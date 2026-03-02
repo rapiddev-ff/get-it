@@ -1,0 +1,55 @@
+// Automatic FlutterFlow imports
+import '/backend/schema/structs/index.dart';
+import '/backend/schema/enums/enums.dart';
+import '/backend/supabase/supabase.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import 'index.dart'; // Imports other custom actions
+import '/flutter_flow/custom_functions.dart'; // Imports custom functions
+import 'package:flutter/material.dart';
+// Begin custom action code
+// DO NOT REMOVE OR MODIFY THE CODE ABOVE!
+
+// Custom Action: sendCounterOffer
+// Return Type: CounterOfferStruct? (nullable)
+// Arguments:
+//   - conversationId (String)
+//   - offeredPrice (double)
+
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+Future<CounterOfferStruct?> sendCounterOffer(
+  String conversationId,
+  double offeredPrice,
+) async {
+  final client = Supabase.instance.client;
+
+  try {
+    final response = await client.rpc(
+      'send_counter_offer',
+      params: {
+        'p_conversation_id': conversationId,
+        'p_offered_price': offeredPrice,
+      },
+    );
+
+    if (response == null || (response as List).isEmpty) return null;
+
+    final json = response[0];
+
+    return CounterOfferStruct(
+      id: json['counter_offer_id'] ?? '',
+      originalPrice: (json['original_price'] as num?)?.toDouble() ?? 0,
+      offeredPrice: (json['offered_price'] as num?)?.toDouble() ?? 0,
+      status: json['status'] ?? 'pending',
+      fromUserId: '',
+      toUserId: '',
+      expiresAt: json['expires_at'] != null
+          ? DateTime.parse(json['expires_at'])
+          : null,
+    );
+  } catch (e) {
+    print('❌ Error sending counter offer: $e');
+    return null;
+  }
+}

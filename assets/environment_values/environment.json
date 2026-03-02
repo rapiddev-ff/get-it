@@ -1,0 +1,11 @@
+{
+  "supabaseHost": "https://xvdugwnatoqsbfssugsu.supabase.co",
+"supabaseAnonKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh2ZHVnd25hdG9xc2Jmc3N1Z3N1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc3ODI0MzksImV4cCI6MjA4MzM1ODQzOX0.Ds3sC0-vW-FVzfk0_zjDCCygD22pieqgeUP994syVNA",
+"serviceSid": "VA645bcb8a95567b2706624c7aa845ef43",
+"twillioAuth": "bc982fc22779c01dc35fabb4ee45c370",
+"twillioSid": "AC91f6c5cafc65567c582d5064a55a64fa",
+"twillioBase64": "QUM5MWY2YzVjYWZjNjU1NjdjNTgyZDUwNjRhNTVhNjRmYTpjZmZjNDBlMzkyZGM3NjdiZGNlMDVkZWQwYjg1OWVlNA==",
+"stripeSecret": "sk_test_51SpWyZ2LSPiGT9oDUMSUDHOfgmTL7dEwHBLOlTVSW2Fge38fIOuUvmcpXaZmkt2OWeT0VeQ4h89f6XzfREPK5wJM00oArsx6k2",
+"stripePublishable": "pk_test_51SpWyZ2LSPiGT9oDmU6mz5DhfDqhlW2jz90IVhMLpByByrYdHDba6U08s3AUW3PD0UkK09INkEDHfhMY5oidRLrG00MQCfxKoM",
+"google": "AIzaSyAkaG2L5v0-cGHrrQpsOP_TSYbdSGNoNoI"
+}
