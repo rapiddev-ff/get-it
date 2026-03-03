@@ -42,7 +42,7 @@ export '/features/wishlist/presentation/pages/wishlist/wishlist_widget.dart' sho
 export '/features/messages/presentation/pages/messages/messages_widget.dart' show MessagesWidget;
 export '/features/browse/presentation/pages/browse/browse_widget.dart' show BrowseWidget;
 export '/home/home_product/home_product_widget.dart' show HomeProductWidget;
-export '/videos/videos/videos_widget.dart' show VideosWidget;
+export '/features/videos/presentation/pages/videos/videos_widget.dart' show VideosWidget;
 export '/home/home_seller_profile/home_seller_profile_widget.dart'
     show HomeSellerProfileWidget;
 export '/features/messages/presentation/pages/chat_page/chat_page_widget.dart' show ChatPageWidget;

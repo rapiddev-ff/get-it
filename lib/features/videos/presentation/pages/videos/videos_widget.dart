@@ -1,6 +1,6 @@
 import '/core/nav_bar/nav_bar_widget.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/theme/app_colors.dart';
+import '/core/utils/list_extensions.dart';
 import 'package:flutter/material.dart';
 import 'videos_model.dart';
 export 'videos_model.dart';
@@ -23,13 +23,12 @@ class _VideosWidgetState extends State<VideosWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => VideosModel());
+    _model = VideosModel();
   }
 
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
   }
 
@@ -42,7 +41,7 @@ class _VideosWidgetState extends State<VideosWidget> {
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        backgroundColor: AppColors.backgroundPrimary,
         body: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -60,11 +59,7 @@ class _VideosWidgetState extends State<VideosWidget> {
                 ),
               ),
             ),
-            wrapWithModel(
-              model: _model.navBarModel,
-              updateCallback: () => safeSetState(() {}),
-              child: NavBarWidget(),
-            ),
+            NavBarWidget(),
           ],
         ),
       ),
