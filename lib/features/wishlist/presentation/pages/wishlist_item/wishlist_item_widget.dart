@@ -1,0 +1,170 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_blurhash/flutter_blurhash.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:octo_image/octo_image.dart';
+
+import '/backend/schema/structs/index.dart';
+import '/core/constants/app_constants.dart';
+import '/core/theme/app_colors.dart';
+
+class WishlistItemWidget extends StatelessWidget {
+  const WishlistItemWidget({
+    super.key,
+    required this.productDataType,
+    required this.actionWishlish,
+  });
+
+  final ProductDetailsStruct? productDataType;
+  final Future Function()? actionWishlish;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4.0),
+        border: Border.all(
+          color: const Color(0xFF363636),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            width: 168.5,
+            height: 128.0,
+            child: Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(4.0),
+                    topRight: Radius.circular(4.0),
+                  ),
+                  child: OctoImage(
+                    placeholderBuilder: (_) => SizedBox.expand(
+                      child: Image(
+                        image: BlurHashImage(AppConstants.blurHash),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    image: NetworkImage(
+                      productDataType?.images.firstOrNull?.imageUrl ??
+                          'https://picsum.photos/seed/487/600',
+                    ),
+                    width: 168.5,
+                    height: 128.0,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Align(
+                  alignment: const AlignmentDirectional(1.0, -1.0),
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 10.0, 10.0, 0.0),
+                    child: ClipOval(
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            await actionWishlish?.call();
+                          },
+                          child: Container(
+                            width: 40.0,
+                            height: 40.0,
+                            decoration: const BoxDecoration(
+                              color: Color(0x98000000),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Align(
+                              child: FaIcon(
+                                FontAwesomeIcons.solidHeart,
+                                color: Color(0xFFEF4444),
+                                size: 18.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              color: Color(0xFF363636),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(4.0),
+                bottomRight: Radius.circular(4.0),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    productDataType?.title ?? 'N/A',
+                    style: GoogleFonts.inter(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14.0,
+                      color: AppColors.textPrimary,
+                      height: 1.5,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          productDataType?.price != null
+                              ? NumberFormat('#,##0.##', 'en_US')
+                                  .format(productDataType!.price)
+                              : '0',
+                          style: GoogleFonts.inter(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
+                            color: AppColors.textPrimary,
+                            height: 1.5,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.secondary,
+                          borderRadius: BorderRadius.circular(4.0),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              8.0, 4.0, 8.0, 4.0),
+                          child: Text(
+                            'Buy Now',
+                            style: GoogleFonts.inter(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12.0,
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

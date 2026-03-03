@@ -38,7 +38,7 @@ export '/profile/settings_privacy/settings_privacy_widget.dart'
     show SettingsPrivacyWidget;
 export '/profile/settings_report/settings_report_widget.dart'
     show SettingsReportWidget;
-export '/wishlist/wishlist/wishlist_widget.dart' show WishlistWidget;
+export '/features/wishlist/presentation/pages/wishlist/wishlist_widget.dart' show WishlistWidget;
 export '/features/messages/presentation/pages/messages/messages_widget.dart' show MessagesWidget;
 export '/features/browse/presentation/pages/browse/browse_widget.dart' show BrowseWidget;
 export '/home/home_product/home_product_widget.dart' show HomeProductWidget;
