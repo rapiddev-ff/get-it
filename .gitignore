@@ -1,1 +1,8 @@
 .env
+build/
+.dart_tool/
+*.iml
+.idea/
+.packages
+.pub/
+pubspec.lock
