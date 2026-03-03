@@ -40,7 +40,7 @@ export '/profile/settings_report/settings_report_widget.dart'
     show SettingsReportWidget;
 export '/wishlist/wishlist/wishlist_widget.dart' show WishlistWidget;
 export '/messages/messages/messages_widget.dart' show MessagesWidget;
-export '/browse/browse/browse_widget.dart' show BrowseWidget;
+export '/features/browse/presentation/pages/browse/browse_widget.dart' show BrowseWidget;
 export '/home/home_product/home_product_widget.dart' show HomeProductWidget;
 export '/videos/videos/videos_widget.dart' show VideosWidget;
 export '/home/home_seller_profile/home_seller_profile_widget.dart'
