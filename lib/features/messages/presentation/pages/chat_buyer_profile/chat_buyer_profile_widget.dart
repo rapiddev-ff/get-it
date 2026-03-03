@@ -4,7 +4,7 @@ import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
-import '/profile/review_item/review_item_widget.dart';
+import '/features/profile/presentation/pages/review_item/review_item_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';

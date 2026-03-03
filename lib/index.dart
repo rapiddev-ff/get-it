@@ -17,26 +17,26 @@ export '/features/auth/presentation/pages/permissions/permissions_widget.dart' s
 export '/features/auth/presentation/pages/additional_info/additional_info_widget.dart'
     show AdditionalInfoWidget;
 export '/core/check_data/check_data_widget.dart' show CheckDataWidget;
-export '/profile/settings/settings_widget.dart' show SettingsWidget;
-export '/profile/settings_referral/settings_referral_widget.dart'
+export '/features/profile/presentation/pages/settings/settings_widget.dart' show SettingsWidget;
+export '/features/profile/presentation/pages/settings_referral/settings_referral_widget.dart'
     show SettingsReferralWidget;
-export '/profile/settings_payment_method/settings_payment_method_widget.dart'
+export '/features/profile/presentation/pages/settings_payment_method/settings_payment_method_widget.dart'
     show SettingsPaymentMethodWidget;
 export '/features/notifications/presentation/pages/notification/notification_widget.dart'
     show NotificationWidget;
 export '/features/notifications/presentation/pages/notification_settings/notification_settings_widget.dart'
     show NotificationSettingsWidget;
-export '/profile/settings_payment_method_add/settings_payment_method_add_widget.dart'
+export '/features/profile/presentation/pages/settings_payment_method_add/settings_payment_method_add_widget.dart'
     show SettingsPaymentMethodAddWidget;
-export '/profile/settings_my_profile/settings_my_profile_widget.dart'
+export '/features/profile/presentation/pages/settings_my_profile/settings_my_profile_widget.dart'
     show SettingsMyProfileWidget;
-export '/profile/settings_block_list/settings_block_list_widget.dart'
+export '/features/profile/presentation/pages/settings_block_list/settings_block_list_widget.dart'
     show SettingsBlockListWidget;
-export '/profile/settings_terms/settings_terms_widget.dart'
+export '/features/profile/presentation/pages/settings_terms/settings_terms_widget.dart'
     show SettingsTermsWidget;
-export '/profile/settings_privacy/settings_privacy_widget.dart'
+export '/features/profile/presentation/pages/settings_privacy/settings_privacy_widget.dart'
     show SettingsPrivacyWidget;
-export '/profile/settings_report/settings_report_widget.dart'
+export '/features/profile/presentation/pages/settings_report/settings_report_widget.dart'
     show SettingsReportWidget;
 export '/features/wishlist/presentation/pages/wishlist/wishlist_widget.dart' show WishlistWidget;
 export '/features/messages/presentation/pages/messages/messages_widget.dart' show MessagesWidget;
@@ -75,25 +75,25 @@ export '/home/seller_dashboard/shortlist/home_dashoard_shortlist_add/home_dashoa
 export '/home/seller_dashboard/shortlist/home_dashoard_shortlist/home_dashoard_shortlist_widget.dart'
     show HomeDashoardShortlistWidget;
 export '/home/checkout/checkout/checkout_widget.dart' show CheckoutWidget;
-export '/profile/settings_edit_profile/settings_edit_profile_widget.dart'
+export '/features/profile/presentation/pages/settings_edit_profile/settings_edit_profile_widget.dart'
     show SettingsEditProfileWidget;
-export '/profile/settings_payment_method_edit/settings_payment_method_edit_widget.dart'
+export '/features/profile/presentation/pages/settings_payment_method_edit/settings_payment_method_edit_widget.dart'
     show SettingsPaymentMethodEditWidget;
-export '/profile/settings_change_phone/settings_change_phone_widget.dart'
+export '/features/profile/presentation/pages/settings_change_phone/settings_change_phone_widget.dart'
     show SettingsChangePhoneWidget;
-export '/profile/settings_change_email/settings_change_email_widget.dart'
+export '/features/profile/presentation/pages/settings_change_email/settings_change_email_widget.dart'
     show SettingsChangeEmailWidget;
-export '/profile/settings_change_password/settings_change_password_widget.dart'
+export '/features/profile/presentation/pages/settings_change_password/settings_change_password_widget.dart'
     show SettingsChangePasswordWidget;
-export '/profile/settings_deactivate_account/settings_deactivate_account_widget.dart'
+export '/features/profile/presentation/pages/settings_deactivate_account/settings_deactivate_account_widget.dart'
     show SettingsDeactivateAccountWidget;
-export '/profile/settings_delete_account/settings_delete_account_widget.dart'
+export '/features/profile/presentation/pages/settings_delete_account/settings_delete_account_widget.dart'
     show SettingsDeleteAccountWidget;
-export '/profile/settings_business_address/settings_business_address_widget.dart'
+export '/features/profile/presentation/pages/settings_business_address/settings_business_address_widget.dart'
     show SettingsBusinessAddressWidget;
-export '/profile/settings_my_profile_followers/settings_my_profile_followers_widget.dart'
+export '/features/profile/presentation/pages/settings_my_profile_followers/settings_my_profile_followers_widget.dart'
     show SettingsMyProfileFollowersWidget;
-export '/profile/settings_daily_budget/settings_daily_budget_widget.dart'
+export '/features/profile/presentation/pages/settings_daily_budget/settings_daily_budget_widget.dart'
     show SettingsDailyBudgetWidget;
 export '/test/test_widget.dart' show TestWidget;
 export '/stripe/stripe_success_copy/stripe_success_copy_widget.dart'
@@ -106,7 +106,7 @@ export '/home/home_seller_profile_reviews_step1/home_seller_profile_reviews_step
     show HomeSellerProfileReviewsStep1Widget;
 export '/home/home_seller_profile_reviews_step2/home_seller_profile_reviews_step2_widget.dart'
     show HomeSellerProfileReviewsStep2Widget;
-export '/profile/settings_shipping_defaults/settings_shipping_defaults_widget.dart'
+export '/features/profile/presentation/pages/settings_shipping_defaults/settings_shipping_defaults_widget.dart'
     show SettingsShippingDefaultsWidget;
 export '/home/seller_dashboard/home_dashoard_inventory_add_tags/home_dashoard_inventory_add_tags_widget.dart'
     show HomeDashoardInventoryAddTagsWidget;

@@ -1,0 +1,331 @@
+import '/backend/api_requests/api_calls.dart';
+import '/features/auth/presentation/pages/phone_verification_page2/phone_verification_page2_widget.dart';
+import '/core/theme/app_colors.dart';
+import '/core/constants/app_constants.dart';
+import '/core/utils/list_extensions.dart';
+import 'dart:async';
+import '/custom_code/actions/index.dart' as actions;
+import '/core/utils/form_validators.dart';
+import 'package:easy_debounce/easy_debounce.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'settings_change_phone_model.dart';
+
+class SettingsChangePhoneWidget extends StatefulWidget {
+  const SettingsChangePhoneWidget({
+    super.key,
+    required this.isOnboarding,
+  });
+
+  final bool? isOnboarding;
+
+  static String routeName = 'settingsChangePhone';
+  static String routePath = 'settingsChangePhone';
+
+  @override
+  State<SettingsChangePhoneWidget> createState() =>
+      _SettingsChangePhoneWidgetState();
+}
+
+class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget> {
+  late SettingsChangePhoneModel _model;
+
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+  late StreamSubscription<bool> _keyboardVisibilitySubscription;
+  bool _isKeyboardVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _model = SettingsChangePhoneModel();
+
+    if (!kIsWeb) {
+      _keyboardVisibilitySubscription =
+          KeyboardVisibilityController().onChange.listen((bool visible) {
+        setState(() {
+          _isKeyboardVisible = visible;
+        });
+      });
+    }
+
+    _model.textController ??= TextEditingController();
+    _model.textFieldFocusNode ??= FocusNode();
+    _model.textFieldFocusNode!.addListener(() => setState(() {}));
+    _model.textFieldMask = MaskTextInputFormatter(mask: '+# (###) ###-##-##');
+  }
+
+  @override
+  void dispose() {
+    _model.dispose();
+
+    if (!kIsWeb) {
+      _keyboardVisibilitySubscription.cancel();
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: AppColors.backgroundPrimary,
+        appBar: AppBar(
+          backgroundColor: AppColors.backgroundSecondary,
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: Colors.white,
+              size: 24.0,
+            ),
+            onPressed: () {
+              context.pop();
+            },
+          ),
+          title: Text(
+            'Edit Phone Number',
+            style: GoogleFonts.inter(
+              color: Colors.white,
+              fontSize: 18.0,
+              fontWeight: FontWeight.w500,
+              height: 1.5,
+            ),
+          ),
+          actions: [],
+          centerTitle: true,
+          elevation: 0.0,
+        ),
+        body: SafeArea(
+          top: true,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 4.0),
+                        child: Text(
+                          'Phone Number',
+                          style: GoogleFonts.inter(
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.textPrimary,
+                            height: 1.4,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        child: TextFormField(
+                          controller: _model.textController,
+                          focusNode: _model.textFieldFocusNode,
+                          onChanged: (_) => EasyDebounce.debounce(
+                            '_model.textController',
+                            Duration(milliseconds: 100),
+                            () => setState(() {}),
+                          ),
+                          autofocus: false,
+                          enabled: true,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            isDense: false,
+                            hintText: 'Your phone number',
+                            hintStyle: GoogleFonts.inter(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 16.0,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: AppColors.neutral700,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(
+                                  AppConstants.radiusTextField4),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: AppColors.secondary,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(
+                                  AppConstants.radiusTextField4),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: AppColors.error,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(
+                                  AppConstants.radiusTextField4),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: AppColors.error,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(
+                                  AppConstants.radiusTextField4),
+                            ),
+                          ),
+                          style: GoogleFonts.inter(),
+                          keyboardType: TextInputType.number,
+                          cursorColor: AppColors.textPrimary,
+                          enableInteractiveSelection: true,
+                          inputFormatters: [_model.textFieldMask],
+                        ),
+                      ),
+                      if ((FormValidators.phoneValidationResult(
+                                      _model.textController!.text) !=
+                                  null &&
+                              FormValidators.phoneValidationResult(
+                                      _model.textController!.text) !=
+                                  '') &&
+                          (_model.textController!.text != ''))
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 4.0, 0.0, 0.0),
+                          child: Text(
+                            FormValidators.phoneValidationResult(
+                                    _model.textController!.text) ??
+                                'N/A',
+                            style: GoogleFonts.inter(
+                              color: AppColors.error,
+                              fontSize: 12.0,
+                            ),
+                          ).animate().fade(duration: 600.ms),
+                        ),
+                    ].addToStart(SizedBox(height: 24.0)),
+                  ),
+                ),
+              ),
+              if (!(kIsWeb
+                  ? MediaQuery.viewInsetsOf(context).bottom > 0
+                  : _isKeyboardVisible))
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        height: 56.0,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              (FormValidators.phoneValidationResult(
+                                                  _model.textController!.text) ==
+                                              null ||
+                                          FormValidators.phoneValidationResult(
+                                                  _model.textController!.text) ==
+                                              '') &&
+                                      (_model.textController!.text != '')
+                                  ? Color(0xFF7D56FF)
+                                  : Color(0xFF363636),
+                              (FormValidators.phoneValidationResult(
+                                                  _model.textController!.text) ==
+                                              null ||
+                                          FormValidators.phoneValidationResult(
+                                                  _model.textController!.text) ==
+                                              '') &&
+                                      (_model.textController!.text != '')
+                                  ? Color(0xFF6187F1)
+                                  : Color(0xFF363636)
+                            ],
+                            stops: [0.0, 1.0],
+                            begin: AlignmentDirectional(0.0, -1.0),
+                            end: AlignmentDirectional(0, 1.0),
+                          ),
+                          borderRadius: BorderRadius.circular(4.0),
+                        ),
+                        child: TextButton(
+                          onPressed: ((_model.textController!.text == '') ||
+                                  (FormValidators.phoneValidationResult(
+                                              _model.textController!.text) !=
+                                          null &&
+                                      FormValidators.phoneValidationResult(
+                                              _model.textController!.text) !=
+                                          ''))
+                              ? null
+                              : () async {
+                                  _model.apiResultzpe = await SupabaseRPCGroup
+                                      .checkphoneexistsCall
+                                      .call(
+                                    userId: _model.textController!.text,
+                                  );
+
+                                  if ((_model.apiResultzpe?.jsonBody ?? '')) {
+                                    await actions.toastificationshow(
+                                      context,
+                                      'Error',
+                                      'This number already registered',
+                                      'error',
+                                    );
+                                  } else {
+                                    await TwillioGroup.sendVerificationCall
+                                        .call(
+                                      to: FormValidators.formatPhoneNumber(
+                                          _model.textController!.text),
+                                    );
+
+                                    if (Navigator.of(context).canPop()) {
+                                      context.pop();
+                                    }
+                                    context.pushNamed(
+                                      PhoneVerificationPage2Widget.routeName,
+                                      queryParameters: {
+                                        'phoneNumber':
+                                            _model.textController!.text,
+                                        'isOnborading':
+                                            widget.isOnboarding.toString(),
+                                      },
+                                    );
+                                  }
+
+                                  setState(() {});
+                                },
+                          style: TextButton.styleFrom(
+                            minimumSize: Size(double.infinity, 56.0),
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                          ),
+                          child: Text(
+                            'Send',
+                            style: GoogleFonts.inter(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ]
+                        .divide(SizedBox(height: 40.0))
+                        .addToStart(SizedBox(height: 24.0))
+                        .addToEnd(SizedBox(height: 32.0)),
+                  ).animate().move(
+                        begin: Offset(0, 100),
+                        end: Offset.zero,
+                        duration: 600.ms,
+                      ),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

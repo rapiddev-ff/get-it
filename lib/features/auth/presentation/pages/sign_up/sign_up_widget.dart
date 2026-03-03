@@ -18,8 +18,8 @@ import '/custom_code/actions/index.dart' as actions;
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/auth/presentation/pages/phone_verification_page/phone_verification_page_widget.dart';
 import '/features/auth/presentation/widgets/password_component/password_component_widget.dart';
-import '/profile/settings_privacy/settings_privacy_widget.dart';
-import '/profile/settings_terms/settings_terms_widget.dart';
+import '/features/profile/presentation/pages/settings_privacy/settings_privacy_widget.dart';
+import '/features/profile/presentation/pages/settings_terms/settings_terms_widget.dart';
 import 'sign_up_model.dart';
 
 export 'sign_up_model.dart';

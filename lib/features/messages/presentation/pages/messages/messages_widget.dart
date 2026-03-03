@@ -8,7 +8,7 @@ import '/features/messages/presentation/widgets/message_item/message_item_widget
 import '/features/auth/presentation/providers/auth_provider.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/notifications/presentation/pages/notification/notification_widget.dart';
-import '/profile/settings/settings_widget.dart';
+import '/features/profile/presentation/pages/settings/settings_widget.dart';
 import '/features/messages/presentation/pages/chat_page/chat_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
