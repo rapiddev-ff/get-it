@@ -16,7 +16,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import '/core/utils/uploaded_file.dart' show FFUploadedFile;
+import '/core/utils/uploaded_file.dart' show UploadedFile;
 
 class HomeSellerProfileReviewsStep2Widget extends StatefulWidget {
   const HomeSellerProfileReviewsStep2Widget({
@@ -667,7 +667,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                         onPressed: () async {
                           uploadReviewImages = await actions.uploadReviewImages(
                             images
-                                .map((bytes) => FFUploadedFile(
+                                .map((bytes) => UploadedFile(
                                       bytes: bytes,
                                       name: 'review_image.jpg',
                                     ))

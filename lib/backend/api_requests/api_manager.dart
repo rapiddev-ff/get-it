@@ -381,9 +381,9 @@ class ApiManager {
     );
 
     bool isFile(dynamic e) =>
-        e is FFUploadedFile ||
-        e is List<FFUploadedFile> ||
-        (e is List && e.firstOrNull is FFUploadedFile);
+        e is UploadedFile ||
+        e is List<UploadedFile> ||
+        (e is List && e.firstOrNull is UploadedFile);
 
     final nonFileParams = toStringMap(
         Map.fromEntries(params.entries.where((e) => !isFile(e.value))));
@@ -392,8 +392,8 @@ class ApiManager {
     params.entries.where((e) => isFile(e.value)).forEach((e) {
       final param = e.value;
       final uploadedFiles = param is List
-          ? param as List<FFUploadedFile>
-          : [param as FFUploadedFile];
+          ? param as List<UploadedFile>
+          : [param as UploadedFile];
       for (var uploadedFile in uploadedFiles) {
         files.add(
           http.MultipartFile.fromBytes(

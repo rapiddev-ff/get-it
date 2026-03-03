@@ -10,7 +10,7 @@ import '/core/router/serialization_util.dart';
 export 'package:collection/collection.dart' show ListEquality;
 export 'package:flutter/material.dart' show Color, Colors;
 export 'package:from_css_color/from_css_color.dart';
-export '/backend/schema/enums/enums.dart' show FFEnumExtensions;
+export '/backend/schema/enums/enums.dart' show EnumSerializeExtensions;
 
 typedef StructBuilder<T> = T Function(Map<String, dynamic> data);
 

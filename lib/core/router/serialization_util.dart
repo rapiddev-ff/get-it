@@ -18,7 +18,7 @@ String dateTimeRangeToString(DateTimeRange dateTimeRange) {
   return '$startStr|$endStr';
 }
 
-String placeToString(FFPlace place) => jsonEncode({
+String placeToString(AppPlace place) => jsonEncode({
       'latLng': place.latLng.serialize(),
       'name': place.name,
       'address': place.address,
@@ -28,7 +28,7 @@ String placeToString(FFPlace place) => jsonEncode({
       'zipCode': place.zipCode,
     });
 
-String uploadedFileToString(FFUploadedFile uploadedFile) =>
+String uploadedFileToString(UploadedFile uploadedFile) =>
     uploadedFile.serialize();
 
 String? serializeParam(
@@ -66,10 +66,10 @@ String? serializeParam(
         data = (param as LatLng).serialize();
       case ParamType.Color:
         data = (param as Color).toCssString();
-      case ParamType.FFPlace:
-        data = placeToString(param as FFPlace);
-      case ParamType.FFUploadedFile:
-        data = uploadedFileToString(param as FFUploadedFile);
+      case ParamType.place:
+        data = placeToString(param as AppPlace);
+      case ParamType.uploadedFile:
+        data = uploadedFileToString(param as UploadedFile);
       case ParamType.JSON:
         data = json.encode(param);
 
@@ -121,7 +121,7 @@ LatLng? latLngFromString(String? latLngStr) {
   );
 }
 
-FFPlace placeFromString(String placeStr) {
+AppPlace placeFromString(String placeStr) {
   final serializedData = jsonDecode(placeStr) as Map<String, dynamic>;
   final data = {
     'latLng': serializedData.containsKey('latLng')
@@ -134,7 +134,7 @@ FFPlace placeFromString(String placeStr) {
     'country': serializedData['country'] ?? '',
     'zipCode': serializedData['zipCode'] ?? '',
   };
-  return FFPlace(
+  return AppPlace(
     latLng: data['latLng'] as LatLng,
     name: data['name'] as String,
     address: data['address'] as String,
@@ -145,8 +145,8 @@ FFPlace placeFromString(String placeStr) {
   );
 }
 
-FFUploadedFile uploadedFileFromString(String uploadedFileStr) =>
-    FFUploadedFile.deserialize(uploadedFileStr);
+UploadedFile uploadedFileFromString(String uploadedFileStr) =>
+    UploadedFile.deserialize(uploadedFileStr);
 
 enum ParamType {
   int,
@@ -157,8 +157,8 @@ enum ParamType {
   DateTimeRange,
   LatLng,
   Color,
-  FFPlace,
-  FFUploadedFile,
+  place,
+  uploadedFile,
   JSON,
 
   DataStruct,
@@ -217,9 +217,9 @@ dynamic deserializeParam<T>(
         return latLngFromString(param);
       case ParamType.Color:
         return fromCssColor(param);
-      case ParamType.FFPlace:
+      case ParamType.place:
         return placeFromString(param);
-      case ParamType.FFUploadedFile:
+      case ParamType.uploadedFile:
         return uploadedFileFromString(param);
       case ParamType.JSON:
         return json.decode(param);

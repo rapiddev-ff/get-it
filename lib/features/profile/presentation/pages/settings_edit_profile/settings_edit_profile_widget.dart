@@ -116,7 +116,7 @@ class _SettingsEditProfileWidgetState
 
     // Upload to storage
     _model.uploadToBucket = await actions.uploadImageToStorage(
-      FFUploadedFile(bytes: _model.image, name: 'avatar.jpg'),
+      UploadedFile(bytes: _model.image, name: 'avatar.jpg'),
       'avatars',
       currentUserUid,
     );

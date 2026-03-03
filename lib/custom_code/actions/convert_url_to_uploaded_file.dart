@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import '/core/utils/uploaded_file.dart';
 import 'package:http/http.dart' as http;
 
-Future<FFUploadedFile?> convertUrlToUploadedFile(String imageUrl) async {
+Future<UploadedFile?> convertUrlToUploadedFile(String imageUrl) async {
   try {
     final response = await http.get(Uri.parse(imageUrl));
 
@@ -22,7 +22,7 @@ Future<FFUploadedFile?> convertUrlToUploadedFile(String imageUrl) async {
         }
       }
 
-      return FFUploadedFile(
+      return UploadedFile(
         name: fileName,
         bytes: bytes,
       );

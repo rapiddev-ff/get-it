@@ -5,7 +5,7 @@ import 'package:uuid/uuid.dart';
 import 'package:mime/mime.dart';
 
 Future<String?> uploadImageToStorage(
-  FFUploadedFile uploadedFile,
+  UploadedFile uploadedFile,
   String bucket,
   String folder,
 ) async {

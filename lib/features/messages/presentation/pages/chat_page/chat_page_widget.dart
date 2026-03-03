@@ -46,7 +46,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
   List<String> _uploadedImages = [];
   String? _textMessage;
   // _isDataUploading removed (unused)
-  List<FFUploadedFile> _uploadedLocalFiles = [];
+  List<UploadedFile> _uploadedLocalFiles = [];
 
   @override
   void initState() {
@@ -475,11 +475,11 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                                             validateFileFormat(
                                                 m.storagePath, context))) {
                                       var selectedUploadedFiles =
-                                          <FFUploadedFile>[];
+                                          <UploadedFile>[];
 
                                       try {
                                         selectedUploadedFiles = selectedMedia
-                                            .map((m) => FFUploadedFile(
+                                            .map((m) => UploadedFile(
                                                   name: m.storagePath
                                                       .split('/')
                                                       .last,

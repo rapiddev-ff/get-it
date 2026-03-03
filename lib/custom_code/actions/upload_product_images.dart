@@ -4,7 +4,7 @@ import 'package:uuid/uuid.dart';
 import 'package:mime/mime.dart';
 
 Future<List<String>?> uploadProductImages(
-  List<FFUploadedFile> uploadedFiles,
+  List<UploadedFile> uploadedFiles,
   String productId,
 ) async {
   try {

@@ -30,11 +30,11 @@ enum CounterOfferStatus {
   expired,
 }
 
-extension FFEnumExtensions<T extends Enum> on T {
+extension EnumSerializeExtensions<T extends Enum> on T {
   String serialize() => name;
 }
 
-extension FFEnumListExtensions<T extends Enum> on Iterable<T> {
+extension EnumListDeserializeExtensions<T extends Enum> on Iterable<T> {
   T? deserialize(String? value) =>
       firstWhereOrNull((e) => e.serialize() == value);
 }

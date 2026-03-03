@@ -36,6 +36,7 @@ class AppStateNotifier extends ChangeNotifier {
   BaseAuthUser? initialUser;
   BaseAuthUser? user;
   bool showSplashImage = true;
+  bool initialDataLoaded = false;
   String? _redirectLocation;
 
   /// Determines whether the app will refresh and build again when a sign
@@ -88,28 +89,31 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       errorBuilder: (context, state) =>
           appStateNotifier.loggedIn ? CheckDataWidget() : WelcomeWidget(),
       routes: [
-        FFRoute(
+        AppRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) =>
-              appStateNotifier.loggedIn ? CheckDataWidget() : WelcomeWidget(),
+          builder: (context, _) => appStateNotifier.loggedIn
+              ? (appStateNotifier.initialDataLoaded
+                  ? HomePageWidget()
+                  : CheckDataWidget())
+              : WelcomeWidget(),
           routes: [
-            FFRoute(
+            AppRoute(
               name: SignInWidget.routeName,
               path: SignInWidget.routePath,
               builder: (context, params) => SignInWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: WelcomeWidget.routeName,
               path: WelcomeWidget.routePath,
               builder: (context, params) => WelcomeWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: HomePageWidget.routeName,
               path: HomePageWidget.routePath,
               builder: (context, params) => HomePageWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: PhoneVerificationPageWidget.routeName,
               path: PhoneVerificationPageWidget.routePath,
               builder: (context, params) => PhoneVerificationPageWidget(
@@ -119,7 +123,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 ),
               ),
             ),
-            FFRoute(
+            AppRoute(
               name: PhoneVerificationPage2Widget.routeName,
               path: PhoneVerificationPage2Widget.routePath,
               builder: (context, params) => PhoneVerificationPage2Widget(
@@ -133,17 +137,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 ),
               ),
             ),
-            FFRoute(
+            AppRoute(
               name: SignUpWidget.routeName,
               path: SignUpWidget.routePath,
               builder: (context, params) => SignUpWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: ForgotPasswordWidget.routeName,
               path: ForgotPasswordWidget.routePath,
               builder: (context, params) => ForgotPasswordWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: ForgotPasswordStep2Widget.routeName,
               path: ForgotPasswordStep2Widget.routePath,
               builder: (context, params) => ForgotPasswordStep2Widget(
@@ -153,7 +157,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 ),
               ),
             ),
-            FFRoute(
+            AppRoute(
               name: ForgotPasswordStep3Widget.routeName,
               path: ForgotPasswordStep3Widget.routePath,
               builder: (context, params) => ForgotPasswordStep3Widget(
@@ -163,17 +167,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 ),
               ),
             ),
-            FFRoute(
+            AppRoute(
               name: PermissionsWidget.routeName,
               path: PermissionsWidget.routePath,
               builder: (context, params) => PermissionsWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: AdditionalInfoWidget.routeName,
               path: AdditionalInfoWidget.routePath,
               builder: (context, params) => AdditionalInfoWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: CheckDataWidget.routeName,
               path: CheckDataWidget.routePath,
               builder: (context, params) => CheckDataWidget(
@@ -183,77 +187,77 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 ),
               ),
             ),
-            FFRoute(
+            AppRoute(
               name: SettingsWidget.routeName,
               path: SettingsWidget.routePath,
               builder: (context, params) => SettingsWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: SettingsReferralWidget.routeName,
               path: SettingsReferralWidget.routePath,
               builder: (context, params) => SettingsReferralWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: SettingsPaymentMethodWidget.routeName,
               path: SettingsPaymentMethodWidget.routePath,
               builder: (context, params) => SettingsPaymentMethodWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: NotificationWidget.routeName,
               path: NotificationWidget.routePath,
               builder: (context, params) => NotificationWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: NotificationSettingsWidget.routeName,
               path: NotificationSettingsWidget.routePath,
               builder: (context, params) => NotificationSettingsWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: SettingsPaymentMethodAddWidget.routeName,
               path: SettingsPaymentMethodAddWidget.routePath,
               builder: (context, params) => SettingsPaymentMethodAddWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: SettingsMyProfileWidget.routeName,
               path: SettingsMyProfileWidget.routePath,
               builder: (context, params) => SettingsMyProfileWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: SettingsBlockListWidget.routeName,
               path: SettingsBlockListWidget.routePath,
               builder: (context, params) => SettingsBlockListWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: SettingsTermsWidget.routeName,
               path: SettingsTermsWidget.routePath,
               builder: (context, params) => SettingsTermsWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: SettingsPrivacyWidget.routeName,
               path: SettingsPrivacyWidget.routePath,
               builder: (context, params) => SettingsPrivacyWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: SettingsReportWidget.routeName,
               path: SettingsReportWidget.routePath,
               builder: (context, params) => SettingsReportWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: WishlistWidget.routeName,
               path: WishlistWidget.routePath,
               builder: (context, params) => WishlistWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: MessagesWidget.routeName,
               path: MessagesWidget.routePath,
               builder: (context, params) => MessagesWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: BrowseWidget.routeName,
               path: BrowseWidget.routePath,
               builder: (context, params) => BrowseWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: HomeProductWidget.routeName,
               path: HomeProductWidget.routePath,
               builder: (context, params) => HomeProductWidget(
@@ -263,12 +267,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 ),
               ),
             ),
-            FFRoute(
+            AppRoute(
               name: VideosWidget.routeName,
               path: VideosWidget.routePath,
               builder: (context, params) => VideosWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: HomeSellerProfileWidget.routeName,
               path: HomeSellerProfileWidget.routePath,
               builder: (context, params) => HomeSellerProfileWidget(
@@ -278,7 +282,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 ),
               ),
             ),
-            FFRoute(
+            AppRoute(
               name: ChatPageWidget.routeName,
               path: ChatPageWidget.routePath,
               builder: (context, params) => ChatPageWidget(
@@ -290,17 +294,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 ),
               ),
             ),
-            FFRoute(
+            AppRoute(
               name: StripeSuccessWidget.routeName,
               path: StripeSuccessWidget.routePath,
               builder: (context, params) => StripeSuccessWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: StripeRefreshWidget.routeName,
               path: StripeRefreshWidget.routePath,
               builder: (context, params) => StripeRefreshWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: StripeCreateChekOutWidget.routeName,
               path: StripeCreateChekOutWidget.routePath,
               requireAuth: true,
@@ -319,28 +323,28 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 ),
               ),
             ),
-            FFRoute(
+            AppRoute(
               name: HomeDashoardEarningsWidget.routeName,
               path: HomeDashoardEarningsWidget.routePath,
               builder: (context, params) => HomeDashoardEarningsWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: HomeDashoardShippingWidget.routeName,
               path: HomeDashoardShippingWidget.routePath,
               builder: (context, params) => HomeDashoardShippingWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: HomeDashoardShippingDetailedWidget.routeName,
               path: HomeDashoardShippingDetailedWidget.routePath,
               builder: (context, params) =>
                   HomeDashoardShippingDetailedWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: HomeDashoardInventoryWidget.routeName,
               path: HomeDashoardInventoryWidget.routePath,
               builder: (context, params) => HomeDashoardInventoryWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: HomeDashoardInventoryAddWidget.routeName,
               path: HomeDashoardInventoryAddWidget.routePath,
               builder: (context, params) => HomeDashoardInventoryAddWidget(
@@ -350,38 +354,38 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 ),
               ),
             ),
-            FFRoute(
+            AppRoute(
               name: HomeDashoardPromoteStep1Widget.routeName,
               path: HomeDashoardPromoteStep1Widget.routePath,
               builder: (context, params) => HomeDashoardPromoteStep1Widget(),
             ),
-            FFRoute(
+            AppRoute(
               name: HomeDashoardPromoteStep2Widget.routeName,
               path: HomeDashoardPromoteStep2Widget.routePath,
               builder: (context, params) => HomeDashoardPromoteStep2Widget(),
             ),
-            FFRoute(
+            AppRoute(
               name: HomeDashoardShortlistCreateWidget.routeName,
               path: HomeDashoardShortlistCreateWidget.routePath,
               builder: (context, params) => HomeDashoardShortlistCreateWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: HomeDashoardShortlistCreateStep2Widget.routeName,
               path: HomeDashoardShortlistCreateStep2Widget.routePath,
               builder: (context, params) =>
                   HomeDashoardShortlistCreateStep2Widget(),
             ),
-            FFRoute(
+            AppRoute(
               name: HomeDashoardShortlistAddWidget.routeName,
               path: HomeDashoardShortlistAddWidget.routePath,
               builder: (context, params) => HomeDashoardShortlistAddWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: HomeDashoardShortlistWidget.routeName,
               path: HomeDashoardShortlistWidget.routePath,
               builder: (context, params) => HomeDashoardShortlistWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: CheckoutWidget.routeName,
               path: CheckoutWidget.routePath,
               builder: (context, params) => CheckoutWidget(
@@ -401,12 +405,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 ),
               ),
             ),
-            FFRoute(
+            AppRoute(
               name: SettingsEditProfileWidget.routeName,
               path: SettingsEditProfileWidget.routePath,
               builder: (context, params) => SettingsEditProfileWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: SettingsPaymentMethodEditWidget.routeName,
               path: SettingsPaymentMethodEditWidget.routePath,
               builder: (context, params) => SettingsPaymentMethodEditWidget(
@@ -422,7 +426,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 ),
               ),
             ),
-            FFRoute(
+            AppRoute(
               name: SettingsChangePhoneWidget.routeName,
               path: SettingsChangePhoneWidget.routePath,
               builder: (context, params) => SettingsChangePhoneWidget(
@@ -432,7 +436,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 ),
               ),
             ),
-            FFRoute(
+            AppRoute(
               name: SettingsChangeEmailWidget.routeName,
               path: SettingsChangeEmailWidget.routePath,
               builder: (context, params) => SettingsChangeEmailWidget(
@@ -442,42 +446,42 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 ),
               ),
             ),
-            FFRoute(
+            AppRoute(
               name: SettingsChangePasswordWidget.routeName,
               path: SettingsChangePasswordWidget.routePath,
               builder: (context, params) => SettingsChangePasswordWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: SettingsDeactivateAccountWidget.routeName,
               path: SettingsDeactivateAccountWidget.routePath,
               builder: (context, params) => SettingsDeactivateAccountWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: SettingsDeleteAccountWidget.routeName,
               path: SettingsDeleteAccountWidget.routePath,
               builder: (context, params) => SettingsDeleteAccountWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: SettingsBusinessAddressWidget.routeName,
               path: SettingsBusinessAddressWidget.routePath,
               builder: (context, params) => SettingsBusinessAddressWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: SettingsMyProfileFollowersWidget.routeName,
               path: SettingsMyProfileFollowersWidget.routePath,
               builder: (context, params) => SettingsMyProfileFollowersWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: SettingsDailyBudgetWidget.routeName,
               path: SettingsDailyBudgetWidget.routePath,
               builder: (context, params) => SettingsDailyBudgetWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: StripeSuccessCopyWidget.routeName,
               path: StripeSuccessCopyWidget.routePath,
               builder: (context, params) => StripeSuccessCopyWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: ChatBuyerProfileWidget.routeName,
               path: ChatBuyerProfileWidget.routePath,
               builder: (context, params) => ChatBuyerProfileWidget(
@@ -487,7 +491,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 ),
               ),
             ),
-            FFRoute(
+            AppRoute(
               name: HomeSellerProfileReviewsWidget.routeName,
               path: HomeSellerProfileReviewsWidget.routePath,
               builder: (context, params) => HomeSellerProfileReviewsWidget(
@@ -499,7 +503,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 ),
               ),
             ),
-            FFRoute(
+            AppRoute(
               name: HomeSellerProfileReviewsStep1Widget.routeName,
               path: HomeSellerProfileReviewsStep1Widget.routePath,
               builder: (context, params) => HomeSellerProfileReviewsStep1Widget(
@@ -511,7 +515,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 ),
               ),
             ),
-            FFRoute(
+            AppRoute(
               name: HomeSellerProfileReviewsStep2Widget.routeName,
               path: HomeSellerProfileReviewsStep2Widget.routePath,
               builder: (context, params) => HomeSellerProfileReviewsStep2Widget(
@@ -529,18 +533,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 ),
               ),
             ),
-            FFRoute(
+            AppRoute(
               name: SettingsShippingDefaultsWidget.routeName,
               path: SettingsShippingDefaultsWidget.routePath,
               builder: (context, params) => SettingsShippingDefaultsWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: HomeDashoardInventoryAddTagsWidget.routeName,
               path: HomeDashoardInventoryAddTagsWidget.routePath,
               builder: (context, params) =>
                   HomeDashoardInventoryAddTagsWidget(),
             ),
-            FFRoute(
+            AppRoute(
               name: CheckoutEditShippingAddressWidget.routeName,
               path: CheckoutEditShippingAddressWidget.routePath,
               builder: (context, params) => CheckoutEditShippingAddressWidget(),
@@ -629,8 +633,8 @@ extension _GoRouterStateExtensions on GoRouterState {
       : TransitionInfo.appDefault();
 }
 
-class FFParameters {
-  FFParameters(this.state, [this.asyncParams = const {}]);
+class AppRouteParameters {
+  AppRouteParameters(this.state, [this.asyncParams = const {}]);
 
   final GoRouterState state;
   final Map<String, Future<dynamic> Function(String)> asyncParams;
@@ -698,8 +702,8 @@ void fixStatusBarOniOS16AndBelow(BuildContext context) {
   );
 }
 
-class FFRoute {
-  const FFRoute({
+class AppRoute {
+  const AppRoute({
     required this.name,
     required this.path,
     required this.builder,
@@ -712,7 +716,7 @@ class FFRoute {
   final String path;
   final bool requireAuth;
   final Map<String, Future<dynamic> Function(String)> asyncParams;
-  final Widget Function(BuildContext, FFParameters) builder;
+  final Widget Function(BuildContext, AppRouteParameters) builder;
   final List<GoRoute> routes;
 
   GoRoute toRoute(AppStateNotifier appStateNotifier) => GoRoute(
@@ -733,7 +737,7 @@ class FFRoute {
         },
         pageBuilder: (context, state) {
           fixStatusBarOniOS16AndBelow(context);
-          final ffParams = FFParameters(state, asyncParams);
+          final ffParams = AppRouteParameters(state, asyncParams);
           final page = ffParams.hasFutures
               ? FutureBuilder(
                   future: ffParams.completeFutures(),

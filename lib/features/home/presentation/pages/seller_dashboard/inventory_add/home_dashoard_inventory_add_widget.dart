@@ -49,7 +49,7 @@ class _HomeDashoardInventoryAddWidgetState
   final formKey = GlobalKey<FormState>();
 
   // Model state inlined
-  List<FFUploadedFile> uploadedImages = [];
+  List<UploadedFile> uploadedImages = [];
   String shippingCost = 'Use Seller Default Shipping Rule';
   CategoriesRow? category;
   SubcategoriesRow? subcategory;
@@ -59,15 +59,15 @@ class _HomeDashoardInventoryAddWidgetState
   List<CategoriesRow>? getCategory;
   List<SubcategoriesRow>? getSubcategory;
   List<ConditionsRow>? getConditions;
-  List<FFUploadedFile>? convertImages;
+  List<UploadedFile>? convertImages;
   bool isDataUploading_uploadDataEdit = false;
-  FFUploadedFile uploadedLocalFile_uploadDataEdit =
-      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
+  UploadedFile uploadedLocalFile_uploadDataEdit =
+      UploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
   List<Tag> choosenTags = [];
   List<Tag> tags = [];
 
-  void addToUploadedImages(FFUploadedFile item) => uploadedImages.add(item);
-  void removeFromUploadedImages(FFUploadedFile item) =>
+  void addToUploadedImages(UploadedFile item) => uploadedImages.add(item);
+  void removeFromUploadedImages(UploadedFile item) =>
       uploadedImages.remove(item);
   CategoriesRow? choosenCategory;
   SubcategoriesRow? choosenSubcategory;
@@ -256,7 +256,7 @@ class _HomeDashoardInventoryAddWidgetState
             );
           }),
         ]);
-        uploadedImages = convertImages!.toList().cast<FFUploadedFile>();
+        uploadedImages = convertImages!.toList().cast<UploadedFile>();
         category = getCategory?.firstOrNull;
         subcategory = getSubcategory?.firstOrNull;
         conditionsList = getConditions!.toList().cast<ConditionsRow>();
@@ -435,11 +435,11 @@ class _HomeDashoardInventoryAddWidgetState
                                       m.storagePath, context))) {
                                 setState(() =>
                                     isDataUploading_uploadDataEdit = true);
-                                var selectedUploadedFiles = <FFUploadedFile>[];
+                                var selectedUploadedFiles = <UploadedFile>[];
 
                                 try {
                                   selectedUploadedFiles = selectedMedia
-                                      .map((m) => FFUploadedFile(
+                                      .map((m) => UploadedFile(
                                             name: m.storagePath.split('/').last,
                                             bytes: m.bytes,
                                             height: m.dimensions?.height,
@@ -473,7 +473,7 @@ class _HomeDashoardInventoryAddWidgetState
                                 setState(() {
                                   isDataUploading_uploadDataEdit = false;
                                   uploadedLocalFile_uploadDataEdit =
-                                      FFUploadedFile(
+                                      UploadedFile(
                                           bytes: Uint8List.fromList([]),
                                           originalFilename: '');
                                 });

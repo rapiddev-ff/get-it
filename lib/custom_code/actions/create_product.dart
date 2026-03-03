@@ -35,7 +35,7 @@ Future<dynamic> createProduct(
   String? customFlatRateStr,
   String? customAdditionalItemFeeStr,
   String status,
-  List<FFUploadedFile> uploadedImages,
+  List<UploadedFile> uploadedImages,
 ) async {
   final bool isEditMode = _isValidUuid(productId);
 
@@ -75,9 +75,9 @@ Future<dynamic> createProduct(
 
     // ─── Photos ───────────────────────────────────────────────────────────────
     // uploadedImages содержит ВСЕ фото (старые + новые)
-    // В edit режиме старые загружены в FFUploadedFile через networkImageToFile
+    // В edit режиме старые загружены в UploadedFile через networkImageToFile
     // RPC уже удалил все старые из БД, просто загружаем все заново
-    final List<FFUploadedFile> validImages = uploadedImages
+    final List<UploadedFile> validImages = uploadedImages
         .where((f) => f.bytes != null && f.bytes!.isNotEmpty)
         .toList();
 

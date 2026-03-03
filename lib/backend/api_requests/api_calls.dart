@@ -1,4 +1,4 @@
-import '/core/config/environment_values.dart';
+import '/core/config/app_config.dart';
 import '/core/utils/json_utils.dart';
 import 'api_manager.dart';
 
@@ -11,8 +11,8 @@ class TwillioGroup {
     String? authToken,
     String? serviceSID,
   }) {
-    authToken ??= FFDevEnvironmentValues().twillioBase64;
-    serviceSID ??= FFDevEnvironmentValues().serviceSid;
+    authToken ??= AppConfig.twillioBase64;
+    serviceSID ??= AppConfig.serviceSid;
     return 'https://verify.twilio.com/v2';
   }
 
@@ -30,8 +30,8 @@ class SendVerificationCall {
     String? authToken,
     String? serviceSID,
   }) async {
-    authToken ??= FFDevEnvironmentValues().twillioBase64;
-    serviceSID ??= FFDevEnvironmentValues().serviceSid;
+    authToken ??= AppConfig.twillioBase64;
+    serviceSID ??= AppConfig.serviceSid;
     final baseUrl = TwillioGroup.getBaseUrl(
       authToken: authToken,
       serviceSID: serviceSID,
@@ -67,8 +67,8 @@ class VerifyCodeCall {
     String? authToken,
     String? serviceSID,
   }) async {
-    authToken ??= FFDevEnvironmentValues().twillioBase64;
-    serviceSID ??= FFDevEnvironmentValues().serviceSid;
+    authToken ??= AppConfig.twillioBase64;
+    serviceSID ??= AppConfig.serviceSid;
     final baseUrl = TwillioGroup.getBaseUrl(
       authToken: authToken,
       serviceSID: serviceSID,
@@ -115,8 +115,8 @@ class SupabaseRPCGroup {
     String? apikey,
     String? url,
   }) {
-    apikey ??= FFDevEnvironmentValues().supabaseAnonKey;
-    url ??= FFDevEnvironmentValues().supabaseHost;
+    apikey ??= AppConfig.supabaseAnonKey;
+    url ??= AppConfig.supabaseHost;
     return '${url}/rest/v1/rpc';
   }
 
@@ -140,8 +140,8 @@ class WishlistProductsCall {
     String? apikey,
     String? url,
   }) async {
-    apikey ??= FFDevEnvironmentValues().supabaseAnonKey;
-    url ??= FFDevEnvironmentValues().supabaseHost;
+    apikey ??= AppConfig.supabaseAnonKey;
+    url ??= AppConfig.supabaseHost;
     final baseUrl = SupabaseRPCGroup.getBaseUrl(
       apikey: apikey,
       url: url,
@@ -179,8 +179,8 @@ class ProductsCall {
     String? apikey,
     String? url,
   }) async {
-    apikey ??= FFDevEnvironmentValues().supabaseAnonKey;
-    url ??= FFDevEnvironmentValues().supabaseHost;
+    apikey ??= AppConfig.supabaseAnonKey;
+    url ??= AppConfig.supabaseHost;
     final baseUrl = SupabaseRPCGroup.getBaseUrl(
       apikey: apikey,
       url: url,
@@ -220,8 +220,8 @@ class ProductsCopyCall {
     String? apikey,
     String? url,
   }) async {
-    apikey ??= FFDevEnvironmentValues().supabaseAnonKey;
-    url ??= FFDevEnvironmentValues().supabaseHost;
+    apikey ??= AppConfig.supabaseAnonKey;
+    url ??= AppConfig.supabaseHost;
     final baseUrl = SupabaseRPCGroup.getBaseUrl(
       apikey: apikey,
       url: url,
@@ -263,8 +263,8 @@ class GetuserprofilewithreviewsCall {
     String? apikey,
     String? url,
   }) async {
-    apikey ??= FFDevEnvironmentValues().supabaseAnonKey;
-    url ??= FFDevEnvironmentValues().supabaseHost;
+    apikey ??= AppConfig.supabaseAnonKey;
+    url ??= AppConfig.supabaseHost;
     final baseUrl = SupabaseRPCGroup.getBaseUrl(
       apikey: apikey,
       url: url,
@@ -307,8 +307,8 @@ class CheckphoneexistsCall {
     String? apikey,
     String? url,
   }) async {
-    apikey ??= FFDevEnvironmentValues().supabaseAnonKey;
-    url ??= FFDevEnvironmentValues().supabaseHost;
+    apikey ??= AppConfig.supabaseAnonKey;
+    url ??= AppConfig.supabaseHost;
     final baseUrl = SupabaseRPCGroup.getBaseUrl(
       apikey: apikey,
       url: url,
@@ -352,8 +352,8 @@ class GetuserreviewsCall {
     String? apikey,
     String? url,
   }) async {
-    apikey ??= FFDevEnvironmentValues().supabaseAnonKey;
-    url ??= FFDevEnvironmentValues().supabaseHost;
+    apikey ??= AppConfig.supabaseAnonKey;
+    url ??= AppConfig.supabaseHost;
     final baseUrl = SupabaseRPCGroup.getBaseUrl(
       apikey: apikey,
       url: url,
@@ -396,7 +396,7 @@ class StripeGroup {
   static String getBaseUrl({
     String? skStripe,
   }) {
-    skStripe ??= FFDevEnvironmentValues().stripeSecret;
+    skStripe ??= AppConfig.stripeSecret;
     return 'https://api.stripe.com/v1';
   }
 
@@ -417,7 +417,7 @@ class CreateACustomerCall {
     String? shoperId = '',
     String? skStripe,
   }) async {
-    skStripe ??= FFDevEnvironmentValues().stripeSecret;
+    skStripe ??= AppConfig.stripeSecret;
     final baseUrl = StripeGroup.getBaseUrl(
       skStripe: skStripe,
     );
@@ -459,7 +459,7 @@ class CreateAnAccountCall {
     String? email = '',
     String? skStripe,
   }) async {
-    skStripe ??= FFDevEnvironmentValues().stripeSecret;
+    skStripe ??= AppConfig.stripeSecret;
     final baseUrl = StripeGroup.getBaseUrl(
       skStripe: skStripe,
     );
@@ -497,7 +497,7 @@ class CreateAnAccountLinkCall {
     String? type = '',
     String? skStripe,
   }) async {
-    skStripe ??= FFDevEnvironmentValues().stripeSecret;
+    skStripe ??= AppConfig.stripeSecret;
     final baseUrl = StripeGroup.getBaseUrl(
       skStripe: skStripe,
     );
@@ -536,7 +536,7 @@ class SupabaseEdgeGroup {
   static String getBaseUrl({
     String? apikey,
   }) {
-    apikey ??= FFDevEnvironmentValues().supabaseAnonKey;
+    apikey ??= AppConfig.supabaseAnonKey;
     return 'https://xvdugwnatoqsbfssugsu.supabase.co/functions/v1';
   }
 
@@ -555,7 +555,7 @@ class ResetPasswordCall {
     String? newPassword = '',
     String? apikey,
   }) async {
-    apikey ??= FFDevEnvironmentValues().supabaseAnonKey;
+    apikey ??= AppConfig.supabaseAnonKey;
     final baseUrl = SupabaseEdgeGroup.getBaseUrl(
       apikey: apikey,
     );
@@ -592,7 +592,7 @@ class TaxDocumentsCall {
     String? userId = '',
     String? apikey,
   }) async {
-    apikey ??= FFDevEnvironmentValues().supabaseAnonKey;
+    apikey ??= AppConfig.supabaseAnonKey;
     final baseUrl = SupabaseEdgeGroup.getBaseUrl(
       apikey: apikey,
     );
@@ -638,7 +638,7 @@ class GooglePlacesGroup {
   static String getBaseUrl({
     String? google,
   }) {
-    google ??= FFDevEnvironmentValues().google;
+    google ??= AppConfig.google;
     return 'https://places.googleapis.com/v1/places';
   }
 
@@ -655,7 +655,7 @@ class AutocompleteCall {
     String? searchingString = '',
     String? google,
   }) async {
-    google ??= FFDevEnvironmentValues().google;
+    google ??= AppConfig.google;
     final baseUrl = GooglePlacesGroup.getBaseUrl(
       google: google,
     );
@@ -704,7 +704,7 @@ class GetPlaceCall {
     String? placeId = '',
     String? google,
   }) async {
-    google ??= FFDevEnvironmentValues().google;
+    google ??= AppConfig.google;
     final baseUrl = GooglePlacesGroup.getBaseUrl(
       google: google,
     );

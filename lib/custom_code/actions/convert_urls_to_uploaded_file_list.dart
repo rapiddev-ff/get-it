@@ -2,9 +2,9 @@ import 'dart:typed_data';
 import '/core/utils/uploaded_file.dart';
 import 'package:http/http.dart' as http;
 
-Future<List<FFUploadedFile>> convertUrlsToUploadedFileList(
+Future<List<UploadedFile>> convertUrlsToUploadedFileList(
     List<String> imageUrls) async {
-  final List<FFUploadedFile> results = [];
+  final List<UploadedFile> results = [];
 
   await Future.wait(imageUrls.map((imageUrl) async {
     try {
@@ -22,7 +22,7 @@ Future<List<FFUploadedFile>> convertUrlsToUploadedFileList(
             fileName = 'image.webp';
           }
         }
-        results.add(FFUploadedFile(name: fileName, bytes: bytes));
+        results.add(UploadedFile(name: fileName, bytes: bytes));
       }
     } catch (e) {}
   }));

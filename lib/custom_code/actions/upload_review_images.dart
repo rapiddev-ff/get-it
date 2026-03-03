@@ -6,10 +6,10 @@ import 'package:uuid/uuid.dart';
 // Custom Action: uploadReviewImages
 // Return Type: List<String> (uploaded URLs)
 // Arguments:
-//   images (List<FFUploadedFile>, required)
+//   images (List<UploadedFile>, required)
 
 Future<List<String>> uploadReviewImages(
-  List<FFUploadedFile> images,
+  List<UploadedFile> images,
 ) async {
   final List<String> uploadedUrls = [];
   final userId = SupaFlow.client.auth.currentUser?.id;

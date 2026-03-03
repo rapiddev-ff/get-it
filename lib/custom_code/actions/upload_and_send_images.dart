@@ -9,7 +9,7 @@ import 'package:uuid/uuid.dart';
 Future<List<Message>> uploadAndSendImages(
   WidgetRef ref,
   String conversationId,
-  List<FFUploadedFile> images,
+  List<UploadedFile> images,
 ) async {
   final client = Supabase.instance.client;
   final userId = client.auth.currentUser?.id;

@@ -1,5 +1,5 @@
 import '/backend/supabase/supabase.dart';
-import '/core/config/environment_values.dart';
+import '/core/config/app_config.dart';
 
 import 'package:flutter_stripe/flutter_stripe.dart';
 
@@ -10,7 +10,7 @@ Future<dynamic> payWithSavedCard(
 ) async {
   try {
     // Инициализация Stripe (для 3D Secure если понадобится)
-    final stripeKey = FFDevEnvironmentValues().stripePublishable;
+    final stripeKey = AppConfig.stripePublishable;
 
     if (stripeKey.isEmpty) {
       return {
