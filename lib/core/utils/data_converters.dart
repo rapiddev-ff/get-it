@@ -220,11 +220,11 @@ UserData convertUserToDataType(
     budgetResetAt: userSettingsRow?['budget_reset_at'] != null
         ? DateTime.tryParse(userSettingsRow!['budget_reset_at'])
         : null,
-    defaultPaymentMethodId: userSettingsRow?['default_payment_method_id'],
-    defaultShippingAddressId: userSettingsRow?['default_shipping_address_id'],
-    fcmToken: userSettingsRow?['fcm_token'],
-    defaultFlatShippingRate: userSettingsRow?['default_flat_shipping_rate'],
-    defaultAdditionalItemFee: userSettingsRow?['default_additional_item_fee'],
+    defaultPaymentMethodId: userSettingsRow?['default_payment_method_id'] ?? '',
+    defaultShippingAddressId: userSettingsRow?['default_shipping_address_id'] ?? '',
+    fcmToken: userSettingsRow?['fcm_token'] ?? '',
+    defaultFlatShippingRate: userSettingsRow?['default_flat_shipping_rate'] ?? 0.0,
+    defaultAdditionalItemFee: userSettingsRow?['default_additional_item_fee'] ?? 0.0,
   );
 
   // ── Parse shipping addresses ───────────────────────────────────────────
@@ -244,24 +244,24 @@ UserData convertUserToDataType(
 
   // ── Build and return UserData ────────────────────────────────────
   return UserData(
-    id: userRow['id'],
-    userId: userRow['user_id'],
-    username: userRow['username'],
-    firstName: userRow['first_name'],
-    lastName: userRow['last_name'],
-    avatarUrl: userRow['avatar_url'],
-    bio: userRow['bio'],
-    phone: userRow['phone'],
+    id: userRow['id'] ?? '',
+    userId: userRow['user_id'] ?? '',
+    username: userRow['username'] ?? '',
+    firstName: userRow['first_name'] ?? '',
+    lastName: userRow['last_name'] ?? '',
+    avatarUrl: userRow['avatar_url'] ?? '',
+    bio: userRow['bio'] ?? '',
+    phone: userRow['phone'] ?? '',
     phoneVerified: userRow['phone_verified'] ?? false,
     isSeller: userRow['is_seller'] ?? false,
     sellerSince: userRow['seller_since'] != null
         ? DateTime.tryParse(userRow['seller_since'])
         : null,
-    businessName: userRow['business_name'],
+    businessName: userRow['business_name'] ?? '',
     businessAddress: businessAddressStruct,
-    businessEmail: userRow['business_email'],
-    ratingAsSeller: userRow['rating_as_seller']?.toDouble(),
-    ratingAsBuyer: userRow['rating_as_buyer']?.toDouble(),
+    businessEmail: userRow['business_email'] ?? '',
+    ratingAsSeller: (userRow['rating_as_seller'] ?? 0).toDouble(),
+    ratingAsBuyer: (userRow['rating_as_buyer'] ?? 0).toDouble(),
     totalReviewsAsSeller: userRow['total_reviews_as_seller'] ?? 0,
     totalReviewsAsBuyer: userRow['total_reviews_as_buyer'] ?? 0,
     totalSales: userRow['total_sales'] ?? 0,
@@ -271,8 +271,8 @@ UserData convertUserToDataType(
     followersCount: userRow['followers_count'] ?? 0,
     followingCount: userRow['following_count'] ?? 0,
     isPrivate: userRow['is_private'] ?? false,
-    referralCode: userRow['referral_code'],
-    referredBy: userRow['referred_by'],
+    referralCode: userRow['referral_code'] ?? '',
+    referredBy: userRow['referred_by'] ?? '',
     createdAt: userRow['created_at'] != null
         ? DateTime.tryParse(userRow['created_at'])
         : null,

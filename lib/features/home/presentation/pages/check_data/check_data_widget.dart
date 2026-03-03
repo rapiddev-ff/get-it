@@ -90,6 +90,7 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
                 .cast<Condition>(),
           );
       setState(() {});
+      AppStateNotifier.instance.initialDataLoaded = true;
       if (userData.phoneVerified == false) {
         context.goNamed(
           PhoneVerificationPageWidget.routeName,

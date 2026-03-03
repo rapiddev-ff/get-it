@@ -56,8 +56,10 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) return;
       await Future.wait([
         Future(() async {
+          if (!mounted) return;
           getFeed = await actions.initFeedProductsStream(
             ref,
             currentUserUid,
@@ -65,6 +67,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
           );
         }),
         Future(() async {
+          if (!mounted) return;
           getSellerDashboard = await actions.callRpc(
             context,
             'get_seller_dashboard',
