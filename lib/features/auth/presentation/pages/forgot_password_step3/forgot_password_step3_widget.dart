@@ -11,7 +11,7 @@ import 'dart:async';
 
 import '/backend/api_requests/api_calls.dart';
 import '/core/constants/app_constants.dart';
-import '/core/dialog/dialog_widget.dart';
+import '/features/home/presentation/widgets/dialog/dialog_widget.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/custom_code/actions/index.dart' as actions;

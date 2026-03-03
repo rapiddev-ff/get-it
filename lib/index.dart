@@ -1,7 +1,7 @@
 // Export pages
 export '/features/auth/presentation/pages/sign_in/sign_in_widget.dart' show SignInWidget;
 export '/features/auth/presentation/pages/welcome/welcome_widget.dart' show WelcomeWidget;
-export '/home/home_page/home_page_widget.dart' show HomePageWidget;
+export '/features/home/presentation/pages/home_page/home_page_widget.dart' show HomePageWidget;
 export '/features/auth/presentation/pages/phone_verification_page/phone_verification_page_widget.dart'
     show PhoneVerificationPageWidget;
 export '/features/auth/presentation/pages/phone_verification_page2/phone_verification_page2_widget.dart'
@@ -16,7 +16,7 @@ export '/features/auth/presentation/pages/forgot_password_step3/forgot_password_
 export '/features/auth/presentation/pages/permissions/permissions_widget.dart' show PermissionsWidget;
 export '/features/auth/presentation/pages/additional_info/additional_info_widget.dart'
     show AdditionalInfoWidget;
-export '/core/check_data/check_data_widget.dart' show CheckDataWidget;
+export '/features/home/presentation/pages/check_data/check_data_widget.dart' show CheckDataWidget;
 export '/features/profile/presentation/pages/settings/settings_widget.dart' show SettingsWidget;
 export '/features/profile/presentation/pages/settings_referral/settings_referral_widget.dart'
     show SettingsReferralWidget;
@@ -41,9 +41,9 @@ export '/features/profile/presentation/pages/settings_report/settings_report_wid
 export '/features/wishlist/presentation/pages/wishlist/wishlist_widget.dart' show WishlistWidget;
 export '/features/messages/presentation/pages/messages/messages_widget.dart' show MessagesWidget;
 export '/features/browse/presentation/pages/browse/browse_widget.dart' show BrowseWidget;
-export '/home/home_product/home_product_widget.dart' show HomeProductWidget;
+export '/features/home/presentation/pages/home_product/home_product_widget.dart' show HomeProductWidget;
 export '/features/videos/presentation/pages/videos/videos_widget.dart' show VideosWidget;
-export '/home/home_seller_profile/home_seller_profile_widget.dart'
+export '/features/home/presentation/pages/home_seller_profile/home_seller_profile_widget.dart'
     show HomeSellerProfileWidget;
 export '/features/messages/presentation/pages/chat_page/chat_page_widget.dart' show ChatPageWidget;
 export '/stripe/stripe_success/stripe_success_widget.dart'
@@ -100,11 +100,11 @@ export '/stripe/stripe_success_copy/stripe_success_copy_widget.dart'
     show StripeSuccessCopyWidget;
 export '/features/messages/presentation/pages/chat_buyer_profile/chat_buyer_profile_widget.dart'
     show ChatBuyerProfileWidget;
-export '/home/home_seller_profile_reviews/home_seller_profile_reviews_widget.dart'
+export '/features/home/presentation/pages/home_seller_profile_reviews/home_seller_profile_reviews_widget.dart'
     show HomeSellerProfileReviewsWidget;
-export '/home/home_seller_profile_reviews_step1/home_seller_profile_reviews_step1_widget.dart'
+export '/features/home/presentation/pages/home_seller_profile_reviews_step1/home_seller_profile_reviews_step1_widget.dart'
     show HomeSellerProfileReviewsStep1Widget;
-export '/home/home_seller_profile_reviews_step2/home_seller_profile_reviews_step2_widget.dart'
+export '/features/home/presentation/pages/home_seller_profile_reviews_step2/home_seller_profile_reviews_step2_widget.dart'
     show HomeSellerProfileReviewsStep2Widget;
 export '/features/profile/presentation/pages/settings_shipping_defaults/settings_shipping_defaults_widget.dart'
     show SettingsShippingDefaultsWidget;

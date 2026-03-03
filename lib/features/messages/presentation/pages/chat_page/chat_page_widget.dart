@@ -1,6 +1,6 @@
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/schema/structs/index.dart';
-import '/core/empty_state/empty_state_widget.dart';
+import '/features/home/presentation/widgets/empty_state/empty_state_widget.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';
@@ -10,9 +10,9 @@ import '/features/messages/presentation/widgets/chat_item/chat_item_widget.dart'
 import '/features/messages/presentation/widgets/chat_more/chat_more_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
-import '/home/home_seller_profile/home_seller_profile_widget.dart';
+import '/features/home/presentation/pages/home_seller_profile/home_seller_profile_widget.dart';
 import '/features/messages/presentation/pages/chat_buyer_profile/chat_buyer_profile_widget.dart';
-import '/home/home_product/home_product_widget.dart';
+import '/features/home/presentation/pages/home_product/home_product_widget.dart';
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';

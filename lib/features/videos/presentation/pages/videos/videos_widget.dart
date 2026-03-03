@@ -1,4 +1,4 @@
-import '/core/nav_bar/nav_bar_widget.dart';
+import '/features/home/presentation/widgets/nav_bar/nav_bar_widget.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import 'package:flutter/material.dart';

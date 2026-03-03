@@ -1,5 +1,5 @@
 import '/backend/schema/structs/index.dart';
-import '/core/dialog/dialog_widget.dart';
+import '/features/home/presentation/widgets/dialog/dialog_widget.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';

@@ -9,7 +9,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '/core/check_data/check_data_widget.dart';
+import '/features/home/presentation/pages/check_data/check_data_widget.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';

@@ -1,4 +1,4 @@
-import '/components/follower_item_widget.dart';
+import '/features/home/presentation/widgets/components/follower_item_widget.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/features/profile/presentation/pages/settings_blocked_user_item/settings_blocked_user_item_widget.dart';

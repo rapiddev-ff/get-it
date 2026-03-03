@@ -1,7 +1,7 @@
 import '/backend/schema/structs/index.dart';
 import '/core/constants/app_constants.dart';
-import '/core/empty_state/empty_state_widget.dart';
-import '/core/nav_bar/nav_bar_widget.dart';
+import '/features/home/presentation/widgets/empty_state/empty_state_widget.dart';
+import '/features/home/presentation/widgets/nav_bar/nav_bar_widget.dart';
 import '/core/theme/app_colors.dart';
 import '/features/messages/presentation/providers/messages_provider.dart';
 import '/features/messages/presentation/widgets/message_item/message_item_widget.dart';

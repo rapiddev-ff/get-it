@@ -1,8 +1,8 @@
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/schema/structs/index.dart';
 import '/features/browse/presentation/widgets/browse_products_item/browse_products_item_widget.dart';
-import '/core/empty_state/empty_state_widget.dart';
-import '/core/nav_bar/nav_bar_widget.dart';
+import '/features/home/presentation/widgets/empty_state/empty_state_widget.dart';
+import '/features/home/presentation/widgets/nav_bar/nav_bar_widget.dart';
 import '/core/theme/app_colors.dart';
 import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';

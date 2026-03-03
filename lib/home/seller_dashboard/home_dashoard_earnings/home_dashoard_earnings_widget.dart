@@ -1,4 +1,4 @@
-import '/core/nav_bar/nav_bar_widget.dart';
+import '/features/home/presentation/widgets/nav_bar/nav_bar_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
