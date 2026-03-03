@@ -1,18 +1,20 @@
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/schema/structs/index.dart';
+import '/core/constants/app_constants.dart';
+import '/core/theme/app_colors.dart';
+import '/core/utils/date_utils.dart';
+import '/core/utils/list_extensions.dart';
+import '/core/utils/value_utils.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:octo_image/octo_image.dart';
-import 'chat_item_model.dart';
-export 'chat_item_model.dart';
 
-class ChatItemWidget extends StatefulWidget {
+class ChatItemWidget extends StatelessWidget {
   const ChatItemWidget({
     super.key,
     required this.messageDataType,
@@ -21,39 +23,14 @@ class ChatItemWidget extends StatefulWidget {
   final MessageStruct? messageDataType;
 
   @override
-  State<ChatItemWidget> createState() => _ChatItemWidgetState();
-}
-
-class _ChatItemWidgetState extends State<ChatItemWidget> {
-  late ChatItemModel _model;
-
-  @override
-  void setState(VoidCallback callback) {
-    super.setState(callback);
-    _model.onUpdate();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _model = createModel(context, () => ChatItemModel());
-  }
-
-  @override
-  void dispose() {
-    _model.maybeDispose();
-
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if ((widget.messageDataType?.senderId != currentUserUid) &&
-            (widget.messageDataType?.messageType == MessageType.text))
+        // Other user text message
+        if ((messageDataType?.senderId != currentUserUid) &&
+            (messageDataType?.messageType == MessageType.text))
           Row(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +44,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                 ),
                 child: Image.network(
                   valueOrDefault<String>(
-                    widget.messageDataType?.senderAvatar,
+                    messageDataType?.senderAvatar,
                     'https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=s0aTdmT5aU6b8ot7VKm11DeID6NctRCpB755rA1BIP0=',
                   ),
                   fit: BoxFit.cover,
@@ -81,7 +58,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                     Container(
                       width: MediaQuery.sizeOf(context).width * 0.8,
                       decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        color: AppColors.backgroundSecondary,
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(8.0),
                           bottomRight: Radius.circular(8.0),
@@ -94,27 +71,10 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                             16.0, 12.0, 16.0, 12.0),
                         child: Text(
                           valueOrDefault<String>(
-                            widget.messageDataType?.content,
+                            messageDataType?.content,
                             'N/A',
                           ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                    letterSpacing: 0.0,
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
+                          style: GoogleFonts.inter(fontSize: 14.0),
                         ),
                       ),
                     ),
@@ -124,28 +84,13 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                       child: Text(
                         dateTimeFormat(
                           "jm",
-                          widget.messageDataType!.createdAt!,
-                          locale: FFLocalizations.of(context).languageCode,
+                          messageDataType!.createdAt!,
+                          locale: 'en',
                         ),
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              font: GoogleFonts.inter(
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .fontStyle,
-                              ),
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                              fontSize: 12.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontStyle,
-                            ),
+                        style: GoogleFonts.inter(
+                          color: AppColors.textSecondary,
+                          fontSize: 12.0,
+                        ),
                       ),
                     ),
                   ],
@@ -153,8 +98,10 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
               ),
             ].divide(SizedBox(width: 12.0)),
           ),
-        if ((widget.messageDataType?.senderId != currentUserUid) &&
-            (widget.messageDataType?.messageType == MessageType.image))
+
+        // Other user image message
+        if ((messageDataType?.senderId != currentUserUid) &&
+            (messageDataType?.messageType == MessageType.image))
           Row(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,7 +115,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                 ),
                 child: Image.network(
                   valueOrDefault<String>(
-                    widget.messageDataType?.senderAvatar,
+                    messageDataType?.senderAvatar,
                     'https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=s0aTdmT5aU6b8ot7VKm11DeID6NctRCpB755rA1BIP0=',
                   ),
                   fit: BoxFit.cover,
@@ -194,36 +141,36 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                                 placeholderBuilder: (_) => SizedBox.expand(
                                   child: Image(
                                     image:
-                                        BlurHashImage(FFAppConstants.blurHach),
+                                        BlurHashImage(AppConstants.blurHash),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
                                 image: CachedNetworkImageProvider(
-                                  widget.messageDataType!.imageUrl,
+                                  messageDataType!.imageUrl,
                                 ),
                                 fit: BoxFit.contain,
                               ),
                               allowRotation: false,
-                              tag: widget.messageDataType!.imageUrl,
+                              tag: messageDataType!.imageUrl,
                               useHeroAnimation: true,
                             ),
                           ),
                         );
                       },
                       child: Hero(
-                        tag: widget.messageDataType!.imageUrl,
+                        tag: messageDataType!.imageUrl,
                         transitionOnUserGestures: true,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
                           child: OctoImage(
                             placeholderBuilder: (_) => SizedBox.expand(
                               child: Image(
-                                image: BlurHashImage(FFAppConstants.blurHach),
+                                image: BlurHashImage(AppConstants.blurHash),
                                 fit: BoxFit.cover,
                               ),
                             ),
                             image: CachedNetworkImageProvider(
-                              widget.messageDataType!.imageUrl,
+                              messageDataType!.imageUrl,
                             ),
                             width: MediaQuery.sizeOf(context).width * 0.8,
                             height: 200.0,
@@ -238,28 +185,13 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                       child: Text(
                         dateTimeFormat(
                           "jm",
-                          widget.messageDataType!.createdAt!,
-                          locale: FFLocalizations.of(context).languageCode,
+                          messageDataType!.createdAt!,
+                          locale: 'en',
                         ),
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              font: GoogleFonts.inter(
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .fontStyle,
-                              ),
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                              fontSize: 12.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .fontStyle,
-                            ),
+                        style: GoogleFonts.inter(
+                          color: AppColors.textSecondary,
+                          fontSize: 12.0,
+                        ),
                       ),
                     ),
                   ],
@@ -267,8 +199,10 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
               ),
             ].divide(SizedBox(width: 12.0)),
           ),
-        if ((widget.messageDataType?.senderId == currentUserUid) &&
-            (widget.messageDataType?.messageType == MessageType.text))
+
+        // Current user text message
+        if ((messageDataType?.senderId == currentUserUid) &&
+            (messageDataType?.messageType == MessageType.text))
           Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -276,7 +210,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
               Container(
                 width: MediaQuery.sizeOf(context).width * 0.8,
                 decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).primary,
+                  color: AppColors.primary,
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(8.0),
                     bottomRight: Radius.circular(8.0),
@@ -289,25 +223,10 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                       EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
                   child: Text(
                     valueOrDefault<String>(
-                      widget.messageDataType?.content,
+                      messageDataType?.content,
                       'N/A',
                     ),
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          font: GoogleFonts.inter(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontStyle,
-                          ),
-                          letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                        ),
+                    style: GoogleFonts.inter(fontSize: 14.0),
                   ),
                 ),
               ),
@@ -316,31 +235,21 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                 child: Text(
                   dateTimeFormat(
                     "jm",
-                    widget.messageDataType!.createdAt!,
-                    locale: FFLocalizations.of(context).languageCode,
+                    messageDataType!.createdAt!,
+                    locale: 'en',
                   ),
-                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        font: GoogleFonts.inter(
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                        ),
-                        color: FlutterFlowTheme.of(context).secondaryText,
-                        fontSize: 12.0,
-                        letterSpacing: 0.0,
-                        fontWeight:
-                            FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                      ),
+                  style: GoogleFonts.inter(
+                    color: AppColors.textSecondary,
+                    fontSize: 12.0,
+                  ),
                 ),
               ),
             ],
           ),
-        if ((widget.messageDataType?.senderId == currentUserUid) &&
-            (widget.messageDataType?.messageType == MessageType.image))
+
+        // Current user image message
+        if ((messageDataType?.senderId == currentUserUid) &&
+            (messageDataType?.messageType == MessageType.image))
           Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -359,36 +268,36 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                         image: OctoImage(
                           placeholderBuilder: (_) => SizedBox.expand(
                             child: Image(
-                              image: BlurHashImage(FFAppConstants.blurHach),
+                              image: BlurHashImage(AppConstants.blurHash),
                               fit: BoxFit.cover,
                             ),
                           ),
                           image: CachedNetworkImageProvider(
-                            widget.messageDataType!.imageUrl,
+                            messageDataType!.imageUrl,
                           ),
                           fit: BoxFit.contain,
                         ),
                         allowRotation: false,
-                        tag: widget.messageDataType!.imageUrl,
+                        tag: messageDataType!.imageUrl,
                         useHeroAnimation: true,
                       ),
                     ),
                   );
                 },
                 child: Hero(
-                  tag: widget.messageDataType!.imageUrl,
+                  tag: messageDataType!.imageUrl,
                   transitionOnUserGestures: true,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: OctoImage(
                       placeholderBuilder: (_) => SizedBox.expand(
                         child: Image(
-                          image: BlurHashImage(FFAppConstants.blurHach),
+                          image: BlurHashImage(AppConstants.blurHash),
                           fit: BoxFit.cover,
                         ),
                       ),
                       image: CachedNetworkImageProvider(
-                        widget.messageDataType!.imageUrl,
+                        messageDataType!.imageUrl,
                       ),
                       width: MediaQuery.sizeOf(context).width * 0.8,
                       height: 200.0,
@@ -402,25 +311,13 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                 child: Text(
                   dateTimeFormat(
                     "jm",
-                    widget.messageDataType!.createdAt!,
-                    locale: FFLocalizations.of(context).languageCode,
+                    messageDataType!.createdAt!,
+                    locale: 'en',
                   ),
-                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        font: GoogleFonts.inter(
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                        ),
-                        color: FlutterFlowTheme.of(context).secondaryText,
-                        fontSize: 12.0,
-                        letterSpacing: 0.0,
-                        fontWeight:
-                            FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                      ),
+                  style: GoogleFonts.inter(
+                    color: AppColors.textSecondary,
+                    fontSize: 12.0,
+                  ),
                 ),
               ),
             ],

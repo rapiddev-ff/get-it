@@ -39,13 +39,13 @@ export '/profile/settings_privacy/settings_privacy_widget.dart'
 export '/profile/settings_report/settings_report_widget.dart'
     show SettingsReportWidget;
 export '/wishlist/wishlist/wishlist_widget.dart' show WishlistWidget;
-export '/messages/messages/messages_widget.dart' show MessagesWidget;
+export '/features/messages/presentation/pages/messages/messages_widget.dart' show MessagesWidget;
 export '/features/browse/presentation/pages/browse/browse_widget.dart' show BrowseWidget;
 export '/home/home_product/home_product_widget.dart' show HomeProductWidget;
 export '/videos/videos/videos_widget.dart' show VideosWidget;
 export '/home/home_seller_profile/home_seller_profile_widget.dart'
     show HomeSellerProfileWidget;
-export '/messages/chat_page/chat_page_widget.dart' show ChatPageWidget;
+export '/features/messages/presentation/pages/chat_page/chat_page_widget.dart' show ChatPageWidget;
 export '/stripe/stripe_success/stripe_success_widget.dart'
     show StripeSuccessWidget;
 export '/stripe/stripe_refresh/stripe_refresh_widget.dart'
@@ -98,7 +98,7 @@ export '/profile/settings_daily_budget/settings_daily_budget_widget.dart'
 export '/test/test_widget.dart' show TestWidget;
 export '/stripe/stripe_success_copy/stripe_success_copy_widget.dart'
     show StripeSuccessCopyWidget;
-export '/messages/chat_buyer_profile/chat_buyer_profile_widget.dart'
+export '/features/messages/presentation/pages/chat_buyer_profile/chat_buyer_profile_widget.dart'
     show ChatBuyerProfileWidget;
 export '/home/home_seller_profile_reviews/home_seller_profile_reviews_widget.dart'
     show HomeSellerProfileReviewsWidget;

@@ -1,11 +1,10 @@
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/theme/app_colors.dart';
+import '/core/utils/list_extensions.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'chat_more_model.dart';
-export 'chat_more_model.dart';
+import 'package:go_router/go_router.dart';
 
 class ChatMoreWidget extends StatefulWidget {
   const ChatMoreWidget({
@@ -22,33 +21,14 @@ class ChatMoreWidget extends StatefulWidget {
 }
 
 class _ChatMoreWidgetState extends State<ChatMoreWidget> {
-  late ChatMoreModel _model;
-
-  @override
-  void setState(VoidCallback callback) {
-    super.setState(callback);
-    _model.onUpdate();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _model = createModel(context, () => ChatMoreModel());
-  }
-
-  @override
-  void dispose() {
-    _model.maybeDispose();
-
-    super.dispose();
-  }
+  dynamic _blockUser;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 203.0,
       decoration: BoxDecoration(
-        color: FlutterFlowTheme.of(context).secondaryBackground,
+        color: AppColors.backgroundSecondary,
         borderRadius: BorderRadius.circular(4.0),
       ),
       child: Padding(
@@ -62,7 +42,7 @@ class _ChatMoreWidgetState extends State<ChatMoreWidget> {
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                _model.blockUser = await actions.callRpc(
+                _blockUser = await actions.callRpc(
                   context,
                   'block_user',
                   <String, String>{
@@ -70,7 +50,7 @@ class _ChatMoreWidgetState extends State<ChatMoreWidget> {
                   },
                 );
 
-                safeSetState(() {});
+                setState(() {});
               },
               child: Row(
                 mainAxisSize: MainAxisSize.max,
@@ -80,28 +60,13 @@ class _ChatMoreWidgetState extends State<ChatMoreWidget> {
                         EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 16.0),
                     child: Icon(
                       Icons.block_sharp,
-                      color: FlutterFlowTheme.of(context).primaryText,
+                      color: AppColors.textPrimary,
                       size: 20.0,
                     ),
                   ),
                   Text(
                     'Block user',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          font: GoogleFonts.inter(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontStyle,
-                          ),
-                          letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                        ),
+                    style: GoogleFonts.inter(fontSize: 14.0),
                   ),
                 ].divide(SizedBox(width: 16.0)),
               ),
@@ -113,26 +78,13 @@ class _ChatMoreWidgetState extends State<ChatMoreWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 16.0),
                   child: Icon(
                     Icons.person_add_alt,
-                    color: FlutterFlowTheme.of(context).primaryText,
+                    color: AppColors.textPrimary,
                     size: 20.0,
                   ),
                 ),
                 Text(
                   'Follow',
-                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        font: GoogleFonts.inter(
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                        ),
-                        letterSpacing: 0.0,
-                        fontWeight:
-                            FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                        fontStyle:
-                            FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                      ),
+                  style: GoogleFonts.inter(fontSize: 14.0),
                 ),
               ].divide(SizedBox(width: 16.0)),
             ),
@@ -152,7 +104,7 @@ class _ChatMoreWidgetState extends State<ChatMoreWidget> {
                 await actions.refreshConversations();
                 await actions.unsubscribeFromMessages();
                 Navigator.pop(context);
-                context.safePop();
+                context.pop();
               },
               child: Row(
                 mainAxisSize: MainAxisSize.max,
@@ -162,28 +114,13 @@ class _ChatMoreWidgetState extends State<ChatMoreWidget> {
                         EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 16.0),
                     child: FaIcon(
                       FontAwesomeIcons.trashAlt,
-                      color: FlutterFlowTheme.of(context).primaryText,
+                      color: AppColors.textPrimary,
                       size: 20.0,
                     ),
                   ),
                   Text(
                     'Delete chat',
-                    style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          font: GoogleFonts.inter(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .fontStyle,
-                          ),
-                          letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .fontWeight,
-                          fontStyle:
-                              FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                        ),
+                    style: GoogleFonts.inter(fontSize: 14.0),
                   ),
                 ].divide(SizedBox(width: 16.0)),
               ),
