@@ -1,6 +1,6 @@
 // Automatic FlutterFlow imports
-import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/features/browse/domain/models/browse_product_model.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -56,7 +56,7 @@ class BrowseProductsGrid extends StatefulWidget {
   final int pageSize;
   final Future Function(String productId)? onProductTap;
   final Future Function(int total)? onTotalChanged;
-  final Widget Function(BrowseProductStruct product)? itemBuilder;
+  final Widget Function(BrowseProduct product)? itemBuilder;
 
   /// Custom empty state widget builder. Falls back to default if null.
   final Widget Function()? emptyStateWidget;
@@ -66,7 +66,7 @@ class BrowseProductsGrid extends StatefulWidget {
 }
 
 class _BrowseProductsGridState extends State<BrowseProductsGrid> {
-  List<BrowseProductStruct> _products = [];
+  List<BrowseProduct> _products = [];
   bool _isLoading = true;
   bool _isLoadingMore = false;
   bool _hasMore = true;
@@ -157,7 +157,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
       final productsJson = data['products'] as List<dynamic>;
       final newProducts = productsJson
           .map((json) =>
-              BrowseProductStruct.fromMap(json as Map<String, dynamic>))
+              BrowseProduct.fromJson(json as Map<String, dynamic>))
           .toList();
 
       final totalCount = data['total_count'] as int;
@@ -189,7 +189,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
     }
   }
 
-  void _handleProductTap(BrowseProductStruct product) async {
+  void _handleProductTap(BrowseProduct product) async {
     if (widget.onProductTap == null) {
       debugPrint(
           '[BrowseProductsGrid] onProductTap is null — not wired in FlutterFlow');

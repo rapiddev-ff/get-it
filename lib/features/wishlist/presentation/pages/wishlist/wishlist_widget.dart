@@ -7,7 +7,8 @@ import 'package:go_router/go_router.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '/backend/schema/structs/index.dart';
+import '/features/browse/domain/models/category_model.dart';
+import '/features/home/domain/models/product_details_model.dart';
 import '/core/constants/app_constants.dart';
 import '/features/home/presentation/widgets/empty_state/empty_state_widget.dart';
 import '/features/home/presentation/widgets/nav_bar/nav_bar_widget.dart';
@@ -34,7 +35,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _textController = TextEditingController();
   final _textFieldFocusNode = FocusNode();
-  CategoryStruct? _choosenCategory;
+  Category? _choosenCategory;
 
   @override
   void initState() {
@@ -52,8 +53,8 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
     super.dispose();
   }
 
-  static List<ProductDetailsStruct> _filterProducts(
-    List<ProductDetailsStruct> products,
+  static List<ProductDetails> _filterProducts(
+    List<ProductDetails> products,
     String? searchQuery,
     String? categoryId,
   ) {

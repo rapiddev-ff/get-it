@@ -1,6 +1,8 @@
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/schema/enums/enums.dart';
-import '/backend/schema/structs/index.dart';
+import '/features/home/domain/models/seller_product_model.dart';
+import '/features/home/domain/models/seller_model.dart';
+import '/features/messages/domain/models/conversation_model.dart';
 import '/features/home/presentation/widgets/empty_state/empty_state_widget.dart';
 import '/features/home/presentation/pages/home_seller_product/home_seller_product_widget.dart';
 import '/features/home/presentation/pages/home_seller_profile_more/home_seller_profile_more_widget.dart';
@@ -46,25 +48,25 @@ class _HomeSellerProfileWidgetState extends State<HomeSellerProfileWidget> {
   // Local state fields (inlined from model).
   String state = 'Products';
   String choosenFilter = 'All';
-  List<SellerProductStruct> products = [];
+  List<SellerProduct> products = [];
   String roleState = 'As Seller';
 
   // Action output results.
-  SellerStruct? getSellerData;
-  ConversationStruct? getOrCreateConversation;
+  Seller? getSellerData;
+  Conversation? getOrCreateConversation;
 
   // Text field state.
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
 
   // List helper methods.
-  void addToProducts(SellerProductStruct item) => products.add(item);
-  void removeFromProducts(SellerProductStruct item) => products.remove(item);
+  void addToProducts(SellerProduct item) => products.add(item);
+  void removeFromProducts(SellerProduct item) => products.remove(item);
   void removeAtIndexFromProducts(int index) => products.removeAt(index);
-  void insertAtIndexInProducts(int index, SellerProductStruct item) =>
+  void insertAtIndexInProducts(int index, SellerProduct item) =>
       products.insert(index, item);
   void updateProductsAtIndex(
-          int index, Function(SellerProductStruct) updateFn) =>
+          int index, Function(SellerProduct) updateFn) =>
       products[index] = updateFn(products[index]);
 
   @override
@@ -623,7 +625,7 @@ class _HomeSellerProfileWidgetState extends State<HomeSellerProfileWidget> {
                                                     fadeOutDuration: Duration(
                                                         milliseconds: 500),
                                                     imageUrl: reviewsItem
-                                                        .reviewer.avatarUrl,
+                                                        .reviewer?.avatarUrl ?? '',
                                                     fit: BoxFit.cover,
                                                   ),
                                                 ),
@@ -640,7 +642,7 @@ class _HomeSellerProfileWidgetState extends State<HomeSellerProfileWidget> {
                                                     children: [
                                                       Text(
                                                         reviewsItem
-                                                            .reviewer.username,
+                                                            .reviewer?.username ?? '',
                                                         style:
                                                             GoogleFonts.inter(
                                                           fontWeight:
@@ -780,7 +782,7 @@ class _HomeSellerProfileWidgetState extends State<HomeSellerProfileWidget> {
                                                     fadeOutDuration: Duration(
                                                         milliseconds: 500),
                                                     imageUrl: reviewsItem
-                                                        .reviewer.avatarUrl,
+                                                        .reviewer?.avatarUrl ?? '',
                                                     fit: BoxFit.cover,
                                                   ),
                                                 ),
@@ -797,7 +799,7 @@ class _HomeSellerProfileWidgetState extends State<HomeSellerProfileWidget> {
                                                     children: [
                                                       Text(
                                                         reviewsItem
-                                                            .reviewer.username,
+                                                            .reviewer?.username ?? '',
                                                         style:
                                                             GoogleFonts.inter(
                                                           fontWeight:
@@ -1113,7 +1115,7 @@ class _HomeSellerProfileWidgetState extends State<HomeSellerProfileWidget> {
                                 );
                               },
                               itemBuilder:
-                                  (SellerProductStruct? sellerProduct) =>
+                                  (SellerProduct? sellerProduct) =>
                                       HomeSellerProductWidget(
                                 productDataType: sellerProduct,
                               ),

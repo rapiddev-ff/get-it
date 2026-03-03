@@ -1,6 +1,6 @@
 // Automatic FlutterFlow imports
-import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/features/messages/domain/models/conversation_model.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -21,7 +21,7 @@ String? _nullIfEmpty(dynamic value) {
   return str.isNotEmpty ? str : null;
 }
 
-Future<List<ConversationStruct>> loadConversations(String filter) async {
+Future<List<Conversation>> loadConversations(String filter) async {
   print('🔄 loadConversations called with filter: $filter');
 
   final client = Supabase.instance.client;
@@ -43,7 +43,7 @@ Future<List<ConversationStruct>> loadConversations(String filter) async {
     }
 
     final all = (response as List).map((json) {
-      return ConversationStruct(
+      return Conversation(
         id: json['id'] ?? '',
         buyerId: json['buyer_id'] ?? '',
         sellerId: json['seller_id'] ?? '',
@@ -77,7 +77,7 @@ Future<List<ConversationStruct>> loadConversations(String filter) async {
       FFAppState().conversations = all;
     });
 
-    List<ConversationStruct> filtered;
+    List<Conversation> filtered;
     if (filter == 'buying') {
       filtered =
           all.where((c) => c.role == 'buyer' || c.role == 'both').toList();

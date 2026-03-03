@@ -1,5 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
-import '/backend/schema/structs/index.dart';
+import '/features/home/domain/models/seller_model.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';
@@ -23,7 +23,7 @@ class HomeSellerProfileReviewsWidget extends StatefulWidget {
     required this.sellerDataType,
   });
 
-  final SellerStruct? sellerDataType;
+  final Seller? sellerDataType;
 
   static String routeName = 'homeSellerProfileReviews';
   static String routePath = 'homeSellerProfileReviews';

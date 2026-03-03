@@ -1,25 +1,25 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '/backend/schema/structs/index.dart';
+import '/features/checkout/domain/models/payment_method_model.dart';
 
-class CheckoutNotifier extends Notifier<PaymentMethodStruct> {
+class CheckoutNotifier extends Notifier<PaymentMethod> {
   @override
-  PaymentMethodStruct build() => PaymentMethodStruct();
+  PaymentMethod build() => PaymentMethod();
 
-  void setPaymentMethod(PaymentMethodStruct method) {
+  void setPaymentMethod(PaymentMethod method) {
     state = method;
   }
 
-  void updatePaymentMethod(Function(PaymentMethodStruct) updateFn) {
+  void updatePaymentMethod(Function(PaymentMethod) updateFn) {
     updateFn(state);
     state = state;
   }
 
   void clear() {
-    state = PaymentMethodStruct();
+    state = PaymentMethod();
   }
 }
 
 final checkoutProvider =
-    NotifierProvider<CheckoutNotifier, PaymentMethodStruct>(
+    NotifierProvider<CheckoutNotifier, PaymentMethod>(
   CheckoutNotifier.new,
 );

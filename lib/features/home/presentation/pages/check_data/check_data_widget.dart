@@ -1,5 +1,6 @@
 import '/features/auth/data/supabase_auth/auth_util.dart';
-import '/backend/schema/structs/index.dart';
+import '/features/browse/domain/models/category_model.dart';
+import '/features/browse/domain/models/condition_model.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/router/app_router.dart';
@@ -72,7 +73,7 @@ class _CheckDataWidgetState extends State<CheckDataWidget>
                 true,
               )!)!
           .toList()
-          .cast<CategoryStruct>();
+          .cast<Category>();
       FFAppState().conditions = functions
           .convertConditionsToDataType(getJsonField(
             getAppInitialData,
@@ -80,7 +81,7 @@ class _CheckDataWidgetState extends State<CheckDataWidget>
             true,
           )!)!
           .toList()
-          .cast<ConditionStruct>();
+          .cast<Condition>();
       setState(() {});
       if (FFAppState().userData.phoneVerified == false) {
         context.goNamed(

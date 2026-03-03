@@ -1,6 +1,6 @@
 // Automatic FlutterFlow imports
-import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/features/home/domain/models/feed_product_model.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -38,10 +38,10 @@ class SwipeableProductStack extends StatefulWidget {
 
   final double? width;
   final double? height;
-  final List<FeedProductStruct> products;
+  final List<FeedProduct> products;
 
   // Callbacks
-  final Future<dynamic> Function(FeedProductStruct product)? onBuy;
+  final Future<dynamic> Function(FeedProduct product)? onBuy;
   final Future<dynamic> Function(String productId, int index)? onHide;
   final Future<dynamic> Function(String productId, int index)? onSkip;
   final Future<dynamic> Function(String productId, int index)? onLike;
@@ -221,7 +221,7 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
   }
 
   // Форматирование цены с учётом flash sale
-  String _formatPrice(FeedProductStruct product) {
+  String _formatPrice(FeedProduct product) {
     if (product.flashSaleEnabled &&
         product.flashSalePrice != null &&
         product.flashSalePrice! > 0) {
@@ -231,7 +231,7 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
   }
 
   // Проверка активности flash sale
-  bool _isFlashSaleActive(FeedProductStruct product) {
+  bool _isFlashSaleActive(FeedProduct product) {
     if (!product.flashSaleEnabled || product.flashSaleEndsAt == null) {
       return false;
     }
@@ -327,7 +327,7 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
   }
 
   Widget _buildBackgroundCard(
-    FeedProductStruct product,
+    FeedProduct product,
     double width,
     double height,
     FlutterFlowTheme theme, {
@@ -369,7 +369,7 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
   }
 
   Widget _buildActiveCard(
-    FeedProductStruct product,
+    FeedProduct product,
     double cardWidth,
     double cardHeight,
     double screenWidth,

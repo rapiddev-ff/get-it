@@ -2,19 +2,21 @@ import 'dart:convert';
 import 'package:csv/csv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '/backend/schema/structs/index.dart';
+import '/features/browse/domain/models/category_model.dart';
+import '/features/browse/domain/models/condition_model.dart';
+import '/features/browse/domain/models/tag_model.dart';
 
 final _secureStorage = FlutterSecureStorage();
 
 // --- categories (persisted) ---
 
-class CategoriesNotifier extends AsyncNotifier<List<CategoryStruct>> {
+class CategoriesNotifier extends AsyncNotifier<List<Category>> {
   @override
-  Future<List<CategoryStruct>> build() async {
+  Future<List<Category>> build() async {
     return _readFromStorage();
   }
 
-  Future<List<CategoryStruct>> _readFromStorage() async {
+  Future<List<Category>> _readFromStorage() async {
     final raw = await _secureStorage.read(key: 'ff_categories');
     if (raw == null || raw.isEmpty) return [];
     return CsvToListConverter()
@@ -22,35 +24,35 @@ class CategoriesNotifier extends AsyncNotifier<List<CategoryStruct>> {
         .first
         .map((e) {
           try {
-            return CategoryStruct.fromSerializableMap(jsonDecode(e.toString()));
+            return Category.fromJson(jsonDecode(e.toString()));
           } catch (_) {
             return null;
           }
         })
-        .whereType<CategoryStruct>()
+        .whereType<Category>()
         .toList();
   }
 
-  Future<void> _persist(List<CategoryStruct> list) async {
+  Future<void> _persist(List<Category> list) async {
     final csv = ListToCsvConverter().convert([
       list.map((x) => x.serialize()).toList(),
     ]);
     await _secureStorage.write(key: 'ff_categories', value: csv);
   }
 
-  Future<void> set(List<CategoryStruct> categories) async {
+  Future<void> set(List<Category> categories) async {
     await _persist(categories);
     state = AsyncData(categories);
   }
 
-  Future<void> add(CategoryStruct category) async {
+  Future<void> add(Category category) async {
     final current = state.valueOrNull ?? [];
     final updated = [...current, category];
     await _persist(updated);
     state = AsyncData(updated);
   }
 
-  Future<void> remove(CategoryStruct category) async {
+  Future<void> remove(Category category) async {
     final current = state.valueOrNull ?? [];
     final updated = current.where((c) => c != category).toList();
     await _persist(updated);
@@ -65,7 +67,7 @@ class CategoriesNotifier extends AsyncNotifier<List<CategoryStruct>> {
 
   Future<void> updateAtIndex(
     int index,
-    CategoryStruct Function(CategoryStruct) updateFn,
+    Category Function(Category) updateFn,
   ) async {
     final current = [...(state.valueOrNull ?? [])];
     current[index] = updateFn(current[index]);
@@ -73,7 +75,7 @@ class CategoriesNotifier extends AsyncNotifier<List<CategoryStruct>> {
     state = AsyncData(current);
   }
 
-  Future<void> insertAtIndex(int index, CategoryStruct category) async {
+  Future<void> insertAtIndex(int index, Category category) async {
     final current = [...(state.valueOrNull ?? [])]..insert(index, category);
     await _persist(current);
     state = AsyncData(current);
@@ -86,19 +88,19 @@ class CategoriesNotifier extends AsyncNotifier<List<CategoryStruct>> {
 }
 
 final categoriesProvider =
-    AsyncNotifierProvider<CategoriesNotifier, List<CategoryStruct>>(
+    AsyncNotifierProvider<CategoriesNotifier, List<Category>>(
   CategoriesNotifier.new,
 );
 
 // --- conditions (persisted) ---
 
-class ConditionsNotifier extends AsyncNotifier<List<ConditionStruct>> {
+class ConditionsNotifier extends AsyncNotifier<List<Condition>> {
   @override
-  Future<List<ConditionStruct>> build() async {
+  Future<List<Condition>> build() async {
     return _readFromStorage();
   }
 
-  Future<List<ConditionStruct>> _readFromStorage() async {
+  Future<List<Condition>> _readFromStorage() async {
     final raw = await _secureStorage.read(key: 'ff_conditions');
     if (raw == null || raw.isEmpty) return [];
     return CsvToListConverter()
@@ -106,36 +108,36 @@ class ConditionsNotifier extends AsyncNotifier<List<ConditionStruct>> {
         .first
         .map((e) {
           try {
-            return ConditionStruct.fromSerializableMap(
+            return Condition.fromJson(
                 jsonDecode(e.toString()));
           } catch (_) {
             return null;
           }
         })
-        .whereType<ConditionStruct>()
+        .whereType<Condition>()
         .toList();
   }
 
-  Future<void> _persist(List<ConditionStruct> list) async {
+  Future<void> _persist(List<Condition> list) async {
     final csv = ListToCsvConverter().convert([
       list.map((x) => x.serialize()).toList(),
     ]);
     await _secureStorage.write(key: 'ff_conditions', value: csv);
   }
 
-  Future<void> set(List<ConditionStruct> conditions) async {
+  Future<void> set(List<Condition> conditions) async {
     await _persist(conditions);
     state = AsyncData(conditions);
   }
 
-  Future<void> add(ConditionStruct condition) async {
+  Future<void> add(Condition condition) async {
     final current = state.valueOrNull ?? [];
     final updated = [...current, condition];
     await _persist(updated);
     state = AsyncData(updated);
   }
 
-  Future<void> remove(ConditionStruct condition) async {
+  Future<void> remove(Condition condition) async {
     final current = state.valueOrNull ?? [];
     final updated = current.where((c) => c != condition).toList();
     await _persist(updated);
@@ -150,7 +152,7 @@ class ConditionsNotifier extends AsyncNotifier<List<ConditionStruct>> {
 
   Future<void> updateAtIndex(
     int index,
-    ConditionStruct Function(ConditionStruct) updateFn,
+    Condition Function(Condition) updateFn,
   ) async {
     final current = [...(state.valueOrNull ?? [])];
     current[index] = updateFn(current[index]);
@@ -158,7 +160,7 @@ class ConditionsNotifier extends AsyncNotifier<List<ConditionStruct>> {
     state = AsyncData(current);
   }
 
-  Future<void> insertAtIndex(int index, ConditionStruct condition) async {
+  Future<void> insertAtIndex(int index, Condition condition) async {
     final current = [...(state.valueOrNull ?? [])]..insert(index, condition);
     await _persist(current);
     state = AsyncData(current);
@@ -171,25 +173,25 @@ class ConditionsNotifier extends AsyncNotifier<List<ConditionStruct>> {
 }
 
 final conditionsProvider =
-    AsyncNotifierProvider<ConditionsNotifier, List<ConditionStruct>>(
+    AsyncNotifierProvider<ConditionsNotifier, List<Condition>>(
   ConditionsNotifier.new,
 );
 
 // --- choosenTags (in-memory only) ---
 
-class ChoosenTagsNotifier extends Notifier<List<TagStruct>> {
+class ChoosenTagsNotifier extends Notifier<List<Tag>> {
   @override
-  List<TagStruct> build() => [];
+  List<Tag> build() => [];
 
-  void set(List<TagStruct> tags) {
+  void set(List<Tag> tags) {
     state = tags;
   }
 
-  void add(TagStruct tag) {
+  void add(Tag tag) {
     state = [...state, tag];
   }
 
-  void remove(TagStruct tag) {
+  void remove(Tag tag) {
     state = state.where((t) => t != tag).toList();
   }
 
@@ -199,14 +201,14 @@ class ChoosenTagsNotifier extends Notifier<List<TagStruct>> {
 
   void updateAtIndex(
     int index,
-    TagStruct Function(TagStruct) updateFn,
+    Tag Function(Tag) updateFn,
   ) {
     final list = [...state];
     list[index] = updateFn(list[index]);
     state = list;
   }
 
-  void insertAtIndex(int index, TagStruct tag) {
+  void insertAtIndex(int index, Tag tag) {
     state = [...state]..insert(index, tag);
   }
 
@@ -216,6 +218,6 @@ class ChoosenTagsNotifier extends Notifier<List<TagStruct>> {
 }
 
 final choosenTagsProvider =
-    NotifierProvider<ChoosenTagsNotifier, List<TagStruct>>(
+    NotifierProvider<ChoosenTagsNotifier, List<Tag>>(
   ChoosenTagsNotifier.new,
 );

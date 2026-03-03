@@ -1,4 +1,5 @@
-import '/backend/schema/structs/index.dart';
+import '/features/home/domain/models/seller_model.dart';
+import '/features/home/domain/models/seller_product_model.dart';
 import '/core/theme/app_colors.dart';
 import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
@@ -24,8 +25,8 @@ class HomeSellerProfileReviewsStep2Widget extends StatefulWidget {
     required this.product,
   });
 
-  final SellerStruct? sellerDataType;
-  final SellerProductStruct? product;
+  final Seller? sellerDataType;
+  final SellerProduct? product;
 
   static String routeName = 'homeSellerProfileReviewsStep2';
   static String routePath = 'homeSellerProfileReviewsStep2';

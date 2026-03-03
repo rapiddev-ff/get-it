@@ -1,4 +1,4 @@
-import '/backend/schema/structs/index.dart';
+import '/features/messages/domain/models/conversation_model.dart';
 import '/core/constants/app_constants.dart';
 import '/features/home/presentation/widgets/empty_state/empty_state_widget.dart';
 import '/features/home/presentation/widgets/nav_bar/nav_bar_widget.dart';
@@ -39,7 +39,7 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       final loadedConversations = await actions.loadConversations('all');
       ref.read(messagesProvider.notifier).setConversations(
-            loadedConversations.toList().cast<ConversationStruct>(),
+            loadedConversations.toList().cast<Conversation>(),
           );
       setState(() {});
       await actions.subscribeToConversations();
@@ -215,7 +215,7 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
   }
 
   Widget _buildConversationList(
-    List<ConversationStruct> converstations, {
+    List<Conversation> converstations, {
     required String emptyTitle,
     required String emptyDescription,
   }) {

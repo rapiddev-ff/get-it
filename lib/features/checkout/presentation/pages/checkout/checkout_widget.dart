@@ -1,5 +1,7 @@
 import '/app_state.dart';
-import '/backend/schema/structs/index.dart';
+import '/features/home/domain/models/feed_product_model.dart';
+import '/features/checkout/domain/models/checkout_totals_model.dart';
+import '/features/checkout/domain/models/checkout_order_result_model.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/features/checkout/presentation/pages/checkout_edit_shipping_address/checkout_edit_shipping_address_widget.dart';
@@ -21,7 +23,7 @@ class CheckoutWidget extends StatefulWidget {
     this.shortlistId,
   }) : this.initialQuantity = initialQuantity ?? 1;
 
-  final FeedProductStruct? feedProductItem;
+  final FeedProduct? feedProductItem;
   final int initialQuantity;
   final String? shortlistId;
 
@@ -36,7 +38,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   // Inlined model state
-  CheckoutTotalsStruct? checkoutTotals;
+  CheckoutTotals? checkoutTotals;
   int quantity = 1;
   String? selectedAddress;
   bool isProcessing = false;
@@ -45,7 +47,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
   String? cancelResult;
   double? getTaxFromStripeAdd;
   double? getTaxFromStripeMinus;
-  CheckoutOrderResultStruct? orderResult;
+  CheckoutOrderResult? orderResult;
 
   @override
   void initState() {
@@ -146,13 +148,13 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                     getTaxFromStripeAdd =
                         await actions.calculateOrderTax(
                       widget.feedProductItem!.price * quantity,
-                      widget.feedProductItem!.customFlatRate +
-                          widget.feedProductItem!.customAdditionalItemFee,
+                      (widget.feedProductItem!.customFlatRate ?? 0.0) +
+                          (widget.feedProductItem!.customAdditionalItemFee ?? 0.0),
                       // TODO: replace FFAppState() with proper state provider
-                      FFAppState().userData.shippingAddress.addressLine1,
-                      FFAppState().userData.shippingAddress.city,
-                      FFAppState().userData.shippingAddress.state,
-                      FFAppState().userData.shippingAddress.zipCode,
+                      FFAppState().userData.shippingAddress?.addressLine1 ?? '',
+                      FFAppState().userData.shippingAddress?.city ?? '',
+                      FFAppState().userData.shippingAddress?.state ?? '',
+                      FFAppState().userData.shippingAddress?.zipCode ?? '',
                     );
                     tax = getTaxFromStripeAdd;
                     setState(() {});
@@ -165,13 +167,13 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                     getTaxFromStripeMinus =
                         await actions.calculateOrderTax(
                       widget.feedProductItem!.price * quantity,
-                      widget.feedProductItem!.customFlatRate +
-                          widget.feedProductItem!.customAdditionalItemFee,
+                      (widget.feedProductItem!.customFlatRate ?? 0.0) +
+                          (widget.feedProductItem!.customAdditionalItemFee ?? 0.0),
                       // TODO: replace FFAppState() with proper state provider
-                      FFAppState().userData.shippingAddress.addressLine1,
-                      FFAppState().userData.shippingAddress.city,
-                      FFAppState().userData.shippingAddress.state,
-                      FFAppState().userData.shippingAddress.zipCode,
+                      FFAppState().userData.shippingAddress?.addressLine1 ?? '',
+                      FFAppState().userData.shippingAddress?.city ?? '',
+                      FFAppState().userData.shippingAddress?.state ?? '',
+                      FFAppState().userData.shippingAddress?.zipCode ?? '',
                     );
                     tax = getTaxFromStripeMinus;
                     setState(() {});
@@ -215,10 +217,10 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                         ),
                         Text(
                           // TODO: replace FFAppState() with proper state provider
-                          FFAppState()
+                          (FFAppState()
                                           .userData
                                           .shippingAddress
-                                          .addressLine1 !=
+                                          ?.addressLine1 ?? '') !=
                                       ''
                               ? 'Edit'
                               : 'Add Address',
@@ -249,7 +251,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                         children: [
                           Text(
                             // TODO: replace FFAppState() with proper state provider
-                            FFAppState().userData.shippingAddress.fullName,
+                            FFAppState().userData.shippingAddress?.fullName ?? '',
                             style: GoogleFonts.inter(
                               fontWeight: FontWeight.w500,
                               color: AppColors.textPrimary,
@@ -257,7 +259,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                           ),
                           Text(
                             // TODO: replace FFAppState() with proper state provider
-                            '${FFAppState().userData.shippingAddress.addressLine1}, ${FFAppState().userData.shippingAddress.addressLine2}',
+                            '${FFAppState().userData.shippingAddress?.addressLine1 ?? ''}, ${FFAppState().userData.shippingAddress?.addressLine2 ?? ''}',
                             maxLines: 1,
                             style: GoogleFonts.inter(
                               color: AppColors.textSecondary,
@@ -267,7 +269,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                           ),
                           Text(
                             // TODO: replace FFAppState() with proper state provider
-                            '${FFAppState().userData.shippingAddress.city}, ${FFAppState().userData.shippingAddress.state}, ${FFAppState().userData.shippingAddress.zipCode}',
+                            '${FFAppState().userData.shippingAddress?.city ?? ''}, ${FFAppState().userData.shippingAddress?.state ?? ''}, ${FFAppState().userData.shippingAddress?.zipCode ?? ''}',
                             maxLines: 1,
                             style: GoogleFonts.inter(
                               color: AppColors.textSecondary,
@@ -277,7 +279,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                           ),
                           Text(
                             // TODO: replace FFAppState() with proper state provider
-                            FFAppState().userData.shippingAddress.country,
+                            FFAppState().userData.shippingAddress?.country ?? '',
                             maxLines: 1,
                             style: GoogleFonts.inter(
                               color: AppColors.textSecondary,
@@ -373,14 +375,14 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          '**** **** ****${paymentMethodsItem.card.last4}',
+                                          '**** **** ****${paymentMethodsItem.card?.last4 ?? ''}',
                                           style: GoogleFonts.inter(
                                             fontWeight: FontWeight.w500,
                                             color: AppColors.textPrimary,
                                           ),
                                         ),
                                         Text(
-                                          'Expires ${paymentMethodsItem.card.expMonth.toString()}/${paymentMethodsItem.card.expYear.toString()}',
+                                          'Expires ${paymentMethodsItem.card?.expMonth.toString() ?? ''}/${paymentMethodsItem.card?.expYear.toString() ?? ''}',
                                           maxLines: 1,
                                           style: GoogleFonts.inter(
                                             color: AppColors.textSecondary,
@@ -518,9 +520,9 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                               ),
                               Text(
                                 NumberFormat('#,##0.##', 'en_US').format(
-                                  widget.feedProductItem!.customFlatRate +
-                                      widget.feedProductItem!
-                                          .customAdditionalItemFee,
+                                  (widget.feedProductItem!.customFlatRate ?? 0.0) +
+                                      (widget.feedProductItem!
+                                          .customAdditionalItemFee ?? 0.0),
                                 ),
                                 style: GoogleFonts.inter(
                                   fontWeight: FontWeight.w500,

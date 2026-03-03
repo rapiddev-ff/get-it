@@ -1,6 +1,6 @@
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
-import '/backend/schema/structs/index.dart';
+import '/features/home/domain/models/review_model.dart';
 import '/features/profile/presentation/pages/review_item/review_item_widget.dart';
 import '/index.dart';
 import '/core/theme/app_colors.dart';
@@ -919,13 +919,13 @@ class _SettingsMyProfileWidgetState
     );
   }
 
-  List<ReviewStruct> _parseReviews(dynamic json, String role) {
+  List<Review> _parseReviews(dynamic json, String role) {
     final rawList = _jsonGet(json, '$role.reviews');
     if (rawList == null || rawList is! List) return [];
     return rawList
-        .map<ReviewStruct?>((e) => ReviewStruct.maybeFromMap(e))
+        .map<Review?>((e) => e is Map<String, dynamic> ? Review.fromJson(e) : null)
         .where((e) => e != null)
-        .cast<ReviewStruct>()
+        .cast<Review>()
         .toList();
   }
 

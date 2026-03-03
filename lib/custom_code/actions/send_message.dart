@@ -1,6 +1,7 @@
 // Automatic FlutterFlow imports
-import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/features/messages/domain/models/message_model.dart';
+import '/features/messages/domain/models/conversation_model.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -14,7 +15,7 @@ import '/custom_code/actions/index.dart';
 import '/flutter_flow/custom_functions.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-Future<MessageStruct?> sendMessage(
+Future<Message?> sendMessage(
   String conversationId,
   String content,
   List<String>? imageUrls,
@@ -44,9 +45,9 @@ Future<MessageStruct?> sendMessage(
       }
     }
 
-    final messageType = _parseMessageType(json['message_type']);
+    final messageType = json['message_type']?.toString() ?? 'text';
 
-    final newMessage = MessageStruct(
+    final newMessage = Message(
       id: json['id'] ?? '',
       conversationId: json['conversation_id'] ?? '',
       senderId: json['sender_id'] ?? '',
@@ -75,7 +76,7 @@ Future<MessageStruct?> sendMessage(
       });
     }
 
-    final lastMsgText = messageType == MessageType.image ? '📷 Photo' : content;
+    final lastMsgText = messageType == 'image' ? '📷 Photo' : content;
 
     _updateConversationLastMessage(
       conversationId,
@@ -100,44 +101,16 @@ void _updateConversationLastMessage(
   if (index == -1) return;
 
   final old = conversations[index];
-  final updated = ConversationStruct(
-    id: old.id,
-    buyerId: old.buyerId,
-    sellerId: old.sellerId,
-    productId: old.productId,
+  final updated = old.copyWith(
     lastMessageText: messageText,
     lastMessageAt: messageTime,
-    buyerUnreadCount: old.buyerUnreadCount,
-    sellerUnreadCount: old.sellerUnreadCount,
-    otherUserId: old.otherUserId,
-    otherUserUsername: old.otherUserUsername,
-    otherUserAvatar: old.otherUserAvatar,
-    otherUserLastActive: old.otherUserLastActive,
-    productTitle: old.productTitle,
-    productImage: old.productImage,
-    productPrice: old.productPrice,
-    productCondition: old.productCondition,
   );
 
   FFAppState().update(() {
-    final list = List<ConversationStruct>.from(FFAppState().conversations);
+    final list = List<Conversation>.from(FFAppState().conversations);
     list.removeAt(index);
     list.insert(0, updated);
     FFAppState().conversations = list;
   });
 }
 
-MessageType _parseMessageType(dynamic type) {
-  if (type == null) return MessageType.text;
-  final typeStr = type.toString().toLowerCase();
-  switch (typeStr) {
-    case 'image':
-      return MessageType.image;
-    case 'counter_offer':
-      return MessageType.counter_offer;
-    case 'system':
-      return MessageType.system;
-    default:
-      return MessageType.text;
-  }
-}

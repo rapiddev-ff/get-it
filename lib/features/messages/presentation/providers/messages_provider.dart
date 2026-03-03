@@ -1,23 +1,24 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '/backend/schema/structs/index.dart';
+import '/features/messages/domain/models/conversation_model.dart';
+import '/features/messages/domain/models/message_model.dart';
 
 class MessagesState {
   MessagesState({
     this.conversations = const [],
     this.currentChatMessages = const [],
-    ConversationStruct? currentConversation,
+    Conversation? currentConversation,
     this.totalUnreadCount = 0,
-  }) : currentConversation = currentConversation ?? ConversationStruct();
+  }) : currentConversation = currentConversation ?? Conversation();
 
-  final List<ConversationStruct> conversations;
-  final List<MessageStruct> currentChatMessages;
-  final ConversationStruct currentConversation;
+  final List<Conversation> conversations;
+  final List<Message> currentChatMessages;
+  final Conversation currentConversation;
   final int totalUnreadCount;
 
   MessagesState copyWith({
-    List<ConversationStruct>? conversations,
-    List<MessageStruct>? currentChatMessages,
-    ConversationStruct? currentConversation,
+    List<Conversation>? conversations,
+    List<Message>? currentChatMessages,
+    Conversation? currentConversation,
     int? totalUnreadCount,
   }) {
     return MessagesState(
@@ -35,17 +36,17 @@ class MessagesNotifier extends Notifier<MessagesState> {
 
   // --- Conversations ---
 
-  void setConversations(List<ConversationStruct> conversations) {
+  void setConversations(List<Conversation> conversations) {
     state = state.copyWith(conversations: conversations);
   }
 
-  void addToConversations(ConversationStruct conversation) {
+  void addToConversations(Conversation conversation) {
     state = state.copyWith(
       conversations: [...state.conversations, conversation],
     );
   }
 
-  void removeFromConversations(ConversationStruct conversation) {
+  void removeFromConversations(Conversation conversation) {
     state = state.copyWith(
       conversations:
           state.conversations.where((c) => c != conversation).toList(),
@@ -59,7 +60,7 @@ class MessagesNotifier extends Notifier<MessagesState> {
 
   void updateConversationsAtIndex(
     int index,
-    ConversationStruct Function(ConversationStruct) updateFn,
+    Conversation Function(Conversation) updateFn,
   ) {
     final list = [...state.conversations];
     list[index] = updateFn(list[index]);
@@ -67,24 +68,24 @@ class MessagesNotifier extends Notifier<MessagesState> {
   }
 
   void insertAtIndexInConversations(
-      int index, ConversationStruct conversation) {
+      int index, Conversation conversation) {
     final list = [...state.conversations]..insert(index, conversation);
     state = state.copyWith(conversations: list);
   }
 
   // --- Current Chat Messages ---
 
-  void setCurrentChatMessages(List<MessageStruct> messages) {
+  void setCurrentChatMessages(List<Message> messages) {
     state = state.copyWith(currentChatMessages: messages);
   }
 
-  void addToCurrentChatMessages(MessageStruct message) {
+  void addToCurrentChatMessages(Message message) {
     state = state.copyWith(
       currentChatMessages: [...state.currentChatMessages, message],
     );
   }
 
-  void removeFromCurrentChatMessages(MessageStruct message) {
+  void removeFromCurrentChatMessages(Message message) {
     state = state.copyWith(
       currentChatMessages:
           state.currentChatMessages.where((m) => m != message).toList(),
@@ -98,25 +99,25 @@ class MessagesNotifier extends Notifier<MessagesState> {
 
   void updateCurrentChatMessagesAtIndex(
     int index,
-    MessageStruct Function(MessageStruct) updateFn,
+    Message Function(Message) updateFn,
   ) {
     final list = [...state.currentChatMessages];
     list[index] = updateFn(list[index]);
     state = state.copyWith(currentChatMessages: list);
   }
 
-  void insertAtIndexInCurrentChatMessages(int index, MessageStruct message) {
+  void insertAtIndexInCurrentChatMessages(int index, Message message) {
     final list = [...state.currentChatMessages]..insert(index, message);
     state = state.copyWith(currentChatMessages: list);
   }
 
   // --- Current Conversation ---
 
-  void setCurrentConversation(ConversationStruct conversation) {
+  void setCurrentConversation(Conversation conversation) {
     state = state.copyWith(currentConversation: conversation);
   }
 
-  void updateCurrentConversation(Function(ConversationStruct) updateFn) {
+  void updateCurrentConversation(Function(Conversation) updateFn) {
     updateFn(state.currentConversation);
     state = state.copyWith(currentConversation: state.currentConversation);
   }

@@ -1,6 +1,6 @@
 // Automatic FlutterFlow imports
-import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/features/home/domain/models/feed_product_model.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -20,7 +20,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 RealtimeChannel? _feedProductsSubscription;
 
-Future<List<FeedProductStruct>> initFeedProductsStream(
+Future<List<FeedProduct>> initFeedProductsStream(
   String userId,
   List<String> excludeIds,
 ) async {
@@ -52,7 +52,7 @@ Future<List<FeedProductStruct>> initFeedProductsStream(
   return data;
 }
 
-Future<List<FeedProductStruct>> _fetchAllFeedProducts(
+Future<List<FeedProduct>> _fetchAllFeedProducts(
   String userId,
   List<String> excludeIds,
 ) async {
@@ -70,7 +70,7 @@ Future<List<FeedProductStruct>> _fetchAllFeedProducts(
 
     if (response is List && response.isNotEmpty) {
       return response.map((item) {
-        return FeedProductStruct(
+        return FeedProduct(
           id: item['id']?.toString() ?? '',
           title: item['title']?.toString() ?? '',
           description: item['description']?.toString() ?? '',

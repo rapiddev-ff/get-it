@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:go_router/go_router.dart';
 
-import '/backend/schema/structs/index.dart';
+import '/features/browse/domain/models/tag_model.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/theme/app_colors.dart';
 import '/core/constants/app_constants.dart';
@@ -25,16 +25,16 @@ class _HomeDashoardInventoryAddTagsWidgetState
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   // Inlined model state
-  List<TagStruct> tags = [];
+  List<Tag> tags = [];
   Stream<List<TagsRow>>? homeDashoardInventoryAddTagsSupabaseStream;
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
 
-  void addToTags(TagStruct item) {
+  void addToTags(Tag item) {
     tags.add(item);
   }
 
-  void removeFromTags(TagStruct item) {
+  void removeFromTags(Tag item) {
     tags.remove(item);
   }
 
@@ -260,19 +260,19 @@ class _HomeDashoardInventoryAddTagsWidgetState
                                       hoverColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
-                                        if (tags.contains(TagStruct(
+                                        if (tags.contains(Tag(
                                           id: tagsListItem.id,
                                           name: tagsListItem.name,
                                           slug: tagsListItem.slug,
                                         ))) {
-                                          removeFromTags(TagStruct(
+                                          removeFromTags(Tag(
                                             id: tagsListItem.id,
                                             name: tagsListItem.name,
                                             slug: tagsListItem.slug,
                                           ));
                                           setState(() {});
                                         } else {
-                                          addToTags(TagStruct(
+                                          addToTags(Tag(
                                             id: tagsListItem.id,
                                             name: tagsListItem.name,
                                             slug: tagsListItem.slug,
@@ -284,14 +284,14 @@ class _HomeDashoardInventoryAddTagsWidgetState
                                         decoration: BoxDecoration(
                                           gradient: LinearGradient(
                                             colors: [
-                                              tags.contains(TagStruct(
+                                              tags.contains(Tag(
                                                 id: tagsListItem.id,
                                                 name: tagsListItem.name,
                                                 slug: tagsListItem.slug,
                                               ))
                                                   ? Color(0xFF7D56FF)
                                                   : Color(0xFF252525),
-                                              tags.contains(TagStruct(
+                                              tags.contains(Tag(
                                                 id: tagsListItem.id,
                                                 name: tagsListItem.name,
                                                 slug: tagsListItem.slug,
@@ -323,7 +323,7 @@ class _HomeDashoardInventoryAddTagsWidgetState
                                                 ),
                                               ),
                                               if (tags
-                                                  .contains(TagStruct(
+                                                  .contains(Tag(
                                                 id: tagsListItem.id,
                                                 name: tagsListItem.name,
                                                 slug: tagsListItem.slug,

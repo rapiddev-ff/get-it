@@ -1,4 +1,5 @@
 import '/app_state.dart';
+import '/features/checkout/domain/models/shipping_address_model.dart';
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
@@ -1054,26 +1055,20 @@ class _CheckoutEditShippingAddressWidgetState
                           Future(() async {
                             // TODO: replace FFAppState() with proper state provider
                             FFAppState().updateUserDataStruct(
-                              (e) => e
-                                ..updateShippingAddress(
-                                  (e) => e
-                                    ..fullName =
-                                        fullNameTextController!.text
-                                    ..addressLine1 =
-                                        streetaddressTextController!.text
-                                    ..addressLine2 =
-                                        aptsuiteunitTextController!.text
-                                    ..city = cityTextController!.text
-                                    ..state =
-                                        (countryDropdownValue == 'US') ||
-                                                (countryDropdownValue ==
-                                                    'CA')
-                                            ? stateDropdownValue
-                                            : stateTextController!.text
-                                    ..country = countryDropdownValue
-                                    ..zipCode =
-                                        zipCodeTextController!.text,
+                              (e) => e.copyWith(
+                                shippingAddress: (e.shippingAddress ?? const ShippingAddress()).copyWith(
+                                  fullName: fullNameTextController!.text,
+                                  addressLine1: streetaddressTextController!.text,
+                                  addressLine2: aptsuiteunitTextController!.text,
+                                  city: cityTextController!.text,
+                                  state: (countryDropdownValue == 'US') ||
+                                          (countryDropdownValue == 'CA')
+                                      ? stateDropdownValue ?? ''
+                                      : stateTextController!.text,
+                                  country: countryDropdownValue ?? '',
+                                  zipCode: zipCodeTextController!.text,
                                 ),
+                              ),
                             );
                             setState(() {});
                           }),

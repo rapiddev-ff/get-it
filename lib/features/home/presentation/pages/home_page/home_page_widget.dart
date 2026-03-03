@@ -1,6 +1,6 @@
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/app_state.dart';
-import '/backend/schema/structs/index.dart';
+import '/features/home/domain/models/feed_product_model.dart';
 import '/backend/supabase/supabase.dart';
 import '/features/home/presentation/widgets/components/seller_dashboard_ship_item_widget.dart';
 import '/features/home/presentation/widgets/nav_bar/nav_bar_widget.dart';
@@ -38,7 +38,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   String _state = 'Shop';
   bool hasMoreProducts = true;
   bool isLoadingMore = false;
-  List<FeedProductStruct>? getFeed;
+  List<FeedProduct>? getFeed;
   dynamic getSellerDashboard;
   List<StripeAccountsRow>? getStripe;
   OrdersRow? createOrder;
@@ -215,7 +215,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         onTap: () async {
                           _state = 'Seller Dashboard';
                           setState(() {});
-                          if (FFAppState().userData.stripe.needsOnboarding) {
+                          if (FFAppState().userData.stripe?.needsOnboarding ?? true) {
                             getStripe =
                                 await StripeAccountsTable().queryRows(
                               queryFn: (q) => q.eqOrNull(
@@ -224,9 +224,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               ),
                             );
                             FFAppState().updateUserDataStruct(
-                              (e) => e
-                                ..stripe = functions.convertStripeStatus(
+                              (e) => e.copyWith(
+                                stripe: functions.convertStripeStatus(
                                     getStripe?.firstOrNull),
+                              ),
                             );
                             setState(() {});
                           }
@@ -295,7 +296,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               if (FFAppState()
                                   .userData
                                   .userSettings
-                                  .swipePaymentEnabled) {
+                                  ?.swipePaymentEnabled ?? false) {
                                 createOrder =
                                     await OrdersTable().insert({
                                   'buyer_id': currentUserUid,
@@ -368,7 +369,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 Future(() async {
                                   FFAppState().updateFeedProductsAtIndex(
                                     index,
-                                    (e) => e..isInWishlist = !e.isInWishlist,
+                                    (e) => e.copyWith(isInWishlist: !e.isInWishlist),
                                   );
                                   setState(() {});
                                 }),
@@ -390,7 +391,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   } else {
                     return Builder(
                       builder: (context) {
-                        if (FFAppState().userData.stripe.onboardingCompleted) {
+                        if (FFAppState().userData.stripe?.onboardingCompleted ?? false) {
                           return Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 16.0, 0.0, 16.0, 0.0),
@@ -1179,8 +1180,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             FFAppState()
                                                 .userData
                                                 .stripe
-                                                .currentlyDue
-                                                .toList()),
+                                                ?.currentlyDue
+                                                .toList() ?? []),
                                         style: GoogleFonts.inter(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.0,

@@ -1,6 +1,6 @@
 // Automatic FlutterFlow imports
-import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/features/messages/domain/models/conversation_model.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -43,7 +43,7 @@ Future refreshConversations() async {
     }
 
     final all = (response as List).map((json) {
-      return ConversationStruct(
+      return Conversation(
         id: json['id'] ?? '',
         buyerId: json['buyer_id'] ?? '',
         sellerId: json['seller_id'] ?? '',

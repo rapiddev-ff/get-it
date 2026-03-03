@@ -1,5 +1,6 @@
 import '/features/auth/data/supabase_auth/auth_util.dart';
-import '/backend/schema/structs/index.dart';
+import '/features/messages/domain/models/conversation_model.dart';
+import '/features/messages/domain/models/message_model.dart';
 import '/features/home/presentation/widgets/empty_state/empty_state_widget.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
@@ -28,7 +29,7 @@ class ChatPageWidget extends StatefulWidget {
     required this.conversation,
   });
 
-  final ConversationStruct? conversation;
+  final Conversation? conversation;
 
   static String routeName = 'chatPage';
   static String routePath = 'chatPage';
@@ -350,7 +351,7 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
                       conversationId: widget.conversation!.id,
                       pageSize: 30,
                       loadMoreThreshold: 300.0,
-                      itemBuilder: (MessageStruct message) => ChatItemWidget(
+                      itemBuilder: (Message message) => ChatItemWidget(
                         messageDataType: message,
                       ),
                       loadingIndicator: () => EmptyStateWidget(

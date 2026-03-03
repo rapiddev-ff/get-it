@@ -1,6 +1,13 @@
 // Automatic FlutterFlow imports
-import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/features/home/domain/models/seller_model.dart';
+import '/features/home/domain/models/seller_product_model.dart';
+import '/features/home/domain/models/seller_shortlist_model.dart';
+import '/features/home/domain/models/shortlist_cover_image_model.dart';
+import '/features/home/domain/models/review_model.dart';
+import '/features/home/domain/models/review_image_model.dart';
+import '/features/home/domain/models/reviewer_model.dart';
+import '/features/home/domain/models/review_product_model.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -13,25 +20,25 @@ import 'package:flutter/material.dart';
 import '/custom_code/actions/index.dart';
 import '/flutter_flow/custom_functions.dart';
 
-List<ReviewStruct> _parseReviews(List? rawList) {
-  final reviewsList = <ReviewStruct>[];
+List<Review> _parseReviews(List? rawList) {
+  final reviewsList = <Review>[];
   if (rawList == null) return reviewsList;
 
   for (final r in rawList) {
-    ReviewerStruct? reviewer;
+    Reviewer? reviewer;
     if (r['reviewer'] != null) {
       final rev = r['reviewer'];
-      reviewer = ReviewerStruct(
+      reviewer = Reviewer(
         id: rev['id']?.toString() ?? '',
         username: rev['username']?.toString() ?? '',
         avatarUrl: rev['avatarUrl']?.toString() ?? '',
       );
     }
 
-    ReviewProductStruct? product;
+    ReviewProduct? product;
     if (r['product'] != null) {
       final prod = r['product'];
-      product = ReviewProductStruct(
+      product = ReviewProduct(
         id: prod['id']?.toString() ?? '',
         title: prod['title']?.toString() ?? '',
         price: (prod['price'] as num?)?.toDouble() ?? 0.0,
@@ -39,17 +46,17 @@ List<ReviewStruct> _parseReviews(List? rawList) {
       );
     }
 
-    final imagesList = <ReviewImageStruct>[];
+    final imagesList = <ReviewImage>[];
     if (r['images'] != null) {
       for (final img in (r['images'] as List)) {
-        imagesList.add(ReviewImageStruct(
+        imagesList.add(ReviewImage(
           id: img['id']?.toString() ?? '',
           imageUrl: img['imageUrl']?.toString() ?? '',
         ));
       }
     }
 
-    reviewsList.add(ReviewStruct(
+    reviewsList.add(Review(
       id: r['id']?.toString() ?? '',
       rating: (r['rating'] as num?)?.toInt() ?? 0,
       title: r['title']?.toString() ?? '',
@@ -66,7 +73,7 @@ List<ReviewStruct> _parseReviews(List? rawList) {
   return reviewsList;
 }
 
-Future<SellerStruct?> getSellerInfo(
+Future<Seller?> getSellerInfo(
   String sellerId,
   String? userId,
 ) async {
@@ -90,10 +97,10 @@ Future<SellerStruct?> getSellerInfo(
     final reviewsAsBuyer = _parseReviews(data['reviews_as_buyer'] as List?);
 
     // Parse purchased products
-    final purchasedProducts = <SellerProductStruct>[];
+    final purchasedProducts = <SellerProduct>[];
     if (data['purchased_products'] != null) {
       for (final item in (data['purchased_products'] as List)) {
-        purchasedProducts.add(SellerProductStruct(
+        purchasedProducts.add(SellerProduct(
           id: item['id']?.toString() ?? '',
           orderId: item['orderId']?.toString() ?? '',
           title: item['title']?.toString() ?? '',
@@ -112,13 +119,13 @@ Future<SellerStruct?> getSellerInfo(
     }
 
     // Parse shortlists
-    final shortlistsList = <SellerShortlistStruct>[];
+    final shortlistsList = <SellerShortlist>[];
     if (data['shortlists'] != null) {
       for (final sl in (data['shortlists'] as List)) {
-        final coverImages = <ShortlistCoverImageStruct>[];
+        final coverImages = <ShortlistCoverImage>[];
         if (sl['coverImages'] != null) {
           for (final img in (sl['coverImages'] as List)) {
-            coverImages.add(ShortlistCoverImageStruct(
+            coverImages.add(ShortlistCoverImage(
               productId: img['productId']?.toString() ?? '',
               imageUrl: img['imageUrl']?.toString() ?? '',
               sortOrder: (img['sortOrder'] as num?)?.toInt() ?? 0,
@@ -133,7 +140,7 @@ Future<SellerStruct?> getSellerInfo(
           }
         }
 
-        shortlistsList.add(SellerShortlistStruct(
+        shortlistsList.add(SellerShortlist(
           id: sl['id']?.toString() ?? '',
           name: sl['name']?.toString() ?? '',
           description: sl['description']?.toString() ?? '',
@@ -159,7 +166,7 @@ Future<SellerStruct?> getSellerInfo(
       }
     }
 
-    return SellerStruct(
+    return Seller(
       id: data['id']?.toString() ?? '',
       username: data['username']?.toString() ?? '',
       avatarUrl: data['avatar_url']?.toString() ?? '',

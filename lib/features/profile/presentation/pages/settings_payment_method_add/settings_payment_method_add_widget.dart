@@ -1,4 +1,6 @@
-import '/backend/schema/structs/index.dart';
+import '/features/checkout/domain/models/payment_method_model.dart';
+import '/features/checkout/domain/models/payment_card_model.dart';
+import '/features/checkout/domain/models/billing_details_model.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/core/theme/app_colors.dart';
 import '/core/utils/form_validators.dart';
@@ -826,10 +828,10 @@ class _SettingsPaymentMethodAddWidgetState
                                     _model.countryDropdownValue,
                                     _model.setAsDefault,
                                   );
-                                  final newPaymentMethod = PaymentMethodStruct(
+                                  final newPaymentMethod = PaymentMethod(
                                     id: _jsonStr(
                                         _model.result, 'payment_method_id'),
-                                    card: PaymentCardStruct(
+                                    card: PaymentCard(
                                       brand:
                                           _jsonStr(_model.result, 'card_brand'),
                                       last4:
@@ -846,7 +848,7 @@ class _SettingsPaymentMethodAddWidgetState
                                     isDefault: ((_model.result is Map)
                                         ? _model.result['is_default']
                                         : null),
-                                    billingDetails: BillingDetailsStruct(
+                                    billingDetails: BillingDetails(
                                       name:
                                           _model.fullNameTextController!.text,
                                       email: _model
@@ -855,12 +857,12 @@ class _SettingsPaymentMethodAddWidgetState
                                           .addressLine1TextController!.text,
                                       addressLine2: _model
                                           .addressLine2TextController!.text,
-                                      country: _model.countryDropdownValue,
+                                      country: _model.countryDropdownValue ?? '',
                                       state: (_model.countryDropdownValue ==
                                                   'US') ||
                                               (_model.countryDropdownValue ==
                                                   'CA')
-                                          ? _model.stateDropdownValue
+                                          ? _model.stateDropdownValue ?? ''
                                           : _model.stateTextController!.text,
                                       city: _model.cityTextController!.text,
                                       postalCode:
@@ -869,10 +871,9 @@ class _SettingsPaymentMethodAddWidgetState
                                   );
                                   ref
                                       .read(authProvider.notifier)
-                                      .updateUser((e) => e
-                                        ..updatePaymentMethod(
-                                          (e) => e.add(newPaymentMethod),
-                                        ));
+                                      .updateUser((e) => e.copyWith(
+                                        paymentMethod: [...e.paymentMethod, newPaymentMethod],
+                                      ));
                                   ref
                                       .read(checkoutProvider.notifier)
                                       .setPaymentMethod(newPaymentMethod);

@@ -12,6 +12,7 @@ import 'package:go_router/go_router.dart';
 import '/core/theme/app_colors.dart';
 import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
+import '/features/auth/domain/models/business_address_model.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import 'settings_business_address_model.dart';
 export 'settings_business_address_model.dart';
@@ -51,23 +52,23 @@ class _SettingsBusinessAddressWidgetState
 
     final userData = ref.read(authProvider);
     _model.addressLine1TextController ??= TextEditingController(
-        text: userData.businessAddress.addressLine1);
+        text: userData.businessAddress?.addressLine1 ?? '');
     _model.addressLine1FocusNode ??= FocusNode();
     _model.addressLine1FocusNode!.addListener(() => setState(() {}));
     _model.addressLine2TextController ??= TextEditingController(
-        text: userData.businessAddress.addressLine2);
+        text: userData.businessAddress?.addressLine2 ?? '');
     _model.addressLine2FocusNode ??= FocusNode();
     _model.addressLine2FocusNode!.addListener(() => setState(() {}));
     _model.stateTextController ??= TextEditingController(
-        text: userData.businessAddress.state);
+        text: userData.businessAddress?.state ?? '');
     _model.stateFocusNode ??= FocusNode();
     _model.stateFocusNode!.addListener(() => setState(() {}));
     _model.cityTextController ??=
-        TextEditingController(text: userData.businessAddress.city);
+        TextEditingController(text: userData.businessAddress?.city ?? '');
     _model.cityFocusNode ??= FocusNode();
     _model.cityFocusNode!.addListener(() => setState(() {}));
     _model.zipCodeTextController ??= TextEditingController(
-        text: userData.businessAddress.zipCode);
+        text: userData.businessAddress?.zipCode ?? '');
     _model.zipCodeFocusNode ??= FocusNode();
     _model.zipCodeFocusNode!.addListener(() => setState(() {}));
   }
@@ -302,7 +303,7 @@ class _SettingsBusinessAddressWidgetState
                                                     ref
                                                         .read(authProvider)
                                                         .businessAddress
-                                                        .country)
+                                                        ?.country ?? '')
                                                 ?.isEmpty ?? true
                                             ? null
                                             : _model.countryDropdownValue,
@@ -383,7 +384,7 @@ class _SettingsBusinessAddressWidgetState
                                                           ref
                                                               .read(authProvider)
                                                               .businessAddress
-                                                              .state)
+                                                              ?.state ?? '')
                                                       ?.isEmpty ?? true
                                                   ? null
                                                   : _model.stateDropdownValue,
@@ -782,28 +783,28 @@ class _SettingsBusinessAddressWidgetState
                                   }),
                                   Future(() async {
                                     ref.read(authProvider.notifier).updateUser(
-                                      (e) => e
-                                        ..updateBusinessAddress(
-                                          (e) => e
-                                            ..addressLine1 = _model
-                                                .addressLine1TextController!.text
-                                            ..addressLine2 = _model
-                                                .addressLine2TextController!.text
-                                            ..country =
-                                                _model.countryDropdownValue
-                                            ..state =
-                                                (_model.countryDropdownValue ==
-                                                            'US') ||
-                                                        (_model.countryDropdownValue ==
-                                                            'CA')
-                                                    ? _model.stateDropdownValue
-                                                    : _model.stateTextController!
-                                                        .text
-                                            ..city =
-                                                _model.cityTextController!.text
-                                            ..zipCode = _model
-                                                .zipCodeTextController!.text,
+                                      (e) => e.copyWith(
+                                        businessAddress: (e.businessAddress ?? const BusinessAddress()).copyWith(
+                                          addressLine1: _model
+                                              .addressLine1TextController!.text,
+                                          addressLine2: _model
+                                              .addressLine2TextController!.text,
+                                          country:
+                                              _model.countryDropdownValue ?? '',
+                                          state:
+                                              (_model.countryDropdownValue ==
+                                                          'US') ||
+                                                      (_model.countryDropdownValue ==
+                                                          'CA')
+                                                  ? _model.stateDropdownValue ?? ''
+                                                  : _model.stateTextController!
+                                                      .text,
+                                          city:
+                                              _model.cityTextController!.text,
+                                          zipCode: _model
+                                              .zipCodeTextController!.text,
                                         ),
+                                      ),
                                     );
                                     setState(() {});
                                   }),

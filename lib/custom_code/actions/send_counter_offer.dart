@@ -1,6 +1,6 @@
 // Automatic FlutterFlow imports
-import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/features/home/domain/models/counter_offer_model.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -11,14 +11,14 @@ import 'package:flutter/material.dart';
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 // Custom Action: sendCounterOffer
-// Return Type: CounterOfferStruct? (nullable)
+// Return Type: CounterOffer? (nullable)
 // Arguments:
 //   - conversationId (String)
 //   - offeredPrice (double)
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-Future<CounterOfferStruct?> sendCounterOffer(
+Future<CounterOffer?> sendCounterOffer(
   String conversationId,
   double offeredPrice,
 ) async {
@@ -37,7 +37,7 @@ Future<CounterOfferStruct?> sendCounterOffer(
 
     final json = response[0];
 
-    return CounterOfferStruct(
+    return CounterOffer(
       id: json['counter_offer_id'] ?? '',
       originalPrice: (json['original_price'] as num?)?.toDouble() ?? 0,
       offeredPrice: (json['offered_price'] as num?)?.toDouble() ?? 0,

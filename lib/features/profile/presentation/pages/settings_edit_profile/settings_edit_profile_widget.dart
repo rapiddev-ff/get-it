@@ -694,20 +694,21 @@ class _SettingsEditProfileWidgetState
                                     Future(() async {
                                       ref
                                           .read(authProvider.notifier)
-                                          .updateUser((e) => e
-                                            ..firstName = _model
+                                          .updateUser((e) => e.copyWith(
+                                            firstName: _model
                                                 .firstnameTextController!
-                                                .text
-                                            ..lastName = _model
+                                                .text,
+                                            lastName: _model
                                                 .lastnameTextController!
-                                                .text
-                                            ..username = _model
+                                                .text,
+                                            username: _model
                                                 .usernameTextController!
-                                                .text
-                                            ..bio = _model
-                                                .bioTextController!.text
-                                            ..avatarUrl =
-                                                _model.uploadToBucket);
+                                                .text,
+                                            bio: _model
+                                                .bioTextController!.text,
+                                            avatarUrl:
+                                                _model.uploadToBucket ?? '',
+                                          ));
                                       setState(() {});
                                     }),
                                   ]);

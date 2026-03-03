@@ -1,24 +1,23 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '/backend/schema/structs/index.dart';
+import '/features/auth/domain/models/user_model.dart';
 
-class AuthNotifier extends Notifier<UserDataStruct> {
+class AuthNotifier extends Notifier<UserData> {
   @override
-  UserDataStruct build() => UserDataStruct();
+  UserData build() => const UserData();
 
-  void setUser(UserDataStruct user) {
+  void setUser(UserData user) {
     state = user;
   }
 
-  void updateUser(Function(UserDataStruct) updateFn) {
-    updateFn(state);
-    state = state;
+  void updateUser(UserData Function(UserData) updateFn) {
+    state = updateFn(state);
   }
 
   void clear() {
-    state = UserDataStruct();
+    state = const UserData();
   }
 }
 
-final authProvider = NotifierProvider<AuthNotifier, UserDataStruct>(
+final authProvider = NotifierProvider<AuthNotifier, UserData>(
   AuthNotifier.new,
 );

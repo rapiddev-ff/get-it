@@ -1,4 +1,5 @@
-import '/backend/schema/structs/index.dart';
+import '/features/checkout/domain/models/payment_method_model.dart';
+import '/features/checkout/domain/models/billing_details_model.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/core/theme/app_colors.dart';
 import '/core/utils/form_validators.dart';
@@ -23,7 +24,7 @@ class SettingsPaymentMethodEditWidget extends ConsumerStatefulWidget {
     this.index,
   });
 
-  final PaymentMethodStruct? paymentMethod;
+  final PaymentMethod? paymentMethod;
   final int? index;
 
   static String routeName = 'settingsPaymentMethodEdit';
@@ -47,14 +48,14 @@ class _SettingsPaymentMethodEditWidgetState
     _model = SettingsPaymentMethodEditModel();
 
     _model.cardNumberTextController ??= TextEditingController(
-        text: '.... .... .... ${widget.paymentMethod?.card.last4}');
+        text: '.... .... .... ${widget.paymentMethod?.card?.last4 ?? ''}');
     _model.cardNumberFocusNode ??= FocusNode();
 
     _model.cardNumberMask =
         MaskTextInputFormatter(mask: '#### #### #### ####');
     _model.expireDateTextController ??= TextEditingController(
         text:
-            '${widget.paymentMethod?.card.expMonth.toString()}/${widget.paymentMethod?.card.expYear.toString()}');
+            '${widget.paymentMethod?.card?.expMonth.toString() ?? ''}/${widget.paymentMethod?.card?.expYear.toString() ?? ''}');
     _model.expireDateFocusNode ??= FocusNode();
 
     _model.expireDateMask = MaskTextInputFormatter(mask: '##/##');
@@ -62,35 +63,35 @@ class _SettingsPaymentMethodEditWidgetState
     _model.textFieldaCVCFocusNode ??= FocusNode();
 
     _model.cardholderNameTextController ??= TextEditingController(
-        text: widget.paymentMethod?.billingDetails.name);
+        text: widget.paymentMethod?.billingDetails?.name);
     _model.cardholderNameFocusNode ??= FocusNode();
 
     _model.emailAddressTextController ??= TextEditingController(
-        text: widget.paymentMethod?.billingDetails.email);
+        text: widget.paymentMethod?.billingDetails?.email);
     _model.emailAddressFocusNode ??= FocusNode();
     _model.emailAddressFocusNode!.addListener(() => setState(() {}));
     _model.fullNameTextController ??= TextEditingController(
-        text: widget.paymentMethod?.billingDetails.name);
+        text: widget.paymentMethod?.billingDetails?.name);
     _model.fullNameFocusNode ??= FocusNode();
     _model.fullNameFocusNode!.addListener(() => setState(() {}));
     _model.addressLine1TextController ??= TextEditingController(
-        text: widget.paymentMethod?.billingDetails.addressLine1);
+        text: widget.paymentMethod?.billingDetails?.addressLine1);
     _model.addressLine1FocusNode ??= FocusNode();
     _model.addressLine1FocusNode!.addListener(() => setState(() {}));
     _model.addressLine2TextController ??= TextEditingController(
-        text: widget.paymentMethod?.billingDetails.addressLine2);
+        text: widget.paymentMethod?.billingDetails?.addressLine2);
     _model.addressLine2FocusNode ??= FocusNode();
     _model.addressLine2FocusNode!.addListener(() => setState(() {}));
     _model.stateTextController ??= TextEditingController(
-        text: widget.paymentMethod?.billingDetails.state);
+        text: widget.paymentMethod?.billingDetails?.state);
     _model.stateFocusNode ??= FocusNode();
     _model.stateFocusNode!.addListener(() => setState(() {}));
     _model.cityTextController ??= TextEditingController(
-        text: widget.paymentMethod?.billingDetails.city);
+        text: widget.paymentMethod?.billingDetails?.city);
     _model.cityFocusNode ??= FocusNode();
     _model.cityFocusNode!.addListener(() => setState(() {}));
     _model.zipCodeTextController ??= TextEditingController(
-        text: widget.paymentMethod?.billingDetails.postalCode);
+        text: widget.paymentMethod?.billingDetails?.postalCode);
     _model.zipCodeFocusNode ??= FocusNode();
     _model.zipCodeFocusNode!.addListener(() => setState(() {}));
 
@@ -491,7 +492,7 @@ class _SettingsPaymentMethodEditWidgetState
                                   value: (_model.countryDropdownValue ??= widget
                                               .paymentMethod
                                               ?.billingDetails
-                                              .country ??
+                                              ?.country ??
                                           '')
                                       .isEmpty
                                       ? null
@@ -536,7 +537,7 @@ class _SettingsPaymentMethodEditWidgetState
                                                     widget
                                                         .paymentMethod
                                                         ?.billingDetails
-                                                        .state ??
+                                                        ?.state ??
                                                     '')
                                                 .isEmpty
                                             ? null
@@ -850,42 +851,26 @@ class _SettingsPaymentMethodEditWidgetState
                                 if (validationResult['success'] == true) {
                                   ref
                                       .read(authProvider.notifier)
-                                      .updateUser((e) => e
-                                        ..updatePaymentMethod(
-                                          (e) => e[widget.index!]
-                                            ..updateBillingDetails(
-                                              (e) => e
-                                                ..name = _model
-                                                    .fullNameTextController!
-                                                    .text
-                                                ..email = _model
-                                                    .emailAddressTextController!
-                                                    .text
-                                                ..addressLine1 = _model
-                                                    .addressLine1TextController!
-                                                    .text
-                                                ..addressLine2 = _model
-                                                    .addressLine2TextController!
-                                                    .text
-                                                ..city = _model
-                                                    .cityTextController!.text
-                                                ..state = (_model
-                                                                .countryDropdownValue ==
-                                                            'US') ||
-                                                        (_model.countryDropdownValue ==
-                                                            'CA')
-                                                    ? _model
-                                                        .stateDropdownValue
-                                                    : _model
-                                                        .stateTextController!
-                                                        .text
-                                                ..postalCode = _model
-                                                    .zipCodeTextController!
-                                                    .text
-                                                ..country = _model
-                                                    .countryDropdownValue,
-                                            ),
-                                        ));
+                                      .updateUser((e) {
+                                        final methods = [...e.paymentMethod];
+                                        final pm = methods[widget.index!];
+                                        methods[widget.index!] = pm.copyWith(
+                                          billingDetails: (pm.billingDetails ?? const BillingDetails()).copyWith(
+                                            name: _model.fullNameTextController!.text,
+                                            email: _model.emailAddressTextController!.text,
+                                            addressLine1: _model.addressLine1TextController!.text,
+                                            addressLine2: _model.addressLine2TextController!.text,
+                                            city: _model.cityTextController!.text,
+                                            state: (_model.countryDropdownValue == 'US') ||
+                                                    (_model.countryDropdownValue == 'CA')
+                                                ? _model.stateDropdownValue ?? ''
+                                                : _model.stateTextController!.text,
+                                            postalCode: _model.zipCodeTextController!.text,
+                                            country: _model.countryDropdownValue ?? '',
+                                          ),
+                                        );
+                                        return e.copyWith(paymentMethod: methods);
+                                      });
                                   setState(() {});
                                 } else {
                                   await actions.toastificationshow(

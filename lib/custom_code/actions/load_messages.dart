@@ -1,6 +1,7 @@
 // Automatic FlutterFlow imports
-import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/features/messages/domain/models/message_model.dart';
+import '/features/home/domain/models/counter_offer_model.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -14,7 +15,7 @@ import '/custom_code/actions/index.dart';
 import '/flutter_flow/custom_functions.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-Future<List<MessageStruct>> loadMessages(
+Future<List<Message>> loadMessages(
   String conversationId,
   int limit,
   DateTime? beforeDate,
@@ -33,7 +34,7 @@ Future<List<MessageStruct>> loadMessages(
 
     if (response == null) return [];
 
-    final List<MessageStruct> messages = [];
+    final List<Message> messages = [];
 
     for (final json in (response as List)) {
       // Берём первое фото
@@ -46,14 +47,14 @@ Future<List<MessageStruct>> loadMessages(
       }
 
       // Counter offer
-      CounterOfferStruct? counterOffer;
+      CounterOffer? counterOffer;
       if (json['counter_offer'] != null && json['counter_offer'] is Map) {
         final co = json['counter_offer'];
-        counterOffer = CounterOfferStruct(
+        counterOffer = CounterOffer(
           id: co['id']?.toString() ?? '',
           originalPrice: (co['original_price'] ?? 0).toDouble(),
           offeredPrice: (co['offered_price'] ?? 0).toDouble(),
-          status: _parseCounterOfferStatus(co['status']),
+          status: co['status']?.toString() ?? 'pending',
           fromUserId: co['from_user_id']?.toString() ?? '',
           toUserId: co['to_user_id']?.toString() ?? '',
           expiresAt: co['expires_at'] != null
@@ -63,9 +64,9 @@ Future<List<MessageStruct>> loadMessages(
         );
       }
 
-      final messageType = _parseMessageType(json['message_type']);
+      final messageType = json['message_type']?.toString() ?? 'text';
 
-      messages.add(MessageStruct(
+      messages.add(Message(
         id: json['id'] ?? '',
         conversationId: json['conversation_id'] ?? '',
         senderId: json['sender_id'] ?? '',
@@ -90,32 +91,3 @@ Future<List<MessageStruct>> loadMessages(
   }
 }
 
-MessageType _parseMessageType(dynamic type) {
-  if (type == null) return MessageType.text;
-  final typeStr = type.toString().toLowerCase();
-  switch (typeStr) {
-    case 'image':
-      return MessageType.image;
-    case 'counter_offer':
-      return MessageType.counter_offer;
-    case 'system':
-      return MessageType.system;
-    default:
-      return MessageType.text;
-  }
-}
-
-CounterOfferStatus _parseCounterOfferStatus(dynamic status) {
-  if (status == null) return CounterOfferStatus.pending;
-  final statusStr = status.toString().toLowerCase();
-  switch (statusStr) {
-    case 'accepted':
-      return CounterOfferStatus.accepted;
-    case 'rejected':
-      return CounterOfferStatus.rejected;
-    case 'expired':
-      return CounterOfferStatus.expired;
-    default:
-      return CounterOfferStatus.pending;
-  }
-}

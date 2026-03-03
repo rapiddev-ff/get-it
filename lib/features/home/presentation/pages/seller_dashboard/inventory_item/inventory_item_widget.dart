@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-import '/backend/schema/structs/index.dart';
+import '/features/home/domain/models/seller_product_model.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';
@@ -14,7 +14,7 @@ class InventoryItemWidget extends StatelessWidget {
     required this.sellerProduct,
   });
 
-  final SellerProductStruct? sellerProduct;
+  final SellerProduct? sellerProduct;
 
   @override
   Widget build(BuildContext context) {

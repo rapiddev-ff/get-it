@@ -1,6 +1,8 @@
 // Automatic FlutterFlow imports
-import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/features/messages/domain/models/message_model.dart';
+import '/features/messages/domain/models/message_image_model.dart';
+import '/features/home/domain/models/counter_offer_model.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -33,7 +35,7 @@ class InfiniteMessageList extends StatefulWidget {
   final double? width;
   final double? height;
   final String conversationId;
-  final Widget Function(MessageStruct message) itemBuilder;
+  final Widget Function(Message message) itemBuilder;
   final Widget Function()? loadingIndicator;
   final Widget Function()? emptyWidget;
   final int? pageSize;
@@ -46,7 +48,7 @@ class InfiniteMessageList extends StatefulWidget {
 class _InfiniteMessageListState extends State<InfiniteMessageList> {
   final ScrollController _scrollController = ScrollController();
 
-  List<MessageStruct> _messages = [];
+  List<Message> _messages = [];
   bool _isLoadingInitial = true;
   bool _isLoadingMore = false;
   bool _hasMore = true;
@@ -134,7 +136,7 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
     }
   }
 
-  Future<List<MessageStruct>> _fetchMessages({
+  Future<List<Message>> _fetchMessages({
     required DateTime? beforeDate,
   }) async {
     final client = Supabase.instance.client;
@@ -147,15 +149,15 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
 
     if (response == null) return [];
 
-    final List<MessageStruct> messages = [];
+    final List<Message> messages = [];
 
     for (final json in (response as List)) {
       // Берём первое фото
-      MessageImageStruct? imageData;
+      MessageImage? imageData;
       if (json['images'] != null && json['images'] is List) {
         final imgs = json['images'] as List;
         if (imgs.isNotEmpty) {
-          imageData = MessageImageStruct(
+          imageData = MessageImage(
             id: imgs[0]['id']?.toString() ?? '',
             imageUrl: imgs[0]['image_url'] ?? '',
           );
@@ -163,14 +165,14 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
       }
 
       // Counter offer
-      CounterOfferStruct? counterOffer;
+      CounterOffer? counterOffer;
       if (json['counter_offer'] != null && json['counter_offer'] is Map) {
         final co = json['counter_offer'];
-        counterOffer = CounterOfferStruct(
+        counterOffer = CounterOffer(
           id: co['id']?.toString() ?? '',
           originalPrice: (co['original_price'] ?? 0).toDouble(),
           offeredPrice: (co['offered_price'] ?? 0).toDouble(),
-          status: _parseCounterOfferStatus(co['status']),
+          status: co['status']?.toString(),
           fromUserId: co['from_user_id']?.toString() ?? '',
           toUserId: co['to_user_id']?.toString() ?? '',
           expiresAt: co['expires_at'] != null
@@ -180,9 +182,9 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
         );
       }
 
-      final messageType = _parseMessageType(json['message_type']);
+      final messageType = json['message_type']?.toString() ?? 'text';
 
-      messages.add(MessageStruct(
+      messages.add(Message(
         id: json['id'] ?? '',
         conversationId: json['conversation_id'] ?? '',
         senderId: json['sender_id'] ?? '',
@@ -254,10 +256,10 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
     final messageId = json['id']?.toString() ?? '';
     if (_messages.any((m) => m.id == messageId)) return;
 
-    final messageType = _parseMessageType(json['message_type']);
+    final messageType = json['message_type']?.toString() ?? 'text';
 
     // Для image — дозагружаем через RPC
-    if (messageType == MessageType.image) {
+    if (messageType == 'image') {
       try {
         final fullData =
             await Supabase.instance.client.rpc('get_messages', params: {
@@ -268,23 +270,23 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
         if (fullData != null && (fullData as List).isNotEmpty) {
           final fullJson = fullData[0];
 
-          MessageImageStruct? imageData;
+          MessageImage? imageData;
           if (fullJson['images'] != null && fullJson['images'] is List) {
             final imgs = fullJson['images'] as List;
             if (imgs.isNotEmpty) {
-              imageData = MessageImageStruct(
+              imageData = MessageImage(
                 id: imgs[0]['id']?.toString() ?? '',
                 imageUrl: imgs[0]['image_url'] ?? '',
               );
             }
           }
 
-          final newMessage = MessageStruct(
+          final newMessage = Message(
             id: fullJson['id'] ?? '',
             conversationId: fullJson['conversation_id'] ?? '',
             senderId: fullJson['sender_id'] ?? '',
             content: fullJson['content'] ?? '',
-            messageType: _parseMessageType(fullJson['message_type']),
+            messageType: fullJson['message_type']?.toString() ?? 'text',
             isRead: fullJson['is_read'] ?? false,
             createdAt: fullJson['created_at'] != null
                 ? DateTime.parse(fullJson['created_at']).toLocal()
@@ -310,7 +312,7 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
     }
 
     // Text message
-    final newMessage = MessageStruct(
+    final newMessage = Message(
       id: messageId,
       conversationId: json['conversation_id'] ?? '',
       senderId: json['sender_id'] ?? '',
@@ -344,22 +346,9 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
 
     if (mounted) {
       setState(() {
-        _messages = _messages.map<MessageStruct>((m) {
+        _messages = _messages.map<Message>((m) {
           if (m.id == messageId) {
-            return MessageStruct(
-              id: m.id,
-              conversationId: m.conversationId,
-              senderId: m.senderId,
-              content: m.content,
-              messageType: m.messageType,
-              isRead: isRead,
-              createdAt: m.createdAt,
-              senderUsername: m.senderUsername,
-              senderAvatar: m.senderAvatar,
-              imageUrl: m.imageUrl,
-              counterOffer: m.counterOffer,
-              isSending: m.isSending,
-            );
+            return m.copyWith(isRead: isRead);
           }
           return m;
         }).toList();
@@ -401,12 +390,12 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
     }
   }
 
-  void addOptimisticMessage(MessageStruct message) {
+  void addOptimisticMessage(Message message) {
     setState(() => _messages.insert(0, message));
     _autoScrollToBottom();
   }
 
-  void replaceOptimisticMessage(String tempId, MessageStruct real) {
+  void replaceOptimisticMessage(String tempId, Message real) {
     setState(() {
       final index = _messages.indexWhere((m) => m.id == tempId);
       if (index != -1) _messages[index] = real;
@@ -466,33 +455,4 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
     );
   }
 
-  static MessageType _parseMessageType(dynamic type) {
-    if (type == null) return MessageType.text;
-    final typeStr = type.toString().toLowerCase();
-    switch (typeStr) {
-      case 'image':
-        return MessageType.image;
-      case 'counter_offer':
-        return MessageType.counter_offer;
-      case 'system':
-        return MessageType.system;
-      default:
-        return MessageType.text;
-    }
-  }
-
-  static CounterOfferStatus _parseCounterOfferStatus(dynamic status) {
-    if (status == null) return CounterOfferStatus.pending;
-    final statusStr = status.toString().toLowerCase();
-    switch (statusStr) {
-      case 'accepted':
-        return CounterOfferStatus.accepted;
-      case 'rejected':
-        return CounterOfferStatus.rejected;
-      case 'expired':
-        return CounterOfferStatus.expired;
-      default:
-        return CounterOfferStatus.pending;
-    }
-  }
 }

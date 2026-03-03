@@ -8,6 +8,7 @@ import '/core/theme/app_colors.dart';
 import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
 import '/custom_code/actions/index.dart' as actions;
+import '/features/auth/domain/models/user_settings_model.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import 'settings_shipping_defaults_model.dart';
 export 'settings_shipping_defaults_model.dart';
@@ -42,12 +43,12 @@ class _SettingsShippingDefaultsWidgetState
     final userData = ref.read(authProvider);
     _model.textController1 ??= TextEditingController(
         text: _formatDecimal(
-            userData.userSettings.defaultFlatShippingRate));
+            userData.userSettings?.defaultFlatShippingRate));
     _model.textFieldFocusNode1 ??= FocusNode();
     _model.textFieldFocusNode1!.addListener(() => setState(() {}));
     _model.textController2 ??= TextEditingController(
         text: _formatDecimal(
-            userData.userSettings.defaultAdditionalItemFee));
+            userData.userSettings?.defaultAdditionalItemFee));
     _model.textFieldFocusNode2 ??= FocusNode();
     _model.textFieldFocusNode2!.addListener(() => setState(() {}));
   }
@@ -344,16 +345,16 @@ class _SettingsShippingDefaultsWidgetState
                             }),
                             Future(() async {
                               ref.read(authProvider.notifier).updateUser(
-                                (e) => e
-                                  ..updateUserSettings(
-                                    (e) => e
-                                      ..defaultFlatShippingRate =
-                                          double.tryParse(
-                                              _model.textController1!.text)
-                                      ..defaultAdditionalItemFee =
-                                          double.tryParse(
-                                              _model.textController2!.text),
+                                (e) => e.copyWith(
+                                  userSettings: (e.userSettings ?? const UserSettings()).copyWith(
+                                    defaultFlatShippingRate:
+                                        double.tryParse(
+                                            _model.textController1!.text) ?? 0.0,
+                                    defaultAdditionalItemFee:
+                                        double.tryParse(
+                                            _model.textController2!.text) ?? 0.0,
                                   ),
+                                ),
                               );
                               setState(() {});
                             }),

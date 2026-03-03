@@ -1,6 +1,7 @@
 // Automatic FlutterFlow imports
-import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/features/messages/domain/models/message_model.dart';
+import '/features/messages/domain/models/conversation_model.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -28,10 +29,10 @@ Future subscribeToMessages(String conversationId) async {
           FFAppState().currentChatMessages.any((m) => m.id == json['id']);
 
       if (!exists) {
-        final messageType = _parseMessageType(json['message_type']);
+        final messageType = json['message_type']?.toString() ?? 'text';
 
         // IMAGE: дозагружаем через RPC
-        if (messageType == MessageType.image) {
+        if (messageType == 'image') {
           try {
             final fullData = await client.rpc('get_messages', params: {
               'p_conversation_id': conversationId,
@@ -49,12 +50,12 @@ Future subscribeToMessages(String conversationId) async {
                 }
               }
 
-              final newMessage = MessageStruct(
+              final newMessage = Message(
                 id: fullJson['id'] ?? '',
                 conversationId: fullJson['conversation_id'] ?? '',
                 senderId: fullJson['sender_id'] ?? '',
                 content: fullJson['content'] ?? '',
-                messageType: _parseMessageType(fullJson['message_type']),
+                messageType: fullJson['message_type']?.toString() ?? 'text',
                 isRead: fullJson['is_read'] ?? false,
                 createdAt: fullJson['created_at'] != null
                     ? DateTime.parse(fullJson['created_at']).toLocal()
@@ -100,7 +101,7 @@ Future subscribeToMessages(String conversationId) async {
         }
 
         // TEXT: как раньше
-        final newMessage = MessageStruct(
+        final newMessage = Message(
           id: json['id'] ?? '',
           conversationId: json['conversation_id'] ?? '',
           senderId: json['sender_id'] ?? '',
@@ -155,20 +156,7 @@ Future subscribeToMessages(String conversationId) async {
         FFAppState().currentChatMessages =
             FFAppState().currentChatMessages.map((m) {
           if (m.id == messageId) {
-            return MessageStruct(
-              id: m.id,
-              conversationId: m.conversationId,
-              senderId: m.senderId,
-              content: m.content,
-              messageType: m.messageType,
-              isRead: isRead,
-              createdAt: m.createdAt,
-              senderUsername: m.senderUsername,
-              senderAvatar: m.senderAvatar,
-              imageUrl: m.imageUrl,
-              counterOffer: m.counterOffer,
-              isSending: m.isSending,
-            );
+            return m.copyWith(isRead: isRead);
           }
           return m;
         }).toList();
@@ -187,44 +175,15 @@ void _updateConversationLastMessage(
   if (index == -1) return;
 
   final old = conversations[index];
-  final updated = ConversationStruct(
-    id: old.id,
-    buyerId: old.buyerId,
-    sellerId: old.sellerId,
-    productId: old.productId,
+  final updated = old.copyWith(
     lastMessageText: messageText,
     lastMessageAt: messageTime,
-    buyerUnreadCount: old.buyerUnreadCount,
-    sellerUnreadCount: old.sellerUnreadCount,
-    otherUserId: old.otherUserId,
-    otherUserUsername: old.otherUserUsername,
-    otherUserAvatar: old.otherUserAvatar,
-    otherUserLastActive: old.otherUserLastActive,
-    productTitle: old.productTitle,
-    productImage: old.productImage,
-    productPrice: old.productPrice,
-    productCondition: old.productCondition,
   );
 
   FFAppState().update(() {
-    final list = List<ConversationStruct>.from(FFAppState().conversations);
+    final list = List<Conversation>.from(FFAppState().conversations);
     list.removeAt(index);
     list.insert(0, updated);
     FFAppState().conversations = list;
   });
-}
-
-MessageType _parseMessageType(dynamic type) {
-  if (type == null) return MessageType.text;
-  final typeStr = type.toString().toLowerCase();
-  switch (typeStr) {
-    case 'image':
-      return MessageType.image;
-    case 'counter_offer':
-      return MessageType.counter_offer;
-    case 'system':
-      return MessageType.system;
-    default:
-      return MessageType.text;
-  }
 }

@@ -1,4 +1,4 @@
-import '/backend/schema/structs/index.dart';
+import '/features/home/domain/models/review_model.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/date_utils.dart';
 import '/core/utils/list_extensions.dart';
@@ -14,7 +14,7 @@ class ReviewItemWidget extends StatelessWidget {
     required this.reviewDataType,
   });
 
-  final ReviewStruct? reviewDataType;
+  final Review? reviewDataType;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class ReviewItemWidget extends StatelessWidget {
                   child: CachedNetworkImage(
                     fadeInDuration: Duration(milliseconds: 500),
                     fadeOutDuration: Duration(milliseconds: 500),
-                    imageUrl: reviewDataType!.reviewer.avatarUrl,
+                    imageUrl: reviewDataType!.reviewer?.avatarUrl ?? '',
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -58,7 +58,7 @@ class ReviewItemWidget extends StatelessWidget {
                     children: [
                       Text(
                         valueOrDefault<String>(
-                          reviewDataType?.reviewer.username,
+                          reviewDataType?.reviewer?.username,
                           'N/A',
                         ),
                         style: GoogleFonts.inter(

@@ -1,6 +1,12 @@
 // Automatic FlutterFlow imports
-import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/features/home/domain/models/product_details_model.dart';
+import '/features/home/domain/models/product_image_model.dart';
+import '/features/home/domain/models/seller_model.dart';
+import '/features/browse/domain/models/category_model.dart';
+import '/features/browse/domain/models/subcategory_model.dart';
+import '/features/browse/domain/models/condition_model.dart';
+import '/features/browse/domain/models/tag_model.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -13,7 +19,7 @@ import 'package:flutter/material.dart';
 import '/custom_code/actions/index.dart';
 import '/flutter_flow/custom_functions.dart';
 
-Future<ProductDetailsStruct?> getProductDetails(
+Future<ProductDetails?> getProductDetails(
   String productId,
   String? userId,
 ) async {
@@ -33,10 +39,10 @@ Future<ProductDetailsStruct?> getProductDetails(
     final data = response;
 
     // Parse conditions (array)
-    List<ConditionStruct> conditions = [];
+    List<Condition> conditions = [];
     if (data['conditions'] != null && data['conditions'] is List) {
       conditions = (data['conditions'] as List).map((c) {
-        return ConditionStruct(
+        return Condition(
           id: c['id']?.toString() ?? '',
           name: c['name']?.toString() ?? '',
           code: c['code']?.toString() ?? '',
@@ -46,10 +52,10 @@ Future<ProductDetailsStruct?> getProductDetails(
     }
 
     // Parse category
-    CategoryStruct? category;
+    Category? category;
     if (data['category'] != null) {
       final cat = data['category'];
-      category = CategoryStruct(
+      category = Category(
         id: cat['id']?.toString() ?? '',
         name: cat['name']?.toString() ?? '',
         slug: cat['slug']?.toString() ?? '',
@@ -57,10 +63,10 @@ Future<ProductDetailsStruct?> getProductDetails(
     }
 
     // Parse subcategory
-    SubcategoryStruct? subcategory;
+    Subcategory? subcategory;
     if (data['subcategory'] != null) {
       final sub = data['subcategory'];
-      subcategory = SubcategoryStruct(
+      subcategory = Subcategory(
         id: sub['id']?.toString() ?? '',
         name: sub['name']?.toString() ?? '',
         slug: sub['slug']?.toString() ?? '',
@@ -68,10 +74,10 @@ Future<ProductDetailsStruct?> getProductDetails(
     }
 
     // Parse seller
-    SellerStruct? seller;
+    Seller? seller;
     if (data['seller'] != null) {
       final s = data['seller'];
-      seller = SellerStruct(
+      seller = Seller(
         id: s['id']?.toString() ?? '',
         username: s['username']?.toString() ?? '',
         avatarUrl: s['avatar_url']?.toString() ?? '',
@@ -85,10 +91,10 @@ Future<ProductDetailsStruct?> getProductDetails(
     }
 
     // Parse images
-    List<ProductImageStruct> images = [];
+    List<ProductImage> images = [];
     if (data['images'] != null && data['images'] is List) {
       images = (data['images'] as List).map((img) {
-        return ProductImageStruct(
+        return ProductImage(
           id: img['id']?.toString() ?? '',
           imageUrl: img['image_url']?.toString() ?? '',
           isMain: img['is_main'] == true,
@@ -98,10 +104,10 @@ Future<ProductDetailsStruct?> getProductDetails(
     }
 
     // Parse tags
-    List<TagStruct> tags = [];
+    List<Tag> tags = [];
     if (data['tags'] != null && data['tags'] is List) {
       tags = (data['tags'] as List).map((tag) {
-        return TagStruct(
+        return Tag(
           id: tag['id']?.toString() ?? '',
           name: tag['name']?.toString() ?? '',
           slug: tag['slug']?.toString() ?? '',
@@ -109,7 +115,7 @@ Future<ProductDetailsStruct?> getProductDetails(
       }).toList();
     }
 
-    return ProductDetailsStruct(
+    return ProductDetails(
       id: data['id']?.toString() ?? '',
       title: data['title']?.toString() ?? '',
       description: data['description']?.toString() ?? '',

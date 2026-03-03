@@ -7,6 +7,7 @@ import '/index.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';
+import '/features/auth/domain/models/user_settings_model.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
     _model = SettingsModel();
 
     _model.switchValue =
-        ref.read(authProvider).userSettings.swipePaymentEnabled;
+        ref.read(authProvider).userSettings?.swipePaymentEnabled ?? false;
   }
 
   @override
@@ -245,7 +246,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                   .paymentMethod
                                   .firstOrNull !=
                               null
-                          ? '**** **** **** ${authState.paymentMethod.firstOrNull?.card.last4}'
+                          ? '**** **** **** ${authState.paymentMethod.firstOrNull?.card?.last4 ?? ''}'
                           : '',
                       showTrailingIcon: true,
                       action: () async {
@@ -297,9 +298,9 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                                 color: AppColors.textPrimary,
                                               ),
                                             ),
-                                            if (authState
+                                            if (                                            (authState
                                                 .userSettings
-                                                .swipePaymentEnabled)
+                                                ?.swipePaymentEnabled ?? false))
                                               InkWell(
                                                 splashColor: Colors.transparent,
                                                 focusColor: Colors.transparent,
@@ -333,7 +334,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                                                 'en_US')
                                                             .format(authState
                                                                 .userSettings
-                                                                .dailyBudget),
+                                                                ?.dailyBudget ?? 0.0),
                                                         '0',
                                                       ),
                                                       style: GoogleFonts.inter(
@@ -359,12 +360,11 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                                 ref
                                                     .read(authProvider.notifier)
                                                     .updateUser(
-                                                  (e) => e
-                                                    ..updateUserSettings(
-                                                      (e) => e
-                                                        ..swipePaymentEnabled =
-                                                            true,
+                                                  (e) => e.copyWith(
+                                                    userSettings: (e.userSettings ?? const UserSettings()).copyWith(
+                                                      swipePaymentEnabled: true,
                                                     ),
+                                                  ),
                                                 );
                                                 setState(() {});
                                               }),
@@ -389,12 +389,11 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                                 ref
                                                     .read(authProvider.notifier)
                                                     .updateUser(
-                                                  (e) => e
-                                                    ..updateUserSettings(
-                                                      (e) => e
-                                                        ..swipePaymentEnabled =
-                                                            false,
+                                                  (e) => e.copyWith(
+                                                    userSettings: (e.userSettings ?? const UserSettings()).copyWith(
+                                                      swipePaymentEnabled: false,
                                                     ),
+                                                  ),
                                                 );
                                                 setState(() {});
                                               }),
@@ -495,7 +494,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                     ref
                                         .read(authProvider.notifier)
                                         .updateUser(
-                                      (e) => e..businessName = val,
+                                      (e) => e.copyWith(businessName: val ?? ''),
                                     );
                                     setState(() {});
                                     Navigator.pop(context);
@@ -514,7 +513,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     child: SettingsItemWidget(
                       tittle: 'Business Address',
                       value:
-                          authState.businessAddress.hasCountry()
+                          (authState.businessAddress?.country.isNotEmpty ?? false)
                               ? 'Update your address'
                               : 'Add your address',
                       showTrailingIcon: true,
@@ -566,7 +565,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                     ref
                                         .read(authProvider.notifier)
                                         .updateUser(
-                                      (e) => e..businessEmail = val,
+                                      (e) => e.copyWith(businessEmail: val ?? ''),
                                     );
                                     setState(() {});
                                     Navigator.pop(context);
@@ -588,7 +587,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        if (authState.stripe.hasAccount == false) {
+                        if ((authState.stripe?.hasAccount ?? false) == false) {
                           await actions.startStripeConnectOnboarding();
                         } else {
                           await actions.openStripeDashboard();
@@ -618,7 +617,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      !authState.stripe.hasAccount
+                                      !(authState.stripe?.hasAccount ?? false)
                                           ? 'Connect Stripe'
                                           : 'Seller Dashboard',
                                       style: GoogleFonts.inter(
@@ -631,32 +630,32 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                       () {
                                         if (authState
                                                 .stripe
-                                                .accountStatus ==
+                                                ?.accountStatus ==
                                             'not_connected') {
                                           return 'Connect Stripe to start selling';
                                         } else if (authState
                                                 .stripe
-                                                .accountStatus ==
+                                                ?.accountStatus ==
                                             'onboarding') {
                                           return 'Complete your Stripe setup to start selling';
                                         } else if (authState
                                                 .stripe
-                                                .accountStatus ==
+                                                ?.accountStatus ==
                                             'in_review') {
                                           return 'Stripe is reviewing your account';
                                         } else if (authState
                                                 .stripe
-                                                .accountStatus ==
+                                                ?.accountStatus ==
                                             'restricted') {
                                           return 'Your account requires attention';
                                         } else if (authState
                                                 .stripe
-                                                .accountStatus ==
+                                                ?.accountStatus ==
                                             'enabled') {
                                           return 'Your seller account is active';
                                         } else if (authState
                                                 .stripe
-                                                .accountStatus ==
+                                                ?.accountStatus ==
                                             'rejected') {
                                           return 'Your account has been rejected';
                                         } else {
@@ -671,20 +670,20 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                   ].divide(SizedBox(height: 8.0)),
                                 ),
                               ),
-                              if (authState.stripe.hasAccount &&
-                                  !authState.stripe.canSell)
+                              if ((authState.stripe?.hasAccount ?? false) &&
+                                  !(authState.stripe?.canSell ?? false))
                                 FaIcon(
                                   FontAwesomeIcons.hourglass,
                                   color: Color(0xFFF2BD43),
                                   size: 22.0,
                                 ),
-                              if (authState.stripe.canSell)
+                              if ((authState.stripe?.canSell ?? false))
                                 FaIcon(
                                   FontAwesomeIcons.check,
                                   color: Color(0xFF4ADE80),
                                   size: 24.0,
                                 ),
-                              if (!authState.stripe.hasAccount)
+                              if (!(authState.stripe?.hasAccount ?? false))
                                 Container(
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
@@ -812,7 +811,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     child: SettingsItemWidget(
                       tittle: 'Shipping Defaults',
                       value:
-                          '${authState.userSettings.defaultFlatShippingRate.toInt()} + ${authState.userSettings.defaultAdditionalItemFee.toInt()}',
+                          '${(authState.userSettings?.defaultFlatShippingRate ?? 0.0).toInt()} + ${(authState.userSettings?.defaultAdditionalItemFee ?? 0.0).toInt()}',
                       showTrailingIcon: true,
                       action: () async {
                         context.pushNamed(

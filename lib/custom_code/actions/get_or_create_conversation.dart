@@ -1,6 +1,6 @@
 // Automatic FlutterFlow imports
-import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/features/messages/domain/models/conversation_model.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-Future<ConversationStruct?> getOrCreateConversation(
+Future<Conversation?> getOrCreateConversation(
   String sellerId,
   String? productId,
 ) async {
@@ -32,7 +32,7 @@ Future<ConversationStruct?> getOrCreateConversation(
 
     final json = response[0];
 
-    return ConversationStruct(
+    return Conversation(
       id: json['id'] ?? '',
       buyerId: json['buyer_id'] ?? '',
       sellerId: json['seller_id'] ?? '',

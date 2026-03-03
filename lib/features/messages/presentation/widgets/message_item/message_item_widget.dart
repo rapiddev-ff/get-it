@@ -1,5 +1,5 @@
 import '/features/auth/data/supabase_auth/auth_util.dart';
-import '/backend/schema/structs/index.dart';
+import '/features/messages/domain/models/conversation_model.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/date_utils.dart';
 import '/core/utils/list_extensions.dart';
@@ -13,7 +13,7 @@ class MessageItemWidget extends StatelessWidget {
     required this.conversationDataType,
   });
 
-  final ConversationStruct? conversationDataType;
+  final Conversation? conversationDataType;
 
   bool _hasUnread() {
     if ((conversationDataType?.buyerId == currentUserUid) &&
@@ -64,7 +64,7 @@ class MessageItemWidget extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(4.0),
                         child: Image.network(
-                          conversationDataType!.productImage,
+                          conversationDataType!.productImage ?? '',
                           width: 56.0,
                           height: 56.0,
                           fit: BoxFit.cover,
@@ -178,7 +178,7 @@ class MessageItemWidget extends StatelessWidget {
                         ) !=
                         '')
                       Text(
-                        conversationDataType!.lastMessageText,
+                        conversationDataType!.lastMessageText ?? '',
                         maxLines: 1,
                         style: GoogleFonts.inter(
                           color: AppColors.textSecondary,

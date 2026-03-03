@@ -1,6 +1,6 @@
 // Automatic FlutterFlow imports
-import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/features/messages/domain/models/conversation_model.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -34,28 +34,14 @@ Future markMessagesAsRead(String conversationId) async {
 
         final isBuyer = old.buyerId == currentUserId;
 
-        final updated = ConversationStruct(
-          id: old.id,
-          buyerId: old.buyerId,
-          sellerId: old.sellerId,
-          productId: old.productId,
-          lastMessageText: old.lastMessageText,
-          lastMessageAt: old.lastMessageAt,
+        final updated = old.copyWith(
           buyerUnreadCount: isBuyer ? 0 : old.buyerUnreadCount,
           sellerUnreadCount: isBuyer ? old.sellerUnreadCount : 0,
-          otherUserId: old.otherUserId,
-          otherUserUsername: old.otherUserUsername,
-          otherUserAvatar: old.otherUserAvatar,
-          otherUserLastActive: old.otherUserLastActive,
-          productTitle: old.productTitle,
-          productImage: old.productImage,
-          productPrice: old.productPrice,
-          productCondition: old.productCondition,
         );
 
         FFAppState().update(() {
           final list =
-              List<ConversationStruct>.from(FFAppState().conversations);
+              List<Conversation>.from(FFAppState().conversations);
           list[index] = updated;
           FFAppState().conversations = list;
         });

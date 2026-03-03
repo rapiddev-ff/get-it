@@ -1,5 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
-import '/backend/schema/structs/index.dart';
+import '/features/home/domain/models/review_model.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';
@@ -474,12 +474,11 @@ class _ChatBuyerProfileWidgetState
                                         final buyerReviews = (reviewsJson
                                                     is List
                                                 ? reviewsJson
-                                                    .map<ReviewStruct?>(
-                                                        ReviewStruct
-                                                            .maybeFromMap)
-                                                    .whereType<ReviewStruct>()
+                                                    .map<Review?>((e) =>
+                                                        e is Map<String, dynamic> ? Review.fromJson(e) : null)
+                                                    .whereType<Review>()
                                                     .toList()
-                                                : <ReviewStruct>[]);
+                                                : <Review>[]);
 
                                         return ListView.separated(
                                           padding: EdgeInsets.zero,

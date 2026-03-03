@@ -1,4 +1,4 @@
-import '/backend/schema/structs/index.dart';
+import '/features/checkout/domain/models/payment_method_model.dart';
 import '/features/home/presentation/widgets/dialog/dialog_widget.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
@@ -19,7 +19,7 @@ class SettingsPaymentCardItemWidget extends StatefulWidget {
     required this.index,
   });
 
-  final PaymentMethodStruct? paymentMethod;
+  final PaymentMethod? paymentMethod;
   final int? index;
 
   @override
@@ -73,7 +73,7 @@ class _SettingsPaymentCardItemWidgetState
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '\u2022\u2022\u2022\u2022 \u2022\u2022\u2022\u2022 \u2022\u2022\u2022\u2022 ${widget.paymentMethod?.card.last4}',
+                          '\u2022\u2022\u2022\u2022 \u2022\u2022\u2022\u2022 \u2022\u2022\u2022\u2022 ${widget.paymentMethod?.card?.last4 ?? ''}',
                           style: GoogleFonts.inter(
                             fontWeight: FontWeight.normal,
                             fontSize: 14.0,
@@ -81,7 +81,7 @@ class _SettingsPaymentCardItemWidgetState
                           ),
                         ),
                         Text(
-                          'Expires ${widget.paymentMethod?.card.expMonth.toString()}/${widget.paymentMethod?.card.expYear.toString()}',
+                          'Expires ${widget.paymentMethod?.card?.expMonth.toString() ?? ''}/${widget.paymentMethod?.card?.expYear.toString() ?? ''}',
                           style: GoogleFonts.inter(
                             fontWeight: FontWeight.normal,
                             fontSize: 12.0,
@@ -133,7 +133,7 @@ class _SettingsPaymentCardItemWidgetState
             ),
             Text(
               valueOrDefault<String>(
-                widget.paymentMethod?.billingDetails.name,
+                widget.paymentMethod?.billingDetails?.name,
                 'N/A',
               ),
               style: GoogleFonts.inter(
@@ -144,10 +144,10 @@ class _SettingsPaymentCardItemWidgetState
             ),
             Text(
               '${valueOrDefault<String>(
-                widget.paymentMethod?.billingDetails.addressLine1,
+                widget.paymentMethod?.billingDetails?.addressLine1,
                 'n/a',
               )}, ${valueOrDefault<String>(
-                widget.paymentMethod?.billingDetails.addressLine2,
+                widget.paymentMethod?.billingDetails?.addressLine2,
                 'n/a',
               )}',
               style: GoogleFonts.inter(

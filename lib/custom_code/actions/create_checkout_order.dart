@@ -1,6 +1,6 @@
 // Automatic FlutterFlow imports
-import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/features/checkout/domain/models/checkout_order_result_model.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -14,7 +14,7 @@ import '/custom_code/actions/index.dart';
 import '/flutter_flow/custom_functions.dart';
 
 // Custom Action: createCheckoutOrder
-// Return Type: CheckoutOrderResultStruct? (nullable)
+// Return Type: CheckoutOrderResult? (nullable)
 // Arguments:
 //   productId (String)
 //   quantity (int)
@@ -25,7 +25,7 @@ import '/flutter_flow/custom_functions.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-Future<CheckoutOrderResultStruct?> createCheckoutOrder(
+Future<CheckoutOrderResult?> createCheckoutOrder(
   String productId,
   int quantity,
   String? shippingAddressId,
@@ -57,7 +57,7 @@ Future<CheckoutOrderResultStruct?> createCheckoutOrder(
       return null;
     }
 
-    return CheckoutOrderResultStruct(
+    return CheckoutOrderResult(
       success: true,
       orderId: json['order_id'] ?? '',
       orderNumber: json['order_number'] ?? '',

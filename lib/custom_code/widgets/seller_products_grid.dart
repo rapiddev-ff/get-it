@@ -1,5 +1,4 @@
 // Automatic FlutterFlow imports
-import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -11,6 +10,7 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import '/features/home/domain/models/seller_product_model.dart';
 import '/custom_code/widgets/index.dart';
 import '/custom_code/actions/index.dart';
 import '/flutter_flow/custom_functions.dart';
@@ -48,14 +48,14 @@ class SellerProductsGrid extends StatefulWidget {
   final double padding;
   final int pageSize;
   final Future Function(String productId)? onProductTap;
-  final Widget Function(SellerProductStruct? sellerProduct)? itemBuilder;
+  final Widget Function(SellerProduct? sellerProduct)? itemBuilder;
 
   @override
   State<SellerProductsGrid> createState() => _SellerProductsGridState();
 }
 
 class _SellerProductsGridState extends State<SellerProductsGrid> {
-  final List<SellerProductStruct> _products = [];
+  final List<SellerProduct> _products = [];
 
   bool _isLoading = false;
   bool _hasMore = true;
@@ -116,7 +116,7 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
       final total = data['total'] as int? ?? 0;
 
       final newProducts = productsJson.map((json) {
-        return SellerProductStruct(
+        return SellerProduct(
           id: json['id']?.toString() ?? '',
           title: json['title']?.toString() ?? '',
           price: (json['price'] as num?)?.toDouble() ?? 0.0,

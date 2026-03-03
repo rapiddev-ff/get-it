@@ -73,7 +73,11 @@ String? serializeParam(
         data = json.encode(param);
 
       case ParamType.DataStruct:
-        data = param is BaseStruct ? param.serialize() : null;
+        try {
+          data = (param as dynamic).serialize() as String?;
+        } catch (_) {
+          data = null;
+        }
 
       case ParamType.Enum:
         data = (param is Enum) ? param.serialize() : null;

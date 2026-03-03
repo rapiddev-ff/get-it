@@ -8,8 +8,19 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'lat_lng.dart';
 import 'place.dart';
 import 'uploaded_file.dart';
-import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/features/auth/domain/models/user_model.dart';
+import '/features/auth/domain/models/user_settings_model.dart';
+import '/features/auth/domain/models/business_address_model.dart';
+import '/features/home/domain/models/product_details_model.dart';
+import '/features/browse/domain/models/category_model.dart';
+import '/features/browse/domain/models/subcategory_model.dart';
+import '/features/browse/domain/models/condition_model.dart';
+import '/features/checkout/domain/models/stripe_account_status_model.dart';
+import '/features/checkout/domain/models/payment_method_model.dart';
+import '/features/checkout/domain/models/payment_card_model.dart';
+import '/features/checkout/domain/models/billing_details_model.dart';
+import '/features/checkout/domain/models/shipping_address_model.dart';
 import '/backend/supabase/supabase.dart';
 import '/features/auth/data/supabase_auth/auth_util.dart';
 
@@ -76,7 +87,7 @@ bool containsProfanity(String text) {
   return false;
 }
 
-UserDataStruct convertUserToDataType(
+UserData convertUserToDataType(
   dynamic initialData,
   dynamic paymentMethods,
 ) {
@@ -179,7 +190,7 @@ UserDataStruct convertUserToDataType(
   }
 
   // ── Build Stripe status struct ─────────────────────────────────────────
-  StripeAccountStatusStruct stripeStatus = StripeAccountStatusStruct(
+  StripeAccountStatus stripeStatus = StripeAccountStatus(
     hasAccount: stripeRow != null,
     stripeAccountId: stripeRow?['stripe_account_id'],
     chargesEnabled: stripeRow?['charges_enabled'] ?? false,
@@ -200,7 +211,7 @@ UserDataStruct convertUserToDataType(
   );
 
   // ── Parse payment methods ──────────────────────────────────────────────
-  List<PaymentMethodStruct> paymentMethodsList = [];
+  List<PaymentMethod> paymentMethodsList = [];
   String? defaultPaymentMethodId;
   bool hasStripeCustomer = false;
 
@@ -220,10 +231,10 @@ UserDataStruct convertUserToDataType(
 
       final List<dynamic> methods = responseMap['payment_methods'] ?? [];
       paymentMethodsList = methods.map((pm) {
-        PaymentCardStruct? cardStruct;
+        PaymentCard? cardStruct;
         if (pm['card'] != null) {
           final card = pm['card'];
-          cardStruct = PaymentCardStruct(
+          cardStruct = PaymentCard(
             brand: card['brand'] ?? '',
             last4: card['last4'] ?? '',
             expMonth: card['exp_month'] ?? 0,
@@ -232,11 +243,11 @@ UserDataStruct convertUserToDataType(
           );
         }
 
-        BillingDetailsStruct? billingStruct;
+        BillingDetails? billingStruct;
         if (pm['billing_details'] != null) {
           final billing = pm['billing_details'];
           final address = billing['address'] ?? {};
-          billingStruct = BillingDetailsStruct(
+          billingStruct = BillingDetails(
             name: billing['name'] ?? '',
             email: billing['email'] ?? '',
             phone: billing['phone'] ?? '',
@@ -249,7 +260,7 @@ UserDataStruct convertUserToDataType(
           );
         }
 
-        return PaymentMethodStruct(
+        return PaymentMethod(
           id: pm['id'] ?? '',
           type: pm['type'] ?? 'card',
           card: cardStruct,
@@ -264,7 +275,7 @@ UserDataStruct convertUserToDataType(
   }
 
   // ── Parse business address ─────────────────────────────────────────────
-  BusinessAddressStruct businessAddressStruct = BusinessAddressStruct(
+  BusinessAddress businessAddressStruct = BusinessAddress(
     addressLine1: userRow['business_address_line1'] ?? '',
     addressLine2: userRow['business_address_line2'] ?? '',
     country: userRow['business_country'] ?? '',
@@ -274,7 +285,7 @@ UserDataStruct convertUserToDataType(
   );
 
   // ── Parse user settings ────────────────────────────────────────────────
-  UserSettingsStruct userSettingsStruct = UserSettingsStruct(
+  UserSettings userSettingsStruct = UserSettings(
     swipePaymentEnabled: userSettingsRow?['swipe_payment_enabled'] ?? false,
     dailyBudget: userSettingsRow?['daily_budget'] ?? 0,
     dailyBudgetUsed: userSettingsRow?['daily_budget_used'] ?? 0,
@@ -294,7 +305,7 @@ UserDataStruct convertUserToDataType(
       ? shippingAddresses.first as Map<String, dynamic>
       : null;
 
-  ShippingAddressStruct shippingAddressStruct = ShippingAddressStruct(
+  ShippingAddress shippingAddressStruct = ShippingAddress(
     fullName: defaultAddress?['full_name'] ?? '',
     addressLine1: defaultAddress?['address_line1'] ?? '',
     addressLine2: defaultAddress?['address_line2'] ?? '',
@@ -304,8 +315,8 @@ UserDataStruct convertUserToDataType(
     country: defaultAddress?['country'] ?? '',
   );
 
-  // ── Build and return UserDataStruct ────────────────────────────────────
-  return UserDataStruct(
+  // ── Build and return UserData ────────────────────────────────────
+  return UserData(
     id: userRow['id'],
     userId: userRow['user_id'],
     username: userRow['username'],
@@ -460,8 +471,8 @@ String usernameValidationResult(String? username) {
   return 'valid';
 }
 
-List<ProductDetailsStruct>? filterProductsWishlist(
-  List<ProductDetailsStruct> products,
+List<ProductDetails>? filterProductsWishlist(
+  List<ProductDetails> products,
   String? searchQuery,
   String? categoryId,
 ) {
@@ -490,7 +501,7 @@ List<ProductDetailsStruct>? filterProductsWishlist(
   }).toList();
 }
 
-List<CategoryStruct>? convertCategoriesToDataType(
+List<Category>? convertCategoriesToDataType(
   List<dynamic> categoriesRows,
   List<dynamic> subcategories,
 ) {
@@ -502,14 +513,14 @@ List<CategoryStruct>? convertCategoriesToDataType(
     final categorySubcategories = subcategories
         .map((s) => s as Map<String, dynamic>)
         .where((sub) => sub['category_id'] == categoryRow['id'])
-        .map((sub) => SubcategoryStruct(
+        .map((sub) => Subcategory(
               id: sub['id'],
               name: sub['name'],
               slug: sub['slug'],
             ))
         .toList();
 
-    return CategoryStruct(
+    return Category(
       id: categoryRow['id'],
       name: categoryRow['name'],
       slug: categoryRow['slug'],
@@ -518,13 +529,13 @@ List<CategoryStruct>? convertCategoriesToDataType(
   }).toList();
 }
 
-List<ConditionStruct>? convertConditionsToDataType(
+List<Condition>? convertConditionsToDataType(
     List<dynamic> conditionsRows) {
   if (conditionsRows.isEmpty) return null;
 
   return conditionsRows.map((c) {
     final row = c as Map<String, dynamic>;
-    return ConditionStruct(
+    return Condition(
       id: row['id'],
       name: row['name'],
       code: row['code'],
@@ -600,9 +611,9 @@ String getRequirementMessages(List<String> requirements) {
       .join('\n');
 }
 
-StripeAccountStatusStruct convertStripeStatus(StripeAccountsRow? stripeData) {
+StripeAccountStatus convertStripeStatus(StripeAccountsRow? stripeData) {
   if (stripeData == null) {
-    return StripeAccountStatusStruct(
+    return StripeAccountStatus(
       hasAccount: false,
       chargesEnabled: false,
       payoutsEnabled: false,
@@ -640,7 +651,7 @@ StripeAccountStatusStruct convertStripeStatus(StripeAccountsRow? stripeData) {
     }
   }
 
-  return StripeAccountStatusStruct(
+  return StripeAccountStatus(
     hasAccount: true,
     stripeAccountId: stripeData.stripeAccountId,
     chargesEnabled: stripeData.chargesEnabled ?? false,

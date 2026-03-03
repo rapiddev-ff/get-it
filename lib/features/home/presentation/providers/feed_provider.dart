@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '/backend/schema/structs/index.dart';
+import '/features/home/domain/models/feed_product_model.dart';
 
 class FeedState {
   FeedState({
@@ -9,13 +9,13 @@ class FeedState {
     this.currentCardIndex = 0,
   });
 
-  final List<FeedProductStruct> feedProducts;
+  final List<FeedProduct> feedProducts;
   final bool feedHasMore;
   final List<String> swipedProductIds;
   final int currentCardIndex;
 
   FeedState copyWith({
-    List<FeedProductStruct>? feedProducts,
+    List<FeedProduct>? feedProducts,
     bool? feedHasMore,
     List<String>? swipedProductIds,
     int? currentCardIndex,
@@ -33,17 +33,17 @@ class FeedNotifier extends Notifier<FeedState> {
   @override
   FeedState build() => FeedState();
 
-  void setFeedProducts(List<FeedProductStruct> products) {
+  void setFeedProducts(List<FeedProduct> products) {
     state = state.copyWith(feedProducts: products);
   }
 
-  void addToFeedProducts(FeedProductStruct product) {
+  void addToFeedProducts(FeedProduct product) {
     state = state.copyWith(
       feedProducts: [...state.feedProducts, product],
     );
   }
 
-  void removeFromFeedProducts(FeedProductStruct product) {
+  void removeFromFeedProducts(FeedProduct product) {
     state = state.copyWith(
       feedProducts: state.feedProducts.where((p) => p != product).toList(),
     );
@@ -56,14 +56,14 @@ class FeedNotifier extends Notifier<FeedState> {
 
   void updateFeedProductsAtIndex(
     int index,
-    FeedProductStruct Function(FeedProductStruct) updateFn,
+    FeedProduct Function(FeedProduct) updateFn,
   ) {
     final list = [...state.feedProducts];
     list[index] = updateFn(list[index]);
     state = state.copyWith(feedProducts: list);
   }
 
-  void insertAtIndexInFeedProducts(int index, FeedProductStruct product) {
+  void insertAtIndexInFeedProducts(int index, FeedProduct product) {
     final list = [...state.feedProducts]..insert(index, product);
     state = state.copyWith(feedProducts: list);
   }

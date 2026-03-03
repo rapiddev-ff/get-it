@@ -1,4 +1,4 @@
-import '/backend/schema/structs/index.dart';
+import '/features/home/domain/models/seller_product_model.dart';
 import '/core/utils/value_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,7 +11,7 @@ class HomeSellerProductWidget extends StatelessWidget {
     required this.productDataType,
   });
 
-  final SellerProductStruct? productDataType;
+  final SellerProduct? productDataType;
 
   @override
   Widget build(BuildContext context) {

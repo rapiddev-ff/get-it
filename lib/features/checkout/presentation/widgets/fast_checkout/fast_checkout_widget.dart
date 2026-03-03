@@ -1,4 +1,4 @@
-import '/backend/schema/structs/index.dart';
+import '/features/home/domain/models/feed_product_model.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/custom_code/actions/index.dart' as actions;
@@ -13,7 +13,7 @@ class FastCheckoutWidget extends StatefulWidget {
     required this.orderId,
   });
 
-  final FeedProductStruct? feedProduct;
+  final FeedProduct? feedProduct;
   final String? orderId;
 
   @override

@@ -1,5 +1,4 @@
 // Automatic FlutterFlow imports
-import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -11,6 +10,7 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import '/features/home/domain/models/seller_product_model.dart';
 import '/custom_code/widgets/index.dart';
 import '/custom_code/actions/index.dart';
 import '/flutter_flow/custom_functions.dart';
@@ -53,7 +53,7 @@ class InfiniteProductGrid extends StatefulWidget {
   final double padding;
   final int pageSize;
   final Future Function(String productId)? onProductTap;
-  final Widget Function(SellerProductStruct? sellerProduct)? itemBuilder;
+  final Widget Function(SellerProduct? sellerProduct)? itemBuilder;
   final Future Function(int total)? onTotalChanged;
 
   @override
@@ -62,7 +62,7 @@ class InfiniteProductGrid extends StatefulWidget {
 
 class _InfiniteProductGridState extends State<InfiniteProductGrid> {
   final ScrollController _scrollController = ScrollController();
-  final List<SellerProductStruct> _products = [];
+  final List<SellerProduct> _products = [];
 
   bool _isLoading = false;
   bool _hasMore = true;
@@ -117,8 +117,8 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
     }
   }
 
-  SellerProductStruct _mapToStruct(Map<String, dynamic> data) {
-    return SellerProductStruct(
+  SellerProduct _mapToStruct(Map<String, dynamic> data) {
+    return SellerProduct(
       id: data['id'] as String?,
       title: data['title'] as String?,
       price: (data['price'] as num?)?.toDouble(),
@@ -397,7 +397,7 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
     );
   }
 
-  Widget _buildProductCard(BuildContext context, SellerProductStruct product) {
+  Widget _buildProductCard(BuildContext context, SellerProduct product) {
     return GestureDetector(
       onTap: () {
         if (widget.onProductTap != null && (product.id?.isNotEmpty == true)) {

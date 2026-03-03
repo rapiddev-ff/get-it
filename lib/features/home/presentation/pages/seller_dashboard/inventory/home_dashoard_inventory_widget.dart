@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' hide Category;
+import 'package:flutter/material.dart' hide Category;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -8,7 +8,8 @@ import 'package:go_router/go_router.dart';
 import 'dart:async';
 
 import '/features/auth/data/supabase_auth/auth_util.dart';
-import '/backend/schema/structs/index.dart';
+import '/features/browse/domain/models/category_model.dart';
+import '/features/home/domain/models/seller_product_model.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/core/theme/app_colors.dart';
 import '/core/constants/app_constants.dart';
@@ -35,7 +36,7 @@ class _HomeDashoardInventoryWidgetState
   bool _isKeyboardVisible = false;
 
   // Inlined model state
-  CategoryStruct? choosenCategory;
+  Category? choosenCategory;
   int? itemsCount = 0;
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
@@ -278,7 +279,7 @@ class _HomeDashoardInventoryWidgetState
                           ),
                           Builder(
                             builder: (context) {
-                              final categories = <CategoryStruct>[];
+                              final categories = <Category>[];
 
                               return Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -384,7 +385,7 @@ class _HomeDashoardInventoryWidgetState
                           itemsCount = total;
                           setState(() {});
                         },
-                        itemBuilder: (SellerProductStruct? sellerProduct) =>
+                        itemBuilder: (SellerProduct? sellerProduct) =>
                             InventoryItemWidget(
                           sellerProduct: sellerProduct,
                         ),

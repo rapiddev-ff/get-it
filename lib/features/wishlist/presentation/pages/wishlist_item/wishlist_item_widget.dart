@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:octo_image/octo_image.dart';
 
-import '/backend/schema/structs/index.dart';
+import '/features/home/domain/models/product_details_model.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 
@@ -18,7 +18,7 @@ class WishlistItemWidget extends StatelessWidget {
     required this.actionWishlish,
   });
 
-  final ProductDetailsStruct? productDataType;
+  final ProductDetails? productDataType;
   final Future Function()? actionWishlish;
 
   @override

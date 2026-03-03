@@ -2,7 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '/backend/schema/structs/index.dart';
+import '/backend/schema/util/schema_util.dart';
+import '/features/messages/domain/models/conversation_model.dart';
+import '/features/home/domain/models/feed_product_model.dart';
+import '/features/home/domain/models/seller_model.dart';
+import '/features/home/domain/models/seller_product_model.dart';
+import '/features/checkout/domain/models/payment_method_model.dart';
 
 import '/features/auth/data/base_auth_user_provider.dart';
 
@@ -277,7 +282,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   'conversation',
                   ParamType.DataStruct,
                   isList: false,
-                  structBuilder: ConversationStruct.fromSerializableMap,
+                  structBuilder: Conversation.fromSerializableMap,
                 ),
               ),
             ),
@@ -380,7 +385,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   'feedProductItem',
                   ParamType.DataStruct,
                   isList: false,
-                  structBuilder: FeedProductStruct.fromSerializableMap,
+                  structBuilder: FeedProduct.fromSerializableMap,
                 ),
                 initialQuantity: params.getParam(
                   'initialQuantity',
@@ -405,7 +410,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   'paymentMethod',
                   ParamType.DataStruct,
                   isList: false,
-                  structBuilder: PaymentMethodStruct.fromSerializableMap,
+                  structBuilder: PaymentMethod.fromSerializableMap,
                 ),
                 index: params.getParam(
                   'index',
@@ -491,7 +496,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   'sellerDataType',
                   ParamType.DataStruct,
                   isList: false,
-                  structBuilder: SellerStruct.fromSerializableMap,
+                  structBuilder: Seller.fromSerializableMap,
                 ),
               ),
             ),
@@ -503,7 +508,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   'sellerDataType',
                   ParamType.DataStruct,
                   isList: false,
-                  structBuilder: SellerStruct.fromSerializableMap,
+                  structBuilder: Seller.fromSerializableMap,
                 ),
               ),
             ),
@@ -515,13 +520,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   'sellerDataType',
                   ParamType.DataStruct,
                   isList: false,
-                  structBuilder: SellerStruct.fromSerializableMap,
+                  structBuilder: Seller.fromSerializableMap,
                 ),
                 product: params.getParam(
                   'product',
                   ParamType.DataStruct,
                   isList: false,
-                  structBuilder: SellerProductStruct.fromSerializableMap,
+                  structBuilder: SellerProduct.fromSerializableMap,
                 ),
               ),
             ),

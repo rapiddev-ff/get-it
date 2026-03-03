@@ -1,6 +1,12 @@
 // Automatic FlutterFlow imports
-import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/features/home/domain/models/product_details_model.dart';
+import '/features/home/domain/models/product_image_model.dart';
+import '/features/home/domain/models/seller_model.dart';
+import '/features/browse/domain/models/category_model.dart';
+import '/features/browse/domain/models/subcategory_model.dart';
+import '/features/browse/domain/models/condition_model.dart';
+import '/features/browse/domain/models/tag_model.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -15,7 +21,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 RealtimeChannel? _wishlistSubscription;
 
-Future<List<ProductDetailsStruct>> initWishlistStream(String userId) async {
+Future<List<ProductDetails>> initWishlistStream(String userId) async {
   final data = await _fetchWishlistProducts(userId);
 
   FFAppState().update(() {
@@ -46,7 +52,7 @@ Future<List<ProductDetailsStruct>> initWishlistStream(String userId) async {
   return data;
 }
 
-Future<List<ProductDetailsStruct>> _fetchWishlistProducts(String userId) async {
+Future<List<ProductDetails>> _fetchWishlistProducts(String userId) async {
   try {
     final response = await SupaFlow.client.rpc(
       'get_wishlist_products',
@@ -55,8 +61,8 @@ Future<List<ProductDetailsStruct>> _fetchWishlistProducts(String userId) async {
 
     if (response is! List || response.isEmpty) return [];
 
-    return response.map<ProductDetailsStruct>((item) {
-      return ProductDetailsStruct(
+    return response.map<ProductDetails>((item) {
+      return ProductDetails(
         id: item['id']?.toString() ?? '',
         title: item['title']?.toString() ?? '',
         description: item['description']?.toString(),
@@ -108,10 +114,10 @@ Future<List<ProductDetailsStruct>> _fetchWishlistProducts(String userId) async {
   }
 }
 
-List<ConditionStruct> _parseConditions(dynamic json) {
+List<Condition> _parseConditions(dynamic json) {
   if (json == null || json is! List) return [];
-  return json.map<ConditionStruct>((c) {
-    return ConditionStruct(
+  return json.map<Condition>((c) {
+    return Condition(
       id: c['id']?.toString() ?? '',
       name: c['name']?.toString() ?? '',
       code: c['code']?.toString() ?? '',
@@ -120,30 +126,30 @@ List<ConditionStruct> _parseConditions(dynamic json) {
   }).toList();
 }
 
-CategoryStruct? _parseCategory(dynamic json) {
+Category? _parseCategory(dynamic json) {
   if (json == null) return null;
   final data = json as Map<String, dynamic>;
-  return CategoryStruct(
+  return Category(
     id: data['id']?.toString() ?? '',
     name: data['name']?.toString() ?? '',
     slug: data['slug']?.toString() ?? '',
   );
 }
 
-SubcategoryStruct? _parseSubcategory(dynamic json) {
+Subcategory? _parseSubcategory(dynamic json) {
   if (json == null) return null;
   final data = json as Map<String, dynamic>;
-  return SubcategoryStruct(
+  return Subcategory(
     id: data['id']?.toString() ?? '',
     name: data['name']?.toString() ?? '',
     slug: data['slug']?.toString() ?? '',
   );
 }
 
-SellerStruct? _parseSeller(dynamic json) {
+Seller? _parseSeller(dynamic json) {
   if (json == null) return null;
   final data = json as Map<String, dynamic>;
-  return SellerStruct(
+  return Seller(
     id: data['id']?.toString() ?? '',
     username: data['username']?.toString() ?? '',
     avatarUrl: data['avatar_url']?.toString() ?? '',
@@ -156,10 +162,10 @@ SellerStruct? _parseSeller(dynamic json) {
   );
 }
 
-List<ProductImageStruct> _parseImages(dynamic json) {
+List<ProductImage> _parseImages(dynamic json) {
   if (json == null || json is! List) return [];
-  return json.map<ProductImageStruct>((item) {
-    return ProductImageStruct(
+  return json.map<ProductImage>((item) {
+    return ProductImage(
       id: item['id']?.toString() ?? '',
       imageUrl: item['image_url']?.toString() ?? '',
       isMain: item['is_main'] == true,
@@ -168,10 +174,10 @@ List<ProductImageStruct> _parseImages(dynamic json) {
   }).toList();
 }
 
-List<TagStruct> _parseTags(dynamic json) {
+List<Tag> _parseTags(dynamic json) {
   if (json == null || json is! List) return [];
-  return json.map<TagStruct>((item) {
-    return TagStruct(
+  return json.map<Tag>((item) {
+    return Tag(
       id: item['id']?.toString() ?? '',
       name: item['name']?.toString() ?? '',
       slug: item['slug']?.toString() ?? '',

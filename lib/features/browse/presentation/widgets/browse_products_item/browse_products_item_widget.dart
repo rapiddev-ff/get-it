@@ -1,4 +1,4 @@
-import '/backend/schema/structs/index.dart';
+import '/features/browse/domain/models/browse_product_model.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/value_utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -12,7 +12,7 @@ class BrowseProductsItemWidget extends StatelessWidget {
     required this.browseDataType,
   });
 
-  final BrowseProductStruct? browseDataType;
+  final BrowseProduct? browseDataType;
 
   @override
   Widget build(BuildContext context) {

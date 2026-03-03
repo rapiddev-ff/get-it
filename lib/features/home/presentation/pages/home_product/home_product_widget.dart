@@ -2,7 +2,9 @@ import 'dart:math';
 
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/app_state.dart';
-import '/backend/schema/structs/index.dart';
+import '/features/home/domain/models/product_details_model.dart';
+import '/features/messages/domain/models/conversation_model.dart';
+import '/features/home/domain/models/feed_product_model.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
 import '/core/theme/app_colors.dart';
@@ -37,9 +39,9 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   // Inlined from HomeProductModel
-  ProductDetailsStruct? _getProduct;
+  ProductDetails? _getProduct;
   PageController? _pageViewController;
-  ConversationStruct? _getOrCreateConversation;
+  Conversation? _getOrCreateConversation;
 
 
   @override
@@ -312,7 +314,7 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
                             HomeSellerProfileWidget.routeName,
                             queryParameters: {
                               'sellerId':
-                                  _getProduct?.seller.id ?? '',
+                                  _getProduct?.seller?.id ?? '',
                             },
                           );
                         },
@@ -339,7 +341,7 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
                                     fadeOutDuration:
                                         Duration(milliseconds: 500),
                                     imageUrl: valueOrDefault<String>(
-                                      _getProduct?.seller.avatarUrl,
+                                      _getProduct?.seller?.avatarUrl,
                                       'https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=s0aTdmT5aU6b8ot7VKm11DeID6NctRCpB755rA1BIP0=',
                                     ),
                                     fit: BoxFit.cover,
@@ -354,7 +356,7 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
                                     children: [
                                       Text(
                                         valueOrDefault<String>(
-                                          _getProduct?.seller.username,
+                                          _getProduct?.seller?.username,
                                           'N/A',
                                         ),
                                         style: GoogleFonts.inter(
@@ -374,7 +376,7 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
                                               size: 18.0,
                                             ),
                                             Text(
-                                              '${_getProduct?.seller.ratingAsSeller.toString()} (${_getProduct?.seller.totalReviewsAsSeller.toString()} reviews)',
+                                              '${_getProduct?.seller?.ratingAsSeller.toString()} (${_getProduct?.seller?.totalReviewsAsSeller.toString()} reviews)',
                                               style: GoogleFonts.inter(
                                                 color: Color(0xFFAFAFB4),
                                                 fontSize: 12.0,
@@ -606,7 +608,7 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
                       thickness: 2.0,
                       color: Color(0xFF363636),
                     ),
-                    if (currentUserUid != _getProduct?.seller.id)
+                    if (currentUserUid != _getProduct?.seller?.id)
                       Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -618,7 +620,7 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
                                 onPressed: () async {
                                   _getOrCreateConversation =
                                       await actions.getOrCreateConversation(
-                                    _getProduct!.seller.id,
+                                    _getProduct!.seller?.id ?? '',
                                     widget.productId,
                                   );
                                   FFAppState().currentConversation =
@@ -677,44 +679,44 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
                                   context.pushNamed(
                                     CheckoutWidget.routeName,
                                     queryParameters: {
-                                      'feedProductItem': FeedProductStruct(
-                                        id: _getProduct?.id,
-                                        title: _getProduct?.title,
+                                      'feedProductItem': FeedProduct(
+                                        id: _getProduct?.id ?? '',
+                                        title: _getProduct?.title ?? '',
                                         description:
-                                            _getProduct?.description,
-                                        price: _getProduct?.price,
+                                            _getProduct?.description ?? '',
+                                        price: _getProduct?.price ?? 0.0,
                                         originalPrice:
                                             _getProduct?.originalPrice,
                                         flashSaleEnabled:
-                                            _getProduct?.flashSaleEnabled,
+                                            _getProduct?.flashSaleEnabled ?? false,
                                         flashSalePrice:
                                             _getProduct?.flashSalePrice,
                                         flashSaleEndsAt:
                                             _getProduct?.flashSaleEndsAt,
                                         conditionName: _getProduct
-                                            ?.conditions.firstOrNull?.name,
+                                            ?.conditions.firstOrNull?.name ?? '',
                                         mainImageUrl: _getProduct
-                                            ?.images.firstOrNull?.imageUrl,
+                                            ?.images.firstOrNull?.imageUrl ?? '',
                                         sellerId:
-                                            _getProduct?.seller.id,
+                                            _getProduct?.seller?.id ?? '',
                                         sellerUsername:
-                                            _getProduct?.seller.username,
+                                            _getProduct?.seller?.username ?? '',
                                         sellerAvatarUrl:
-                                            _getProduct?.seller.avatarUrl,
+                                            _getProduct?.seller?.avatarUrl,
                                         sellerRating: _getProduct
-                                            ?.seller.ratingAsSeller,
+                                            ?.seller?.ratingAsSeller ?? 0.0,
                                         sellerTotalReviews: _getProduct
-                                            ?.seller.totalReviewsAsSeller,
+                                            ?.seller?.totalReviewsAsSeller ?? 0,
                                         isInWishlist:
-                                            _getProduct?.isInWishlist,
+                                            _getProduct?.isInWishlist ?? false,
                                         createdAt:
                                             _getProduct?.createdAt,
                                         shippingPrice:
-                                            _getProduct?.shippingPrice,
+                                            _getProduct?.shippingPrice ?? 0.0,
                                         freeShipping:
-                                            _getProduct?.freeShipping,
+                                            _getProduct?.freeShipping ?? false,
                                         useSellerShipping:
-                                            _getProduct?.useSellerShipping,
+                                            _getProduct?.useSellerShipping ?? false,
                                         customFlatRate:
                                             _getProduct?.customFlatRate,
                                         customAdditionalItemFee:

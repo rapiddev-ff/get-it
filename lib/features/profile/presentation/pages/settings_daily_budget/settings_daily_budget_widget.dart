@@ -1,5 +1,6 @@
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
+import '/features/auth/domain/models/user_settings_model.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import '/core/theme/app_colors.dart';
 import '/core/constants/app_constants.dart';
@@ -50,7 +51,7 @@ class _SettingsDailyBudgetWidgetState
     }
 
     final dailyBudget =
-        ref.read(authProvider).userSettings.dailyBudget;
+        ref.read(authProvider).userSettings?.dailyBudget;
     final formattedBudget = dailyBudget != null
         ? NumberFormat('#,##0.##', 'en_US').format(dailyBudget)
         : '0';
@@ -235,12 +236,12 @@ class _SettingsDailyBudgetWidgetState
                             await Future.wait([
                               Future(() async {
                                 ref.read(authProvider.notifier).updateUser(
-                                  (e) => e
-                                    ..updateUserSettings(
-                                      (e) => e
-                                        ..dailyBudget = double.tryParse(
-                                            _model.textController!.text),
+                                  (e) => e.copyWith(
+                                    userSettings: (e.userSettings ?? const UserSettings()).copyWith(
+                                      dailyBudget: double.tryParse(
+                                          _model.textController!.text) ?? 0.0,
                                     ),
+                                  ),
                                 );
                                 setState(() {});
                               }),

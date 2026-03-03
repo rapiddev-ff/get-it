@@ -14,7 +14,8 @@ import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/uploaded_file.dart';
 import '/flutter_flow/upload_data.dart';
-import '/backend/schema/structs/index.dart';
+import '/features/home/domain/models/product_details_model.dart';
+import '/features/browse/domain/models/tag_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import '/features/home/presentation/pages/seller_dashboard/inventory_add_tags/home_dashoard_inventory_add_tags_widget.dart';
@@ -55,7 +56,7 @@ class _HomeDashoardInventoryAddWidgetState
   SubcategoriesRow? subcategory;
   List<ConditionsRow> conditionsList = [];
   String discount = 'percentage';
-  ProductDetailsStruct? getProduct;
+  ProductDetails? getProduct;
   List<CategoriesRow>? getCategory;
   List<SubcategoriesRow>? getSubcategory;
   List<ConditionsRow>? getConditions;
@@ -63,8 +64,8 @@ class _HomeDashoardInventoryAddWidgetState
   bool isDataUploading_uploadDataEdit = false;
   FFUploadedFile uploadedLocalFile_uploadDataEdit =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
-  List<TagStruct> choosenTags = [];
-  List<TagStruct> tags = [];
+  List<Tag> choosenTags = [];
+  List<Tag> tags = [];
 
   void addToUploadedImages(FFUploadedFile item) => uploadedImages.add(item);
   void removeFromUploadedImages(FFUploadedFile item) => uploadedImages.remove(item);
@@ -137,7 +138,7 @@ class _HomeDashoardInventoryAddWidgetState
           }),
           Future(() async {
             setState(() {
-              skuPrefixTextController?.text = getProduct!.sku;
+              skuPrefixTextController?.text = getProduct!.sku ?? '';
             });
           }),
           Future(() async {
@@ -217,7 +218,7 @@ class _HomeDashoardInventoryAddWidgetState
           Future(() async {
             setState(() {
               skuNumberTextController?.text =
-                  getProduct!.skuNumber;
+                  getProduct!.skuNumber ?? '';
             });
           }),
         ]);
@@ -226,7 +227,7 @@ class _HomeDashoardInventoryAddWidgetState
             getCategory = await CategoriesTable().queryRows(
               queryFn: (q) => q.eqOrNull(
                 'id',
-                getProduct?.category.id,
+                getProduct?.category?.id,
               ),
             );
           }),
@@ -234,7 +235,7 @@ class _HomeDashoardInventoryAddWidgetState
             getSubcategory = await SubcategoriesTable().queryRows(
               queryFn: (q) => q.eqOrNull(
                 'id',
-                getProduct?.subcategory.id,
+                getProduct?.subcategory?.id,
               ),
             );
           }),
@@ -250,7 +251,7 @@ class _HomeDashoardInventoryAddWidgetState
             convertImages = await actions.convertUrlsToUploadedFileList(
               getProduct!.images
                   .map((e) {
-                        final m = e.toMap();
+                        final m = e.toJson();
                         return m is Map ? m['imageUrl'] : null;
                       })
                   .toList()
@@ -266,7 +267,7 @@ class _HomeDashoardInventoryAddWidgetState
         subcategory = getSubcategory?.firstOrNull;
         conditionsList =
             getConditions!.toList().cast<ConditionsRow>();
-        discount = getProduct!.discountType;
+        discount = getProduct!.discountType ?? 'percentage';
         setState(() {});
       }
     });

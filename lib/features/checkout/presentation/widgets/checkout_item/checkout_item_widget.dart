@@ -1,4 +1,4 @@
-import '/backend/schema/structs/index.dart';
+import '/features/home/domain/models/feed_product_model.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';
@@ -17,7 +17,7 @@ class CheckoutItemWidget extends StatelessWidget {
     required this.minusQuantityAction,
   });
 
-  final FeedProductStruct? feedProduct;
+  final FeedProduct? feedProduct;
   final int? quantity;
   final Future Function()? addQuantityAction;
   final Future Function()? minusQuantityAction;

@@ -1,6 +1,6 @@
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/schema/enums/enums.dart';
-import '/backend/schema/structs/index.dart';
+import '/features/messages/domain/models/message_model.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/date_utils.dart';
@@ -20,7 +20,7 @@ class ChatItemWidget extends StatelessWidget {
     required this.messageDataType,
   });
 
-  final MessageStruct? messageDataType;
+  final Message? messageDataType;
 
   @override
   Widget build(BuildContext context) {
@@ -146,19 +146,19 @@ class ChatItemWidget extends StatelessWidget {
                                   ),
                                 ),
                                 image: CachedNetworkImageProvider(
-                                  messageDataType!.imageUrl,
+                                  messageDataType!.imageUrl ?? '',
                                 ),
                                 fit: BoxFit.contain,
                               ),
                               allowRotation: false,
-                              tag: messageDataType!.imageUrl,
+                              tag: messageDataType!.imageUrl ?? '',
                               useHeroAnimation: true,
                             ),
                           ),
                         );
                       },
                       child: Hero(
-                        tag: messageDataType!.imageUrl,
+                        tag: messageDataType!.imageUrl ?? '',
                         transitionOnUserGestures: true,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
@@ -170,7 +170,7 @@ class ChatItemWidget extends StatelessWidget {
                               ),
                             ),
                             image: CachedNetworkImageProvider(
-                              messageDataType!.imageUrl,
+                              messageDataType!.imageUrl ?? '',
                             ),
                             width: MediaQuery.sizeOf(context).width * 0.8,
                             height: 200.0,
@@ -273,19 +273,19 @@ class ChatItemWidget extends StatelessWidget {
                             ),
                           ),
                           image: CachedNetworkImageProvider(
-                            messageDataType!.imageUrl,
+                            messageDataType!.imageUrl ?? '',
                           ),
                           fit: BoxFit.contain,
                         ),
                         allowRotation: false,
-                        tag: messageDataType!.imageUrl,
+                        tag: messageDataType!.imageUrl ?? '',
                         useHeroAnimation: true,
                       ),
                     ),
                   );
                 },
                 child: Hero(
-                  tag: messageDataType!.imageUrl,
+                  tag: messageDataType!.imageUrl ?? '',
                   transitionOnUserGestures: true,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
@@ -297,7 +297,7 @@ class ChatItemWidget extends StatelessWidget {
                         ),
                       ),
                       image: CachedNetworkImageProvider(
-                        messageDataType!.imageUrl,
+                        messageDataType!.imageUrl ?? '',
                       ),
                       width: MediaQuery.sizeOf(context).width * 0.8,
                       height: 200.0,

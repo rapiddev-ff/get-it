@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
-import '/backend/schema/structs/index.dart';
+import '/features/auth/domain/models/user_model.dart';
+import '/features/home/domain/models/feed_product_model.dart';
+import '/features/home/domain/models/product_details_model.dart';
+import '/features/browse/domain/models/category_model.dart';
+import '/features/browse/domain/models/condition_model.dart';
+import '/features/browse/domain/models/tag_model.dart';
+import '/features/messages/domain/models/conversation_model.dart';
+import '/features/messages/domain/models/message_model.dart';
+import '/features/checkout/domain/models/payment_method_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:csv/csv.dart';
 import 'package:synchronized/synchronized.dart';
@@ -32,7 +40,7 @@ class FFAppState extends ChangeNotifier {
       _categories = (await secureStorage.getStringList('ff_categories'))
               ?.map((x) {
                 try {
-                  return CategoryStruct.fromSerializableMap(jsonDecode(x));
+                  return Category.fromSerializableMap(jsonDecode(x));
                 } catch (e) {
                   print("Can't decode persisted data type. Error: $e.");
                   return null;
@@ -46,7 +54,7 @@ class FFAppState extends ChangeNotifier {
       _conditions = (await secureStorage.getStringList('ff_conditions'))
               ?.map((x) {
                 try {
-                  return ConditionStruct.fromSerializableMap(jsonDecode(x));
+                  return Condition.fromSerializableMap(jsonDecode(x));
                 } catch (e) {
                   print("Can't decode persisted data type. Error: $e.");
                   return null;
@@ -92,27 +100,27 @@ class FFAppState extends ChangeNotifier {
     secureStorage.delete(key: 'ff_isHomeViewed');
   }
 
-  UserDataStruct _userData = UserDataStruct();
-  UserDataStruct get userData => _userData;
-  set userData(UserDataStruct value) {
+  UserData _userData = const UserData();
+  UserData get userData => _userData;
+  set userData(UserData value) {
     _userData = value;
   }
 
-  void updateUserDataStruct(Function(UserDataStruct) updateFn) {
-    updateFn(_userData);
+  void updateUserDataStruct(UserData Function(UserData) updateFn) {
+    _userData = updateFn(_userData);
   }
 
-  List<FeedProductStruct> _feedProducts = [];
-  List<FeedProductStruct> get feedProducts => _feedProducts;
-  set feedProducts(List<FeedProductStruct> value) {
+  List<FeedProduct> _feedProducts = [];
+  List<FeedProduct> get feedProducts => _feedProducts;
+  set feedProducts(List<FeedProduct> value) {
     _feedProducts = value;
   }
 
-  void addToFeedProducts(FeedProductStruct value) {
+  void addToFeedProducts(FeedProduct value) {
     feedProducts.add(value);
   }
 
-  void removeFromFeedProducts(FeedProductStruct value) {
+  void removeFromFeedProducts(FeedProduct value) {
     feedProducts.remove(value);
   }
 
@@ -122,26 +130,26 @@ class FFAppState extends ChangeNotifier {
 
   void updateFeedProductsAtIndex(
     int index,
-    FeedProductStruct Function(FeedProductStruct) updateFn,
+    FeedProduct Function(FeedProduct) updateFn,
   ) {
     feedProducts[index] = updateFn(_feedProducts[index]);
   }
 
-  void insertAtIndexInFeedProducts(int index, FeedProductStruct value) {
+  void insertAtIndexInFeedProducts(int index, FeedProduct value) {
     feedProducts.insert(index, value);
   }
 
-  List<ProductDetailsStruct> _wishlistProducts = [];
-  List<ProductDetailsStruct> get wishlistProducts => _wishlistProducts;
-  set wishlistProducts(List<ProductDetailsStruct> value) {
+  List<ProductDetails> _wishlistProducts = [];
+  List<ProductDetails> get wishlistProducts => _wishlistProducts;
+  set wishlistProducts(List<ProductDetails> value) {
     _wishlistProducts = value;
   }
 
-  void addToWishlistProducts(ProductDetailsStruct value) {
+  void addToWishlistProducts(ProductDetails value) {
     wishlistProducts.add(value);
   }
 
-  void removeFromWishlistProducts(ProductDetailsStruct value) {
+  void removeFromWishlistProducts(ProductDetails value) {
     wishlistProducts.remove(value);
   }
 
@@ -151,18 +159,18 @@ class FFAppState extends ChangeNotifier {
 
   void updateWishlistProductsAtIndex(
     int index,
-    ProductDetailsStruct Function(ProductDetailsStruct) updateFn,
+    ProductDetails Function(ProductDetails) updateFn,
   ) {
     wishlistProducts[index] = updateFn(_wishlistProducts[index]);
   }
 
-  void insertAtIndexInWishlistProducts(int index, ProductDetailsStruct value) {
+  void insertAtIndexInWishlistProducts(int index, ProductDetails value) {
     wishlistProducts.insert(index, value);
   }
 
-  List<CategoryStruct> _categories = [];
-  List<CategoryStruct> get categories => _categories;
-  set categories(List<CategoryStruct> value) {
+  List<Category> _categories = [];
+  List<Category> get categories => _categories;
+  set categories(List<Category> value) {
     _categories = value;
     secureStorage.setStringList(
         'ff_categories', value.map((x) => x.serialize()).toList());
@@ -172,13 +180,13 @@ class FFAppState extends ChangeNotifier {
     secureStorage.delete(key: 'ff_categories');
   }
 
-  void addToCategories(CategoryStruct value) {
+  void addToCategories(Category value) {
     categories.add(value);
     secureStorage.setStringList(
         'ff_categories', _categories.map((x) => x.serialize()).toList());
   }
 
-  void removeFromCategories(CategoryStruct value) {
+  void removeFromCategories(Category value) {
     categories.remove(value);
     secureStorage.setStringList(
         'ff_categories', _categories.map((x) => x.serialize()).toList());
@@ -192,22 +200,22 @@ class FFAppState extends ChangeNotifier {
 
   void updateCategoriesAtIndex(
     int index,
-    CategoryStruct Function(CategoryStruct) updateFn,
+    Category Function(Category) updateFn,
   ) {
     categories[index] = updateFn(_categories[index]);
     secureStorage.setStringList(
         'ff_categories', _categories.map((x) => x.serialize()).toList());
   }
 
-  void insertAtIndexInCategories(int index, CategoryStruct value) {
+  void insertAtIndexInCategories(int index, Category value) {
     categories.insert(index, value);
     secureStorage.setStringList(
         'ff_categories', _categories.map((x) => x.serialize()).toList());
   }
 
-  List<ConditionStruct> _conditions = [];
-  List<ConditionStruct> get conditions => _conditions;
-  set conditions(List<ConditionStruct> value) {
+  List<Condition> _conditions = [];
+  List<Condition> get conditions => _conditions;
+  set conditions(List<Condition> value) {
     _conditions = value;
     secureStorage.setStringList(
         'ff_conditions', value.map((x) => x.serialize()).toList());
@@ -217,13 +225,13 @@ class FFAppState extends ChangeNotifier {
     secureStorage.delete(key: 'ff_conditions');
   }
 
-  void addToConditions(ConditionStruct value) {
+  void addToConditions(Condition value) {
     conditions.add(value);
     secureStorage.setStringList(
         'ff_conditions', _conditions.map((x) => x.serialize()).toList());
   }
 
-  void removeFromConditions(ConditionStruct value) {
+  void removeFromConditions(Condition value) {
     conditions.remove(value);
     secureStorage.setStringList(
         'ff_conditions', _conditions.map((x) => x.serialize()).toList());
@@ -237,14 +245,14 @@ class FFAppState extends ChangeNotifier {
 
   void updateConditionsAtIndex(
     int index,
-    ConditionStruct Function(ConditionStruct) updateFn,
+    Condition Function(Condition) updateFn,
   ) {
     conditions[index] = updateFn(_conditions[index]);
     secureStorage.setStringList(
         'ff_conditions', _conditions.map((x) => x.serialize()).toList());
   }
 
-  void insertAtIndexInConditions(int index, ConditionStruct value) {
+  void insertAtIndexInConditions(int index, Condition value) {
     conditions.insert(index, value);
     secureStorage.setStringList(
         'ff_conditions', _conditions.map((x) => x.serialize()).toList());
@@ -302,17 +310,17 @@ class FFAppState extends ChangeNotifier {
     secureStorage.delete(key: 'ff_isPasswordRecovery');
   }
 
-  List<ConversationStruct> _conversations = [];
-  List<ConversationStruct> get conversations => _conversations;
-  set conversations(List<ConversationStruct> value) {
+  List<Conversation> _conversations = [];
+  List<Conversation> get conversations => _conversations;
+  set conversations(List<Conversation> value) {
     _conversations = value;
   }
 
-  void addToConversations(ConversationStruct value) {
+  void addToConversations(Conversation value) {
     conversations.add(value);
   }
 
-  void removeFromConversations(ConversationStruct value) {
+  void removeFromConversations(Conversation value) {
     conversations.remove(value);
   }
 
@@ -322,26 +330,26 @@ class FFAppState extends ChangeNotifier {
 
   void updateConversationsAtIndex(
     int index,
-    ConversationStruct Function(ConversationStruct) updateFn,
+    Conversation Function(Conversation) updateFn,
   ) {
     conversations[index] = updateFn(_conversations[index]);
   }
 
-  void insertAtIndexInConversations(int index, ConversationStruct value) {
+  void insertAtIndexInConversations(int index, Conversation value) {
     conversations.insert(index, value);
   }
 
-  List<MessageStruct> _currentChatMessages = [];
-  List<MessageStruct> get currentChatMessages => _currentChatMessages;
-  set currentChatMessages(List<MessageStruct> value) {
+  List<Message> _currentChatMessages = [];
+  List<Message> get currentChatMessages => _currentChatMessages;
+  set currentChatMessages(List<Message> value) {
     _currentChatMessages = value;
   }
 
-  void addToCurrentChatMessages(MessageStruct value) {
+  void addToCurrentChatMessages(Message value) {
     currentChatMessages.add(value);
   }
 
-  void removeFromCurrentChatMessages(MessageStruct value) {
+  void removeFromCurrentChatMessages(Message value) {
     currentChatMessages.remove(value);
   }
 
@@ -351,23 +359,23 @@ class FFAppState extends ChangeNotifier {
 
   void updateCurrentChatMessagesAtIndex(
     int index,
-    MessageStruct Function(MessageStruct) updateFn,
+    Message Function(Message) updateFn,
   ) {
     currentChatMessages[index] = updateFn(_currentChatMessages[index]);
   }
 
-  void insertAtIndexInCurrentChatMessages(int index, MessageStruct value) {
+  void insertAtIndexInCurrentChatMessages(int index, Message value) {
     currentChatMessages.insert(index, value);
   }
 
-  ConversationStruct _currentConversation = ConversationStruct();
-  ConversationStruct get currentConversation => _currentConversation;
-  set currentConversation(ConversationStruct value) {
+  Conversation _currentConversation = const Conversation();
+  Conversation get currentConversation => _currentConversation;
+  set currentConversation(Conversation value) {
     _currentConversation = value;
   }
 
-  void updateCurrentConversationStruct(Function(ConversationStruct) updateFn) {
-    updateFn(_currentConversation);
+  void updateCurrentConversationStruct(Conversation Function(Conversation) updateFn) {
+    _currentConversation = updateFn(_currentConversation);
   }
 
   int _activeTabIndex = 0;
@@ -382,17 +390,17 @@ class FFAppState extends ChangeNotifier {
     _totalUnreadCount = value;
   }
 
-  List<TagStruct> _choosenTags = [];
-  List<TagStruct> get choosenTags => _choosenTags;
-  set choosenTags(List<TagStruct> value) {
+  List<Tag> _choosenTags = [];
+  List<Tag> get choosenTags => _choosenTags;
+  set choosenTags(List<Tag> value) {
     _choosenTags = value;
   }
 
-  void addToChoosenTags(TagStruct value) {
+  void addToChoosenTags(Tag value) {
     choosenTags.add(value);
   }
 
-  void removeFromChoosenTags(TagStruct value) {
+  void removeFromChoosenTags(Tag value) {
     choosenTags.remove(value);
   }
 
@@ -402,24 +410,24 @@ class FFAppState extends ChangeNotifier {
 
   void updateChoosenTagsAtIndex(
     int index,
-    TagStruct Function(TagStruct) updateFn,
+    Tag Function(Tag) updateFn,
   ) {
     choosenTags[index] = updateFn(_choosenTags[index]);
   }
 
-  void insertAtIndexInChoosenTags(int index, TagStruct value) {
+  void insertAtIndexInChoosenTags(int index, Tag value) {
     choosenTags.insert(index, value);
   }
 
-  PaymentMethodStruct _choosenPaymentMethod = PaymentMethodStruct();
-  PaymentMethodStruct get choosenPaymentMethod => _choosenPaymentMethod;
-  set choosenPaymentMethod(PaymentMethodStruct value) {
+  PaymentMethod _choosenPaymentMethod = const PaymentMethod();
+  PaymentMethod get choosenPaymentMethod => _choosenPaymentMethod;
+  set choosenPaymentMethod(PaymentMethod value) {
     _choosenPaymentMethod = value;
   }
 
   void updateChoosenPaymentMethodStruct(
-      Function(PaymentMethodStruct) updateFn) {
-    updateFn(_choosenPaymentMethod);
+      PaymentMethod Function(PaymentMethod) updateFn) {
+    _choosenPaymentMethod = updateFn(_choosenPaymentMethod);
   }
 }
 

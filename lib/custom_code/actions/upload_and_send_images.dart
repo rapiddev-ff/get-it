@@ -1,6 +1,7 @@
 // Automatic FlutterFlow imports
-import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
+import '/features/messages/domain/models/message_model.dart';
+import '/features/messages/domain/models/conversation_model.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -13,13 +14,13 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 
-Future<List<MessageStruct>> uploadAndSendImages(
+Future<List<Message>> uploadAndSendImages(
   String conversationId,
   List<FFUploadedFile> images,
 ) async {
   final client = Supabase.instance.client;
   final userId = client.auth.currentUser?.id;
-  final List<MessageStruct> sentMessages = [];
+  final List<Message> sentMessages = [];
 
   if (userId == null || images.isEmpty) return [];
 
@@ -61,12 +62,12 @@ Future<List<MessageStruct>> uploadAndSendImages(
         }
       }
 
-      final newMessage = MessageStruct(
+      final newMessage = Message(
         id: json['id'] ?? '',
         conversationId: json['conversation_id'] ?? '',
         senderId: json['sender_id'] ?? '',
         content: json['content'] ?? '',
-        messageType: MessageType.image,
+        messageType: 'image',
         isRead: json['is_read'] ?? false,
         createdAt: json['created_at'] != null
             ? DateTime.parse(json['created_at']).toLocal()
@@ -117,27 +118,13 @@ void _updateConversationLastMessage(
   if (index == -1) return;
 
   final old = conversations[index];
-  final updated = ConversationStruct(
-    id: old.id,
-    buyerId: old.buyerId,
-    sellerId: old.sellerId,
-    productId: old.productId,
+  final updated = old.copyWith(
     lastMessageText: messageText,
     lastMessageAt: messageTime,
-    buyerUnreadCount: old.buyerUnreadCount,
-    sellerUnreadCount: old.sellerUnreadCount,
-    otherUserId: old.otherUserId,
-    otherUserUsername: old.otherUserUsername,
-    otherUserAvatar: old.otherUserAvatar,
-    otherUserLastActive: old.otherUserLastActive,
-    productTitle: old.productTitle,
-    productImage: old.productImage,
-    productPrice: old.productPrice,
-    productCondition: old.productCondition,
   );
 
   FFAppState().update(() {
-    final list = List<ConversationStruct>.from(FFAppState().conversations);
+    final list = List<Conversation>.from(FFAppState().conversations);
     list.removeAt(index);
     list.insert(0, updated);
     FFAppState().conversations = list;
