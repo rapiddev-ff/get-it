@@ -1,6 +1,6 @@
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
-import '/flutter_flow/uploaded_file.dart';
+import '/core/utils/uploaded_file.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/core/utils/form_validators.dart';
 import '/core/theme/app_colors.dart';

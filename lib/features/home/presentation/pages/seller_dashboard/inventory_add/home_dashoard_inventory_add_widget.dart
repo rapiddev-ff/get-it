@@ -10,10 +10,10 @@ import '/core/theme/app_colors.dart';
 import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';
-import '/flutter_flow/flutter_flow_drop_down.dart';
-import '/flutter_flow/form_field_controller.dart';
-import '/flutter_flow/uploaded_file.dart';
-import '/flutter_flow/upload_data.dart';
+import '/core/widgets/app_drop_down.dart';
+import '/core/widgets/form_field_controller.dart';
+import '/core/utils/uploaded_file.dart';
+import '/core/utils/upload_data.dart';
 import '/features/home/domain/models/product_details_model.dart';
 import '/features/browse/domain/models/tag_model.dart';
 import 'package:go_router/go_router.dart';
@@ -1563,7 +1563,7 @@ onPressed: () {
                                       style: GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
                                     ),
                                     if (switchFlashSaleValue ?? true)
-                                      FlutterFlowDropDown<int>(
+                                      AppDropDown<int>(
                                         controller:
                                                 flashDropDownValueController ??=
                                             FormFieldController<int>(
@@ -2535,7 +2535,7 @@ onPressed: () {
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 8.0, 0.0, 0.0),
-                            child: FlutterFlowDropDown<String>(
+                            child: AppDropDown<String>(
                               controller: dropDownValueController ??=
                                   FormFieldController<String>(null),
                               options: ['Option 1', 'Option 2', 'Option 3'],

@@ -1,4 +1,3 @@
-// Automatic FlutterFlow imports
 import '/backend/schema/enums/enums.dart';
 import '/features/home/domain/models/product_details_model.dart';
 import '/features/home/domain/models/product_image_model.dart';
@@ -8,13 +7,9 @@ import '/features/browse/domain/models/subcategory_model.dart';
 import '/features/browse/domain/models/condition_model.dart';
 import '/features/browse/domain/models/tag_model.dart';
 import '/backend/supabase/supabase.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import 'index.dart'; // Imports other custom actions
-import '/flutter_flow/custom_functions.dart'; // Imports custom functions
+import '/core/state/app_state_service.dart';
+import 'index.dart';
 import 'package:flutter/material.dart';
-// Begin custom action code
-// DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 import 'dart:async';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -65,7 +60,7 @@ Future<List<ProductDetails>> _fetchWishlistProducts(String userId) async {
       return ProductDetails(
         id: item['id']?.toString() ?? '',
         title: item['title']?.toString() ?? '',
-        description: item['description']?.toString(),
+        description: item['description']?.toString() ?? '',
         price: (item['price'] as num?)?.toDouble() ?? 0.0,
         originalPrice: (item['original_price'] as num?)?.toDouble(),
         flashSaleEnabled: item['flash_sale_enabled'] == true,
@@ -142,7 +137,7 @@ Subcategory? _parseSubcategory(dynamic json) {
   return Subcategory(
     id: data['id']?.toString() ?? '',
     name: data['name']?.toString() ?? '',
-    slug: data['slug']?.toString() ?? '',
+    categoryId: data['category_id']?.toString() ?? '',
   );
 }
 

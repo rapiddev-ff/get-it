@@ -1,4 +1,4 @@
-import '/app_state.dart';
+import '/core/state/app_state_service.dart';
 import '/features/checkout/domain/models/shipping_address_model.dart';
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
@@ -7,9 +7,9 @@ import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/geo_data.dart';
 import '/core/utils/list_extensions.dart';
-import '/flutter_flow/flutter_flow_autocomplete_options_list.dart';
-import '/flutter_flow/flutter_flow_drop_down.dart';
-import '/flutter_flow/form_field_controller.dart';
+import '/core/widgets/autocomplete_options_list.dart';
+import '/core/widgets/app_drop_down.dart';
+import '/core/widgets/form_field_controller.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -715,7 +715,7 @@ class _CheckoutEditShippingAddressWidgetState
                                     color: AppColors.textPrimary,
                                   ),
                                 ),
-                                FlutterFlowDropDown<String>(
+                                AppDropDown<String>(
                                   controller:
                                       countryDropdownValueController ??=
                                           FormFieldController<String>(
@@ -782,7 +782,7 @@ class _CheckoutEditShippingAddressWidgetState
                                                   'US') ||
                                               (countryDropdownValue ==
                                                   'CA')) {
-                                            return FlutterFlowDropDown<String>(
+                                            return AppDropDown<String>(
                                               controller:
                                                   stateDropdownValueController ??=
                                                       FormFieldController<

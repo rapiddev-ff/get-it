@@ -1,19 +1,12 @@
-// Automatic FlutterFlow imports
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import 'index.dart'; // Imports other custom widgets
-import '/custom_code/actions/index.dart'; // Imports custom actions
-import '/flutter_flow/custom_functions.dart'; // Imports custom functions
+import '/core/theme/app_colors.dart';
+import 'index.dart';
+import '/custom_code/actions/index.dart';
 import 'package:flutter/material.dart';
-// Begin custom widget code
-// DO NOT REMOVE OR MODIFY THE CODE ABOVE!
+import 'package:google_fonts/google_fonts.dart';
 
 import '/features/home/domain/models/seller_product_model.dart';
-import '/custom_code/widgets/index.dart';
-import '/custom_code/actions/index.dart';
-import '/flutter_flow/custom_functions.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shimmer/shimmer.dart';
@@ -119,20 +112,20 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
 
   SellerProduct _mapToStruct(Map<String, dynamic> data) {
     return SellerProduct(
-      id: data['id'] as String?,
-      title: data['title'] as String?,
-      price: (data['price'] as num?)?.toDouble(),
-      originalPrice: (data['original_price'] as num?)?.toDouble(),
-      status: data['status'] as String?,
-      viewsCount: data['views_count'] as int?,
-      conditionName: data['condition_name'] as String?,
-      mainImageUrl: data['main_image_url'] as String?,
+      id: data['id']?.toString() ?? '',
+      title: data['title']?.toString() ?? '',
+      price: (data['price'] as num?)?.toDouble() ?? 0.0,
+      originalPrice: (data['original_price'] as num?)?.toDouble() ?? 0.0,
+      status: data['status']?.toString() ?? '',
+      viewsCount: (data['views_count'] as num?)?.toInt() ?? 0,
+      conditionName: data['condition_name']?.toString() ?? '',
+      mainImageUrl: data['main_image_url']?.toString() ?? '',
       isInWishlist: data['is_in_wishlist'] as bool? ?? false,
       createdAt: data['created_at'] != null
           ? DateTime.tryParse(data['created_at'].toString())
           : null,
-      quantity: data['quantity'] as int?,
-      categoryId: data['category_id'] as String?,
+      quantity: (data['quantity'] as num?)?.toInt() ?? 0,
+      categoryId: data['category_id']?.toString() ?? '',
     );
   }
 
@@ -181,7 +174,6 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
         _isLoading = false;
       });
 
-      // Вызываем onTotalChanged только при первой странице
       if (isFirstPage && widget.onTotalChanged != null) {
         widget.onTotalChanged!(total);
       }
@@ -305,9 +297,7 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = FlutterFlowTheme.of(context);
-
-    // Shimmer при первой загрузке или поиске
+    // Shimmer on initial load or search
     if ((_isInitialLoad && _isLoading) || _isSearching) {
       return _buildShimmerGrid();
     }
@@ -317,22 +307,26 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.error_outline, size: 48, color: theme.error),
+            Icon(Icons.error_outline, size: 48, color: AppColors.error),
             const SizedBox(height: 16),
-            Text('Error loading products', style: theme.bodyMedium),
+            Text('Error loading products',
+                style: GoogleFonts.inter(
+                    fontSize: 14, color: AppColors.textPrimary)),
             const SizedBox(height: 8),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 _error ?? '',
-                style: theme.bodySmall?.copyWith(color: theme.error),
+                style: GoogleFonts.inter(
+                    fontSize: 12, color: AppColors.error),
                 textAlign: TextAlign.center,
               ),
             ),
             const SizedBox(height: 16),
             TextButton(
               onPressed: _refresh,
-              child: Text('Retry', style: TextStyle(color: theme.primary)),
+              child:
+                  Text('Retry', style: TextStyle(color: AppColors.primary)),
             ),
           ],
         ),
@@ -345,13 +339,14 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.inventory_2_outlined,
-                size: 64, color: theme.secondaryText),
+                size: 64, color: AppColors.textSecondary),
             const SizedBox(height: 16),
             Text(
               widget.searchText?.isNotEmpty == true
                   ? 'No products found for "${widget.searchText}"'
                   : 'No products found',
-              style: theme.bodyLarge,
+              style: GoogleFonts.inter(
+                  fontSize: 16, color: AppColors.textPrimary),
               textAlign: TextAlign.center,
             ),
           ],
@@ -388,7 +383,7 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Center(
-                  child: CircularProgressIndicator(color: theme.primary),
+                  child: CircularProgressIndicator(color: AppColors.primary),
                 ),
               ),
             ),

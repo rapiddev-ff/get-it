@@ -1,4 +1,3 @@
-// Automatic FlutterFlow imports
 import '/backend/schema/enums/enums.dart';
 import '/features/home/domain/models/seller_model.dart';
 import '/features/home/domain/models/seller_product_model.dart';
@@ -9,16 +8,8 @@ import '/features/home/domain/models/review_image_model.dart';
 import '/features/home/domain/models/reviewer_model.dart';
 import '/features/home/domain/models/review_product_model.dart';
 import '/backend/supabase/supabase.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import 'index.dart'; // Imports other custom actions
-import '/flutter_flow/custom_functions.dart'; // Imports custom functions
+import 'index.dart';
 import 'package:flutter/material.dart';
-// Begin custom action code
-// DO NOT REMOVE OR MODIFY THE CODE ABOVE!
-
-import '/custom_code/actions/index.dart';
-import '/flutter_flow/custom_functions.dart';
 
 List<Review> _parseReviews(List? rawList) {
   final reviewsList = <Review>[];
@@ -170,7 +161,7 @@ Future<Seller?> getSellerInfo(
       id: data['id']?.toString() ?? '',
       username: data['username']?.toString() ?? '',
       avatarUrl: data['avatar_url']?.toString() ?? '',
-      bio: data['bio']?.toString(),
+      bio: data['bio']?.toString() ?? '',
       ratingAsSeller: (data['rating_as_seller'] as num?)?.toDouble() ?? 0.0,
       totalReviewsAsSeller:
           (data['total_reviews_as_seller'] as num?)?.toInt() ?? 0,

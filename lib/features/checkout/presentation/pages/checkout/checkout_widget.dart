@@ -1,4 +1,4 @@
-import '/app_state.dart';
+import '/core/state/app_state_service.dart';
 import '/features/home/domain/models/feed_product_model.dart';
 import '/features/checkout/domain/models/checkout_totals_model.dart';
 import '/features/checkout/domain/models/checkout_order_result_model.dart';

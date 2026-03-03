@@ -562,7 +562,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                                   children: [
                                     PasswordComponentWidget(
                                       isActive: (_model.passwordTextController
-                                                  .text.length) >=
+                                                  ?.text.length ?? 0) >=
                                           8,
                                       text: 'Minimum 8 characters',
                                     ),
@@ -608,12 +608,12 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                                       child: PasswordComponentWidget(
                                         isActive: (_model
                                                     .passwordTextController
-                                                    .text ==
+                                                    ?.text ==
                                                 _model
                                                     .confirmPasswordTextController
-                                                    .text) &&
+                                                    ?.text) &&
                                             (_model.passwordTextController
-                                                    .text !=
+                                                    ?.text !=
                                                 ''),
                                         text: 'Passwords match',
                                       ),

@@ -14,7 +14,7 @@ import '/core/constants/app_constants.dart';
 import '/core/utils/value_utils.dart';
 import '/core/utils/list_extensions.dart';
 import '/index.dart';
-import '/app_state.dart';
+import '/core/state/app_state_service.dart';
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_debounce/easy_debounce.dart';

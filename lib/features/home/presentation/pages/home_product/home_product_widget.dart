@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import '/features/auth/data/supabase_auth/auth_util.dart';
-import '/app_state.dart';
+import '/core/state/app_state_service.dart';
 import '/features/home/domain/models/product_details_model.dart';
 import '/features/messages/domain/models/conversation_model.dart';
 import '/features/home/domain/models/feed_product_model.dart';
@@ -10,7 +10,7 @@ import '/index.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';
-import '/flutter_flow/custom_icons.dart' show FFIcons;
+import '/core/widgets/custom_icons.dart' show AppIcons;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
 import 'package:cached_network_image/cached_network_image.dart';
@@ -97,7 +97,7 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
                     ),
                   ),
                   icon: Icon(
-                    FFIcons.karrowBack,
+                    AppIcons.karrowBack,
                     color: AppColors.info,
                     size: 24.0,
                   ),
@@ -120,7 +120,7 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
                     ),
                   ),
                   icon: Icon(
-                    FFIcons.khelp,
+                    AppIcons.khelp,
                     color: AppColors.info,
                     size: 20.0,
                   ),
@@ -740,7 +740,7 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(
-                                      FFIcons.kadd,
+                                      AppIcons.kadd,
                                       color: Colors.white,
                                       size: 28.0,
                                     ),

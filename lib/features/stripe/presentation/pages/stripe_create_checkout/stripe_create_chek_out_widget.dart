@@ -1,8 +1,8 @@
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/theme/app_colors.dart';
-import '/flutter_flow/flutter_flow_web_view.dart';
-import '/flutter_flow/instant_timer.dart';
+import '/core/widgets/app_web_view.dart';
+import '/core/utils/instant_timer.dart';
 import '/core/router/app_router.dart';
 import '/features/stripe/presentation/pages/stripe_success/stripe_success_widget.dart';
 import '/features/stripe/presentation/pages/stripe_refresh/stripe_refresh_widget.dart';
@@ -95,7 +95,7 @@ class _StripeCreateChekOutWidgetState extends State<StripeCreateChekOutWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              FlutterFlowWebView(
+              AppWebView(
                 content: ((widget.checkoutDetail is Map)
                         ? widget.checkoutDetail['url']
                         : null)

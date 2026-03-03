@@ -1,4 +1,3 @@
-// Automatic FlutterFlow imports
 import '/backend/schema/enums/enums.dart';
 import '/features/home/domain/models/product_details_model.dart';
 import '/features/home/domain/models/product_image_model.dart';
@@ -8,16 +7,8 @@ import '/features/browse/domain/models/subcategory_model.dart';
 import '/features/browse/domain/models/condition_model.dart';
 import '/features/browse/domain/models/tag_model.dart';
 import '/backend/supabase/supabase.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import 'index.dart'; // Imports other custom actions
-import '/flutter_flow/custom_functions.dart'; // Imports custom functions
+import 'index.dart';
 import 'package:flutter/material.dart';
-// Begin custom action code
-// DO NOT REMOVE OR MODIFY THE CODE ABOVE!
-
-import '/custom_code/actions/index.dart';
-import '/flutter_flow/custom_functions.dart';
 
 Future<ProductDetails?> getProductDetails(
   String productId,
@@ -69,7 +60,7 @@ Future<ProductDetails?> getProductDetails(
       subcategory = Subcategory(
         id: sub['id']?.toString() ?? '',
         name: sub['name']?.toString() ?? '',
-        slug: sub['slug']?.toString() ?? '',
+        categoryId: sub['category_id']?.toString() ?? '',
       );
     }
 

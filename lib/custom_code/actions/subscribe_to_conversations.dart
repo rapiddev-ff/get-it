@@ -1,17 +1,9 @@
-// Automatic FlutterFlow imports
 import '/backend/schema/enums/enums.dart';
 import '/features/messages/domain/models/conversation_model.dart';
 import '/backend/supabase/supabase.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import 'index.dart'; // Imports other custom actions
-import '/flutter_flow/custom_functions.dart'; // Imports custom functions
+import '/core/state/app_state_service.dart';
+import 'index.dart';
 import 'package:flutter/material.dart';
-// Begin custom action code
-// DO NOT REMOVE OR MODIFY THE CODE ABOVE!
-
-import '/custom_code/actions/index.dart';
-import '/flutter_flow/custom_functions.dart';
 
 import '/custom_code/realtime_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

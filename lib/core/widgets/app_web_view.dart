@@ -9,10 +9,10 @@ import 'package:webviewx_plus/webviewx_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:file_picker/file_picker.dart';
 
-import 'flutter_flow_util.dart';
+bool get _isAndroid => !kIsWeb && Platform.isAndroid;
 
-class FlutterFlowWebView extends StatefulWidget {
-  const FlutterFlowWebView({
+class AppWebView extends StatefulWidget {
+  const AppWebView({
     Key? key,
     required this.content,
     this.width,
@@ -32,10 +32,10 @@ class FlutterFlowWebView extends StatefulWidget {
   final bool html;
 
   @override
-  _FlutterFlowWebViewState createState() => _FlutterFlowWebViewState();
+  _AppWebViewState createState() => _AppWebViewState();
 }
 
-class _FlutterFlowWebViewState extends State<FlutterFlowWebView> {
+class _AppWebViewState extends State<AppWebView> {
   @override
   Widget build(BuildContext context) => WebViewX(
         key: webviewKey,
@@ -52,14 +52,14 @@ class _FlutterFlowWebViewState extends State<FlutterFlowWebView> {
                 : SourceType.url,
         javascriptMode: JavascriptMode.unrestricted,
         onWebViewCreated: (controller) async {
-          if (controller.connector is WebViewController && isAndroid) {
+          if (controller.connector is WebViewController && _isAndroid) {
             final androidController =
                 controller.connector.platform as AndroidWebViewController;
             await androidController.setOnShowFileSelector(_androidFilePicker);
           }
         },
         navigationDelegate: (request) async {
-          if (isAndroid) {
+          if (_isAndroid) {
             if (request.content.source
                 .startsWith('https://api.whatsapp.com/send?phone')) {
               String url = request.content.source;

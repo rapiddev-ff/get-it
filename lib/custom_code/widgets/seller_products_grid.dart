@@ -1,19 +1,12 @@
-// Automatic FlutterFlow imports
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import 'index.dart'; // Imports other custom widgets
-import '/custom_code/actions/index.dart'; // Imports custom actions
-import '/flutter_flow/custom_functions.dart'; // Imports custom functions
+import '/core/theme/app_colors.dart';
+import 'index.dart';
+import '/custom_code/actions/index.dart';
 import 'package:flutter/material.dart';
-// Begin custom widget code
-// DO NOT REMOVE OR MODIFY THE CODE ABOVE!
+import 'package:google_fonts/google_fonts.dart';
 
 import '/features/home/domain/models/seller_product_model.dart';
-import '/custom_code/widgets/index.dart';
-import '/custom_code/actions/index.dart';
-import '/flutter_flow/custom_functions.dart';
 
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:shimmer/shimmer.dart';
@@ -120,11 +113,11 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
           id: json['id']?.toString() ?? '',
           title: json['title']?.toString() ?? '',
           price: (json['price'] as num?)?.toDouble() ?? 0.0,
-          originalPrice: (json['original_price'] as num?)?.toDouble(),
+          originalPrice: (json['original_price'] as num?)?.toDouble() ?? 0.0,
           status: json['status']?.toString() ?? '',
           viewsCount: (json['views_count'] as num?)?.toInt() ?? 0,
-          conditionName: json['condition_name']?.toString(),
-          mainImageUrl: json['main_image_url']?.toString(),
+          conditionName: json['condition_name']?.toString() ?? '',
+          mainImageUrl: json['main_image_url']?.toString() ?? '',
           isInWishlist: json['is_in_wishlist'] as bool? ?? false,
           createdAt: json['created_at'] != null
               ? DateTime.tryParse(json['created_at'].toString())
@@ -161,10 +154,10 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
     }
   }
 
-  Widget _buildShimmerCard(FlutterFlowTheme theme) {
+  Widget _buildShimmerCard() {
     return Container(
       decoration: BoxDecoration(
-        color: theme.secondaryBackground,
+        color: AppColors.backgroundSecondary,
         borderRadius: BorderRadius.circular(12),
       ),
       clipBehavior: Clip.antiAlias,
@@ -232,10 +225,10 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
     );
   }
 
-  Widget _buildShimmerGrid(FlutterFlowTheme theme) {
+  Widget _buildShimmerGrid() {
     return Shimmer.fromColors(
-      baseColor: theme.secondaryBackground,
-      highlightColor: theme.primaryBackground.withOpacity(0.5),
+      baseColor: AppColors.backgroundSecondary,
+      highlightColor: AppColors.backgroundPrimary.withOpacity(0.5),
       child: GridView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -247,33 +240,33 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
           crossAxisSpacing: widget.crossAxisSpacing,
         ),
         itemCount: 6, // Show 6 shimmer cards
-        itemBuilder: (context, index) => _buildShimmerCard(theme),
+        itemBuilder: (context, index) => _buildShimmerCard(),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = FlutterFlowTheme.of(context);
-
-    // Shimmer при первой загрузке
+    // Shimmer on initial load
     if (_isInitialLoad && _isLoading) {
-      return _buildShimmerGrid(theme);
+      return _buildShimmerGrid();
     }
 
     if (_error != null && _products.isEmpty) {
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.error_outline, size: 48, color: theme.error),
+          Icon(Icons.error_outline, size: 48, color: AppColors.error),
           const SizedBox(height: 16),
-          Text('Error loading products', style: theme.bodyMedium),
+          Text('Error loading products',
+              style: GoogleFonts.inter(
+                  fontSize: 14, color: AppColors.textPrimary)),
           const SizedBox(height: 8),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(
               _error ?? '',
-              style: theme.bodySmall?.copyWith(color: theme.error),
+              style: GoogleFonts.inter(fontSize: 12, color: AppColors.error),
               textAlign: TextAlign.center,
             ),
           ),
@@ -283,7 +276,7 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
               _reset();
               _loadProducts();
             },
-            child: Text('Retry', style: TextStyle(color: theme.primary)),
+            child: Text('Retry', style: TextStyle(color: AppColors.primary)),
           ),
         ],
       );
@@ -294,9 +287,11 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(Icons.inventory_2_outlined,
-              size: 64, color: theme.secondaryText),
+              size: 64, color: AppColors.textSecondary),
           const SizedBox(height: 16),
-          Text('No products found', style: theme.bodyLarge),
+          Text('No products found',
+              style: GoogleFonts.inter(
+                  fontSize: 16, color: AppColors.textPrimary)),
         ],
       );
     }
@@ -329,7 +324,7 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
               onTap: () => _handleProductTap(product.id),
               child: Container(
                 decoration: BoxDecoration(
-                  color: theme.secondaryBackground,
+                  color: AppColors.backgroundSecondary,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Center(child: Text(product.title)),
@@ -348,7 +343,7 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: _isLoading
-                  ? CircularProgressIndicator(color: theme.primary)
+                  ? CircularProgressIndicator(color: AppColors.primary)
                   : const SizedBox(height: 1),
             ),
           )

@@ -1,15 +1,11 @@
-// Automatic FlutterFlow imports
 import '/backend/schema/enums/enums.dart';
 import '/features/browse/domain/models/browse_product_model.dart';
 import '/backend/supabase/supabase.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import 'index.dart'; // Imports other custom widgets
-import '/custom_code/actions/index.dart'; // Imports custom actions
-import '/flutter_flow/custom_functions.dart'; // Imports custom functions
+import '/core/theme/app_colors.dart';
+import 'index.dart';
+import '/custom_code/actions/index.dart';
 import 'package:flutter/material.dart';
-// Begin custom widget code
-// DO NOT REMOVE OR MODIFY THE CODE ABOVE!
+import 'package:google_fonts/google_fonts.dart';
 
 import 'dart:async';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -192,7 +188,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
   void _handleProductTap(BrowseProduct product) async {
     if (widget.onProductTap == null) {
       debugPrint(
-          '[BrowseProductsGrid] onProductTap is null — not wired in FlutterFlow');
+          '[BrowseProductsGrid] onProductTap is null -- not wired in FlutterFlow');
       return;
     }
     try {
@@ -239,7 +235,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
 
         if (widget.itemBuilder == null) {
           debugPrint(
-              '[BrowseProductsGrid] itemBuilder is null — no card to render');
+              '[BrowseProductsGrid] itemBuilder is null -- no card to render');
           return const SizedBox.shrink();
         }
 
@@ -251,7 +247,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
     );
   }
 
-  // ── Empty State ──────────────────────────────────────────────
+  // -- Empty State --
 
   Widget _buildDefaultEmpty() {
     final hasFilters = (widget.searchQuery?.isNotEmpty == true) ||
@@ -267,12 +263,14 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
             Icon(
               hasFilters ? Icons.search_off : Icons.inventory_2_outlined,
               size: 64,
-              color: FlutterFlowTheme.of(context).secondaryText,
+              color: AppColors.textSecondary,
             ),
             const SizedBox(height: 16),
             Text(
               hasFilters ? 'No products found' : 'No products available',
-              style: FlutterFlowTheme.of(context).titleMedium,
+              style: GoogleFonts.inter(
+                  fontSize: 16, fontWeight: FontWeight.w500,
+                  color: AppColors.textPrimary),
             ),
             const SizedBox(height: 8),
             Text(
@@ -280,7 +278,8 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
                   ? 'Try adjusting your search or filters'
                   : 'Check back later for new listings',
               textAlign: TextAlign.center,
-              style: FlutterFlowTheme.of(context).bodyMedium,
+              style: GoogleFonts.inter(
+                  fontSize: 14, color: AppColors.textPrimary),
             ),
           ],
         ),
@@ -288,7 +287,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
     );
   }
 
-  // ── Load More ────────────────────────────────────────────────
+  // -- Load More --
 
   Widget _buildLoadMoreTrigger() {
     return VisibilityDetector(
@@ -307,7 +306,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
           child: CircularProgressIndicator(
             strokeWidth: 2,
             valueColor: AlwaysStoppedAnimation<Color>(
-              FlutterFlowTheme.of(context).primary,
+              AppColors.primary,
             ),
           ),
         ),
@@ -315,14 +314,12 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
     );
   }
 
-  // ── Shimmer ──────────────────────────────────────────────────
+  // -- Shimmer --
 
   Widget _buildShimmerGrid() {
-    final theme = FlutterFlowTheme.of(context);
-
     return Shimmer.fromColors(
-      baseColor: theme.secondaryBackground,
-      highlightColor: theme.primaryBackground.withOpacity(0.5),
+      baseColor: AppColors.backgroundSecondary,
+      highlightColor: AppColors.backgroundPrimary.withOpacity(0.5),
       child: GridView.builder(
         padding: EdgeInsets.only(
           left: widget.paddingLeft,
@@ -338,15 +335,15 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
         ),
         itemCount: widget.pageSize.clamp(4, 8),
         physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) => _buildShimmerCard(theme),
+        itemBuilder: (context, index) => _buildShimmerCard(),
       ),
     );
   }
 
-  Widget _buildShimmerCard(FlutterFlowTheme theme) {
+  Widget _buildShimmerCard() {
     return Container(
       decoration: BoxDecoration(
-        color: theme.secondaryBackground,
+        color: AppColors.backgroundSecondary,
         borderRadius: BorderRadius.circular(12),
       ),
       clipBehavior: Clip.antiAlias,
@@ -436,7 +433,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
     );
   }
 
-  // ── Error ────────────────────────────────────────────────────
+  // -- Error --
 
   Widget _buildErrorWidget() {
     return Center(
@@ -446,24 +443,26 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(Icons.error_outline,
-                size: 48, color: FlutterFlowTheme.of(context).error),
+                size: 48, color: AppColors.error),
             const SizedBox(height: 16),
             Text(
               'Failed to load products',
-              style: FlutterFlowTheme.of(context).bodyMedium,
+              style: GoogleFonts.inter(
+                  fontSize: 14, color: AppColors.textPrimary),
             ),
             const SizedBox(height: 8),
             Text(
               _error ?? 'Unknown error',
               textAlign: TextAlign.center,
-              style: FlutterFlowTheme.of(context).bodySmall,
+              style: GoogleFonts.inter(
+                  fontSize: 12, color: AppColors.textSecondary),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () => _loadProducts(reset: true),
               style: ElevatedButton.styleFrom(
-                backgroundColor: FlutterFlowTheme.of(context).primary,
-                foregroundColor: FlutterFlowTheme.of(context).info,
+                backgroundColor: AppColors.primary,
+                foregroundColor: AppColors.info,
               ),
               child: const Text('Retry'),
             ),

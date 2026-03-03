@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-class FFIcons {
-  FFIcons._();
+class AppIcons {
+  AppIcons._();
 
   static const String _getItFamily = 'GetIt';
 

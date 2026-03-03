@@ -16,7 +16,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import '/flutter_flow/uploaded_file.dart' show FFUploadedFile;
+import '/core/utils/uploaded_file.dart' show FFUploadedFile;
 
 class HomeSellerProfileReviewsStep2Widget extends StatefulWidget {
   const HomeSellerProfileReviewsStep2Widget({

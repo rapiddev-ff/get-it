@@ -6,7 +6,7 @@ import '/core/theme/app_colors.dart';
 import '/core/utils/date_utils.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';
-import '/flutter_flow/flutter_flow_expanded_image_view.dart';
+import '/core/widgets/expanded_image_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:flutter/material.dart';
@@ -136,7 +136,7 @@ class ChatItemWidget extends StatelessWidget {
                           context,
                           PageTransition(
                             type: PageTransitionType.fade,
-                            child: FlutterFlowExpandedImageView(
+                            child: ExpandedImageView(
                               image: OctoImage(
                                 placeholderBuilder: (_) => SizedBox.expand(
                                   child: Image(
@@ -264,7 +264,7 @@ class ChatItemWidget extends StatelessWidget {
                     context,
                     PageTransition(
                       type: PageTransitionType.fade,
-                      child: FlutterFlowExpandedImageView(
+                      child: ExpandedImageView(
                         image: OctoImage(
                           placeholderBuilder: (_) => SizedBox.expand(
                             child: Image(

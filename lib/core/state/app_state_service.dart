@@ -11,7 +11,8 @@ import '/features/checkout/domain/models/payment_method_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:csv/csv.dart';
 import 'package:synchronized/synchronized.dart';
-import 'flutter_flow/flutter_flow_util.dart';
+import '/core/utils/json_utils.dart';
+import 'dart:convert' show jsonDecode;
 
 class FFAppState extends ChangeNotifier {
   static FFAppState _instance = FFAppState._internal();

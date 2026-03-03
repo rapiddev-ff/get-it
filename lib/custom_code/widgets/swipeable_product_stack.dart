@@ -1,18 +1,12 @@
-// Automatic FlutterFlow imports
 import '/backend/schema/enums/enums.dart';
 import '/features/home/domain/models/feed_product_model.dart';
 import '/backend/supabase/supabase.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import 'index.dart'; // Imports other custom widgets
-import '/custom_code/actions/index.dart'; // Imports custom actions
-import '/flutter_flow/custom_functions.dart'; // Imports custom functions
+import '/core/theme/app_colors.dart';
+import '/core/state/app_state_service.dart';
+import 'index.dart';
+import '/custom_code/actions/index.dart';
 import 'package:flutter/material.dart';
-// Begin custom widget code
-// DO NOT REMOVE OR MODIFY THE CODE ABOVE!
-
-import '/custom_code/widgets/index.dart';
-import '/flutter_flow/custom_functions.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SwipeableProductStack extends StatefulWidget {
   const SwipeableProductStack({
@@ -20,7 +14,7 @@ class SwipeableProductStack extends StatefulWidget {
     this.width,
     this.height,
     required this.products,
-    // Callbacks - возвращают productId и index
+    // Callbacks - return productId and index
     this.onBuy,
     this.onHide,
     this.onSkip,
@@ -220,7 +214,6 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
     });
   }
 
-  // Форматирование цены с учётом flash sale
   String _formatPrice(FeedProduct product) {
     if (product.flashSaleEnabled &&
         product.flashSalePrice != null &&
@@ -230,7 +223,6 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
     return '\$${product.price.toStringAsFixed(2)}';
   }
 
-  // Проверка активности flash sale
   bool _isFlashSaleActive(FeedProduct product) {
     if (!product.flashSaleEnabled || product.flashSaleEndsAt == null) {
       return false;
@@ -240,10 +232,8 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
 
   @override
   Widget build(BuildContext context) {
-    final theme = FlutterFlowTheme.of(context);
-
     if (widget.products.isEmpty || _currentIndex >= widget.products.length) {
-      return _buildEmptyState(theme);
+      return _buildEmptyState();
     }
 
     return LayoutBuilder(
@@ -255,13 +245,12 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
         return Stack(
           alignment: Alignment.center,
           children: [
-            // Активная карточка (передняя)
+            // Active card (front)
             _buildActiveCard(
               widget.products[_currentIndex],
               cardWidth,
               cardHeight,
               screenWidth,
-              theme,
             ),
 
             // Swipe Up Indicator (below card)
@@ -286,14 +275,14 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
 
             // Onboarding Overlay
             if (_showOnboarding)
-              _buildOnboardingOverlay(theme, cardWidth, cardHeight),
+              _buildOnboardingOverlay(cardWidth, cardHeight),
           ],
         );
       },
     );
   }
 
-  Widget _buildEmptyState(FlutterFlowTheme theme) {
+  Widget _buildEmptyState() {
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -301,24 +290,24 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
           Icon(
             Icons.inventory_2_outlined,
             size: 64,
-            color: theme.secondaryText,
+            color: AppColors.textSecondary,
           ),
           const SizedBox(height: 16),
           Text(
             widget.emptyMessage ?? 'No more products to show',
-            style: theme.titleMedium.override(
-              fontFamily: theme.titleMediumFamily,
-              color: theme.secondaryText,
-              useGoogleFonts: true,
+            style: GoogleFonts.inter(
+              color: AppColors.textSecondary,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             'Check back later for new items',
-            style: theme.bodyMedium.override(
-              fontFamily: theme.bodyMediumFamily,
-              color: theme.secondaryText.withOpacity(0.7),
-              useGoogleFonts: true,
+            style: GoogleFonts.inter(
+              color: AppColors.textSecondary.withOpacity(0.7),
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
             ),
           ),
         ],
@@ -329,8 +318,7 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
   Widget _buildBackgroundCard(
     FeedProduct product,
     double width,
-    double height,
-    FlutterFlowTheme theme, {
+    double height, {
     required double scale,
     required double opacity,
     double offsetY = 0,
@@ -358,9 +346,9 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
                       product.mainImageUrl,
                       fit: BoxFit.cover,
                       errorBuilder: (_, __, ___) =>
-                          _buildImagePlaceholder(theme),
+                          _buildImagePlaceholder(),
                     )
-                  : _buildImagePlaceholder(theme),
+                  : _buildImagePlaceholder(),
             ),
           ),
         ),
@@ -373,12 +361,11 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
     double cardWidth,
     double cardHeight,
     double screenWidth,
-    FlutterFlowTheme theme,
   ) {
     final bgColor = widget.cardBgColor ?? const Color(0xFF252525);
     final priceColor = widget.priceTextColor ?? Colors.white;
     final cBuy = widget.colorBuy ?? const Color(0xFF4B39EF);
-    final cHide = widget.colorHide ?? theme.error;
+    final cHide = widget.colorHide ?? AppColors.error;
     final cSkip = widget.colorSkip ?? const Color(0xFFF59E0B);
 
     final double distanceX = _offset.dx.abs();
@@ -447,10 +434,10 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
                                 errorBuilder: (_, __, ___) => Container(
                                   width: cardWidth,
                                   height: cardHeight * 0.65,
-                                  color: theme.secondaryText.withOpacity(0.2),
+                                  color: AppColors.textSecondary.withOpacity(0.2),
                                   child: Icon(
                                     Icons.broken_image,
-                                    color: theme.secondaryText,
+                                    color: AppColors.textSecondary,
                                     size: 48,
                                   ),
                                 ),
@@ -458,10 +445,10 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
                             : Container(
                                 width: cardWidth,
                                 height: cardHeight * 0.65,
-                                color: theme.secondaryText.withOpacity(0.2),
+                                color: AppColors.textSecondary.withOpacity(0.2),
                                 child: Icon(
                                   Icons.image,
-                                  color: theme.secondaryText,
+                                  color: AppColors.textSecondary,
                                   size: 48,
                                 ),
                               ),
@@ -491,12 +478,10 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
                                   const SizedBox(width: 4),
                                   Text(
                                     'FLASH SALE',
-                                    style: theme.bodySmall.override(
-                                      fontFamily: theme.bodySmallFamily,
+                                    style: GoogleFonts.inter(
                                       color: Colors.white,
                                       fontSize: 10,
                                       fontWeight: FontWeight.bold,
-                                      useGoogleFonts: true,
                                     ),
                                   ),
                                 ],
@@ -594,12 +579,10 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
                                 ),
                                 child: Text(
                                   'Tap to view details',
-                                  style: theme.bodyMedium.override(
-                                    fontFamily: theme.bodyMediumFamily,
+                                  style: GoogleFonts.inter(
                                     color: Colors.white,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
-                                    useGoogleFonts: true,
                                   ),
                                 ),
                               ),
@@ -651,12 +634,10 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
                           product.title,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: theme.headlineMedium.override(
-                            fontFamily: theme.headlineMediumFamily,
-                            color: theme.primaryText,
+                          style: GoogleFonts.inter(
+                            color: AppColors.textPrimary,
                             fontSize: 22,
                             fontWeight: FontWeight.w800,
-                            useGoogleFonts: true,
                           ),
                         ),
 
@@ -666,12 +647,10 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
                         if (product.conditionName.isNotEmpty)
                           Text(
                             product.conditionName,
-                            style: theme.bodyMedium.override(
-                              fontFamily: theme.bodyMediumFamily,
-                              color: theme.secondaryText,
+                            style: GoogleFonts.inter(
+                              color: AppColors.textSecondary,
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
-                              useGoogleFonts: true,
                             ),
                           ),
 
@@ -691,23 +670,19 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
                                     product.originalPrice != null)
                                   Text(
                                     '\$${product.originalPrice!.toStringAsFixed(2)}',
-                                    style: theme.bodySmall.override(
-                                      fontFamily: theme.bodySmallFamily,
-                                      color: theme.secondaryText,
+                                    style: GoogleFonts.inter(
+                                      color: AppColors.textSecondary,
                                       fontSize: 14,
                                       decoration: TextDecoration.lineThrough,
-                                      useGoogleFonts: true,
                                     ),
                                   ),
                                 Text(
                                   _formatPrice(product),
-                                  style: theme.titleLarge.override(
-                                    fontFamily: theme.titleLargeFamily,
+                                  style: GoogleFonts.inter(
                                     color:
                                         isFlashSale ? Colors.red : priceColor,
                                     fontSize: 26,
                                     fontWeight: FontWeight.w900,
-                                    useGoogleFonts: true,
                                   ),
                                 ),
                               ],
@@ -754,11 +729,9 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
                                   children: [
                                     Text(
                                       '@${product.sellerUsername}',
-                                      style: theme.bodySmall.override(
-                                        fontFamily: theme.bodySmallFamily,
-                                        color: theme.secondaryText,
+                                      style: GoogleFonts.inter(
+                                        color: AppColors.textSecondary,
                                         fontSize: 12,
-                                        useGoogleFonts: true,
                                       ),
                                     ),
                                     if (product.sellerRating > 0)
@@ -772,11 +745,9 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
                                           const SizedBox(width: 2),
                                           Text(
                                             '${product.sellerRating.toStringAsFixed(1)} (${product.sellerTotalReviews})',
-                                            style: theme.bodySmall.override(
-                                              fontFamily: theme.bodySmallFamily,
-                                              color: theme.secondaryText,
+                                            style: GoogleFonts.inter(
+                                              color: AppColors.textSecondary,
                                               fontSize: 10,
-                                              useGoogleFonts: true,
                                             ),
                                           ),
                                         ],
@@ -817,11 +788,11 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
     );
   }
 
-  Widget _buildImagePlaceholder(FlutterFlowTheme theme) {
+  Widget _buildImagePlaceholder() {
     return Container(
-      color: theme.secondaryText.withOpacity(0.2),
+      color: AppColors.textSecondary.withOpacity(0.2),
       child: Center(
-        child: Icon(Icons.image, color: theme.secondaryText, size: 48),
+        child: Icon(Icons.image, color: AppColors.textSecondary, size: 48),
       ),
     );
   }
@@ -868,7 +839,6 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
 
   /// Builds the onboarding overlay with swipe instructions
   Widget _buildOnboardingOverlay(
-    FlutterFlowTheme theme,
     double cardWidth,
     double cardHeight,
   ) {
@@ -910,7 +880,7 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
               right: 0,
               child: Center(
                 child: Text(
-                  'Double-tap to wishlist • Tap to view details',
+                  'Double-tap to wishlist \u2022 Tap to view details',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: 'Inter',

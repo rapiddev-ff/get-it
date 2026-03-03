@@ -1,21 +1,13 @@
-// Automatic FlutterFlow imports
 import '/backend/schema/enums/enums.dart';
 import '/features/messages/domain/models/message_model.dart';
 import '/features/messages/domain/models/message_image_model.dart';
 import '/features/home/domain/models/counter_offer_model.dart';
 import '/backend/supabase/supabase.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import 'index.dart'; // Imports other custom widgets
-import '/custom_code/actions/index.dart'; // Imports custom actions
-import '/flutter_flow/custom_functions.dart'; // Imports custom functions
-import 'package:flutter/material.dart';
-// Begin custom widget code
-// DO NOT REMOVE OR MODIFY THE CODE ABOVE!
-
-import '/custom_code/widgets/index.dart';
+import '/core/theme/app_colors.dart';
+import 'index.dart';
 import '/custom_code/actions/index.dart';
-import '/flutter_flow/custom_functions.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -97,7 +89,7 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
     });
   }
 
-  // ── ЗАГРУЗКА ──
+  // -- LOADING --
 
   Future<void> _loadInitialMessages() async {
     setState(() => _isLoadingInitial = true);
@@ -111,7 +103,7 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
         });
       }
     } catch (e) {
-      debugPrint('❌ Error loading initial messages: $e');
+      debugPrint('Error loading initial messages: $e');
       if (mounted) setState(() => _isLoadingInitial = false);
     }
   }
@@ -131,7 +123,7 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
         });
       }
     } catch (e) {
-      debugPrint('❌ Error loading more messages: $e');
+      debugPrint('Error loading more messages: $e');
       if (mounted) setState(() => _isLoadingMore = false);
     }
   }
@@ -152,7 +144,7 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
     final List<Message> messages = [];
 
     for (final json in (response as List)) {
-      // Берём первое фото
+      // Get first image
       MessageImage? imageData;
       if (json['images'] != null && json['images'] is List) {
         final imgs = json['images'] as List;
@@ -205,7 +197,7 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
     return messages;
   }
 
-  // ── REALTIME ──
+  // -- REALTIME --
 
   void _subscribeRealtime() {
     if (_realtimeSubscribed) return;
@@ -258,7 +250,7 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
 
     final messageType = json['message_type']?.toString() ?? 'text';
 
-    // Для image — дозагружаем через RPC
+    // For image messages -- reload via RPC
     if (messageType == 'image') {
       try {
         final fullData =
@@ -304,7 +296,7 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
           }
         }
       } catch (e) {
-        debugPrint('❌ Error loading image message: $e');
+        debugPrint('Error loading image message: $e');
       }
 
       if (json['sender_id'] != currentUserId) _markAsRead();
@@ -361,11 +353,11 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
       await Supabase.instance.client.rpc('mark_messages_as_read',
           params: {'p_conversation_id': widget.conversationId});
     } catch (e) {
-      debugPrint('⚠️ Error marking as read: $e');
+      debugPrint('Error marking as read: $e');
     }
   }
 
-  // ── SCROLL ──
+  // -- SCROLL --
 
   void _onScroll() {
     final maxScroll = _scrollController.position.maxScrollExtent;
@@ -402,7 +394,7 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
     });
   }
 
-  // ── BUILD ──
+  // -- BUILD --
 
   @override
   Widget build(BuildContext context) {
@@ -424,9 +416,8 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
       return Center(
           child: widget.emptyWidget?.call() ??
               Text('No messages yet',
-                  style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: 'Inter',
-                      color: FlutterFlowTheme.of(context).secondaryText)));
+                  style: GoogleFonts.inter(
+                      color: AppColors.textSecondary)));
     }
 
     return ListView.separated(

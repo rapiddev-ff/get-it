@@ -60,7 +60,7 @@ class CategoriesNotifier extends AsyncNotifier<List<Category>> {
   }
 
   Future<void> removeAtIndex(int index) async {
-    final current = [...(state.valueOrNull ?? [])]..removeAt(index);
+    final current = <Category>[...(state.valueOrNull ?? [])]..removeAt(index);
     await _persist(current);
     state = AsyncData(current);
   }
@@ -69,14 +69,14 @@ class CategoriesNotifier extends AsyncNotifier<List<Category>> {
     int index,
     Category Function(Category) updateFn,
   ) async {
-    final current = [...(state.valueOrNull ?? [])];
+    final current = <Category>[...(state.valueOrNull ?? [])];
     current[index] = updateFn(current[index]);
     await _persist(current);
     state = AsyncData(current);
   }
 
   Future<void> insertAtIndex(int index, Category category) async {
-    final current = [...(state.valueOrNull ?? [])]..insert(index, category);
+    final current = <Category>[...(state.valueOrNull ?? [])]..insert(index, category);
     await _persist(current);
     state = AsyncData(current);
   }
@@ -145,7 +145,7 @@ class ConditionsNotifier extends AsyncNotifier<List<Condition>> {
   }
 
   Future<void> removeAtIndex(int index) async {
-    final current = [...(state.valueOrNull ?? [])]..removeAt(index);
+    final current = <Condition>[...(state.valueOrNull ?? [])]..removeAt(index);
     await _persist(current);
     state = AsyncData(current);
   }
@@ -154,14 +154,14 @@ class ConditionsNotifier extends AsyncNotifier<List<Condition>> {
     int index,
     Condition Function(Condition) updateFn,
   ) async {
-    final current = [...(state.valueOrNull ?? [])];
+    final current = <Condition>[...(state.valueOrNull ?? [])];
     current[index] = updateFn(current[index]);
     await _persist(current);
     state = AsyncData(current);
   }
 
   Future<void> insertAtIndex(int index, Condition condition) async {
-    final current = [...(state.valueOrNull ?? [])]..insert(index, condition);
+    final current = <Condition>[...(state.valueOrNull ?? [])]..insert(index, condition);
     await _persist(current);
     state = AsyncData(current);
   }

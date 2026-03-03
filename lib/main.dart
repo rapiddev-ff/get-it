@@ -8,9 +8,11 @@ import '/custom_code/actions/index.dart' as actions;
 import '/features/auth/data/supabase_auth/supabase_user_provider.dart';
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
+import '/core/l10n/internationalization.dart';
+import '/core/router/app_router.dart';
+import '/core/state/app_state_service.dart';
 import '/core/theme/app_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/internationalization.dart';
+import '/core/utils/widget_extensions.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

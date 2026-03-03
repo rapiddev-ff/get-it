@@ -4,9 +4,9 @@ import '/features/browse/domain/models/condition_model.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/router/app_router.dart';
-import '/flutter_flow/flutter_flow_util.dart' show getJsonField;
+import '/core/utils/json_utils.dart' show getJsonField;
 import '/custom_code/actions/index.dart' as actions;
-import '/flutter_flow/custom_functions.dart' as functions;
+import '/core/utils/data_converters.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -14,7 +14,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '/app_state.dart';
+import '/core/state/app_state_service.dart';
 
 class CheckDataWidget extends StatefulWidget {
   const CheckDataWidget({

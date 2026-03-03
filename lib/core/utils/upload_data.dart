@@ -8,8 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mime_type/mime_type.dart';
 import 'package:video_player/video_player.dart';
 
-import '/flutter_flow/flutter_flow_theme.dart';
-import 'flutter_flow_util.dart';
+import '/core/utils/uploaded_file.dart';
 
 const allowedFormats = {'image/png', 'image/jpeg', 'video/mp4', 'image/gif'};
 
@@ -94,7 +93,7 @@ Future<List<SelectedFile>?> selectMediaWithSourceBottomSheet({
                     textAlign: TextAlign.center,
                     style: GoogleFonts.getFont(
                       pickerFontFamily,
-                      color: textColor.applyAlpha(0.65),
+                      color: textColor.withValues(alpha: 0.65),
                       fontWeight: FontWeight.w500,
                       fontSize: 20,
                     ),
@@ -272,7 +271,7 @@ Future<List<SelectedFile>?> selectFiles({
           _getStoragePath(storageFolderPath, file.name, false, index);
       return SelectedFile(
         storagePath: storagePath,
-        filePath: isWeb ? null : file.path,
+        filePath: kIsWeb ? null : file.path,
         bytes: file.bytes!,
         originalFilename: file.name,
       );
@@ -286,7 +285,7 @@ Future<List<SelectedFile>?> selectFiles({
   return [
     SelectedFile(
       storagePath: storagePath,
-      filePath: isWeb ? null : file.path,
+      filePath: kIsWeb ? null : file.path,
       bytes: file.bytes!,
       originalFilename: file.name,
     )
@@ -365,12 +364,7 @@ void showUploadMessage(
             if (showLoading)
               Padding(
                 padding: EdgeInsetsDirectional.only(end: 10.0),
-                child: CircularProgressIndicator(
-                  valueColor: Theme.of(context).brightness == Brightness.dark
-                      ? AlwaysStoppedAnimation<Color>(
-                          FlutterFlowTheme.of(context).accent4)
-                      : null,
-                ),
+                child: CircularProgressIndicator(),
               ),
             Text(message),
           ],

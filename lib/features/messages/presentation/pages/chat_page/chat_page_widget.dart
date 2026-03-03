@@ -5,8 +5,8 @@ import '/features/home/presentation/widgets/empty_state/empty_state_widget.dart'
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';
-import '/flutter_flow/upload_data.dart';
-import '/flutter_flow/uploaded_file.dart';
+import '/core/utils/upload_data.dart';
+import '/core/utils/uploaded_file.dart';
 import '/features/messages/presentation/widgets/chat_item/chat_item_widget.dart';
 import '/features/messages/presentation/widgets/chat_more/chat_more_widget.dart';
 import '/custom_code/actions/index.dart' as actions;

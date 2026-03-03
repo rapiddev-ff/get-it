@@ -1,8 +1,15 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '/backend/schema/util/schema_util.dart';
+import '/core/router/serialization_util.dart';
+import '/core/theme/app_colors.dart';
 import '/features/messages/domain/models/conversation_model.dart';
 import '/features/home/domain/models/feed_product_model.dart';
 import '/features/home/domain/models/seller_model.dart';
@@ -10,9 +17,6 @@ import '/features/home/domain/models/seller_product_model.dart';
 import '/features/checkout/domain/models/payment_method_model.dart';
 
 import '/features/auth/data/base_auth_user_provider.dart';
-
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
 
 import '/index.dart';
 
@@ -469,11 +473,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => SettingsDailyBudgetWidget(),
             ),
             FFRoute(
-              name: TestWidget.routeName,
-              path: TestWidget.routePath,
-              builder: (context, params) => TestWidget(),
-            ),
-            FFRoute(
               name: StripeSuccessCopyWidget.routeName,
               path: StripeSuccessCopyWidget.routePath,
               builder: (context, params) => StripeSuccessCopyWidget(),
@@ -688,6 +687,17 @@ class FFParameters {
   }
 }
 
+void fixStatusBarOniOS16AndBelow(BuildContext context) {
+  if (kIsWeb || !Platform.isIOS) return;
+  final brightness = Theme.of(context).brightness;
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarBrightness: brightness,
+      systemStatusBarContrastEnforced: true,
+    ),
+  );
+}
+
 class FFRoute {
   const FFRoute({
     required this.name,
@@ -737,7 +747,7 @@ class FFRoute {
                     height: 50.0,
                     child: CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(
-                        FlutterFlowTheme.of(context).primary,
+                        AppColors.primary,
                       ),
                     ),
                   ),
