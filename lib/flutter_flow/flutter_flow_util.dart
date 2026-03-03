@@ -28,7 +28,7 @@ export 'package:intl/intl.dart';
 export 'package:page_transition/page_transition.dart';
 export 'custom_icons.dart' show FFIcons;
 export 'internationalization.dart' show FFLocalizations;
-export 'nav/nav.dart';
+export '/core/router/app_router.dart';
 
 T valueOrDefault<T>(T? value, T defaultValue) =>
     (value is String && value.isEmpty) || value == null ? defaultValue : value;
@@ -281,12 +281,6 @@ void setAppLanguage(BuildContext context, String language) =>
 void setDarkModeSetting(BuildContext context, ThemeMode themeMode) =>
     MyApp.of(context).setThemeMode(themeMode);
 
-void setTextScaleFactorSetting(BuildContext context, double textScaleFactor) =>
-    MyApp.of(context).setTextScaleFactor(textScaleFactor);
-
-void incrementTextScaleFactorSetting(
-        BuildContext context, double incrementValue) =>
-    MyApp.of(context).incrementTextScaleFactor(incrementValue);
 
 void showSnackbar(
   BuildContext context,

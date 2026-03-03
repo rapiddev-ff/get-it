@@ -1,11 +1,8 @@
 import 'package:supabase_flutter/supabase_flutter.dart' hide Provider;
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/config/app_config.dart';
 
 export 'database/database.dart';
 export 'storage/storage.dart';
-
-String _kSupabaseUrl = FFDevEnvironmentValues().supabaseHost;
-String _kSupabaseAnonKey = FFDevEnvironmentValues().supabaseAnonKey;
 
 class SupaFlow {
   SupaFlow._();
@@ -17,11 +14,11 @@ class SupaFlow {
   static SupabaseClient get client => instance._supabase;
 
   static Future initialize() => Supabase.initialize(
-        url: _kSupabaseUrl,
+        url: AppConfig.supabaseUrl,
         headers: {
           'X-Client-Info': 'flutterflow',
         },
-        anonKey: _kSupabaseAnonKey,
+        anonKey: AppConfig.supabaseAnonKey,
         debug: false,
         authOptions:
             FlutterAuthClientOptions(authFlowType: AuthFlowType.implicit),

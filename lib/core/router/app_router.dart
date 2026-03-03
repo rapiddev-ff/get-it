@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '/backend/schema/structs/index.dart';
 
@@ -13,7 +12,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 
 export 'package:go_router/go_router.dart';
-export 'serialization_util.dart';
+export '/core/router/serialization_util.dart';
 
 const kTransitionInfoKey = '__transition_info__';
 
@@ -785,13 +784,22 @@ class TransitionInfo {
   static TransitionInfo appDefault() => TransitionInfo(hasTransition: false);
 }
 
-class RootPageContext {
-  const RootPageContext(this.isRootPage, [this.errorRoute]);
+class RootPageContext extends InheritedWidget {
+  const RootPageContext({
+    super.key,
+    required this.isRootPage,
+    this.errorRoute,
+    required super.child,
+  });
+
   final bool isRootPage;
   final String? errorRoute;
 
+  static RootPageContext? of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<RootPageContext>();
+
   static bool isInactiveRootPage(BuildContext context) {
-    final rootPageContext = context.read<RootPageContext?>();
+    final rootPageContext = RootPageContext.of(context);
     final isRootPage = rootPageContext?.isRootPage ?? false;
     final location = GoRouterState.of(context).uri.toString();
     return isRootPage &&
@@ -799,10 +807,15 @@ class RootPageContext {
         location != rootPageContext?.errorRoute;
   }
 
-  static Widget wrap(Widget child, {String? errorRoute}) => Provider.value(
-        value: RootPageContext(true, errorRoute),
+  static Widget wrap(Widget child, {String? errorRoute}) => RootPageContext(
+        isRootPage: true,
+        errorRoute: errorRoute,
         child: child,
       );
+
+  @override
+  bool updateShouldNotify(RootPageContext oldWidget) =>
+      isRootPage != oldWidget.isRootPage || errorRoute != oldWidget.errorRoute;
 }
 
 extension GoRouterLocationExtension on GoRouter {

@@ -1,25 +1,23 @@
-import '/custom_code/actions/index.dart' as actions;
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
-import 'auth/supabase_auth/supabase_user_provider.dart';
-import 'auth/supabase_auth/auth_util.dart';
-
+import '/custom_code/actions/index.dart' as actions;
+import '/auth/supabase_auth/supabase_user_provider.dart';
+import '/auth/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import 'flutter_flow/flutter_flow_util.dart';
-import 'flutter_flow/internationalization.dart';
+import '/core/theme/app_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/internationalization.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   GoRouter.optionURLReflectsImperativeAPIs = true;
   usePathUrlStrategy();
 
-  final environmentValues = FFDevEnvironmentValues();
-  await environmentValues.initialize();
+  await dotenv.load(fileName: '.env');
 
   // Start initial custom actions code
   await actions.lockOrientation();
@@ -35,26 +33,25 @@ void main() async {
   await actions.checkReminderMeAuth();
   // End final custom actions code
 
-  runApp(ChangeNotifierProvider(
-    create: (context) => appState,
+  runApp(ProviderScope(
     child: MyApp(),
   ));
 }
 
-class MyApp extends StatefulWidget {
-  // This widget is the root of your application.
+class MyApp extends ConsumerStatefulWidget {
+  const MyApp({super.key});
+
   @override
-  State<MyApp> createState() => _MyAppState();
+  ConsumerState<MyApp> createState() => _MyAppState();
 
   static _MyAppState of(BuildContext context) =>
       context.findAncestorStateOfType<_MyAppState>()!;
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends ConsumerState<MyApp> {
   Locale? _locale;
 
   ThemeMode _themeMode = ThemeMode.system;
-  double _textScaleFactor = 1.0;
 
   late AppStateNotifier _appStateNotifier;
   late GoRouter _router;
@@ -98,27 +95,6 @@ class _MyAppState extends State<MyApp> {
         _themeMode = mode;
       });
 
-  void setTextScaleFactor(double updatedFactor) {
-    if (updatedFactor < FlutterFlowTheme.minTextScaleFactor ||
-        updatedFactor > FlutterFlowTheme.maxTextScaleFactor) {
-      return;
-    }
-    safeSetState(() {
-      _textScaleFactor = updatedFactor;
-    });
-  }
-
-  void incrementTextScaleFactor(double incrementValue) {
-    final updatedFactor = _textScaleFactor + incrementValue;
-    if (updatedFactor < FlutterFlowTheme.minTextScaleFactor ||
-        updatedFactor > FlutterFlowTheme.maxTextScaleFactor) {
-      return;
-    }
-    safeSetState(() {
-      _textScaleFactor = updatedFactor;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
@@ -136,27 +112,9 @@ class _MyAppState extends State<MyApp> {
       supportedLocales: const [
         Locale('en'),
       ],
-      theme: ThemeData(
-        brightness: Brightness.light,
-        useMaterial3: false,
-      ),
+      theme: AppTheme.dark,
       themeMode: _themeMode,
       routerConfig: _router,
-      builder: (_, child) => MediaQuery(
-        data: MediaQuery.of(context).copyWith(
-          textScaler:
-              _textScaleFactor == FlutterFlowTheme.defaultTextScaleFactor
-                  ? MediaQuery.of(context).textScaler.clamp(
-                        minScaleFactor: FlutterFlowTheme.minTextScaleFactor,
-                        maxScaleFactor: FlutterFlowTheme.maxTextScaleFactor,
-                      )
-                  : TextScaler.linear(_textScaleFactor).clamp(
-                      minScaleFactor: FlutterFlowTheme.minTextScaleFactor,
-                      maxScaleFactor: FlutterFlowTheme.maxTextScaleFactor,
-                    ),
-        ),
-        child: child!,
-      ),
     );
   }
 }
