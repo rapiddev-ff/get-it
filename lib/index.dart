@@ -22,9 +22,9 @@ export '/profile/settings_referral/settings_referral_widget.dart'
     show SettingsReferralWidget;
 export '/profile/settings_payment_method/settings_payment_method_widget.dart'
     show SettingsPaymentMethodWidget;
-export '/notifications/notification/notification_widget.dart'
+export '/features/notifications/presentation/pages/notification/notification_widget.dart'
     show NotificationWidget;
-export '/notifications/notification_settings/notification_settings_widget.dart'
+export '/features/notifications/presentation/pages/notification_settings/notification_settings_widget.dart'
     show NotificationSettingsWidget;
 export '/profile/settings_payment_method_add/settings_payment_method_add_widget.dart'
     show SettingsPaymentMethodAddWidget;
