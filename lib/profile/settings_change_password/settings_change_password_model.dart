@@ -1,4 +1,4 @@
-import '/auth/password_component/password_component_widget.dart';
+import '/features/auth/presentation/widgets/password_component/password_component_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'settings_change_password_widget.dart' show SettingsChangePasswordWidget;
 import 'package:flutter/material.dart';

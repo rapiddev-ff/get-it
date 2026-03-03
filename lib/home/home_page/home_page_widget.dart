@@ -1,4 +1,4 @@
-import '/auth/supabase_auth/auth_util.dart';
+import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
 import '/components/seller_dashboard_ship_item_widget.dart';
 import '/core/nav_bar/nav_bar_widget.dart';

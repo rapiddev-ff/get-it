@@ -1,20 +1,20 @@
 // Export pages
-export '/auth/sign_in/sign_in_widget.dart' show SignInWidget;
-export '/auth/welcome/welcome_widget.dart' show WelcomeWidget;
+export '/features/auth/presentation/pages/sign_in/sign_in_widget.dart' show SignInWidget;
+export '/features/auth/presentation/pages/welcome/welcome_widget.dart' show WelcomeWidget;
 export '/home/home_page/home_page_widget.dart' show HomePageWidget;
-export '/auth/phone_verification_page/phone_verification_page_widget.dart'
+export '/features/auth/presentation/pages/phone_verification_page/phone_verification_page_widget.dart'
     show PhoneVerificationPageWidget;
-export '/auth/phone_verification_page2/phone_verification_page2_widget.dart'
+export '/features/auth/presentation/pages/phone_verification_page2/phone_verification_page2_widget.dart'
     show PhoneVerificationPage2Widget;
-export '/auth/sign_up/sign_up_widget.dart' show SignUpWidget;
-export '/auth/forgot_password/forgot_password_widget.dart'
+export '/features/auth/presentation/pages/sign_up/sign_up_widget.dart' show SignUpWidget;
+export '/features/auth/presentation/pages/forgot_password/forgot_password_widget.dart'
     show ForgotPasswordWidget;
-export '/auth/forgot_password_step2/forgot_password_step2_widget.dart'
+export '/features/auth/presentation/pages/forgot_password_step2/forgot_password_step2_widget.dart'
     show ForgotPasswordStep2Widget;
-export '/auth/forgot_password_step3/forgot_password_step3_widget.dart'
+export '/features/auth/presentation/pages/forgot_password_step3/forgot_password_step3_widget.dart'
     show ForgotPasswordStep3Widget;
-export '/auth/permissions/permissions_widget.dart' show PermissionsWidget;
-export '/auth/additional_info/additional_info_widget.dart'
+export '/features/auth/presentation/pages/permissions/permissions_widget.dart' show PermissionsWidget;
+export '/features/auth/presentation/pages/additional_info/additional_info_widget.dart'
     show AdditionalInfoWidget;
 export '/core/check_data/check_data_widget.dart' show CheckDataWidget;
 export '/profile/settings/settings_widget.dart' show SettingsWidget;

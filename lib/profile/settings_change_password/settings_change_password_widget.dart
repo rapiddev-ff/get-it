@@ -1,4 +1,4 @@
-import '/auth/password_component/password_component_widget.dart';
+import '/features/auth/presentation/widgets/password_component/password_component_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';

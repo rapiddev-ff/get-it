@@ -11,7 +11,7 @@ import 'uploaded_file.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
-import '/auth/supabase_auth/auth_util.dart';
+import '/features/auth/data/supabase_auth/auth_util.dart';
 
 bool checkEmailFormat(String email) {
   final emailRegex = RegExp(

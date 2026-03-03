@@ -1,4 +1,4 @@
-import '/auth/supabase_auth/auth_util.dart';
+import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/schema/structs/index.dart';
 import '/browse/browse_products_item/browse_products_item_widget.dart';
 import '/core/empty_state/empty_state_widget.dart';

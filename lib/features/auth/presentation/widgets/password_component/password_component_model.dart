@@ -1,0 +1,3 @@
+class PasswordComponentModel {
+  void dispose() {}
+}

@@ -1,0 +1,3 @@
+class WelcomeModel {
+  void dispose() {}
+}

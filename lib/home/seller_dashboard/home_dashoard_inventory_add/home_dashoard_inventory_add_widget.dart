@@ -1,4 +1,4 @@
-import '/auth/supabase_auth/auth_util.dart';
+import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';

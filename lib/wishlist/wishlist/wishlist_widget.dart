@@ -1,4 +1,4 @@
-import '/auth/supabase_auth/auth_util.dart';
+import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/core/empty_state/empty_state_widget.dart';
 import '/core/nav_bar/nav_bar_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
