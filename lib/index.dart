@@ -46,11 +46,11 @@ export '/features/videos/presentation/pages/videos/videos_widget.dart' show Vide
 export '/features/home/presentation/pages/home_seller_profile/home_seller_profile_widget.dart'
     show HomeSellerProfileWidget;
 export '/features/messages/presentation/pages/chat_page/chat_page_widget.dart' show ChatPageWidget;
-export '/stripe/stripe_success/stripe_success_widget.dart'
+export '/features/stripe/presentation/pages/stripe_success/stripe_success_widget.dart'
     show StripeSuccessWidget;
-export '/stripe/stripe_refresh/stripe_refresh_widget.dart'
+export '/features/stripe/presentation/pages/stripe_refresh/stripe_refresh_widget.dart'
     show StripeRefreshWidget;
-export '/stripe/stripe_create_chek_out/stripe_create_chek_out_widget.dart'
+export '/features/stripe/presentation/pages/stripe_create_checkout/stripe_create_chek_out_widget.dart'
     show StripeCreateChekOutWidget;
 export '/features/home/presentation/pages/seller_dashboard/earnings/home_dashoard_earnings_widget.dart'
     show HomeDashoardEarningsWidget;
@@ -74,7 +74,7 @@ export '/features/home/presentation/pages/seller_dashboard/shortlist_add/home_da
     show HomeDashoardShortlistAddWidget;
 export '/features/home/presentation/pages/seller_dashboard/shortlist/home_dashoard_shortlist_widget.dart'
     show HomeDashoardShortlistWidget;
-export '/home/checkout/checkout/checkout_widget.dart' show CheckoutWidget;
+export '/features/checkout/presentation/pages/checkout/checkout_widget.dart' show CheckoutWidget;
 export '/features/profile/presentation/pages/settings_edit_profile/settings_edit_profile_widget.dart'
     show SettingsEditProfileWidget;
 export '/features/profile/presentation/pages/settings_payment_method_edit/settings_payment_method_edit_widget.dart'
@@ -96,7 +96,7 @@ export '/features/profile/presentation/pages/settings_my_profile_followers/setti
 export '/features/profile/presentation/pages/settings_daily_budget/settings_daily_budget_widget.dart'
     show SettingsDailyBudgetWidget;
 export '/test/test_widget.dart' show TestWidget;
-export '/stripe/stripe_success_copy/stripe_success_copy_widget.dart'
+export '/features/stripe/presentation/pages/stripe_success_copy/stripe_success_copy_widget.dart'
     show StripeSuccessCopyWidget;
 export '/features/messages/presentation/pages/chat_buyer_profile/chat_buyer_profile_widget.dart'
     show ChatBuyerProfileWidget;
@@ -110,5 +110,5 @@ export '/features/profile/presentation/pages/settings_shipping_defaults/settings
     show SettingsShippingDefaultsWidget;
 export '/features/home/presentation/pages/seller_dashboard/inventory_add_tags/home_dashoard_inventory_add_tags_widget.dart'
     show HomeDashoardInventoryAddTagsWidget;
-export '/home/checkout/checkout_edit_shipping_address/checkout_edit_shipping_address_widget.dart'
+export '/features/checkout/presentation/pages/checkout_edit_shipping_address/checkout_edit_shipping_address_widget.dart'
     show CheckoutEditShippingAddressWidget;

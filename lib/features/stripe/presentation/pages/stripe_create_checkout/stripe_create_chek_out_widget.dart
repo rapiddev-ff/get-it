@@ -1,14 +1,13 @@
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
+import '/core/theme/app_colors.dart';
 import '/flutter_flow/flutter_flow_web_view.dart';
 import '/flutter_flow/instant_timer.dart';
-import '/index.dart';
+import '/core/router/app_router.dart';
+import '/features/stripe/presentation/pages/stripe_success/stripe_success_widget.dart';
+import '/features/stripe/presentation/pages/stripe_refresh/stripe_refresh_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'stripe_create_chek_out_model.dart';
-export 'stripe_create_chek_out_model.dart';
 
 class StripeCreateChekOutWidget extends StatefulWidget {
   const StripeCreateChekOutWidget({
@@ -31,14 +30,14 @@ class StripeCreateChekOutWidget extends StatefulWidget {
 }
 
 class _StripeCreateChekOutWidgetState extends State<StripeCreateChekOutWidget> {
-  late StripeCreateChekOutModel _model;
+  InstantTimer? chekPaid;
+  List<OrdersRow>? chekoutRowExist;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => StripeCreateChekOutModel());
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -47,10 +46,10 @@ class _StripeCreateChekOutWidgetState extends State<StripeCreateChekOutWidget> {
           milliseconds: 20000,
         ),
       );
-      _model.chekPaid = InstantTimer.periodic(
+      chekPaid = InstantTimer.periodic(
         duration: Duration(milliseconds: 5000),
         callback: (timer) async {
-          _model.chekoutRowExist = await OrdersTable().queryRows(
+          chekoutRowExist = await OrdersTable().queryRows(
             queryFn: (q) => q
                 .eqOrNull(
                   'id',
@@ -61,8 +60,8 @@ class _StripeCreateChekOutWidgetState extends State<StripeCreateChekOutWidget> {
                   currentUserUid,
                 ),
           );
-          if (_model.chekoutRowExist!.length > 0) {
-            if (_model.chekoutRowExist?.firstOrNull?.status == 'paid') {
+          if (chekoutRowExist!.length > 0) {
+            if (chekoutRowExist?.firstOrNull?.status == 'paid') {
               context.goNamed(StripeSuccessWidget.routeName);
             } else {
               context.goNamed(StripeRefreshWidget.routeName);
@@ -76,7 +75,7 @@ class _StripeCreateChekOutWidgetState extends State<StripeCreateChekOutWidget> {
 
   @override
   void dispose() {
-    _model.dispose();
+    chekPaid?.cancel();
 
     super.dispose();
   }
@@ -90,17 +89,17 @@ class _StripeCreateChekOutWidgetState extends State<StripeCreateChekOutWidget> {
       },
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        backgroundColor: AppColors.backgroundPrimary,
         body: SafeArea(
           top: true,
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
               FlutterFlowWebView(
-                content: getJsonField(
-                  widget.checkoutDetail,
-                  r'''$.url''',
-                ).toString(),
+                content: ((widget.checkoutDetail is Map)
+                        ? widget.checkoutDetail['url']
+                        : null)
+                    .toString(),
                 bypass: false,
                 height: MediaQuery.sizeOf(context).height * 1.0,
                 verticalScroll: false,

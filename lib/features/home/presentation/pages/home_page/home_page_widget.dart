@@ -4,7 +4,7 @@ import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
 import '/features/home/presentation/widgets/components/seller_dashboard_ship_item_widget.dart';
 import '/features/home/presentation/widgets/nav_bar/nav_bar_widget.dart';
-import '/home/checkout/fast_checkout/fast_checkout_widget.dart';
+import '/features/checkout/presentation/widgets/fast_checkout/fast_checkout_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
