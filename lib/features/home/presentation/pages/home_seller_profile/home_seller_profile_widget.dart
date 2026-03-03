@@ -4,7 +4,7 @@ import '/backend/schema/structs/index.dart';
 import '/features/home/presentation/widgets/empty_state/empty_state_widget.dart';
 import '/features/home/presentation/pages/home_seller_product/home_seller_product_widget.dart';
 import '/features/home/presentation/pages/home_seller_profile_more/home_seller_profile_more_widget.dart';
-import '/home/seller_dashboard/shortlist/shortlist_item/shortlist_item_widget.dart';
+import '/features/home/presentation/pages/seller_dashboard/shortlist_item/shortlist_item_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/core/theme/app_colors.dart';
