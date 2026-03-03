@@ -179,10 +179,8 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                     direction: Axis.horizontal,
                                     rating: valueOrDefault<double>(
                                       valueOrDefault<int>(
-                                        _getJsonInt(
-                                            getUserProfileWithReviews,
-                                            'overall',
-                                            'avgRating'),
+                                        _getJsonInt(getUserProfileWithReviews,
+                                            'overall', 'avgRating'),
                                         0,
                                       ).toDouble(),
                                       0.0,
@@ -193,10 +191,8 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                   ),
                                   Text(
                                     valueOrDefault<String>(
-                                      _getJsonValue(
-                                              getUserProfileWithReviews,
-                                              'overall',
-                                              'avgRating')
+                                      _getJsonValue(getUserProfileWithReviews,
+                                              'overall', 'avgRating')
                                           ?.toString(),
                                       '0',
                                     ),
@@ -208,10 +204,8 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                   ),
                                   Text(
                                     '${valueOrDefault<String>(
-                                      _getJsonValue(
-                                              getUserProfileWithReviews,
-                                              'overall',
-                                              'total')
+                                      _getJsonValue(getUserProfileWithReviews,
+                                              'overall', 'total')
                                           ?.toString(),
                                       '0',
                                     )} reviews',
@@ -312,8 +306,7 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                 queryParameters: {
                                   'sellerDataType':
                                       widget.sellerDataType?.serialize(),
-                                  'product':
-                                      purchasedProductsItem.serialize(),
+                                  'product': purchasedProductsItem.serialize(),
                                 },
                               );
                             },

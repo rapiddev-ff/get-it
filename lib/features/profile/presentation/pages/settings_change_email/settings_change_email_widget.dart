@@ -387,7 +387,6 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget> {
                             } else {
                               _model.errorPasswordRequired = true;
                               setState(() {});
-                              if (_shouldSetState) setState(() {});
                               return;
                             }
 

@@ -1,10 +1,5 @@
-import '/backend/schema/enums/enums.dart';
-import '/backend/supabase/supabase.dart';
-import '/core/utils/uploaded_file.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
-
 import 'dart:typed_data';
+import '/core/utils/uploaded_file.dart';
 import 'package:http/http.dart' as http;
 
 Future<List<FFUploadedFile>> convertUrlsToUploadedFileList(
@@ -29,9 +24,7 @@ Future<List<FFUploadedFile>> convertUrlsToUploadedFileList(
         }
         results.add(FFUploadedFile(name: fileName, bytes: bytes));
       }
-    } catch (e) {
-      print('Error converting URL $imageUrl: $e');
-    }
+    } catch (e) {}
   }));
 
   return results;

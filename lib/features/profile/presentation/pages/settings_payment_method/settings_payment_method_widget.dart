@@ -82,8 +82,7 @@ class _SettingsPaymentMethodWidgetState
                         EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                     child: Builder(
                       builder: (context) {
-                        final paymentMethods =
-                            userData.paymentMethod.toList();
+                        final paymentMethods = userData.paymentMethod.toList();
 
                         return ListView.separated(
                           padding: EdgeInsets.zero,

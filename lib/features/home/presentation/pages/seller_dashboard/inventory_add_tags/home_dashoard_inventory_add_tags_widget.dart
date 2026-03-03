@@ -67,8 +67,9 @@ class _HomeDashoardInventoryAddTagsWidgetState
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<TagsRow>>(
-      stream: homeDashoardInventoryAddTagsSupabaseStream ??=
-          SupaFlow.client.from("tags").stream(primaryKey: ['id']).map(
+      stream: homeDashoardInventoryAddTagsSupabaseStream ??= SupaFlow.client
+          .from("tags")
+          .stream(primaryKey: ['id']).map(
               (list) => list.map((item) => TagsRow(item)).toList()),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
@@ -235,10 +236,10 @@ class _HomeDashoardInventoryAddTagsWidgetState
                             child: Builder(
                               builder: (context) {
                                 final tagsList = _searchTags(
-                                        textController!.text,
-                                        homeDashoardInventoryAddTagsTagsRowList
-                                            .toList())
-                                    ?.toList() ??
+                                            textController!.text,
+                                            homeDashoardInventoryAddTagsTagsRowList
+                                                .toList())
+                                        ?.toList() ??
                                     [];
 
                                 return Wrap(
@@ -322,8 +323,7 @@ class _HomeDashoardInventoryAddTagsWidgetState
                                                   height: 1.5,
                                                 ),
                                               ),
-                                              if (tags
-                                                  .contains(Tag(
+                                              if (tags.contains(Tag(
                                                 id: tagsListItem.id,
                                                 name: tagsListItem.name,
                                                 slug: tagsListItem.slug,

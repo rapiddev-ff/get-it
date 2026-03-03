@@ -522,7 +522,6 @@ class _SignInWidgetState extends State<SignInWidget> {
                             } else {
                               _model.errorEmailFormat = true;
                               setState(() {});
-                              if (_shouldSetState) setState(() {});
                               return;
                             }
 
@@ -532,11 +531,9 @@ class _SignInWidgetState extends State<SignInWidget> {
                             } else {
                               _model.errorPasswordRequired = true;
                               setState(() {});
-                              if (_shouldSetState) setState(() {});
                               return;
                             }
 
-                            // TODO: migrate to Riverpod — FFAppState().keepSignedIn = _model.keepSignedIn;
                             setState(() {});
                             _model.supabaseLogin = await actions.supabaseLogin(
                               _model.emailTextController!.text,
@@ -565,10 +562,9 @@ class _SignInWidgetState extends State<SignInWidget> {
                                 );
                               }
                             } else {
-                              final loginMessage =
-                                  (_model.supabaseLogin is Map)
-                                      ? _model.supabaseLogin['message']
-                                      : null;
+                              final loginMessage = (_model.supabaseLogin is Map)
+                                  ? _model.supabaseLogin['message']
+                                  : null;
                               _model.errorSignIn = loginMessage?.toString();
                               setState(() {});
                             }

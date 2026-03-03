@@ -26,8 +26,7 @@ class KeepSignedInNotifier extends AsyncNotifier<bool> {
   }
 }
 
-final keepSignedInProvider =
-    AsyncNotifierProvider<KeepSignedInNotifier, bool>(
+final keepSignedInProvider = AsyncNotifierProvider<KeepSignedInNotifier, bool>(
   KeepSignedInNotifier.new,
 );
 
@@ -54,8 +53,7 @@ class IsHomeViewedNotifier extends AsyncNotifier<bool> {
   }
 }
 
-final isHomeViewedProvider =
-    AsyncNotifierProvider<IsHomeViewedNotifier, bool>(
+final isHomeViewedProvider = AsyncNotifierProvider<IsHomeViewedNotifier, bool>(
   IsHomeViewedNotifier.new,
 );
 

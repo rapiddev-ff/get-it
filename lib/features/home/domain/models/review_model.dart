@@ -26,8 +26,7 @@ class Review with _$Review {
     @Default([]) List<ReviewImage> images,
   }) = _Review;
 
-  factory Review.fromJson(Map<String, dynamic> json) =>
-      _$ReviewFromJson(json);
+  factory Review.fromJson(Map<String, dynamic> json) => _$ReviewFromJson(json);
 
   String serialize() => jsonEncode(toJson());
 

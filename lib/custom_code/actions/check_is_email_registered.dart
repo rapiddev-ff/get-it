@@ -1,7 +1,4 @@
-import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
 
 Future<bool> checkIsEmailRegistered(String? email) async {
   if (email == null || email.isEmpty) return false;
@@ -15,7 +12,6 @@ Future<bool> checkIsEmailRegistered(String? email) async {
     }
     return false;
   } catch (e) {
-    print('Error: $e');
     return false;
   }
 }

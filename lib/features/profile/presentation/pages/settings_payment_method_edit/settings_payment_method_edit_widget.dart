@@ -51,8 +51,7 @@ class _SettingsPaymentMethodEditWidgetState
         text: '.... .... .... ${widget.paymentMethod?.card?.last4 ?? ''}');
     _model.cardNumberFocusNode ??= FocusNode();
 
-    _model.cardNumberMask =
-        MaskTextInputFormatter(mask: '#### #### #### ####');
+    _model.cardNumberMask = MaskTextInputFormatter(mask: '#### #### #### ####');
     _model.expireDateTextController ??= TextEditingController(
         text:
             '${widget.paymentMethod?.card?.expMonth.toString() ?? ''}/${widget.paymentMethod?.card?.expYear.toString() ?? ''}');
@@ -62,16 +61,16 @@ class _SettingsPaymentMethodEditWidgetState
     _model.textFieldaCVCTextController ??= TextEditingController();
     _model.textFieldaCVCFocusNode ??= FocusNode();
 
-    _model.cardholderNameTextController ??= TextEditingController(
-        text: widget.paymentMethod?.billingDetails?.name);
+    _model.cardholderNameTextController ??=
+        TextEditingController(text: widget.paymentMethod?.billingDetails?.name);
     _model.cardholderNameFocusNode ??= FocusNode();
 
     _model.emailAddressTextController ??= TextEditingController(
         text: widget.paymentMethod?.billingDetails?.email);
     _model.emailAddressFocusNode ??= FocusNode();
     _model.emailAddressFocusNode!.addListener(() => setState(() {}));
-    _model.fullNameTextController ??= TextEditingController(
-        text: widget.paymentMethod?.billingDetails?.name);
+    _model.fullNameTextController ??=
+        TextEditingController(text: widget.paymentMethod?.billingDetails?.name);
     _model.fullNameFocusNode ??= FocusNode();
     _model.fullNameFocusNode!.addListener(() => setState(() {}));
     _model.addressLine1TextController ??= TextEditingController(
@@ -86,8 +85,8 @@ class _SettingsPaymentMethodEditWidgetState
         text: widget.paymentMethod?.billingDetails?.state);
     _model.stateFocusNode ??= FocusNode();
     _model.stateFocusNode!.addListener(() => setState(() {}));
-    _model.cityTextController ??= TextEditingController(
-        text: widget.paymentMethod?.billingDetails?.city);
+    _model.cityTextController ??=
+        TextEditingController(text: widget.paymentMethod?.billingDetails?.city);
     _model.cityFocusNode ??= FocusNode();
     _model.cityFocusNode!.addListener(() => setState(() {}));
     _model.zipCodeTextController ??= TextEditingController(
@@ -248,8 +247,7 @@ class _SettingsPaymentMethodEditWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
@@ -314,8 +312,7 @@ class _SettingsPaymentMethodEditWidgetState
                                   autofocus: false,
                                   readOnly: true,
                                   obscureText: false,
-                                  decoration:
-                                      _fieldDecoration(hintText: 'CVC'),
+                                  decoration: _fieldDecoration(hintText: 'CVC'),
                                   style: _bodyStyle(),
                                   keyboardType: TextInputType.number,
                                   cursorColor: AppColors.textPrimary,
@@ -333,8 +330,7 @@ class _SettingsPaymentMethodEditWidgetState
                     child: Text('Cardholder Name', style: _labelStyle()),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
@@ -369,8 +365,7 @@ class _SettingsPaymentMethodEditWidgetState
                     child: Text('Email Address', style: _labelStyle()),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
@@ -398,8 +393,7 @@ class _SettingsPaymentMethodEditWidgetState
                     child: Text('Full Name', style: _labelStyle()),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
@@ -427,8 +421,7 @@ class _SettingsPaymentMethodEditWidgetState
                     child: Text('Address', style: _labelStyle()),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
@@ -490,11 +483,11 @@ class _SettingsPaymentMethodEditWidgetState
                                 height: 52.0,
                                 child: DropdownButtonFormField<String>(
                                   value: (_model.countryDropdownValue ??= widget
-                                              .paymentMethod
-                                              ?.billingDetails
-                                              ?.country ??
-                                          '')
-                                      .isEmpty
+                                                  .paymentMethod
+                                                  ?.billingDetails
+                                                  ?.country ??
+                                              '')
+                                          .isEmpty
                                       ? null
                                       : _model.countryDropdownValue,
                                   items: GeoData.getCountries()
@@ -535,10 +528,10 @@ class _SettingsPaymentMethodEditWidgetState
                                       child: DropdownButtonFormField<String>(
                                         value: (_model.stateDropdownValue ??=
                                                     widget
-                                                        .paymentMethod
-                                                        ?.billingDetails
-                                                        ?.state ??
-                                                    '')
+                                                            .paymentMethod
+                                                            ?.billingDetails
+                                                            ?.state ??
+                                                        '')
                                                 .isEmpty
                                             ? null
                                             : _model.stateDropdownValue,
@@ -571,8 +564,7 @@ class _SettingsPaymentMethodEditWidgetState
                                       child: TextFormField(
                                         controller: _model.stateTextController,
                                         focusNode: _model.stateFocusNode,
-                                        onChanged: (_) =>
-                                            EasyDebounce.debounce(
+                                        onChanged: (_) => EasyDebounce.debounce(
                                           '_model.stateTextController',
                                           Duration(milliseconds: 100),
                                           () => setState(() {}),
@@ -816,10 +808,7 @@ class _SettingsPaymentMethodEditWidgetState
                             height: 56.0,
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
-                                colors: [
-                                  Color(0xFF7D56FF),
-                                  Color(0xFF6187F1)
-                                ],
+                                colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
                                 stops: [0.0, 1.0],
                                 begin: AlignmentDirectional(0.0, -1.0),
                                 end: AlignmentDirectional(0, 1.0),
@@ -832,10 +821,10 @@ class _SettingsPaymentMethodEditWidgetState
                                     FormValidators.paymentValidator(
                                         _model.cardNumberTextController!.text,
                                         _model.expireDateTextController!.text,
-                                        _model.textFieldaCVCTextController!
-                                            .text,
-                                        _model.cardholderNameTextController!
-                                            .text,
+                                        _model
+                                            .textFieldaCVCTextController!.text,
+                                        _model
+                                            .cardholderNameTextController!.text,
                                         _model.emailAddressTextController!.text,
                                         _model.fullNameTextController!.text,
                                         _model.addressLine1TextController!.text,
@@ -852,25 +841,35 @@ class _SettingsPaymentMethodEditWidgetState
                                   ref
                                       .read(authProvider.notifier)
                                       .updateUser((e) {
-                                        final methods = [...e.paymentMethod];
-                                        final pm = methods[widget.index!];
-                                        methods[widget.index!] = pm.copyWith(
-                                          billingDetails: (pm.billingDetails ?? const BillingDetails()).copyWith(
-                                            name: _model.fullNameTextController!.text,
-                                            email: _model.emailAddressTextController!.text,
-                                            addressLine1: _model.addressLine1TextController!.text,
-                                            addressLine2: _model.addressLine2TextController!.text,
-                                            city: _model.cityTextController!.text,
-                                            state: (_model.countryDropdownValue == 'US') ||
-                                                    (_model.countryDropdownValue == 'CA')
-                                                ? _model.stateDropdownValue ?? ''
-                                                : _model.stateTextController!.text,
-                                            postalCode: _model.zipCodeTextController!.text,
-                                            country: _model.countryDropdownValue ?? '',
-                                          ),
-                                        );
-                                        return e.copyWith(paymentMethod: methods);
-                                      });
+                                    final methods = [...e.paymentMethod];
+                                    final pm = methods[widget.index!];
+                                    methods[widget.index!] = pm.copyWith(
+                                      billingDetails: (pm.billingDetails ??
+                                              const BillingDetails())
+                                          .copyWith(
+                                        name:
+                                            _model.fullNameTextController!.text,
+                                        email: _model
+                                            .emailAddressTextController!.text,
+                                        addressLine1: _model
+                                            .addressLine1TextController!.text,
+                                        addressLine2: _model
+                                            .addressLine2TextController!.text,
+                                        city: _model.cityTextController!.text,
+                                        state: (_model.countryDropdownValue ==
+                                                    'US') ||
+                                                (_model.countryDropdownValue ==
+                                                    'CA')
+                                            ? _model.stateDropdownValue ?? ''
+                                            : _model.stateTextController!.text,
+                                        postalCode:
+                                            _model.zipCodeTextController!.text,
+                                        country:
+                                            _model.countryDropdownValue ?? '',
+                                      ),
+                                    );
+                                    return e.copyWith(paymentMethod: methods);
+                                  });
                                   setState(() {});
                                 } else {
                                   await actions.toastificationshow(
@@ -896,8 +895,7 @@ class _SettingsPaymentMethodEditWidgetState
                               ),
                               style: TextButton.styleFrom(
                                 minimumSize: Size(double.infinity, 56.0),
-                                padding:
-                                    EdgeInsets.symmetric(horizontal: 16.0),
+                                padding: EdgeInsets.symmetric(horizontal: 16.0),
                               ),
                             ),
                           ),

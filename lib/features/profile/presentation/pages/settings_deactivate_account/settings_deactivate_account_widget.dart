@@ -100,9 +100,7 @@ class SettingsDeactivateAccountWidget extends StatelessWidget {
                       width: double.infinity,
                       height: 56.0,
                       child: OutlinedButton.icon(
-                        onPressed: () {
-                          print('Button pressed ...');
-                        },
+                        onPressed: () {},
                         icon: FaIcon(
                           FontAwesomeIcons.powerOff,
                           size: 16.0,

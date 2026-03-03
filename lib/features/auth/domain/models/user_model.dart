@@ -33,8 +33,12 @@ class UserData with _$UserData {
     @JsonKey(name: 'business_email') @Default('') String businessEmail,
     @JsonKey(name: 'rating_as_seller') @Default(0.0) double ratingAsSeller,
     @JsonKey(name: 'rating_as_buyer') @Default(0.0) double ratingAsBuyer,
-    @JsonKey(name: 'total_reviews_as_seller') @Default(0) int totalReviewsAsSeller,
-    @JsonKey(name: 'total_reviews_as_buyer') @Default(0) int totalReviewsAsBuyer,
+    @JsonKey(name: 'total_reviews_as_seller')
+    @Default(0)
+    int totalReviewsAsSeller,
+    @JsonKey(name: 'total_reviews_as_buyer')
+    @Default(0)
+    int totalReviewsAsBuyer,
     @JsonKey(name: 'total_sales') @Default(0) int totalSales,
     @JsonKey(name: 'total_purchases') @Default(0) int totalPurchases,
     @JsonKey(name: 'total_refunds') @Default(0) int totalRefunds,

@@ -321,8 +321,7 @@ List<Category>? convertCategoriesToDataType(
   }).toList();
 }
 
-List<Condition>? convertConditionsToDataType(
-    List<dynamic> conditionsRows) {
+List<Condition>? convertConditionsToDataType(List<dynamic> conditionsRows) {
   if (conditionsRows.isEmpty) return null;
 
   return conditionsRows.map((c) {

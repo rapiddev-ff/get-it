@@ -29,9 +29,7 @@ class FFDevEnvironmentValues {
       _stripeSecret = data['stripeSecret'];
       _stripePublishable = data['stripePublishable'];
       _google = data['google'];
-    } catch (e) {
-      print('Error loading environment values: $e');
-    }
+    } catch (e) {}
   }
 
   String _supabaseHost = '';

@@ -90,8 +90,7 @@ class _PhoneVerificationPageWidgetState
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
     _model.textFieldFocusNode!.addListener(() => setState(() {}));
-    _model.textFieldMask =
-        MaskTextInputFormatter(mask: '+# (###) ###-##-##');
+    _model.textFieldMask = MaskTextInputFormatter(mask: '+# (###) ###-##-##');
   }
 
   @override
@@ -260,19 +259,19 @@ class _PhoneVerificationPageWidgetState
                                 keyboardType: TextInputType.number,
                                 cursorColor: AppColors.textPrimary,
                                 enableInteractiveSelection: true,
-                                validator: (value) =>
-                                    _model.textControllerValidator
-                                        ?.call(context, value),
+                                validator: (value) => _model
+                                    .textControllerValidator
+                                    ?.call(context, value),
                                 inputFormatters: [_model.textFieldMask],
                               ),
                             ),
                             if (_phoneValidationResult(
-                                            _model.textController!.text) !=
-                                        null &&
-                                    _phoneValidationResult(
-                                            _model.textController!.text) !=
-                                        '' &&
-                                    _model.textController!.text != '')
+                                        _model.textController!.text) !=
+                                    null &&
+                                _phoneValidationResult(
+                                        _model.textController!.text) !=
+                                    '' &&
+                                _model.textController!.text != '')
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 4.0, 0.0, 0.0),
@@ -284,9 +283,7 @@ class _PhoneVerificationPageWidgetState
                                     color: AppColors.error,
                                     fontSize: 12.0,
                                   ),
-                                )
-                                    .animate()
-                                    .fade(duration: 600.ms),
+                                ).animate().fade(duration: 600.ms),
                               ),
                           ],
                         ),
@@ -362,9 +359,7 @@ class _PhoneVerificationPageWidgetState
                         .divide(const SizedBox(height: 40.0))
                         .addToStart(const SizedBox(height: 24.0))
                         .addToEnd(const SizedBox(height: 32.0)),
-                  )
-                      .animate()
-                      .move(
+                  ).animate().move(
                         begin: const Offset(0, 100),
                         end: Offset.zero,
                         duration: 600.ms,

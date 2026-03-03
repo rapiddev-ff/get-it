@@ -109,10 +109,6 @@ class _StripeSuccessWidgetState extends State<StripeSuccessWidget> {
                           currentUserUid,
                         ),
                       );
-                      // TODO: replace with Riverpod updateUser when FFAppState is removed
-                      // FFAppState().updateUserDataStruct(
-                      //   (e) => e..stripe = _convertStripeStatus(getStripe?.firstOrNull),
-                      // );
                       setState(() {});
 
                       context.goNamed(

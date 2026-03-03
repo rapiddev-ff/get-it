@@ -1,4 +1,3 @@
-import '/core/state/app_state_service.dart';
 import '/features/home/domain/models/feed_product_model.dart';
 import '/features/checkout/domain/models/checkout_totals_model.dart';
 import '/features/checkout/domain/models/checkout_order_result_model.dart';
@@ -7,15 +6,18 @@ import '/core/utils/list_extensions.dart';
 import '/features/checkout/presentation/pages/checkout_edit_shipping_address/checkout_edit_shipping_address_widget.dart';
 import '/features/checkout/presentation/widgets/checkout_item/checkout_item_widget.dart';
 import '/features/profile/presentation/pages/settings_payment_method_add/settings_payment_method_add_widget.dart';
+import '/features/auth/presentation/providers/auth_provider.dart';
+import '/features/checkout/presentation/providers/checkout_provider.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-class CheckoutWidget extends StatefulWidget {
+class CheckoutWidget extends ConsumerStatefulWidget {
   const CheckoutWidget({
     super.key,
     required this.feedProductItem,
@@ -31,10 +33,10 @@ class CheckoutWidget extends StatefulWidget {
   static String routePath = 'checkout';
 
   @override
-  State<CheckoutWidget> createState() => _CheckoutWidgetState();
+  ConsumerState<CheckoutWidget> createState() => _CheckoutWidgetState();
 }
 
-class _CheckoutWidgetState extends State<CheckoutWidget> {
+class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   // Inlined model state
@@ -118,11 +120,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                       color: AppColors.info,
                       size: 20.0,
                     ),
-                    onPressed: true
-                        ? null
-                        : () {
-                            print('IconButton pressed ...');
-                          },
+                    onPressed: null,
                   ),
                 ),
               ],
@@ -145,16 +143,16 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                   addQuantityAction: () async {
                     quantity = quantity + 1;
                     setState(() {});
-                    getTaxFromStripeAdd =
-                        await actions.calculateOrderTax(
+                    getTaxFromStripeAdd = await actions.calculateOrderTax(
                       widget.feedProductItem!.price * quantity,
                       (widget.feedProductItem!.customFlatRate ?? 0.0) +
-                          (widget.feedProductItem!.customAdditionalItemFee ?? 0.0),
-                      // TODO: replace FFAppState() with proper state provider
-                      FFAppState().userData.shippingAddress?.addressLine1 ?? '',
-                      FFAppState().userData.shippingAddress?.city ?? '',
-                      FFAppState().userData.shippingAddress?.state ?? '',
-                      FFAppState().userData.shippingAddress?.zipCode ?? '',
+                          (widget.feedProductItem!.customAdditionalItemFee ??
+                              0.0),
+                      ref.read(authProvider).shippingAddress?.addressLine1 ??
+                          '',
+                      ref.read(authProvider).shippingAddress?.city ?? '',
+                      ref.read(authProvider).shippingAddress?.state ?? '',
+                      ref.read(authProvider).shippingAddress?.zipCode ?? '',
                     );
                     tax = getTaxFromStripeAdd;
                     setState(() {});
@@ -164,16 +162,16 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                   minusQuantityAction: () async {
                     quantity = quantity + -1;
                     setState(() {});
-                    getTaxFromStripeMinus =
-                        await actions.calculateOrderTax(
+                    getTaxFromStripeMinus = await actions.calculateOrderTax(
                       widget.feedProductItem!.price * quantity,
                       (widget.feedProductItem!.customFlatRate ?? 0.0) +
-                          (widget.feedProductItem!.customAdditionalItemFee ?? 0.0),
-                      // TODO: replace FFAppState() with proper state provider
-                      FFAppState().userData.shippingAddress?.addressLine1 ?? '',
-                      FFAppState().userData.shippingAddress?.city ?? '',
-                      FFAppState().userData.shippingAddress?.state ?? '',
-                      FFAppState().userData.shippingAddress?.zipCode ?? '',
+                          (widget.feedProductItem!.customAdditionalItemFee ??
+                              0.0),
+                      ref.read(authProvider).shippingAddress?.addressLine1 ??
+                          '',
+                      ref.read(authProvider).shippingAddress?.city ?? '',
+                      ref.read(authProvider).shippingAddress?.state ?? '',
+                      ref.read(authProvider).shippingAddress?.zipCode ?? '',
                     );
                     tax = getTaxFromStripeMinus;
                     setState(() {});
@@ -216,12 +214,12 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                           size: 14.0,
                         ),
                         Text(
-                          // TODO: replace FFAppState() with proper state provider
-                          (FFAppState()
-                                          .userData
+                          (ref
+                                          .read(authProvider)
                                           .shippingAddress
-                                          ?.addressLine1 ?? '') !=
-                                      ''
+                                          ?.addressLine1 ??
+                                      '') !=
+                                  ''
                               ? 'Edit'
                               : 'Add Address',
                           style: GoogleFonts.inter(
@@ -250,16 +248,15 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            // TODO: replace FFAppState() with proper state provider
-                            FFAppState().userData.shippingAddress?.fullName ?? '',
+                            ref.read(authProvider).shippingAddress?.fullName ??
+                                '',
                             style: GoogleFonts.inter(
                               fontWeight: FontWeight.w500,
                               color: AppColors.textPrimary,
                             ),
                           ),
                           Text(
-                            // TODO: replace FFAppState() with proper state provider
-                            '${FFAppState().userData.shippingAddress?.addressLine1 ?? ''}, ${FFAppState().userData.shippingAddress?.addressLine2 ?? ''}',
+                            '${ref.read(authProvider).shippingAddress?.addressLine1 ?? ''}, ${ref.read(authProvider).shippingAddress?.addressLine2 ?? ''}',
                             maxLines: 1,
                             style: GoogleFonts.inter(
                               color: AppColors.textSecondary,
@@ -268,8 +265,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            // TODO: replace FFAppState() with proper state provider
-                            '${FFAppState().userData.shippingAddress?.city ?? ''}, ${FFAppState().userData.shippingAddress?.state ?? ''}, ${FFAppState().userData.shippingAddress?.zipCode ?? ''}',
+                            '${ref.read(authProvider).shippingAddress?.city ?? ''}, ${ref.read(authProvider).shippingAddress?.state ?? ''}, ${ref.read(authProvider).shippingAddress?.zipCode ?? ''}',
                             maxLines: 1,
                             style: GoogleFonts.inter(
                               color: AppColors.textSecondary,
@@ -278,8 +274,8 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            // TODO: replace FFAppState() with proper state provider
-                            FFAppState().userData.shippingAddress?.country ?? '',
+                            ref.read(authProvider).shippingAddress?.country ??
+                                '',
                             maxLines: 1,
                             style: GoogleFonts.inter(
                               color: AppColors.textSecondary,
@@ -313,9 +309,8 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                       EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
                   child: Builder(
                     builder: (context) {
-                      // TODO: replace FFAppState() with proper state provider
                       final paymentMethods =
-                          FFAppState().userData.paymentMethod.toList();
+                          ref.read(authProvider).paymentMethod.toList();
 
                       return ListView.separated(
                         padding: EdgeInsets.zero,
@@ -333,9 +328,9 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              // TODO: replace FFAppState() with proper state provider
-                              FFAppState().choosenPaymentMethod =
-                                  paymentMethodsItem;
+                              ref
+                                  .read(checkoutProvider.notifier)
+                                  .setPaymentMethod(paymentMethodsItem);
                               setState(() {});
                             },
                             child: Container(
@@ -350,11 +345,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Opacity(
-                                      opacity:
-                                          // TODO: replace FFAppState() with proper state provider
-                                          FFAppState()
-                                                  .choosenPaymentMethod
-                                                  .id ==
+                                      opacity: ref.read(checkoutProvider).id ==
                                               paymentMethodsItem.id
                                           ? 1.0
                                           : 0.0,
@@ -492,8 +483,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                               ),
                               Text(
                                 NumberFormat('#,##0.##', 'en_US').format(
-                                  widget.feedProductItem!.price *
-                                      quantity,
+                                  widget.feedProductItem!.price * quantity,
                                 ),
                                 style: GoogleFonts.inter(
                                   fontWeight: FontWeight.w500,
@@ -520,9 +510,11 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                               ),
                               Text(
                                 NumberFormat('#,##0.##', 'en_US').format(
-                                  (widget.feedProductItem!.customFlatRate ?? 0.0) +
+                                  (widget.feedProductItem!.customFlatRate ??
+                                          0.0) +
                                       (widget.feedProductItem!
-                                          .customAdditionalItemFee ?? 0.0),
+                                              .customAdditionalItemFee ??
+                                          0.0),
                                 ),
                                 style: GoogleFonts.inter(
                                   fontWeight: FontWeight.w500,
@@ -574,8 +566,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                               ),
                               Text(
                                 NumberFormat('#,##0.##', 'en_US').format(
-                                  (widget.feedProductItem!.price *
-                                          quantity) *
+                                  (widget.feedProductItem!.price * quantity) *
                                       0.1,
                                 ),
                                 style: GoogleFonts.inter(
@@ -696,8 +687,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                     ),
                     child: TextButton(
                       onPressed: () async {
-                        orderResult =
-                            await actions.createCheckoutOrder(
+                        orderResult = await actions.createCheckoutOrder(
                           widget.feedProductItem!.id,
                           quantity,
                           'f08c02f4-18c9-4f9e-9ae2-c207682fe5c5',
@@ -707,8 +697,7 @@ class _CheckoutWidgetState extends State<CheckoutWidget> {
                         );
                         await actions.payWithSavedCard(
                           orderResult!.orderId,
-                          // TODO: replace FFAppState() with proper state provider
-                          FFAppState().userData.defaultPaymentMethodId,
+                          ref.read(authProvider).defaultPaymentMethodId,
                           7,
                         );
                         Navigator.pop(context);

@@ -41,7 +41,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
   void initState() {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await actions.initWishlistStream(currentUserUid);
+      await actions.initWishlistStream(ref, currentUserUid);
     });
     _textFieldFocusNode.addListener(() => setState(() {}));
   }
@@ -65,8 +65,8 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
       }
       if (searchQuery != null && searchQuery.trim().isNotEmpty) {
         final query = searchQuery.toLowerCase().trim();
-        final title = (product.title ?? '').toLowerCase();
-        final description = (product.description ?? '').toLowerCase();
+        final title = product.title.toLowerCase();
+        final description = product.description.toLowerCase();
         if (!title.contains(query) && !description.contains(query)) {
           return false;
         }
@@ -104,7 +104,8 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                     ),
                     fixedSize: const Size(40.0, 40.0),
                   ),
-                  icon: const Icon(Icons.menu, color: AppColors.info, size: 24.0),
+                  icon:
+                      const Icon(Icons.menu, color: AppColors.info, size: 24.0),
                   onPressed: () {
                     context.pushNamed(SettingsWidget.routeName);
                   },
@@ -301,9 +302,8 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                             BorderRadius.circular(100.0),
                                       ),
                                       child: Padding(
-                                        padding:
-                                            const EdgeInsetsDirectional.fromSTEB(
-                                                16.0, 8.0, 16.0, 8.0),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(16.0, 8.0, 16.0, 8.0),
                                         child: Text(
                                           categoriesItem.name,
                                           style: GoogleFonts.inter(
@@ -361,8 +361,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                 }
 
                                 return MasonryGridView.builder(
-                                  physics:
-                                      const NeverScrollableScrollPhysics(),
+                                  physics: const NeverScrollableScrollPhysics(),
                                   gridDelegate:
                                       const SliverSimpleGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
@@ -383,8 +382,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                         context.pushNamed(
                                           HomeProductWidget.routeName,
                                           queryParameters: {
-                                            'productId':
-                                                wishlistItem.id ?? '',
+                                            'productId': wishlistItem.id,
                                           },
                                         );
                                       },

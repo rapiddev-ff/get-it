@@ -1,8 +1,4 @@
-import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -14,10 +10,6 @@ Future<dynamic> startStripeConnectOnboarding() async {
     // Check and refresh session
     final session = supabase.auth.currentSession;
     final user = supabase.auth.currentUser;
-
-    print('=== DEBUG AUTH STATE ===');
-    print('User ID: ${user?.id}');
-    print('Session exists: ${session != null}');
 
     if (user == null || session == null) {
       return {'success': false, 'error': 'Not authenticated - no session'};
@@ -32,13 +24,10 @@ Future<dynamic> startStripeConnectOnboarding() async {
     }
 
     final accessToken = freshSession.accessToken;
-    print('Access token length: ${accessToken.length}');
 
     // Get Supabase URL
     final supabaseUrl = SupaFlow.client.rest.url.replaceAll('/rest/v1', '');
     final functionUrl = '$supabaseUrl/functions/v1/stripe-connect-onboarding';
-
-    print('Calling function at: $functionUrl');
 
     // ========================================
     // ПРАВИЛЬНЫЕ HTTPS URLs для Stripe
@@ -48,9 +37,6 @@ Future<dynamic> startStripeConnectOnboarding() async {
         '$supabaseUrl/functions/v1/stripe-redirect?type=refresh&user_id=${user.id}';
     final String returnUrl =
         '$supabaseUrl/functions/v1/stripe-redirect?type=success&user_id=${user.id}';
-
-    print('Refresh URL: $refreshUrl');
-    print('Return URL: $returnUrl');
 
     // Make direct HTTP call
     final response = await http.post(
@@ -65,9 +51,6 @@ Future<dynamic> startStripeConnectOnboarding() async {
         'country': 'US',
       }),
     );
-
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
 
     if (response.statusCode != 200) {
       final errorData = jsonDecode(response.body);
@@ -109,9 +92,7 @@ Future<dynamic> startStripeConnectOnboarding() async {
       'error': 'No URL returned from Stripe',
       'error_code': 'NO_URL',
     };
-  } catch (e, stackTrace) {
-    print('Error in startStripeConnectOnboarding: $e');
-    print('Stack trace: $stackTrace');
+  } catch (e) {
     return {
       'success': false,
       'error': e.toString(),

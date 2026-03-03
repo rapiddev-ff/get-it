@@ -1,10 +1,5 @@
-import '/backend/schema/enums/enums.dart';
-import '/backend/supabase/supabase.dart';
 import '/core/utils/uploaded_file.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
 
-import 'dart:typed_data';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 import 'package:mime/mime.dart';
@@ -19,7 +14,6 @@ Future<String?> uploadImageToStorage(
     final bytes = uploadedFile.bytes;
 
     if (bytes == null || bytes.isEmpty) {
-      print('Error: No file bytes');
       return null;
     }
 
@@ -27,8 +21,7 @@ Future<String?> uploadImageToStorage(
     final extension = _getFileExtension(uploadedFile.name ?? 'image.jpg');
     final fileName = '$uuid$extension';
 
-    final filePath =
-        folder != null && folder.isNotEmpty ? '$folder/$fileName' : fileName;
+    final filePath = folder.isNotEmpty ? '$folder/$fileName' : fileName;
 
     final mimeType = lookupMimeType(uploadedFile.name ?? '') ?? 'image/jpeg';
 
@@ -45,7 +38,6 @@ Future<String?> uploadImageToStorage(
 
     return publicUrl;
   } catch (e) {
-    print('Upload error: $e');
     return null;
   }
 }

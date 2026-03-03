@@ -1,9 +1,6 @@
-import '/backend/schema/enums/enums.dart';
 import '/features/browse/domain/models/browse_product_model.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/theme/app_colors.dart';
-import 'index.dart';
-import '/custom_code/actions/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -66,7 +63,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
   bool _isLoading = true;
   bool _isLoadingMore = false;
   bool _hasMore = true;
-  int _totalCount = 0;
+  // _totalCount removed (unused)
   String? _error;
   int _currentOffset = 0;
   Timer? _debounceTimer;
@@ -152,8 +149,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
       final data = response as Map<String, dynamic>;
       final productsJson = data['products'] as List<dynamic>;
       final newProducts = productsJson
-          .map((json) =>
-              BrowseProduct.fromJson(json as Map<String, dynamic>))
+          .map((json) => BrowseProduct.fromJson(json as Map<String, dynamic>))
           .toList();
 
       final totalCount = data['total_count'] as int;
@@ -167,7 +163,6 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
         } else {
           _products.addAll(newProducts);
         }
-        _totalCount = totalCount;
         _hasMore = hasMore;
         _currentOffset += newProducts.length;
         _isLoading = false;
@@ -187,8 +182,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
 
   void _handleProductTap(BrowseProduct product) async {
     if (widget.onProductTap == null) {
-      debugPrint(
-          '[BrowseProductsGrid] onProductTap is null -- not wired in FlutterFlow');
+      debugPrint('[BrowseProductsGrid] onProductTap is null');
       return;
     }
     try {
@@ -269,7 +263,8 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
             Text(
               hasFilters ? 'No products found' : 'No products available',
               style: GoogleFonts.inter(
-                  fontSize: 16, fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
                   color: AppColors.textPrimary),
             ),
             const SizedBox(height: 8),
@@ -278,8 +273,8 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
                   ? 'Try adjusting your search or filters'
                   : 'Check back later for new listings',
               textAlign: TextAlign.center,
-              style: GoogleFonts.inter(
-                  fontSize: 14, color: AppColors.textPrimary),
+              style:
+                  GoogleFonts.inter(fontSize: 14, color: AppColors.textPrimary),
             ),
           ],
         ),
@@ -442,13 +437,12 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.error_outline,
-                size: 48, color: AppColors.error),
+            Icon(Icons.error_outline, size: 48, color: AppColors.error),
             const SizedBox(height: 16),
             Text(
               'Failed to load products',
-              style: GoogleFonts.inter(
-                  fontSize: 14, color: AppColors.textPrimary),
+              style:
+                  GoogleFonts.inter(fontSize: 14, color: AppColors.textPrimary),
             ),
             const SizedBox(height: 8),
             Text(

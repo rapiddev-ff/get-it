@@ -14,9 +14,11 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '/core/state/app_state_service.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '/features/auth/presentation/providers/auth_provider.dart';
+import '/features/browse/presentation/providers/browse_provider.dart';
 
-class CheckDataWidget extends StatefulWidget {
+class CheckDataWidget extends ConsumerStatefulWidget {
   const CheckDataWidget({
     super.key,
     bool? fromSignIn,
@@ -28,10 +30,10 @@ class CheckDataWidget extends StatefulWidget {
   static String routePath = 'checkData';
 
   @override
-  State<CheckDataWidget> createState() => _CheckDataWidgetState();
+  ConsumerState<CheckDataWidget> createState() => _CheckDataWidgetState();
 }
 
-class _CheckDataWidgetState extends State<CheckDataWidget>
+class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
     with TickerProviderStateMixin {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -58,32 +60,37 @@ class _CheckDataWidgetState extends State<CheckDataWidget>
         },
       );
       getPaymentMethods = await actions.getSavedPaymentMethods();
-      FFAppState().userData = functions.convertUserToDataType(
+      final userData = functions.convertUserToDataType(
           getAppInitialData!, getPaymentMethods);
-      FFAppState().categories = functions
-          .convertCategoriesToDataType(
-              getJsonField(
-                getAppInitialData,
-                r'''$.categories''',
-                true,
-              )!,
-              getJsonField(
-                getAppInitialData,
-                r'''$.subcategories''',
-                true,
-              )!)!
-          .toList()
-          .cast<Category>();
-      FFAppState().conditions = functions
-          .convertConditionsToDataType(getJsonField(
-            getAppInitialData,
-            r'''$.conditions''',
-            true,
-          )!)!
-          .toList()
-          .cast<Condition>();
+      ref.read(authProvider.notifier).setUser(userData);
+      await ref.read(categoriesProvider.notifier).set(
+            functions
+                .convertCategoriesToDataType(
+                    getJsonField(
+                      getAppInitialData,
+                      r'''$.categories''',
+                      true,
+                    )!,
+                    getJsonField(
+                      getAppInitialData,
+                      r'''$.subcategories''',
+                      true,
+                    )!)!
+                .toList()
+                .cast<Category>(),
+          );
+      await ref.read(conditionsProvider.notifier).set(
+            functions
+                .convertConditionsToDataType(getJsonField(
+                  getAppInitialData,
+                  r'''$.conditions''',
+                  true,
+                )!)!
+                .toList()
+                .cast<Condition>(),
+          );
       setState(() {});
-      if (FFAppState().userData.phoneVerified == false) {
+      if (userData.phoneVerified == false) {
         context.goNamed(
           PhoneVerificationPageWidget.routeName,
           queryParameters: {
@@ -97,7 +104,7 @@ class _CheckDataWidgetState extends State<CheckDataWidget>
             ),
           },
         );
-      } else if (FFAppState().userData.firstName == '') {
+      } else if (userData.firstName == '') {
         context.goNamed(
           AdditionalInfoWidget.routeName,
           extra: <String, dynamic>{

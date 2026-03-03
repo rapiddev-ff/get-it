@@ -256,13 +256,13 @@ class _HomeDashoardPromoteStep1WidgetState
                   ),
                   child: TextButton(
                     onPressed: () async {
-                      context.pushNamed(
-                          HomeDashoardPromoteStep2Widget.routeName);
+                      context
+                          .pushNamed(HomeDashoardPromoteStep2Widget.routeName);
                     },
                     style: TextButton.styleFrom(
                       minimumSize: Size(double.infinity, 40.0),
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          16.0, 0.0, 16.0, 0.0),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                       backgroundColor: Color(0x008E6CFF),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),

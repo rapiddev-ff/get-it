@@ -378,10 +378,9 @@ class _HomeSellerProfileReviewsWidgetState
                                           'As Buyer',
                                           style: GoogleFonts.inter(
                                             fontWeight: FontWeight.normal,
-                                            color:
-                                                _model.state == 'As Buyer'
-                                                    ? AppColors.textPrimary
-                                                    : Color(0xFFAFAFB4),
+                                            color: _model.state == 'As Buyer'
+                                                ? AppColors.textPrimary
+                                                : Color(0xFFAFAFB4),
                                             height: 2.0,
                                           ),
                                         ),
@@ -422,10 +421,9 @@ class _HomeSellerProfileReviewsWidgetState
                                         child: Text(
                                           'As Seller',
                                           style: GoogleFonts.inter(
-                                            color:
-                                                _model.state == 'As Seller'
-                                                    ? AppColors.textPrimary
-                                                    : Color(0xFFAFAFB4),
+                                            color: _model.state == 'As Seller'
+                                                ? AppColors.textPrimary
+                                                : Color(0xFFAFAFB4),
                                             height: 2.0,
                                           ),
                                         ),
@@ -543,11 +541,7 @@ class _HomeSellerProfileReviewsWidgetState
                                     ),
                                   ),
                                 ),
-
                                 itemBuilder: (context, _, asSellerIndex) {
-                                  final asSellerItem = _model
-                                      .listViewPagingController1!
-                                      .itemList![asSellerIndex];
                                   return Container(
                                     width: double.infinity,
                                     decoration: BoxDecoration(
@@ -802,11 +796,7 @@ class _HomeSellerProfileReviewsWidgetState
                                         ),
                                       ),
                                     ),
-
                                     itemBuilder: (context, _, asSellerIndex) {
-                                      final asSellerItem = _model
-                                          .listViewPagingController2!
-                                          .itemList![asSellerIndex];
                                       return Container(
                                         width: double.infinity,
                                         decoration: BoxDecoration(
@@ -1037,9 +1027,7 @@ class _HomeSellerProfileReviewsWidgetState
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 12.0, 0.0, 0.0),
                                   child: TextButton.icon(
-                                    onPressed: () {
-                                      print('Button pressed ...');
-                                    },
+                                    onPressed: () {},
                                     icon: Icon(
                                       Icons.arrow_circle_down,
                                       size: 24.0,
@@ -1052,11 +1040,9 @@ class _HomeSellerProfileReviewsWidgetState
                                       ),
                                     ),
                                     style: TextButton.styleFrom(
-                                      minimumSize:
-                                          Size(double.infinity, 56.0),
-                                      padding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              16.0, 0.0, 16.0, 0.0),
+                                      minimumSize: Size(double.infinity, 56.0),
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 0.0, 16.0, 0.0),
                                       shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(8.0),

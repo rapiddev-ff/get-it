@@ -1,10 +1,6 @@
-import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/utils/uploaded_file.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
 
-import 'dart:typed_data';
 import 'package:uuid/uuid.dart';
 
 // Custom Action: uploadReviewImages
@@ -41,9 +37,7 @@ Future<List<String>> uploadReviewImages(
           SupaFlow.client.storage.from('review-images').getPublicUrl(path);
 
       uploadedUrls.add(publicUrl);
-    } catch (e) {
-      print('❌ Error uploading review image: $e');
-    }
+    } catch (e) {}
   }
 
   return uploadedUrls;

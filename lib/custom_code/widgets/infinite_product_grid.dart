@@ -1,14 +1,9 @@
-import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/theme/app_colors.dart';
-import 'index.dart';
-import '/custom_code/actions/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '/features/home/domain/models/seller_product_model.dart';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shimmer/shimmer.dart';
 
 class InfiniteProductGrid extends StatefulWidget {
@@ -63,7 +58,7 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
   bool _isSearching = false;
   String? _error;
   int _offset = 0;
-  int _total = 0;
+  // _total removed (unused)
 
   @override
   void initState() {
@@ -99,7 +94,6 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
       _isInitialLoad = !isSearching;
       _isSearching = isSearching;
       _error = null;
-      _total = 0;
     });
   }
 
@@ -167,7 +161,6 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
       setState(() {
         _products.addAll(newProducts);
         _hasMore = hasMore;
-        _total = total;
         _offset += widget.pageSize;
         _isInitialLoad = false;
         _isSearching = false;
@@ -317,16 +310,14 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 _error ?? '',
-                style: GoogleFonts.inter(
-                    fontSize: 12, color: AppColors.error),
+                style: GoogleFonts.inter(fontSize: 12, color: AppColors.error),
                 textAlign: TextAlign.center,
               ),
             ),
             const SizedBox(height: 16),
             TextButton(
               onPressed: _refresh,
-              child:
-                  Text('Retry', style: TextStyle(color: AppColors.primary)),
+              child: Text('Retry', style: TextStyle(color: AppColors.primary)),
             ),
           ],
         ),
@@ -345,8 +336,8 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
               widget.searchText?.isNotEmpty == true
                   ? 'No products found for "${widget.searchText}"'
                   : 'No products found',
-              style: GoogleFonts.inter(
-                  fontSize: 16, color: AppColors.textPrimary),
+              style:
+                  GoogleFonts.inter(fontSize: 16, color: AppColors.textPrimary),
               textAlign: TextAlign.center,
             ),
           ],
@@ -395,8 +386,8 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
   Widget _buildProductCard(BuildContext context, SellerProduct product) {
     return GestureDetector(
       onTap: () {
-        if (widget.onProductTap != null && (product.id?.isNotEmpty == true)) {
-          widget.onProductTap!(product.id!);
+        if (widget.onProductTap != null && (product.id.isNotEmpty == true)) {
+          widget.onProductTap!(product.id);
         }
       },
       child: widget.itemBuilder!(product),

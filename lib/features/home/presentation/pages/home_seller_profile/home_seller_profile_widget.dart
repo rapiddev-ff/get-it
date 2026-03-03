@@ -14,7 +14,8 @@ import '/core/constants/app_constants.dart';
 import '/core/utils/value_utils.dart';
 import '/core/utils/list_extensions.dart';
 import '/index.dart';
-import '/core/state/app_state_service.dart';
+import '/features/messages/presentation/providers/messages_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -26,7 +27,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
 
-class HomeSellerProfileWidget extends StatefulWidget {
+class HomeSellerProfileWidget extends ConsumerStatefulWidget {
   const HomeSellerProfileWidget({
     super.key,
     required this.sellerId,
@@ -38,11 +39,12 @@ class HomeSellerProfileWidget extends StatefulWidget {
   static String routePath = 'homeSellerProfile';
 
   @override
-  State<HomeSellerProfileWidget> createState() =>
+  ConsumerState<HomeSellerProfileWidget> createState() =>
       _HomeSellerProfileWidgetState();
 }
 
-class _HomeSellerProfileWidgetState extends State<HomeSellerProfileWidget> {
+class _HomeSellerProfileWidgetState
+    extends ConsumerState<HomeSellerProfileWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   // Local state fields (inlined from model).
@@ -65,8 +67,7 @@ class _HomeSellerProfileWidgetState extends State<HomeSellerProfileWidget> {
   void removeAtIndexFromProducts(int index) => products.removeAt(index);
   void insertAtIndexInProducts(int index, SellerProduct item) =>
       products.insert(index, item);
-  void updateProductsAtIndex(
-          int index, Function(SellerProduct) updateFn) =>
+  void updateProductsAtIndex(int index, Function(SellerProduct) updateFn) =>
       products[index] = updateFn(products[index]);
 
   @override
@@ -286,8 +287,7 @@ class _HomeSellerProfileWidgetState extends State<HomeSellerProfileWidget> {
                                   children: [
                                     Text(
                                       valueOrDefault<String>(
-                                        getSellerData?.totalProducts
-                                            .toString(),
+                                        getSellerData?.totalProducts.toString(),
                                         '0',
                                       ),
                                       style: GoogleFonts.inter(
@@ -311,8 +311,7 @@ class _HomeSellerProfileWidgetState extends State<HomeSellerProfileWidget> {
                                   children: [
                                     Text(
                                       valueOrDefault<String>(
-                                        getSellerData?.totalSales
-                                            .toString(),
+                                        getSellerData?.totalSales.toString(),
                                         '0 ',
                                       ),
                                       style: GoogleFonts.inter(
@@ -402,8 +401,9 @@ class _HomeSellerProfileWidgetState extends State<HomeSellerProfileWidget> {
                           widget.sellerId!,
                           '',
                         );
-                        FFAppState().currentConversation =
-                            getOrCreateConversation!;
+                        ref
+                            .read(messagesProvider.notifier)
+                            .setCurrentConversation(getOrCreateConversation!);
                         setState(() {});
 
                         context.pushNamed(
@@ -480,9 +480,8 @@ class _HomeSellerProfileWidgetState extends State<HomeSellerProfileWidget> {
                                       ),
                                     ),
                                     Opacity(
-                                      opacity:
-                                          (roleState == 'As Buyer' ? 1 : 0)
-                                              .toDouble(),
+                                      opacity: (roleState == 'As Buyer' ? 1 : 0)
+                                          .toDouble(),
                                       child: Container(
                                         width: double.infinity,
                                         height: 2.0,
@@ -625,7 +624,9 @@ class _HomeSellerProfileWidgetState extends State<HomeSellerProfileWidget> {
                                                     fadeOutDuration: Duration(
                                                         milliseconds: 500),
                                                     imageUrl: reviewsItem
-                                                        .reviewer?.avatarUrl ?? '',
+                                                            .reviewer
+                                                            ?.avatarUrl ??
+                                                        '',
                                                     fit: BoxFit.cover,
                                                   ),
                                                 ),
@@ -641,8 +642,9 @@ class _HomeSellerProfileWidgetState extends State<HomeSellerProfileWidget> {
                                                             .start,
                                                     children: [
                                                       Text(
-                                                        reviewsItem
-                                                            .reviewer?.username ?? '',
+                                                        reviewsItem.reviewer
+                                                                ?.username ??
+                                                            '',
                                                         style:
                                                             GoogleFonts.inter(
                                                           fontWeight:
@@ -782,7 +784,9 @@ class _HomeSellerProfileWidgetState extends State<HomeSellerProfileWidget> {
                                                     fadeOutDuration: Duration(
                                                         milliseconds: 500),
                                                     imageUrl: reviewsItem
-                                                        .reviewer?.avatarUrl ?? '',
+                                                            .reviewer
+                                                            ?.avatarUrl ??
+                                                        '',
                                                     fit: BoxFit.cover,
                                                   ),
                                                 ),
@@ -798,8 +802,9 @@ class _HomeSellerProfileWidgetState extends State<HomeSellerProfileWidget> {
                                                             .start,
                                                     children: [
                                                       Text(
-                                                        reviewsItem
-                                                            .reviewer?.username ?? '',
+                                                        reviewsItem.reviewer
+                                                                ?.username ??
+                                                            '',
                                                         style:
                                                             GoogleFonts.inter(
                                                           fontWeight:
@@ -897,8 +902,8 @@ class _HomeSellerProfileWidgetState extends State<HomeSellerProfileWidget> {
                                 ),
                               ),
                               Opacity(
-                                opacity: (state == 'Products' ? 1 : 0)
-                                    .toDouble(),
+                                opacity:
+                                    (state == 'Products' ? 1 : 0).toDouble(),
                                 child: Container(
                                   width: double.infinity,
                                   height: 2.0,
@@ -940,8 +945,8 @@ class _HomeSellerProfileWidgetState extends State<HomeSellerProfileWidget> {
                                 ),
                               ),
                               Opacity(
-                                opacity: (state == 'Short Lists' ? 1 : 0)
-                                    .toDouble(),
+                                opacity:
+                                    (state == 'Short Lists' ? 1 : 0).toDouble(),
                                 child: Container(
                                   width: double.infinity,
                                   height: 2.0,
@@ -1056,17 +1061,15 @@ class _HomeSellerProfileWidgetState extends State<HomeSellerProfileWidget> {
                                               : AppColors.backgroundSecondary
                                         ],
                                         stops: [0.0, 1.0],
-                                        begin:
-                                            AlignmentDirectional(0.0, -1.0),
+                                        begin: AlignmentDirectional(0.0, -1.0),
                                         end: AlignmentDirectional(0, 1.0),
                                       ),
                                       borderRadius:
                                           BorderRadius.circular(100.0),
                                     ),
                                     child: Padding(
-                                      padding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              16.0, 8.0, 16.0, 8.0),
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 8.0, 16.0, 8.0),
                                       child: Text(
                                         'All (24)',
                                         style: GoogleFonts.inter(
@@ -1077,8 +1080,7 @@ class _HomeSellerProfileWidgetState extends State<HomeSellerProfileWidget> {
                                   ),
                                 ),
                                 Align(
-                                  alignment:
-                                      AlignmentDirectional(-1.0, 0.0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: SingleChildScrollView(
                                     scrollDirection: Axis.horizontal,
                                     child: Row(
@@ -1114,9 +1116,8 @@ class _HomeSellerProfileWidgetState extends State<HomeSellerProfileWidget> {
                                   },
                                 );
                               },
-                              itemBuilder:
-                                  (SellerProduct? sellerProduct) =>
-                                      HomeSellerProductWidget(
+                              itemBuilder: (SellerProduct? sellerProduct) =>
+                                  HomeSellerProductWidget(
                                 productDataType: sellerProduct,
                               ),
                             ),
@@ -1142,11 +1143,9 @@ class _HomeSellerProfileWidgetState extends State<HomeSellerProfileWidget> {
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
                             itemCount: shortlists.length,
-                            separatorBuilder: (_, __) =>
-                                SizedBox(height: 16.0),
+                            separatorBuilder: (_, __) => SizedBox(height: 16.0),
                             itemBuilder: (context, shortlistsIndex) {
-                              final shortlistsItem =
-                                  shortlists[shortlistsIndex];
+                              final _ = shortlists[shortlistsIndex];
                               return ShortlistItemWidget(
                                 key: Key(
                                     'Key0vf_${shortlistsIndex}_of_${shortlists.length}'),

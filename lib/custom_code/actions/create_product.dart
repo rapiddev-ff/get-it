@@ -1,8 +1,6 @@
-import '/backend/schema/enums/enums.dart';
+import 'package:flutter/foundation.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/utils/uploaded_file.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 

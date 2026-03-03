@@ -17,7 +17,6 @@ import '/core/utils/upload_data.dart';
 import '/features/home/domain/models/product_details_model.dart';
 import '/features/browse/domain/models/tag_model.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import '/features/home/presentation/pages/seller_dashboard/inventory_add_tags/home_dashoard_inventory_add_tags_widget.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -68,7 +67,8 @@ class _HomeDashoardInventoryAddWidgetState
   List<Tag> tags = [];
 
   void addToUploadedImages(FFUploadedFile item) => uploadedImages.add(item);
-  void removeFromUploadedImages(FFUploadedFile item) => uploadedImages.remove(item);
+  void removeFromUploadedImages(FFUploadedFile item) =>
+      uploadedImages.remove(item);
   CategoriesRow? choosenCategory;
   SubcategoriesRow? choosenSubcategory;
   List<ConditionsRow>? choosenConditions;
@@ -143,8 +143,7 @@ class _HomeDashoardInventoryAddWidgetState
           }),
           Future(() async {
             setState(() {
-              quantityTextController?.text =
-                  getProduct!.quantity.toString();
+              quantityTextController?.text = getProduct!.quantity.toString();
               quantityMask.updateMask(
                 newValue: TextEditingValue(
                   text: quantityTextController!.text,
@@ -154,8 +153,7 @@ class _HomeDashoardInventoryAddWidgetState
           }),
           Future(() async {
             setState(() {
-              yearTextController?.text =
-                  getProduct!.year.toString();
+              yearTextController?.text = getProduct!.year.toString();
               yearMask.updateMask(
                 newValue: TextEditingValue(
                   text: yearTextController!.text,
@@ -165,8 +163,7 @@ class _HomeDashoardInventoryAddWidgetState
           }),
           Future(() async {
             setState(() {
-              issueTextController?.text =
-                  getProduct!.issueNumber.toString();
+              issueTextController?.text = getProduct!.issueNumber.toString();
               issueMask.updateMask(
                 newValue: TextEditingValue(
                   text: issueTextController!.text,
@@ -176,8 +173,7 @@ class _HomeDashoardInventoryAddWidgetState
           }),
           Future(() async {
             setState(() {
-              priceTextController?.text =
-                  getProduct!.price.toString();
+              priceTextController?.text = getProduct!.price.toString();
             });
           }),
           Future(() async {
@@ -217,8 +213,7 @@ class _HomeDashoardInventoryAddWidgetState
           }),
           Future(() async {
             setState(() {
-              skuNumberTextController?.text =
-                  getProduct!.skuNumber ?? '';
+              skuNumberTextController?.text = getProduct!.skuNumber ?? '';
             });
           }),
         ]);
@@ -251,9 +246,9 @@ class _HomeDashoardInventoryAddWidgetState
             convertImages = await actions.convertUrlsToUploadedFileList(
               getProduct!.images
                   .map((e) {
-                        final m = e.toJson();
-                        return m is Map ? m['imageUrl'] : null;
-                      })
+                    final m = e.toJson();
+                    return m['imageUrl'];
+                  })
                   .toList()
                   .map((e) => e.toString())
                   .toList()
@@ -261,12 +256,10 @@ class _HomeDashoardInventoryAddWidgetState
             );
           }),
         ]);
-        uploadedImages =
-            convertImages!.toList().cast<FFUploadedFile>();
+        uploadedImages = convertImages!.toList().cast<FFUploadedFile>();
         category = getCategory?.firstOrNull;
         subcategory = getSubcategory?.firstOrNull;
-        conditionsList =
-            getConditions!.toList().cast<ConditionsRow>();
+        conditionsList = getConditions!.toList().cast<ConditionsRow>();
         discount = getProduct!.discountType ?? 'percentage';
         setState(() {});
       }
@@ -347,7 +340,6 @@ class _HomeDashoardInventoryAddWidgetState
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -366,33 +358,34 @@ class _HomeDashoardInventoryAddWidgetState
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-icon: Icon(
+                  icon: Icon(
                     Icons.arrow_back,
                     color: AppColors.info,
                     size: 24.0,
                   ),
-iconSize: 40.0,
-onPressed: () async {
+                  iconSize: 40.0,
+                  onPressed: () async {
                     context.pop();
                   },
-),
+                ),
                 Text(
                   widget.productId != null && widget.productId != ''
                       ? 'Edit Product'
                       : 'Add a Product',
-                  style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 18.0, color: AppColors.textPrimary),
+                  style: GoogleFonts.inter(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18.0,
+                      color: AppColors.textPrimary),
                 ),
                 IconButton(
-icon: Icon(
+                  icon: Icon(
                     Icons.more_vert,
                     color: AppColors.info,
                     size: 20.0,
                   ),
-iconSize: 40.0,
-onPressed: () {
-                    print('IconButton pressed ...');
-                  },
-),
+                  iconSize: 40.0,
+                  onPressed: () {},
+                ),
               ],
             ),
             actions: [],
@@ -411,7 +404,10 @@ onPressed: () {
                   padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   child: Text(
                     'Product Photos',
-                    style: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 14.0, color: AppColors.textPrimary),
+                    style: GoogleFonts.inter(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14.0,
+                        color: AppColors.textPrimary),
                   ),
                 ),
                 Padding(
@@ -468,9 +464,9 @@ onPressed: () {
                                 }
                               }
 
-                              if ((uploadedLocalFile_uploadDataEdit.bytes
-                                          ?.isNotEmpty ??
-                                      false)) {
+                              if ((uploadedLocalFile_uploadDataEdit
+                                      .bytes?.isNotEmpty ??
+                                  false)) {
                                 addToUploadedImages(
                                     uploadedLocalFile_uploadDataEdit);
                                 setState(() {});
@@ -589,7 +585,8 @@ onPressed: () {
                       EdgeInsetsDirectional.fromSTEB(16.0, 10.0, 16.0, 0.0),
                   child: Text(
                     'Add up to 10 photos. First photo will be the main image.',
-                    style: GoogleFonts.inter(fontSize: 12.0, color: AppColors.textSecondary),
+                    style: GoogleFonts.inter(
+                        fontSize: 12.0, color: AppColors.textSecondary),
                   ),
                 ),
                 Divider(
@@ -609,15 +606,18 @@ onPressed: () {
                       children: [
                         Text(
                           'Basic Information',
-                          style:
-                              GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 18.0, color: AppColors.textPrimary),
+                          style: GoogleFonts.inter(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18.0,
+                              color: AppColors.textPrimary),
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 16.0, 0.0, 0.0),
                           child: Text(
                             'Product Title',
-                            style: GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+                            style: GoogleFonts.inter(
+                                fontSize: 15.0, color: AppColors.textPrimary),
                           ),
                         ),
                         Padding(
@@ -639,11 +639,12 @@ onPressed: () {
                               decoration: InputDecoration(
                                 isDense: false,
                                 hintText: 'Enter product title',
-                                hintStyle: GoogleFonts.inter(fontSize: 16.0, color: AppColors.textSecondary),
+                                hintStyle: GoogleFonts.inter(
+                                    fontSize: 16.0,
+                                    color: AppColors.textSecondary),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color:
-                                        AppColors.neutral700,
+                                    color: AppColors.neutral700,
                                     width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.circular(
@@ -654,8 +655,7 @@ onPressed: () {
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color:
-                                        AppColors.secondary,
+                                    color: AppColors.secondary,
                                     width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.circular(
@@ -687,9 +687,9 @@ onPressed: () {
                                   )),
                                 ),
                               ),
-                              style: GoogleFonts.inter(fontSize: 14.0, color: AppColors.textPrimary),
-                              cursorColor:
-                                  AppColors.textPrimary,
+                              style: GoogleFonts.inter(
+                                  fontSize: 14.0, color: AppColors.textPrimary),
+                              cursorColor: AppColors.textPrimary,
                               enableInteractiveSelection: true,
                               validator: null,
                             ),
@@ -700,7 +700,8 @@ onPressed: () {
                               0.0, 16.0, 0.0, 0.0),
                           child: Text(
                             'Category',
-                            style: GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+                            style: GoogleFonts.inter(
+                                fontSize: 15.0, color: AppColors.textPrimary),
                           ),
                         ),
                         Padding(
@@ -738,8 +739,8 @@ onPressed: () {
                                     ),
                                   );
                                 },
-                              ).then((value) => setState(
-                                  () => choosenCategory = value));
+                              ).then((value) =>
+                                  setState(() => choosenCategory = value));
 
                               category = choosenCategory;
                               setState(() {});
@@ -756,8 +757,7 @@ onPressed: () {
                                   0.0,
                                 )),
                                 border: Border.all(
-                                  color:
-                                      AppColors.neutral700,
+                                  color: AppColors.neutral700,
                                 ),
                               ),
                               child: Padding(
@@ -774,7 +774,9 @@ onPressed: () {
                                               : 'Select category',
                                           'Select category',
                                         ),
-                                        style: GoogleFonts.inter(fontSize: 16.0, color: AppColors.textPrimary),
+                                        style: GoogleFonts.inter(
+                                            fontSize: 16.0,
+                                            color: AppColors.textPrimary),
                                       ),
                                     ),
                                     Icon(
@@ -793,7 +795,8 @@ onPressed: () {
                               0.0, 16.0, 0.0, 0.0),
                           child: Text(
                             'Subcategory',
-                            style: GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+                            style: GoogleFonts.inter(
+                                fontSize: 15.0, color: AppColors.textPrimary),
                           ),
                         ),
                         Padding(
@@ -833,8 +836,8 @@ onPressed: () {
                                       ),
                                     );
                                   },
-                                ).then((value) => setState(
-                                    () => choosenSubcategory = value));
+                                ).then((value) =>
+                                    setState(() => choosenSubcategory = value));
 
                                 subcategory = choosenSubcategory;
                                 setState(() {});
@@ -859,8 +862,7 @@ onPressed: () {
                                   0.0,
                                 )),
                                 border: Border.all(
-                                  color:
-                                      AppColors.neutral700,
+                                  color: AppColors.neutral700,
                                 ),
                               ),
                               child: Padding(
@@ -877,7 +879,9 @@ onPressed: () {
                                               : 'Select subcategory',
                                           'Select subcategory',
                                         ),
-                                        style: GoogleFonts.inter(fontSize: 16.0, color: AppColors.textPrimary),
+                                        style: GoogleFonts.inter(
+                                            fontSize: 16.0,
+                                            color: AppColors.textPrimary),
                                       ),
                                     ),
                                     Icon(
@@ -896,7 +900,8 @@ onPressed: () {
                               0.0, 16.0, 0.0, 0.0),
                           child: Text(
                             'SKU',
-                            style: GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+                            style: GoogleFonts.inter(
+                                fontSize: 15.0, color: AppColors.textPrimary),
                           ),
                         ),
                         Padding(
@@ -922,7 +927,11 @@ onPressed: () {
                                         );
                                         setState(() {
                                           skuNumberTextController?.text =
-                                              (getNextSkuNumber is Map ? getNextSkuNumber['nextNumber'] : null).toString();
+                                              (getNextSkuNumber is Map
+                                                      ? getNextSkuNumber[
+                                                          'nextNumber']
+                                                      : null)
+                                                  .toString();
                                         });
 
                                         setState(() {});
@@ -934,7 +943,9 @@ onPressed: () {
                                     decoration: InputDecoration(
                                       isDense: false,
                                       hintText: 'Enter Prefix',
-                                      hintStyle: GoogleFonts.inter(fontSize: 16.0, color: AppColors.textSecondary),
+                                      hintStyle: GoogleFonts.inter(
+                                          fontSize: 16.0,
+                                          color: AppColors.textSecondary),
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: AppColors.neutral700,
@@ -980,7 +991,9 @@ onPressed: () {
                                         )),
                                       ),
                                     ),
-                                    style: GoogleFonts.inter(fontSize: 14.0, color: AppColors.textPrimary),
+                                    style: GoogleFonts.inter(
+                                        fontSize: 14.0,
+                                        color: AppColors.textPrimary),
                                     cursorColor: AppColors.textPrimary,
                                     enableInteractiveSelection: true,
                                     validator: null,
@@ -1004,7 +1017,9 @@ onPressed: () {
                                     decoration: InputDecoration(
                                       isDense: false,
                                       hintText: 'SKU number',
-                                      hintStyle: GoogleFonts.inter(fontSize: 16.0, color: AppColors.textSecondary),
+                                      hintStyle: GoogleFonts.inter(
+                                          fontSize: 16.0,
+                                          color: AppColors.textSecondary),
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: AppColors.neutral700,
@@ -1050,7 +1065,9 @@ onPressed: () {
                                         )),
                                       ),
                                     ),
-                                    style: GoogleFonts.inter(fontSize: 14.0, color: AppColors.textPrimary),
+                                    style: GoogleFonts.inter(
+                                        fontSize: 14.0,
+                                        color: AppColors.textPrimary),
                                     keyboardType: TextInputType.number,
                                     cursorColor: AppColors.textPrimary,
                                     enableInteractiveSelection: true,
@@ -1066,7 +1083,8 @@ onPressed: () {
                               0.0, 16.0, 0.0, 0.0),
                           child: Text(
                             'Quantity',
-                            style: GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+                            style: GoogleFonts.inter(
+                                fontSize: 15.0, color: AppColors.textPrimary),
                           ),
                         ),
                         Padding(
@@ -1088,11 +1106,12 @@ onPressed: () {
                               decoration: InputDecoration(
                                 isDense: false,
                                 hintText: 'Enter quantity',
-                                hintStyle: GoogleFonts.inter(fontSize: 16.0, color: AppColors.textSecondary),
+                                hintStyle: GoogleFonts.inter(
+                                    fontSize: 16.0,
+                                    color: AppColors.textSecondary),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color:
-                                        AppColors.neutral700,
+                                    color: AppColors.neutral700,
                                     width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.circular(
@@ -1103,8 +1122,7 @@ onPressed: () {
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color:
-                                        AppColors.secondary,
+                                    color: AppColors.secondary,
                                     width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.circular(
@@ -1136,10 +1154,10 @@ onPressed: () {
                                   )),
                                 ),
                               ),
-                              style: GoogleFonts.inter(fontSize: 14.0, color: AppColors.textPrimary),
+                              style: GoogleFonts.inter(
+                                  fontSize: 14.0, color: AppColors.textPrimary),
                               keyboardType: TextInputType.number,
-                              cursorColor:
-                                  AppColors.textPrimary,
+                              cursorColor: AppColors.textPrimary,
                               enableInteractiveSelection: true,
                               validator: null,
                               inputFormatters: [quantityMask],
@@ -1151,7 +1169,8 @@ onPressed: () {
                               0.0, 16.0, 0.0, 0.0),
                           child: Text(
                             'Condition',
-                            style: GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+                            style: GoogleFonts.inter(
+                                fontSize: 15.0, color: AppColors.textPrimary),
                           ),
                         ),
                         Padding(
@@ -1189,8 +1208,8 @@ onPressed: () {
                                     ),
                                   );
                                 },
-                              ).then((value) => setState(
-                                  () => choosenConditions = value));
+                              ).then((value) =>
+                                  setState(() => choosenConditions = value));
 
                               conditionsList = choosenConditions!
                                   .toList()
@@ -1209,8 +1228,7 @@ onPressed: () {
                                   0.0,
                                 )),
                                 border: Border.all(
-                                  color:
-                                      AppColors.neutral700,
+                                  color: AppColors.neutral700,
                                 ),
                               ),
                               child: Padding(
@@ -1225,8 +1243,8 @@ onPressed: () {
                                           if (conditionsList.isNotEmpty) {
                                             return Builder(
                                               builder: (context) {
-                                                final conditions = conditionsList
-                                                    .toList();
+                                                final conditions =
+                                                    conditionsList.toList();
 
                                                 return Row(
                                                   mainAxisSize:
@@ -1239,8 +1257,10 @@ onPressed: () {
                                                             conditionsIndex];
                                                     return Text(
                                                       '${conditionsItem.name}${conditionsIndex == (conditionsList.length - 1) ? '' : ', '}',
-                                                      style:
-                                                          GoogleFonts.inter(fontSize: 16.0, color: AppColors.textPrimary),
+                                                      style: GoogleFonts.inter(
+                                                          fontSize: 16.0,
+                                                          color: AppColors
+                                                              .textPrimary),
                                                     );
                                                   }),
                                                 );
@@ -1249,8 +1269,9 @@ onPressed: () {
                                           } else {
                                             return Text(
                                               'Select condition',
-                                              style:
-                                                  GoogleFonts.inter(fontSize: 16.0, color: AppColors.textPrimary),
+                                              style: GoogleFonts.inter(
+                                                  fontSize: 16.0,
+                                                  color: AppColors.textPrimary),
                                             );
                                           }
                                         },
@@ -1280,7 +1301,9 @@ onPressed: () {
                                   children: [
                                     Text(
                                       'Year (Optional)',
-                                      style: GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+                                      style: GoogleFonts.inter(
+                                          fontSize: 15.0,
+                                          color: AppColors.textPrimary),
                                     ),
                                     Container(
                                       width: double.infinity,
@@ -1298,11 +1321,12 @@ onPressed: () {
                                         decoration: InputDecoration(
                                           isDense: false,
                                           hintText: 'Enter year',
-                                          hintStyle: GoogleFonts.inter(fontSize: 16.0, color: AppColors.textSecondary),
+                                          hintStyle: GoogleFonts.inter(
+                                              fontSize: 16.0,
+                                              color: AppColors.textSecondary),
                                           enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
-                                              color:
-                                                  AppColors.neutral700,
+                                              color: AppColors.neutral700,
                                               width: 1.0,
                                             ),
                                             borderRadius: BorderRadius.circular(
@@ -1313,8 +1337,7 @@ onPressed: () {
                                           ),
                                           focusedBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
-                                              color:
-                                                  AppColors.secondary,
+                                              color: AppColors.secondary,
                                               width: 1.0,
                                             ),
                                             borderRadius: BorderRadius.circular(
@@ -1325,8 +1348,7 @@ onPressed: () {
                                           ),
                                           errorBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
-                                              color:
-                                                  AppColors.error,
+                                              color: AppColors.error,
                                               width: 1.0,
                                             ),
                                             borderRadius: BorderRadius.circular(
@@ -1338,8 +1360,7 @@ onPressed: () {
                                           focusedErrorBorder:
                                               OutlineInputBorder(
                                             borderSide: BorderSide(
-                                              color:
-                                                  AppColors.error,
+                                              color: AppColors.error,
                                               width: 1.0,
                                             ),
                                             borderRadius: BorderRadius.circular(
@@ -1349,10 +1370,11 @@ onPressed: () {
                                             )),
                                           ),
                                         ),
-                                        style: GoogleFonts.inter(fontSize: 14.0, color: AppColors.textPrimary),
+                                        style: GoogleFonts.inter(
+                                            fontSize: 14.0,
+                                            color: AppColors.textPrimary),
                                         keyboardType: TextInputType.number,
-                                        cursorColor:
-                                            AppColors.textPrimary,
+                                        cursorColor: AppColors.textPrimary,
                                         enableInteractiveSelection: true,
                                         validator: null,
                                         inputFormatters: [yearMask],
@@ -1368,7 +1390,9 @@ onPressed: () {
                                   children: [
                                     Text(
                                       'Issue # (Optional)',
-                                      style: GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+                                      style: GoogleFonts.inter(
+                                          fontSize: 15.0,
+                                          color: AppColors.textPrimary),
                                     ),
                                     Container(
                                       width: double.infinity,
@@ -1386,11 +1410,12 @@ onPressed: () {
                                         decoration: InputDecoration(
                                           isDense: false,
                                           hintText: 'Enter issue #',
-                                          hintStyle: GoogleFonts.inter(fontSize: 16.0, color: AppColors.textSecondary),
+                                          hintStyle: GoogleFonts.inter(
+                                              fontSize: 16.0,
+                                              color: AppColors.textSecondary),
                                           enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
-                                              color:
-                                                  AppColors.neutral700,
+                                              color: AppColors.neutral700,
                                               width: 1.0,
                                             ),
                                             borderRadius: BorderRadius.circular(
@@ -1401,8 +1426,7 @@ onPressed: () {
                                           ),
                                           focusedBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
-                                              color:
-                                                  AppColors.secondary,
+                                              color: AppColors.secondary,
                                               width: 1.0,
                                             ),
                                             borderRadius: BorderRadius.circular(
@@ -1413,8 +1437,7 @@ onPressed: () {
                                           ),
                                           errorBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
-                                              color:
-                                                  AppColors.error,
+                                              color: AppColors.error,
                                               width: 1.0,
                                             ),
                                             borderRadius: BorderRadius.circular(
@@ -1426,8 +1449,7 @@ onPressed: () {
                                           focusedErrorBorder:
                                               OutlineInputBorder(
                                             borderSide: BorderSide(
-                                              color:
-                                                  AppColors.error,
+                                              color: AppColors.error,
                                               width: 1.0,
                                             ),
                                             borderRadius: BorderRadius.circular(
@@ -1437,10 +1459,11 @@ onPressed: () {
                                             )),
                                           ),
                                         ),
-                                        style: GoogleFonts.inter(fontSize: 14.0, color: AppColors.textPrimary),
+                                        style: GoogleFonts.inter(
+                                            fontSize: 14.0,
+                                            color: AppColors.textPrimary),
                                         keyboardType: TextInputType.number,
-                                        cursorColor:
-                                            AppColors.textPrimary,
+                                        cursorColor: AppColors.textPrimary,
                                         enableInteractiveSelection: true,
                                         validator: null,
                                         inputFormatters: [issueMask],
@@ -1459,15 +1482,18 @@ onPressed: () {
                         ),
                         Text(
                           'Pricing',
-                          style:
-                              GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 18.0, color: AppColors.textPrimary),
+                          style: GoogleFonts.inter(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18.0,
+                              color: AppColors.textPrimary),
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 16.0, 0.0, 0.0),
                           child: Text(
                             'Price',
-                            style: GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+                            style: GoogleFonts.inter(
+                                fontSize: 15.0, color: AppColors.textPrimary),
                           ),
                         ),
                         Padding(
@@ -1489,11 +1515,12 @@ onPressed: () {
                               decoration: InputDecoration(
                                 isDense: false,
                                 hintText: '\$ 0.00',
-                                hintStyle: GoogleFonts.inter(fontSize: 16.0, color: AppColors.textSecondary),
+                                hintStyle: GoogleFonts.inter(
+                                    fontSize: 16.0,
+                                    color: AppColors.textSecondary),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color:
-                                        AppColors.neutral700,
+                                    color: AppColors.neutral700,
                                     width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.circular(
@@ -1504,8 +1531,7 @@ onPressed: () {
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color:
-                                        AppColors.secondary,
+                                    color: AppColors.secondary,
                                     width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.circular(
@@ -1537,12 +1563,12 @@ onPressed: () {
                                   )),
                                 ),
                               ),
-                              style: GoogleFonts.inter(fontSize: 14.0, color: AppColors.textPrimary),
+                              style: GoogleFonts.inter(
+                                  fontSize: 14.0, color: AppColors.textPrimary),
                               keyboardType:
                                   const TextInputType.numberWithOptions(
                                       decimal: true),
-                              cursorColor:
-                                  AppColors.textPrimary,
+                              cursorColor: AppColors.textPrimary,
                               enableInteractiveSelection: true,
                               validator: null,
                             ),
@@ -1560,13 +1586,15 @@ onPressed: () {
                                   children: [
                                     Text(
                                       'Flash Sale',
-                                      style: GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+                                      style: GoogleFonts.inter(
+                                          fontSize: 15.0,
+                                          color: AppColors.textPrimary),
                                     ),
                                     if (switchFlashSaleValue ?? true)
                                       AppDropDown<int>(
                                         controller:
-                                                flashDropDownValueController ??=
-                                            FormFieldController<int>(
+                                            flashDropDownValueController ??=
+                                                FormFieldController<int>(
                                           flashDropDownValue ??= 1,
                                         ),
                                         options: List<int>.from([1, 20, 24]),
@@ -1575,11 +1603,13 @@ onPressed: () {
                                           '20 hours',
                                           '24 hours'
                                         ],
-                                        onChanged: (val) => setState(() =>
-                                            flashDropDownValue = val),
+                                        onChanged: (val) => setState(
+                                            () => flashDropDownValue = val),
                                         width: 115.0,
                                         height: 50.0,
-                                        textStyle: GoogleFonts.inter(fontSize: 14.0, color: AppColors.textPrimary),
+                                        textStyle: GoogleFonts.inter(
+                                            fontSize: 14.0,
+                                            color: AppColors.textPrimary),
                                         hintText: '20 hours',
                                         icon: Icon(
                                           Icons.keyboard_arrow_down_rounded,
@@ -1588,8 +1618,7 @@ onPressed: () {
                                         ),
                                         fillColor: AppColors.backgroundPrimary,
                                         elevation: 2.0,
-                                        borderColor:
-                                            AppColors.neutral700,
+                                        borderColor: AppColors.neutral700,
                                         borderWidth: 1.0,
                                         borderRadius: 4.0,
                                         margin: EdgeInsetsDirectional.fromSTEB(
@@ -1607,15 +1636,12 @@ onPressed: () {
                                 child: Switch.adaptive(
                                   value: switchFlashSaleValue!,
                                   onChanged: (newValue) async {
-                                    setState(() =>
-                                        switchFlashSaleValue = newValue);
+                                    setState(
+                                        () => switchFlashSaleValue = newValue);
                                   },
-                                  activeColor:
-                                      AppColors.primary,
-                                  activeTrackColor:
-                                      AppColors.primary,
-                                  inactiveTrackColor:
-                                      AppColors.alternate,
+                                  activeColor: AppColors.primary,
+                                  activeTrackColor: AppColors.primary,
+                                  inactiveTrackColor: AppColors.alternate,
                                   inactiveThumbColor:
                                       AppColors.backgroundSecondary,
                                 ),
@@ -1638,7 +1664,9 @@ onPressed: () {
                                     children: [
                                       Text(
                                         'Amount',
-                                        style: GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+                                        style: GoogleFonts.inter(
+                                            fontSize: 15.0,
+                                            color: AppColors.textPrimary),
                                       ),
                                       Builder(
                                         builder: (context) {
@@ -1662,7 +1690,10 @@ onPressed: () {
                                                 decoration: InputDecoration(
                                                   isDense: false,
                                                   hintText: '% 0',
-                                                  hintStyle: GoogleFonts.inter(fontSize: 16.0, color: AppColors.textSecondary),
+                                                  hintStyle: GoogleFonts.inter(
+                                                      fontSize: 16.0,
+                                                      color: AppColors
+                                                          .textSecondary),
                                                   enabledBorder:
                                                       OutlineInputBorder(
                                                     borderSide: BorderSide(
@@ -1698,8 +1729,7 @@ onPressed: () {
                                                   errorBorder:
                                                       OutlineInputBorder(
                                                     borderSide: BorderSide(
-                                                      color:
-                                                          AppColors.error,
+                                                      color: AppColors.error,
                                                       width: 1.0,
                                                     ),
                                                     borderRadius:
@@ -1714,8 +1744,7 @@ onPressed: () {
                                                   focusedErrorBorder:
                                                       OutlineInputBorder(
                                                     borderSide: BorderSide(
-                                                      color:
-                                                          AppColors.error,
+                                                      color: AppColors.error,
                                                       width: 1.0,
                                                     ),
                                                     borderRadius:
@@ -1728,8 +1757,10 @@ onPressed: () {
                                                     )),
                                                   ),
                                                 ),
-                                                style:
-                                                    GoogleFonts.inter(fontSize: 14.0, color: AppColors.textPrimary),
+                                                style: GoogleFonts.inter(
+                                                    fontSize: 14.0,
+                                                    color:
+                                                        AppColors.textPrimary),
                                                 keyboardType:
                                                     TextInputType.number,
                                                 cursorColor:
@@ -1762,7 +1793,10 @@ onPressed: () {
                                                 decoration: InputDecoration(
                                                   isDense: false,
                                                   hintText: '\$0.00',
-                                                  hintStyle: GoogleFonts.inter(fontSize: 16.0, color: AppColors.textSecondary),
+                                                  hintStyle: GoogleFonts.inter(
+                                                      fontSize: 16.0,
+                                                      color: AppColors
+                                                          .textSecondary),
                                                   enabledBorder:
                                                       OutlineInputBorder(
                                                     borderSide: BorderSide(
@@ -1798,8 +1832,7 @@ onPressed: () {
                                                   errorBorder:
                                                       OutlineInputBorder(
                                                     borderSide: BorderSide(
-                                                      color:
-                                                          AppColors.error,
+                                                      color: AppColors.error,
                                                       width: 1.0,
                                                     ),
                                                     borderRadius:
@@ -1814,8 +1847,7 @@ onPressed: () {
                                                   focusedErrorBorder:
                                                       OutlineInputBorder(
                                                     borderSide: BorderSide(
-                                                      color:
-                                                          AppColors.error,
+                                                      color: AppColors.error,
                                                       width: 1.0,
                                                     ),
                                                     borderRadius:
@@ -1828,8 +1860,10 @@ onPressed: () {
                                                     )),
                                                   ),
                                                 ),
-                                                style:
-                                                    GoogleFonts.inter(fontSize: 14.0, color: AppColors.textPrimary),
+                                                style: GoogleFonts.inter(
+                                                    fontSize: 14.0,
+                                                    color:
+                                                        AppColors.textPrimary),
                                                 keyboardType:
                                                     const TextInputType
                                                         .numberWithOptions(
@@ -1861,21 +1895,18 @@ onPressed: () {
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
-                                                  if (discount !=
-                                                      'percentage')
+                                                  if (discount != 'percentage')
                                                     Icon(
                                                       Icons.circle_outlined,
-                                                      color:
-                                                          AppColors.textSecondary,
+                                                      color: AppColors
+                                                          .textSecondary,
                                                       size: 20.0,
                                                     ),
-                                                  if (discount ==
-                                                      'percentage')
+                                                  if (discount == 'percentage')
                                                     Icon(
                                                       Icons
                                                           .radio_button_checked_rounded,
-                                                      color:
-                                                          AppColors.primary,
+                                                      color: AppColors.primary,
                                                       size: 20.0,
                                                     ),
                                                   Expanded(
@@ -1889,8 +1920,10 @@ onPressed: () {
                                                                   8.0),
                                                       child: Text(
                                                         'Percentage Discount',
-                                                        style:
-                                                            GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+                                                        style: GoogleFonts.inter(
+                                                            fontSize: 15.0,
+                                                            color: AppColors
+                                                                .textPrimary),
                                                       ),
                                                     ),
                                                   ),
@@ -1912,21 +1945,18 @@ onPressed: () {
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
-                                                  if (discount !=
-                                                      'dollar')
+                                                  if (discount != 'dollar')
                                                     Icon(
                                                       Icons.circle_outlined,
-                                                      color:
-                                                          AppColors.textSecondary,
+                                                      color: AppColors
+                                                          .textSecondary,
                                                       size: 20.0,
                                                     ),
-                                                  if (discount ==
-                                                      'dollar')
+                                                  if (discount == 'dollar')
                                                     Icon(
                                                       Icons
                                                           .radio_button_checked_rounded,
-                                                      color:
-                                                          AppColors.primary,
+                                                      color: AppColors.primary,
                                                       size: 20.0,
                                                     ),
                                                   Expanded(
@@ -1940,8 +1970,10 @@ onPressed: () {
                                                                   8.0),
                                                       child: Text(
                                                         'Dollar Discount',
-                                                        style:
-                                                            GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+                                                        style: GoogleFonts.inter(
+                                                            fontSize: 15.0,
+                                                            color: AppColors
+                                                                .textPrimary),
                                                       ),
                                                     ),
                                                   ),
@@ -1967,7 +1999,10 @@ onPressed: () {
                               0.0, 0.0, 0.0, 8.0),
                           child: Text(
                             'Shipping Cost',
-                            style: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 18.0, color: AppColors.textPrimary),
+                            style: GoogleFonts.inter(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 18.0,
+                                color: AppColors.textPrimary),
                           ),
                         ),
                         InkWell(
@@ -1976,8 +2011,7 @@ onPressed: () {
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           onTap: () async {
-                            shippingCost =
-                                'Use Seller Default Shipping Rule';
+                            shippingCost = 'Use Seller Default Shipping Rule';
                             setState(() {});
                           },
                           child: Row(
@@ -2003,7 +2037,9 @@ onPressed: () {
                                       0.0, 8.0, 0.0, 8.0),
                                   child: Text(
                                     'Use Seller Default Shipping Rule',
-                                    style: GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+                                    style: GoogleFonts.inter(
+                                        fontSize: 15.0,
+                                        color: AppColors.textPrimary),
                                   ),
                                 ),
                               ),
@@ -2043,7 +2079,9 @@ onPressed: () {
                                       0.0, 8.0, 0.0, 8.0),
                                   child: Text(
                                     'Set Custom Shipping For This Product',
-                                    style: GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+                                    style: GoogleFonts.inter(
+                                        fontSize: 15.0,
+                                        color: AppColors.textPrimary),
                                   ),
                                 ),
                               ),
@@ -2061,13 +2099,14 @@ onPressed: () {
                               children: [
                                 Text(
                                   'Flat Shipping Cost',
-                                  style: GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+                                  style: GoogleFonts.inter(
+                                      fontSize: 15.0,
+                                      color: AppColors.textPrimary),
                                 ),
                                 Container(
                                   width: double.infinity,
                                   child: TextFormField(
-                                    controller:
-                                        flatShippingCostTextController,
+                                    controller: flatShippingCostTextController,
                                     focusNode: flatShippingCostFocusNode,
                                     onChanged: (_) => EasyDebounce.debounce(
                                       'flatShippingCostTextController',
@@ -2080,7 +2119,9 @@ onPressed: () {
                                     decoration: InputDecoration(
                                       isDense: false,
                                       hintText: '\$ 0.00',
-                                      hintStyle: GoogleFonts.inter(fontSize: 16.0, color: AppColors.textSecondary),
+                                      hintStyle: GoogleFonts.inter(
+                                          fontSize: 16.0,
+                                          color: AppColors.textSecondary),
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: AppColors.neutral700,
@@ -2126,7 +2167,9 @@ onPressed: () {
                                         )),
                                       ),
                                     ),
-                                    style: GoogleFonts.inter(fontSize: 14.0, color: AppColors.textPrimary),
+                                    style: GoogleFonts.inter(
+                                        fontSize: 14.0,
+                                        color: AppColors.textPrimary),
                                     keyboardType:
                                         const TextInputType.numberWithOptions(
                                             decimal: true),
@@ -2140,16 +2183,16 @@ onPressed: () {
                                       0.0, 4.0, 0.0, 0.0),
                                   child: Text(
                                     'Additional Item Fee',
-                                    style: GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+                                    style: GoogleFonts.inter(
+                                        fontSize: 15.0,
+                                        color: AppColors.textPrimary),
                                   ),
                                 ),
                                 Container(
                                   width: double.infinity,
                                   child: TextFormField(
-                                    controller:
-                                        additionalItemFeeTextController,
-                                    focusNode:
-                                        additionalItemFeeFocusNode,
+                                    controller: additionalItemFeeTextController,
+                                    focusNode: additionalItemFeeFocusNode,
                                     onChanged: (_) => EasyDebounce.debounce(
                                       'additionalItemFeeTextController',
                                       Duration(milliseconds: 100),
@@ -2161,7 +2204,9 @@ onPressed: () {
                                     decoration: InputDecoration(
                                       isDense: false,
                                       hintText: '\$ 0.00',
-                                      hintStyle: GoogleFonts.inter(fontSize: 16.0, color: AppColors.textSecondary),
+                                      hintStyle: GoogleFonts.inter(
+                                          fontSize: 16.0,
+                                          color: AppColors.textSecondary),
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: AppColors.neutral700,
@@ -2207,7 +2252,9 @@ onPressed: () {
                                         )),
                                       ),
                                     ),
-                                    style: GoogleFonts.inter(fontSize: 14.0, color: AppColors.textPrimary),
+                                    style: GoogleFonts.inter(
+                                        fontSize: 14.0,
+                                        color: AppColors.textPrimary),
                                     keyboardType:
                                         const TextInputType.numberWithOptions(
                                             decimal: true),
@@ -2226,8 +2273,8 @@ onPressed: () {
                         ),
                         Text(
                           'Description',
-                          style:
-                              GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+                          style: GoogleFonts.inter(
+                              fontSize: 15.0, color: AppColors.textPrimary),
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
@@ -2248,11 +2295,12 @@ onPressed: () {
                               decoration: InputDecoration(
                                 isDense: false,
                                 hintText: 'Describe your item in detail',
-                                hintStyle: GoogleFonts.inter(fontSize: 16.0, color: AppColors.textSecondary),
+                                hintStyle: GoogleFonts.inter(
+                                    fontSize: 16.0,
+                                    color: AppColors.textSecondary),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color:
-                                        AppColors.neutral700,
+                                    color: AppColors.neutral700,
                                     width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.circular(
@@ -2263,8 +2311,7 @@ onPressed: () {
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color:
-                                        AppColors.secondary,
+                                    color: AppColors.secondary,
                                     width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.circular(
@@ -2296,7 +2343,8 @@ onPressed: () {
                                   )),
                                 ),
                               ),
-                              style: GoogleFonts.inter(fontSize: 14.0, color: AppColors.textPrimary),
+                              style: GoogleFonts.inter(
+                                  fontSize: 14.0, color: AppColors.textPrimary),
                               maxLines: 10,
                               minLines: 4,
                               maxLength: 500,
@@ -2307,8 +2355,7 @@ onPressed: () {
                                       required isFocused,
                                       maxLength}) =>
                                   null,
-                              cursorColor:
-                                  AppColors.textPrimary,
+                              cursorColor: AppColors.textPrimary,
                               enableInteractiveSelection: true,
                               validator: null,
                             ),
@@ -2325,7 +2372,8 @@ onPressed: () {
                           children: [
                             Text(
                               'Add Product Tags',
-                              style: GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+                              style: GoogleFonts.inter(
+                                  fontSize: 15.0, color: AppColors.textPrimary),
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
@@ -2360,7 +2408,9 @@ onPressed: () {
                                         Expanded(
                                           child: Text(
                                             'Add Tags',
-                                            style: GoogleFonts.inter(fontSize: 16.0, color: AppColors.textPrimary),
+                                            style: GoogleFonts.inter(
+                                                fontSize: 16.0,
+                                                color: AppColors.textPrimary),
                                           ),
                                         ),
                                         Icon(
@@ -2424,7 +2474,10 @@ onPressed: () {
                                               children: [
                                                 Text(
                                                   tagsItem.name,
-                                                  style: GoogleFonts.inter(fontSize: 14.0, color: AppColors.textPrimary),
+                                                  style: GoogleFonts.inter(
+                                                      fontSize: 14.0,
+                                                      color: AppColors
+                                                          .textPrimary),
                                                 ),
                                                 Icon(
                                                   Icons.close,
@@ -2461,9 +2514,7 @@ onPressed: () {
                             borderRadius: BorderRadius.circular(4.0),
                           ),
                           child: TextButton(
-                            onPressed: () {
-                              print('Button pressed ...');
-                            },
+                            onPressed: () {},
                             style: TextButton.styleFrom(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   16.0, 0.0, 16.0, 0.0),
@@ -2482,7 +2533,10 @@ onPressed: () {
                                 SizedBox(width: 8.0),
                                 Text(
                                   'AI Scan',
-                                  style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 16.0, color: Colors.white),
+                                  style: GoogleFonts.inter(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16.0,
+                                      color: Colors.white),
                                 ),
                               ],
                             ),
@@ -2495,8 +2549,10 @@ onPressed: () {
                         ),
                         Text(
                           'Convention Settings',
-                          style:
-                              GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 18.0, color: AppColors.textPrimary),
+                          style: GoogleFonts.inter(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18.0,
+                              color: AppColors.textPrimary),
                         ),
                         Row(
                           mainAxisSize: MainAxisSize.max,
@@ -2504,7 +2560,9 @@ onPressed: () {
                             Expanded(
                               child: Text(
                                 'Add to Convention Shortlist',
-                                style: GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+                                style: GoogleFonts.inter(
+                                    fontSize: 15.0,
+                                    color: AppColors.textPrimary),
                               ),
                             ),
                             Switch.adaptive(
@@ -2514,10 +2572,8 @@ onPressed: () {
                                     switchConventionSettingsValue = newValue);
                               },
                               activeColor: AppColors.primary,
-                              activeTrackColor:
-                                  AppColors.primary,
-                              inactiveTrackColor:
-                                  AppColors.alternate,
+                              activeTrackColor: AppColors.primary,
+                              inactiveTrackColor: AppColors.alternate,
                               inactiveThumbColor: AppColors.backgroundSecondary,
                             ),
                           ].divide(SizedBox(width: 8.0)),
@@ -2528,7 +2584,8 @@ onPressed: () {
                                 0.0, 8.0, 0.0, 0.0),
                             child: Text(
                               'Select Convention',
-                              style: GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+                              style: GoogleFonts.inter(
+                                  fontSize: 15.0, color: AppColors.textPrimary),
                             ),
                           ),
                         if (switchConventionSettingsValue ?? true)
@@ -2539,22 +2596,21 @@ onPressed: () {
                               controller: dropDownValueController ??=
                                   FormFieldController<String>(null),
                               options: ['Option 1', 'Option 2', 'Option 3'],
-                              onChanged: (val) => setState(
-                                  () => dropDownValue = val),
+                              onChanged: (val) =>
+                                  setState(() => dropDownValue = val),
                               width: double.infinity,
                               height: 50.0,
-                              textStyle: GoogleFonts.inter(fontSize: 14.0, color: AppColors.textPrimary),
+                              textStyle: GoogleFonts.inter(
+                                  fontSize: 14.0, color: AppColors.textPrimary),
                               hintText: 'Comic Con 2025',
                               icon: Icon(
                                 Icons.keyboard_arrow_down_rounded,
-                                color:
-                                    AppColors.textSecondary,
+                                color: AppColors.textSecondary,
                                 size: 24.0,
                               ),
                               fillColor: AppColors.backgroundPrimary,
                               elevation: 2.0,
-                              borderColor:
-                                  AppColors.neutral700,
+                              borderColor: AppColors.neutral700,
                               borderWidth: 1.0,
                               borderRadius: 4.0,
                               margin: EdgeInsetsDirectional.fromSTEB(
@@ -2585,8 +2641,7 @@ onPressed: () {
                           child: Builder(
                             builder: (context) => TextButton(
                               onPressed: () async {
-                                createProduct =
-                                    await actions.createProduct(
+                                createProduct = await actions.createProduct(
                                   widget.productId,
                                   titleTextController?.text ?? '',
                                   descTextController?.text ?? '',
@@ -2595,23 +2650,17 @@ onPressed: () {
                                   skuPrefixTextController?.text ?? '',
                                   skuNumberTextController?.text ?? '',
                                   quantityTextController?.text ?? '',
-                                  conditionsList
-                                      .map((e) => e.id)
-                                      .toList(),
+                                  conditionsList.map((e) => e.id).toList(),
                                   yearTextController?.text ?? '',
                                   issueTextController?.text ?? '',
                                   priceTextController?.text ?? '',
                                   switchFlashSaleValue,
                                   flashDropDownValue,
-                                  discount == 'percentage'
-                                      ? true
-                                      : false,
+                                  discount == 'percentage' ? true : false,
                                   discount == 'percentage'
                                       ? percentageDiscountTextController!.text
                                       : dollarDiscountTextController!.text,
-                                  choosenTags
-                                      .map((e) => e.id)
-                                      .toList(),
+                                  choosenTags.map((e) => e.id).toList(),
                                   null,
                                   shippingCost ==
                                           'Use Seller Default Shipping Rule'
@@ -2622,7 +2671,8 @@ onPressed: () {
                                   'active',
                                   uploadedImages.toList(),
                                 );
-                                if (createProduct is Map && createProduct['success'] == true) {
+                                if (createProduct is Map &&
+                                    createProduct['success'] == true) {
                                   await showDialog(
                                     context: context,
                                     builder: (dialogContext) {
@@ -2643,7 +2693,10 @@ onPressed: () {
                                                   ?.unfocus();
                                             },
                                             child: DialogProductCreatedWidget(
-                                              productId: (createProduct is Map ? createProduct['id'] : null).toString(),
+                                              productId: (createProduct is Map
+                                                      ? createProduct['id']
+                                                      : null)
+                                                  .toString(),
                                               action: () async {
                                                 Navigator.pop(context);
                                                 if (Navigator.of(context)
@@ -2663,8 +2716,14 @@ onPressed: () {
                                 } else {
                                   await actions.toastificationshow(
                                     context,
-                                    (createProduct is Map ? createProduct['title'] : null).toString(),
-                                    (createProduct is Map ? createProduct['message'] : null).toString(),
+                                    (createProduct is Map
+                                            ? createProduct['title']
+                                            : null)
+                                        .toString(),
+                                    (createProduct is Map
+                                            ? createProduct['message']
+                                            : null)
+                                        .toString(),
                                     'error',
                                   );
                                 }
@@ -2680,7 +2739,10 @@ onPressed: () {
                               ),
                               child: Text(
                                 'Save & Publish',
-                                style: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
+                                style: GoogleFonts.inter(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 17.0,
+                                    color: Colors.white),
                               ),
                             ),
                           ),
@@ -2707,35 +2769,33 @@ onPressed: () {
                                       skuPrefixTextController?.text ?? '',
                                       skuNumberTextController?.text ?? '',
                                       quantityTextController?.text ?? '',
-                                      conditionsList
-                                          .map((e) => e.id)
-                                          .toList(),
+                                      conditionsList.map((e) => e.id).toList(),
                                       yearTextController?.text ?? '',
                                       issueTextController?.text ?? '',
                                       priceTextController?.text ?? '',
                                       switchFlashSaleValue,
                                       flashDropDownValue,
-                                      discount == 'percentage'
-                                          ? true
-                                          : false,
+                                      discount == 'percentage' ? true : false,
                                       discount == 'percentage'
                                           ? percentageDiscountTextController!
                                               .text
                                           : dollarDiscountTextController!.text,
-                                      choosenTags
-                                          .map((e) => e.id)
-                                          .toList(),
+                                      choosenTags.map((e) => e.id).toList(),
                                       null,
                                       shippingCost ==
                                               'Use Seller Default Shipping Rule'
                                           ? true
                                           : false,
-                                      flatShippingCostTextController?.text ?? '',
-                                      additionalItemFeeTextController?.text ?? '',
+                                      flatShippingCostTextController?.text ??
+                                          '',
+                                      additionalItemFeeTextController?.text ??
+                                          '',
                                       'draft',
                                       uploadedImages.toList(),
                                     );
-                                    if (createProductAsDraft is Map && createProductAsDraft['success'] == true) {
+                                    if (createProductAsDraft is Map &&
+                                        createProductAsDraft['success'] ==
+                                            true) {
                                       await showDialog(
                                         context: context,
                                         builder: (dialogContext) {
@@ -2776,8 +2836,15 @@ onPressed: () {
                                     } else {
                                       await actions.toastificationshow(
                                         context,
-                                        (createProductAsDraft is Map ? createProductAsDraft['title'] : null).toString(),
-                                        (createProductAsDraft is Map ? createProductAsDraft['message'] : null).toString(),
+                                        (createProductAsDraft is Map
+                                                ? createProductAsDraft['title']
+                                                : null)
+                                            .toString(),
+                                        (createProductAsDraft is Map
+                                                ? createProductAsDraft[
+                                                    'message']
+                                                : null)
+                                            .toString(),
                                         'error',
                                       );
                                     }
@@ -2785,7 +2852,8 @@ onPressed: () {
                                     setState(() {});
                                   },
                                   style: OutlinedButton.styleFrom(
-                                    backgroundColor: AppColors.backgroundPrimary,
+                                    backgroundColor:
+                                        AppColors.backgroundPrimary,
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         16.0, 0.0, 16.0, 0.0),
                                     side: BorderSide(
@@ -2797,7 +2865,10 @@ onPressed: () {
                                   ),
                                   child: Text(
                                     'Save as Draft',
-                                    style: GoogleFonts.inter(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
+                                    style: GoogleFonts.inter(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 17.0,
+                                        color: Colors.white),
                                   ),
                                 ),
                               ),

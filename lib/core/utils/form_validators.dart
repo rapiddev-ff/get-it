@@ -21,10 +21,36 @@ class FormValidators {
         .replaceAll('.', '');
 
     const blockedWords = [
-      'fuck', 'shit', 'ass', 'bitch', 'cunt', 'dick', 'porn', 'xxx',
-      'asshole', 'bastard', 'slut', 'whore', 'faggot', 'nigger', 'nigga',
-      'cock', 'pussy', 'penis', 'vagina', 'boob', 'tits', 'anal', 'sex',
-      'rape', 'molest', 'pedo', 'nazi', 'hitler', 'retard', 'fag',
+      'fuck',
+      'shit',
+      'ass',
+      'bitch',
+      'cunt',
+      'dick',
+      'porn',
+      'xxx',
+      'asshole',
+      'bastard',
+      'slut',
+      'whore',
+      'faggot',
+      'nigger',
+      'nigga',
+      'cock',
+      'pussy',
+      'penis',
+      'vagina',
+      'boob',
+      'tits',
+      'anal',
+      'sex',
+      'rape',
+      'molest',
+      'pedo',
+      'nazi',
+      'hitler',
+      'retard',
+      'fag',
     ];
 
     for (final word in blockedWords) {
@@ -183,8 +209,7 @@ class FormValidators {
 
     bool isValidEmail(String e) =>
         e.isNotEmpty &&
-        RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
-            .hasMatch(e);
+        RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$').hasMatch(e);
 
     bool isValidZipCode(String zc, String cc) {
       if (zc.isEmpty) return false;

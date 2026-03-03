@@ -43,8 +43,7 @@ class _HomeDashoardInventoryAddConditionWidgetState
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      conditionsList =
-          widget.conditionsList!.toList().cast<ConditionsRow>();
+      conditionsList = widget.conditionsList!.toList().cast<ConditionsRow>();
       setState(() {});
     });
   }
@@ -125,8 +124,7 @@ class _HomeDashoardInventoryAddConditionWidgetState
                               if (_checkConditionsContains(
                                   conditionsList.toList(),
                                   listViewConditionsRow)) {
-                                removeFromConditionsList(
-                                    listViewConditionsRow);
+                                removeFromConditionsList(listViewConditionsRow);
                                 setState(() {});
                               } else {
                                 addToConditionsList(listViewConditionsRow);
@@ -219,8 +217,8 @@ class _HomeDashoardInventoryAddConditionWidgetState
                     },
                     style: OutlinedButton.styleFrom(
                       minimumSize: Size(double.infinity, 56.0),
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          16.0, 0.0, 16.0, 0.0),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                       side: BorderSide(color: Color(0xFF545454)),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4.0),

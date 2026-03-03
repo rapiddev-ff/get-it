@@ -25,19 +25,15 @@ class RealtimeService {
     required Future<void> Function() onUpdate,
   }) async {
     if (_currentUserId == null) {
-      print('❌ Cannot subscribe: User not authenticated');
       return;
     }
 
     // Don't re-subscribe if already active
     if (_conversationsSubscribed && _conversationsChannel != null) {
-      print('ℹ️ Conversations already subscribed, skipping');
       return;
     }
 
     await unsubscribeFromConversations();
-
-    print('🔔 Subscribing to conversations...');
 
     _conversationsChannel = _client
         .channel(
@@ -56,24 +52,20 @@ class RealtimeService {
             final userId = _currentUserId;
 
             if (userId == null) {
-              print('⚠️ Realtime callback: user not authenticated, skipping');
               return;
             }
 
             if (buyerId == userId || sellerId == userId) {
-              print('📨 Conversation updated, scheduling refresh...');
               _debouncedRefresh(onUpdate);
             }
           },
         )
         .subscribe((status, error) {
-      print('Conversations subscription: $status');
       if (status == RealtimeSubscribeStatus.subscribed) {
         _conversationsSubscribed = true;
       } else if (status == RealtimeSubscribeStatus.closed) {
         _conversationsSubscribed = false;
       }
-      if (error != null) print('Error: $error');
     });
   }
 
@@ -81,7 +73,6 @@ class RealtimeService {
     _debounceTimer?.cancel();
     _debounceTimer = Timer(const Duration(milliseconds: 500), () async {
       if (_isRefreshing) {
-        print('⏳ Already refreshing, skipping');
         return;
       }
       _isRefreshing = true;
@@ -102,7 +93,6 @@ class RealtimeService {
     if (_conversationsChannel != null) {
       await _client.removeChannel(_conversationsChannel!);
       _conversationsChannel = null;
-      print('🔕 Unsubscribed from conversations');
     }
   }
 
@@ -119,8 +109,6 @@ class RealtimeService {
 
     await unsubscribeFromMessages();
 
-    print('🔔 Subscribing to messages for: $conversationId');
-
     _messagesChannel = _client
         .channel(
             'messages_${conversationId}_${DateTime.now().millisecondsSinceEpoch}')
@@ -134,7 +122,6 @@ class RealtimeService {
             value: conversationId,
           ),
           callback: (payload) {
-            print('📨 New message received');
             onNewMessage(payload.newRecord);
           },
         )
@@ -148,21 +135,16 @@ class RealtimeService {
             value: conversationId,
           ),
           callback: (payload) {
-            print('📝 Message updated');
             onMessageUpdate?.call(payload.newRecord);
           },
         )
-        .subscribe((status, error) {
-      print('Messages subscription: $status');
-      if (error != null) print('Error: $error');
-    });
+        .subscribe((status, error) {});
   }
 
   Future<void> unsubscribeFromMessages() async {
     if (_messagesChannel != null) {
       await _client.removeChannel(_messagesChannel!);
       _messagesChannel = null;
-      print('🔕 Unsubscribed from messages');
     }
   }
 

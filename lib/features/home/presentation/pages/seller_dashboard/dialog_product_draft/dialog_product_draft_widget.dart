@@ -87,8 +87,8 @@ class DialogProductDraftWidget extends StatelessWidget {
                       await action?.call();
                     },
                     style: TextButton.styleFrom(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          16.0, 0.0, 16.0, 0.0),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
                       ),
@@ -112,8 +112,8 @@ class DialogProductDraftWidget extends StatelessWidget {
                   },
                   style: TextButton.styleFrom(
                     minimumSize: Size(double.infinity, 56.0),
-                    padding: EdgeInsetsDirectional.fromSTEB(
-                        16.0, 0.0, 16.0, 0.0),
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       side: BorderSide(
@@ -141,8 +141,8 @@ class DialogProductDraftWidget extends StatelessWidget {
                   },
                   style: TextButton.styleFrom(
                     minimumSize: Size(double.infinity, 56.0),
-                    padding: EdgeInsetsDirectional.fromSTEB(
-                        16.0, 0.0, 16.0, 0.0),
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),

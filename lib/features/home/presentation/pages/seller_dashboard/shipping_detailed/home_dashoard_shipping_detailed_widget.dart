@@ -370,10 +370,7 @@ class _HomeDashoardShippingDetailedWidgetState
                     Container(
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          colors: [
-                            AppColors.secondary,
-                            Color(0xFF6187F1)
-                          ],
+                          colors: [AppColors.secondary, Color(0xFF6187F1)],
                           stops: [0.0, 1.0],
                           begin: AlignmentDirectional(0.0, -1.0),
                           end: AlignmentDirectional(0, 1.0),

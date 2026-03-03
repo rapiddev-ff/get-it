@@ -1,8 +1,3 @@
-import '/backend/schema/enums/enums.dart';
-import '/backend/supabase/supabase.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
-
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -39,7 +34,6 @@ Future<dynamic> openStripeDashboard() async {
       'is_dashboard_link': data['is_dashboard_link'] ?? false,
     };
   } catch (e) {
-    print('Error in openStripeDashboard: $e');
     return {'success': false, 'error': e.toString()};
   }
 }

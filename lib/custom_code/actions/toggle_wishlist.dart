@@ -1,7 +1,4 @@
-import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
 
 Future<bool> toggleWishlist(
   String userId,
@@ -21,7 +18,6 @@ Future<bool> toggleWishlist(
     }
     return false;
   } catch (e) {
-    print('toggleWishlist error: $e');
     return false;
   }
 }

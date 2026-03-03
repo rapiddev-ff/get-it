@@ -126,8 +126,7 @@ class _SettingsMyProfileFollowersWidgetState
                   color: AppColors.backgroundSecondary,
                 ),
                 child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
@@ -160,9 +159,8 @@ class _SettingsMyProfileFollowersWidgetState
                                 ),
                               ),
                               Opacity(
-                                opacity:
-                                    (_model.state == 'Followers' ? 1 : 0)
-                                        .toDouble(),
+                                opacity: (_model.state == 'Followers' ? 1 : 0)
+                                    .toDouble(),
                                 child: Container(
                                   width: double.infinity,
                                   height: 2.0,
@@ -203,9 +201,8 @@ class _SettingsMyProfileFollowersWidgetState
                                 ),
                               ),
                               Opacity(
-                                opacity:
-                                    (_model.state == 'Following' ? 1 : 0)
-                                        .toDouble(),
+                                opacity: (_model.state == 'Following' ? 1 : 0)
+                                    .toDouble(),
                                 child: Container(
                                   width: double.infinity,
                                   height: 2.0,
@@ -224,8 +221,7 @@ class _SettingsMyProfileFollowersWidgetState
               ),
               Expanded(
                 child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   child: Builder(
                     builder: (context) {
                       if (_model.state == 'Followers') {
@@ -245,8 +241,8 @@ class _SettingsMyProfileFollowersWidgetState
                                 ),
                                 autofocus: false,
                                 obscureText: false,
-                                decoration: _searchDecoration(
-                                    hintText: 'Search '),
+                                decoration:
+                                    _searchDecoration(hintText: 'Search '),
                                 style: GoogleFonts.inter(
                                   color: AppColors.textPrimary,
                                 ),

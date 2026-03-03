@@ -243,8 +243,8 @@ class _HomeDashoardShortlistCreateWidgetState
                           autofocus: false,
                           enabled: true,
                           obscureText: false,
-                          decoration: _buildInputDecoration(
-                              'e.g., San Diego Comc Con'),
+                          decoration:
+                              _buildInputDecoration('e.g., San Diego Comc Con'),
                           style: _bodyStyle,
                           cursorColor: AppColors.textPrimary,
                           enableInteractiveSelection: true,

@@ -157,10 +157,10 @@ class MessageItemWidget extends StatelessWidget {
                       ].divide(SizedBox(width: 4.0)),
                     ),
                     if (valueOrDefault<String>(
-                              conversationDataType?.productTitle,
-                              'N/A',
-                            ) !=
-                            '')
+                          conversationDataType?.productTitle,
+                          'N/A',
+                        ) !=
+                        '')
                       Text(
                         valueOrDefault<String>(
                           conversationDataType?.productTitle,

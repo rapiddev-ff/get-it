@@ -160,9 +160,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                     color: AppColors.info,
                     size: 20.0,
                   ),
-                  onPressed: () {
-                    print('IconButton pressed ...');
-                  },
+                  onPressed: () {},
                 ),
               ],
             ),
@@ -297,8 +295,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                 autofocus: false,
                                 enabled: true,
                                 obscureText: false,
-                                decoration:
-                                    _buildInputDecoration('% 0.00'),
+                                decoration: _buildInputDecoration('% 0.00'),
                                 style: _bodyStyle,
                                 keyboardType: TextInputType.number,
                                 cursorColor: AppColors.textPrimary,
@@ -323,8 +320,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                 autofocus: false,
                                 enabled: true,
                                 obscureText: false,
-                                decoration:
-                                    _buildInputDecoration('Notes'),
+                                decoration: _buildInputDecoration('Notes'),
                                 style: _bodyStyle,
                                 maxLines: null,
                                 minLines: 4,
@@ -498,9 +494,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                       borderRadius: BorderRadius.circular(4.0),
                     ),
                     child: TextButton(
-                      onPressed: () {
-                        print('Button pressed ...');
-                      },
+                      onPressed: () {},
                       child: Text(
                         'Create Shortlist',
                         style: GoogleFonts.inter(

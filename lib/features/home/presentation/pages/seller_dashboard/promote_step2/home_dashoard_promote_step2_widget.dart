@@ -1004,8 +1004,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                                   onChanged: (_) =>
                                                       EasyDebounce.debounce(
                                                     '_model.textController2',
-                                                    Duration(
-                                                        milliseconds: 100),
+                                                    Duration(milliseconds: 100),
                                                     () => setState(() {}),
                                                   ),
                                                   autofocus: false,
@@ -1027,10 +1026,9 @@ class _HomeDashoardPromoteStep2WidgetState
                                                             .neutral700,
                                                         width: 1.0,
                                                       ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              AppConstants
-                                                                  .radiusTextField4),
+                                                      borderRadius: BorderRadius
+                                                          .circular(AppConstants
+                                                              .radiusTextField4),
                                                     ),
                                                     focusedBorder:
                                                         OutlineInputBorder(
@@ -1039,10 +1037,9 @@ class _HomeDashoardPromoteStep2WidgetState
                                                             AppColors.secondary,
                                                         width: 1.0,
                                                       ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              AppConstants
-                                                                  .radiusTextField4),
+                                                      borderRadius: BorderRadius
+                                                          .circular(AppConstants
+                                                              .radiusTextField4),
                                                     ),
                                                     errorBorder:
                                                         OutlineInputBorder(
@@ -1050,10 +1047,9 @@ class _HomeDashoardPromoteStep2WidgetState
                                                         color: AppColors.error,
                                                         width: 1.0,
                                                       ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              AppConstants
-                                                                  .radiusTextField4),
+                                                      borderRadius: BorderRadius
+                                                          .circular(AppConstants
+                                                              .radiusTextField4),
                                                     ),
                                                     focusedErrorBorder:
                                                         OutlineInputBorder(
@@ -1061,10 +1057,9 @@ class _HomeDashoardPromoteStep2WidgetState
                                                         color: AppColors.error,
                                                         width: 1.0,
                                                       ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              AppConstants
-                                                                  .radiusTextField4),
+                                                      borderRadius: BorderRadius
+                                                          .circular(AppConstants
+                                                              .radiusTextField4),
                                                     ),
                                                   ),
                                                   style: GoogleFonts.inter(
@@ -1089,8 +1084,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                                   onChanged: (_) =>
                                                       EasyDebounce.debounce(
                                                     '_model.textController3',
-                                                    Duration(
-                                                        milliseconds: 100),
+                                                    Duration(milliseconds: 100),
                                                     () => setState(() {}),
                                                   ),
                                                   autofocus: false,
@@ -1112,10 +1106,9 @@ class _HomeDashoardPromoteStep2WidgetState
                                                             .neutral700,
                                                         width: 1.0,
                                                       ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              AppConstants
-                                                                  .radiusTextField4),
+                                                      borderRadius: BorderRadius
+                                                          .circular(AppConstants
+                                                              .radiusTextField4),
                                                     ),
                                                     focusedBorder:
                                                         OutlineInputBorder(
@@ -1124,10 +1117,9 @@ class _HomeDashoardPromoteStep2WidgetState
                                                             AppColors.secondary,
                                                         width: 1.0,
                                                       ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              AppConstants
-                                                                  .radiusTextField4),
+                                                      borderRadius: BorderRadius
+                                                          .circular(AppConstants
+                                                              .radiusTextField4),
                                                     ),
                                                     errorBorder:
                                                         OutlineInputBorder(
@@ -1135,10 +1127,9 @@ class _HomeDashoardPromoteStep2WidgetState
                                                         color: AppColors.error,
                                                         width: 1.0,
                                                       ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              AppConstants
-                                                                  .radiusTextField4),
+                                                      borderRadius: BorderRadius
+                                                          .circular(AppConstants
+                                                              .radiusTextField4),
                                                     ),
                                                     focusedErrorBorder:
                                                         OutlineInputBorder(
@@ -1146,10 +1137,9 @@ class _HomeDashoardPromoteStep2WidgetState
                                                         color: AppColors.error,
                                                         width: 1.0,
                                                       ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              AppConstants
-                                                                  .radiusTextField4),
+                                                      borderRadius: BorderRadius
+                                                          .circular(AppConstants
+                                                              .radiusTextField4),
                                                     ),
                                                   ),
                                                   style: GoogleFonts.inter(

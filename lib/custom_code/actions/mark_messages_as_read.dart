@@ -1,13 +1,9 @@
-import '/backend/schema/enums/enums.dart';
 import '/features/messages/domain/models/conversation_model.dart';
-import '/backend/supabase/supabase.dart';
-import '/core/state/app_state_service.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
-
+import '/features/messages/presentation/providers/messages_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-Future markMessagesAsRead(String conversationId) async {
+Future markMessagesAsRead(WidgetRef ref, String conversationId) async {
   final client = Supabase.instance.client;
   final currentUserId = client.auth.currentUser?.id;
 
@@ -17,11 +13,8 @@ Future markMessagesAsRead(String conversationId) async {
       params: {'p_conversation_id': conversationId},
     );
 
-    print('✅ Messages marked as read');
-
-    // ✅ Сбрасываем счётчик в AppState
     if (currentUserId != null) {
-      final conversations = FFAppState().conversations;
+      final conversations = ref.read(messagesProvider).conversations;
       final index = conversations.indexWhere((c) => c.id == conversationId);
 
       if (index != -1) {
@@ -34,17 +27,10 @@ Future markMessagesAsRead(String conversationId) async {
           sellerUnreadCount: isBuyer ? old.sellerUnreadCount : 0,
         );
 
-        FFAppState().update(() {
-          final list =
-              List<Conversation>.from(FFAppState().conversations);
-          list[index] = updated;
-          FFAppState().conversations = list;
-        });
-
-        print('✅ Unread count reset in AppState');
+        final list = List<Conversation>.from(conversations);
+        list[index] = updated;
+        ref.read(messagesProvider.notifier).setConversations(list);
       }
     }
-  } catch (e) {
-    print('❌ Error marking messages as read: $e');
-  }
+  } catch (_) {}
 }

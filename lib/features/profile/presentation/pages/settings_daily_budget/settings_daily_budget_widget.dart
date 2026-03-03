@@ -50,8 +50,7 @@ class _SettingsDailyBudgetWidgetState
       });
     }
 
-    final dailyBudget =
-        ref.read(authProvider).userSettings?.dailyBudget;
+    final dailyBudget = ref.read(authProvider).userSettings?.dailyBudget;
     final formattedBudget = dailyBudget != null
         ? NumberFormat('#,##0.##', 'en_US').format(dailyBudget)
         : '0';
@@ -236,13 +235,16 @@ class _SettingsDailyBudgetWidgetState
                             await Future.wait([
                               Future(() async {
                                 ref.read(authProvider.notifier).updateUser(
-                                  (e) => e.copyWith(
-                                    userSettings: (e.userSettings ?? const UserSettings()).copyWith(
-                                      dailyBudget: double.tryParse(
-                                          _model.textController!.text) ?? 0.0,
-                                    ),
-                                  ),
-                                );
+                                      (e) => e.copyWith(
+                                        userSettings: (e.userSettings ??
+                                                const UserSettings())
+                                            .copyWith(
+                                          dailyBudget: double.tryParse(_model
+                                                  .textController!.text) ??
+                                              0.0,
+                                        ),
+                                      ),
+                                    );
                                 setState(() {});
                               }),
                               Future(() async {

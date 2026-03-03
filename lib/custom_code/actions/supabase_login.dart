@@ -1,8 +1,3 @@
-import '/backend/schema/enums/enums.dart';
-import '/backend/supabase/supabase.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
-
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<dynamic> supabaseLogin(

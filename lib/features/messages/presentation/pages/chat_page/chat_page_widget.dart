@@ -18,12 +18,13 @@ import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-class ChatPageWidget extends StatefulWidget {
+class ChatPageWidget extends ConsumerStatefulWidget {
   const ChatPageWidget({
     super.key,
     required this.conversation,
@@ -35,16 +36,16 @@ class ChatPageWidget extends StatefulWidget {
   static String routePath = 'chatPage';
 
   @override
-  State<ChatPageWidget> createState() => _ChatPageWidgetState();
+  ConsumerState<ChatPageWidget> createState() => _ChatPageWidgetState();
 }
 
-class _ChatPageWidgetState extends State<ChatPageWidget> {
+class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController? _textController;
   FocusNode? _textFieldFocusNode;
   List<String> _uploadedImages = [];
   String? _textMessage;
-  bool _isDataUploading = false;
+  // _isDataUploading removed (unused)
   List<FFUploadedFile> _uploadedLocalFiles = [];
 
   @override
@@ -64,9 +65,11 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
       );
       setState(() {});
       await actions.markMessagesAsRead(
+        ref,
         widget.conversation!.id,
       );
       await actions.subscribeToMessages(
+        ref,
         widget.conversation!.id,
       );
     });
@@ -76,7 +79,7 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
   void dispose() {
     // On page dispose action.
     () async {
-      await actions.refreshConversations();
+      await actions.refreshConversations(ref);
       await actions.unsubscribeFromMessages();
     }();
 
@@ -129,16 +132,14 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
                           context.pushNamed(
                             HomeSellerProfileWidget.routeName,
                             queryParameters: {
-                              'sellerId':
-                                  widget.conversation?.sellerId ?? '',
+                              'sellerId': widget.conversation?.sellerId ?? '',
                             },
                           );
                         } else {
                           context.pushNamed(
                             ChatBuyerProfileWidget.routeName,
                             queryParameters: {
-                              'buyerId':
-                                  widget.conversation?.buyerId ?? '',
+                              'buyerId': widget.conversation?.buyerId ?? '',
                             },
                           );
                         }
@@ -303,8 +304,7 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
                           context.pushNamed(
                             HomeProductWidget.routeName,
                             queryParameters: {
-                              'productId':
-                                  widget.conversation?.productId ?? '',
+                              'productId': widget.conversation?.productId ?? '',
                             },
                           );
                         },
@@ -425,32 +425,28 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
                                       color: AppColors.neutral700,
                                       width: 1.0,
                                     ),
-                                    borderRadius:
-                                        BorderRadius.circular(100.0),
+                                    borderRadius: BorderRadius.circular(100.0),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: AppColors.secondary,
                                       width: 1.0,
                                     ),
-                                    borderRadius:
-                                        BorderRadius.circular(100.0),
+                                    borderRadius: BorderRadius.circular(100.0),
                                   ),
                                   errorBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: AppColors.error,
                                       width: 1.0,
                                     ),
-                                    borderRadius:
-                                        BorderRadius.circular(100.0),
+                                    borderRadius: BorderRadius.circular(100.0),
                                   ),
                                   focusedErrorBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: AppColors.error,
                                       width: 1.0,
                                     ),
-                                    borderRadius:
-                                        BorderRadius.circular(100.0),
+                                    borderRadius: BorderRadius.circular(100.0),
                                   ),
                                 ),
                                 style: GoogleFonts.inter(fontSize: 14.0),
@@ -478,8 +474,6 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
                                         selectedMedia.every((m) =>
                                             validateFileFormat(
                                                 m.storagePath, context))) {
-                                      setState(
-                                          () => _isDataUploading = true);
                                       var selectedUploadedFiles =
                                           <FFUploadedFile>[];
 
@@ -490,18 +484,14 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
                                                       .split('/')
                                                       .last,
                                                   bytes: m.bytes,
-                                                  height:
-                                                      m.dimensions?.height,
-                                                  width:
-                                                      m.dimensions?.width,
+                                                  height: m.dimensions?.height,
+                                                  width: m.dimensions?.width,
                                                   blurHash: m.blurHash,
                                                   originalFilename:
                                                       m.originalFilename,
                                                 ))
                                             .toList();
-                                      } finally {
-                                        _isDataUploading = false;
-                                      }
+                                      } finally {}
                                       if (selectedUploadedFiles.length ==
                                           selectedMedia.length) {
                                         setState(() {
@@ -516,12 +506,11 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
 
                                     if (_uploadedLocalFiles.firstOrNull !=
                                             null &&
-                                        (_uploadedLocalFiles
-                                                .firstOrNull
-                                                ?.bytes
+                                        (_uploadedLocalFiles.firstOrNull?.bytes
                                                 ?.isNotEmpty ??
                                             false)) {
                                       await actions.uploadAndSendImages(
+                                        ref,
                                         widget.conversation!.id,
                                         _uploadedLocalFiles.toList(),
                                       );
@@ -551,6 +540,7 @@ class _ChatPageWidgetState extends State<ChatPageWidget> {
                           _textController?.clear();
                         });
                         await actions.sendMessage(
+                          ref,
                           widget.conversation!.id,
                           _textMessage!,
                           _uploadedImages.toList(),

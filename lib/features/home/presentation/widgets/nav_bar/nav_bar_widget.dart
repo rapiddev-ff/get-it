@@ -100,8 +100,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                               () {
                                 if (route == '/homePage') {
                                   return Color(0xFF7D56FF);
-                                } else if (route ==
-                                    '/homeDashoardEarnings') {
+                                } else if (route == '/homeDashoardEarnings') {
                                   return Color(0xFF7D56FF);
                                 } else {
                                   return Colors.transparent;
@@ -110,8 +109,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                               () {
                                 if (route == '/homePage') {
                                   return Color(0xFF6187F1);
-                                } else if (route ==
-                                    '/homeDashoardEarnings') {
+                                } else if (route == '/homeDashoardEarnings') {
                                   return Color(0xFF6187F1);
                                 } else {
                                   return Colors.transparent;
@@ -130,8 +128,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                           color: () {
                             if (route == '/homePage') {
                               return AppColors.textPrimary;
-                            } else if (route ==
-                                '/homeDashoardEarnings') {
+                            } else if (route == '/homeDashoardEarnings') {
                               return AppColors.textPrimary;
                             } else {
                               return Color(0xFFAFAFB4);
@@ -185,11 +182,9 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                               () {
                                 if (route == '/browse') {
                                   return Color(0xFF7D56FF);
-                                } else if (route ==
-                                    '/browseCategories') {
+                                } else if (route == '/browseCategories') {
                                   return Color(0xFF7D56FF);
-                                } else if (route ==
-                                    '/browseProducts') {
+                                } else if (route == '/browseProducts') {
                                   return Color(0xFF7D56FF);
                                 } else {
                                   return Colors.transparent;
@@ -198,11 +193,9 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                               () {
                                 if (route == '/browse') {
                                   return Color(0xFF6187F1);
-                                } else if (route ==
-                                    '/browseCategories') {
+                                } else if (route == '/browseCategories') {
                                   return Color(0xFF6187F1);
-                                } else if (route ==
-                                    '/browseProducts') {
+                                } else if (route == '/browseProducts') {
                                   return Color(0xFF6187F1);
                                 } else {
                                   return Colors.transparent;
@@ -222,11 +215,9 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                             color: () {
                               if (route == '/browse') {
                                 return AppColors.textPrimary;
-                              } else if (route ==
-                                  '/browseCategories') {
+                              } else if (route == '/browseCategories') {
                                 return AppColors.textPrimary;
-                              } else if (route ==
-                                  '/browseProducts') {
+                              } else if (route == '/browseProducts') {
                                 return AppColors.textPrimary;
                               } else {
                                 return Color(0xFFAFAFB4);

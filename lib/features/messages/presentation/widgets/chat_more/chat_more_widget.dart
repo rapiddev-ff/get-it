@@ -2,11 +2,12 @@ import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 
-class ChatMoreWidget extends StatefulWidget {
+class ChatMoreWidget extends ConsumerStatefulWidget {
   const ChatMoreWidget({
     super.key,
     required this.conversationId,
@@ -17,12 +18,10 @@ class ChatMoreWidget extends StatefulWidget {
   final String? userId;
 
   @override
-  State<ChatMoreWidget> createState() => _ChatMoreWidgetState();
+  ConsumerState<ChatMoreWidget> createState() => _ChatMoreWidgetState();
 }
 
-class _ChatMoreWidgetState extends State<ChatMoreWidget> {
-  dynamic _blockUser;
-
+class _ChatMoreWidgetState extends ConsumerState<ChatMoreWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,7 +41,7 @@ class _ChatMoreWidgetState extends State<ChatMoreWidget> {
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
-                _blockUser = await actions.callRpc(
+                await actions.callRpc(
                   context,
                   'block_user',
                   <String, String>{
@@ -101,7 +100,7 @@ class _ChatMoreWidgetState extends State<ChatMoreWidget> {
                     'p_conversation_id': widget.conversationId,
                   },
                 );
-                await actions.refreshConversations();
+                await actions.refreshConversations(ref);
                 await actions.unsubscribeFromMessages();
                 Navigator.pop(context);
                 context.pop();

@@ -1,8 +1,8 @@
 import '/features/auth/data/supabase_auth/auth_util.dart';
-import '/core/state/app_state_service.dart';
 import '/features/home/domain/models/feed_product_model.dart';
+import '/features/home/presentation/providers/feed_provider.dart';
+import '/features/auth/presentation/providers/auth_provider.dart';
 import '/backend/supabase/supabase.dart';
-import '/features/home/presentation/widgets/components/seller_dashboard_ship_item_widget.dart';
 import '/features/home/presentation/widgets/nav_bar/nav_bar_widget.dart';
 import '/features/checkout/presentation/widgets/fast_checkout/fast_checkout_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
@@ -16,22 +16,23 @@ import '/core/utils/list_extensions.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
 
-class HomePageWidget extends StatefulWidget {
+class HomePageWidget extends ConsumerStatefulWidget {
   const HomePageWidget({super.key});
 
   static String routeName = 'homePage';
   static String routePath = 'homePage';
 
   @override
-  State<HomePageWidget> createState() => _HomePageWidgetState();
+  ConsumerState<HomePageWidget> createState() => _HomePageWidgetState();
 }
 
-class _HomePageWidgetState extends State<HomePageWidget> {
+class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   // Inlined from HomePageModel
@@ -58,8 +59,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       await Future.wait([
         Future(() async {
           getFeed = await actions.initFeedProductsStream(
+            ref,
             currentUserUid,
-            FFAppState().swipedProductIds.toList(),
+            ref.read(feedProvider).swipedProductIds.toList(),
           );
         }),
         Future(() async {
@@ -72,9 +74,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       ]);
     });
 
-    expandableExpandableController =
-        ExpandableController(initialExpanded: true)
-          ..addListener(() => setState(() {}));
+    expandableExpandableController = ExpandableController(initialExpanded: true)
+      ..addListener(() => setState(() {}));
   }
 
   @override
@@ -192,8 +193,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               ),
                             ),
                             Opacity(
-                              opacity:
-                                  (_state == 'Shop' ? 1 : 0).toDouble(),
+                              opacity: (_state == 'Shop' ? 1 : 0).toDouble(),
                               child: Container(
                                 width: double.infinity,
                                 height: 2.0,
@@ -215,20 +215,20 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         onTap: () async {
                           _state = 'Seller Dashboard';
                           setState(() {});
-                          if (FFAppState().userData.stripe?.needsOnboarding ?? true) {
-                            getStripe =
-                                await StripeAccountsTable().queryRows(
+                          if (ref.read(authProvider).stripe?.needsOnboarding ??
+                              true) {
+                            getStripe = await StripeAccountsTable().queryRows(
                               queryFn: (q) => q.eqOrNull(
                                 'user_id',
                                 currentUserUid,
                               ),
                             );
-                            FFAppState().updateUserDataStruct(
-                              (e) => e.copyWith(
-                                stripe: functions.convertStripeStatus(
-                                    getStripe?.firstOrNull),
-                              ),
-                            );
+                            ref.read(authProvider.notifier).updateUser(
+                                  (e) => e.copyWith(
+                                    stripe: functions.convertStripeStatus(
+                                        getStripe?.firstOrNull),
+                                  ),
+                                );
                             setState(() {});
                           }
 
@@ -252,9 +252,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               ),
                             ),
                             Opacity(
-                              opacity:
-                                  (_state == 'Seller Dashboard' ? 1 : 0)
-                                      .toDouble(),
+                              opacity: (_state == 'Seller Dashboard' ? 1 : 0)
+                                  .toDouble(),
                               child: Container(
                                 width: double.infinity,
                                 height: 2.0,
@@ -291,14 +290,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             cardBgColor: AppColors.backgroundSecondary,
                             priceTextColor: AppColors.primary,
                             emptyMessage: 'test',
-                            products: FFAppState().feedProducts,
+                            products: ref.read(feedProvider).feedProducts,
                             onBuy: (product) async {
-                              if (FFAppState()
-                                  .userData
-                                  .userSettings
-                                  ?.swipePaymentEnabled ?? false) {
-                                createOrder =
-                                    await OrdersTable().insert({
+                              if (ref
+                                      .read(authProvider)
+                                      .userSettings
+                                      ?.swipePaymentEnabled ??
+                                  false) {
+                                createOrder = await OrdersTable().insert({
                                   'buyer_id': currentUserUid,
                                   'seller_id': product.sellerId,
                                   'total_amount': product.price,
@@ -336,8 +335,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
                                 await actions.payWithSavedCard(
                                   createOrder!.id,
-                                  FFAppState()
-                                      .userData
+                                  ref
+                                      .read(authProvider)
                                       .paymentMethod
                                       .where((e) => e.isDefault)
                                       .toList()
@@ -367,10 +366,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   );
                                 }),
                                 Future(() async {
-                                  FFAppState().updateFeedProductsAtIndex(
-                                    index,
-                                    (e) => e.copyWith(isInWishlist: !e.isInWishlist),
-                                  );
+                                  ref
+                                      .read(feedProvider.notifier)
+                                      .updateFeedProductsAtIndex(
+                                        index,
+                                        (e) => e.copyWith(
+                                            isInWishlist: !e.isInWishlist),
+                                      );
                                   setState(() {});
                                 }),
                               ]);
@@ -391,7 +393,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   } else {
                     return Builder(
                       builder: (context) {
-                        if (FFAppState().userData.stripe?.onboardingCompleted ?? false) {
+                        if (ref
+                                .read(authProvider)
+                                .stripe
+                                ?.onboardingCompleted ??
+                            false) {
                           return Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 16.0, 0.0, 16.0, 0.0),
@@ -401,7 +407,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Welcome back, ${FFAppState().userData.firstName}',
+                                    'Welcome back, ${ref.read(authProvider).firstName}',
                                     style: GoogleFonts.inter(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 24.0,
@@ -473,7 +479,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         Expanded(
                                           child: Container(
                                             decoration: BoxDecoration(
-                                              color: AppColors.backgroundSecondary,
+                                              color:
+                                                  AppColors.backgroundSecondary,
                                               borderRadius:
                                                   BorderRadius.circular(4.0),
                                             ),
@@ -507,7 +514,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                     style: GoogleFonts.inter(
                                                       fontWeight:
                                                           FontWeight.normal,
-                                                      color: AppColors.textSecondary,
+                                                      color: AppColors
+                                                          .textSecondary,
                                                     ),
                                                   ),
                                                 ].divide(SizedBox(height: 4.0)),
@@ -518,7 +526,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         Expanded(
                                           child: Container(
                                             decoration: BoxDecoration(
-                                              color: AppColors.backgroundSecondary,
+                                              color:
+                                                  AppColors.backgroundSecondary,
                                               borderRadius:
                                                   BorderRadius.circular(4.0),
                                             ),
@@ -552,7 +561,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                     style: GoogleFonts.inter(
                                                       fontWeight:
                                                           FontWeight.normal,
-                                                      color: AppColors.textSecondary,
+                                                      color: AppColors
+                                                          .textSecondary,
                                                     ),
                                                   ),
                                                 ].divide(SizedBox(height: 4.0)),
@@ -563,7 +573,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         Expanded(
                                           child: Container(
                                             decoration: BoxDecoration(
-                                              color: AppColors.backgroundSecondary,
+                                              color:
+                                                  AppColors.backgroundSecondary,
                                               borderRadius:
                                                   BorderRadius.circular(4.0),
                                             ),
@@ -597,7 +608,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                     style: GoogleFonts.inter(
                                                       fontWeight:
                                                           FontWeight.normal,
-                                                      color: AppColors.textSecondary,
+                                                      color: AppColors
+                                                          .textSecondary,
                                                     ),
                                                   ),
                                                 ].divide(SizedBox(height: 4.0)),
@@ -608,101 +620,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       ].divide(SizedBox(width: 16.0)),
                                     ),
                                   ),
-                                  if (false)
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 40.0, 0.0, 0.0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              'Items to Ship',
-                                              style: GoogleFonts.inter(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 18.0,
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: AppColors.destructive500,
-                                              borderRadius:
-                                                  BorderRadius.circular(24.0),
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      12.0, 4.0, 12.0, 4.0),
-                                              child: Text(
-                                                '${valueOrDefault<String>(
-                                                  _jsonStr(
-                                                    getSellerDashboard,
-                                                    'pending_ship_count',
-                                                  ),
-                                                  '-',
-                                                )} pending',
-                                                style: GoogleFonts.inter(
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 12.0,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ].divide(SizedBox(width: 12.0)),
-                                      ),
-                                    ),
-                                  if (false)
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 12.0, 0.0, 0.0),
-                                      child: ListView(
-                                        padding: EdgeInsets.zero,
-                                        primary: false,
-                                        shrinkWrap: true,
-                                        scrollDirection: Axis.vertical,
-                                        children: [
-                                          SellerDashboardShipItemWidget(),
-                                        ].divide(SizedBox(height: 16.0)),
-                                      ),
-                                    ),
-                                  if (false)
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 12.0, 0.0, 0.0),
-                                      child: SizedBox(
-                                        width: double.infinity,
-                                        height: 56.0,
-                                        child: TextButton(
-                                          onPressed: () async {
-                                            context.pushNamed(
-                                                HomeDashoardShippingWidget
-                                                    .routeName);
-                                          },
-                                          style: TextButton.styleFrom(
-                                            backgroundColor: AppColors.backgroundPrimary,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(4.0),
-                                              side: BorderSide(
-                                                color: Color(0xFF545454),
-                                              ),
-                                            ),
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 0.0, 16.0, 0.0),
-                                          ),
-                                          child: Text(
-                                            'View All Orders',
-                                            style: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.white,
-                                              fontSize: 17.0,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 40.0, 0.0, 0.0),
@@ -789,7 +706,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             },
                                             child: Container(
                                               decoration: BoxDecoration(
-                                                color: AppColors.backgroundSecondary,
+                                                color: AppColors
+                                                    .backgroundSecondary,
                                                 borderRadius:
                                                     BorderRadius.circular(4.0),
                                               ),
@@ -808,7 +726,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                     FaIcon(
                                                       FontAwesomeIcons
                                                           .solidEdit,
-                                                      color: AppColors.secondary,
+                                                      color:
+                                                          AppColors.secondary,
                                                       size: 22.0,
                                                     ),
                                                     Text(
@@ -829,7 +748,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         Expanded(
                                           child: Container(
                                             decoration: BoxDecoration(
-                                              color: AppColors.backgroundSecondary,
+                                              color:
+                                                  AppColors.backgroundSecondary,
                                               borderRadius:
                                                   BorderRadius.circular(4.0),
                                             ),
@@ -895,7 +815,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             },
                                             child: Container(
                                               decoration: BoxDecoration(
-                                                color: AppColors.backgroundSecondary,
+                                                color: AppColors
+                                                    .backgroundSecondary,
                                                 borderRadius:
                                                     BorderRadius.circular(4.0),
                                               ),
@@ -913,7 +834,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                   children: [
                                                     FaIcon(
                                                       FontAwesomeIcons.boxes,
-                                                      color: AppColors.secondary,
+                                                      color:
+                                                          AppColors.secondary,
                                                       size: 22.0,
                                                     ),
                                                     Padding(
@@ -926,7 +848,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                   0.0),
                                                       child: Text(
                                                         'Inventory',
-                                                        style: GoogleFonts.inter(
+                                                        style:
+                                                            GoogleFonts.inter(
                                                           fontWeight:
                                                               FontWeight.w500,
                                                           fontSize: 14.0,
@@ -938,7 +861,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                       style: GoogleFonts.inter(
                                                         fontWeight:
                                                             FontWeight.normal,
-                                                        color: AppColors.textSecondary,
+                                                        color: AppColors
+                                                            .textSecondary,
                                                       ),
                                                     ),
                                                   ],
@@ -961,7 +885,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             child: Container(
                                               height: 97.0,
                                               decoration: BoxDecoration(
-                                                color: AppColors.backgroundSecondary,
+                                                color: AppColors
+                                                    .backgroundSecondary,
                                                 borderRadius:
                                                     BorderRadius.circular(4.0),
                                               ),
@@ -980,7 +905,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                     FaIcon(
                                                       FontAwesomeIcons
                                                           .chartLine,
-                                                      color: AppColors.secondary,
+                                                      color:
+                                                          AppColors.secondary,
                                                       size: 22.0,
                                                     ),
                                                     Padding(
@@ -993,7 +919,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                   0.0),
                                                       child: Text(
                                                         'Analytics',
-                                                        style: GoogleFonts.inter(
+                                                        style:
+                                                            GoogleFonts.inter(
                                                           fontWeight:
                                                               FontWeight.w500,
                                                           fontSize: 14.0,
@@ -1029,7 +956,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             child: Container(
                                               height: 97.0,
                                               decoration: BoxDecoration(
-                                                color: AppColors.backgroundSecondary,
+                                                color: AppColors
+                                                    .backgroundSecondary,
                                                 borderRadius:
                                                     BorderRadius.circular(4.0),
                                               ),
@@ -1047,7 +975,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                   children: [
                                                     FaIcon(
                                                       FontAwesomeIcons.bullhorn,
-                                                      color: AppColors.secondary,
+                                                      color:
+                                                          AppColors.secondary,
                                                       size: 22.0,
                                                     ),
                                                     Padding(
@@ -1060,7 +989,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                   0.0),
                                                       child: Text(
                                                         'Promote',
-                                                        style: GoogleFonts.inter(
+                                                        style:
+                                                            GoogleFonts.inter(
                                                           fontWeight:
                                                               FontWeight.w500,
                                                           fontSize: 14.0,
@@ -1087,7 +1017,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             child: Container(
                                               height: 97.0,
                                               decoration: BoxDecoration(
-                                                color: AppColors.backgroundSecondary,
+                                                color: AppColors
+                                                    .backgroundSecondary,
                                                 borderRadius:
                                                     BorderRadius.circular(4.0),
                                               ),
@@ -1105,7 +1036,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                   children: [
                                                     FaIcon(
                                                       FontAwesomeIcons.qrcode,
-                                                      color: AppColors.secondary,
+                                                      color:
+                                                          AppColors.secondary,
                                                       size: 22.0,
                                                     ),
                                                     Padding(
@@ -1118,7 +1050,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                   0.0),
                                                       child: Text(
                                                         'Shortlists',
-                                                        style: GoogleFonts.inter(
+                                                        style:
+                                                            GoogleFonts.inter(
                                                           fontWeight:
                                                               FontWeight.w500,
                                                           fontSize: 14.0,
@@ -1136,7 +1069,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                       style: GoogleFonts.inter(
                                                         fontWeight:
                                                             FontWeight.normal,
-                                                        color: AppColors.textSecondary,
+                                                        color: AppColors
+                                                            .textSecondary,
                                                       ),
                                                     ),
                                                   ],
@@ -1176,12 +1110,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         ),
                                       ),
                                       Text(
-                                        functions.getRequirementMessages(
-                                            FFAppState()
-                                                .userData
+                                        functions.getRequirementMessages(ref
+                                                .read(authProvider)
                                                 .stripe
                                                 ?.currentlyDue
-                                                .toList() ?? []),
+                                                .toList() ??
+                                            []),
                                         style: GoogleFonts.inter(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12.0,
@@ -1223,7 +1157,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                   .startStripeConnectOnboarding();
                                             },
                                             style: TextButton.styleFrom(
-                                              backgroundColor: Color(0x008E6CFF),
+                                              backgroundColor:
+                                                  Color(0x008E6CFF),
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(8.0),
@@ -1270,7 +1205,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                 'Secure payments and payouts. Get It never stores your bank details.',
                                                 style: GoogleFonts.inter(
                                                   fontWeight: FontWeight.normal,
-                                                  color: AppColors.textSecondary,
+                                                  color:
+                                                      AppColors.textSecondary,
                                                   fontSize: 16.0,
                                                   height: 1.5,
                                                 ),

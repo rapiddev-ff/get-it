@@ -307,7 +307,8 @@ class _HomeDashoardShortlistAddWidgetState
                                                   '\$3,200',
                                                   style: GoogleFonts.inter(
                                                     fontSize: 14.0,
-                                                    color: AppColors.textPrimary,
+                                                    color:
+                                                        AppColors.textPrimary,
                                                   ),
                                                 ),
                                                 Expanded(
@@ -316,7 +317,8 @@ class _HomeDashoardShortlistAddWidgetState
                                                     maxLines: 1,
                                                     style: GoogleFonts.inter(
                                                       fontSize: 14.0,
-                                                      color: AppColors.textSecondary,
+                                                      color: AppColors
+                                                          .textSecondary,
                                                     ),
                                                     overflow:
                                                         TextOverflow.ellipsis,
@@ -379,9 +381,7 @@ class _HomeDashoardShortlistAddWidgetState
                     borderRadius: BorderRadius.circular(4.0),
                   ),
                   child: TextButton(
-                    onPressed: () {
-                      print('Button pressed ...');
-                    },
+                    onPressed: () {},
                     child: Text(
                       'Add Product',
                       style: GoogleFonts.inter(

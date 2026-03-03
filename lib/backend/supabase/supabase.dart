@@ -1,4 +1,4 @@
-import 'package:supabase_flutter/supabase_flutter.dart' hide Provider;
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '/core/config/app_config.dart';
 
 export 'database/database.dart';
@@ -15,9 +15,6 @@ class SupaFlow {
 
   static Future initialize() => Supabase.initialize(
         url: AppConfig.supabaseUrl,
-        headers: {
-          'X-Client-Info': 'flutterflow',
-        },
         anonKey: AppConfig.supabaseAnonKey,
         debug: false,
         authOptions:

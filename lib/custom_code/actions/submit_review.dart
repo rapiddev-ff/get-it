@@ -1,7 +1,4 @@
-import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
 
 // Custom Action: submitReview
 // Return Type: JSON (dynamic)
@@ -37,19 +34,13 @@ Future<dynamic> submitReview(
       if (imageUrls != null && imageUrls.isNotEmpty) 'p_image_urls': imageUrls,
     };
 
-    print('📤 submitReview params: $params');
-
     final response = await SupaFlow.client.rpc(
       'submit_review',
       params: params,
     );
 
-    print('📥 response type: ${response.runtimeType}');
-    print('📥 response: $response');
-
     return response ?? {'success': false, 'error': 'No response'};
   } catch (e) {
-    print('❌ submitReview error: $e');
     return {'success': false, 'error': e.toString()};
   }
 }

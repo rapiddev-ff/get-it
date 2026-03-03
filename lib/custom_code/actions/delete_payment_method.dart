@@ -1,7 +1,4 @@
-import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
 
 Future<bool> deletePaymentMethod(String paymentMethodId) async {
   try {
@@ -18,7 +15,6 @@ Future<bool> deletePaymentMethod(String paymentMethodId) async {
     }
     return false;
   } catch (e) {
-    print('Error deleting payment method: $e');
     return false;
   }
 }

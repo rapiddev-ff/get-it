@@ -173,8 +173,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                           '${authState.firstName} ${authState.lastName}, ${authState.username}',
                       showTrailingIcon: true,
                       action: () async {
-                        context
-                            .pushNamed(SettingsEditProfileWidget.routeName);
+                        context.pushNamed(SettingsEditProfileWidget.routeName);
                       },
                     ),
                   ),
@@ -232,8 +231,8 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                       value: '********',
                       showTrailingIcon: true,
                       action: () async {
-                        context.pushNamed(
-                            SettingsChangePasswordWidget.routeName);
+                        context
+                            .pushNamed(SettingsChangePasswordWidget.routeName);
                       },
                     ),
                   ),
@@ -242,10 +241,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                         EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                     child: SettingsItemWidget(
                       tittle: 'Payment Method',
-                      value: authState
-                                  .paymentMethod
-                                  .firstOrNull !=
-                              null
+                      value: authState.paymentMethod.firstOrNull != null
                           ? '**** **** **** ${authState.paymentMethod.firstOrNull?.card?.last4 ?? ''}'
                           : '',
                       showTrailingIcon: true,
@@ -298,9 +294,9 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                                 color: AppColors.textPrimary,
                                               ),
                                             ),
-                                            if (                                            (authState
-                                                .userSettings
-                                                ?.swipePaymentEnabled ?? false))
+                                            if ((authState.userSettings
+                                                    ?.swipePaymentEnabled ??
+                                                false))
                                               InkWell(
                                                 splashColor: Colors.transparent,
                                                 focusColor: Colors.transparent,
@@ -329,12 +325,12 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                                                 20.0, 8.0),
                                                     child: Text(
                                                       valueOrDefault<String>(
-                                                        NumberFormat(
-                                                                '#,##0.##',
+                                                        NumberFormat('#,##0.##',
                                                                 'en_US')
                                                             .format(authState
-                                                                .userSettings
-                                                                ?.dailyBudget ?? 0.0),
+                                                                    .userSettings
+                                                                    ?.dailyBudget ??
+                                                                0.0),
                                                         '0',
                                                       ),
                                                       style: GoogleFonts.inter(
@@ -360,12 +356,16 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                                 ref
                                                     .read(authProvider.notifier)
                                                     .updateUser(
-                                                  (e) => e.copyWith(
-                                                    userSettings: (e.userSettings ?? const UserSettings()).copyWith(
-                                                      swipePaymentEnabled: true,
-                                                    ),
-                                                  ),
-                                                );
+                                                      (e) => e.copyWith(
+                                                        userSettings:
+                                                            (e.userSettings ??
+                                                                    const UserSettings())
+                                                                .copyWith(
+                                                          swipePaymentEnabled:
+                                                              true,
+                                                        ),
+                                                      ),
+                                                    );
                                                 setState(() {});
                                               }),
                                               Future(() async {
@@ -389,12 +389,16 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                                 ref
                                                     .read(authProvider.notifier)
                                                     .updateUser(
-                                                  (e) => e.copyWith(
-                                                    userSettings: (e.userSettings ?? const UserSettings()).copyWith(
-                                                      swipePaymentEnabled: false,
-                                                    ),
-                                                  ),
-                                                );
+                                                      (e) => e.copyWith(
+                                                        userSettings:
+                                                            (e.userSettings ??
+                                                                    const UserSettings())
+                                                                .copyWith(
+                                                          swipePaymentEnabled:
+                                                              false,
+                                                        ),
+                                                      ),
+                                                    );
                                                 setState(() {});
                                               }),
                                               Future(() async {
@@ -471,16 +475,14 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                             return GestureDetector(
                               onTap: () {
                                 FocusScope.of(context).unfocus();
-                                FocusManager.instance.primaryFocus
-                                    ?.unfocus();
+                                FocusManager.instance.primaryFocus?.unfocus();
                               },
                               child: Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
                                 child: SettingsBusinessWidget(
                                   title: 'Business Name',
                                   hintText: 'Add your business name',
-                                  initialVal:
-                                      authState.businessName,
+                                  initialVal: authState.businessName,
                                   action: (val) async {
                                     await UserProfilesTable().update(
                                       data: {
@@ -491,11 +493,10 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                         currentUserUid,
                                       ),
                                     );
-                                    ref
-                                        .read(authProvider.notifier)
-                                        .updateUser(
-                                      (e) => e.copyWith(businessName: val ?? ''),
-                                    );
+                                    ref.read(authProvider.notifier).updateUser(
+                                          (e) => e.copyWith(
+                                              businessName: val ?? ''),
+                                        );
                                     setState(() {});
                                     Navigator.pop(context);
                                   },
@@ -512,14 +513,14 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                         EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                     child: SettingsItemWidget(
                       tittle: 'Business Address',
-                      value:
-                          (authState.businessAddress?.country.isNotEmpty ?? false)
-                              ? 'Update your address'
-                              : 'Add your address',
+                      value: (authState.businessAddress?.country.isNotEmpty ??
+                              false)
+                          ? 'Update your address'
+                          : 'Add your address',
                       showTrailingIcon: true,
                       action: () async {
-                        context.pushNamed(
-                            SettingsBusinessAddressWidget.routeName);
+                        context
+                            .pushNamed(SettingsBusinessAddressWidget.routeName);
                       },
                     ),
                   ),
@@ -542,16 +543,14 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                             return GestureDetector(
                               onTap: () {
                                 FocusScope.of(context).unfocus();
-                                FocusManager.instance.primaryFocus
-                                    ?.unfocus();
+                                FocusManager.instance.primaryFocus?.unfocus();
                               },
                               child: Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
                                 child: SettingsBusinessWidget(
                                   title: 'Business Email',
                                   hintText: 'Add business email',
-                                  initialVal:
-                                      authState.businessEmail,
+                                  initialVal: authState.businessEmail,
                                   action: (val) async {
                                     await UserProfilesTable().update(
                                       data: {
@@ -562,11 +561,10 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                         currentUserUid,
                                       ),
                                     );
-                                    ref
-                                        .read(authProvider.notifier)
-                                        .updateUser(
-                                      (e) => e.copyWith(businessEmail: val ?? ''),
-                                    );
+                                    ref.read(authProvider.notifier).updateUser(
+                                          (e) => e.copyWith(
+                                              businessEmail: val ?? ''),
+                                        );
                                     setState(() {});
                                     Navigator.pop(context);
                                   },
@@ -628,34 +626,27 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                     ),
                                     Text(
                                       () {
-                                        if (authState
-                                                .stripe
-                                                ?.accountStatus ==
+                                        if (authState.stripe?.accountStatus ==
                                             'not_connected') {
                                           return 'Connect Stripe to start selling';
                                         } else if (authState
-                                                .stripe
-                                                ?.accountStatus ==
+                                                .stripe?.accountStatus ==
                                             'onboarding') {
                                           return 'Complete your Stripe setup to start selling';
                                         } else if (authState
-                                                .stripe
-                                                ?.accountStatus ==
+                                                .stripe?.accountStatus ==
                                             'in_review') {
                                           return 'Stripe is reviewing your account';
                                         } else if (authState
-                                                .stripe
-                                                ?.accountStatus ==
+                                                .stripe?.accountStatus ==
                                             'restricted') {
                                           return 'Your account requires attention';
                                         } else if (authState
-                                                .stripe
-                                                ?.accountStatus ==
+                                                .stripe?.accountStatus ==
                                             'enabled') {
                                           return 'Your seller account is active';
                                         } else if (authState
-                                                .stripe
-                                                ?.accountStatus ==
+                                                .stripe?.accountStatus ==
                                             'rejected') {
                                           return 'Your account has been rejected';
                                         } else {

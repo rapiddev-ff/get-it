@@ -67,8 +67,7 @@ class MessagesNotifier extends Notifier<MessagesState> {
     state = state.copyWith(conversations: list);
   }
 
-  void insertAtIndexInConversations(
-      int index, Conversation conversation) {
+  void insertAtIndexInConversations(int index, Conversation conversation) {
     final list = [...state.conversations]..insert(index, conversation);
     state = state.copyWith(conversations: list);
   }
@@ -133,7 +132,6 @@ class MessagesNotifier extends Notifier<MessagesState> {
   }
 }
 
-final messagesProvider =
-    NotifierProvider<MessagesNotifier, MessagesState>(
+final messagesProvider = NotifierProvider<MessagesNotifier, MessagesState>(
   MessagesNotifier.new,
 );

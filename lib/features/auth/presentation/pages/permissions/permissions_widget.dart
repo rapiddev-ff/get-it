@@ -100,8 +100,8 @@ class _PermissionsWidgetState extends State<PermissionsWidget> {
             children: [
               Flexible(
                 child: Padding(
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      16.0, 0.0, 16.0, 0.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -219,8 +219,8 @@ class _PermissionsWidgetState extends State<PermissionsWidget> {
                   ? MediaQuery.viewInsetsOf(context).bottom > 0
                   : _isKeyboardVisible))
                 Padding(
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  padding: const EdgeInsetsDirectional.fromSTEB(
+                      24.0, 0.0, 24.0, 0.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [

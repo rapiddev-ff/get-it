@@ -177,9 +177,7 @@ class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget> {
                           borderRadius: BorderRadius.circular(4.0),
                         ),
                         child: TextButton(
-                          onPressed: () {
-                            print('Button pressed ...');
-                          },
+                          onPressed: () {},
                           style: TextButton.styleFrom(
                             elevation: 0,
                             backgroundColor: Colors.transparent,

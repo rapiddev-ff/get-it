@@ -117,8 +117,7 @@ class _HomeDashoardInventoryAddSubCategoryWidgetState
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              choosenSubCategory =
-                                  listViewSubcategoriesRow;
+                              choosenSubCategory = listViewSubcategoriesRow;
                               setState(() {});
                             },
                             child: Row(
@@ -176,8 +175,8 @@ class _HomeDashoardInventoryAddSubCategoryWidgetState
                     },
                     style: OutlinedButton.styleFrom(
                       minimumSize: Size(double.infinity, 56.0),
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          16.0, 0.0, 16.0, 0.0),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                       side: BorderSide(color: Color(0xFF545454)),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4.0),

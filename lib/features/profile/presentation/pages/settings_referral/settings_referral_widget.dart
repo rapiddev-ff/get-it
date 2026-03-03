@@ -157,9 +157,7 @@ class _SettingsReferralWidgetState
                         borderRadius: BorderRadius.circular(4.0),
                       ),
                       child: TextButton(
-                        onPressed: () {
-                          print('Button pressed ...');
-                        },
+                        onPressed: () {},
                         style: TextButton.styleFrom(
                           minimumSize: Size(double.infinity, 56.0),
                           padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -177,9 +175,7 @@ class _SettingsReferralWidgetState
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                       child: OutlinedButton(
-                        onPressed: () {
-                          print('Button pressed ...');
-                        },
+                        onPressed: () {},
                         style: OutlinedButton.styleFrom(
                           minimumSize: Size(double.infinity, 56.0),
                           padding: EdgeInsets.symmetric(horizontal: 16.0),

@@ -1,8 +1,5 @@
-import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/theme/app_colors.dart';
-import 'index.dart';
-import '/custom_code/actions/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -55,7 +52,7 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
   bool _isInitialLoad = true;
   String? _error;
   int _offset = 0;
-  int _total = 0;
+  // _total removed (unused)
 
   @override
   void initState() {
@@ -106,7 +103,8 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
       final data = response as Map<String, dynamic>;
       final productsJson = data['products'] as List<dynamic>;
       final hasMore = data['has_more'] as bool? ?? false;
-      final total = data['total'] as int? ?? 0;
+      // total not currently used
+      // final total = data['total'] as int? ?? 0;
 
       final newProducts = productsJson.map((json) {
         return SellerProduct(
@@ -128,7 +126,6 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
       setState(() {
         _products.addAll(newProducts);
         _hasMore = hasMore;
-        _total = total;
         _offset += widget.pageSize;
         _isInitialLoad = false;
         _isLoading = false;

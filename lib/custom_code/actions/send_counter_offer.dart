@@ -1,8 +1,5 @@
-import '/backend/schema/enums/enums.dart';
 import '/features/home/domain/models/counter_offer_model.dart';
 import '/backend/supabase/supabase.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
 
 // Custom Action: sendCounterOffer
 // Return Type: CounterOffer? (nullable)
@@ -43,7 +40,6 @@ Future<CounterOffer?> sendCounterOffer(
           : null,
     );
   } catch (e) {
-    print('❌ Error sending counter offer: $e');
     return null;
   }
 }

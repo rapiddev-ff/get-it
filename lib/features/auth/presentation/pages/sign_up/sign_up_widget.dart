@@ -394,8 +394,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                                             _model.passwordVisibility1 =
                                                 !_model.passwordVisibility1);
                                       },
-                                      focusNode:
-                                          FocusNode(skipTraversal: true),
+                                      focusNode: FocusNode(skipTraversal: true),
                                       child: Icon(
                                         _model.passwordVisibility1
                                             ? Icons.visibility_outlined
@@ -511,8 +510,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                                             _model.passwordVisibility2 =
                                                 !_model.passwordVisibility2);
                                       },
-                                      focusNode:
-                                          FocusNode(skipTraversal: true),
+                                      focusNode: FocusNode(skipTraversal: true),
                                       child: Icon(
                                         _model.passwordVisibility2
                                             ? Icons.visibility_outlined
@@ -562,7 +560,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                                   children: [
                                     PasswordComponentWidget(
                                       isActive: (_model.passwordTextController
-                                                  ?.text.length ?? 0) >=
+                                                  ?.text.length ??
+                                              0) >=
                                           8,
                                       text: 'Minimum 8 characters',
                                     ),
@@ -597,8 +596,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                                             .passwordTextController!.text
                                             .contains(RegExp(
                                                 r'[!@#\$%^&*(),.?":{}|<>_\-]')),
-                                        text:
-                                            'One special character (!@#\$%)',
+                                        text: 'One special character (!@#\$%)',
                                       ),
                                     ),
                                     Padding(
@@ -606,8 +604,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0.0, 4.0, 0.0, 0.0),
                                       child: PasswordComponentWidget(
-                                        isActive: (_model
-                                                    .passwordTextController
+                                        isActive: (_model.passwordTextController
                                                     ?.text ==
                                                 _model
                                                     .confirmPasswordTextController
@@ -792,7 +789,6 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                               } else {
                                 _model.errorEmailRequired = true;
                                 setState(() {});
-                                if (shouldSetState) setState(() {});
                                 return;
                               }
 
@@ -803,7 +799,6 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                               } else {
                                 _model.errorEmailFormat = true;
                                 setState(() {});
-                                if (shouldSetState) setState(() {});
                                 return;
                               }
 
@@ -830,8 +825,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                                 setState(() {});
                               }
 
-                              if (_model
-                                      .confirmPasswordTextController!.text !=
+                              if (_model.confirmPasswordTextController!.text !=
                                   '') {
                                 _model.errorConfirmPasswordRequired = false;
                                 setState(() {});
@@ -843,8 +837,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                               }
 
                               if (_model.passwordTextController!.text ==
-                                  _model
-                                      .confirmPasswordTextController!.text) {
+                                  _model.confirmPasswordTextController!.text) {
                                 _model.errorPaswordsDontMatch = false;
                                 setState(() {});
                               } else {
@@ -862,8 +855,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                                   _model.passwordTextController!.text
                                       .contains(RegExp(r'\d')) &&
                                   _model.passwordTextController!.text.contains(
-                                      RegExp(
-                                          r'[!@#\$%^&*(),.?":{}|<>_\-]')))) {
+                                      RegExp(r'[!@#\$%^&*(),.?":{}|<>_\-]')))) {
                                 if (shouldSetState) setState(() {});
                                 return;
                               }
@@ -874,8 +866,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                               }
 
                               if (_model.passwordTextController!.text !=
-                                  _model
-                                      .confirmPasswordTextController!.text) {
+                                  _model.confirmPasswordTextController!.text) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text(
@@ -898,8 +889,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
 
                               await UserProfilesTable().insert({
                                 'email': _model.emailTextController!.text,
-                                'created_at':
-                                    DateTime.now().toIso8601String(),
+                                'created_at': DateTime.now().toIso8601String(),
                                 'user_id': currentUserUid,
                               });
 

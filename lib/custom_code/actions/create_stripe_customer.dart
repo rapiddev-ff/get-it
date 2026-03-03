@@ -1,7 +1,4 @@
-import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
 
 Future<dynamic> createStripeCustomer(
   String? email,
@@ -43,7 +40,6 @@ Future<dynamic> createStripeCustomer(
       'customer_id': data['customer_id'],
     };
   } catch (e) {
-    print('Error creating Stripe customer: $e');
     return {'success': false, 'error': e.toString()};
   }
 }

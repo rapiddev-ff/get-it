@@ -1,6 +1,6 @@
-import '/core/state/app_state_service.dart';
 import '/features/checkout/domain/models/shipping_address_model.dart';
 import '/features/auth/data/supabase_auth/auth_util.dart';
+import '/features/auth/presentation/providers/auth_provider.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/constants/app_constants.dart';
@@ -12,21 +12,22 @@ import '/core/widgets/app_drop_down.dart';
 import '/core/widgets/form_field_controller.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CheckoutEditShippingAddressWidget extends StatefulWidget {
+class CheckoutEditShippingAddressWidget extends ConsumerStatefulWidget {
   const CheckoutEditShippingAddressWidget({super.key});
 
   static String routeName = 'checkoutEditShippingAddress';
   static String routePath = 'checkoutEditShippingAddress';
 
   @override
-  State<CheckoutEditShippingAddressWidget> createState() =>
+  ConsumerState<CheckoutEditShippingAddressWidget> createState() =>
       _CheckoutEditShippingAddressWidgetState();
 }
 
 class _CheckoutEditShippingAddressWidgetState
-    extends State<CheckoutEditShippingAddressWidget> {
+    extends ConsumerState<CheckoutEditShippingAddressWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   bool streetaddressFocusListenerRegistered = false;
 
@@ -64,10 +65,10 @@ class _CheckoutEditShippingAddressWidgetState
 
   // Inline: parseAddressComponents
   static Map<String, String> _parseAddressComponents(dynamic addressResponse) {
-    final components =
-        (addressResponse is Map ? addressResponse['addressComponents'] : null)
-                as List? ??
-            [];
+    final components = (addressResponse is Map
+            ? addressResponse['addressComponents']
+            : null) as List? ??
+        [];
     String streetNumber = '';
     String route = '';
     String city = '';
@@ -100,10 +101,9 @@ class _CheckoutEditShippingAddressWidgetState
   void initState() {
     super.initState();
 
-    // TODO: replace FFAppState() with proper state provider
     fullNameTextController ??= TextEditingController(
         text:
-            '${FFAppState().userData.firstName} ${FFAppState().userData.lastName}');
+            '${ref.read(authProvider).firstName} ${ref.read(authProvider).lastName}');
     fullNameFocusNode ??= FocusNode();
     fullNameFocusNode!.addListener(() => setState(() {}));
     streetaddressTextController ??= TextEditingController();
@@ -194,11 +194,7 @@ class _CheckoutEditShippingAddressWidgetState
                       color: AppColors.info,
                       size: 20.0,
                     ),
-                    onPressed: true
-                        ? null
-                        : () {
-                            print('IconButton pressed ...');
-                          },
+                    onPressed: null,
                   ),
                 ),
               ],
@@ -362,25 +358,21 @@ class _CheckoutEditShippingAddressWidgetState
                                       () async {
                                         if (streetaddressSelectedOption !=
                                                 null &&
-                                            streetaddressSelectedOption !=
-                                                '') {
+                                            streetaddressSelectedOption != '') {
                                           choosenPlaceId =
                                               autocompletePredictionPlace
-                                                  .elementAtOrNull(
-                                                      _getIndexByVal(
-                                                          streetaddressSelectedOption!,
-                                                          autocompletePredictionName
-                                                              .toList())!);
+                                                  .elementAtOrNull(_getIndexByVal(
+                                                      streetaddressSelectedOption!,
+                                                      autocompletePredictionName
+                                                          .toList())!);
                                           setState(() {});
-                                          getPlace =
-                                              await GooglePlacesGroup
-                                                  .getPlaceCall
-                                                  .call(
+                                          getPlace = await GooglePlacesGroup
+                                              .getPlaceCall
+                                              .call(
                                             placeId: choosenPlaceId,
                                           );
 
-                                          if ((getPlace?.succeeded ??
-                                              true)) {
+                                          if ((getPlace?.succeeded ?? true)) {
                                             final parsed =
                                                 _parseAddressComponents(
                                                     getPlace?.jsonBody ?? {});
@@ -450,10 +442,9 @@ class _CheckoutEditShippingAddressWidgetState
                                         if ((streetaddressTextController!
                                                 .text.length) >=
                                             3) {
-                                          apiResultlkc =
-                                              await GooglePlacesGroup
-                                                  .autocompleteCall
-                                                  .call(
+                                          apiResultlkc = await GooglePlacesGroup
+                                              .autocompleteCall
+                                              .call(
                                             searchingString:
                                                 streetaddressTextController!
                                                     .text,
@@ -465,8 +456,7 @@ class _CheckoutEditShippingAddressWidgetState
                                                 GooglePlacesGroup
                                                     .autocompleteCall
                                                     .predictionPlaceText(
-                                                      (apiResultlkc
-                                                              ?.jsonBody ??
+                                                      (apiResultlkc?.jsonBody ??
                                                           ''),
                                                     )!
                                                     .toList()
@@ -475,8 +465,7 @@ class _CheckoutEditShippingAddressWidgetState
                                                 (GooglePlacesGroup
                                                         .autocompleteCall
                                                         .autocompletePredictions(
-                                              (apiResultlkc?.jsonBody ??
-                                                  ''),
+                                              (apiResultlkc?.jsonBody ?? ''),
                                             ) as List?)!
                                                     .map<String>(
                                                         (e) => e.toString())
@@ -716,17 +705,15 @@ class _CheckoutEditShippingAddressWidgetState
                                   ),
                                 ),
                                 AppDropDown<String>(
-                                  controller:
-                                      countryDropdownValueController ??=
-                                          FormFieldController<String>(
+                                  controller: countryDropdownValueController ??=
+                                      FormFieldController<String>(
                                     countryDropdownValue ??= '',
                                   ),
-                                  options: List<String>.from(GeoData
-                                      .getCountries()
-                                      .map((e) => e['code'] ?? '')
-                                      .toList()),
-                                  optionLabels: GeoData
-                                      .getCountries()
+                                  options: List<String>.from(
+                                      GeoData.getCountries()
+                                          .map((e) => e['code'] ?? '')
+                                          .toList()),
+                                  optionLabels: GeoData.getCountries()
                                       .map((e) => e['name'] ?? '')
                                       .toList(),
                                   onChanged: (val) => setState(
@@ -778,10 +765,8 @@ class _CheckoutEditShippingAddressWidgetState
                                       ),
                                       Builder(
                                         builder: (context) {
-                                          if ((countryDropdownValue ==
-                                                  'US') ||
-                                              (countryDropdownValue ==
-                                                  'CA')) {
+                                          if ((countryDropdownValue == 'US') ||
+                                              (countryDropdownValue == 'CA')) {
                                             return AppDropDown<String>(
                                               controller:
                                                   stateDropdownValueController ??=
@@ -793,13 +778,12 @@ class _CheckoutEditShippingAddressWidgetState
                                                   GeoData.getStatesByCountry(
                                                           countryDropdownValue)
                                                       .toList()),
-                                              optionLabels: GeoData
-                                                  .getStatesByCountry(
-                                                      countryDropdownValue)
-                                                  .toList(),
-                                              onChanged: (val) => setState(
-                                                  () => stateDropdownValue =
-                                                      val),
+                                              optionLabels:
+                                                  GeoData.getStatesByCountry(
+                                                          countryDropdownValue)
+                                                      .toList(),
+                                              onChanged: (val) => setState(() =>
+                                                  stateDropdownValue = val),
                                               width: double.infinity,
                                               height: 52.0,
                                               textStyle: GoogleFonts.inter(
@@ -815,8 +799,7 @@ class _CheckoutEditShippingAddressWidgetState
                                               fillColor:
                                                   AppColors.backgroundPrimary,
                                               elevation: 2.0,
-                                              borderColor:
-                                                  AppColors.neutral700,
+                                              borderColor: AppColors.neutral700,
                                               borderWidth: 1.0,
                                               borderRadius: 4.0,
                                               margin: EdgeInsetsDirectional
@@ -831,8 +814,7 @@ class _CheckoutEditShippingAddressWidgetState
                                             return Container(
                                               width: double.infinity,
                                               child: TextFormField(
-                                                controller:
-                                                    stateTextController,
+                                                controller: stateTextController,
                                                 focusNode: stateFocusNode,
                                                 onChanged: (_) =>
                                                     EasyDebounce.debounce(
@@ -860,10 +842,9 @@ class _CheckoutEditShippingAddressWidgetState
                                                           AppColors.neutral700,
                                                       width: 1.0,
                                                     ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            AppConstants
-                                                                .radiusTextField4),
+                                                    borderRadius: BorderRadius
+                                                        .circular(AppConstants
+                                                            .radiusTextField4),
                                                   ),
                                                   focusedBorder:
                                                       OutlineInputBorder(
@@ -872,10 +853,9 @@ class _CheckoutEditShippingAddressWidgetState
                                                           AppColors.secondary,
                                                       width: 1.0,
                                                     ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            AppConstants
-                                                                .radiusTextField4),
+                                                    borderRadius: BorderRadius
+                                                        .circular(AppConstants
+                                                            .radiusTextField4),
                                                   ),
                                                   errorBorder:
                                                       OutlineInputBorder(
@@ -883,10 +863,9 @@ class _CheckoutEditShippingAddressWidgetState
                                                       color: AppColors.error,
                                                       width: 1.0,
                                                     ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            AppConstants
-                                                                .radiusTextField4),
+                                                    borderRadius: BorderRadius
+                                                        .circular(AppConstants
+                                                            .radiusTextField4),
                                                   ),
                                                   focusedErrorBorder:
                                                       OutlineInputBorder(
@@ -894,10 +873,9 @@ class _CheckoutEditShippingAddressWidgetState
                                                       color: AppColors.error,
                                                       width: 1.0,
                                                     ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            AppConstants
-                                                                .radiusTextField4),
+                                                    borderRadius: BorderRadius
+                                                        .circular(AppConstants
+                                                            .radiusTextField4),
                                                   ),
                                                 ),
                                                 style: GoogleFonts.inter(
@@ -1039,8 +1017,7 @@ class _CheckoutEditShippingAddressWidgetState
                               'full_name': fullNameTextController!.text,
                               'address_line1':
                                   streetaddressTextController!.text,
-                              'address_line2':
-                                  aptsuiteunitTextController!.text,
+                              'address_line2': aptsuiteunitTextController!.text,
                               'city': cityTextController!.text,
                               'country': countryDropdownValue,
                               'state': (countryDropdownValue == 'US') ||
@@ -1053,23 +1030,26 @@ class _CheckoutEditShippingAddressWidgetState
                             });
                           }),
                           Future(() async {
-                            // TODO: replace FFAppState() with proper state provider
-                            FFAppState().updateUserDataStruct(
-                              (e) => e.copyWith(
-                                shippingAddress: (e.shippingAddress ?? const ShippingAddress()).copyWith(
-                                  fullName: fullNameTextController!.text,
-                                  addressLine1: streetaddressTextController!.text,
-                                  addressLine2: aptsuiteunitTextController!.text,
-                                  city: cityTextController!.text,
-                                  state: (countryDropdownValue == 'US') ||
-                                          (countryDropdownValue == 'CA')
-                                      ? stateDropdownValue ?? ''
-                                      : stateTextController!.text,
-                                  country: countryDropdownValue ?? '',
-                                  zipCode: zipCodeTextController!.text,
-                                ),
-                              ),
-                            );
+                            ref.read(authProvider.notifier).updateUser(
+                                  (e) => e.copyWith(
+                                    shippingAddress: (e.shippingAddress ??
+                                            const ShippingAddress())
+                                        .copyWith(
+                                      fullName: fullNameTextController!.text,
+                                      addressLine1:
+                                          streetaddressTextController!.text,
+                                      addressLine2:
+                                          aptsuiteunitTextController!.text,
+                                      city: cityTextController!.text,
+                                      state: (countryDropdownValue == 'US') ||
+                                              (countryDropdownValue == 'CA')
+                                          ? stateDropdownValue ?? ''
+                                          : stateTextController!.text,
+                                      country: countryDropdownValue ?? '',
+                                      zipCode: zipCodeTextController!.text,
+                                    ),
+                                  ),
+                                );
                             setState(() {});
                           }),
                         ]);

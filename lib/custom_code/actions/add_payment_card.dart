@@ -1,6 +1,5 @@
 import '/backend/supabase/supabase.dart';
 import '/core/config/environment_values.dart';
-import 'package:flutter/material.dart';
 
 import 'package:flutter_stripe/flutter_stripe.dart';
 
@@ -36,7 +35,6 @@ Future<dynamic> addPaymentCard(
       Stripe.publishableKey = stripeKey;
       await Stripe.instance.applySettings();
     } catch (e) {
-      print('Stripe initialization error: $e');
       return {'success': false, 'error': 'Failed to initialize Stripe'};
     }
 
@@ -143,7 +141,7 @@ Future<dynamic> addPaymentCard(
       'stripe-save-card',
       body: {
         'payment_method_id': paymentMethod.id,
-        'set_as_default': setAsDefault ?? false,
+        'set_as_default': setAsDefault,
         'billing_details': {
           if (name != null) 'name': name,
           if (emailVal != null) 'email': emailVal,
@@ -169,21 +167,18 @@ Future<dynamic> addPaymentCard(
     return {
       'success': true,
       'payment_method_id': paymentMethod.id,
-      'card_brand':
-          data['card_brand'] ?? paymentMethod.card?.brand ?? 'unknown',
-      'card_last4': data['card_last4'] ?? paymentMethod.card?.last4 ?? '',
+      'card_brand': data['card_brand'] ?? paymentMethod.card.brand ?? 'unknown',
+      'card_last4': data['card_last4'] ?? paymentMethod.card.last4 ?? '',
       'card_exp_month': expMonthInt,
       'card_exp_year': expYearInt,
-      'is_default': setAsDefault ?? false,
+      'is_default': setAsDefault,
     };
   } on StripeException catch (e) {
-    print('Stripe error: ${e.error.message}');
     return {
       'success': false,
       'error': e.error.message ?? 'Card validation failed',
     };
   } catch (e) {
-    print('Error adding card: $e');
     return {'success': false, 'error': e.toString()};
   }
 }

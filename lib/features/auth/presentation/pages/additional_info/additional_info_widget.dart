@@ -76,10 +76,9 @@ class _AdditionalInfoWidgetState extends State<AdditionalInfoWidget> {
     super.dispose();
   }
 
-  // --- Inline helper functions (replacing FlutterFlow custom_functions) ---
+  // --- Inline helper functions ---
 
-  static String _normalizeUsername(String text) =>
-      text.toLowerCase().trim();
+  static String _normalizeUsername(String text) => text.toLowerCase().trim();
 
   /// Returns 'valid' if username is acceptable, otherwise an error message.
   static String _usernameValidationResult(String text) {
@@ -121,8 +120,7 @@ class _AdditionalInfoWidgetState extends State<AdditionalInfoWidget> {
   bool get _isFormValid {
     return (_model.firstnameTextController?.text ?? '').isNotEmpty &&
         (_model.lastnameTextController?.text ?? '').isNotEmpty &&
-        _usernameValidationResult(
-                _model.usernameTextController?.text ?? '') ==
+        _usernameValidationResult(_model.usernameTextController?.text ?? '') ==
             'valid' &&
         (_model.checkIsUsernameAvailable ?? false);
   }
@@ -145,7 +143,11 @@ class _AdditionalInfoWidgetState extends State<AdditionalInfoWidget> {
         // Direct Supabase storage upload (bypassing FF custom action)
         final supabase = Supabase.instance.client;
         final uuid = const Uuid().v4();
-        final ext = pickedFile.name.contains('.') ? pickedFile.name.substring(pickedFile.name.lastIndexOf('.')).toLowerCase() : '.jpg';
+        final ext = pickedFile.name.contains('.')
+            ? pickedFile.name
+                .substring(pickedFile.name.lastIndexOf('.'))
+                .toLowerCase()
+            : '.jpg';
         final filePath = '$currentUserUid/$uuid$ext';
         final mimeType = lookupMimeType(pickedFile.name) ?? 'image/jpeg';
         await supabase.storage.from('avatars').uploadBinary(
@@ -153,7 +155,8 @@ class _AdditionalInfoWidgetState extends State<AdditionalInfoWidget> {
               bytes,
               fileOptions: FileOptions(contentType: mimeType, upsert: true),
             );
-        _model.uploadToBucket = supabase.storage.from('avatars').getPublicUrl(filePath);
+        _model.uploadToBucket =
+            supabase.storage.from('avatars').getPublicUrl(filePath);
       } finally {
         _model.isDataUploading_uploadImage = false;
       }
@@ -284,8 +287,7 @@ class _AdditionalInfoWidgetState extends State<AdditionalInfoWidget> {
                                       shape: BoxShape.circle,
                                     ),
                                     child: const Align(
-                                      alignment:
-                                          AlignmentDirectional(0.0, 0.0),
+                                      alignment: AlignmentDirectional(0.0, 0.0),
                                       child: FaIcon(
                                         FontAwesomeIcons.camera,
                                         color: Colors.white,
@@ -332,16 +334,23 @@ class _AdditionalInfoWidgetState extends State<AdditionalInfoWidget> {
                                 isDense: false,
                                 hintText: 'First Name',
                                 hintStyle: _hintStyle,
-                                enabledBorder: _inputBorder(AppColors.neutral700),
-                                focusedBorder: _inputBorder(AppColors.secondary),
+                                enabledBorder:
+                                    _inputBorder(AppColors.neutral700),
+                                focusedBorder:
+                                    _inputBorder(AppColors.secondary),
                                 errorBorder: _inputBorder(AppColors.error),
-                                focusedErrorBorder: _inputBorder(AppColors.error),
+                                focusedErrorBorder:
+                                    _inputBorder(AppColors.error),
                               ),
                               style: _bodyStyle,
                               cursorColor: AppColors.textPrimary,
                               enableInteractiveSelection: true,
-                              validator: _model.firstnameTextControllerValidator != null
-                                  ? (val) => _model.firstnameTextControllerValidator!(context, val)
+                              validator: _model
+                                          .firstnameTextControllerValidator !=
+                                      null
+                                  ? (val) =>
+                                      _model.firstnameTextControllerValidator!(
+                                          context, val)
                                   : null,
                               inputFormatters: [
                                 FilteringTextInputFormatter.allow(
@@ -392,17 +401,23 @@ class _AdditionalInfoWidgetState extends State<AdditionalInfoWidget> {
                                 isDense: false,
                                 hintText: 'Last Name',
                                 hintStyle: _hintStyle,
-                                enabledBorder: _inputBorder(AppColors.neutral700),
-                                focusedBorder: _inputBorder(AppColors.secondary),
+                                enabledBorder:
+                                    _inputBorder(AppColors.neutral700),
+                                focusedBorder:
+                                    _inputBorder(AppColors.secondary),
                                 errorBorder: _inputBorder(AppColors.error),
-                                focusedErrorBorder: _inputBorder(AppColors.error),
+                                focusedErrorBorder:
+                                    _inputBorder(AppColors.error),
                               ),
                               style: _bodyStyle,
                               cursorColor: AppColors.textPrimary,
                               enableInteractiveSelection: true,
-                              validator: _model.lastnameTextControllerValidator != null
-                                  ? (val) => _model.lastnameTextControllerValidator!(context, val)
-                                  : null,
+                              validator:
+                                  _model.lastnameTextControllerValidator != null
+                                      ? (val) => _model
+                                              .lastnameTextControllerValidator!(
+                                          context, val)
+                                      : null,
                               inputFormatters: [
                                 FilteringTextInputFormatter.allow(
                                     RegExp('^[a-zA-Z]+( [a-zA-Z]+){0,2}'))
@@ -447,17 +462,23 @@ class _AdditionalInfoWidgetState extends State<AdditionalInfoWidget> {
                                 isDense: false,
                                 hintText: 'Username',
                                 hintStyle: _hintStyle,
-                                enabledBorder: _inputBorder(AppColors.neutral700),
-                                focusedBorder: _inputBorder(AppColors.secondary),
+                                enabledBorder:
+                                    _inputBorder(AppColors.neutral700),
+                                focusedBorder:
+                                    _inputBorder(AppColors.secondary),
                                 errorBorder: _inputBorder(AppColors.error),
-                                focusedErrorBorder: _inputBorder(AppColors.error),
+                                focusedErrorBorder:
+                                    _inputBorder(AppColors.error),
                               ),
                               style: _bodyStyle,
                               cursorColor: AppColors.textPrimary,
                               enableInteractiveSelection: true,
-                              validator: _model.usernameTextControllerValidator != null
-                                  ? (val) => _model.usernameTextControllerValidator!(context, val)
-                                  : null,
+                              validator:
+                                  _model.usernameTextControllerValidator != null
+                                      ? (val) => _model
+                                              .usernameTextControllerValidator!(
+                                          context, val)
+                                      : null,
                               inputFormatters: [
                                 FilteringTextInputFormatter.allow(
                                     RegExp(r'^[a-zA-Z0-9_\-\.@!#\$%&\*]+'))
@@ -474,9 +495,7 @@ class _AdditionalInfoWidgetState extends State<AdditionalInfoWidget> {
                             child: Text(
                               usernameValidation,
                               style: _errorSmallStyle,
-                            )
-                                .animate()
-                                .fade(duration: 600.ms),
+                            ).animate().fade(duration: 600.ms),
                           ),
                         if (usernameText.isNotEmpty &&
                             usernameValidation == 'valid')
@@ -492,15 +511,13 @@ class _AdditionalInfoWidgetState extends State<AdditionalInfoWidget> {
                                       ? 'Available '
                                       : 'Unavailable',
                                   style: GoogleFonts.inter(
-                                    color:
-                                        (_model.checkIsUsernameAvailable ?? false)
-                                            ? const Color(0xFF4ADE80)
-                                            : const Color(0xFFEF4444),
+                                    color: (_model.checkIsUsernameAvailable ??
+                                            false)
+                                        ? const Color(0xFF4ADE80)
+                                        : const Color(0xFFEF4444),
                                     fontSize: 12.0,
                                   ),
-                                )
-                                    .animate()
-                                    .fade(duration: 600.ms),
+                                ).animate().fade(duration: 600.ms),
                                 if (_model.checkIsUsernameAvailable ?? false)
                                   const Icon(
                                     Icons.check,
@@ -597,9 +614,7 @@ class _AdditionalInfoWidgetState extends State<AdditionalInfoWidget> {
                         .divide(const SizedBox(height: 40.0))
                         .addToStart(const SizedBox(height: 24.0))
                         .addToEnd(const SizedBox(height: 32.0)),
-                  )
-                      .animate()
-                      .move(
+                  ).animate().move(
                         begin: const Offset(0, 100),
                         end: Offset.zero,
                         duration: 600.ms,

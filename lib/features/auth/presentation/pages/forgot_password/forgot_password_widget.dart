@@ -105,8 +105,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
             children: [
               Flexible(
                 child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
@@ -208,9 +207,9 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                                 keyboardType: TextInputType.emailAddress,
                                 cursorColor: AppColors.textPrimary,
                                 enableInteractiveSelection: true,
-                                validator: (value) =>
-                                    _model.textControllerValidator
-                                        ?.call(context, value),
+                                validator: (value) => _model
+                                    .textControllerValidator
+                                    ?.call(context, value),
                               ),
                             ),
                           ],
@@ -224,8 +223,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                   ? MediaQuery.viewInsetsOf(context).bottom > 0
                   : _isKeyboardVisible))
                 Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -261,8 +259,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                                 context,
                                 'Error!',
                                 ((_model.requestPasswordReset is Map)
-                                        ? _model
-                                            .requestPasswordReset['message']
+                                        ? _model.requestPasswordReset['message']
                                         : null)
                                     .toString(),
                                 'error',

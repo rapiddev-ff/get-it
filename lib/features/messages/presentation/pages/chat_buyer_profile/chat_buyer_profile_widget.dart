@@ -48,8 +48,7 @@ class _ChatBuyerProfileWidgetState
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _getReviews =
-          await SupabaseRPCGroup.getuserprofilewithreviewsCall.call(
+      _getReviews = await SupabaseRPCGroup.getuserprofilewithreviewsCall.call(
         pUserId: widget.buyerId,
         pOffset: 0,
         pLimit: 10,
@@ -98,9 +97,7 @@ class _ChatBuyerProfileWidgetState
                 color: Colors.white,
                 size: 28.0,
               ),
-              onPressed: () {
-                print('IconButton pressed ...');
-              },
+              onPressed: () {},
             ),
           ],
           centerTitle: true,
@@ -208,11 +205,9 @@ class _ChatBuyerProfileWidgetState
                                     (userData.isSeller
                                             ? (valueOrDefault<int>(
                                                 _jsonField(
-                                                          (_getReviews
-                                                                  ?.jsonBody ??
-                                                              ''),
-                                                          'as_seller',
-                                                        ) is Map
+                                                  (_getReviews?.jsonBody ?? ''),
+                                                  'as_seller',
+                                                ) is Map
                                                     ? (_jsonField(
                                                             _jsonField(
                                                                 (_getReviews
@@ -226,11 +221,9 @@ class _ChatBuyerProfileWidgetState
                                               ).toDouble())
                                             : (valueOrDefault<int>(
                                                 _jsonField(
-                                                          (_getReviews
-                                                                  ?.jsonBody ??
-                                                              ''),
-                                                          'as_buyer',
-                                                        ) is Map
+                                                  (_getReviews?.jsonBody ?? ''),
+                                                  'as_buyer',
+                                                ) is Map
                                                     ? (_jsonField(
                                                             _jsonField(
                                                                 (_getReviews
@@ -254,9 +247,9 @@ class _ChatBuyerProfileWidgetState
                                 Text(
                                   '(${userData.isSeller ? valueOrDefault<String>(
                                       _jsonField(
-                                                (_getReviews?.jsonBody ?? ''),
-                                                'as_seller',
-                                              ) is Map
+                                        (_getReviews?.jsonBody ?? ''),
+                                        'as_seller',
+                                      ) is Map
                                           ? _jsonField(
                                                   _jsonField(
                                                       (_getReviews?.jsonBody ??
@@ -268,9 +261,9 @@ class _ChatBuyerProfileWidgetState
                                       '0',
                                     ) : valueOrDefault<String>(
                                       _jsonField(
-                                                (_getReviews?.jsonBody ?? ''),
-                                                'as_buyer',
-                                              ) is Map
+                                        (_getReviews?.jsonBody ?? ''),
+                                        'as_buyer',
+                                      ) is Map
                                           ? _jsonField(
                                                   _jsonField(
                                                       (_getReviews?.jsonBody ??
@@ -338,9 +331,8 @@ class _ChatBuyerProfileWidgetState
                                       ),
                                     ),
                                     Opacity(
-                                      opacity:
-                                          (_state == 'Reviews' ? 1 : 0)
-                                              .toDouble(),
+                                      opacity: (_state == 'Reviews' ? 1 : 0)
+                                          .toDouble(),
                                       child: Container(
                                         width: double.infinity,
                                         height: 2.0,
@@ -373,9 +365,8 @@ class _ChatBuyerProfileWidgetState
                                     ),
                                   ),
                                   Opacity(
-                                    opacity:
-                                        (_state == 'As Seller' ? 1 : 0)
-                                            .toDouble(),
+                                    opacity: (_state == 'As Seller' ? 1 : 0)
+                                        .toDouble(),
                                     child: Container(
                                       width: double.infinity,
                                       height: 2.0,
@@ -417,10 +408,9 @@ class _ChatBuyerProfileWidgetState
                                       child: Text(
                                         '${valueOrDefault<String>(
                                           _jsonField(
-                                                    (_getReviews?.jsonBody ??
-                                                        ''),
-                                                    'as_buyer',
-                                                  ) is Map
+                                            (_getReviews?.jsonBody ?? ''),
+                                            'as_buyer',
+                                          ) is Map
                                               ? _jsonField(
                                                       _jsonField(
                                                           (_getReviews
@@ -462,23 +452,23 @@ class _ChatBuyerProfileWidgetState
                                         0.0, 20.0, 0.0, 0.0),
                                     child: Builder(
                                       builder: (context) {
-                                        final dynamic asBuyerData =
-                                            _jsonField(
-                                                (_getReviews?.jsonBody ??
-                                                    ''),
-                                                'as_buyer');
+                                        final dynamic asBuyerData = _jsonField(
+                                            (_getReviews?.jsonBody ?? ''),
+                                            'as_buyer');
                                         final dynamic reviewsJson =
                                             asBuyerData is Map
                                                 ? asBuyerData['reviews']
                                                 : null;
                                         final buyerReviews = (reviewsJson
-                                                    is List
-                                                ? reviewsJson
-                                                    .map<Review?>((e) =>
-                                                        e is Map<String, dynamic> ? Review.fromJson(e) : null)
-                                                    .whereType<Review>()
-                                                    .toList()
-                                                : <Review>[]);
+                                                is List
+                                            ? reviewsJson
+                                                .map<Review?>((e) =>
+                                                    e is Map<String, dynamic>
+                                                        ? Review.fromJson(e)
+                                                        : null)
+                                                .whereType<Review>()
+                                                .toList()
+                                            : <Review>[]);
 
                                         return ListView.separated(
                                           padding: EdgeInsets.zero,
@@ -491,18 +481,14 @@ class _ChatBuyerProfileWidgetState
                                           itemBuilder:
                                               (context, buyerReviewsIndex) {
                                             final buyerReviewsItem =
-                                                buyerReviews[
-                                                    buyerReviewsIndex];
+                                                buyerReviews[buyerReviewsIndex];
                                             return ReviewItemWidget(
                                               key: Key(
                                                   'Keywip_${buyerReviewsIndex}_of_${buyerReviews.length}'),
-                                              reviewDataType:
-                                                  buyerReviewsItem,
+                                              reviewDataType: buyerReviewsItem,
                                             );
                                           },
-                                        )
-                                            .animate()
-                                            .shimmer(
+                                        ).animate().shimmer(
                                               duration: 600.ms,
                                               color: Color(0x80FFFFFF),
                                             );
@@ -521,9 +507,7 @@ class _ChatBuyerProfileWidgetState
                                       width: double.infinity,
                                       height: 56.0,
                                       child: TextButton(
-                                        onPressed: () {
-                                          print('Button pressed ...');
-                                        },
+                                        onPressed: () {},
                                         style: TextButton.styleFrom(
                                           backgroundColor: Color(0x008E6CFF),
                                           shape: RoundedRectangleBorder(

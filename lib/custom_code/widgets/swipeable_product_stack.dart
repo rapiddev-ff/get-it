@@ -1,14 +1,11 @@
-import '/backend/schema/enums/enums.dart';
 import '/features/home/domain/models/feed_product_model.dart';
-import '/backend/supabase/supabase.dart';
 import '/core/theme/app_colors.dart';
-import '/core/state/app_state_service.dart';
-import 'index.dart';
-import '/custom_code/actions/index.dart';
+import '/features/auth/presentation/providers/auth_settings_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SwipeableProductStack extends StatefulWidget {
+class SwipeableProductStack extends ConsumerStatefulWidget {
   const SwipeableProductStack({
     super.key,
     this.width,
@@ -51,10 +48,11 @@ class SwipeableProductStack extends StatefulWidget {
   final String? emptyMessage;
 
   @override
-  State<SwipeableProductStack> createState() => _SwipeableProductStackState();
+  ConsumerState<SwipeableProductStack> createState() =>
+      _SwipeableProductStackState();
 }
 
-class _SwipeableProductStackState extends State<SwipeableProductStack>
+class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
     with TickerProviderStateMixin {
   int _currentIndex = 0;
   bool _showOnboarding = false;
@@ -78,7 +76,7 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
     super.initState();
     _initAnimations();
     // Show onboarding only if the user hasn't viewed home before
-    _showOnboarding = !(FFAppState().isHomeViewed);
+    _showOnboarding = !(ref.read(isHomeViewedProvider).valueOrNull ?? false);
   }
 
   void _initAnimations() {
@@ -274,8 +272,7 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
               ),
 
             // Onboarding Overlay
-            if (_showOnboarding)
-              _buildOnboardingOverlay(cardWidth, cardHeight),
+            if (_showOnboarding) _buildOnboardingOverlay(cardWidth, cardHeight),
           ],
         );
       },
@@ -315,47 +312,6 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
     );
   }
 
-  Widget _buildBackgroundCard(
-    FeedProduct product,
-    double width,
-    double height, {
-    required double scale,
-    required double opacity,
-    double offsetY = 0,
-  }) {
-    final bgColor = widget.cardBgColor ?? const Color(0xFF252525);
-
-    return Transform.translate(
-      offset: Offset(0, offsetY),
-      child: Transform.scale(
-        scale: scale,
-        child: Opacity(
-          opacity: opacity,
-          child: Container(
-            width: width,
-            height: height,
-            decoration: BoxDecoration(
-              color: bgColor,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: const Color(0xFF383838)),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: product.mainImageUrl.isNotEmpty
-                  ? Image.network(
-                      product.mainImageUrl,
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) =>
-                          _buildImagePlaceholder(),
-                    )
-                  : _buildImagePlaceholder(),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _buildActiveCard(
     FeedProduct product,
     double cardWidth,
@@ -366,7 +322,6 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
     final priceColor = widget.priceTextColor ?? Colors.white;
     final cBuy = widget.colorBuy ?? const Color(0xFF4B39EF);
     final cHide = widget.colorHide ?? AppColors.error;
-    final cSkip = widget.colorSkip ?? const Color(0xFFF59E0B);
 
     final double distanceX = _offset.dx.abs();
     final double distanceY = _offset.dy.abs();
@@ -379,7 +334,6 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
     );
 
     final double scaleX = 0.5 + (swipeXOpacity * 0.7);
-    final double scaleY = 0.5 + (swipeYOpacity * 0.7);
 
     final bool isFlashSale = _isFlashSaleActive(product);
 
@@ -434,7 +388,8 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
                                 errorBuilder: (_, __, ___) => Container(
                                   width: cardWidth,
                                   height: cardHeight * 0.65,
-                                  color: AppColors.textSecondary.withOpacity(0.2),
+                                  color:
+                                      AppColors.textSecondary.withOpacity(0.2),
                                   child: Icon(
                                     Icons.broken_image,
                                     color: AppColors.textSecondary,
@@ -788,15 +743,6 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
     );
   }
 
-  Widget _buildImagePlaceholder() {
-    return Container(
-      color: AppColors.textSecondary.withOpacity(0.2),
-      child: Center(
-        child: Icon(Icons.image, color: AppColors.textSecondary, size: 48),
-      ),
-    );
-  }
-
   Widget _buildVerticalSwipeIndicator(Color color) {
     // Design colors for each bar
     const Color leftBarColor = Color(0xFF7B59FE);
@@ -987,7 +933,6 @@ class _SwipeableProductStackState extends State<SwipeableProductStack>
     setState(() {
       _showOnboarding = false;
     });
-    // Mark home as viewed in AppState
-    FFAppState().isHomeViewed = true;
+    ref.read(isHomeViewedProvider.notifier).set(true);
   }
 }

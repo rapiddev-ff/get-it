@@ -1,13 +1,11 @@
-import '/backend/schema/enums/enums.dart';
 import '/features/messages/domain/models/message_model.dart';
 import '/features/messages/domain/models/conversation_model.dart';
-import '/backend/supabase/supabase.dart';
-import '/core/state/app_state_service.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
+import '/features/messages/presentation/providers/messages_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<Message?> sendMessage(
+  WidgetRef ref,
   String conversationId,
   String content,
   List<String>? imageUrls,
@@ -28,7 +26,6 @@ Future<Message?> sendMessage(
 
     final json = response[0];
 
-    // Берём первое фото если есть
     String? imageUrl;
     if (json['images'] != null && json['images'] is List) {
       final imgs = json['images'] as List;
@@ -56,39 +53,38 @@ Future<Message?> sendMessage(
       isSending: false,
     );
 
-    final exists =
-        FFAppState().currentChatMessages.any((m) => m.id == newMessage.id);
+    final currentMessages = ref.read(messagesProvider).currentChatMessages;
+    final exists = currentMessages.any((m) => m.id == newMessage.id);
 
     if (!exists) {
-      FFAppState().update(() {
-        FFAppState().currentChatMessages = [
-          newMessage,
-          ...FFAppState().currentChatMessages,
-        ];
-      });
+      ref.read(messagesProvider.notifier).setCurrentChatMessages([
+        newMessage,
+        ...currentMessages,
+      ]);
     }
 
     final lastMsgText = messageType == 'image' ? '📷 Photo' : content;
 
     _updateConversationLastMessage(
+      ref,
       conversationId,
       lastMsgText,
       newMessage.createdAt ?? DateTime.now(),
     );
 
     return newMessage;
-  } catch (e) {
-    print('❌ Error sending message: $e');
+  } catch (_) {
     return null;
   }
 }
 
 void _updateConversationLastMessage(
+  WidgetRef ref,
   String conversationId,
   String messageText,
   DateTime messageTime,
 ) {
-  final conversations = FFAppState().conversations;
+  final conversations = ref.read(messagesProvider).conversations;
   final index = conversations.indexWhere((c) => c.id == conversationId);
   if (index == -1) return;
 
@@ -98,11 +94,8 @@ void _updateConversationLastMessage(
     lastMessageAt: messageTime,
   );
 
-  FFAppState().update(() {
-    final list = List<Conversation>.from(FFAppState().conversations);
-    list.removeAt(index);
-    list.insert(0, updated);
-    FFAppState().conversations = list;
-  });
+  final list = List<Conversation>.from(conversations);
+  list.removeAt(index);
+  list.insert(0, updated);
+  ref.read(messagesProvider.notifier).setConversations(list);
 }
-

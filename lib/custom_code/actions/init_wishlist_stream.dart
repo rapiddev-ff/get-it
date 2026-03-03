@@ -1,4 +1,3 @@
-import '/backend/schema/enums/enums.dart';
 import '/features/home/domain/models/product_details_model.dart';
 import '/features/home/domain/models/product_image_model.dart';
 import '/features/home/domain/models/seller_model.dart';
@@ -6,22 +5,21 @@ import '/features/browse/domain/models/category_model.dart';
 import '/features/browse/domain/models/subcategory_model.dart';
 import '/features/browse/domain/models/condition_model.dart';
 import '/features/browse/domain/models/tag_model.dart';
+import '/features/wishlist/presentation/providers/wishlist_provider.dart';
 import '/backend/supabase/supabase.dart';
-import '/core/state/app_state_service.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
-
 import 'dart:async';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 RealtimeChannel? _wishlistSubscription;
 
-Future<List<ProductDetails>> initWishlistStream(String userId) async {
+Future<List<ProductDetails>> initWishlistStream(
+  WidgetRef ref,
+  String userId,
+) async {
   final data = await _fetchWishlistProducts(userId);
 
-  FFAppState().update(() {
-    FFAppState().wishlistProducts = data;
-  });
+  ref.read(wishlistProvider.notifier).setProducts(data);
 
   _wishlistSubscription?.unsubscribe();
   _wishlistSubscription = Supabase.instance.client
@@ -37,9 +35,7 @@ Future<List<ProductDetails>> initWishlistStream(String userId) async {
         ),
         callback: (payload) async {
           final freshData = await _fetchWishlistProducts(userId);
-          FFAppState().update(() {
-            FFAppState().wishlistProducts = freshData;
-          });
+          ref.read(wishlistProvider.notifier).setProducts(freshData);
         },
       )
       .subscribe();
@@ -103,8 +99,7 @@ Future<List<ProductDetails>> _fetchWishlistProducts(String userId) async {
         isOwnProduct: item['is_own_product'] ?? false,
       );
     }).toList();
-  } catch (e) {
-    print('_fetchWishlistProducts error: $e');
+  } catch (_) {
     return [];
   }
 }

@@ -255,7 +255,8 @@ class _SettingsPaymentMethodAddWidgetState
                                   ),
                                   autofocus: false,
                                   obscureText: false,
-                                  decoration: _fieldDecoration(hintText: 'MM/YY'),
+                                  decoration:
+                                      _fieldDecoration(hintText: 'MM/YY'),
                                   style: _bodyStyle(),
                                   keyboardType: TextInputType.number,
                                   cursorColor: AppColors.textPrimary,
@@ -459,7 +460,8 @@ class _SettingsPaymentMethodAddWidgetState
                               SizedBox(
                                 height: 52.0,
                                 child: DropdownButtonFormField<String>(
-                                  value: (_model.countryDropdownValue ?? '').isEmpty
+                                  value: (_model.countryDropdownValue ?? '')
+                                          .isEmpty
                                       ? null
                                       : _model.countryDropdownValue,
                                   items: GeoData.getCountries()
@@ -578,7 +580,8 @@ class _SettingsPaymentMethodAddWidgetState
                                   ),
                                   autofocus: false,
                                   obscureText: false,
-                                  decoration: _fieldDecoration(hintText: 'City'),
+                                  decoration:
+                                      _fieldDecoration(hintText: 'City'),
                                   style: _bodyStyle(),
                                   cursorColor: AppColors.textPrimary,
                                 ),
@@ -787,10 +790,10 @@ class _SettingsPaymentMethodAddWidgetState
                                     FormValidators.paymentValidator(
                                         _model.cardNumberTextController!.text,
                                         _model.expireDateTextController!.text,
-                                        _model.textFieldaCVCTextController!
-                                            .text,
-                                        _model.cardholderNameTextController!
-                                            .text,
+                                        _model
+                                            .textFieldaCVCTextController!.text,
+                                        _model
+                                            .cardholderNameTextController!.text,
                                         _model.emailAddressTextController!.text,
                                         _model.fullNameTextController!.text,
                                         _model.addressLine1TextController!.text,
@@ -805,11 +808,9 @@ class _SettingsPaymentMethodAddWidgetState
                                         _model.zipCodeTextController!.text);
                                 if (validationResult['success'] == true) {
                                   final parsedDate =
-                                      FormValidators.parseMonthYear(
-                                          _model.expireDateTextController!
-                                              .text);
-                                  _model.result =
-                                      await actions.addPaymentCard(
+                                      FormValidators.parseMonthYear(_model
+                                          .expireDateTextController!.text);
+                                  _model.result = await actions.addPaymentCard(
                                     _model.cardNumberTextController!.text,
                                     parsedDate['month'] ?? '',
                                     parsedDate['year'] ?? '',
@@ -836,12 +837,10 @@ class _SettingsPaymentMethodAddWidgetState
                                           _jsonStr(_model.result, 'card_brand'),
                                       last4:
                                           _jsonStr(_model.result, 'card_last4'),
-                                      expMonth: ((_model.result
-                                              is Map)
+                                      expMonth: ((_model.result is Map)
                                           ? _model.result['card_exp_month']
                                           : null),
-                                      expYear: ((_model.result
-                                              is Map)
+                                      expYear: ((_model.result is Map)
                                           ? _model.result['card_exp_year']
                                           : null),
                                     ),
@@ -849,15 +848,15 @@ class _SettingsPaymentMethodAddWidgetState
                                         ? _model.result['is_default']
                                         : null),
                                     billingDetails: BillingDetails(
-                                      name:
-                                          _model.fullNameTextController!.text,
+                                      name: _model.fullNameTextController!.text,
                                       email: _model
                                           .emailAddressTextController!.text,
                                       addressLine1: _model
                                           .addressLine1TextController!.text,
                                       addressLine2: _model
                                           .addressLine2TextController!.text,
-                                      country: _model.countryDropdownValue ?? '',
+                                      country:
+                                          _model.countryDropdownValue ?? '',
                                       state: (_model.countryDropdownValue ==
                                                   'US') ||
                                               (_model.countryDropdownValue ==
@@ -872,8 +871,11 @@ class _SettingsPaymentMethodAddWidgetState
                                   ref
                                       .read(authProvider.notifier)
                                       .updateUser((e) => e.copyWith(
-                                        paymentMethod: [...e.paymentMethod, newPaymentMethod],
-                                      ));
+                                            paymentMethod: [
+                                              ...e.paymentMethod,
+                                              newPaymentMethod
+                                            ],
+                                          ));
                                   ref
                                       .read(checkoutProvider.notifier)
                                       .setPaymentMethod(newPaymentMethod);
@@ -905,8 +907,7 @@ class _SettingsPaymentMethodAddWidgetState
                               ),
                               style: TextButton.styleFrom(
                                 minimumSize: Size(double.infinity, 56.0),
-                                padding:
-                                    EdgeInsets.symmetric(horizontal: 16.0),
+                                padding: EdgeInsets.symmetric(horizontal: 16.0),
                               ),
                             ),
                           ),

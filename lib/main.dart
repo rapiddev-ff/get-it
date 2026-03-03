@@ -10,7 +10,6 @@ import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/l10n/internationalization.dart';
 import '/core/router/app_router.dart';
-import '/core/state/app_state_service.dart';
 import '/core/theme/app_theme.dart';
 import '/core/utils/widget_extensions.dart';
 
@@ -21,19 +20,12 @@ void main() async {
 
   await dotenv.load(fileName: '.env');
 
-  // Start initial custom actions code
   await actions.lockOrientation();
   await actions.setStatusbarColor();
-  // End initial custom actions code
 
   await SupaFlow.initialize();
 
-  final appState = FFAppState(); // Initialize FFAppState
-  await appState.initializePersistedState();
-
-  // Start final custom actions code
   await actions.checkReminderMeAuth();
-  // End final custom actions code
 
   runApp(ProviderScope(
     child: MyApp(),

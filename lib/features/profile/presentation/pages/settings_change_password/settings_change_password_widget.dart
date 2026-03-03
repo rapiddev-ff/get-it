@@ -569,7 +569,6 @@ class _SettingsChangePasswordWidgetState
                             } else {
                               _model.errorConfirmPasswordRequired = true;
                               setState(() {});
-                              if (_shouldSetState) setState(() {});
                               return;
                             }
 

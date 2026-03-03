@@ -1,8 +1,5 @@
-import '/backend/schema/enums/enums.dart';
 import '/features/checkout/domain/models/checkout_order_result_model.dart';
 import '/backend/supabase/supabase.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
 
 // Custom Action: createCheckoutOrder
 // Return Type: CheckoutOrderResult? (nullable)
@@ -44,7 +41,6 @@ Future<CheckoutOrderResult?> createCheckoutOrder(
     final json = response as Map<String, dynamic>;
 
     if (json['success'] != true) {
-      print('❌ Order creation failed: ${json['error']}');
       return null;
     }
 
@@ -61,7 +57,6 @@ Future<CheckoutOrderResult?> createCheckoutOrder(
       productTitle: json['product_title'] ?? '',
     );
   } catch (e) {
-    print('❌ Error creating order: $e');
     return null;
   }
 }

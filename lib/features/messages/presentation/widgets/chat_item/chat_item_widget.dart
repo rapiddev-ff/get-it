@@ -140,8 +140,7 @@ class ChatItemWidget extends StatelessWidget {
                               image: OctoImage(
                                 placeholderBuilder: (_) => SizedBox.expand(
                                   child: Image(
-                                    image:
-                                        BlurHashImage(AppConstants.blurHash),
+                                    image: BlurHashImage(AppConstants.blurHash),
                                     fit: BoxFit.cover,
                                   ),
                                 ),

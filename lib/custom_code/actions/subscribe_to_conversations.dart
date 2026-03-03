@@ -1,11 +1,7 @@
-import '/backend/schema/enums/enums.dart';
 import '/features/messages/domain/models/conversation_model.dart';
-import '/backend/supabase/supabase.dart';
-import '/core/state/app_state_service.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
-
+import '/features/messages/presentation/providers/messages_provider.dart';
 import '/custom_code/realtime_service.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 String? _nullIfEmptySub(dynamic value) {
@@ -14,13 +10,12 @@ String? _nullIfEmptySub(dynamic value) {
   return str.isNotEmpty ? str : null;
 }
 
-Future subscribeToConversations() async {
+Future subscribeToConversations(WidgetRef ref) async {
   await RealtimeService.instance.subscribeToConversations(
     onUpdate: () async {
       final client = Supabase.instance.client;
 
       if (client.auth.currentUser == null) {
-        print('⚠️ Realtime: User not authenticated, skipping refresh');
         return;
       }
 
@@ -31,7 +26,6 @@ Future subscribeToConversations() async {
         );
 
         if (response == null) {
-          print('⚠️ Realtime: RPC returned null, skipping');
           return;
         }
 
@@ -61,21 +55,21 @@ Future subscribeToConversations() async {
           );
         }).toList();
 
+        final currentConversations = ref.read(messagesProvider).conversations;
+
         // Don't overwrite with empty if we had data before
-        if (all.isEmpty && FFAppState().conversations.isNotEmpty) {
-          print('⚠️ Realtime: returned empty list, skipping update');
+        if (all.isEmpty && currentConversations.isNotEmpty) {
           return;
         }
 
         // Only update if data actually changed
-        final oldIds = FFAppState().conversations.map((c) => c.id).toSet();
+        final oldIds = currentConversations.map((c) => c.id).toSet();
         final newIds = all.map((c) => c.id).toSet();
 
         final hasChanges = oldIds.length != newIds.length ||
             !oldIds.containsAll(newIds) ||
             all.any((newConv) {
-              final oldConv = FFAppState()
-                  .conversations
+              final oldConv = currentConversations
                   .where((c) => c.id == newConv.id)
                   .firstOrNull;
               if (oldConv == null) return true;
@@ -85,28 +79,16 @@ Future subscribeToConversations() async {
             });
 
         if (!hasChanges) {
-          print('ℹ️ Realtime: no changes, skipping UI update');
           return;
         }
 
-        print('📋 Realtime loaded ${all.length} conversations');
-        for (final c in all) {
-          print('  - ${c.otherUserUsername}: role=${c.role}, id=${c.id}');
-        }
-
-        FFAppState().update(() {
-          FFAppState().conversations = all;
-        });
+        ref.read(messagesProvider.notifier).setConversations(all);
 
         final unreadResponse = await client.rpc('get_total_unread_count');
-        FFAppState().update(() {
-          FFAppState().totalUnreadCount = unreadResponse as int? ?? 0;
-        });
-
-        print('✅ Conversations refreshed via realtime');
-      } catch (e) {
-        print('❌ Error refreshing conversations: $e');
-      }
+        ref
+            .read(messagesProvider.notifier)
+            .setTotalUnreadCount(unreadResponse as int? ?? 0);
+      } catch (_) {}
     },
   );
 }

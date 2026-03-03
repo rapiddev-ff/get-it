@@ -42,13 +42,11 @@ class _SettingsShippingDefaultsWidgetState
 
     final userData = ref.read(authProvider);
     _model.textController1 ??= TextEditingController(
-        text: _formatDecimal(
-            userData.userSettings?.defaultFlatShippingRate));
+        text: _formatDecimal(userData.userSettings?.defaultFlatShippingRate));
     _model.textFieldFocusNode1 ??= FocusNode();
     _model.textFieldFocusNode1!.addListener(() => setState(() {}));
     _model.textController2 ??= TextEditingController(
-        text: _formatDecimal(
-            userData.userSettings?.defaultAdditionalItemFee));
+        text: _formatDecimal(userData.userSettings?.defaultAdditionalItemFee));
     _model.textFieldFocusNode2 ??= FocusNode();
     _model.textFieldFocusNode2!.addListener(() => setState(() {}));
   }
@@ -345,17 +343,21 @@ class _SettingsShippingDefaultsWidgetState
                             }),
                             Future(() async {
                               ref.read(authProvider.notifier).updateUser(
-                                (e) => e.copyWith(
-                                  userSettings: (e.userSettings ?? const UserSettings()).copyWith(
-                                    defaultFlatShippingRate:
-                                        double.tryParse(
-                                            _model.textController1!.text) ?? 0.0,
-                                    defaultAdditionalItemFee:
-                                        double.tryParse(
-                                            _model.textController2!.text) ?? 0.0,
-                                  ),
-                                ),
-                              );
+                                    (e) => e.copyWith(
+                                      userSettings: (e.userSettings ??
+                                              const UserSettings())
+                                          .copyWith(
+                                        defaultFlatShippingRate:
+                                            double.tryParse(_model
+                                                    .textController1!.text) ??
+                                                0.0,
+                                        defaultAdditionalItemFee:
+                                            double.tryParse(_model
+                                                    .textController2!.text) ??
+                                                0.0,
+                                      ),
+                                    ),
+                                  );
                               setState(() {});
                             }),
                           ]);

@@ -45,8 +45,7 @@ class Seller with _$Seller {
     @Default([]) List<SellerShortlist> shortlists,
   }) = _Seller;
 
-  factory Seller.fromJson(Map<String, dynamic> json) =>
-      _$SellerFromJson(json);
+  factory Seller.fromJson(Map<String, dynamic> json) => _$SellerFromJson(json);
 
   String serialize() => jsonEncode(toJson());
 

@@ -59,16 +59,16 @@ class _SettingsBusinessAddressWidgetState
         text: userData.businessAddress?.addressLine2 ?? '');
     _model.addressLine2FocusNode ??= FocusNode();
     _model.addressLine2FocusNode!.addListener(() => setState(() {}));
-    _model.stateTextController ??= TextEditingController(
-        text: userData.businessAddress?.state ?? '');
+    _model.stateTextController ??=
+        TextEditingController(text: userData.businessAddress?.state ?? '');
     _model.stateFocusNode ??= FocusNode();
     _model.stateFocusNode!.addListener(() => setState(() {}));
     _model.cityTextController ??=
         TextEditingController(text: userData.businessAddress?.city ?? '');
     _model.cityFocusNode ??= FocusNode();
     _model.cityFocusNode!.addListener(() => setState(() {}));
-    _model.zipCodeTextController ??= TextEditingController(
-        text: userData.businessAddress?.zipCode ?? '');
+    _model.zipCodeTextController ??=
+        TextEditingController(text: userData.businessAddress?.zipCode ?? '');
     _model.zipCodeFocusNode ??= FocusNode();
     _model.zipCodeFocusNode!.addListener(() => setState(() {}));
   }
@@ -301,10 +301,11 @@ class _SettingsBusinessAddressWidgetState
                                       child: DropdownButtonFormField<String>(
                                         value: (_model.countryDropdownValue ??=
                                                     ref
-                                                        .read(authProvider)
-                                                        .businessAddress
-                                                        ?.country ?? '')
-                                                ?.isEmpty ?? true
+                                                            .read(authProvider)
+                                                            .businessAddress
+                                                            ?.country ??
+                                                        '')
+                                                .isEmpty
                                             ? null
                                             : _model.countryDropdownValue,
                                         items: GeoData.getCountries()
@@ -350,8 +351,8 @@ class _SettingsBusinessAddressWidgetState
                                           color: AppColors.textSecondary,
                                           size: 24.0,
                                         ),
-                                        style: GoogleFonts.inter(
-                                            fontSize: 14.0),
+                                        style:
+                                            GoogleFonts.inter(fontSize: 14.0),
                                         isExpanded: true,
                                       ),
                                     ),
@@ -380,31 +381,31 @@ class _SettingsBusinessAddressWidgetState
                                             child:
                                                 DropdownButtonFormField<String>(
                                               value: (_model
-                                                              .stateDropdownValue ??=
-                                                          ref
-                                                              .read(authProvider)
+                                                          .stateDropdownValue ??= ref
+                                                              .read(
+                                                                  authProvider)
                                                               .businessAddress
-                                                              ?.state ?? '')
-                                                      ?.isEmpty ?? true
+                                                              ?.state ??
+                                                          '')
+                                                      .isEmpty
                                                   ? null
                                                   : _model.stateDropdownValue,
-                                              items:
-                                                  GeoData.getStatesByCountry(
-                                                          _model
-                                                              .countryDropdownValue)
-                                                      .map((name) =>
-                                                          DropdownMenuItem(
-                                                            value: name,
-                                                            child: Text(name,
-                                                                style: GoogleFonts
-                                                                    .inter(
-                                                                        fontSize:
-                                                                            14.0)),
-                                                          ))
-                                                      .toList(),
-                                              onChanged: (val) => setState(
-                                                  () => _model
-                                                      .stateDropdownValue = val),
+                                              items: GeoData.getStatesByCountry(
+                                                      _model
+                                                          .countryDropdownValue)
+                                                  .map((name) =>
+                                                      DropdownMenuItem(
+                                                        value: name,
+                                                        child: Text(name,
+                                                            style: GoogleFonts
+                                                                .inter(
+                                                                    fontSize:
+                                                                        14.0)),
+                                                      ))
+                                                  .toList(),
+                                              onChanged: (val) => setState(() =>
+                                                  _model.stateDropdownValue =
+                                                      val),
                                               decoration: InputDecoration(
                                                 isDense: true,
                                                 hintText: 'State',
@@ -481,10 +482,9 @@ class _SettingsBusinessAddressWidgetState
                                                     color: AppColors.neutral700,
                                                     width: 1.0,
                                                   ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          AppConstants
-                                                              .radiusTextField4),
+                                                  borderRadius: BorderRadius
+                                                      .circular(AppConstants
+                                                          .radiusTextField4),
                                                 ),
                                                 focusedBorder:
                                                     OutlineInputBorder(
@@ -492,20 +492,18 @@ class _SettingsBusinessAddressWidgetState
                                                     color: AppColors.secondary,
                                                     width: 1.0,
                                                   ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          AppConstants
-                                                              .radiusTextField4),
+                                                  borderRadius: BorderRadius
+                                                      .circular(AppConstants
+                                                          .radiusTextField4),
                                                 ),
                                                 errorBorder: OutlineInputBorder(
                                                   borderSide: BorderSide(
                                                     color: AppColors.error,
                                                     width: 1.0,
                                                   ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          AppConstants
-                                                              .radiusTextField4),
+                                                  borderRadius: BorderRadius
+                                                      .circular(AppConstants
+                                                          .radiusTextField4),
                                                 ),
                                                 focusedErrorBorder:
                                                     OutlineInputBorder(
@@ -513,10 +511,9 @@ class _SettingsBusinessAddressWidgetState
                                                     color: AppColors.error,
                                                     width: 1.0,
                                                   ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          AppConstants
-                                                              .radiusTextField4),
+                                                  borderRadius: BorderRadius
+                                                      .circular(AppConstants
+                                                          .radiusTextField4),
                                                 ),
                                               ),
                                               style: GoogleFonts.inter(
@@ -783,29 +780,35 @@ class _SettingsBusinessAddressWidgetState
                                   }),
                                   Future(() async {
                                     ref.read(authProvider.notifier).updateUser(
-                                      (e) => e.copyWith(
-                                        businessAddress: (e.businessAddress ?? const BusinessAddress()).copyWith(
-                                          addressLine1: _model
-                                              .addressLine1TextController!.text,
-                                          addressLine2: _model
-                                              .addressLine2TextController!.text,
-                                          country:
-                                              _model.countryDropdownValue ?? '',
-                                          state:
-                                              (_model.countryDropdownValue ==
+                                          (e) => e.copyWith(
+                                            businessAddress:
+                                                (e.businessAddress ??
+                                                        const BusinessAddress())
+                                                    .copyWith(
+                                              addressLine1: _model
+                                                  .addressLine1TextController!
+                                                  .text,
+                                              addressLine2: _model
+                                                  .addressLine2TextController!
+                                                  .text,
+                                              country:
+                                                  _model.countryDropdownValue ??
+                                                      '',
+                                              state: (_model.countryDropdownValue ==
                                                           'US') ||
                                                       (_model.countryDropdownValue ==
                                                           'CA')
-                                                  ? _model.stateDropdownValue ?? ''
+                                                  ? _model.stateDropdownValue ??
+                                                      ''
                                                   : _model.stateTextController!
                                                       .text,
-                                          city:
-                                              _model.cityTextController!.text,
-                                          zipCode: _model
-                                              .zipCodeTextController!.text,
-                                        ),
-                                      ),
-                                    );
+                                              city: _model
+                                                  .cityTextController!.text,
+                                              zipCode: _model
+                                                  .zipCodeTextController!.text,
+                                            ),
+                                          ),
+                                        );
                                     setState(() {});
                                   }),
                                 ]);

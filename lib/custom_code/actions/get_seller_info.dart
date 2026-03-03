@@ -1,4 +1,3 @@
-import '/backend/schema/enums/enums.dart';
 import '/features/home/domain/models/seller_model.dart';
 import '/features/home/domain/models/seller_product_model.dart';
 import '/features/home/domain/models/seller_shortlist_model.dart';
@@ -8,8 +7,6 @@ import '/features/home/domain/models/review_image_model.dart';
 import '/features/home/domain/models/reviewer_model.dart';
 import '/features/home/domain/models/review_product_model.dart';
 import '/backend/supabase/supabase.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
 
 List<Review> _parseReviews(List? rawList) {
   final reviewsList = <Review>[];
@@ -186,7 +183,6 @@ Future<Seller?> getSellerInfo(
       shortlists: shortlistsList,
     );
   } catch (e) {
-    print('getSellerInfo error: $e');
     return null;
   }
 }

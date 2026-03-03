@@ -1,4 +1,3 @@
-import '/backend/schema/enums/enums.dart';
 import '/features/home/domain/models/product_details_model.dart';
 import '/features/home/domain/models/product_image_model.dart';
 import '/features/home/domain/models/seller_model.dart';
@@ -7,8 +6,6 @@ import '/features/browse/domain/models/subcategory_model.dart';
 import '/features/browse/domain/models/condition_model.dart';
 import '/features/browse/domain/models/tag_model.dart';
 import '/backend/supabase/supabase.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
 
 Future<ProductDetails?> getProductDetails(
   String productId,
@@ -147,7 +144,6 @@ Future<ProductDetails?> getProductDetails(
       isOwnProduct: data['is_own_product'] == true,
     );
   } catch (e) {
-    print('getProductDetails error: $e');
     return null;
   }
 }

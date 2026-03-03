@@ -37,12 +37,9 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      final loadedConversations = await actions.loadConversations('all');
-      ref.read(messagesProvider.notifier).setConversations(
-            loadedConversations.toList().cast<Conversation>(),
-          );
+      await actions.loadConversations(ref, 'all');
       setState(() {});
-      await actions.subscribeToConversations();
+      await actions.subscribeToConversations(ref);
     });
   }
 

@@ -1,6 +1,5 @@
 import '/backend/supabase/supabase.dart';
 import '/core/config/environment_values.dart';
-import 'package:flutter/material.dart';
 
 import 'package:flutter_stripe/flutter_stripe.dart';
 
@@ -25,7 +24,6 @@ Future<dynamic> payWithSavedCard(
       Stripe.publishableKey = stripeKey;
       await Stripe.instance.applySettings();
     } catch (e) {
-      print('Stripe initialization error: $e');
       return {'success': false, 'error': 'Failed to initialize Stripe'};
     }
 
@@ -123,7 +121,6 @@ Future<dynamic> payWithSavedCard(
       'status': status,
     };
   } on StripeException catch (e) {
-    print('Stripe error: ${e.error.message}');
     return {
       'success': false,
       'error': e.error.message ?? 'Payment failed',
@@ -131,7 +128,6 @@ Future<dynamic> payWithSavedCard(
       'decline_code': e.error.declineCode,
     };
   } catch (e) {
-    print('Payment error: $e');
     return {
       'success': false,
       'error': e.toString(),

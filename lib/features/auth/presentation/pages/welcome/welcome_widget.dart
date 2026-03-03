@@ -82,8 +82,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                 ),
                 Spacer(),
                 Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                   child: Container(
                     width: double.infinity,
                     height: 56.0,
@@ -118,8 +117,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                   ),
                 ),
                 Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 24.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 24.0),
                   child: InkWell(
                     splashColor: Colors.transparent,
                     focusColor: Colors.transparent,

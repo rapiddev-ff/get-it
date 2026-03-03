@@ -1,8 +1,3 @@
-import '/backend/schema/enums/enums.dart';
-import '/backend/supabase/supabase.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
-
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<dynamic> getStripeAccountStatus() async {
@@ -108,7 +103,6 @@ Future<dynamic> getStripeAccountStatus() async {
       'disabled_reason': response['disabled_reason'],
     };
   } catch (e) {
-    print('Error getting Stripe status: $e');
     return {
       'has_account': false,
       'status': 'error',

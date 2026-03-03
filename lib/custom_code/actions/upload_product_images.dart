@@ -1,9 +1,4 @@
-import '/backend/schema/enums/enums.dart';
-import '/backend/supabase/supabase.dart';
 import '/core/utils/uploaded_file.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
-import 'dart:typed_data';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 import 'package:mime/mime.dart';
@@ -18,12 +13,10 @@ Future<List<String>?> uploadProductImages(
     // Получаем user ID для пути в storage
     final userId = supabase.auth.currentUser?.id;
     if (userId == null) {
-      print('Error: User not authenticated');
       return null;
     }
 
     if (uploadedFiles.isEmpty) {
-      print('Error: No files to upload');
       return null;
     }
 
@@ -36,7 +29,6 @@ Future<List<String>?> uploadProductImages(
       final bytes = file.bytes;
 
       if (bytes == null || bytes.isEmpty) {
-        print('Skipping file $i: No bytes');
         continue;
       }
 
@@ -72,7 +64,6 @@ Future<List<String>?> uploadProductImages(
 
     return uploadedUrls;
   } catch (e) {
-    print('Upload error: $e');
     return null;
   }
 }

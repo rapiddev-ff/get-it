@@ -190,8 +190,8 @@ class _SettingsMyProfileWidgetState
                                     direction: Axis.horizontal,
                                     rating: authState.isSeller
                                         ? (valueOrDefault<int>(
-                                            _jsonGet(json,
-                                                'as_seller.avg_rating'),
+                                            _jsonGet(
+                                                json, 'as_seller.avg_rating'),
                                             0,
                                           ).toDouble())
                                         : (valueOrDefault<int>(
@@ -299,8 +299,8 @@ class _SettingsMyProfileWidgetState
                                         children: [
                                           Text(
                                             valueOrDefault<String>(
-                                              _jsonGet(json,
-                                                      'profile.soldCount')
+                                              _jsonGet(
+                                                      json, 'profile.soldCount')
                                                   ?.toString(),
                                               '0',
                                             ),
@@ -564,8 +564,8 @@ class _SettingsMyProfileWidgetState
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          0.0, 0.0, 0.0, 10.0),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
                       child: Text(
                         'As Buyer',
                         style: GoogleFonts.inter(
@@ -578,8 +578,7 @@ class _SettingsMyProfileWidgetState
                       ),
                     ),
                     Opacity(
-                      opacity:
-                          (_model.state == 'As Buyer' ? 1 : 0).toDouble(),
+                      opacity: (_model.state == 'As Buyer' ? 1 : 0).toDouble(),
                       child: Container(
                         width: double.infinity,
                         height: 2.0,
@@ -607,8 +606,8 @@ class _SettingsMyProfileWidgetState
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          0.0, 0.0, 0.0, 10.0),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
                       child: Text(
                         'As Seller',
                         style: GoogleFonts.inter(
@@ -621,8 +620,7 @@ class _SettingsMyProfileWidgetState
                       ),
                     ),
                     Opacity(
-                      opacity:
-                          (_model.state == 'As Seller' ? 1 : 0).toDouble(),
+                      opacity: (_model.state == 'As Seller' ? 1 : 0).toDouble(),
                       child: Container(
                         width: double.infinity,
                         height: 2.0,
@@ -909,8 +907,7 @@ class _SettingsMyProfileWidgetState
           itemBuilder: (context, reviewsIndex) {
             final reviewsItem = reviews[reviewsIndex];
             return ReviewItemWidget(
-              key: Key(
-                  '${keyPrefix}_${reviewsIndex}_of_${reviews.length}'),
+              key: Key('${keyPrefix}_${reviewsIndex}_of_${reviews.length}'),
               reviewDataType: reviewsItem,
             );
           },
@@ -923,7 +920,8 @@ class _SettingsMyProfileWidgetState
     final rawList = _jsonGet(json, '$role.reviews');
     if (rawList == null || rawList is! List) return [];
     return rawList
-        .map<Review?>((e) => e is Map<String, dynamic> ? Review.fromJson(e) : null)
+        .map<Review?>(
+            (e) => e is Map<String, dynamic> ? Review.fromJson(e) : null)
         .where((e) => e != null)
         .cast<Review>()
         .toList();
@@ -936,9 +934,7 @@ class _SettingsMyProfileWidgetState
         width: double.infinity,
         height: 56.0,
         child: TextButton(
-          onPressed: () {
-            print('Button pressed ...');
-          },
+          onPressed: () {},
           style: TextButton.styleFrom(
             backgroundColor: Color(0x008E6CFF),
             padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),

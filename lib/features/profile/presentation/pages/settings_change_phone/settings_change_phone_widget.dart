@@ -228,20 +228,22 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget> {
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              (FormValidators.phoneValidationResult(
-                                                  _model.textController!.text) ==
+                              (FormValidators.phoneValidationResult(_model
+                                                  .textController!.text) ==
                                               null ||
                                           FormValidators.phoneValidationResult(
-                                                  _model.textController!.text) ==
+                                                  _model
+                                                      .textController!.text) ==
                                               '') &&
                                       (_model.textController!.text != '')
                                   ? Color(0xFF7D56FF)
                                   : Color(0xFF363636),
-                              (FormValidators.phoneValidationResult(
-                                                  _model.textController!.text) ==
+                              (FormValidators.phoneValidationResult(_model
+                                                  .textController!.text) ==
                                               null ||
                                           FormValidators.phoneValidationResult(
-                                                  _model.textController!.text) ==
+                                                  _model
+                                                      .textController!.text) ==
                                               '') &&
                                       (_model.textController!.text != '')
                                   ? Color(0xFF6187F1)

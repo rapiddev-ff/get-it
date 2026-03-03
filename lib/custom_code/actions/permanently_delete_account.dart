@@ -1,7 +1,4 @@
-import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
 
 Future<dynamic> permanentlyDeleteAccount() async {
   try {
@@ -22,10 +19,8 @@ Future<dynamic> permanentlyDeleteAccount() async {
     if (result['success'] == true) {
       await Supabase.instance.client.auth.signOut();
     }
-    print(result);
     return result;
   } catch (e) {
-    print(e.toString());
     return {
       'success': false,
       'error': e.toString(),

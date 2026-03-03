@@ -183,9 +183,7 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   child: ElevatedButton(
-                    onPressed: () {
-                      print('Button pressed ...');
-                    },
+                    onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.secondary,
                       minimumSize:

@@ -48,8 +48,9 @@ class _SettingsEditProfileWidgetState
       // Load avatar URL as bytes
       if (userData.avatarUrl.isNotEmpty) {
         try {
-          final response = await NetworkAssetBundle(Uri.parse(userData.avatarUrl))
-              .load(userData.avatarUrl);
+          final response =
+              await NetworkAssetBundle(Uri.parse(userData.avatarUrl))
+                  .load(userData.avatarUrl);
           _model.image = response.buffer.asUint8List();
         } catch (_) {
           // Failed to load image, leave as null
@@ -256,8 +257,7 @@ class _SettingsEditProfileWidgetState
                                     );
                                   } else {
                                     return Align(
-                                      alignment:
-                                          AlignmentDirectional(0.0, 0.0),
+                                      alignment: AlignmentDirectional(0.0, 0.0),
                                       child: FaIcon(
                                         FontAwesomeIcons.userLarge,
                                         color: Color(0xFF797A79),
@@ -305,8 +305,7 @@ class _SettingsEditProfileWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
@@ -324,7 +323,8 @@ class _SettingsEditProfileWidgetState
                                 await actions.checkIsUsernameAvailable(
                               FormValidators.normalizeUsername(_model.username)
                                       .isNotEmpty
-                                  ? FormValidators.normalizeUsername(_model.username)
+                                  ? FormValidators.normalizeUsername(
+                                      _model.username)
                                   : 'a',
                             );
                             _model.usernameAvailable =
@@ -371,7 +371,7 @@ class _SettingsEditProfileWidgetState
                           EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                       child: Text(
                         FormValidators.usernameValidationResult(
-                                _model.usernameTextController!.text),
+                            _model.usernameTextController!.text),
                         style: GoogleFonts.inter(
                           color: AppColors.error,
                           fontSize: 12.0,
@@ -429,8 +429,7 @@ class _SettingsEditProfileWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
@@ -509,8 +508,7 @@ class _SettingsEditProfileWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
@@ -533,8 +531,7 @@ class _SettingsEditProfileWidgetState
                         autofillHints: [AutofillHints.name],
                         textInputAction: TextInputAction.done,
                         obscureText: false,
-                        decoration:
-                            _fieldDecoration(hintText: 'First Name'),
+                        decoration: _fieldDecoration(hintText: 'First Name'),
                         style: GoogleFonts.inter(
                           color: AppColors.textPrimary,
                         ),
@@ -574,8 +571,7 @@ class _SettingsEditProfileWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
@@ -590,8 +586,7 @@ class _SettingsEditProfileWidgetState
                           setState(() {
                             _model.usernameTextController?.text = '';
                             _model.usernameFocusNode?.requestFocus();
-                            WidgetsBinding.instance
-                                .addPostFrameCallback((_) {
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
                               _model.usernameTextController?.selection =
                                   const TextSelection.collapsed(offset: 0);
                             });
@@ -601,8 +596,7 @@ class _SettingsEditProfileWidgetState
                         autofillHints: [AutofillHints.familyName],
                         textInputAction: TextInputAction.done,
                         obscureText: false,
-                        decoration:
-                            _fieldDecoration(hintText: 'Last Name'),
+                        decoration: _fieldDecoration(hintText: 'Last Name'),
                         style: GoogleFonts.inter(
                           color: AppColors.textPrimary,
                         ),
@@ -670,22 +664,18 @@ class _SettingsEditProfileWidgetState
                                     Future(() async {
                                       await UserProfilesTable().update(
                                         data: {
-                                          'first_name': _model
-                                              .bioTextController!.text,
+                                          'first_name':
+                                              _model.bioTextController!.text,
                                           'last_name': _model
                                               .lastnameTextController!.text,
                                           'username':
                                               FormValidators.normalizeUsername(
-                                                  _model
-                                                      .usernameTextController!
+                                                  _model.usernameTextController!
                                                       .text),
-                                          'avatar_url':
-                                              _model.uploadToBucket,
-                                          'bio':
-                                              _model.bioTextController!.text,
+                                          'avatar_url': _model.uploadToBucket,
+                                          'bio': _model.bioTextController!.text,
                                         },
-                                        matchingRows: (rows) =>
-                                            rows.eqOrNull(
+                                        matchingRows: (rows) => rows.eqOrNull(
                                           'user_id',
                                           currentUserUid,
                                         ),
@@ -695,20 +685,20 @@ class _SettingsEditProfileWidgetState
                                       ref
                                           .read(authProvider.notifier)
                                           .updateUser((e) => e.copyWith(
-                                            firstName: _model
-                                                .firstnameTextController!
-                                                .text,
-                                            lastName: _model
-                                                .lastnameTextController!
-                                                .text,
-                                            username: _model
-                                                .usernameTextController!
-                                                .text,
-                                            bio: _model
-                                                .bioTextController!.text,
-                                            avatarUrl:
-                                                _model.uploadToBucket ?? '',
-                                          ));
+                                                firstName: _model
+                                                    .firstnameTextController!
+                                                    .text,
+                                                lastName: _model
+                                                    .lastnameTextController!
+                                                    .text,
+                                                username: _model
+                                                    .usernameTextController!
+                                                    .text,
+                                                bio: _model
+                                                    .bioTextController!.text,
+                                                avatarUrl:
+                                                    _model.uploadToBucket ?? '',
+                                              ));
                                       setState(() {});
                                     }),
                                   ]);
@@ -716,8 +706,7 @@ class _SettingsEditProfileWidgetState
                                 },
                           style: TextButton.styleFrom(
                             minimumSize: Size(double.infinity, 56.0),
-                            padding:
-                                EdgeInsets.symmetric(horizontal: 16.0),
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
                           ),
                           child: Text(
                             'Save Changes',

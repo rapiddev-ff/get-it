@@ -1,7 +1,4 @@
-import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
 
 Future<dynamic> getSellerEarnings(
   DateTime? startDate,
@@ -39,7 +36,6 @@ Future<dynamic> getSellerEarnings(
       'avg_order_value': 0.0,
     };
   } catch (e) {
-    print('Error in getSellerEarnings: $e');
     return {
       'success': false,
       'error': e.toString(),

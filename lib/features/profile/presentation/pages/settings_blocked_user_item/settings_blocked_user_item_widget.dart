@@ -47,8 +47,7 @@ class SettingsBlockedUserItemWidget extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                     child: Text(
                       'Blocked Jan 15, 2025',
                       style: GoogleFonts.inter(

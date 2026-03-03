@@ -1,29 +1,23 @@
-import '/backend/schema/enums/enums.dart';
 import '/features/messages/domain/models/message_model.dart';
 import '/features/messages/domain/models/conversation_model.dart';
-import '/backend/supabase/supabase.dart';
-import '/core/state/app_state_service.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
+import '/features/messages/presentation/providers/messages_provider.dart';
 import '/custom_code/realtime_service.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-Future subscribeToMessages(String conversationId) async {
+Future subscribeToMessages(WidgetRef ref, String conversationId) async {
   final currentUserId = Supabase.instance.client.auth.currentUser?.id;
   final client = Supabase.instance.client;
 
   await RealtimeService.instance.subscribeToMessages(
     conversationId: conversationId,
     onNewMessage: (json) async {
-      print('📨 Processing new message: ${json['id']}');
-
-      final exists =
-          FFAppState().currentChatMessages.any((m) => m.id == json['id']);
+      final currentMessages = ref.read(messagesProvider).currentChatMessages;
+      final exists = currentMessages.any((m) => m.id == json['id']);
 
       if (!exists) {
         final messageType = json['message_type']?.toString() ?? 'text';
 
-        // IMAGE: дозагружаем через RPC
         if (messageType == 'image') {
           try {
             final fullData = await client.rpc('get_messages', params: {
@@ -59,29 +53,26 @@ Future subscribeToMessages(String conversationId) async {
                 isSending: false,
               );
 
-              final stillMissing = !FFAppState()
+              final stillMissing = !ref
+                  .read(messagesProvider)
                   .currentChatMessages
                   .any((m) => m.id == newMessage.id);
 
               if (stillMissing) {
-                FFAppState().update(() {
-                  FFAppState().currentChatMessages = [
-                    newMessage,
-                    ...FFAppState().currentChatMessages,
-                  ];
-                });
-                print('✅ Image message added via RPC');
+                ref.read(messagesProvider.notifier).setCurrentChatMessages([
+                  newMessage,
+                  ...ref.read(messagesProvider).currentChatMessages,
+                ]);
               }
 
               _updateConversationLastMessage(
+                ref,
                 conversationId,
                 '📷 Photo',
                 newMessage.createdAt ?? DateTime.now(),
               );
             }
-          } catch (e) {
-            print('❌ Error loading image message: $e');
-          }
+          } catch (_) {}
 
           if (json['sender_id'] != currentUserId) {
             try {
@@ -92,7 +83,6 @@ Future subscribeToMessages(String conversationId) async {
           return;
         }
 
-        // TEXT: как раньше
         final newMessage = Message(
           id: json['id'] ?? '',
           conversationId: json['conversation_id'] ?? '',
@@ -110,16 +100,13 @@ Future subscribeToMessages(String conversationId) async {
           isSending: false,
         );
 
-        FFAppState().update(() {
-          FFAppState().currentChatMessages = [
-            newMessage,
-            ...FFAppState().currentChatMessages,
-          ];
-        });
-
-        print('✅ Text message added');
+        ref.read(messagesProvider.notifier).setCurrentChatMessages([
+          newMessage,
+          ...ref.read(messagesProvider).currentChatMessages,
+        ]);
 
         _updateConversationLastMessage(
+          ref,
           conversationId,
           newMessage.content,
           newMessage.createdAt ?? DateTime.now(),
@@ -129,40 +116,32 @@ Future subscribeToMessages(String conversationId) async {
           try {
             await client.rpc('mark_messages_as_read',
                 params: {'p_conversation_id': conversationId});
-            print('✅ Marked as read');
-          } catch (e) {
-            print('⚠️ Error marking as read: $e');
-          }
+          } catch (_) {}
         }
-      } else {
-        print('⚠️ Message already exists, skipping');
       }
     },
     onMessageUpdate: (json) {
-      print('📝 Message updated: ${json['id']}');
-
       final messageId = json['id'];
       final isRead = json['is_read'] ?? false;
 
-      FFAppState().update(() {
-        FFAppState().currentChatMessages =
-            FFAppState().currentChatMessages.map((m) {
-          if (m.id == messageId) {
-            return m.copyWith(isRead: isRead);
-          }
-          return m;
-        }).toList();
-      });
+      final updated = ref.read(messagesProvider).currentChatMessages.map((m) {
+        if (m.id == messageId) {
+          return m.copyWith(isRead: isRead);
+        }
+        return m;
+      }).toList();
+      ref.read(messagesProvider.notifier).setCurrentChatMessages(updated);
     },
   );
 }
 
 void _updateConversationLastMessage(
+  WidgetRef ref,
   String conversationId,
   String messageText,
   DateTime messageTime,
 ) {
-  final conversations = FFAppState().conversations;
+  final conversations = ref.read(messagesProvider).conversations;
   final index = conversations.indexWhere((c) => c.id == conversationId);
   if (index == -1) return;
 
@@ -172,10 +151,8 @@ void _updateConversationLastMessage(
     lastMessageAt: messageTime,
   );
 
-  FFAppState().update(() {
-    final list = List<Conversation>.from(FFAppState().conversations);
-    list.removeAt(index);
-    list.insert(0, updated);
-    FFAppState().conversations = list;
-  });
+  final list = List<Conversation>.from(conversations);
+  list.removeAt(index);
+  list.insert(0, updated);
+  ref.read(messagesProvider.notifier).setConversations(list);
 }

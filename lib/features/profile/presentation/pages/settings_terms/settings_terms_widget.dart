@@ -26,16 +26,15 @@ class SettingsTermsWidget extends StatelessWidget {
             actions: [],
             flexibleSpace: FlexibleSpaceBar(
               title: Padding(
-                padding:
-                    EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 14.0),
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 14.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          0.0, 0.0, 0.0, 8.0),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -59,8 +58,8 @@ class SettingsTermsWidget extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          16.0, 0.0, 0.0, 0.0),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
                       child: Text(
                         'Terms & Conditions',
                         style: GoogleFonts.inter(
@@ -81,8 +80,7 @@ class SettingsTermsWidget extends StatelessWidget {
         body: SafeArea(
           top: true,
           child: Padding(
-            padding:
-                EdgeInsetsDirectional.fromSTEB(16.0, 32.0, 16.0, 0.0),
+            padding: EdgeInsetsDirectional.fromSTEB(16.0, 32.0, 16.0, 0.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,8 +94,7 @@ class SettingsTermsWidget extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(
-                      0.0, 8.0, 0.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
                   child: Text(
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet ex mattis, lobortis ante vitae, bibendum ex. Vestibulum feugiat mi eu tincidunt congue. Nam viverra. Lorem ipsum dolor ',
                     style: GoogleFonts.inter(
@@ -108,8 +105,7 @@ class SettingsTermsWidget extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(
-                      0.0, 24.0, 0.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                   child: Text(
                     'Using CardSmart App',
                     style: GoogleFonts.inter(
@@ -120,8 +116,7 @@ class SettingsTermsWidget extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(
-                      0.0, 8.0, 0.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
                   child: Text(
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet ex mattis, lobortis ante vitae, bibendum ex. Vestibulum feugiat mi eu tincidunt congue. Nam viverra. Lorem ipsum dolor ',
                     style: GoogleFonts.inter(

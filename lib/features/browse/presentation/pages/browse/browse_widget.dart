@@ -117,8 +117,8 @@ class _BrowseWidgetState extends State<BrowseWidget> {
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(
-                    16.0, 0.0, 16.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,8 +135,7 @@ class _BrowseWidgetState extends State<BrowseWidget> {
                         ),
                         autofocus: false,
                         decoration: InputDecoration(
-                          hintText:
-                              'Search products, characters, years...',
+                          hintText: 'Search products, characters, years...',
                           hintStyle: GoogleFonts.inter(
                             fontWeight: FontWeight.normal,
                             fontSize: 15.0,
@@ -198,8 +197,7 @@ class _BrowseWidgetState extends State<BrowseWidget> {
                             width: double.infinity,
                             height: double.infinity,
                             userId: currentUserUid,
-                            searchQuery:
-                                _model.textController?.text ?? '',
+                            searchQuery: _model.textController?.text ?? '',
                             categoryId: null,
                             subcategoryId: null,
                             crossAxisCount: 2,
@@ -222,9 +220,8 @@ class _BrowseWidgetState extends State<BrowseWidget> {
                               );
                             },
                             onTotalChanged: (total) async {},
-                            itemBuilder:
-                                (BrowseProduct product) =>
-                                    BrowseProductsItemWidget(
+                            itemBuilder: (BrowseProduct product) =>
+                                BrowseProductsItemWidget(
                               browseDataType: product,
                             ),
                             emptyStateWidget: () => EmptyStateWidget(

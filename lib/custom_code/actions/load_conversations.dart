@@ -1,10 +1,6 @@
-import '/backend/schema/enums/enums.dart';
 import '/features/messages/domain/models/conversation_model.dart';
-import '/backend/supabase/supabase.dart';
-import '/core/state/app_state_service.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
-
+import '/features/messages/presentation/providers/messages_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 String? _nullIfEmpty(dynamic value) {
@@ -13,13 +9,13 @@ String? _nullIfEmpty(dynamic value) {
   return str.isNotEmpty ? str : null;
 }
 
-Future<List<Conversation>> loadConversations(String filter) async {
-  print('🔄 loadConversations called with filter: $filter');
-
+Future<List<Conversation>> loadConversations(
+  WidgetRef ref,
+  String filter,
+) async {
   final client = Supabase.instance.client;
 
   if (client.auth.currentUser == null) {
-    print('⚠️ loadConversations: User not authenticated');
     return [];
   }
 
@@ -30,7 +26,6 @@ Future<List<Conversation>> loadConversations(String filter) async {
     );
 
     if (response == null) {
-      print('⚠️ loadConversations: RPC returned null');
       return [];
     }
 
@@ -60,14 +55,7 @@ Future<List<Conversation>> loadConversations(String filter) async {
       );
     }).toList();
 
-    print('📋 loadConversations: loaded ${all.length} total');
-    for (final c in all) {
-      print('  - ${c.otherUserUsername}: role=${c.role}');
-    }
-
-    FFAppState().update(() {
-      FFAppState().conversations = all;
-    });
+    ref.read(messagesProvider.notifier).setConversations(all);
 
     List<Conversation> filtered;
     if (filter == 'buying') {
@@ -80,10 +68,8 @@ Future<List<Conversation>> loadConversations(String filter) async {
       filtered = all;
     }
 
-    print('📋 loadConversations: returning ${filtered.length} for "$filter"');
     return filtered;
-  } catch (e) {
-    print('❌ Error loading conversations: $e');
+  } catch (_) {
     return [];
   }
 }

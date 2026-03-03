@@ -339,9 +339,8 @@ class _HomeDashoardEarningsWidgetState
                                           ),
                                         ),
                                         Opacity(
-                                          opacity:
-                                              (state == 'Sales' ? 1 : 0)
-                                                  .toDouble(),
+                                          opacity: (state == 'Sales' ? 1 : 0)
+                                              .toDouble(),
                                           child: Container(
                                             width: double.infinity,
                                             height: 2.0,
@@ -384,10 +383,9 @@ class _HomeDashoardEarningsWidgetState
                                           ),
                                         ),
                                         Opacity(
-                                          opacity: (state == 'Referrals'
-                                                  ? 1
-                                                  : 0)
-                                              .toDouble(),
+                                          opacity:
+                                              (state == 'Referrals' ? 1 : 0)
+                                                  .toDouble(),
                                           child: Container(
                                             width: double.infinity,
                                             height: 2.0,
@@ -444,7 +442,8 @@ class _HomeDashoardEarningsWidgetState
                                                   maxLines: 1,
                                                   style: GoogleFonts.inter(
                                                     fontSize: 12.0,
-                                                    color: AppColors.textSecondary,
+                                                    color:
+                                                        AppColors.textSecondary,
                                                   ),
                                                   overflow:
                                                       TextOverflow.ellipsis,
@@ -454,7 +453,8 @@ class _HomeDashoardEarningsWidgetState
                                                   style: GoogleFonts.inter(
                                                     fontWeight: FontWeight.w500,
                                                     fontSize: 14.0,
-                                                    color: AppColors.textPrimary,
+                                                    color:
+                                                        AppColors.textPrimary,
                                                   ),
                                                 ),
                                                 Text(
@@ -462,7 +462,8 @@ class _HomeDashoardEarningsWidgetState
                                                   maxLines: 1,
                                                   style: GoogleFonts.inter(
                                                     fontSize: 12.0,
-                                                    color: AppColors.textSecondary,
+                                                    color:
+                                                        AppColors.textSecondary,
                                                   ),
                                                   overflow:
                                                       TextOverflow.ellipsis,
@@ -490,7 +491,8 @@ class _HomeDashoardEarningsWidgetState
                                                 maxLines: 1,
                                                 style: GoogleFonts.inter(
                                                   fontSize: 12.0,
-                                                  color: AppColors.textSecondary,
+                                                  color:
+                                                      AppColors.textSecondary,
                                                 ),
                                                 overflow: TextOverflow.ellipsis,
                                               ),
@@ -553,11 +555,13 @@ class _HomeDashoardEarningsWidgetState
                                                     Expanded(
                                                       child: Text(
                                                         'ComicVault',
-                                                        style: GoogleFonts.inter(
+                                                        style:
+                                                            GoogleFonts.inter(
                                                           fontWeight:
                                                               FontWeight.w500,
                                                           fontSize: 14.0,
-                                                          color: AppColors.textPrimary,
+                                                          color: AppColors
+                                                              .textPrimary,
                                                         ),
                                                       ),
                                                     ),
@@ -567,7 +571,8 @@ class _HomeDashoardEarningsWidgetState
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         fontSize: 16.0,
-                                                        color: AppColors.textPrimary,
+                                                        color: AppColors
+                                                            .textPrimary,
                                                       ),
                                                     ),
                                                   ],
@@ -577,7 +582,8 @@ class _HomeDashoardEarningsWidgetState
                                                   maxLines: 1,
                                                   style: GoogleFonts.inter(
                                                     fontSize: 12.0,
-                                                    color: AppColors.textSecondary,
+                                                    color:
+                                                        AppColors.textSecondary,
                                                   ),
                                                   overflow:
                                                       TextOverflow.ellipsis,

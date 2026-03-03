@@ -110,7 +110,10 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget> {
               Flexible(
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(
-                      AppConstants.paddingPage, 0.0, AppConstants.paddingPage, 0.0),
+                      AppConstants.paddingPage,
+                      0.0,
+                      AppConstants.paddingPage,
+                      0.0),
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
@@ -118,7 +121,10 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget> {
                       children: [
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              AppConstants.paddingPage, 0.0, AppConstants.paddingPage, 16.0),
+                              AppConstants.paddingPage,
+                              0.0,
+                              AppConstants.paddingPage,
+                              16.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -229,7 +235,10 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget> {
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              AppConstants.paddingPage, 0.0, AppConstants.paddingPage, 24.0),
+                              AppConstants.paddingPage,
+                              0.0,
+                              AppConstants.paddingPage,
+                              24.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -388,8 +397,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget> {
                                           return text.contains(RegExp(
                                               r'[!@#\$%^&*(),.?":{}|<>_\-]'));
                                         }(_model.textController1!.text),
-                                        text:
-                                            'One special character (!@#\$%)',
+                                        text: 'One special character (!@#\$%)',
                                       ),
                                     ),
                                     Padding(
@@ -398,10 +406,9 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget> {
                                       child: PasswordComponentWidget(
                                         isActive: (_model
                                                     .textController1!.text ==
-                                                _model
-                                                    .textController2!.text) &&
+                                                _model.textController2!.text) &&
                                             (_model.textController2!.text !=
-                                                    ''),
+                                                ''),
                                         text: 'Passwords match',
                                       ),
                                     ),

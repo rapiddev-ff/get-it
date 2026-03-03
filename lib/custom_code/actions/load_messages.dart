@@ -1,9 +1,6 @@
-import '/backend/schema/enums/enums.dart';
 import '/features/messages/domain/models/message_model.dart';
 import '/features/home/domain/models/counter_offer_model.dart';
 import '/backend/supabase/supabase.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<List<Message>> loadMessages(
@@ -77,8 +74,6 @@ Future<List<Message>> loadMessages(
 
     return messages;
   } catch (e) {
-    print('❌ Error loading messages: $e');
     return [];
   }
 }
-

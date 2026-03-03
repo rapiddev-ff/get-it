@@ -287,7 +287,8 @@ class _HomeDashoardShippingWidgetState
                                                   style: GoogleFonts.inter(
                                                     fontWeight: FontWeight.w500,
                                                     fontSize: 14.0,
-                                                    color: AppColors.textPrimary,
+                                                    color:
+                                                        AppColors.textPrimary,
                                                   ),
                                                 ),
                                               ),

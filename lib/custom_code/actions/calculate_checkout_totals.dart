@@ -1,8 +1,5 @@
-import '/backend/schema/enums/enums.dart';
 import '/features/checkout/domain/models/checkout_totals_model.dart';
 import '/backend/supabase/supabase.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
 
 Future<CheckoutTotals?> calculateCheckoutTotals(
   String productId,
@@ -29,7 +26,6 @@ Future<CheckoutTotals?> calculateCheckoutTotals(
             : null;
 
     if (json == null || json['success'] != true) {
-      print('❌ Checkout calc error: ${json?['error']}');
       return null;
     }
 
@@ -46,7 +42,6 @@ Future<CheckoutTotals?> calculateCheckoutTotals(
       availableQuantity: _toInt(json['available_quantity']),
     );
   } catch (e) {
-    print('❌ Error calculating checkout totals: $e');
     return null;
   }
 }

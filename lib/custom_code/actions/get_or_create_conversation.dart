@@ -1,8 +1,5 @@
-import '/backend/schema/enums/enums.dart';
 import '/features/messages/domain/models/conversation_model.dart';
 import '/backend/supabase/supabase.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -57,7 +54,6 @@ Future<Conversation?> getOrCreateConversation(
       productPrice: (json['product_price'] as num?)?.toDouble(),
     );
   } catch (e) {
-    print('❌ Error getting/creating conversation: $e');
     return null;
   }
 }

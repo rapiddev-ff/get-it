@@ -6,11 +6,10 @@ extension ListDivideExt<T extends Widget> on Iterable<T> {
   List<Widget> divide(Widget t, {bool Function(int)? filterFn}) => isEmpty
       ? []
       : (enumerate
-              .map(
-                  (e) => [e.value, if (filterFn == null || filterFn(e.key)) t])
-              .expand((i) => i)
-              .toList()
-            ..removeLast());
+          .map((e) => [e.value, if (filterFn == null || filterFn(e.key)) t])
+          .expand((i) => i)
+          .toList()
+        ..removeLast());
 
   List<Widget> around(Widget t) => addToStart(t).addToEnd(t);
 

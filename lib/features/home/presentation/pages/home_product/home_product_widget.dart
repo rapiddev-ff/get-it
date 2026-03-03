@@ -1,10 +1,10 @@
 import 'dart:math';
 
 import '/features/auth/data/supabase_auth/auth_util.dart';
-import '/core/state/app_state_service.dart';
 import '/features/home/domain/models/product_details_model.dart';
 import '/features/messages/domain/models/conversation_model.dart';
 import '/features/home/domain/models/feed_product_model.dart';
+import '/features/messages/presentation/providers/messages_provider.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
 import '/core/theme/app_colors.dart';
@@ -16,11 +16,12 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart'
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-class HomeProductWidget extends StatefulWidget {
+class HomeProductWidget extends ConsumerStatefulWidget {
   const HomeProductWidget({
     super.key,
     required this.productId,
@@ -32,17 +33,16 @@ class HomeProductWidget extends StatefulWidget {
   static String routePath = 'homeProduct';
 
   @override
-  State<HomeProductWidget> createState() => _HomeProductWidgetState();
+  ConsumerState<HomeProductWidget> createState() => _HomeProductWidgetState();
 }
 
-class _HomeProductWidgetState extends State<HomeProductWidget> {
+class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   // Inlined from HomeProductModel
   ProductDetails? _getProduct;
   PageController? _pageViewController;
   Conversation? _getOrCreateConversation;
-
 
   @override
   void initState() {
@@ -124,9 +124,7 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
                     color: AppColors.info,
                     size: 20.0,
                   ),
-                  onPressed: () {
-                    print('IconButton pressed ...');
-                  },
+                  onPressed: () {},
                 ),
               ],
             ),
@@ -152,8 +150,7 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
                       ),
                       child: Builder(
                         builder: (context) {
-                          final images =
-                              _getProduct?.images.toList() ?? [];
+                          final images = _getProduct?.images.toList() ?? [];
 
                           return Container(
                             width: double.infinity,
@@ -313,8 +310,7 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
                           context.pushNamed(
                             HomeSellerProfileWidget.routeName,
                             queryParameters: {
-                              'sellerId':
-                                  _getProduct?.seller?.id ?? '',
+                              'sellerId': _getProduct?.seller?.id ?? '',
                             },
                           );
                         },
@@ -569,8 +565,7 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
                                   ),
                                 ),
                                 Text(
-                                  _formatCurrency(
-                                      _getProduct?.customFlatRate),
+                                  _formatCurrency(_getProduct?.customFlatRate),
                                   style: GoogleFonts.inter(
                                     fontWeight: FontWeight.w600,
                                     color: AppColors.textPrimary,
@@ -623,23 +618,25 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
                                     _getProduct!.seller?.id ?? '',
                                     widget.productId,
                                   );
-                                  FFAppState().currentConversation =
-                                      _getOrCreateConversation!;
+                                  ref
+                                      .read(messagesProvider.notifier)
+                                      .setCurrentConversation(
+                                          _getOrCreateConversation!);
                                   setState(() {});
 
                                   context.pushNamed(
                                     ChatPageWidget.routeName,
                                     queryParameters: {
-                                      'conversation': FFAppState()
-                                          .currentConversation
-                                          .serialize(),
+                                      'conversation':
+                                          _getOrCreateConversation!.serialize(),
                                     },
                                   );
 
                                   setState(() {});
                                 },
                                 style: TextButton.styleFrom(
-                                  backgroundColor: AppColors.backgroundSecondary,
+                                  backgroundColor:
+                                      AppColors.backgroundSecondary,
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       16.0, 0.0, 16.0, 0.0),
                                   elevation: 0.0,
@@ -688,40 +685,43 @@ class _HomeProductWidgetState extends State<HomeProductWidget> {
                                         originalPrice:
                                             _getProduct?.originalPrice,
                                         flashSaleEnabled:
-                                            _getProduct?.flashSaleEnabled ?? false,
+                                            _getProduct?.flashSaleEnabled ??
+                                                false,
                                         flashSalePrice:
                                             _getProduct?.flashSalePrice,
                                         flashSaleEndsAt:
                                             _getProduct?.flashSaleEndsAt,
-                                        conditionName: _getProduct
-                                            ?.conditions.firstOrNull?.name ?? '',
-                                        mainImageUrl: _getProduct
-                                            ?.images.firstOrNull?.imageUrl ?? '',
-                                        sellerId:
-                                            _getProduct?.seller?.id ?? '',
+                                        conditionName: _getProduct?.conditions
+                                                .firstOrNull?.name ??
+                                            '',
+                                        mainImageUrl: _getProduct?.images
+                                                .firstOrNull?.imageUrl ??
+                                            '',
+                                        sellerId: _getProduct?.seller?.id ?? '',
                                         sellerUsername:
                                             _getProduct?.seller?.username ?? '',
                                         sellerAvatarUrl:
                                             _getProduct?.seller?.avatarUrl,
                                         sellerRating: _getProduct
-                                            ?.seller?.ratingAsSeller ?? 0.0,
-                                        sellerTotalReviews: _getProduct
-                                            ?.seller?.totalReviewsAsSeller ?? 0,
+                                                ?.seller?.ratingAsSeller ??
+                                            0.0,
+                                        sellerTotalReviews: _getProduct?.seller
+                                                ?.totalReviewsAsSeller ??
+                                            0,
                                         isInWishlist:
                                             _getProduct?.isInWishlist ?? false,
-                                        createdAt:
-                                            _getProduct?.createdAt,
+                                        createdAt: _getProduct?.createdAt,
                                         shippingPrice:
                                             _getProduct?.shippingPrice ?? 0.0,
                                         freeShipping:
                                             _getProduct?.freeShipping ?? false,
                                         useSellerShipping:
-                                            _getProduct?.useSellerShipping ?? false,
+                                            _getProduct?.useSellerShipping ??
+                                                false,
                                         customFlatRate:
                                             _getProduct?.customFlatRate,
-                                        customAdditionalItemFee:
-                                            _getProduct
-                                                ?.customAdditionalItemFee,
+                                        customAdditionalItemFee: _getProduct
+                                            ?.customAdditionalItemFee,
                                       ).serialize(),
                                       'initialQuantity': 1.toString(),
                                     },

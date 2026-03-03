@@ -266,9 +266,7 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget> {
                           borderRadius: BorderRadius.circular(4.0),
                         ),
                         child: TextButton(
-                          onPressed: () {
-                            print('Button pressed ...');
-                          },
+                          onPressed: () {},
                           style: TextButton.styleFrom(
                             minimumSize: Size(double.infinity, 56.0),
                             padding: EdgeInsets.symmetric(horizontal: 16.0),

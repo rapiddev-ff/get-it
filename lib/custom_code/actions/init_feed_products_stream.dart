@@ -1,23 +1,19 @@
-import '/backend/schema/enums/enums.dart';
 import '/features/home/domain/models/feed_product_model.dart';
+import '/features/home/presentation/providers/feed_provider.dart';
 import '/backend/supabase/supabase.dart';
-import '/core/state/app_state_service.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 RealtimeChannel? _feedProductsSubscription;
 
 Future<List<FeedProduct>> initFeedProductsStream(
+  WidgetRef ref,
   String userId,
   List<String> excludeIds,
 ) async {
   final data = await _fetchAllFeedProducts(userId, excludeIds);
 
-  FFAppState().update(() {
-    FFAppState().feedProducts = data;
-  });
+  ref.read(feedProvider.notifier).setFeedProducts(data);
 
   _feedProductsSubscription?.unsubscribe();
   _feedProductsSubscription = Supabase.instance.client
@@ -29,11 +25,9 @@ Future<List<FeedProduct>> initFeedProductsStream(
         callback: (payload) async {
           final freshData = await _fetchAllFeedProducts(
             userId,
-            FFAppState().swipedProductIds,
+            ref.read(feedProvider).swipedProductIds,
           );
-          FFAppState().update(() {
-            FFAppState().feedProducts = freshData;
-          });
+          ref.read(feedProvider.notifier).setFeedProducts(freshData);
         },
       )
       .subscribe();
@@ -98,8 +92,7 @@ Future<List<FeedProduct>> _fetchAllFeedProducts(
       }).toList();
     }
     return [];
-  } catch (e) {
-    print('_fetchAllFeedProducts error: $e');
+  } catch (_) {
     return [];
   }
 }

@@ -76,7 +76,8 @@ class CategoriesNotifier extends AsyncNotifier<List<Category>> {
   }
 
   Future<void> insertAtIndex(int index, Category category) async {
-    final current = <Category>[...(state.valueOrNull ?? [])]..insert(index, category);
+    final current = <Category>[...(state.valueOrNull ?? [])]
+      ..insert(index, category);
     await _persist(current);
     state = AsyncData(current);
   }
@@ -108,8 +109,7 @@ class ConditionsNotifier extends AsyncNotifier<List<Condition>> {
         .first
         .map((e) {
           try {
-            return Condition.fromJson(
-                jsonDecode(e.toString()));
+            return Condition.fromJson(jsonDecode(e.toString()));
           } catch (_) {
             return null;
           }
@@ -161,7 +161,8 @@ class ConditionsNotifier extends AsyncNotifier<List<Condition>> {
   }
 
   Future<void> insertAtIndex(int index, Condition condition) async {
-    final current = <Condition>[...(state.valueOrNull ?? [])]..insert(index, condition);
+    final current = <Condition>[...(state.valueOrNull ?? [])]
+      ..insert(index, condition);
     await _persist(current);
     state = AsyncData(current);
   }
@@ -217,7 +218,6 @@ class ChoosenTagsNotifier extends Notifier<List<Tag>> {
   }
 }
 
-final choosenTagsProvider =
-    NotifierProvider<ChoosenTagsNotifier, List<Tag>>(
+final choosenTagsProvider = NotifierProvider<ChoosenTagsNotifier, List<Tag>>(
   ChoosenTagsNotifier.new,
 );

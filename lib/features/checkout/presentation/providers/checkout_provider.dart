@@ -19,7 +19,6 @@ class CheckoutNotifier extends Notifier<PaymentMethod> {
   }
 }
 
-final checkoutProvider =
-    NotifierProvider<CheckoutNotifier, PaymentMethod>(
+final checkoutProvider = NotifierProvider<CheckoutNotifier, PaymentMethod>(
   CheckoutNotifier.new,
 );

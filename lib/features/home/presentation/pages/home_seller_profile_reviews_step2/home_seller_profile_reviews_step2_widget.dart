@@ -356,8 +356,8 @@ class _HomeSellerProfileReviewsStep2WidgetState
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 24.0, 0.0, 16.0),
                             child: RatingBar.builder(
-                              onRatingUpdate: (newValue) => setState(
-                                  () => ratingBarValue2 = newValue),
+                              onRatingUpdate: (newValue) =>
+                                  setState(() => ratingBarValue2 = newValue),
                               itemBuilder: (context, index) => Icon(
                                 Icons.star_rounded,
                                 color: Color(0xFFFACC15),
@@ -665,8 +665,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                       ),
                       child: TextButton(
                         onPressed: () async {
-                          uploadReviewImages =
-                              await actions.uploadReviewImages(
+                          uploadReviewImages = await actions.uploadReviewImages(
                             images
                                 .map((bytes) => FFUploadedFile(
                                       bytes: bytes,

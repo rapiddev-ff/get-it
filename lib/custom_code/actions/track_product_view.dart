@@ -1,7 +1,4 @@
-import '/backend/schema/enums/enums.dart';
 import '/backend/supabase/supabase.dart';
-import 'index.dart';
-import 'package:flutter/material.dart';
 
 Future<bool> trackProductView(
   String productId,
@@ -20,7 +17,6 @@ Future<bool> trackProductView(
 
     return response == true;
   } catch (e) {
-    print('trackProductView error: $e');
     return false;
   }
 }

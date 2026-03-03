@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart' hide Category;
-import 'package:flutter/material.dart' hide Category;
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -223,9 +223,7 @@ class _HomeDashoardInventoryWidgetState
                             color: AppColors.info,
                             size: 16.0,
                           ),
-                          onPressed: () {
-                            print('IconButton pressed ...');
-                          },
+                          onPressed: () {},
                         ),
                       ].divide(SizedBox(width: 12.0)),
                     ),
