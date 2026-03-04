@@ -223,7 +223,8 @@ class __$$BrowseProductImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _$BrowseProductImpl extends _BrowseProduct {
   const _$BrowseProductImpl(
       {this.id = '',

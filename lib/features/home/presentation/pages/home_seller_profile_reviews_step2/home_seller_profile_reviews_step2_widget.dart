@@ -16,6 +16,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import '/core/utils/uploaded_file.dart' show UploadedFile;
 
 class HomeSellerProfileReviewsStep2Widget extends StatefulWidget {
@@ -23,10 +24,12 @@ class HomeSellerProfileReviewsStep2Widget extends StatefulWidget {
     super.key,
     required this.sellerDataType,
     required this.product,
+    this.reviewRole = 'as_buyer',
   });
 
   final Seller? sellerDataType;
   final SellerProduct? product;
+  final String reviewRole;
 
   static String routeName = 'homeSellerProfileReviewsStep2';
   static String routePath = 'homeSellerProfileReviewsStep2';
@@ -166,8 +169,8 @@ class _HomeSellerProfileReviewsStep2WidgetState
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(4.0),
-                            child: Image.network(
-                              'https://picsum.photos/seed/688/600',
+                            child: CachedNetworkImage(
+                              imageUrl: widget.product?.mainImageUrl ?? '',
                               width: 64.0,
                               height: 84.0,
                               fit: BoxFit.cover,
@@ -189,16 +192,17 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                     height: 1.5,
                                   ),
                                 ),
-                                Text(
-                                  'Pokemon TCG Champion Path',
-                                  maxLines: 1,
-                                  style: GoogleFonts.inter(
-                                    color: AppColors.textSecondary,
-                                    fontSize: 12.0,
-                                    height: 1.5,
+                                if (widget.product?.conditionName.isNotEmpty == true)
+                                  Text(
+                                    widget.product!.conditionName,
+                                    maxLines: 1,
+                                    style: GoogleFonts.inter(
+                                      color: AppColors.textSecondary,
+                                      fontSize: 12.0,
+                                      height: 1.5,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 8.0, 0.0, 0.0),
@@ -207,7 +211,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          '\$299.99',
+                                          '\$${NumberFormat('#,##0.00', 'en_US').format(widget.product?.price ?? 0)}',
                                           style: GoogleFonts.inter(
                                             fontWeight: FontWeight.w500,
                                             color: AppColors.textPrimary,
@@ -216,7 +220,9 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                         ),
                                       ),
                                       Text(
-                                        'Purchased Jan 15,2025',
+                                        widget.product?.createdAt != null
+                                            ? 'Purchased ${DateFormat('MMM dd, yyyy').format(widget.product!.createdAt!)}'
+                                            : '',
                                         maxLines: 1,
                                         style: GoogleFonts.inter(
                                           color: AppColors.textSecondary,
@@ -289,7 +295,10 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                       color: Color(0xFFFACC15),
                                     ),
                                     direction: Axis.horizontal,
-                                    rating: 3.0,
+                                    rating: valueOrDefault<double>(
+                                      widget.sellerDataType?.ratingAsSeller,
+                                      0.0,
+                                    ),
                                     unratedColor: Color(0xFF7B7B7B),
                                     itemCount: 5,
                                     itemSize: 15.0,
@@ -494,7 +503,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                   ),
                                 ),
                                 Text(
-                                  '0/500',
+                                  '${textController?.text.length ?? 0}/500',
                                   maxLines: 1,
                                   style: GoogleFonts.inter(
                                     color: AppColors.textSecondary,
@@ -665,6 +674,15 @@ class _HomeSellerProfileReviewsStep2WidgetState
                       ),
                       child: TextButton(
                         onPressed: () async {
+                          if (ratingBarValue2 == null || ratingBarValue2! < 1) {
+                            await actions.toastificationshow(
+                              context,
+                              'Rating Required',
+                              'Please select at least 1 star.',
+                              'error',
+                            );
+                            return;
+                          }
                           uploadReviewImages = await actions.uploadReviewImages(
                             images
                                 .map((bytes) => UploadedFile(
@@ -673,18 +691,33 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                     ))
                                 .toList(),
                           );
-                          await actions.submitReview(
+                          final result = await actions.submitReview(
                             widget.product!.orderId,
                             widget.product!.id,
-                            'as_seller',
+                            widget.reviewRole,
                             ratingBarValue2!.round(),
                             textController!.text,
                             widget.product?.title,
                             uploadReviewImages?.toList(),
                           );
-                          Navigator.of(context).pop();
-
-                          setState(() {});
+                          if (!mounted) return;
+                          if (result is Map && result['success'] == false) {
+                            await actions.toastificationshow(
+                              context,
+                              'Error',
+                              result['error']?.toString() ?? 'Failed to submit review.',
+                              'error',
+                            );
+                            return;
+                          }
+                          await actions.toastificationshow(
+                            context,
+                            'Review Submitted',
+                            'Thank you for your feedback!',
+                            'success',
+                          );
+                          if (!mounted) return;
+                          Navigator.of(context).pop(true);
                         },
                         style: TextButton.styleFrom(
                           padding: EdgeInsetsDirectional.fromSTEB(

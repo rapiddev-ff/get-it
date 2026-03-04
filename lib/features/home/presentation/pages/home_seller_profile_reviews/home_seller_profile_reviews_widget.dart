@@ -1,8 +1,10 @@
 import '/backend/api_requests/api_calls.dart';
 import '/features/home/domain/models/seller_model.dart';
 import '/core/theme/app_colors.dart';
+import '/core/utils/date_utils.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';
+import '/custom_code/actions/index.dart' as actions;
 import 'package:go_router/go_router.dart';
 import '/features/home/presentation/pages/home_seller_profile_more/home_seller_profile_more_widget.dart';
 import '/index.dart';
@@ -12,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
 import 'home_seller_profile_reviews_model.dart';
@@ -39,10 +42,41 @@ class _HomeSellerProfileReviewsWidgetState
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  // Mutable header data for refresh
+  double? _ratingAsBuyer;
+  double? _ratingAsSeller;
+  int? _totalReviewsAsBuyer;
+  int? _totalReviewsAsSeller;
+
+  double get _currentRatingAsBuyer => _ratingAsBuyer ?? widget.sellerDataType?.ratingAsBuyer ?? 0.0;
+  double get _currentRatingAsSeller => _ratingAsSeller ?? widget.sellerDataType?.ratingAsSeller ?? 0.0;
+  int get _currentTotalReviewsAsBuyer => _totalReviewsAsBuyer ?? widget.sellerDataType?.totalReviewsAsBuyer ?? 0;
+  int get _currentTotalReviewsAsSeller => _totalReviewsAsSeller ?? widget.sellerDataType?.totalReviewsAsSeller ?? 0;
+
   @override
   void initState() {
     super.initState();
     _model = HomeSellerProfileReviewsModel();
+  }
+
+  Future<void> _refreshAfterReview() async {
+    // Re-fetch seller info to get updated ratings
+    final updatedSeller = await actions.getSellerInfo(
+      widget.sellerDataType!.id,
+      null,
+    );
+    if (!mounted) return;
+    setState(() {
+      if (updatedSeller != null) {
+        _ratingAsBuyer = updatedSeller.ratingAsBuyer;
+        _ratingAsSeller = updatedSeller.ratingAsSeller;
+        _totalReviewsAsBuyer = updatedSeller.totalReviewsAsBuyer;
+        _totalReviewsAsSeller = updatedSeller.totalReviewsAsSeller;
+      }
+    });
+    // Refresh paging controllers
+    _model.listViewPagingController1?.refresh();
+    _model.listViewPagingController2?.refresh();
   }
 
   @override
@@ -199,28 +233,18 @@ class _HomeSellerProfileReviewsWidgetState
                                           color: Color(0xFFFACC15),
                                         ),
                                         direction: Axis.horizontal,
-                                        rating: valueOrDefault<double>(
-                                          _model.state == 'As Buyer'
-                                              ? widget
-                                                  .sellerDataType?.ratingAsBuyer
-                                              : widget.sellerDataType
-                                                  ?.ratingAsSeller,
-                                          0.0,
-                                        ),
+                                        rating: _model.state == 'As Buyer'
+                                            ? _currentRatingAsBuyer
+                                            : _currentRatingAsSeller,
                                         unratedColor: Color(0xFF7B7B7B),
                                         itemCount: 5,
                                         itemSize: 18.0,
                                       ),
                                       Text(
-                                        valueOrDefault<String>(
-                                          (_model.state == 'As Buyer'
-                                                  ? widget.sellerDataType
-                                                      ?.ratingAsBuyer
-                                                  : widget.sellerDataType
-                                                      ?.ratingAsSeller)
-                                              ?.toString(),
-                                          '0',
-                                        ),
+                                        (_model.state == 'As Buyer'
+                                                ? _currentRatingAsBuyer
+                                                : _currentRatingAsSeller)
+                                            .toString(),
                                         style: GoogleFonts.inter(
                                           fontWeight: FontWeight.w500,
                                           fontSize: 14.0,
@@ -228,17 +252,7 @@ class _HomeSellerProfileReviewsWidgetState
                                         ),
                                       ),
                                       Text(
-                                        '(${valueOrDefault<String>(
-                                          (_model.state == 'As Buyer'
-                                                  ? widget.sellerDataType
-                                                      ?.totalReviewsAsBuyer
-                                                      .toDouble()
-                                                  : widget.sellerDataType
-                                                      ?.totalReviewsAsSeller
-                                                      .toDouble())
-                                              ?.toString(),
-                                          '0',
-                                        )}) reviews',
+                                        '(${_model.state == 'As Buyer' ? _currentTotalReviewsAsBuyer : _currentTotalReviewsAsSeller}) reviews',
                                         style: GoogleFonts.inter(
                                           fontSize: 14.0,
                                           color: Color(0xFFAFAFB4),
@@ -466,13 +480,20 @@ class _HomeSellerProfileReviewsWidgetState
                           ),
                           child: TextButton.icon(
                             onPressed: () async {
-                              context.pushNamed(
+                              final reviewRole = _model.state == 'As Buyer'
+                                  ? 'as_buyer'
+                                  : 'as_seller';
+                              final result = await context.pushNamed<bool>(
                                 HomeSellerProfileReviewsStep1Widget.routeName,
                                 queryParameters: {
                                   'sellerDataType':
                                       widget.sellerDataType?.serialize(),
+                                  'reviewRole': reviewRole,
                                 },
                               );
+                              if (result == true && mounted) {
+                                await _refreshAfterReview();
+                              }
                             },
                             icon: Icon(
                               Icons.edit,
@@ -541,206 +562,9 @@ class _HomeSellerProfileReviewsWidgetState
                                     ),
                                   ),
                                 ),
-                                itemBuilder: (context, _, asSellerIndex) {
-                                  return Container(
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.backgroundSecondary,
-                                      borderRadius: BorderRadius.circular(8.0),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(16.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                width: 32.0,
-                                                height: 32.0,
-                                                clipBehavior: Clip.antiAlias,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                child: CachedNetworkImage(
-                                                  fadeInDuration: Duration(
-                                                      milliseconds: 500),
-                                                  fadeOutDuration: Duration(
-                                                      milliseconds: 500),
-                                                  imageUrl:
-                                                      'https://picsum.photos/seed/688/600',
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      '@comic_guru',
-                                                      style: GoogleFonts.inter(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontSize: 14.0,
-                                                        color: AppColors
-                                                            .textPrimary,
-                                                        height: 1.5,
-                                                      ),
-                                                    ),
-                                                    RatingBarIndicator(
-                                                      itemBuilder:
-                                                          (context, index) =>
-                                                              Icon(
-                                                        Icons.star_rounded,
-                                                        color:
-                                                            Color(0xFFFACC15),
-                                                      ),
-                                                      direction:
-                                                          Axis.horizontal,
-                                                      rating: 3.0,
-                                                      unratedColor:
-                                                          Color(0xFF7B7B7B),
-                                                      itemCount: 5,
-                                                      itemSize: 12.0,
-                                                    ),
-                                                  ].divide(
-                                                      SizedBox(height: 4.0)),
-                                                ),
-                                              ),
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Text(
-                                                    '2 days ago',
-                                                    style: GoogleFonts.inter(
-                                                      fontSize: 12.0,
-                                                      color: Color(0xFFAFAFB4),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    width: 26.0,
-                                                    height: 26.0,
-                                                    decoration: BoxDecoration(
-                                                      color: Color(0xFF111111),
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                    child: Align(
-                                                      alignment:
-                                                          AlignmentDirectional(
-                                                              0.0, 0.0),
-                                                      child: FaIcon(
-                                                        FontAwesomeIcons.flag,
-                                                        color: AppColors
-                                                            .textPrimary,
-                                                        size: 12.0,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ].divide(SizedBox(width: 8.0)),
-                                              ),
-                                            ].divide(SizedBox(width: 12.0)),
-                                          ),
-                                          Container(
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(
-                                              color: Color(0xFF111111),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      12.0, 8.0, 12.0, 8.0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            4.0),
-                                                    child: CachedNetworkImage(
-                                                      fadeInDuration: Duration(
-                                                          milliseconds: 500),
-                                                      fadeOutDuration: Duration(
-                                                          milliseconds: 500),
-                                                      imageUrl:
-                                                          'https://picsum.photos/seed/688/600',
-                                                      width: 32.0,
-                                                      height: 32.0,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          'Amazing Spider-Man #300',
-                                                          style:
-                                                              GoogleFonts.inter(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .normal,
-                                                            fontSize: 14.0,
-                                                            color: AppColors
-                                                                .textPrimary,
-                                                            height: 1.5,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          '\$485.00',
-                                                          style:
-                                                              GoogleFonts.inter(
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 12.0,
-                                                            color: AppColors
-                                                                .textPrimary,
-                                                            height: 1.5,
-                                                          ),
-                                                        ),
-                                                      ].divide(SizedBox(
-                                                          height: 4.0)),
-                                                    ),
-                                                  ),
-                                                ].divide(SizedBox(width: 12.0)),
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            'Excellent communication and fast shipping! Item was exactly as described with great packaging. Highly recommended seller.',
-                                            style: GoogleFonts.inter(
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 14.0,
-                                              color: AppColors.textSecondary,
-                                              height: 1.5,
-                                            ),
-                                          ),
-                                        ].divide(SizedBox(height: 16.0)),
-                                      ),
-                                    ),
-                                  );
+                                itemBuilder: (context, reviewItem, asBuyerIndex) {
+                                  final item = reviewItem is Map ? reviewItem : <String, dynamic>{};
+                                  return _buildReviewCard(item);
                                 },
                               ),
                             );
@@ -757,8 +581,8 @@ class _HomeSellerProfileReviewsWidgetState
                                         .call(
                                       userId: widget.sellerDataType?.id,
                                       role: 'as_seller',
-                                      limit: 30,
-                                      offset: 0,
+                                      limit: 20,
+                                      offset: nextPageMarker.numItems,
                                     ),
                                   ),
                                   padding: EdgeInsets.symmetric(vertical: 16.0),
@@ -796,230 +620,9 @@ class _HomeSellerProfileReviewsWidgetState
                                         ),
                                       ),
                                     ),
-                                    itemBuilder: (context, _, asSellerIndex) {
-                                      return Container(
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: AppColors.backgroundSecondary,
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(16.0),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Container(
-                                                    width: 32.0,
-                                                    height: 32.0,
-                                                    clipBehavior:
-                                                        Clip.antiAlias,
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                    child: CachedNetworkImage(
-                                                      fadeInDuration: Duration(
-                                                          milliseconds: 500),
-                                                      fadeOutDuration: Duration(
-                                                          milliseconds: 500),
-                                                      imageUrl:
-                                                          'https://picsum.photos/seed/688/600',
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          '@comic_guru',
-                                                          style:
-                                                              GoogleFonts.inter(
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontSize: 14.0,
-                                                            color: AppColors
-                                                                .textPrimary,
-                                                            height: 1.5,
-                                                          ),
-                                                        ),
-                                                        RatingBarIndicator(
-                                                          itemBuilder: (context,
-                                                                  index) =>
-                                                              Icon(
-                                                            Icons.star_rounded,
-                                                            color: Color(
-                                                                0xFFFACC15),
-                                                          ),
-                                                          direction:
-                                                              Axis.horizontal,
-                                                          rating: 3.0,
-                                                          unratedColor:
-                                                              Color(0xFF7B7B7B),
-                                                          itemCount: 5,
-                                                          itemSize: 12.0,
-                                                        ),
-                                                      ].divide(SizedBox(
-                                                          height: 4.0)),
-                                                    ),
-                                                  ),
-                                                  Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    children: [
-                                                      Text(
-                                                        '2 days ago',
-                                                        style:
-                                                            GoogleFonts.inter(
-                                                          fontSize: 12.0,
-                                                          color:
-                                                              Color(0xFFAFAFB4),
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        width: 26.0,
-                                                        height: 26.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color:
-                                                              Color(0xFF111111),
-                                                          shape:
-                                                              BoxShape.circle,
-                                                        ),
-                                                        child: Align(
-                                                          alignment:
-                                                              AlignmentDirectional(
-                                                                  0.0, 0.0),
-                                                          child: FaIcon(
-                                                            FontAwesomeIcons
-                                                                .flag,
-                                                            color: AppColors
-                                                                .textPrimary,
-                                                            size: 12.0,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ].divide(
-                                                        SizedBox(width: 8.0)),
-                                                  ),
-                                                ].divide(SizedBox(width: 12.0)),
-                                              ),
-                                              Container(
-                                                width: double.infinity,
-                                                decoration: BoxDecoration(
-                                                  color: Color(0xFF111111),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          12.0, 8.0, 12.0, 8.0),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(4.0),
-                                                        child:
-                                                            CachedNetworkImage(
-                                                          fadeInDuration:
-                                                              Duration(
-                                                                  milliseconds:
-                                                                      500),
-                                                          fadeOutDuration:
-                                                              Duration(
-                                                                  milliseconds:
-                                                                      500),
-                                                          imageUrl:
-                                                              'https://picsum.photos/seed/688/600',
-                                                          width: 32.0,
-                                                          height: 32.0,
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ),
-                                                      Expanded(
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text(
-                                                              'Amazing Spider-Man #300',
-                                                              style: GoogleFonts
-                                                                  .inter(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal,
-                                                                fontSize: 14.0,
-                                                                color: AppColors
-                                                                    .textPrimary,
-                                                                height: 1.5,
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              '\$485.00',
-                                                              style: GoogleFonts
-                                                                  .inter(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                fontSize: 12.0,
-                                                                color: AppColors
-                                                                    .textPrimary,
-                                                                height: 1.5,
-                                                              ),
-                                                            ),
-                                                          ].divide(SizedBox(
-                                                              height: 4.0)),
-                                                        ),
-                                                      ),
-                                                    ].divide(
-                                                        SizedBox(width: 12.0)),
-                                                  ),
-                                                ),
-                                              ),
-                                              Text(
-                                                'Excellent communication and fast shipping! Item was exactly as described with great packaging. Highly recommended seller.',
-                                                style: GoogleFonts.inter(
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 14.0,
-                                                  color:
-                                                      AppColors.textSecondary,
-                                                  height: 1.5,
-                                                ),
-                                              ),
-                                            ].divide(SizedBox(height: 16.0)),
-                                          ),
-                                        ),
-                                      );
+                                    itemBuilder: (context, reviewItem, asSellerIndex) {
+                                      final item = reviewItem is Map ? reviewItem : <String, dynamic>{};
+                                      return _buildReviewCard(item);
                                     },
                                   ),
                                 ),
@@ -1065,6 +668,188 @@ class _HomeSellerProfileReviewsWidgetState
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildReviewCard(Map item) {
+    final reviewerUsername = item['reviewer_username']?.toString() ?? '';
+    final reviewerAvatarUrl = item['reviewer_avatar_url']?.toString() ?? '';
+    final rating = (item['rating'] is num) ? (item['rating'] as num).toDouble() : 0.0;
+    final productTitle = item['product_title']?.toString() ?? '';
+    final productPrice = (item['product_price'] is num) ? (item['product_price'] as num).toDouble() : 0.0;
+    final productImageUrl = item['product_main_image_url']?.toString() ?? '';
+    final content = item['content']?.toString() ?? '';
+    final createdAtStr = item['created_at']?.toString();
+    final createdAt = createdAtStr != null ? DateTime.tryParse(createdAtStr) : null;
+
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: AppColors.backgroundSecondary,
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 32.0,
+                  height: 32.0,
+                  clipBehavior: Clip.antiAlias,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                  ),
+                  child: CachedNetworkImage(
+                    fadeInDuration: Duration(milliseconds: 500),
+                    fadeOutDuration: Duration(milliseconds: 500),
+                    imageUrl: reviewerAvatarUrl,
+                    fit: BoxFit.cover,
+                    errorWidget: (_, __, ___) => Icon(
+                      Icons.person,
+                      size: 20.0,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        reviewerUsername.isNotEmpty ? '@$reviewerUsername' : 'Anonymous',
+                        style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14.0,
+                          color: AppColors.textPrimary,
+                          height: 1.5,
+                        ),
+                      ),
+                      RatingBarIndicator(
+                        itemBuilder: (context, index) => Icon(
+                          Icons.star_rounded,
+                          color: Color(0xFFFACC15),
+                        ),
+                        direction: Axis.horizontal,
+                        rating: rating,
+                        unratedColor: Color(0xFF7B7B7B),
+                        itemCount: 5,
+                        itemSize: 12.0,
+                      ),
+                    ].divide(SizedBox(height: 4.0)),
+                  ),
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text(
+                      createdAt != null
+                          ? dateTimeFormat('relative', createdAt)
+                          : '',
+                      style: GoogleFonts.inter(
+                        fontSize: 12.0,
+                        color: Color(0xFFAFAFB4),
+                      ),
+                    ),
+                    Container(
+                      width: 26.0,
+                      height: 26.0,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF111111),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Align(
+                        alignment: AlignmentDirectional(0.0, 0.0),
+                        child: FaIcon(
+                          FontAwesomeIcons.flag,
+                          color: AppColors.textPrimary,
+                          size: 12.0,
+                        ),
+                      ),
+                    ),
+                  ].divide(SizedBox(width: 8.0)),
+                ),
+              ].divide(SizedBox(width: 12.0)),
+            ),
+            if (productTitle.isNotEmpty || productImageUrl.isNotEmpty)
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Color(0xFF111111),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(12.0, 8.0, 12.0, 8.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      if (productImageUrl.isNotEmpty)
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(4.0),
+                          child: CachedNetworkImage(
+                            fadeInDuration: Duration(milliseconds: 500),
+                            fadeOutDuration: Duration(milliseconds: 500),
+                            imageUrl: productImageUrl,
+                            width: 32.0,
+                            height: 32.0,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (productTitle.isNotEmpty)
+                              Text(
+                                productTitle,
+                                style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 14.0,
+                                  color: AppColors.textPrimary,
+                                  height: 1.5,
+                                ),
+                              ),
+                            if (productPrice > 0)
+                              Text(
+                                '\$${NumberFormat('#,##0.00', 'en_US').format(productPrice)}',
+                                style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12.0,
+                                  color: AppColors.textPrimary,
+                                  height: 1.5,
+                                ),
+                              ),
+                          ].divide(SizedBox(height: 4.0)),
+                        ),
+                      ),
+                    ].divide(SizedBox(width: 12.0)),
+                  ),
+                ),
+              ),
+            if (content.isNotEmpty)
+              Text(
+                content,
+                style: GoogleFonts.inter(
+                  fontWeight: FontWeight.normal,
+                  fontSize: 14.0,
+                  color: AppColors.textSecondary,
+                  height: 1.5,
+                ),
+              ),
+          ].divide(SizedBox(height: 16.0)),
         ),
       ),
     );

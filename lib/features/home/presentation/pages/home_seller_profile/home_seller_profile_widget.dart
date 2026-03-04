@@ -25,6 +25,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
 
 class HomeSellerProfileWidget extends ConsumerStatefulWidget {
@@ -88,11 +89,188 @@ class _HomeSellerProfileWidgetState
     textFieldFocusNode!.addListener(() => setState(() {}));
   }
 
+  Future<void> _refreshSellerData() async {
+    final updated = await actions.getSellerInfo(
+      widget.sellerId!,
+      currentUserUid,
+    );
+    if (!mounted) return;
+    if (updated != null) {
+      setState(() {
+        getSellerData = updated;
+      });
+    }
+  }
+
   @override
   void dispose() {
     textFieldFocusNode?.dispose();
     textController?.dispose();
     super.dispose();
+  }
+
+  Widget _buildShimmerProfile() {
+    return Shimmer.fromColors(
+      baseColor: AppColors.backgroundSecondary,
+      highlightColor: Colors.white.withValues(alpha: 0.1),
+      child: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
+        padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Profile header: avatar + username + rating + stats
+            Row(
+              children: [
+                Container(
+                  width: 80.0,
+                  height: 80.0,
+                  decoration: BoxDecoration(
+                    color: AppColors.backgroundSecondary,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                SizedBox(width: 12.0),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 120.0,
+                        height: 18.0,
+                        decoration: BoxDecoration(
+                          color: AppColors.backgroundSecondary,
+                          borderRadius: BorderRadius.circular(4.0),
+                        ),
+                      ),
+                      SizedBox(height: 8.0),
+                      Container(
+                        width: 180.0,
+                        height: 14.0,
+                        decoration: BoxDecoration(
+                          color: AppColors.backgroundSecondary,
+                          borderRadius: BorderRadius.circular(4.0),
+                        ),
+                      ),
+                      SizedBox(height: 8.0),
+                      Row(
+                        children: List.generate(
+                          3,
+                          (_) => Column(
+                            children: [
+                              Container(
+                                width: 30.0,
+                                height: 16.0,
+                                decoration: BoxDecoration(
+                                  color: AppColors.backgroundSecondary,
+                                  borderRadius: BorderRadius.circular(4.0),
+                                ),
+                              ),
+                              SizedBox(height: 4.0),
+                              Container(
+                                width: 45.0,
+                                height: 12.0,
+                                decoration: BoxDecoration(
+                                  color: AppColors.backgroundSecondary,
+                                  borderRadius: BorderRadius.circular(4.0),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ).divide(SizedBox(width: 24.0)).toList(),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            // Bio lines
+            SizedBox(height: 24.0),
+            Container(
+              width: double.infinity,
+              height: 14.0,
+              decoration: BoxDecoration(
+                color: AppColors.backgroundSecondary,
+                borderRadius: BorderRadius.circular(4.0),
+              ),
+            ),
+            SizedBox(height: 10.0),
+            Container(
+              width: 200.0,
+              height: 14.0,
+              decoration: BoxDecoration(
+                color: AppColors.backgroundSecondary,
+                borderRadius: BorderRadius.circular(4.0),
+              ),
+            ),
+            // Message button
+            SizedBox(height: 24.0),
+            Container(
+              width: double.infinity,
+              height: 56.0,
+              decoration: BoxDecoration(
+                color: AppColors.backgroundSecondary,
+                borderRadius: BorderRadius.circular(4.0),
+              ),
+            ),
+            // Tabs
+            SizedBox(height: 28.0),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    height: 40.0,
+                    decoration: BoxDecoration(
+                      color: AppColors.backgroundSecondary,
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 8.0),
+                Expanded(
+                  child: Container(
+                    height: 40.0,
+                    decoration: BoxDecoration(
+                      color: AppColors.backgroundSecondary,
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 8.0),
+                Expanded(
+                  child: Container(
+                    height: 40.0,
+                    decoration: BoxDecoration(
+                      color: AppColors.backgroundSecondary,
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            // Product grid skeleton (2x2)
+            SizedBox(height: 20.0),
+            GridView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 12.0,
+                mainAxisSpacing: 12.0,
+                childAspectRatio: 0.7,
+              ),
+              itemCount: 4,
+              itemBuilder: (_, __) => Container(
+                decoration: BoxDecoration(
+                  color: AppColors.backgroundSecondary,
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
@@ -186,7 +364,9 @@ class _HomeSellerProfileWidgetState
             elevation: 0.0,
           ),
         ),
-        body: Padding(
+        body: getSellerData == null
+            ? _buildShimmerProfile()
+            : Padding(
           padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
           child: SingleChildScrollView(
             child: Column(
@@ -564,7 +744,7 @@ class _HomeSellerProfileWidgetState
                                       hasButton: false,
                                       sidePadding: 25.0,
                                       buttonAction: () async {
-                                        context.pushNamed(
+                                        await context.pushNamed(
                                           HomeSellerProfileReviewsWidget
                                               .routeName,
                                           queryParameters: {
@@ -572,6 +752,7 @@ class _HomeSellerProfileWidgetState
                                                 getSellerData?.serialize(),
                                           },
                                         );
+                                        await _refreshSellerData();
                                       },
                                     ),
                                   );
@@ -719,12 +900,12 @@ class _HomeSellerProfileWidgetState
                                       title: 'No reviews yet',
                                       description:
                                           'Be the first to leave feedback after your purchase.',
-                                      hasButton: getSellerData!
-                                          .purchasedProducts.isNotEmpty,
+                                      hasButton: getSellerData
+                                          ?.purchasedProducts.isNotEmpty ?? false,
                                       sidePadding: 25.0,
                                       buttonText: 'Write a Review',
                                       buttonAction: () async {
-                                        context.pushNamed(
+                                        await context.pushNamed(
                                           HomeSellerProfileReviewsWidget
                                               .routeName,
                                           queryParameters: {
@@ -732,6 +913,7 @@ class _HomeSellerProfileWidgetState
                                                 getSellerData?.serialize(),
                                           },
                                         );
+                                        await _refreshSellerData();
                                       },
                                     ),
                                   );

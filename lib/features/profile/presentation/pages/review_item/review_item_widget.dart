@@ -86,7 +86,7 @@ class ReviewItemWidget extends StatelessWidget {
                     color: Color(0xFFFACC15),
                   ),
                   direction: Axis.horizontal,
-                  rating: 3.0,
+                  rating: (reviewDataType?.rating ?? 0).toDouble(),
                   unratedColor: Color(0xFF7B7B7B),
                   itemCount: 5,
                   itemSize: 18.0,

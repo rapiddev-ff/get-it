@@ -23,6 +23,11 @@ class HomeSellerProfileReviewsModel {
     listViewPagingController2?.dispose();
   }
 
+  void refreshControllers() {
+    listViewPagingController1?.refresh();
+    listViewPagingController2?.refresh();
+  }
+
   /// Additional helper methods.
   PagingController<ApiPagingParams, dynamic> setListViewController1(
     Function(ApiPagingParams) apiCall,

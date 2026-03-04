@@ -11,6 +11,7 @@ part 'browse_product_model.g.dart';
 class BrowseProduct with _$BrowseProduct {
   const BrowseProduct._();
 
+  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory BrowseProduct({
     @Default('') String id,
     @Default('') String title,

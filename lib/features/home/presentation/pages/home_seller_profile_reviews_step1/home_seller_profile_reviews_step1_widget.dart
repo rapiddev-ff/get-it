@@ -16,9 +16,11 @@ class HomeSellerProfileReviewsStep1Widget extends StatefulWidget {
   const HomeSellerProfileReviewsStep1Widget({
     super.key,
     required this.sellerDataType,
+    this.reviewRole = 'as_buyer',
   });
 
   final Seller? sellerDataType;
+  final String reviewRole;
 
   static String routeName = 'homeSellerProfileReviewsStep1';
   static String routePath = 'homeSellerProfileReviewsStep1';
@@ -301,14 +303,18 @@ class _HomeSellerProfileReviewsStep1WidgetState
                             hoverColor: Colors.transparent,
                             highlightColor: Colors.transparent,
                             onTap: () async {
-                              context.pushNamed(
+                              final result = await context.pushNamed<bool>(
                                 HomeSellerProfileReviewsStep2Widget.routeName,
                                 queryParameters: {
                                   'sellerDataType':
                                       widget.sellerDataType?.serialize(),
                                   'product': purchasedProductsItem.serialize(),
+                                  'reviewRole': widget.reviewRole,
                                 },
                               );
+                              if (result == true && mounted) {
+                                Navigator.of(context).pop(true);
+                              }
                             },
                             child: Container(
                               width: double.infinity,
@@ -348,16 +354,17 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                               height: 1.5,
                                             ),
                                           ),
-                                          Text(
-                                            'Pokemon TCG Champion Path',
-                                            maxLines: 1,
-                                            style: GoogleFonts.inter(
-                                              color: AppColors.textSecondary,
-                                              fontSize: 12.0,
-                                              height: 1.5,
+                                          if (purchasedProductsItem.conditionName.isNotEmpty)
+                                            Text(
+                                              purchasedProductsItem.conditionName,
+                                              maxLines: 1,
+                                              style: GoogleFonts.inter(
+                                                color: AppColors.textSecondary,
+                                                fontSize: 12.0,
+                                                height: 1.5,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
                                             ),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
@@ -382,7 +389,9 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                                   ),
                                                 ),
                                                 Text(
-                                                  'Purchased Jan 15,2025',
+                                                  purchasedProductsItem.createdAt != null
+                                                      ? 'Purchased ${DateFormat('MMM dd, yyyy').format(purchasedProductsItem.createdAt!)}'
+                                                      : '',
                                                   maxLines: 1,
                                                   style: GoogleFonts.inter(
                                                     color:

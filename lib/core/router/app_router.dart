@@ -522,6 +522,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   isList: false,
                   structBuilder: Seller.fromSerializableMap,
                 ),
+                reviewRole: params.getParam(
+                  'reviewRole',
+                  ParamType.String,
+                ) ?? 'as_buyer',
               ),
             ),
             AppRoute(
@@ -540,6 +544,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   isList: false,
                   structBuilder: SellerProduct.fromSerializableMap,
                 ),
+                reviewRole: params.getParam(
+                  'reviewRole',
+                  ParamType.String,
+                ) ?? 'as_buyer',
               ),
             ),
             AppRoute(
