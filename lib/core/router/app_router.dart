@@ -372,8 +372,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             AppRoute(
               name: HomeDashoardShortlistCreateStep2Widget.routeName,
               path: HomeDashoardShortlistCreateStep2Widget.routePath,
-              builder: (context, params) =>
-                  HomeDashoardShortlistCreateStep2Widget(),
+              builder: (context, params) {
+                final allParams = params.state.uri.queryParameters;
+                return HomeDashoardShortlistCreateStep2Widget(
+                  name: allParams['name'] ?? '',
+                  eventName: allParams['eventName'] ?? '',
+                  startDate: allParams['startDate'] ?? '',
+                  endDate: allParams['endDate'] ?? '',
+                  isPublic: allParams['isPublic'] != 'false',
+                  shortlistId: allParams['shortlistId'],
+                );
+              },
             ),
             AppRoute(
               name: HomeDashoardShortlistAddWidget.routeName,

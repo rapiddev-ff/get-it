@@ -147,51 +147,37 @@ class _HomeDashoardInventoryAddConditionWidgetState
                                     ),
                                   ),
                                 ),
-                                if (_checkConditionsContains(
-                                    conditionsList.toList(),
-                                    listViewConditionsRow))
-                                  Container(
-                                    width: 22.0,
-                                    height: 22.0,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.secondary,
-                                      borderRadius: BorderRadius.circular(4.0),
-                                      border: Border.all(
-                                        color: AppColors.neutral700,
-                                      ),
-                                    ),
-                                    child: Align(
-                                      alignment: AlignmentDirectional(0.0, 0.0),
-                                      child: Icon(
-                                        Icons.check_sharp,
-                                        color: Colors.white,
-                                        size: 12.0,
-                                      ),
+                                Container(
+                                  width: 24.0,
+                                  height: 24.0,
+                                  decoration: BoxDecoration(
+                                    color: _checkConditionsContains(
+                                            conditionsList.toList(),
+                                            listViewConditionsRow)
+                                        ? AppColors.primary
+                                        : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(6.0),
+                                    border: Border.all(
+                                      color: _checkConditionsContains(
+                                              conditionsList.toList(),
+                                              listViewConditionsRow)
+                                          ? AppColors.primary
+                                          : AppColors.neutral700,
+                                      width: 1.5,
                                     ),
                                   ),
-                                if (!_checkConditionsContains(
-                                    conditionsList.toList(),
-                                    listViewConditionsRow))
-                                  InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () async {
-                                      setState(() {});
-                                    },
-                                    child: Container(
-                                      width: 22.0,
-                                      height: 22.0,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(4.0),
-                                        border: Border.all(
-                                          color: AppColors.neutral700,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  child: _checkConditionsContains(
+                                          conditionsList.toList(),
+                                          listViewConditionsRow)
+                                      ? Center(
+                                          child: Icon(
+                                            Icons.check_rounded,
+                                            color: Colors.white,
+                                            size: 16.0,
+                                          ),
+                                        )
+                                      : null,
+                                ),
                               ].divide(SizedBox(width: 12.0)),
                             ),
                           ),
@@ -213,7 +199,7 @@ class _HomeDashoardInventoryAddConditionWidgetState
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () async {
-                      Navigator.pop(context, conditionsList);
+                      Navigator.pop(context, widget.conditionsList ?? <ConditionsRow>[]);
                     },
                     style: OutlinedButton.styleFrom(
                       minimumSize: Size(double.infinity, 56.0),

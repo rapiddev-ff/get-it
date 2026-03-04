@@ -1145,10 +1145,11 @@ class _HomeSellerProfileWidgetState
                             itemCount: shortlists.length,
                             separatorBuilder: (_, __) => SizedBox(height: 16.0),
                             itemBuilder: (context, shortlistsIndex) {
-                              final _ = shortlists[shortlistsIndex];
-                              return ShortlistItemWidget(
+                              final shortlistRow = shortlists[shortlistsIndex];
+                              return ShortlistItemWidget.fromSeller(
                                 key: Key(
                                     'Key0vf_${shortlistsIndex}_of_${shortlists.length}'),
+                                shortlist: shortlistRow,
                               );
                             },
                           );

@@ -1,12 +1,14 @@
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/custom_code/actions/index.dart' as actions;
 import '/features/home/presentation/pages/seller_dashboard/shortlist_create_step2/home_dashoard_shortlist_create_step2_widget.dart';
 import 'package:easy_debounce/easy_debounce.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class HomeDashoardShortlistCreateWidget extends StatefulWidget {
   const HomeDashoardShortlistCreateWidget({super.key});
@@ -23,15 +25,16 @@ class _HomeDashoardShortlistCreateWidgetState
     extends State<HomeDashoardShortlistCreateWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   String state = 'Shop';
+  bool isPublic = true;
+  bool _isSaving = false;
 
   TextEditingController? textController1;
   FocusNode? textFieldFocusNode1;
   TextEditingController? textController2;
   FocusNode? textFieldFocusNode2;
-  TextEditingController? textController3;
-  FocusNode? textFieldFocusNode3;
-  TextEditingController? textController4;
-  FocusNode? textFieldFocusNode4;
+
+  DateTime? _startDate;
+  DateTime? _endDate;
 
   @override
   void initState() {
@@ -43,12 +46,6 @@ class _HomeDashoardShortlistCreateWidgetState
     textController2 = TextEditingController();
     textFieldFocusNode2 = FocusNode();
     textFieldFocusNode2!.addListener(() => setState(() {}));
-    textController3 = TextEditingController();
-    textFieldFocusNode3 = FocusNode();
-    textFieldFocusNode3!.addListener(() => setState(() {}));
-    textController4 = TextEditingController();
-    textFieldFocusNode4 = FocusNode();
-    textFieldFocusNode4!.addListener(() => setState(() {}));
   }
 
   @override
@@ -57,11 +54,74 @@ class _HomeDashoardShortlistCreateWidgetState
     textFieldFocusNode1?.dispose();
     textController2?.dispose();
     textFieldFocusNode2?.dispose();
-    textController3?.dispose();
-    textFieldFocusNode3?.dispose();
-    textController4?.dispose();
-    textFieldFocusNode4?.dispose();
     super.dispose();
+  }
+
+  String _formatDate(DateTime? date) {
+    if (date == null) return '';
+    return DateFormat('MM/dd/yyyy').format(date);
+  }
+
+  void _showDatePicker({required bool isStartDate}) {
+    DateTime tempDate = (isStartDate ? _startDate : _endDate) ?? DateTime.now();
+    showCupertinoModalPopup(
+      context: context,
+      builder: (_) => Container(
+        height: 300,
+        color: AppColors.backgroundSecondary,
+        child: Column(
+          children: [
+            Container(
+              color: AppColors.backgroundSecondary,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CupertinoButton(
+                    child: Text(
+                      'Cancel',
+                      style: GoogleFonts.inter(
+                        color: AppColors.textSecondary,
+                        fontSize: 16.0,
+                      ),
+                    ),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  CupertinoButton(
+                    child: Text(
+                      'Done',
+                      style: GoogleFonts.inter(
+                        color: AppColors.secondary,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        if (isStartDate) {
+                          _startDate = tempDate;
+                        } else {
+                          _endDate = tempDate;
+                        }
+                      });
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: CupertinoDatePicker(
+                mode: CupertinoDatePickerMode.date,
+                initialDateTime: tempDate,
+                minimumDate: DateTime(2020),
+                maximumDate: DateTime(2030, 12, 31),
+                onDateTimeChanged: (date) => tempDate = date,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   InputDecoration _buildInputDecoration(String hintText) {
@@ -270,25 +330,32 @@ class _HomeDashoardShortlistCreateWidgetState
                                     height: 1.5,
                                   ),
                                 ),
-                                Container(
-                                  width: double.infinity,
-                                  child: TextFormField(
-                                    controller: textController3,
-                                    focusNode: textFieldFocusNode3,
-                                    onChanged: (_) => EasyDebounce.debounce(
-                                      '_model.textController3',
-                                      Duration(milliseconds: 100),
-                                      () => setState(() {}),
+                                GestureDetector(
+                                  onTap: () =>
+                                      _showDatePicker(isStartDate: true),
+                                  child: Container(
+                                    width: double.infinity,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 12.0, vertical: 16.0),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                          AppConstants.radiusTextField4),
+                                      border: Border.all(
+                                        color: AppColors.neutral700,
+                                        width: 1.0,
+                                      ),
                                     ),
-                                    autofocus: false,
-                                    enabled: true,
-                                    obscureText: false,
-                                    decoration:
-                                        _buildInputDecoration('MM/DD/YYYY'),
-                                    style: _bodyStyle,
-                                    keyboardType: TextInputType.number,
-                                    cursorColor: AppColors.textPrimary,
-                                    enableInteractiveSelection: true,
+                                    child: Text(
+                                      _startDate != null
+                                          ? _formatDate(_startDate)
+                                          : 'MM/DD/YYYY',
+                                      style: GoogleFonts.inter(
+                                        fontSize: 16.0,
+                                        color: _startDate != null
+                                            ? AppColors.textPrimary
+                                            : AppColors.textSecondary,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ].divide(SizedBox(height: 8.0)),
@@ -307,25 +374,32 @@ class _HomeDashoardShortlistCreateWidgetState
                                     height: 1.5,
                                   ),
                                 ),
-                                Container(
-                                  width: double.infinity,
-                                  child: TextFormField(
-                                    controller: textController4,
-                                    focusNode: textFieldFocusNode4,
-                                    onChanged: (_) => EasyDebounce.debounce(
-                                      '_model.textController4',
-                                      Duration(milliseconds: 100),
-                                      () => setState(() {}),
+                                GestureDetector(
+                                  onTap: () =>
+                                      _showDatePicker(isStartDate: false),
+                                  child: Container(
+                                    width: double.infinity,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 12.0, vertical: 16.0),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                          AppConstants.radiusTextField4),
+                                      border: Border.all(
+                                        color: AppColors.neutral700,
+                                        width: 1.0,
+                                      ),
                                     ),
-                                    autofocus: false,
-                                    enabled: true,
-                                    obscureText: false,
-                                    decoration:
-                                        _buildInputDecoration('MM/DD/YYYY'),
-                                    style: _bodyStyle,
-                                    keyboardType: TextInputType.number,
-                                    cursorColor: AppColors.textPrimary,
-                                    enableInteractiveSelection: true,
+                                    child: Text(
+                                      _endDate != null
+                                          ? _formatDate(_endDate)
+                                          : 'MM/DD/YYYY',
+                                      style: GoogleFonts.inter(
+                                        fontSize: 16.0,
+                                        color: _endDate != null
+                                            ? AppColors.textPrimary
+                                            : AppColors.textSecondary,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ].divide(SizedBox(height: 8.0)),
@@ -350,48 +424,53 @@ class _HomeDashoardShortlistCreateWidgetState
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Container(
-                            width: 22.0,
-                            height: 22.0,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4.0),
-                              border: Border.all(
-                                color: AppColors.neutral700,
+                      child: GestureDetector(
+                        onTap: () => setState(() => isPublic = !isPublic),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            if (!isPublic)
+                              Container(
+                                width: 22.0,
+                                height: 22.0,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(4.0),
+                                  border: Border.all(
+                                    color: AppColors.neutral700,
+                                  ),
+                                ),
+                              ),
+                            if (isPublic)
+                              Container(
+                                width: 22.0,
+                                height: 22.0,
+                                decoration: BoxDecoration(
+                                  color: AppColors.secondary,
+                                  borderRadius: BorderRadius.circular(4.0),
+                                  border: Border.all(
+                                    color: AppColors.neutral700,
+                                  ),
+                                ),
+                                child: Align(
+                                  alignment: AlignmentDirectional(0.0, 0.0),
+                                  child: Icon(
+                                    Icons.check_sharp,
+                                    color: Colors.white,
+                                    size: 12.0,
+                                  ),
+                                ),
+                              ),
+                            Expanded(
+                              child: Text(
+                                'Allow public viewing',
+                                style: GoogleFonts.inter(
+                                  fontSize: 14.0,
+                                  color: AppColors.textPrimary,
+                                ),
                               ),
                             ),
-                          ),
-                          Container(
-                            width: 22.0,
-                            height: 22.0,
-                            decoration: BoxDecoration(
-                              color: AppColors.secondary,
-                              borderRadius: BorderRadius.circular(4.0),
-                              border: Border.all(
-                                color: AppColors.neutral700,
-                              ),
-                            ),
-                            child: Align(
-                              alignment: AlignmentDirectional(0.0, 0.0),
-                              child: Icon(
-                                Icons.check_sharp,
-                                color: Colors.white,
-                                size: 12.0,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              'Allow public viewing',
-                              style: GoogleFonts.inter(
-                                fontSize: 14.0,
-                                color: AppColors.textPrimary,
-                              ),
-                            ).animate().fade(duration: 600.ms),
-                          ),
-                        ].divide(SizedBox(width: 12.0)),
+                          ].divide(SizedBox(width: 12.0)),
+                        ),
                       ),
                     ),
                   ],
@@ -414,8 +493,25 @@ class _HomeDashoardShortlistCreateWidgetState
                     ),
                     child: TextButton(
                       onPressed: () {
+                        if (textController1!.text.trim().isEmpty) {
+                          actions.toastificationshow(
+                            context,
+                            'Missing Name',
+                            'Please enter a shortlist name.',
+                            'error',
+                          );
+                          return;
+                        }
                         context.pushNamed(
-                            HomeDashoardShortlistCreateStep2Widget.routeName);
+                          HomeDashoardShortlistCreateStep2Widget.routeName,
+                          queryParameters: {
+                            'name': textController1!.text,
+                            'eventName': textController2!.text,
+                            'startDate': _formatDate(_startDate),
+                            'endDate': _formatDate(_endDate),
+                            'isPublic': isPublic.toString(),
+                          },
+                        );
                       },
                       child: Text(
                         'Create Shortlist',
@@ -431,9 +527,39 @@ class _HomeDashoardShortlistCreateWidgetState
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                     child: TextButton(
-                      onPressed: () {
-                        context.pop();
-                      },
+                      onPressed: _isSaving
+                          ? null
+                          : () async {
+                              if (textController1!.text.trim().isEmpty) {
+                                actions.toastificationshow(
+                                  context,
+                                  'Missing Name',
+                                  'Please enter a shortlist name.',
+                                  'error',
+                                );
+                                return;
+                              }
+                              setState(() => _isSaving = true);
+                              final result = await actions.createShortlist(
+                                name: textController1!.text,
+                                eventName: textController2!.text,
+                                startDate: _formatDate(_startDate),
+                                endDate: _formatDate(_endDate),
+                                isPublic: isPublic,
+                                status: 'draft',
+                              );
+                              if (!mounted) return;
+                              setState(() => _isSaving = false);
+                              actions.toastificationshow(
+                                context,
+                                result['title'] ?? '',
+                                result['message'] ?? '',
+                                result['success'] == true ? 'success' : 'error',
+                              );
+                              if (result['success'] == true) {
+                                context.pop();
+                              }
+                            },
                       style: TextButton.styleFrom(
                         minimumSize: Size(double.infinity, 56.0),
                         backgroundColor: AppColors.backgroundPrimary,
@@ -443,7 +569,7 @@ class _HomeDashoardShortlistCreateWidgetState
                         ),
                       ),
                       child: Text(
-                        'Save as Draft',
+                        _isSaving ? 'Saving...' : 'Save as Draft',
                         style: GoogleFonts.inter(
                           fontWeight: FontWeight.w500,
                           fontSize: 17.0,

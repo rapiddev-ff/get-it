@@ -171,7 +171,7 @@ class _HomeDashoardInventoryAddSubCategoryWidgetState
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () async {
-                      Navigator.pop(context, choosenSubCategory);
+                      Navigator.pop(context, widget.subcategories);
                     },
                     style: OutlinedButton.styleFrom(
                       minimumSize: Size(double.infinity, 56.0),

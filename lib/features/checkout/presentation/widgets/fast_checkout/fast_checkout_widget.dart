@@ -147,18 +147,7 @@ class _FastCheckoutWidgetState extends State<FastCheckoutWidget> {
                       cancelResult = await actions.refundOrderAction(
                         widget.orderId!,
                       );
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            cancelResult!,
-                            style: TextStyle(
-                              color: AppColors.textPrimary,
-                            ),
-                          ),
-                          duration: Duration(milliseconds: 4000),
-                          backgroundColor: AppColors.secondary,
-                        ),
-                      );
+                      actions.toastificationshow(context, 'Refund', cancelResult!, 'info');
                       Navigator.pop(context);
 
                       setState(() {});

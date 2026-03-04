@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import '/custom_code/actions/index.dart' as actions;
 import '/features/auth/data/auth_manager.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/router/app_router.dart';
@@ -24,11 +25,7 @@ class SupabaseAuthManager extends AuthManager with EmailSignInManager {
       }
       await currentUser?.delete();
     } on AuthException {
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text('Email or password is incorrect. Please try again')),
-      );
+      actions.toastificationshow(context, 'Error', 'Email or password is incorrect. Please try again', 'error');
     }
   }
 
@@ -43,16 +40,10 @@ class SupabaseAuthManager extends AuthManager with EmailSignInManager {
       }
       await currentUser?.updateEmail(email);
     } on AuthException {
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text('Email or password is incorrect. Please try again')),
-      );
+      actions.toastificationshow(context, 'Error', 'Email or password is incorrect. Please try again', 'error');
       return;
     }
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Email change confirmation email sent')),
-    );
+    actions.toastificationshow(context, 'Success', 'Email change confirmation email sent', 'success');
   }
 
   Future updatePassword({
@@ -65,16 +56,10 @@ class SupabaseAuthManager extends AuthManager with EmailSignInManager {
       }
       await currentUser?.updatePassword(newPassword);
     } on AuthException {
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text('Email or password is incorrect. Please try again')),
-      );
+      actions.toastificationshow(context, 'Error', 'Email or password is incorrect. Please try again', 'error');
       return;
     }
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Password updated successfully')),
-    );
+    actions.toastificationshow(context, 'Success', 'Password updated successfully', 'success');
   }
 
   @override
@@ -87,16 +72,10 @@ class SupabaseAuthManager extends AuthManager with EmailSignInManager {
       await SupaFlow.client.auth
           .resetPasswordForEmail(email, redirectTo: redirectTo);
     } on AuthException {
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text('Email or password is incorrect. Please try again')),
-      );
+      actions.toastificationshow(context, 'Error', 'Email or password is incorrect. Please try again', 'error');
       return null;
     }
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Password reset email sent')),
-    );
+    actions.toastificationshow(context, 'Success', 'Password reset email sent', 'success');
   }
 
   @override
@@ -144,10 +123,7 @@ class SupabaseAuthManager extends AuthManager with EmailSignInManager {
       final errorMsg = e.message.contains('User already registered')
           ? 'Error: The email is already in use by a different account'
           : 'Email or password is incorrect. Please try again';
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(errorMsg)),
-      );
+      actions.toastificationshow(context, 'Error', errorMsg, 'error');
       return null;
     }
   }

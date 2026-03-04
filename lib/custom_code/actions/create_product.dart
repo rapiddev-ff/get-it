@@ -62,16 +62,19 @@ Future<dynamic> createProduct(
     final bool isPercentage = isPercentageDiscount ?? false;
     final bool useSellerShip = useSellerShipping ?? true;
 
+    String _normalizeDecimal(String s) => s.replaceAll(',', '.');
+
     final int quantity = int.tryParse(quantityStr?.trim() ?? '') ?? 0;
-    final double price = double.tryParse(priceStr?.trim() ?? '') ?? 0.0;
+    final double price =
+        double.tryParse(_normalizeDecimal(priceStr?.trim() ?? '')) ?? 0.0;
     final int? year = int.tryParse(yearStr?.trim() ?? '');
     final int? issueNumber = int.tryParse(issueNumberStr?.trim() ?? '');
     final double? discountAmount =
-        double.tryParse(discountAmountStr?.trim() ?? '');
+        double.tryParse(_normalizeDecimal(discountAmountStr?.trim() ?? ''));
     final double? customFlatRate =
-        double.tryParse(customFlatRateStr?.trim() ?? '');
+        double.tryParse(_normalizeDecimal(customFlatRateStr?.trim() ?? ''));
     final double? customAdditionalItemFee =
-        double.tryParse(customAdditionalItemFeeStr?.trim() ?? '');
+        double.tryParse(_normalizeDecimal(customAdditionalItemFeeStr?.trim() ?? ''));
 
     // ─── Photos ───────────────────────────────────────────────────────────────
     // uploadedImages содержит ВСЕ фото (старые + новые)
@@ -218,9 +221,9 @@ Future<dynamic> createProduct(
     double? finalDiscountAmount;
 
     if (flashSale) {
-      if (flashSaleHours == null || ![1, 2, 24].contains(flashSaleHours)) {
+      if (flashSaleHours == null || ![1, 20, 24].contains(flashSaleHours)) {
         return errorResult(
-            'Invalid Flash Sale Duration', 'Select 1, 2, or 24 hours.');
+            'Invalid Flash Sale Duration', 'Select 1, 20, or 24 hours.');
       }
       if (discountAmount == null || discountAmount <= 0) {
         return errorResult(

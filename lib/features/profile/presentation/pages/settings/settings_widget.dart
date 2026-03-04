@@ -801,8 +801,19 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                         EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                     child: SettingsItemWidget(
                       tittle: 'Shipping Defaults',
-                      value:
-                          '${(authState.userSettings?.defaultFlatShippingRate ?? 0.0).toInt()} + ${(authState.userSettings?.defaultAdditionalItemFee ?? 0.0).toInt()}',
+                      value: () {
+                        final flat =
+                            authState.userSettings?.defaultFlatShippingRate ??
+                                0.0;
+                        final additional =
+                            authState.userSettings?.defaultAdditionalItemFee ??
+                                0.0;
+                        if (flat == 0.0 && additional == 0.0) {
+                          return 'Applies to all your items by default';
+                        }
+                        final fmt = NumberFormat('\$#,##0.00', 'en_US');
+                        return '${fmt.format(flat)} + ${fmt.format(additional)}';
+                      }(),
                       showTrailingIcon: true,
                       action: () async {
                         context.pushNamed(

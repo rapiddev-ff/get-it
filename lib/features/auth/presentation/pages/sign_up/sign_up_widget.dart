@@ -867,13 +867,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
 
                               if (_model.passwordTextController!.text !=
                                   _model.confirmPasswordTextController!.text) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                      'Passwords don\'t match!',
-                                    ),
-                                  ),
-                                );
+                                actions.toastificationshow(context, 'Error', 'Passwords don\'t match!', 'error');
                                 return;
                               }
 

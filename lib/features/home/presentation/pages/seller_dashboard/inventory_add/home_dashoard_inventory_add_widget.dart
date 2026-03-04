@@ -61,17 +61,13 @@ class _HomeDashoardInventoryAddWidgetState
   List<ConditionsRow>? getConditions;
   List<UploadedFile>? convertImages;
   bool isDataUploading_uploadDataEdit = false;
-  UploadedFile uploadedLocalFile_uploadDataEdit =
-      UploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
   List<Tag> choosenTags = [];
   List<Tag> tags = [];
+  List<ShortlistsRow> userShortlists = [];
 
   void addToUploadedImages(UploadedFile item) => uploadedImages.add(item);
   void removeFromUploadedImages(UploadedFile item) =>
       uploadedImages.remove(item);
-  CategoriesRow? choosenCategory;
-  SubcategoriesRow? choosenSubcategory;
-  List<ConditionsRow>? choosenConditions;
   dynamic getNextSkuNumber;
   dynamic createProduct;
   dynamic createProductAsDraft;
@@ -124,6 +120,9 @@ class _HomeDashoardInventoryAddWidgetState
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       choosenTags = [];
+      userShortlists = await ShortlistsTable().queryRows(
+        queryFn: (q) => q.eqOrNull('seller_id', currentUserUid),
+      );
       setState(() {});
       if (widget.productId != null && widget.productId != '') {
         getProduct = await actions.getProductDetails(
@@ -260,7 +259,13 @@ class _HomeDashoardInventoryAddWidgetState
         category = getCategory?.firstOrNull;
         subcategory = getSubcategory?.firstOrNull;
         conditionsList = getConditions!.toList().cast<ConditionsRow>();
+        choosenTags = getProduct!.tags.toList();
         discount = getProduct!.discountType ?? 'percentage';
+        if (getProduct?.shortlistId != null && getProduct!.shortlistId!.isNotEmpty) {
+          switchConventionSettingsValue = true;
+          dropDownValue = getProduct!.shortlistId;
+          dropDownValueController = FormFieldController<String>(dropDownValue);
+        }
         setState(() {});
       }
     });
@@ -423,68 +428,58 @@ class _HomeDashoardInventoryAddWidgetState
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                           onTap: () async {
-                            if (uploadedImages.length < 10) {
-                              final selectedMedia =
-                                  await selectMediaWithSourceBottomSheet(
-                                context: context,
-                                imageQuality: 80,
-                                allowPhoto: true,
-                              );
-                              if (selectedMedia != null &&
-                                  selectedMedia.every((m) => validateFileFormat(
-                                      m.storagePath, context))) {
-                                setState(() =>
-                                    isDataUploading_uploadDataEdit = true);
-                                var selectedUploadedFiles = <UploadedFile>[];
-
-                                try {
-                                  selectedUploadedFiles = selectedMedia
-                                      .map((m) => UploadedFile(
-                                            name: m.storagePath.split('/').last,
-                                            bytes: m.bytes,
-                                            height: m.dimensions?.height,
-                                            width: m.dimensions?.width,
-                                            blurHash: m.blurHash,
-                                            originalFilename:
-                                                m.originalFilename,
-                                          ))
-                                      .toList();
-                                } finally {
-                                  isDataUploading_uploadDataEdit = false;
-                                }
-                                if (selectedUploadedFiles.length ==
-                                    selectedMedia.length) {
-                                  setState(() {
-                                    uploadedLocalFile_uploadDataEdit =
-                                        selectedUploadedFiles.first;
-                                  });
-                                } else {
-                                  setState(() {});
-                                  return;
-                                }
-                              }
-
-                              if ((uploadedLocalFile_uploadDataEdit
-                                      .bytes?.isNotEmpty ??
-                                  false)) {
-                                addToUploadedImages(
-                                    uploadedLocalFile_uploadDataEdit);
-                                setState(() {});
-                                setState(() {
-                                  isDataUploading_uploadDataEdit = false;
-                                  uploadedLocalFile_uploadDataEdit =
-                                      UploadedFile(
-                                          bytes: Uint8List.fromList([]),
-                                          originalFilename: '');
-                                });
-                              }
-                            } else {
+                            final remaining = 10 - uploadedImages.length;
+                            if (remaining <= 0) {
                               await actions.toastificationshow(
                                 context,
                                 'Up to 10 images',
                                 'Limit',
                                 'warning',
                               );
+                              return;
+                            }
+                            final selectedMedia =
+                                await selectMediaWithSourceBottomSheet(
+                              context: context,
+                              imageQuality: 80,
+                              allowPhoto: true,
+                            );
+                            if (selectedMedia != null &&
+                                selectedMedia.every((m) => validateFileFormat(
+                                    m.storagePath, context))) {
+                              setState(() =>
+                                  isDataUploading_uploadDataEdit = true);
+                              try {
+                                final selectedUploadedFiles = selectedMedia
+                                    .map((m) => UploadedFile(
+                                          name: m.storagePath.split('/').last,
+                                          bytes: m.bytes,
+                                          height: m.dimensions?.height,
+                                          width: m.dimensions?.width,
+                                          blurHash: m.blurHash,
+                                          originalFilename: m.originalFilename,
+                                        ))
+                                    .take(remaining)
+                                    .toList();
+                                for (final file in selectedUploadedFiles) {
+                                  if (file.bytes?.isNotEmpty ?? false) {
+                                    addToUploadedImages(file);
+                                  }
+                                }
+                                if (selectedUploadedFiles.length <
+                                    selectedMedia.length) {
+                                  await actions.toastificationshow(
+                                    context,
+                                    'Some photos were skipped (limit 10)',
+                                    'Limit',
+                                    'warning',
+                                  );
+                                }
+                              } finally {
+                                setState(() {
+                                  isDataUploading_uploadDataEdit = false;
+                                });
+                              }
                             }
                           },
                           child: Container(
@@ -739,13 +734,16 @@ class _HomeDashoardInventoryAddWidgetState
                                     ),
                                   );
                                 },
-                              ).then((value) =>
-                                  setState(() => choosenCategory = value));
-
-                              category = choosenCategory;
-                              setState(() {});
-
-                              setState(() {});
+                              ).then((value) {
+                                if (value == null) return;
+                                setState(() {
+                                  // Reset subcategory when category changes
+                                  if (category?.id != value.id) {
+                                    subcategory = null;
+                                  }
+                                  category = value;
+                                });
+                              });
                             },
                             child: Container(
                               width: double.infinity,
@@ -836,11 +834,12 @@ class _HomeDashoardInventoryAddWidgetState
                                       ),
                                     );
                                   },
-                                ).then((value) =>
-                                    setState(() => choosenSubcategory = value));
-
-                                subcategory = choosenSubcategory;
-                                setState(() {});
+                                ).then((value) {
+                                  if (value == null) return;
+                                  setState(() {
+                                    subcategory = value;
+                                  });
+                                });
                               } else {
                                 await actions.toastificationshow(
                                   context,
@@ -849,8 +848,6 @@ class _HomeDashoardInventoryAddWidgetState
                                   'warning',
                                 );
                               }
-
-                              setState(() {});
                             },
                             child: Container(
                               width: double.infinity,
@@ -1208,15 +1205,12 @@ class _HomeDashoardInventoryAddWidgetState
                                     ),
                                   );
                                 },
-                              ).then((value) =>
-                                  setState(() => choosenConditions = value));
-
-                              conditionsList = choosenConditions!
-                                  .toList()
-                                  .cast<ConditionsRow>();
-                              setState(() {});
-
-                              setState(() {});
+                              ).then((value) {
+                                if (value == null) return;
+                                setState(() {
+                                  conditionsList = List<ConditionsRow>.from(value);
+                                });
+                              });
                             },
                             child: Container(
                               width: double.infinity,
@@ -1514,7 +1508,13 @@ class _HomeDashoardInventoryAddWidgetState
                               obscureText: false,
                               decoration: InputDecoration(
                                 isDense: false,
-                                hintText: '\$ 0.00',
+                                prefix: Text(
+                                  '\$ ',
+                                  style: GoogleFonts.inter(
+                                      fontSize: 16.0,
+                                      color: AppColors.textPrimary),
+                                ),
+                                hintText: '0.00',
                                 hintStyle: GoogleFonts.inter(
                                     fontSize: 16.0,
                                     color: AppColors.textSecondary),
@@ -1570,6 +1570,10 @@ class _HomeDashoardInventoryAddWidgetState
                                       decimal: true),
                               cursorColor: AppColors.textPrimary,
                               enableInteractiveSelection: true,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'^\d*[.,]?\d{0,2}')),
+                              ],
                               validator: null,
                             ),
                           ),
@@ -1689,7 +1693,14 @@ class _HomeDashoardInventoryAddWidgetState
                                                 obscureText: false,
                                                 decoration: InputDecoration(
                                                   isDense: false,
-                                                  hintText: '% 0',
+                                                  prefix: Text(
+                                                    '% ',
+                                                    style: GoogleFonts.inter(
+                                                        fontSize: 16.0,
+                                                        color: AppColors
+                                                            .textPrimary),
+                                                  ),
+                                                  hintText: '0',
                                                   hintStyle: GoogleFonts.inter(
                                                       fontSize: 16.0,
                                                       color: AppColors
@@ -1792,7 +1803,14 @@ class _HomeDashoardInventoryAddWidgetState
                                                 obscureText: false,
                                                 decoration: InputDecoration(
                                                   isDense: false,
-                                                  hintText: '\$0.00',
+                                                  prefix: Text(
+                                                    '\$ ',
+                                                    style: GoogleFonts.inter(
+                                                        fontSize: 16.0,
+                                                        color: AppColors
+                                                            .textPrimary),
+                                                  ),
+                                                  hintText: '0.00',
                                                   hintStyle: GoogleFonts.inter(
                                                       fontSize: 16.0,
                                                       color: AppColors
@@ -1981,7 +1999,7 @@ class _HomeDashoardInventoryAddWidgetState
                                               ),
                                             ),
                                           ),
-                                        ].divide(SizedBox(width: 12.0)),
+                                        ].divide(SizedBox(width: 24.0)),
                                       ),
                                     ].divide(SizedBox(height: 8.0)),
                                   ),
@@ -2118,7 +2136,13 @@ class _HomeDashoardInventoryAddWidgetState
                                     obscureText: false,
                                     decoration: InputDecoration(
                                       isDense: false,
-                                      hintText: '\$ 0.00',
+                                      prefix: Text(
+                                        '\$ ',
+                                        style: GoogleFonts.inter(
+                                            fontSize: 16.0,
+                                            color: AppColors.textPrimary),
+                                      ),
+                                      hintText: '0.00',
                                       hintStyle: GoogleFonts.inter(
                                           fontSize: 16.0,
                                           color: AppColors.textSecondary),
@@ -2203,7 +2227,13 @@ class _HomeDashoardInventoryAddWidgetState
                                     obscureText: false,
                                     decoration: InputDecoration(
                                       isDense: false,
-                                      hintText: '\$ 0.00',
+                                      prefix: Text(
+                                        '\$ ',
+                                        style: GoogleFonts.inter(
+                                            fontSize: 16.0,
+                                            color: AppColors.textPrimary),
+                                      ),
+                                      hintText: '0.00',
                                       hintStyle: GoogleFonts.inter(
                                           fontSize: 16.0,
                                           color: AppColors.textSecondary),
@@ -2384,9 +2414,19 @@ class _HomeDashoardInventoryAddWidgetState
                                 hoverColor: Colors.transparent,
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
-                                  context.pushNamed(
-                                      HomeDashoardInventoryAddTagsWidget
-                                          .routeName);
+                                  final result = await Navigator.push<List<Tag>>(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => HomeDashoardInventoryAddTagsWidget(
+                                        initialTags: choosenTags,
+                                      ),
+                                    ),
+                                  );
+                                  if (result != null) {
+                                    setState(() {
+                                      choosenTags = result;
+                                    });
+                                  }
                                 },
                                 child: Container(
                                   width: double.infinity,
@@ -2568,8 +2608,13 @@ class _HomeDashoardInventoryAddWidgetState
                             Switch.adaptive(
                               value: switchConventionSettingsValue!,
                               onChanged: (newValue) async {
-                                setState(() =>
-                                    switchConventionSettingsValue = newValue);
+                                setState(() {
+                                  switchConventionSettingsValue = newValue;
+                                  if (!newValue) {
+                                    dropDownValue = null;
+                                    dropDownValueController?.reset();
+                                  }
+                                });
                               },
                               activeColor: AppColors.primary,
                               activeTrackColor: AppColors.primary,
@@ -2595,14 +2640,15 @@ class _HomeDashoardInventoryAddWidgetState
                             child: AppDropDown<String>(
                               controller: dropDownValueController ??=
                                   FormFieldController<String>(null),
-                              options: ['Option 1', 'Option 2', 'Option 3'],
+                              options: userShortlists.map((s) => s.id).toList(),
+                              optionLabels: userShortlists.map((s) => s.name).toList(),
                               onChanged: (val) =>
                                   setState(() => dropDownValue = val),
                               width: double.infinity,
                               height: 50.0,
                               textStyle: GoogleFonts.inter(
                                   fontSize: 14.0, color: AppColors.textPrimary),
-                              hintText: 'Comic Con 2025',
+                              hintText: 'Select shortlist',
                               icon: Icon(
                                 Icons.keyboard_arrow_down_rounded,
                                 color: AppColors.textSecondary,
@@ -2658,10 +2704,10 @@ class _HomeDashoardInventoryAddWidgetState
                                   flashDropDownValue,
                                   discount == 'percentage' ? true : false,
                                   discount == 'percentage'
-                                      ? percentageDiscountTextController!.text
-                                      : dollarDiscountTextController!.text,
+                                      ? percentageDiscountTextController?.text ?? ''
+                                      : dollarDiscountTextController?.text ?? '',
                                   choosenTags.map((e) => e.id).toList(),
-                                  null,
+                                  (switchConventionSettingsValue == true) ? dropDownValue : null,
                                   shippingCost ==
                                           'Use Seller Default Shipping Rule'
                                       ? true
@@ -2694,7 +2740,7 @@ class _HomeDashoardInventoryAddWidgetState
                                             },
                                             child: DialogProductCreatedWidget(
                                               productId: (createProduct is Map
-                                                      ? createProduct['id']
+                                                      ? createProduct['productId']
                                                       : null)
                                                   .toString(),
                                               action: () async {
@@ -2777,11 +2823,10 @@ class _HomeDashoardInventoryAddWidgetState
                                       flashDropDownValue,
                                       discount == 'percentage' ? true : false,
                                       discount == 'percentage'
-                                          ? percentageDiscountTextController!
-                                              .text
-                                          : dollarDiscountTextController!.text,
+                                          ? percentageDiscountTextController?.text ?? ''
+                                          : dollarDiscountTextController?.text ?? '',
                                       choosenTags.map((e) => e.id).toList(),
-                                      null,
+                                      (switchConventionSettingsValue == true) ? dropDownValue : null,
                                       shippingCost ==
                                               'Use Seller Default Shipping Rule'
                                           ? true

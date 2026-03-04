@@ -57,3 +57,4 @@ export 'upload_and_send_images.dart' show uploadAndSendImages;
 export 'create_product.dart' show createProduct;
 export 'calculate_order_tax.dart' show calculateOrderTax;
 export 'get_next_sku_number.dart' show getNextSkuNumber;
+export 'create_shortlist.dart' show createShortlist;

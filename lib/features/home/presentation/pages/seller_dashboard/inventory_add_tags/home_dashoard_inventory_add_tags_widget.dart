@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:easy_debounce/easy_debounce.dart';
-import 'package:go_router/go_router.dart';
 
 import '/features/browse/domain/models/tag_model.dart';
 import '/backend/supabase/supabase.dart';
@@ -10,7 +9,12 @@ import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
 
 class HomeDashoardInventoryAddTagsWidget extends StatefulWidget {
-  const HomeDashoardInventoryAddTagsWidget({super.key});
+  const HomeDashoardInventoryAddTagsWidget({
+    super.key,
+    this.initialTags,
+  });
+
+  final List<Tag>? initialTags;
 
   static String routeName = 'homeDashoardInventoryAddTags';
   static String routePath = 'homeDashoardInventoryAddTags';
@@ -51,6 +55,10 @@ class _HomeDashoardInventoryAddTagsWidgetState
   @override
   void initState() {
     super.initState();
+
+    if (widget.initialTags != null) {
+      tags = List<Tag>.from(widget.initialTags!);
+    }
 
     textController ??= TextEditingController();
     textFieldFocusNode ??= FocusNode();
@@ -114,7 +122,7 @@ class _HomeDashoardInventoryAddTagsWidgetState
                         size: 24.0,
                       ),
                       onPressed: () async {
-                        context.pop();
+                        Navigator.pop(context, null);
                       },
                     ),
                     Text(
@@ -356,7 +364,7 @@ class _HomeDashoardInventoryAddTagsWidgetState
                         Expanded(
                           child: OutlinedButton(
                             onPressed: () async {
-                              context.pop();
+                              Navigator.pop(context, null);
                             },
                             style: OutlinedButton.styleFrom(
                               minimumSize: Size(double.infinity, 56.0),
@@ -393,8 +401,7 @@ class _HomeDashoardInventoryAddTagsWidgetState
                             ),
                             child: TextButton(
                               onPressed: () async {
-                                // TODO: choosenTags will be handled via provider later
-                                context.pop();
+                                Navigator.pop(context, tags);
                               },
                               style: TextButton.styleFrom(
                                 minimumSize: Size(double.infinity, 40.0),

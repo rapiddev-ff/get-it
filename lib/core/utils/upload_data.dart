@@ -8,6 +8,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mime_type/mime_type.dart';
 import 'package:video_player/video_player.dart';
 
+import '/custom_code/actions/index.dart' as actions;
+
 import '/core/utils/uploaded_file.dart';
 
 const allowedFormats = {'image/png', 'image/jpeg', 'video/mp4', 'image/gif'};
@@ -144,6 +146,7 @@ Future<List<SelectedFile>?> selectMediaWithSourceBottomSheet({
     isVideo: mediaSource == MediaSource.videoGallery ||
         (mediaSource == MediaSource.camera && allowVideo && !allowPhoto),
     mediaSource: mediaSource,
+    multiImage: mediaSource == MediaSource.photoGallery,
     includeDimensions: includeDimensions,
     includeBlurHash: includeBlurHash,
   );
@@ -231,11 +234,7 @@ bool validateFileFormat(String filePath, BuildContext context) {
   if (allowedFormats.contains(mime(filePath))) {
     return true;
   }
-  ScaffoldMessenger.of(context)
-    ..hideCurrentSnackBar()
-    ..showSnackBar(SnackBar(
-      content: Text('Invalid file format: ${mime(filePath)}'),
-    ));
+  actions.toastificationshow(context, 'Error', 'Invalid file format: ${mime(filePath)}', 'error');
   return false;
 }
 
@@ -355,23 +354,12 @@ void showUploadMessage(
   String message, {
   bool showLoading = false,
 }) {
-  ScaffoldMessenger.of(context)
-    ..hideCurrentSnackBar()
-    ..showSnackBar(
-      SnackBar(
-        content: Row(
-          children: [
-            if (showLoading)
-              Padding(
-                padding: EdgeInsetsDirectional.only(end: 10.0),
-                child: CircularProgressIndicator(),
-              ),
-            Text(message),
-          ],
-        ),
-        duration: showLoading ? Duration(days: 1) : Duration(seconds: 4),
-      ),
-    );
+  actions.toastificationshow(
+    context,
+    showLoading ? 'Uploading' : 'Upload',
+    message,
+    showLoading ? 'info' : 'success',
+  );
 }
 
 String? _removeTrailingSlash(String? path) => path != null && path.endsWith('/')
