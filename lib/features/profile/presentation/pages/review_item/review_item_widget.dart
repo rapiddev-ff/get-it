@@ -43,12 +43,18 @@ class ReviewItemWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                   ),
-                  child: CachedNetworkImage(
-                    fadeInDuration: Duration(milliseconds: 500),
-                    fadeOutDuration: Duration(milliseconds: 500),
-                    imageUrl: reviewDataType!.reviewer?.avatarUrl ?? '',
-                    fit: BoxFit.cover,
-                  ),
+                  child: (reviewDataType!.reviewer?.avatarUrl ?? '').isNotEmpty
+                      ? CachedNetworkImage(
+                          fadeInDuration: Duration(milliseconds: 500),
+                          fadeOutDuration: Duration(milliseconds: 500),
+                          imageUrl: reviewDataType!.reviewer!.avatarUrl,
+                          fit: BoxFit.cover,
+                        )
+                      : Icon(
+                          Icons.person,
+                          size: 20.0,
+                          color: AppColors.textSecondary,
+                        ),
                 ),
                 Expanded(
                   child: Column(

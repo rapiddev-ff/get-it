@@ -14,6 +14,8 @@ import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/custom_code/actions/index.dart' as actions;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/auth/presentation/pages/forgot_password/forgot_password_widget.dart';
 import 'sign_in_model.dart';
@@ -544,6 +546,12 @@ class _SignInWidgetState extends State<SignInWidget> {
                                 ? _model.supabaseLogin['success']
                                 : null;
                             if (loginSuccess == true) {
+                              // Persist keepSignedIn preference
+                              await const FlutterSecureStorage().write(
+                                key: 'ff_keepSignedIn',
+                                value: _model.keepSignedIn.toString(),
+                              );
+
                               final user = await authManager.signInWithEmail(
                                 context,
                                 _model.emailTextController!.text,

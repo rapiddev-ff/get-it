@@ -75,8 +75,17 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
   void initState() {
     super.initState();
     _initAnimations();
-    // Show onboarding only if the user hasn't viewed home before
-    _showOnboarding = !(ref.read(isHomeViewedProvider).valueOrNull ?? false);
+    // Show onboarding only after we confirm the user hasn't viewed home before
+    _checkOnboarding();
+  }
+
+  Future<void> _checkOnboarding() async {
+    final isViewed = await ref.read(isHomeViewedProvider.future);
+    if (mounted && !isViewed) {
+      setState(() {
+        _showOnboarding = true;
+      });
+    }
   }
 
   void _initAnimations() {

@@ -47,11 +47,13 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      final widgetRef = ref;
       await Future.delayed(
         Duration(
           milliseconds: 1500,
         ),
       );
+      if (!mounted) return;
       getAppInitialData = await actions.callRpc(
         context,
         'get_app_initial_data',
@@ -60,10 +62,11 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
         },
       );
       getPaymentMethods = await actions.getSavedPaymentMethods();
+      if (!mounted) return;
       final userData = functions.convertUserToDataType(
           getAppInitialData!, getPaymentMethods);
-      ref.read(authProvider.notifier).setUser(userData);
-      await ref.read(categoriesProvider.notifier).set(
+      widgetRef.read(authProvider.notifier).setUser(userData);
+      await widgetRef.read(categoriesProvider.notifier).set(
             functions
                 .convertCategoriesToDataType(
                     getJsonField(
@@ -79,7 +82,7 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
                 .toList()
                 .cast<Category>(),
           );
-      await ref.read(conditionsProvider.notifier).set(
+      await widgetRef.read(conditionsProvider.notifier).set(
             functions
                 .convertConditionsToDataType(getJsonField(
                   getAppInitialData,
@@ -91,6 +94,15 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
           );
       setState(() {});
       AppStateNotifier.instance.initialDataLoaded = true;
+
+      // Deleted user — sign out and send to welcome screen
+      if (userData.deletedAt != null) {
+        await authManager.signOut();
+        if (!mounted) return;
+        context.goNamed(WelcomeWidget.routeName);
+        return;
+      }
+
       if (userData.phoneVerified == false) {
         context.goNamed(
           PhoneVerificationPageWidget.routeName,

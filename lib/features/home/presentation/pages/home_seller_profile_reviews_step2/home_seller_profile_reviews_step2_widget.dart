@@ -167,15 +167,16 @@ class _HomeSellerProfileReviewsStep2WidgetState
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(4.0),
-                            child: CachedNetworkImage(
-                              imageUrl: widget.product?.mainImageUrl ?? '',
-                              width: 64.0,
-                              height: 84.0,
-                              fit: BoxFit.cover,
+                          if ((widget.product?.mainImageUrl ?? '').isNotEmpty)
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(4.0),
+                              child: CachedNetworkImage(
+                                imageUrl: widget.product!.mainImageUrl,
+                                width: 64.0,
+                                height: 84.0,
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ),
                           Expanded(
                             child: Column(
                               mainAxisSize: MainAxisSize.min,

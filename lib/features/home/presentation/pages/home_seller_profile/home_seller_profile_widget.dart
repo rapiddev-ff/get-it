@@ -803,17 +803,20 @@ class _HomeSellerProfileWidgetState
                                                   decoration: BoxDecoration(
                                                     shape: BoxShape.circle,
                                                   ),
-                                                  child: CachedNetworkImage(
-                                                    fadeInDuration: Duration(
-                                                        milliseconds: 500),
-                                                    fadeOutDuration: Duration(
-                                                        milliseconds: 500),
-                                                    imageUrl: reviewsItem
-                                                            .reviewer
-                                                            ?.avatarUrl ??
-                                                        '',
-                                                    fit: BoxFit.cover,
-                                                  ),
+                                                  child: (reviewsItem.reviewer?.avatarUrl ?? '').isNotEmpty
+                                                      ? CachedNetworkImage(
+                                                          fadeInDuration: Duration(
+                                                              milliseconds: 500),
+                                                          fadeOutDuration: Duration(
+                                                              milliseconds: 500),
+                                                          imageUrl: reviewsItem.reviewer!.avatarUrl,
+                                                          fit: BoxFit.cover,
+                                                        )
+                                                      : Icon(
+                                                          Icons.person,
+                                                          size: 20.0,
+                                                          color: AppColors.textSecondary,
+                                                        ),
                                                 ),
                                                 Expanded(
                                                   child: Column(
@@ -995,17 +998,20 @@ class _HomeSellerProfileWidgetState
                                                   decoration: BoxDecoration(
                                                     shape: BoxShape.circle,
                                                   ),
-                                                  child: CachedNetworkImage(
-                                                    fadeInDuration: Duration(
-                                                        milliseconds: 500),
-                                                    fadeOutDuration: Duration(
-                                                        milliseconds: 500),
-                                                    imageUrl: reviewsItem
-                                                            .reviewer
-                                                            ?.avatarUrl ??
-                                                        '',
-                                                    fit: BoxFit.cover,
-                                                  ),
+                                                  child: (reviewsItem.reviewer?.avatarUrl ?? '').isNotEmpty
+                                                      ? CachedNetworkImage(
+                                                          fadeInDuration: Duration(
+                                                              milliseconds: 500),
+                                                          fadeOutDuration: Duration(
+                                                              milliseconds: 500),
+                                                          imageUrl: reviewsItem.reviewer!.avatarUrl,
+                                                          fit: BoxFit.cover,
+                                                        )
+                                                      : Icon(
+                                                          Icons.person,
+                                                          size: 20.0,
+                                                          color: AppColors.textSecondary,
+                                                        ),
                                                 ),
                                                 Expanded(
                                                   child: Column(

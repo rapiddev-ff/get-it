@@ -197,12 +197,18 @@ class _HomeSellerProfileReviewsWidgetState
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                             ),
-                            child: CachedNetworkImage(
-                              fadeInDuration: Duration(milliseconds: 100),
-                              fadeOutDuration: Duration(milliseconds: 100),
-                              imageUrl: widget.sellerDataType!.avatarUrl,
-                              fit: BoxFit.cover,
-                            ),
+                            child: widget.sellerDataType!.avatarUrl.isNotEmpty
+                                ? CachedNetworkImage(
+                                    fadeInDuration: Duration(milliseconds: 100),
+                                    fadeOutDuration: Duration(milliseconds: 100),
+                                    imageUrl: widget.sellerDataType!.avatarUrl,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Icon(
+                                    Icons.person,
+                                    size: 40.0,
+                                    color: AppColors.textSecondary,
+                                  ),
                           ),
                           Expanded(
                             child: Column(
@@ -674,17 +680,23 @@ class _HomeSellerProfileReviewsWidgetState
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                   ),
-                  child: CachedNetworkImage(
-                    fadeInDuration: Duration(milliseconds: 500),
-                    fadeOutDuration: Duration(milliseconds: 500),
-                    imageUrl: reviewerAvatarUrl,
-                    fit: BoxFit.cover,
-                    errorWidget: (_, __, ___) => Icon(
-                      Icons.person,
-                      size: 20.0,
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
+                  child: reviewerAvatarUrl.isNotEmpty
+                      ? CachedNetworkImage(
+                          fadeInDuration: Duration(milliseconds: 500),
+                          fadeOutDuration: Duration(milliseconds: 500),
+                          imageUrl: reviewerAvatarUrl,
+                          fit: BoxFit.cover,
+                          errorWidget: (_, __, ___) => Icon(
+                            Icons.person,
+                            size: 20.0,
+                            color: AppColors.textSecondary,
+                          ),
+                        )
+                      : Icon(
+                          Icons.person,
+                          size: 20.0,
+                          color: AppColors.textSecondary,
+                        ),
                 ),
                 Expanded(
                   child: Column(
