@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui' as ui;
 
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/home/domain/models/product_details_model.dart';
@@ -44,6 +45,8 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
   ProductDetails? _getProduct;
   PageController? _pageViewController;
   Conversation? _getOrCreateConversation;
+  bool _isInWishlist = false;
+  bool _isTogglingWishlist = false;
 
   @override
   void initState() {
@@ -55,6 +58,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
         widget.productId!,
         currentUserUid,
       );
+      _isInWishlist = _getProduct?.isInWishlist ?? false;
 
       setState(() {});
     });
@@ -411,6 +415,47 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                               },
                             ),
                           ),
+                          if (!product.isOwnProduct)
+                            Positioned(
+                              top: 12.0,
+                              right: 12.0,
+                              child: GestureDetector(
+                                onTap: () async {
+                                  if (_isTogglingWishlist) return;
+                                  setState(() {
+                                    _isTogglingWishlist = true;
+                                    _isInWishlist = !_isInWishlist;
+                                  });
+                                  final result = await actions.toggleWishlist(
+                                    currentUserUid,
+                                    product.id,
+                                  );
+                                  if (mounted) {
+                                    setState(() {
+                                      _isInWishlist = result;
+                                      _isTogglingWishlist = false;
+                                    });
+                                  }
+                                },
+                                child: Container(
+                                  width: 40.0,
+                                  height: 40.0,
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withValues(alpha: 0.4),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(
+                                    _isInWishlist
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    color: _isInWishlist
+                                        ? Colors.red
+                                        : Colors.white,
+                                    size: 22.0,
+                                  ),
+                                ),
+                              ),
+                            ),
                         ],
                       ),
                     ),
@@ -432,45 +477,13 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 4.0, 0.0, 0.0),
-                            child: Text(
-                              _formatCurrency(product.price, prefix: '\$'),
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 24.0,
-                              ),
-                            ),
+                            child: _buildPriceRow(product),
                           ),
                           if (product.tags.isNotEmpty)
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 24.0, 0.0, 0.0),
-                              child: Wrap(
-                                spacing: 12.0,
-                                runSpacing: 12.0,
-                                children: product.tags.map((tag) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      color: AppColors.backgroundSecondary,
-                                      borderRadius:
-                                          BorderRadius.circular(100.0),
-                                      border: Border.all(
-                                        color: Color(0xFF363636),
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          12.0, 5.0, 12.0, 5.0),
-                                      child: Text(
-                                        tag.name,
-                                        style: GoogleFonts.inter(
-                                          fontWeight: FontWeight.normal,
-                                          fontSize: 14.0,
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
+                              child: _buildTagsSection(product),
                             ),
                           if (product.seller != null)
                             Padding(
@@ -616,10 +629,13 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                   fontSize: 16.0,
                                 ),
                               ),
-                              if (_hasValue(
-                                  product.conditions.firstOrNull?.name))
-                                _buildDetailRow('Condition',
-                                    product.conditions.first.name),
+                              if (product.conditions.isNotEmpty)
+                                _buildDetailRow(
+                                  'Condition',
+                                  product.conditions
+                                      .map((c) => c.name)
+                                      .join(', '),
+                                ),
                               if (product.year != null)
                                 _buildDetailRow(
                                     'Year', product.year.toString()),
@@ -644,6 +660,8 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                   padding: EdgeInsets.all(16.0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -664,96 +682,26 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                           ),
                                         ].divide(SizedBox(width: 12.0)),
                                       ),
-                                      if (product.freeShipping)
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'Free Shipping',
-                                              style: GoogleFonts.inter(
-                                                color: AppColors.primary,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                          ],
+                                      SizedBox(height: 8.0),
+                                      Text(
+                                        product.freeShipping
+                                            ? 'Free shipping'
+                                            : 'Shipping cost: ${_formatCurrency(_getShippingCost(product), prefix: '\$')}',
+                                        style: GoogleFonts.inter(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14.0,
+                                          color: AppColors.textPrimary,
                                         ),
-                                      if (!product.freeShipping &&
-                                          product.customFlatRate != null &&
-                                          product.customFlatRate! > 0)
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              'Flat Shipping',
-                                              style: GoogleFonts.inter(
-                                                color: AppColors.textSecondary,
-                                              ),
-                                            ),
-                                            Text(
-                                              _formatCurrency(
-                                                  product.customFlatRate,
-                                                  prefix: '\$'),
-                                              style: GoogleFonts.inter(
-                                                fontWeight: FontWeight.w600,
-                                                color: AppColors.textPrimary,
-                                              ),
-                                            ),
-                                          ],
+                                      ),
+                                      SizedBox(height: 4.0),
+                                      Text(
+                                        'Carefully packaged with tracking included.',
+                                        style: GoogleFonts.inter(
+                                          fontSize: 14.0,
+                                          color: Color(0xFFAFAFB4),
                                         ),
-                                      if (!product.freeShipping &&
-                                          product.customAdditionalItemFee !=
-                                              null &&
-                                          product.customAdditionalItemFee! > 0)
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              'Additional Fee',
-                                              style: GoogleFonts.inter(
-                                                color: AppColors.textSecondary,
-                                              ),
-                                            ),
-                                            Text(
-                                              _formatCurrency(
-                                                  product
-                                                      .customAdditionalItemFee,
-                                                  prefix: '\$'),
-                                              style: GoogleFonts.inter(
-                                                fontWeight: FontWeight.w600,
-                                                color: AppColors.textPrimary,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      if (!product.freeShipping &&
-                                          product.shippingPrice > 0 &&
-                                          product.customFlatRate == null)
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              'Shipping',
-                                              style: GoogleFonts.inter(
-                                                color: AppColors.textSecondary,
-                                              ),
-                                            ),
-                                            Text(
-                                              _formatCurrency(
-                                                  product.shippingPrice,
-                                                  prefix: '\$'),
-                                              style: GoogleFonts.inter(
-                                                fontWeight: FontWeight.w600,
-                                                color: AppColors.textPrimary,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                    ].divide(SizedBox(height: 16.0)),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -949,8 +897,261 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
     );
   }
 
+  Widget _buildPriceRow(ProductDetails product) {
+    final hasFlashSale = product.flashSaleEnabled && product.flashSalePrice != null;
+    final hasDiscount = product.discountType != null && product.discountAmount != null && product.discountAmount! > 0;
+
+    if (!hasFlashSale && !hasDiscount) {
+      return Text(
+        _formatCurrency(product.price, prefix: '\$'),
+        style: GoogleFonts.inter(
+          fontWeight: FontWeight.bold,
+          fontSize: 24.0,
+        ),
+      );
+    }
+
+    // Determine display prices and discount text
+    double currentPrice = product.price;
+    double? originalPrice;
+    String discountLabel = '';
+
+    if (hasFlashSale) {
+      currentPrice = product.flashSalePrice!;
+      originalPrice = product.price;
+    } else if (hasDiscount) {
+      originalPrice = product.originalPrice ?? product.price;
+    }
+
+    if (product.discountType == 'percentage') {
+      discountLabel = '-${product.discountAmount!.toStringAsFixed(0)}%';
+    } else if (product.discountType == 'dollar') {
+      discountLabel = '\$${_formatCurrency(product.discountAmount!)}';
+    }
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.baseline,
+      textBaseline: TextBaseline.alphabetic,
+      children: [
+        Text(
+          _formatCurrency(currentPrice, prefix: '\$'),
+          style: GoogleFonts.inter(
+            fontWeight: FontWeight.bold,
+            fontSize: 24.0,
+          ),
+        ),
+        if (originalPrice != null) ...[
+          SizedBox(width: 8.0),
+          Text(
+            _formatCurrency(originalPrice, prefix: '\$'),
+            style: GoogleFonts.inter(
+              fontWeight: FontWeight.normal,
+              fontSize: 14.0,
+              color: Color(0xFFAFAFB4),
+              decoration: TextDecoration.lineThrough,
+              decorationColor: Color(0xFFAFAFB4),
+            ),
+          ),
+        ],
+        if (discountLabel.isNotEmpty) ...[
+          SizedBox(width: 6.0),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.bolt,
+                color: Color(0xFFFF6B6B),
+                size: 16.0,
+              ),
+              Text(
+                discountLabel,
+                style: GoogleFonts.inter(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14.0,
+                  color: Color(0xFFFF6B6B),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ],
+    );
+  }
+
+  Widget _buildTagChip(String label) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.backgroundSecondary,
+        borderRadius: BorderRadius.circular(100.0),
+        border: Border.all(
+          color: Color(0xFF363636),
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(12.0, 5.0, 12.0, 5.0),
+        child: Text(
+          label,
+          style: GoogleFonts.inter(
+            fontWeight: FontWeight.normal,
+            fontSize: 14.0,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTagsSection(ProductDetails product) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final tags = product.tags;
+        const spacing = 12.0;
+        const runSpacing = 12.0;
+
+        // Measure tag widths to determine which fit in 2 rows
+        final visibleTags = <int>[];
+        double currentRowWidth = 0.0;
+        int rowCount = 1;
+        const maxRows = 2;
+
+        for (int i = 0; i < tags.length; i++) {
+          final tagWidth = _estimateTagWidth(tags[i].name);
+          final widthNeeded =
+              currentRowWidth == 0 ? tagWidth : currentRowWidth + spacing + tagWidth;
+
+          if (widthNeeded <= constraints.maxWidth) {
+            currentRowWidth = widthNeeded;
+            visibleTags.add(i);
+          } else if (rowCount < maxRows) {
+            rowCount++;
+            currentRowWidth = tagWidth;
+            visibleTags.add(i);
+          } else {
+            break;
+          }
+        }
+
+        final remainingCount = tags.length - visibleTags.length;
+
+        // Check if "+N" chip fits, if not remove last visible tag
+        if (remainingCount > 0) {
+          final moreChipWidth = _estimateTagWidth('+$remainingCount');
+
+          // Try to fit "+N" on the current row
+          final spaceNeeded = currentRowWidth + spacing + moreChipWidth;
+          if (spaceNeeded > constraints.maxWidth) {
+            // Remove last tag to make room
+            visibleTags.removeLast();
+          }
+        }
+
+        final actualRemaining = tags.length - visibleTags.length;
+
+        return Wrap(
+          spacing: spacing,
+          runSpacing: runSpacing,
+          children: [
+            ...visibleTags.map((i) => _buildTagChip(tags[i].name)),
+            if (actualRemaining > 0)
+              GestureDetector(
+                onTap: () => _showAllTagsBottomSheet(context, tags),
+                child: _buildTagChip('+$actualRemaining'),
+              ),
+          ],
+        );
+      },
+    );
+  }
+
+  double _estimateTagWidth(String text) {
+    final textPainter = TextPainter(
+      text: TextSpan(
+        text: text,
+        style: GoogleFonts.inter(
+          fontWeight: FontWeight.normal,
+          fontSize: 14.0,
+        ),
+      ),
+      maxLines: 1,
+      textDirection: ui.TextDirection.ltr,
+    )..layout();
+    // 12 padding left + 12 padding right + 2 border
+    return textPainter.width + 26.0;
+  }
+
+  void _showAllTagsBottomSheet(BuildContext context, List tags) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.backgroundPrimary,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
+      ),
+      builder: (context) {
+        return SafeArea(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(16.0, 24.0, 16.0, 16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Tags',
+                  style: GoogleFonts.inter(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24.0,
+                  ),
+                ),
+                SizedBox(height: 24.0),
+                Flexible(
+                  child: SingleChildScrollView(
+                    child: Wrap(
+                      spacing: 12.0,
+                      runSpacing: 12.0,
+                      children: tags
+                          .map((tag) => _buildTagChip(tag.name as String))
+                          .toList(),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 24.0),
+                SizedBox(
+                  width: double.infinity,
+                  height: 52.0,
+                  child: TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    style: TextButton.styleFrom(
+                      backgroundColor: AppColors.backgroundSecondary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                    child: Text(
+                      'Close',
+                      style: GoogleFonts.inter(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  double _getShippingCost(ProductDetails product) {
+    if (product.freeShipping) return 0.0;
+    if (product.customFlatRate != null && product.customFlatRate! > 0) {
+      return product.customFlatRate!;
+    }
+    return product.shippingPrice;
+  }
+
   bool _hasConditionOrDetails(ProductDetails product) {
-    return _hasValue(product.conditions.firstOrNull?.name) ||
+    return product.conditions.isNotEmpty ||
         product.year != null ||
         product.issueNumber != null;
   }

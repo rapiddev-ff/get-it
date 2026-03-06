@@ -569,95 +569,59 @@ class _HomeSellerProfileReviewsWidgetState
                               ),
                             );
                           } else {
-                            return Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                PagedListView<ApiPagingParams,
-                                    dynamic>.separated(
-                                  pagingController:
-                                      _model.setListViewController2(
-                                    (nextPageMarker) => SupabaseRPCGroup
-                                        .getuserreviewsCall
-                                        .call(
-                                      userId: widget.sellerDataType?.id,
-                                      role: 'as_seller',
-                                      limit: 20,
-                                      offset: nextPageMarker.numItems,
-                                    ),
-                                  ),
-                                  padding: EdgeInsets.symmetric(vertical: 16.0),
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  reverse: false,
-                                  scrollDirection: Axis.vertical,
-                                  separatorBuilder: (_, __) =>
-                                      SizedBox(height: 16.0),
-                                  builderDelegate:
-                                      PagedChildBuilderDelegate<dynamic>(
-                                    firstPageProgressIndicatorBuilder: (_) =>
-                                        Center(
-                                      child: SizedBox(
-                                        width: 50.0,
-                                        height: 50.0,
-                                        child: CircularProgressIndicator(
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                            AppColors.primary,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    newPageProgressIndicatorBuilder: (_) =>
-                                        Center(
-                                      child: SizedBox(
-                                        width: 50.0,
-                                        height: 50.0,
-                                        child: CircularProgressIndicator(
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                            AppColors.primary,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    itemBuilder: (context, reviewItem, asSellerIndex) {
-                                      final item = reviewItem is Map ? reviewItem : <String, dynamic>{};
-                                      return _buildReviewCard(item);
-                                    },
-                                  ),
+                            return PagedListView<ApiPagingParams,
+                                dynamic>.separated(
+                              pagingController:
+                                  _model.setListViewController2(
+                                (nextPageMarker) => SupabaseRPCGroup
+                                    .getuserreviewsCall
+                                    .call(
+                                  userId: widget.sellerDataType?.id,
+                                  role: 'as_seller',
+                                  limit: 20,
+                                  offset: nextPageMarker.numItems,
                                 ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 12.0, 0.0, 0.0),
-                                  child: TextButton.icon(
-                                    onPressed: () {},
-                                    icon: Icon(
-                                      Icons.arrow_circle_down,
-                                      size: 24.0,
-                                      color: AppColors.primary,
-                                    ),
-                                    label: Text(
-                                      'Load More Reviews',
-                                      style: GoogleFonts.inter(
-                                        color: AppColors.primary,
-                                      ),
-                                    ),
-                                    style: TextButton.styleFrom(
-                                      minimumSize: Size(double.infinity, 56.0),
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          16.0, 0.0, 16.0, 0.0),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        side: BorderSide(
-                                          color: AppColors.primary,
-                                          width: 1.0,
-                                        ),
+                              ),
+                              padding: EdgeInsets.symmetric(vertical: 16.0),
+                              primary: false,
+                              shrinkWrap: true,
+                              reverse: false,
+                              scrollDirection: Axis.vertical,
+                              separatorBuilder: (_, __) =>
+                                  SizedBox(height: 16.0),
+                              builderDelegate:
+                                  PagedChildBuilderDelegate<dynamic>(
+                                firstPageProgressIndicatorBuilder: (_) =>
+                                    Center(
+                                  child: SizedBox(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    child: CircularProgressIndicator(
+                                      valueColor:
+                                          AlwaysStoppedAnimation<Color>(
+                                        AppColors.primary,
                                       ),
                                     ),
                                   ),
                                 ),
-                              ],
+                                newPageProgressIndicatorBuilder: (_) =>
+                                    Center(
+                                  child: SizedBox(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    child: CircularProgressIndicator(
+                                      valueColor:
+                                          AlwaysStoppedAnimation<Color>(
+                                        AppColors.primary,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                itemBuilder: (context, reviewItem, asSellerIndex) {
+                                  final item = reviewItem is Map ? reviewItem : <String, dynamic>{};
+                                  return _buildReviewCard(item);
+                                },
+                              ),
                             );
                           }
                         },
@@ -683,6 +647,9 @@ class _HomeSellerProfileReviewsWidgetState
     final content = item['content']?.toString() ?? '';
     final createdAtStr = item['created_at']?.toString();
     final createdAt = createdAtStr != null ? DateTime.tryParse(createdAtStr) : null;
+    final orderDateStr = item['order_date']?.toString();
+    final orderDate = orderDateStr != null ? DateTime.tryParse(orderDateStr) : null;
+    final reviewRole = item['review_role']?.toString() ?? '';
 
     return Container(
       width: double.infinity,
@@ -847,6 +814,16 @@ class _HomeSellerProfileReviewsWidgetState
                   fontSize: 14.0,
                   color: AppColors.textSecondary,
                   height: 1.5,
+                ),
+              ),
+            if (orderDate != null)
+              Text(
+                reviewRole == 'as_seller'
+                    ? 'Purchased on ${DateFormat('MMM dd, yyyy').format(orderDate)}'
+                    : 'Sold on ${DateFormat('MMM dd, yyyy').format(orderDate)}',
+                style: GoogleFonts.inter(
+                  fontSize: 12.0,
+                  color: Color(0xFFAFAFB4),
                 ),
               ),
           ].divide(SizedBox(height: 16.0)),

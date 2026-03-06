@@ -115,7 +115,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                 },
               ),
               Text(
-                'Choose Product to Review',
+                'Write Review',
                 style: GoogleFonts.inter(
                   fontWeight: FontWeight.w600,
                   fontSize: 18.0,
@@ -296,7 +296,9 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                     ),
                                     direction: Axis.horizontal,
                                     rating: valueOrDefault<double>(
-                                      widget.sellerDataType?.ratingAsSeller,
+                                      widget.reviewRole == 'as_buyer'
+                                          ? widget.sellerDataType?.ratingAsBuyer
+                                          : widget.sellerDataType?.ratingAsSeller,
                                       0.0,
                                     ),
                                     unratedColor: Color(0xFF7B7B7B),
@@ -305,8 +307,10 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                   ),
                                   Text(
                                     valueOrDefault<String>(
-                                      widget.sellerDataType?.ratingAsSeller
-                                          .toString(),
+                                      (widget.reviewRole == 'as_buyer'
+                                              ? widget.sellerDataType?.ratingAsBuyer
+                                              : widget.sellerDataType?.ratingAsSeller)
+                                          ?.toString(),
                                       '0',
                                     ),
                                     style: GoogleFonts.inter(
@@ -316,7 +320,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                     ),
                                   ),
                                   Text(
-                                    '${widget.sellerDataType?.totalReviewsAsSeller.toString()} reviews',
+                                    '${(widget.reviewRole == 'as_buyer' ? widget.sellerDataType?.totalReviewsAsBuyer : widget.sellerDataType?.totalReviewsAsSeller)?.toString() ?? '0'} reviews',
                                     style: GoogleFonts.inter(
                                       fontSize: 14.0,
                                       color: Color(0xFFAFAFB4),
@@ -553,6 +557,15 @@ class _HomeSellerProfileReviewsStep2WidgetState
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
+                                if (images.length >= 3) {
+                                  await actions.toastificationshow(
+                                    context,
+                                    'Limit Reached',
+                                    'You can upload up to 3 photos.',
+                                    'error',
+                                  );
+                                  return;
+                                }
                                 final picker = ImagePicker();
                                 final pickedFile = await picker.pickImage(
                                   source: ImageSource.gallery,
@@ -679,6 +692,16 @@ class _HomeSellerProfileReviewsStep2WidgetState
                               context,
                               'Rating Required',
                               'Please select at least 1 star.',
+                              'error',
+                            );
+                            return;
+                          }
+                          if ((textController?.text.trim().length ?? 0) > 0 &&
+                              (textController?.text.trim().length ?? 0) < 20) {
+                            await actions.toastificationshow(
+                              context,
+                              'Review Too Short',
+                              'Please write at least 20 characters.',
                               'error',
                             );
                             return;

@@ -1,4 +1,5 @@
 import '/features/home/domain/models/seller_model.dart';
+import '/features/home/domain/models/seller_product_model.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';
@@ -37,20 +38,41 @@ class _HomeSellerProfileReviewsStep1WidgetState
   // Inlined from model
   String? state = 'As Buyer';
   dynamic getUserProfileWithReviews;
+  List<Map<String, dynamic>> _reviewableProducts = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
 
-    // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      getUserProfileWithReviews = await actions.callRpc(
-        context,
-        'get_user_profile_with_reviews',
-        <String, String>{
-          'p_user_id': widget.sellerDataType!.id,
-        },
-      );
+      final results = await Future.wait([
+        actions.callRpc(
+          context,
+          'get_user_profile_with_reviews',
+          <String, String>{
+            'p_user_id': widget.sellerDataType!.id,
+          },
+        ),
+        actions.callRpc(
+          context,
+          'get_products_to_review',
+          <String, String>{
+            'p_reviewed_user_id': widget.sellerDataType!.id,
+            'p_review_role': widget.reviewRole,
+          },
+        ),
+      ]);
+      if (!mounted) return;
+      getUserProfileWithReviews = results[0];
+      final productsRaw = results[1];
+      if (productsRaw is List) {
+        _reviewableProducts = productsRaw
+            .whereType<Map>()
+            .map((e) => Map<String, dynamic>.from(e))
+            .toList();
+      }
+      _isLoading = false;
       setState(() {});
     });
   }
@@ -270,7 +292,9 @@ class _HomeSellerProfileReviewsStep1WidgetState
                 Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Text(
-                    'Your purchases from this seller',
+                    widget.reviewRole == 'as_seller'
+                        ? 'Your purchases from this seller'
+                        : 'Products you sold to this buyer',
                     style: GoogleFonts.inter(
                       fontWeight: FontWeight.w500,
                       fontSize: 18.0,
@@ -281,147 +305,232 @@ class _HomeSellerProfileReviewsStep1WidgetState
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                  child: Builder(
-                    builder: (context) {
-                      final purchasedProducts =
-                          widget.sellerDataType?.purchasedProducts.toList() ??
-                              [];
-
-                      return ListView.separated(
-                        padding: EdgeInsets.zero,
-                        primary: false,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        itemCount: purchasedProducts.length,
-                        separatorBuilder: (_, __) => SizedBox(height: 16.0),
-                        itemBuilder: (context, purchasedProductsIndex) {
-                          final purchasedProductsItem =
-                              purchasedProducts[purchasedProductsIndex];
-                          return InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              final result = await context.pushNamed<bool>(
-                                HomeSellerProfileReviewsStep2Widget.routeName,
-                                queryParameters: {
-                                  'sellerDataType':
-                                      widget.sellerDataType?.serialize(),
-                                  'product': purchasedProductsItem.serialize(),
-                                  'reviewRole': widget.reviewRole,
-                                },
-                              );
-                              if (result == true && mounted) {
-                                Navigator.of(context).pop(true);
-                              }
-                            },
-                            child: Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: AppColors.backgroundSecondary,
-                                borderRadius: BorderRadius.circular(4.0),
+                  child: _isLoading
+                      ? Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(32.0),
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  AppColors.primary),
+                            ),
+                          ),
+                        )
+                      : _reviewableProducts.isEmpty
+                          ? Padding(
+                              padding: EdgeInsets.all(32.0),
+                              child: Center(
+                                child: Text(
+                                  'No products available for review.',
+                                  style: GoogleFonts.inter(
+                                    color: AppColors.textSecondary,
+                                  ),
+                                ),
                               ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    10.0, 16.0, 16.0, 16.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(4.0),
-                                      child: Image.network(
-                                        purchasedProductsItem.mainImageUrl,
-                                        width: 64.0,
-                                        height: 84.0,
-                                        fit: BoxFit.cover,
+                            )
+                          : ListView.separated(
+                              padding: EdgeInsets.zero,
+                              primary: false,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemCount: _reviewableProducts.length,
+                              separatorBuilder: (_, __) =>
+                                  SizedBox(height: 16.0),
+                              itemBuilder: (context, index) {
+                                final item = _reviewableProducts[index];
+                                final alreadyReviewed =
+                                    item['already_reviewed'] == true;
+                                final productTitle =
+                                    item['product_title']?.toString() ?? 'n/a';
+                                final productPrice =
+                                    (item['product_price'] as num?)
+                                            ?.toDouble() ??
+                                        0.0;
+                                final productImage =
+                                    item['product_image']?.toString() ?? '';
+                                final conditionName =
+                                    item['product_condition']?.toString() ?? '';
+                                final orderId =
+                                    item['order_id']?.toString() ?? '';
+                                final productId =
+                                    item['product_id']?.toString() ?? '';
+                                final paidAtStr =
+                                    item['order_paid_at']?.toString();
+                                final paidAt = paidAtStr != null
+                                    ? DateTime.tryParse(paidAtStr)
+                                    : null;
+
+                                final dateLabel = widget.reviewRole == 'as_seller'
+                                    ? 'Purchased'
+                                    : 'Sold';
+
+                                return Opacity(
+                                  opacity: alreadyReviewed ? 0.5 : 1.0,
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: alreadyReviewed
+                                        ? null
+                                        : () async {
+                                            final result = await context
+                                                .pushNamed<bool>(
+                                              HomeSellerProfileReviewsStep2Widget
+                                                  .routeName,
+                                              queryParameters: {
+                                                'sellerDataType': widget
+                                                    .sellerDataType
+                                                    ?.serialize(),
+                                                'product': SellerProduct(
+                                                  id: productId,
+                                                  orderId: orderId,
+                                                  title: productTitle,
+                                                  price: productPrice,
+                                                  conditionName: conditionName,
+                                                  mainImageUrl: productImage,
+                                                  createdAt: paidAt,
+                                                ).serialize(),
+                                                'reviewRole':
+                                                    widget.reviewRole,
+                                              },
+                                            );
+                                            if (result == true && mounted) {
+                                              Navigator.of(context).pop(true);
+                                            }
+                                          },
+                                    child: Container(
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: AppColors.backgroundSecondary,
+                                        borderRadius:
+                                            BorderRadius.circular(4.0),
                                       ),
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            valueOrDefault<String>(
-                                              purchasedProductsItem.title,
-                                              'n/a',
-                                            ),
-                                            style: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w500,
-                                              color: AppColors.textPrimary,
-                                              height: 1.5,
-                                            ),
-                                          ),
-                                          if (purchasedProductsItem.conditionName.isNotEmpty)
-                                            Text(
-                                              purchasedProductsItem.conditionName,
-                                              maxLines: 1,
-                                              style: GoogleFonts.inter(
-                                                color: AppColors.textSecondary,
-                                                fontSize: 12.0,
-                                                height: 1.5,
+                                      child: Padding(
+                                        padding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                10.0, 16.0, 16.0, 16.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(4.0),
+                                              child: CachedNetworkImage(
+                                                imageUrl: productImage,
+                                                width: 64.0,
+                                                height: 84.0,
+                                                fit: BoxFit.cover,
                                               ),
-                                              overflow: TextOverflow.ellipsis,
                                             ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 8.0, 0.0, 0.0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Expanded(
-                                                  child: Text(
-                                                    NumberFormat(
-                                                            '#,##0.##', 'en_US')
-                                                        .format(
-                                                            purchasedProductsItem
-                                                                .price),
+                                            Expanded(
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    productTitle,
                                                     style: GoogleFonts.inter(
                                                       fontWeight:
                                                           FontWeight.w500,
-                                                      color:
-                                                          AppColors.textPrimary,
+                                                      color: AppColors
+                                                          .textPrimary,
                                                       height: 1.5,
                                                     ),
                                                   ),
-                                                ),
-                                                Text(
-                                                  purchasedProductsItem.createdAt != null
-                                                      ? 'Purchased ${DateFormat('MMM dd, yyyy').format(purchasedProductsItem.createdAt!)}'
-                                                      : '',
-                                                  maxLines: 1,
-                                                  style: GoogleFonts.inter(
-                                                    color:
-                                                        AppColors.textSecondary,
-                                                    fontSize: 12.0,
-                                                    height: 1.5,
+                                                  if (conditionName.isNotEmpty)
+                                                    Text(
+                                                      conditionName,
+                                                      maxLines: 1,
+                                                      style: GoogleFonts.inter(
+                                                        color: AppColors
+                                                            .textSecondary,
+                                                        fontSize: 12.0,
+                                                        height: 1.5,
+                                                      ),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 8.0,
+                                                                0.0, 0.0),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      children: [
+                                                        Expanded(
+                                                          child: Text(
+                                                            '\$${NumberFormat('#,##0.##', 'en_US').format(productPrice)}',
+                                                            style: GoogleFonts
+                                                                .inter(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: AppColors
+                                                                  .textPrimary,
+                                                              height: 1.5,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          paidAt != null
+                                                              ? '$dateLabel ${DateFormat('MMM dd, yyyy').format(paidAt)}'
+                                                              : '',
+                                                          maxLines: 1,
+                                                          style: GoogleFonts
+                                                              .inter(
+                                                            color: AppColors
+                                                                .textSecondary,
+                                                            fontSize: 12.0,
+                                                            height: 1.5,
+                                                          ),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                              ],
+                                                  if (alreadyReviewed)
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  4.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Text(
+                                                        'Already reviewed',
+                                                        style:
+                                                            GoogleFonts.inter(
+                                                          color:
+                                                              AppColors.primary,
+                                                          fontSize: 12.0,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                ].divide(
+                                                    SizedBox(height: 2.0)),
+                                              ),
                                             ),
-                                          ),
-                                        ].divide(SizedBox(height: 2.0)),
+                                            if (!alreadyReviewed)
+                                              Icon(
+                                                Icons
+                                                    .keyboard_arrow_right_sharp,
+                                                color:
+                                                    AppColors.textSecondary,
+                                                size: 20.0,
+                                              ),
+                                          ].divide(SizedBox(width: 12.0)),
+                                        ),
                                       ),
                                     ),
-                                    Icon(
-                                      Icons.keyboard_arrow_right_sharp,
-                                      color: AppColors.textSecondary,
-                                      size: 20.0,
-                                    ),
-                                  ].divide(SizedBox(width: 12.0)),
-                                ),
-                              ),
+                                  ),
+                                );
+                              },
                             ),
-                          );
-                        },
-                      );
-                    },
-                  ),
                 ),
               ].addToEnd(SizedBox(height: 32.0)),
             ),

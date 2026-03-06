@@ -758,7 +758,11 @@ class _HomeSellerProfileWidgetState
                                   );
                                 }
 
-                                return ListView.separated(
+                                final displayReviews = reviews.take(2).toList();
+                                return Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    ListView.separated(
                                   padding: EdgeInsets.fromLTRB(
                                     0,
                                     16.0,
@@ -768,7 +772,7 @@ class _HomeSellerProfileWidgetState
                                   primary: false,
                                   shrinkWrap: true,
                                   scrollDirection: Axis.vertical,
-                                  itemCount: reviews.length,
+                                  itemCount: displayReviews.length,
                                   separatorBuilder: (_, __) =>
                                       SizedBox(height: 16.0),
                                   itemBuilder: (context, reviewsIndex) {
@@ -879,6 +883,33 @@ class _HomeSellerProfileWidgetState
                                       ),
                                     );
                                   },
+                                ),
+                                    if (reviews.length > 2)
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 16.0),
+                                        child: TextButton(
+                                          onPressed: () async {
+                                            await context.pushNamed(
+                                              HomeSellerProfileReviewsWidget
+                                                  .routeName,
+                                              queryParameters: {
+                                                'sellerDataType':
+                                                    getSellerData?.serialize(),
+                                              },
+                                            );
+                                            await _refreshSellerData();
+                                          },
+                                          child: Text(
+                                            'View All',
+                                            style: GoogleFonts.inter(
+                                              color: AppColors.primary,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
                                 );
                               },
                             );
@@ -919,7 +950,11 @@ class _HomeSellerProfileWidgetState
                                   );
                                 }
 
-                                return ListView.separated(
+                                final displayReviews = reviews.take(2).toList();
+                                return Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    ListView.separated(
                                   padding: EdgeInsets.fromLTRB(
                                     0,
                                     16.0,
@@ -929,7 +964,7 @@ class _HomeSellerProfileWidgetState
                                   primary: false,
                                   shrinkWrap: true,
                                   scrollDirection: Axis.vertical,
-                                  itemCount: reviews.length,
+                                  itemCount: displayReviews.length,
                                   separatorBuilder: (_, __) =>
                                       SizedBox(height: 16.0),
                                   itemBuilder: (context, reviewsIndex) {
@@ -1040,6 +1075,33 @@ class _HomeSellerProfileWidgetState
                                       ),
                                     );
                                   },
+                                ),
+                                    if (reviews.length > 2)
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 16.0),
+                                        child: TextButton(
+                                          onPressed: () async {
+                                            await context.pushNamed(
+                                              HomeSellerProfileReviewsWidget
+                                                  .routeName,
+                                              queryParameters: {
+                                                'sellerDataType':
+                                                    getSellerData?.serialize(),
+                                              },
+                                            );
+                                            await _refreshSellerData();
+                                          },
+                                          child: Text(
+                                            'View All',
+                                            style: GoogleFonts.inter(
+                                              color: AppColors.primary,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
                                 );
                               },
                             );
