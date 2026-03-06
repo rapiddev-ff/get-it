@@ -406,12 +406,11 @@ class _SettingsShippingDefaultsWidgetState
                                             ),
                                           ),
                                         );
-                                    setState(() {});
+                                    if (mounted) setState(() {});
                                   }),
                                 ]);
+                                if (!mounted) return;
                                 context.pop();
-
-                                setState(() {});
                               },
                               style: TextButton.styleFrom(
                                 minimumSize: Size(double.infinity, 56.0),

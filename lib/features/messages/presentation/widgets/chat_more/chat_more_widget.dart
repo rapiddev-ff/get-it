@@ -112,7 +112,7 @@ class _ChatMoreWidgetState extends ConsumerState<ChatMoreWidget> {
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 16.0),
                     child: FaIcon(
-                      FontAwesomeIcons.trashAlt,
+                      FontAwesomeIcons.trashCan,
                       color: AppColors.textPrimary,
                       size: 20.0,
                     ),

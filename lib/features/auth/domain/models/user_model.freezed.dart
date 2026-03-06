@@ -80,6 +80,8 @@ mixin _$UserData {
   @JsonKey(name: 'deleted_at')
   @DateTimeConverter()
   DateTime? get deletedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_deactivated')
+  bool get isDeactivated => throw _privateConstructorUsedError;
   @JsonKey(name: 'total_referrals')
   int get totalReferrals => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
@@ -136,6 +138,7 @@ abstract class $UserDataCopyWith<$Res> {
       @JsonKey(name: 'created_at') @DateTimeConverter() DateTime? createdAt,
       @JsonKey(name: 'updated_at') @DateTimeConverter() DateTime? updatedAt,
       @JsonKey(name: 'deleted_at') @DateTimeConverter() DateTime? deletedAt,
+      @JsonKey(name: 'is_deactivated') bool isDeactivated,
       @JsonKey(name: 'total_referrals') int totalReferrals,
       String email,
       StripeAccountStatus? stripe,
@@ -196,6 +199,7 @@ class _$UserDataCopyWithImpl<$Res, $Val extends UserData>
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? deletedAt = freezed,
+    Object? isDeactivated = null,
     Object? totalReferrals = null,
     Object? email = null,
     Object? stripe = freezed,
@@ -326,6 +330,10 @@ class _$UserDataCopyWithImpl<$Res, $Val extends UserData>
           ? _value.deletedAt
           : deletedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      isDeactivated: null == isDeactivated
+          ? _value.isDeactivated
+          : isDeactivated // ignore: cast_nullable_to_non_nullable
+              as bool,
       totalReferrals: null == totalReferrals
           ? _value.totalReferrals
           : totalReferrals // ignore: cast_nullable_to_non_nullable
@@ -457,6 +465,7 @@ abstract class _$$UserDataImplCopyWith<$Res>
       @JsonKey(name: 'created_at') @DateTimeConverter() DateTime? createdAt,
       @JsonKey(name: 'updated_at') @DateTimeConverter() DateTime? updatedAt,
       @JsonKey(name: 'deleted_at') @DateTimeConverter() DateTime? deletedAt,
+      @JsonKey(name: 'is_deactivated') bool isDeactivated,
       @JsonKey(name: 'total_referrals') int totalReferrals,
       String email,
       StripeAccountStatus? stripe,
@@ -519,6 +528,7 @@ class __$$UserDataImplCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? deletedAt = freezed,
+    Object? isDeactivated = null,
     Object? totalReferrals = null,
     Object? email = null,
     Object? stripe = freezed,
@@ -649,6 +659,10 @@ class __$$UserDataImplCopyWithImpl<$Res>
           ? _value.deletedAt
           : deletedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      isDeactivated: null == isDeactivated
+          ? _value.isDeactivated
+          : isDeactivated // ignore: cast_nullable_to_non_nullable
+              as bool,
       totalReferrals: null == totalReferrals
           ? _value.totalReferrals
           : totalReferrals // ignore: cast_nullable_to_non_nullable
@@ -719,6 +733,7 @@ class _$UserDataImpl extends _UserData {
       @JsonKey(name: 'created_at') @DateTimeConverter() this.createdAt,
       @JsonKey(name: 'updated_at') @DateTimeConverter() this.updatedAt,
       @JsonKey(name: 'deleted_at') @DateTimeConverter() this.deletedAt,
+      @JsonKey(name: 'is_deactivated') this.isDeactivated = false,
       @JsonKey(name: 'total_referrals') this.totalReferrals = 0,
       this.email = '',
       this.stripe,
@@ -828,6 +843,9 @@ class _$UserDataImpl extends _UserData {
   @DateTimeConverter()
   final DateTime? deletedAt;
   @override
+  @JsonKey(name: 'is_deactivated')
+  final bool isDeactivated;
+  @override
   @JsonKey(name: 'total_referrals')
   final int totalReferrals;
   @override
@@ -857,7 +875,7 @@ class _$UserDataImpl extends _UserData {
 
   @override
   String toString() {
-    return 'UserData(id: $id, userId: $userId, username: $username, firstName: $firstName, lastName: $lastName, avatarUrl: $avatarUrl, bio: $bio, phone: $phone, phoneVerified: $phoneVerified, isSeller: $isSeller, sellerSince: $sellerSince, businessName: $businessName, businessAddress: $businessAddress, businessEmail: $businessEmail, ratingAsSeller: $ratingAsSeller, ratingAsBuyer: $ratingAsBuyer, totalReviewsAsSeller: $totalReviewsAsSeller, totalReviewsAsBuyer: $totalReviewsAsBuyer, totalSales: $totalSales, totalPurchases: $totalPurchases, totalRefunds: $totalRefunds, totalCancelled: $totalCancelled, followersCount: $followersCount, followingCount: $followingCount, isPrivate: $isPrivate, referralCode: $referralCode, referredBy: $referredBy, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, totalReferrals: $totalReferrals, email: $email, stripe: $stripe, paymentMethod: $paymentMethod, hasStripeCustomer: $hasStripeCustomer, defaultPaymentMethodId: $defaultPaymentMethodId, userSettings: $userSettings, shippingAddress: $shippingAddress)';
+    return 'UserData(id: $id, userId: $userId, username: $username, firstName: $firstName, lastName: $lastName, avatarUrl: $avatarUrl, bio: $bio, phone: $phone, phoneVerified: $phoneVerified, isSeller: $isSeller, sellerSince: $sellerSince, businessName: $businessName, businessAddress: $businessAddress, businessEmail: $businessEmail, ratingAsSeller: $ratingAsSeller, ratingAsBuyer: $ratingAsBuyer, totalReviewsAsSeller: $totalReviewsAsSeller, totalReviewsAsBuyer: $totalReviewsAsBuyer, totalSales: $totalSales, totalPurchases: $totalPurchases, totalRefunds: $totalRefunds, totalCancelled: $totalCancelled, followersCount: $followersCount, followingCount: $followingCount, isPrivate: $isPrivate, referralCode: $referralCode, referredBy: $referredBy, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, isDeactivated: $isDeactivated, totalReferrals: $totalReferrals, email: $email, stripe: $stripe, paymentMethod: $paymentMethod, hasStripeCustomer: $hasStripeCustomer, defaultPaymentMethodId: $defaultPaymentMethodId, userSettings: $userSettings, shippingAddress: $shippingAddress)';
   }
 
   @override
@@ -921,6 +939,8 @@ class _$UserDataImpl extends _UserData {
                 other.updatedAt == updatedAt) &&
             (identical(other.deletedAt, deletedAt) ||
                 other.deletedAt == deletedAt) &&
+            (identical(other.isDeactivated, isDeactivated) ||
+                other.isDeactivated == isDeactivated) &&
             (identical(other.totalReferrals, totalReferrals) ||
                 other.totalReferrals == totalReferrals) &&
             (identical(other.email, email) || other.email == email) &&
@@ -971,6 +991,7 @@ class _$UserDataImpl extends _UserData {
         createdAt,
         updatedAt,
         deletedAt,
+        isDeactivated,
         totalReferrals,
         email,
         stripe,
@@ -1037,6 +1058,7 @@ abstract class _UserData extends UserData {
       @JsonKey(name: 'deleted_at')
       @DateTimeConverter()
       final DateTime? deletedAt,
+      @JsonKey(name: 'is_deactivated') final bool isDeactivated,
       @JsonKey(name: 'total_referrals') final int totalReferrals,
       final String email,
       final StripeAccountStatus? stripe,
@@ -1140,6 +1162,9 @@ abstract class _UserData extends UserData {
   @JsonKey(name: 'deleted_at')
   @DateTimeConverter()
   DateTime? get deletedAt;
+  @override
+  @JsonKey(name: 'is_deactivated')
+  bool get isDeactivated;
   @override
   @JsonKey(name: 'total_referrals')
   int get totalReferrals;

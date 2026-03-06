@@ -77,10 +77,17 @@ class _HomeSellerProfileWidgetState
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      getSellerData = await actions.getSellerInfo(
-        widget.sellerId!,
-        currentUserUid,
-      );
+      final sellerId = widget.sellerId;
+      if (!mounted || sellerId == null || sellerId.isEmpty) return;
+      try {
+        getSellerData = await actions.getSellerInfo(
+          sellerId,
+          currentUserUid,
+        );
+      } catch (_) {
+        // Network or API error — leave getSellerData null (shimmer stays).
+      }
+      if (!mounted) return;
       setState(() {});
     });
 

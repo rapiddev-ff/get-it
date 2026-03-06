@@ -1,7 +1,6 @@
 import '/features/home/presentation/widgets/components/follower_item_widget.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
-import '/features/profile/presentation/pages/settings_blocked_user_item/settings_blocked_user_item_widget.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -296,13 +295,14 @@ class _SettingsMyProfileFollowersWidgetState
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 20.0, 0.0, 0.0),
-                                child: ListView(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  children: [
-                                    SettingsBlockedUserItemWidget(),
-                                  ].divide(SizedBox(height: 16.0)),
+                                child: Center(
+                                  child: Text(
+                                    'No following users yet',
+                                    style: GoogleFonts.inter(
+                                      color: AppColors.textSecondary,
+                                      fontSize: 14.0,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),

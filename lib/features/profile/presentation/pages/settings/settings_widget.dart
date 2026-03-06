@@ -324,7 +324,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                                             .fromSTEB(12.0, 8.0,
                                                                 20.0, 8.0),
                                                     child: Text(
-                                                      valueOrDefault<String>(
+                                                      '\$ ${valueOrDefault<String>(
                                                         NumberFormat('#,##0.##',
                                                                 'en_US')
                                                             .format(authState
@@ -332,7 +332,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                                                     ?.dailyBudget ??
                                                                 0.0),
                                                         '0',
-                                                      ),
+                                                      )}',
                                                       style: GoogleFonts.inter(
                                                         fontSize: 14.0,
                                                         color: AppColors
@@ -346,7 +346,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                         ),
                                       ),
                                       Switch.adaptive(
-                                        value: _model.switchValue!,
+                                        value: _model.switchValue,
                                         onChanged: (newValue) async {
                                           setState(() =>
                                               _model.switchValue = newValue);

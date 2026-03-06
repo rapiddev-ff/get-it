@@ -54,12 +54,18 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _getProduct = await actions.getProductDetails(
-        widget.productId!,
-        currentUserUid,
-      );
-      _isInWishlist = _getProduct?.isInWishlist ?? false;
-
+      final productId = widget.productId;
+      if (!mounted || productId == null || productId.isEmpty) return;
+      try {
+        _getProduct = await actions.getProductDetails(
+          productId,
+          currentUserUid,
+        );
+        _isInWishlist = _getProduct?.isInWishlist ?? false;
+      } catch (_) {
+        // Network or API error — leave _getProduct null (shimmer stays).
+      }
+      if (!mounted) return;
       setState(() {});
     });
   }

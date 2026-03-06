@@ -161,7 +161,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
         if (reset) {
           _products = newProducts;
         } else {
-          _products.addAll(newProducts);
+          _products = [..._products, ...newProducts];
         }
         _hasMore = hasMore;
         _currentOffset += newProducts.length;
@@ -314,7 +314,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
   Widget _buildShimmerGrid() {
     return Shimmer.fromColors(
       baseColor: AppColors.backgroundSecondary,
-      highlightColor: AppColors.backgroundPrimary.withOpacity(0.5),
+      highlightColor: AppColors.backgroundPrimary.withValues(alpha: 0.5),
       child: GridView.builder(
         padding: EdgeInsets.only(
           left: widget.paddingLeft,
@@ -350,7 +350,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.1),
+                color: Colors.white.withValues(alpha: 0.1),
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(12),
                   topRight: Radius.circular(12),
@@ -370,7 +370,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
                     height: 14,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.1),
+                      color: Colors.white.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -379,7 +379,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
                     height: 14,
                     width: 80,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.1),
+                      color: Colors.white.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -390,7 +390,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
                         height: 16,
                         width: 60,
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.1),
+                          color: Colors.white.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),
@@ -403,7 +403,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
                         width: 20,
                         height: 20,
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.1),
+                          color: Colors.white.withValues(alpha: 0.1),
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -412,7 +412,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
                         child: Container(
                           height: 12,
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.1),
+                            color: Colors.white.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),

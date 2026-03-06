@@ -51,6 +51,7 @@ class UserData with _$UserData {
     @JsonKey(name: 'created_at') @DateTimeConverter() DateTime? createdAt,
     @JsonKey(name: 'updated_at') @DateTimeConverter() DateTime? updatedAt,
     @JsonKey(name: 'deleted_at') @DateTimeConverter() DateTime? deletedAt,
+    @JsonKey(name: 'is_deactivated') @Default(false) bool isDeactivated,
     @JsonKey(name: 'total_referrals') @Default(0) int totalReferrals,
     @Default('') String email,
     StripeAccountStatus? stripe,

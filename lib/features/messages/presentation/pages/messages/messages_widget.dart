@@ -37,7 +37,9 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) return;
       await actions.loadConversations(ref, 'all');
+      if (!mounted) return;
       setState(() {});
       await actions.subscribeToConversations(ref);
     });
@@ -45,11 +47,7 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
 
   @override
   void dispose() {
-    // On page dispose action.
-    () async {
-      await actions.unsubscribeFromConversations();
-    }();
-
+    actions.unsubscribeFromConversations();
     super.dispose();
   }
 
@@ -223,7 +221,7 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
           height: double.infinity,
           child: EmptyStateWidget(
             icon: FaIcon(
-              FontAwesomeIcons.solidCommentAlt,
+              FontAwesomeIcons.solidMessage,
               color: AppColors.neutral800,
               size: 100.0,
             ),

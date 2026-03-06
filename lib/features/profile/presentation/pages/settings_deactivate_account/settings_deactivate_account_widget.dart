@@ -1,15 +1,50 @@
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/custom_code/actions/index.dart' as actions;
+import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SettingsDeactivateAccountWidget extends StatelessWidget {
+class SettingsDeactivateAccountWidget extends StatefulWidget {
   const SettingsDeactivateAccountWidget({super.key});
 
   static String routeName = 'settingsDeactivateAccount';
   static String routePath = 'settingsDeactivateAccount';
+
+  @override
+  State<SettingsDeactivateAccountWidget> createState() =>
+      _SettingsDeactivateAccountWidgetState();
+}
+
+class _SettingsDeactivateAccountWidgetState
+    extends State<SettingsDeactivateAccountWidget> {
+  bool _isLoading = false;
+
+  Future<void> _deactivate() async {
+    setState(() => _isLoading = true);
+    final result = await actions.deactivateAccount();
+    if (!mounted) return;
+    setState(() => _isLoading = false);
+
+    if (result['success'] == true) {
+      context.goNamed(SignInWidget.routeName);
+      await actions.toastificationshow(
+        context,
+        'Account Deactivated',
+        'Your account has been deactivated. Sign in again to reactivate.',
+        'success',
+      );
+    } else {
+      await actions.toastificationshow(
+        context,
+        'Error',
+        (result['error'] ?? 'Something went wrong').toString(),
+        'error',
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,12 +135,21 @@ class SettingsDeactivateAccountWidget extends StatelessWidget {
                       width: double.infinity,
                       height: 56.0,
                       child: OutlinedButton.icon(
-                        onPressed: () {},
-                        icon: FaIcon(
-                          FontAwesomeIcons.powerOff,
-                          size: 16.0,
-                          color: AppColors.destructive500,
-                        ),
+                        onPressed: _isLoading ? null : _deactivate,
+                        icon: _isLoading
+                            ? SizedBox(
+                                width: 16.0,
+                                height: 16.0,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2.0,
+                                  color: AppColors.destructive500,
+                                ),
+                              )
+                            : FaIcon(
+                                FontAwesomeIcons.powerOff,
+                                size: 16.0,
+                                color: AppColors.destructive500,
+                              ),
                         label: Text(
                           'Deactivate Account',
                           style: GoogleFonts.inter(

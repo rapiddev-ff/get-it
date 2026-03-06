@@ -159,7 +159,7 @@ class _HomeSellerProfileReviewsWidgetState
                                 FocusManager.instance.primaryFocus?.unfocus();
                               },
                               child: HomeSellerProfileMoreWidget(
-                                userId: '1',
+                                userId: widget.sellerDataType?.id ?? '',
                               ),
                             ),
                           ),
@@ -831,8 +831,8 @@ class _HomeSellerProfileReviewsWidgetState
             if (orderDate != null)
               Text(
                 reviewRole == 'as_seller'
-                    ? 'Purchased on ${DateFormat('MMM dd, yyyy').format(orderDate)}'
-                    : 'Sold on ${DateFormat('MMM dd, yyyy').format(orderDate)}',
+                    ? 'Sold on ${DateFormat('MMM dd, yyyy').format(orderDate)}'
+                    : 'Purchased on ${DateFormat('MMM dd, yyyy').format(orderDate)}',
                 style: GoogleFonts.inter(
                   fontSize: 12.0,
                   color: Color(0xFFAFAFB4),

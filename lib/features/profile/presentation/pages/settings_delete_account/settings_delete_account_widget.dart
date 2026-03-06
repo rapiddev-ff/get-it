@@ -143,7 +143,7 @@ class SettingsDeleteAccountWidget extends StatelessWidget {
                               await actions.toastificationshow(
                                 context,
                                 'Error!',
-                                ((result is Map) ? result['message'] : '')
+                                ((result is Map) ? result['error'] : '')
                                     .toString(),
                                 'error',
                               );

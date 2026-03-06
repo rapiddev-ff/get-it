@@ -91,7 +91,7 @@ class _SettingsPaymentCardItemWidgetState
                       ],
                     ),
                   ),
-                  if (widget.paymentMethod?.isDefault ?? true)
+                  if (widget.paymentMethod?.isDefault ?? false)
                     Container(
                       decoration: BoxDecoration(
                         color: AppColors.backgroundSecondary,

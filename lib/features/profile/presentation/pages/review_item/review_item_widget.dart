@@ -18,6 +18,8 @@ class ReviewItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (reviewDataType == null) return const SizedBox.shrink();
+    final review = reviewDataType!;
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -43,11 +45,11 @@ class ReviewItemWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                   ),
-                  child: (reviewDataType!.reviewer?.avatarUrl ?? '').isNotEmpty
+                  child: (review.reviewer?.avatarUrl ?? '').isNotEmpty
                       ? CachedNetworkImage(
                           fadeInDuration: Duration(milliseconds: 500),
                           fadeOutDuration: Duration(milliseconds: 500),
-                          imageUrl: reviewDataType!.reviewer!.avatarUrl,
+                          imageUrl: review.reviewer?.avatarUrl ?? '',
                           fit: BoxFit.cover,
                         )
                       : Icon(
@@ -64,7 +66,7 @@ class ReviewItemWidget extends StatelessWidget {
                     children: [
                       Text(
                         valueOrDefault<String>(
-                          reviewDataType?.reviewer?.username,
+                          review.reviewer?.username,
                           'N/A',
                         ),
                         style: GoogleFonts.inter(
@@ -76,7 +78,7 @@ class ReviewItemWidget extends StatelessWidget {
                       Text(
                         dateTimeFormat(
                           "yMMMd",
-                          reviewDataType!.createdAt!,
+                          review.createdAt ?? DateTime.now(),
                         ),
                         style: GoogleFonts.inter(
                           fontSize: 12.0,
@@ -92,7 +94,7 @@ class ReviewItemWidget extends StatelessWidget {
                     color: Color(0xFFFACC15),
                   ),
                   direction: Axis.horizontal,
-                  rating: (reviewDataType?.rating ?? 0).toDouble(),
+                  rating: review.rating.toDouble(),
                   unratedColor: Color(0xFF7B7B7B),
                   itemCount: 5,
                   itemSize: 18.0,
@@ -101,7 +103,7 @@ class ReviewItemWidget extends StatelessWidget {
             ),
             Text(
               valueOrDefault<String>(
-                reviewDataType?.content,
+                review.content,
                 'N/A',
               ),
               style: GoogleFonts.inter(

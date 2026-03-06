@@ -1,5 +1,4 @@
 import '/features/auth/data/supabase_auth/auth_util.dart';
-import '/backend/schema/enums/enums.dart';
 import '/features/messages/domain/models/message_model.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
@@ -30,7 +29,7 @@ class ChatItemWidget extends StatelessWidget {
       children: [
         // Other user text message
         if ((messageDataType?.senderId != currentUserUid) &&
-            (messageDataType?.messageType == MessageType.text))
+            (messageDataType?.messageType == 'text'))
           Row(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,7 +100,7 @@ class ChatItemWidget extends StatelessWidget {
 
         // Other user image message
         if ((messageDataType?.senderId != currentUserUid) &&
-            (messageDataType?.messageType == MessageType.image))
+            (messageDataType?.messageType == 'image'))
           Row(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -201,7 +200,7 @@ class ChatItemWidget extends StatelessWidget {
 
         // Current user text message
         if ((messageDataType?.senderId == currentUserUid) &&
-            (messageDataType?.messageType == MessageType.text))
+            (messageDataType?.messageType == 'text'))
           Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -248,7 +247,7 @@ class ChatItemWidget extends StatelessWidget {
 
         // Current user image message
         if ((messageDataType?.senderId == currentUserUid) &&
-            (messageDataType?.messageType == MessageType.image))
+            (messageDataType?.messageType == 'image'))
           Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.end,

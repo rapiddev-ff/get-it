@@ -103,6 +103,114 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
         return;
       }
 
+      // Deactivated user — show reactivation dialog
+      if (userData.isDeactivated) {
+        if (!mounted) return;
+        final shouldReactivate = await showDialog<bool>(
+          context: context,
+          barrierDismissible: false,
+          builder: (dialogContext) => Dialog(
+            backgroundColor: AppColors.backgroundSecondary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(24.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: IconButton(
+                      icon: Icon(Icons.close, color: Colors.white),
+                      onPressed: () => Navigator.pop(dialogContext, false),
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Color(0x338E6CFF),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(14.0),
+                      child: Icon(
+                        Icons.waving_hand_rounded,
+                        color: Color(0xFF8E6CFF),
+                        size: 24.0,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16.0),
+                  Text(
+                    'Reactivate My Account',
+                    style: GoogleFonts.inter(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 20.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(height: 12.0),
+                  Text(
+                    'We\'re so happy to see you back!\nYour account was previously deactivated.\nPlease confirm you would like to reactivate your account again!',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.inter(
+                      fontSize: 14.0,
+                      color: Color(0xFFAFAFB4),
+                      height: 1.5,
+                    ),
+                  ),
+                  SizedBox(height: 24.0),
+                  Container(
+                    width: double.infinity,
+                    height: 52.0,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: TextButton(
+                      onPressed: () => Navigator.pop(dialogContext, true),
+                      child: Text(
+                        'Reactivate My Account',
+                        style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16.0,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+
+        if (!mounted) return;
+        if (shouldReactivate == true) {
+          final result = await actions.reactivateAccount();
+          if (!mounted) return;
+          if (result['success'] == true) {
+            widgetRef.read(authProvider.notifier).updateUser(
+                  (e) => e.copyWith(isDeactivated: false),
+                );
+          } else {
+            await authManager.signOut();
+            if (!mounted) return;
+            context.goNamed(SignInWidget.routeName);
+            return;
+          }
+        } else {
+          await authManager.signOut();
+          if (!mounted) return;
+          context.goNamed(SignInWidget.routeName);
+          return;
+        }
+      }
+
       if (userData.phoneVerified == false) {
         context.goNamed(
           PhoneVerificationPageWidget.routeName,

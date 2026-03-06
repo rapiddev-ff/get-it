@@ -296,18 +296,36 @@ class _SettingsBusinessAddressWidgetState
                                         fontSize: 15.0,
                                       ),
                                     ),
-                                    SizedBox(
-                                      height: 52.0,
-                                      child: DropdownButtonFormField<String>(
-                                        value: (_model.countryDropdownValue ??=
-                                                    ref
-                                                            .read(authProvider)
-                                                            .businessAddress
-                                                            ?.country ??
-                                                        '')
-                                                .isEmpty
-                                            ? null
-                                            : _model.countryDropdownValue,
+                                    DropdownButtonFormField<String>(
+                                        value: () {
+                                          final saved = _model
+                                                  .countryDropdownValue ??=
+                                              ref
+                                                      .read(authProvider)
+                                                      .businessAddress
+                                                      ?.country ??
+                                                  '';
+                                          if (saved.isEmpty) return null;
+                                          final codes = GeoData.getCountries()
+                                              .map((c) => c['code']!)
+                                              .toSet();
+                                          if (codes.contains(saved)) {
+                                            return saved;
+                                          }
+                                          // Legacy full name → resolve to code
+                                          final match = GeoData.getCountries()
+                                              .where((c) =>
+                                                  c['name']!.toLowerCase() ==
+                                                  saved.toLowerCase())
+                                              .toList();
+                                          if (match.isNotEmpty) {
+                                            _model.countryDropdownValue =
+                                                match.first['code']!;
+                                            return _model.countryDropdownValue;
+                                          }
+                                          _model.countryDropdownValue = '';
+                                          return null;
+                                        }(),
                                         items: GeoData.getCountries()
                                             .map((c) => DropdownMenuItem(
                                                   value: c['code'],
@@ -328,7 +346,7 @@ class _SettingsBusinessAddressWidgetState
                                           ),
                                           contentPadding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  12.0, 8.0, 12.0, 8.0),
+                                                  12.0, 16.0, 12.0, 16.0),
                                           enabledBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
                                                 color: AppColors.neutral700,
@@ -355,7 +373,6 @@ class _SettingsBusinessAddressWidgetState
                                             GoogleFonts.inter(fontSize: 14.0),
                                         isExpanded: true,
                                       ),
-                                    ),
                                   ].divide(SizedBox(height: 8.0)),
                                 ),
                               ),
@@ -376,20 +393,26 @@ class _SettingsBusinessAddressWidgetState
                                                 'US') ||
                                             (_model.countryDropdownValue ==
                                                 'CA')) {
-                                          return SizedBox(
-                                            height: 52.0,
-                                            child:
-                                                DropdownButtonFormField<String>(
-                                              value: (_model
-                                                          .stateDropdownValue ??= ref
-                                                              .read(
-                                                                  authProvider)
-                                                              .businessAddress
-                                                              ?.state ??
-                                                          '')
-                                                      .isEmpty
-                                                  ? null
-                                                  : _model.stateDropdownValue,
+                                          return DropdownButtonFormField<String>(
+                                              value: () {
+                                                final saved = _model
+                                                        .stateDropdownValue ??=
+                                                    ref
+                                                            .read(authProvider)
+                                                            .businessAddress
+                                                            ?.state ??
+                                                        '';
+                                                if (saved.isEmpty) return null;
+                                                final valid =
+                                                    GeoData.getStatesByCountry(
+                                                        _model
+                                                            .countryDropdownValue);
+                                                if (valid.contains(saved)) {
+                                                  return saved;
+                                                }
+                                                _model.stateDropdownValue = '';
+                                                return null;
+                                              }(),
                                               items: GeoData.getStatesByCountry(
                                                       _model
                                                           .countryDropdownValue)
@@ -417,8 +440,8 @@ class _SettingsBusinessAddressWidgetState
                                                 ),
                                                 contentPadding:
                                                     EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 8.0,
-                                                            12.0, 8.0),
+                                                        .fromSTEB(12.0, 16.0,
+                                                            12.0, 16.0),
                                                 enabledBorder:
                                                     OutlineInputBorder(
                                                   borderSide: BorderSide(
@@ -451,8 +474,7 @@ class _SettingsBusinessAddressWidgetState
                                               style: GoogleFonts.inter(
                                                   fontSize: 14.0),
                                               isExpanded: true,
-                                            ),
-                                          );
+                                            );
                                         } else {
                                           return Container(
                                             width: double.infinity,
@@ -809,9 +831,10 @@ class _SettingsBusinessAddressWidgetState
                                             ),
                                           ),
                                         );
-                                    setState(() {});
+                                    if (mounted) setState(() {});
                                   }),
                                 ]);
+                                if (!mounted) return;
                                 context.pop();
                               },
                               style: TextButton.styleFrom(

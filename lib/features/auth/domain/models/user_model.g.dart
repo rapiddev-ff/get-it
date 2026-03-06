@@ -43,6 +43,7 @@ _$UserDataImpl _$$UserDataImplFromJson(Map<String, dynamic> json) =>
       createdAt: const DateTimeConverter().fromJson(json['created_at']),
       updatedAt: const DateTimeConverter().fromJson(json['updated_at']),
       deletedAt: const DateTimeConverter().fromJson(json['deleted_at']),
+      isDeactivated: json['is_deactivated'] as bool? ?? false,
       totalReferrals: (json['total_referrals'] as num?)?.toInt() ?? 0,
       email: json['email'] as String? ?? '',
       stripe: json['stripe'] == null
@@ -96,6 +97,7 @@ Map<String, dynamic> _$$UserDataImplToJson(_$UserDataImpl instance) =>
       'created_at': const DateTimeConverter().toJson(instance.createdAt),
       'updated_at': const DateTimeConverter().toJson(instance.updatedAt),
       'deleted_at': const DateTimeConverter().toJson(instance.deletedAt),
+      'is_deactivated': instance.isDeactivated,
       'total_referrals': instance.totalReferrals,
       'email': instance.email,
       'stripe': instance.stripe,

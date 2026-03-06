@@ -57,24 +57,30 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (!mounted) return;
-      await Future.wait([
-        Future(() async {
-          if (!mounted) return;
-          getFeed = await actions.initFeedProductsStream(
-            ref,
-            currentUserUid,
-            ref.read(feedProvider).swipedProductIds.toList(),
-          );
-        }),
-        Future(() async {
-          if (!mounted) return;
-          getSellerDashboard = await actions.callRpc(
-            context,
-            'get_seller_dashboard',
-            <String, dynamic>{},
-          );
-        }),
-      ]);
+      try {
+        await Future.wait([
+          Future(() async {
+            if (!mounted) return;
+            getFeed = await actions.initFeedProductsStream(
+              ref,
+              currentUserUid,
+              ref.read(feedProvider).swipedProductIds.toList(),
+            );
+          }),
+          Future(() async {
+            if (!mounted) return;
+            getSellerDashboard = await actions.callRpc(
+              context,
+              'get_seller_dashboard',
+              <String, dynamic>{},
+            );
+          }),
+        ]);
+      } catch (_) {
+        // Network or API error — dashboard shows fallback values.
+      }
+      if (!mounted) return;
+      setState(() {});
     });
 
     expandableExpandableController = ExpandableController(initialExpanded: true)
@@ -226,6 +232,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                                 currentUserUid,
                               ),
                             );
+                            if (!mounted) return;
                             ref.read(authProvider.notifier).updateUser(
                                   (e) => e.copyWith(
                                     stripe: functions.convertStripeStatus(
@@ -234,8 +241,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                                 );
                             setState(() {});
                           }
-
-                          setState(() {});
                         },
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
@@ -293,7 +298,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                             cardBgColor: AppColors.backgroundSecondary,
                             priceTextColor: AppColors.primary,
                             emptyMessage: 'test',
-                            products: ref.read(feedProvider).feedProducts,
+                            products: ref.watch(feedProvider).feedProducts,
                             onBuy: (product) async {
                               if (ref
                                       .read(authProvider)
@@ -308,6 +313,13 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                                   'status': 'pending',
                                   'subtotal': product.price,
                                 });
+                                if (createOrder == null) return;
+                                final defaultCard = ref
+                                    .read(authProvider)
+                                    .paymentMethod
+                                    .where((e) => e.isDefault)
+                                    .firstOrNull;
+                                if (defaultCard == null) return;
                                 showDialog(
                                   barrierDismissible: false,
                                   context: context,
@@ -338,13 +350,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
 
                                 await actions.payWithSavedCard(
                                   createOrder!.id,
-                                  ref
-                                      .read(authProvider)
-                                      .paymentMethod
-                                      .where((e) => e.isDefault)
-                                      .toList()
-                                      .firstOrNull!
-                                      .id,
+                                  defaultCard.id,
                                   7,
                                 );
                               } else {
@@ -396,10 +402,8 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                   } else {
                     return Builder(
                       builder: (context) {
-                        if (ref
-                                .read(authProvider)
-                                .stripe
-                                ?.onboardingCompleted ??
+                        final authData = ref.watch(authProvider);
+                        if (authData.stripe?.onboardingCompleted ??
                             false) {
                           return Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
@@ -410,7 +414,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Welcome back, ${ref.read(authProvider).firstName}',
+                                    'Welcome back, ${authData.firstName}',
                                     style: GoogleFonts.inter(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 24.0,
@@ -461,13 +465,14 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                                                 fontSize: 24.0,
                                               ),
                                             ),
-                                            Text(
-                                              '${_jsonStr(getSellerDashboard, 'revenue_change_pct') ?? ''}% from last month',
-                                              style: GoogleFonts.inter(
-                                                fontWeight: FontWeight.normal,
-                                                color: Color(0xFF4ADE80),
+                                            if (_jsonStr(getSellerDashboard, 'revenue_change_pct') != null)
+                                              Text(
+                                                '${_jsonStr(getSellerDashboard, 'revenue_change_pct')}% from last month',
+                                                style: GoogleFonts.inter(
+                                                  fontWeight: FontWeight.normal,
+                                                  color: Color(0xFF4ADE80),
+                                                ),
                                               ),
-                                            ),
                                           ].divide(SizedBox(height: 3.0)),
                                         ),
                                       ),
@@ -859,15 +864,16 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                                                         ),
                                                       ),
                                                     ),
-                                                    Text(
-                                                      '${_jsonStr(getSellerDashboard, 'active_listings') ?? ''} Items',
-                                                      style: GoogleFonts.inter(
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                        color: AppColors
-                                                            .textSecondary,
+                                                    if (_jsonStr(getSellerDashboard, 'active_listings') != null)
+                                                      Text(
+                                                        '${_jsonStr(getSellerDashboard, 'active_listings')} Items',
+                                                        style: GoogleFonts.inter(
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                          color: AppColors
+                                                              .textSecondary,
+                                                        ),
                                                       ),
-                                                    ),
                                                   ],
                                                 ),
                                               ),
@@ -1061,21 +1067,16 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                                                         ),
                                                       ),
                                                     ),
-                                                    Text(
-                                                      '${valueOrDefault<String>(
-                                                        _jsonStr(
-                                                          getSellerDashboard,
-                                                          'shortlist_count',
+                                                    if (_jsonStr(getSellerDashboard, 'shortlist_count') != null)
+                                                      Text(
+                                                        '${_jsonStr(getSellerDashboard, 'shortlist_count')} Items',
+                                                        style: GoogleFonts.inter(
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                          color: AppColors
+                                                              .textSecondary,
                                                         ),
-                                                        '0',
-                                                      )} Items',
-                                                      style: GoogleFonts.inter(
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                        color: AppColors
-                                                            .textSecondary,
                                                       ),
-                                                    ),
                                                   ],
                                                 ),
                                               ),

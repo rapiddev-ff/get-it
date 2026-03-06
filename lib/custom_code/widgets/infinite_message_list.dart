@@ -41,7 +41,7 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
   bool _isLoadingInitial = true;
   bool _isLoadingMore = false;
   bool _hasMore = true;
-  bool _realtimeSubscribed = false;
+  RealtimeChannel? _channel;
 
   int get _pageSize => widget.pageSize ?? 30;
   double get _loadMoreThreshold => widget.loadMoreThreshold ?? 300.0;
@@ -82,7 +82,6 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
       _isLoadingInitial = true;
       _isLoadingMore = false;
       _hasMore = true;
-      _realtimeSubscribed = false;
     });
   }
 
@@ -114,7 +113,7 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
       final olderMessages = await _fetchMessages(beforeDate: beforeDate);
       if (mounted) {
         setState(() {
-          _messages.addAll(olderMessages);
+          _messages = [..._messages, ...olderMessages];
           _hasMore = olderMessages.length >= _pageSize;
           _isLoadingMore = false;
         });
@@ -197,13 +196,12 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
   // -- REALTIME --
 
   void _subscribeRealtime() {
-    if (_realtimeSubscribed) return;
-    _realtimeSubscribed = true;
+    if (_channel != null) return;
 
     final currentUserId = Supabase.instance.client.auth.currentUser?.id;
 
-    Supabase.instance.client
-        .channel('messages:${widget.conversationId}')
+    _channel = Supabase.instance.client
+        .channel('messages:${widget.conversationId}:${DateTime.now().millisecondsSinceEpoch}')
         .onPostgresChanges(
           event: PostgresChangeEvent.insert,
           schema: 'public',
@@ -230,11 +228,9 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
   }
 
   void _unsubscribeRealtime() {
-    if (!_realtimeSubscribed) return;
-    Supabase.instance.client.removeChannel(
-      Supabase.instance.client.channel('messages:${widget.conversationId}'),
-    );
-    _realtimeSubscribed = false;
+    if (_channel == null) return;
+    Supabase.instance.client.removeChannel(_channel!);
+    _channel = null;
   }
 
   void _handleNewMessage(
@@ -334,13 +330,11 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
     final isRead = json['is_read'] ?? false;
 
     if (mounted) {
+      final index = _messages.indexWhere((m) => m.id == messageId);
+      if (index == -1) return;
       setState(() {
-        _messages = _messages.map<Message>((m) {
-          if (m.id == messageId) {
-            return m.copyWith(isRead: isRead);
-          }
-          return m;
-        }).toList();
+        _messages = List.from(_messages)
+          ..[index] = _messages[index].copyWith(isRead: isRead);
       });
     }
   }

@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
+import '/features/auth/data/supabase_auth/auth_util.dart';
+import '/backend/supabase/database/tables/support_reports.dart';
+import '/custom_code/actions/index.dart' as actions;
 import '/core/theme/app_colors.dart';
 import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
@@ -27,6 +30,7 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late StreamSubscription<bool> _keyboardVisibilitySubscription;
   bool _isKeyboardVisible = false;
+  bool _isSending = false;
 
   @override
   void initState() {
@@ -216,7 +220,13 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget> {
                             ),
                             maxLines: null,
                             minLines: 5,
-                            keyboardType: TextInputType.emailAddress,
+                            maxLength: 1000,
+                            buildCounter: (context,
+                                    {required currentLength,
+                                    required isFocused,
+                                    maxLength}) =>
+                                null,
+                            keyboardType: TextInputType.multiline,
                             cursorColor: AppColors.textPrimary,
                             enableInteractiveSelection: true,
                           ),
@@ -230,7 +240,7 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              '0/1000',
+                              '${_model.textController?.text.length ?? 0}/1000',
                               style: GoogleFonts.inter(
                                 fontWeight: FontWeight.normal,
                                 fontSize: 14.0,
@@ -266,7 +276,35 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget> {
                           borderRadius: BorderRadius.circular(4.0),
                         ),
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: (_model.textController!.text.trim().isEmpty || _isSending)
+                              ? null
+                              : () async {
+                                  setState(() => _isSending = true);
+                                  try {
+                                    await SupportReportsTable().insert({
+                                      'user_id': currentUserUid,
+                                      'message': _model.textController!.text.trim(),
+                                    });
+                                    if (!mounted) return;
+                                    context.pop();
+                                    await actions.toastificationshow(
+                                      context,
+                                      'Report Sent',
+                                      'We\'ll get back to you within 3-5 business days.',
+                                      'success',
+                                    );
+                                  } catch (e) {
+                                    if (!mounted) return;
+                                    await actions.toastificationshow(
+                                      context,
+                                      'Error',
+                                      'Failed to send report. Please try again.',
+                                      'error',
+                                    );
+                                  } finally {
+                                    if (mounted) setState(() => _isSending = false);
+                                  }
+                                },
                           style: TextButton.styleFrom(
                             minimumSize: Size(double.infinity, 56.0),
                             padding: EdgeInsets.symmetric(horizontal: 16.0),

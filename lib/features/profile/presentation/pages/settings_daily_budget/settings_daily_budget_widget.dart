@@ -162,6 +162,12 @@ class _SettingsDailyBudgetWidgetState
                             decoration: InputDecoration(
                               isDense: false,
                               hintText: 'Daily Budget',
+                              prefixText: '\$ ',
+                              prefixStyle: GoogleFonts.inter(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 16.0,
+                                color: AppColors.textPrimary,
+                              ),
                               hintStyle: GoogleFonts.inter(
                                 fontWeight: FontWeight.normal,
                                 fontSize: 16.0,
@@ -245,7 +251,7 @@ class _SettingsDailyBudgetWidgetState
                                         ),
                                       ),
                                     );
-                                setState(() {});
+                                if (mounted) setState(() {});
                               }),
                               Future(() async {
                                 await UserSettingsTable().update(
@@ -260,6 +266,8 @@ class _SettingsDailyBudgetWidgetState
                                 );
                               }),
                             ]);
+                            if (!mounted) return;
+                            context.pop();
                           },
                           style: TextButton.styleFrom(
                             minimumSize: Size(double.infinity, 56.0),

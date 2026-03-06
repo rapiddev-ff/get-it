@@ -756,7 +756,7 @@ class _SettingsMyProfileWidgetState
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
               child: Text(
                 '${valueOrDefault<String>(
-                  _jsonGet(json, 'as_buyer.total')?.toString(),
+                  _jsonGet(json, 'as_seller.total')?.toString(),
                   '0',
                 )} reviews',
                 style: GoogleFonts.inter(
@@ -768,13 +768,13 @@ class _SettingsMyProfileWidgetState
             ),
           ].divide(SizedBox(width: 12.0)),
         ),
-        _buildRatingsCard(json, 'as_buyer'),
-        if (_jsonGet(json, 'as_buyer.reviews') != null)
+        _buildRatingsCard(json, 'as_seller'),
+        if (_jsonGet(json, 'as_seller.reviews') != null)
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
-            child: _buildReviewsList(json, 'as_buyer', 'Key2m1'),
+            child: _buildReviewsList(json, 'as_seller', 'Key2m1'),
           ),
-        if (_jsonGet(json, 'as_buyer.reviews') != null)
+        if (_jsonGet(json, 'as_seller.reviews') != null)
           _buildViewAllReviewsButton(),
       ].addToStart(SizedBox(height: 24.0)),
     );
@@ -866,7 +866,7 @@ class _SettingsMyProfileWidgetState
               percent: valueOrDefault<int>(
                 _jsonGet(json, '$role.stars[$index].percent'),
                 0,
-              ).toDouble(),
+              ).toDouble() / 100.0,
               lineHeight: 12.0,
               animation: true,
               animateFromLastPercent: true,

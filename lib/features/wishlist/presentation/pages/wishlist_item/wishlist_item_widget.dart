@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -21,6 +19,10 @@ class WishlistItemWidget extends StatelessWidget {
   final ProductDetails? productDataType;
   final Future Function()? actionWishlish;
 
+  bool get _isSold =>
+      productDataType?.quantity == 0 ||
+      productDataType?.status.toLowerCase() == 'sold';
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,9 +35,8 @@ class WishlistItemWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(
-            width: 168.5,
-            height: 128.0,
+          AspectRatio(
+            aspectRatio: 1.0,
             child: Stack(
               children: [
                 ClipRRect(
@@ -54,8 +55,8 @@ class WishlistItemWidget extends StatelessWidget {
                       productDataType?.images.firstOrNull?.imageUrl ??
                           'https://picsum.photos/seed/487/600',
                     ),
-                    width: 168.5,
-                    height: 128.0,
+                    width: double.infinity,
+                    height: double.infinity,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -64,33 +65,14 @@ class WishlistItemWidget extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
                         0.0, 10.0, 10.0, 0.0),
-                    child: ClipOval(
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
-                        child: InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            await actionWishlish?.call();
-                          },
-                          child: Container(
-                            width: 40.0,
-                            height: 40.0,
-                            decoration: const BoxDecoration(
-                              color: Color(0x98000000),
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Align(
-                              child: FaIcon(
-                                FontAwesomeIcons.solidHeart,
-                                color: Color(0xFFEF4444),
-                                size: 18.0,
-                              ),
-                            ),
-                          ),
-                        ),
+                    child: GestureDetector(
+                      onTap: () async {
+                        await actionWishlish?.call();
+                      },
+                      child: const FaIcon(
+                        FontAwesomeIcons.solidHeart,
+                        color: Color(0xFFEF4444),
+                        size: 24.0,
                       ),
                     ),
                   ),
@@ -111,7 +93,6 @@ class WishlistItemWidget extends StatelessWidget {
               padding: const EdgeInsets.all(12.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -123,14 +104,12 @@ class WishlistItemWidget extends StatelessWidget {
                       height: 1.5,
                     ),
                   ),
+                  const SizedBox(height: 4.0),
                   Row(
                     children: [
                       Expanded(
                         child: Text(
-                          productDataType?.price != null
-                              ? NumberFormat('#,##0.##', 'en_US')
-                                  .format(productDataType!.price)
-                              : '0',
+                          '\$${NumberFormat('#,##0.##', 'en_US').format(productDataType?.price ?? 0)}',
                           style: GoogleFonts.inter(
                             fontWeight: FontWeight.bold,
                             fontSize: 16.0,
@@ -141,18 +120,22 @@ class WishlistItemWidget extends StatelessWidget {
                       ),
                       Container(
                         decoration: BoxDecoration(
-                          color: AppColors.secondary,
+                          color: _isSold
+                              ? const Color(0xFF4A4A4A)
+                              : AppColors.secondary,
                           borderRadius: BorderRadius.circular(4.0),
                         ),
                         child: Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               8.0, 4.0, 8.0, 4.0),
                           child: Text(
-                            'Buy Now',
+                            _isSold ? 'Sold' : 'Buy Now',
                             style: GoogleFonts.inter(
                               fontWeight: FontWeight.w500,
                               fontSize: 12.0,
-                              color: AppColors.textPrimary,
+                              color: _isSold
+                                  ? AppColors.textSecondary
+                                  : AppColors.textPrimary,
                             ),
                           ),
                         ),

@@ -271,7 +271,7 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget> {
                                     userId: _model.textController!.text,
                                   );
 
-                                  if ((_model.apiResultzpe?.jsonBody ?? '')) {
+                                  if (_model.apiResultzpe?.jsonBody == true) {
                                     await actions.toastificationshow(
                                       context,
                                       'Error',
@@ -292,7 +292,8 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget> {
                                       PhoneVerificationPage2Widget.routeName,
                                       queryParameters: {
                                         'phoneNumber':
-                                            _model.textController!.text,
+                                            FormValidators.formatPhoneNumber(
+                                                _model.textController!.text),
                                         'isOnborading':
                                             widget.isOnboarding.toString(),
                                       },

@@ -3,19 +3,18 @@ import '/features/browse/domain/models/browse_product_model.dart';
 import '/features/browse/presentation/widgets/browse_products_item/browse_products_item_widget.dart';
 import '/features/home/presentation/widgets/empty_state/empty_state_widget.dart';
 import '/features/home/presentation/widgets/nav_bar/nav_bar_widget.dart';
+import '/features/home/presentation/pages/home_product/home_product_widget.dart';
+import '/features/notifications/presentation/pages/notification/notification_widget.dart';
+import '/features/profile/presentation/pages/settings/settings_widget.dart';
 import '/core/theme/app_colors.dart';
 import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
-import '/index.dart';
-import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
-import 'browse_model.dart';
-export 'browse_model.dart';
 
 class BrowseWidget extends StatefulWidget {
   const BrowseWidget({super.key});
@@ -28,23 +27,25 @@ class BrowseWidget extends StatefulWidget {
 }
 
 class _BrowseWidgetState extends State<BrowseWidget> {
-  late BrowseModel _model;
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _textController = TextEditingController();
+  final _textFieldFocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    _model = BrowseModel();
+    _textFieldFocusNode.addListener(_onFocusChange);
+  }
 
-    _model.textController ??= TextEditingController();
-    _model.textFieldFocusNode ??= FocusNode();
-    _model.textFieldFocusNode!.addListener(() => setState(() {}));
+  void _onFocusChange() {
+    if (mounted) setState(() {});
   }
 
   @override
   void dispose() {
-    _model.dispose();
+    _textFieldFocusNode.removeListener(_onFocusChange);
+    _textFieldFocusNode.dispose();
+    _textController.dispose();
     super.dispose();
   }
 
@@ -126,13 +127,9 @@ class _BrowseWidgetState extends State<BrowseWidget> {
                     SizedBox(
                       width: double.infinity,
                       child: TextFormField(
-                        controller: _model.textController,
-                        focusNode: _model.textFieldFocusNode,
-                        onChanged: (_) => EasyDebounce.debounce(
-                          '_model.textController',
-                          const Duration(milliseconds: 100),
-                          () => setState(() {}),
-                        ),
+                        controller: _textController,
+                        focusNode: _textFieldFocusNode,
+                        onChanged: (_) => setState(() {}),
                         autofocus: false,
                         decoration: InputDecoration(
                           hintText: 'Search products, characters, years...',
@@ -197,7 +194,7 @@ class _BrowseWidgetState extends State<BrowseWidget> {
                             width: double.infinity,
                             height: double.infinity,
                             userId: currentUserUid,
-                            searchQuery: _model.textController?.text ?? '',
+                            searchQuery: _textController.text,
                             categoryId: null,
                             subcategoryId: null,
                             crossAxisCount: 2,
@@ -231,7 +228,7 @@ class _BrowseWidgetState extends State<BrowseWidget> {
                                 size: 140.0,
                               ),
                               title:
-                                  'No results for "${_model.textController?.text ?? ''}"',
+                                  'No results for "${_textController.text}"',
                               description:
                                   'Try a different keyword or use fewer words.',
                               hasButton: true,
@@ -239,7 +236,7 @@ class _BrowseWidgetState extends State<BrowseWidget> {
                               buttonText: 'Clear Search',
                               buttonAction: () async {
                                 setState(() {
-                                  _model.textController?.clear();
+                                  _textController.clear();
                                 });
                               },
                             ),

@@ -282,6 +282,7 @@ UserData convertUserToDataType(
     deletedAt: userRow['deleted_at'] != null
         ? DateTime.tryParse(userRow['deleted_at'])
         : null,
+    isDeactivated: userRow['is_deactivated'] ?? false,
     totalReferrals: userRow['total_referrals'] ?? 0,
     email: userRow['email'] ?? '',
     stripe: stripeStatus,

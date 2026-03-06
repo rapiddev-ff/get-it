@@ -15,7 +15,6 @@ import '/features/home/presentation/pages/home_seller_profile/home_seller_profil
 import '/features/messages/presentation/pages/chat_buyer_profile/chat_buyer_profile_widget.dart';
 import '/features/home/presentation/pages/home_product/home_product_widget.dart';
 import 'package:aligned_dialog/aligned_dialog.dart';
-import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,50 +40,38 @@ class ChatPageWidget extends ConsumerStatefulWidget {
 
 class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  TextEditingController? _textController;
-  FocusNode? _textFieldFocusNode;
-  List<String> _uploadedImages = [];
-  String? _textMessage;
-  // _isDataUploading removed (unused)
-  List<UploadedFile> _uploadedLocalFiles = [];
+  final _textController = TextEditingController();
+  final _textFieldFocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
 
-    _textController = TextEditingController();
-    _textFieldFocusNode = FocusNode();
-    _textFieldFocusNode!.addListener(() => setState(() {}));
+    _textFieldFocusNode.addListener(_onFocusChange);
 
-    // On page load action.
+    // Mark messages as read on page load.
+    // InfiniteMessageList handles loading & realtime subscription internally.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await actions.loadMessages(
-        widget.conversation!.id,
-        50,
-        null,
-      );
-      setState(() {});
+      if (!mounted) return;
       await actions.markMessagesAsRead(
-        ref,
-        widget.conversation!.id,
-      );
-      await actions.subscribeToMessages(
         ref,
         widget.conversation!.id,
       );
     });
   }
 
+  void _onFocusChange() {
+    if (mounted) setState(() {});
+  }
+
   @override
   void dispose() {
-    // On page dispose action.
-    () async {
-      await actions.refreshConversations(ref);
-      await actions.unsubscribeFromMessages();
-    }();
+    _textFieldFocusNode.removeListener(_onFocusChange);
+    _textFieldFocusNode.dispose();
+    _textController.dispose();
 
-    _textFieldFocusNode?.dispose();
-    _textController?.dispose();
+    // Refresh conversations list in the background when leaving chat
+    actions.refreshConversations(ref);
 
     super.dispose();
   }
@@ -304,7 +291,8 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                           context.pushNamed(
                             HomeProductWidget.routeName,
                             queryParameters: {
-                              'productId': widget.conversation?.productId ?? '',
+                              'productId':
+                                  widget.conversation?.productId ?? '',
                             },
                           );
                         },
@@ -341,7 +329,8 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                   color: AppColors.backgroundPrimary,
                 ),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   child: Container(
                     width: double.infinity,
                     height: double.infinity,
@@ -356,7 +345,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                       ),
                       loadingIndicator: () => EmptyStateWidget(
                         icon: FaIcon(
-                          FontAwesomeIcons.solidCommentAlt,
+                          FontAwesomeIcons.solidMessage,
                           color: Color(0xFF676767),
                           size: 100.0,
                         ),
@@ -368,7 +357,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                       ),
                       emptyWidget: () => EmptyStateWidget(
                         icon: FaIcon(
-                          FontAwesomeIcons.solidCommentAlt,
+                          FontAwesomeIcons.solidMessage,
                           color: AppColors.neutral800,
                           size: 100.0,
                         ),
@@ -383,198 +372,176 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                 ),
               ),
             ),
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: AppColors.backgroundSecondary,
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+            _buildMessageInput(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMessageInput() {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: AppColors.backgroundSecondary,
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Container(
+                height: 50.0,
+                child: Stack(
                   children: [
-                    Expanded(
-                      child: Container(
-                        height: 50.0,
-                        child: Stack(
-                          children: [
-                            Container(
-                              width: double.infinity,
-                              child: TextFormField(
-                                controller: _textController,
-                                focusNode: _textFieldFocusNode,
-                                onChanged: (_) => EasyDebounce.debounce(
-                                  '_textController',
-                                  Duration(milliseconds: 100),
-                                  () => setState(() {}),
-                                ),
-                                autofocus: false,
-                                enabled: true,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  isDense: false,
-                                  hintText: 'Type a message...',
-                                  hintStyle: GoogleFonts.inter(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16.0,
-                                    color: AppColors.textSecondary,
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.neutral700,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(100.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.secondary,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(100.0),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(100.0),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(100.0),
-                                  ),
-                                ),
-                                style: GoogleFonts.inter(fontSize: 14.0),
-                                keyboardType: TextInputType.emailAddress,
-                                cursorColor: AppColors.textPrimary,
-                                enableInteractiveSelection: true,
-                              ),
+                    Container(
+                      width: double.infinity,
+                      child: TextFormField(
+                        controller: _textController,
+                        focusNode: _textFieldFocusNode,
+                        onChanged: (_) => setState(() {}),
+                        autofocus: false,
+                        obscureText: false,
+                        decoration: InputDecoration(
+                          isDense: false,
+                          hintText: 'Type a message...',
+                          hintStyle: GoogleFonts.inter(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 16.0,
+                            color: AppColors.textSecondary,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: AppColors.neutral700,
+                              width: 1.0,
                             ),
-                            Align(
-                              alignment: AlignmentDirectional(1.0, 0.0),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 16.0, 0.0),
-                                child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    final selectedMedia = await selectMedia(
-                                      mediaSource: MediaSource.photoGallery,
-                                      multiImage: true,
-                                    );
-                                    if (selectedMedia != null &&
-                                        selectedMedia.every((m) =>
-                                            validateFileFormat(
-                                                m.storagePath, context))) {
-                                      var selectedUploadedFiles =
-                                          <UploadedFile>[];
-
-                                      try {
-                                        selectedUploadedFiles = selectedMedia
-                                            .map((m) => UploadedFile(
-                                                  name: m.storagePath
-                                                      .split('/')
-                                                      .last,
-                                                  bytes: m.bytes,
-                                                  height: m.dimensions?.height,
-                                                  width: m.dimensions?.width,
-                                                  blurHash: m.blurHash,
-                                                  originalFilename:
-                                                      m.originalFilename,
-                                                ))
-                                            .toList();
-                                      } finally {}
-                                      if (selectedUploadedFiles.length ==
-                                          selectedMedia.length) {
-                                        setState(() {
-                                          _uploadedLocalFiles =
-                                              selectedUploadedFiles;
-                                        });
-                                      } else {
-                                        setState(() {});
-                                        return;
-                                      }
-                                    }
-
-                                    if (_uploadedLocalFiles.firstOrNull !=
-                                            null &&
-                                        (_uploadedLocalFiles.firstOrNull?.bytes
-                                                ?.isNotEmpty ??
-                                            false)) {
-                                      await actions.uploadAndSendImages(
-                                        ref,
-                                        widget.conversation!.id,
-                                        _uploadedLocalFiles.toList(),
-                                      );
-                                    }
-                                  },
-                                  child: FaIcon(
-                                    FontAwesomeIcons.camera,
-                                    color: AppColors.textPrimary,
-                                    size: 24.0,
-                                  ),
-                                ),
-                              ),
+                            borderRadius: BorderRadius.circular(100.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: AppColors.secondary,
+                              width: 1.0,
                             ),
-                          ],
+                            borderRadius: BorderRadius.circular(100.0),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: AppColors.error,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(100.0),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: AppColors.error,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(100.0),
+                          ),
                         ),
+                        style: GoogleFonts.inter(fontSize: 14.0),
+                        keyboardType: TextInputType.text,
+                        cursorColor: AppColors.textPrimary,
+                        enableInteractiveSelection: true,
                       ),
                     ),
-                    InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        _textMessage = _textController!.text;
-                        setState(() {});
-                        setState(() {
-                          _textController?.clear();
-                        });
-                        await actions.sendMessage(
-                          ref,
-                          widget.conversation!.id,
-                          _textMessage!,
-                          _uploadedImages.toList(),
-                        );
+                    Align(
+                      alignment: AlignmentDirectional(1.0, 0.0),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            0.0, 0.0, 16.0, 0.0),
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            final selectedMedia = await selectMedia(
+                              mediaSource: MediaSource.photoGallery,
+                              multiImage: true,
+                            );
+                            if (selectedMedia != null &&
+                                selectedMedia.every((m) =>
+                                    validateFileFormat(
+                                        m.storagePath, context))) {
+                              final selectedUploadedFiles = selectedMedia
+                                  .map((m) => UploadedFile(
+                                        name:
+                                            m.storagePath.split('/').last,
+                                        bytes: m.bytes,
+                                        height: m.dimensions?.height,
+                                        width: m.dimensions?.width,
+                                        blurHash: m.blurHash,
+                                        originalFilename:
+                                            m.originalFilename,
+                                      ))
+                                  .toList();
 
-                        setState(() {});
-                      },
-                      child: Container(
-                        width: 38.0,
-                        height: 38.0,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                            stops: [0.0, 1.0],
-                            begin: AlignmentDirectional(0.0, -1.0),
-                            end: AlignmentDirectional(0, 1.0),
-                          ),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Align(
-                          alignment: AlignmentDirectional(0.0, 0.0),
-                          child: Icon(
-                            Icons.send,
+                              if (selectedUploadedFiles.isNotEmpty &&
+                                  (selectedUploadedFiles.first.bytes
+                                          ?.isNotEmpty ??
+                                      false)) {
+                                await actions.uploadAndSendImages(
+                                  ref,
+                                  widget.conversation!.id,
+                                  selectedUploadedFiles,
+                                );
+                              }
+                            }
+                          },
+                          child: FaIcon(
+                            FontAwesomeIcons.camera,
                             color: AppColors.textPrimary,
-                            size: 14.0,
+                            size: 24.0,
                           ),
                         ),
                       ),
                     ),
-                  ].divide(SizedBox(width: 12.0)),
+                  ],
                 ),
               ),
             ),
-          ],
+            InkWell(
+              splashColor: Colors.transparent,
+              focusColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              onTap: () async {
+                final text = _textController.text.trim();
+                if (text.isEmpty) return;
+                _textController.clear();
+                await actions.sendMessage(
+                  ref,
+                  widget.conversation!.id,
+                  text,
+                  [],
+                );
+              },
+              child: Container(
+                width: 38.0,
+                height: 38.0,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
+                    stops: [0.0, 1.0],
+                    begin: AlignmentDirectional(0.0, -1.0),
+                    end: AlignmentDirectional(0, 1.0),
+                  ),
+                  shape: BoxShape.circle,
+                ),
+                child: Align(
+                  alignment: AlignmentDirectional(0.0, 0.0),
+                  child: Icon(
+                    Icons.send,
+                    color: AppColors.textPrimary,
+                    size: 14.0,
+                  ),
+                ),
+              ),
+            ),
+          ].divide(SizedBox(width: 12.0)),
         ),
       ),
     );

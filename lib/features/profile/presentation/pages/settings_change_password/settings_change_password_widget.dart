@@ -146,17 +146,7 @@ class _SettingsChangePasswordWidgetState
                                     () => setState(() {}),
                                   ),
                                   onFieldSubmitted: (_) async {
-                                    setState(() {
-                                      _model.textController2?.text = '';
-                                      _model.textFieldFocusNode2
-                                          ?.requestFocus();
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback((_) {
-                                        _model.textController2?.selection =
-                                            const TextSelection.collapsed(
-                                                offset: 0);
-                                      });
-                                    });
+                                    _model.textFieldFocusNode2?.requestFocus();
                                   },
                                   autofocus: false,
                                   enabled: true,
@@ -266,17 +256,7 @@ class _SettingsChangePasswordWidgetState
                                     () => setState(() {}),
                                   ),
                                   onFieldSubmitted: (_) async {
-                                    setState(() {
-                                      _model.textController3?.text = '';
-                                      _model.textFieldFocusNode3
-                                          ?.requestFocus();
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback((_) {
-                                        _model.textController3?.selection =
-                                            const TextSelection.collapsed(
-                                                offset: 0);
-                                      });
-                                    });
+                                    _model.textFieldFocusNode3?.requestFocus();
                                   },
                                   autofocus: false,
                                   enabled: true,
@@ -547,28 +527,44 @@ class _SettingsChangePasswordWidgetState
                             _model.errorCurrentPasswordRequired = false;
                             _model.errorPasswordRequired = false;
                             setState(() {});
-                            if (_model.textController2!.text != '') {
-                              _model.errorPasswordRequired = false;
-                              setState(() {});
-                            } else {
-                              _model.errorPasswordRequired = true;
-                              setState(() {});
-                            }
-
                             if (_model.textController1!.text != '') {
                               _model.errorCurrentPasswordRequired = false;
-                              setState(() {});
                             } else {
                               _model.errorCurrentPasswordRequired = true;
                               setState(() {});
+                              return;
+                            }
+
+                            if (_model.textController2!.text != '') {
+                              _model.errorPasswordRequired = false;
+                            } else {
+                              _model.errorPasswordRequired = true;
+                              setState(() {});
+                              return;
                             }
 
                             if (_model.textController3!.text != '') {
                               _model.errorConfirmPasswordRequired = false;
-                              setState(() {});
                             } else {
                               _model.errorConfirmPasswordRequired = true;
                               setState(() {});
+                              return;
+                            }
+
+                            // Client-side password strength validation
+                            final newPw = _model.textController2!.text;
+                            final confirmPw = _model.textController3!.text;
+                            if (newPw.length < 8 ||
+                                !newPw.contains(RegExp(r'[A-Z]')) ||
+                                !newPw.contains(RegExp(r'\d')) ||
+                                !newPw.contains(RegExp(r'[!@#\$%^&*(),.?":{}|<>_\-]')) ||
+                                newPw != confirmPw) {
+                              await actions.toastificationshow(
+                                context,
+                                'Error!',
+                                'Please meet all password requirements.',
+                                'error',
+                              );
                               return;
                             }
 

@@ -237,6 +237,14 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
     return DateTime.now().isBefore(product.flashSaleEndsAt!);
   }
 
+  String _formatDiscount(FeedProduct product) {
+    final original = product.originalPrice ?? product.price;
+    final sale = product.flashSalePrice ?? product.price;
+    if (original <= 0) return '';
+    final percent = ((original - sale) / original * 100).round();
+    return '-$percent%';
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.products.isEmpty || _currentIndex >= widget.products.length) {
@@ -328,7 +336,6 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
     double screenWidth,
   ) {
     final bgColor = widget.cardBgColor ?? const Color(0xFF252525);
-    final priceColor = widget.priceTextColor ?? Colors.white;
     final cBuy = widget.colorBuy ?? const Color(0xFF4B39EF);
     final cHide = widget.colorHide ?? AppColors.error;
 
@@ -392,11 +399,11 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
                             ? Image.network(
                                 product.mainImageUrl,
                                 width: cardWidth,
-                                height: cardHeight * 0.65,
+                                height: cardHeight * 0.62,
                                 fit: BoxFit.cover,
                                 errorBuilder: (_, __, ___) => Container(
                                   width: cardWidth,
-                                  height: cardHeight * 0.65,
+                                  height: cardHeight * 0.62,
                                   color:
                                       AppColors.textSecondary.withOpacity(0.2),
                                   child: Icon(
@@ -408,7 +415,7 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
                               )
                             : Container(
                                 width: cardWidth,
-                                height: cardHeight * 0.65,
+                                height: cardHeight * 0.62,
                                 color: AppColors.textSecondary.withOpacity(0.2),
                                 child: Icon(
                                   Icons.image,
@@ -416,42 +423,6 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
                                   size: 48,
                                 ),
                               ),
-
-                        // Flash Sale Badge
-                        if (isFlashSale)
-                          Positioned(
-                            top: 12,
-                            left: 12,
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 4,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const Icon(
-                                    Icons.flash_on,
-                                    color: Colors.white,
-                                    size: 14,
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    'FLASH SALE',
-                                    style: GoogleFonts.inter(
-                                      color: Colors.white,
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
 
                         // Swipe Action Icons
                         Positioned.fill(
@@ -523,8 +494,8 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
                         // "Tap to view details" button (bottom left)
                         if (swipeXOpacity < 0.1 && swipeYOpacity < 0.1)
                           Positioned(
-                            bottom: 12,
-                            left: 12,
+                            bottom: 16,
+                            left: 16,
                             child: GestureDetector(
                               onTap: () async {
                                 await widget.onTapDetails?.call(
@@ -546,7 +517,8 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
                                   style: GoogleFonts.inter(
                                     color: Colors.white,
                                     fontSize: 12,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w400,
+                                    height: 18 / 12,
                                   ),
                                 ),
                               ),
@@ -555,8 +527,8 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
 
                         // Like Button (top right)
                         Positioned(
-                          top: 12,
-                          right: 12,
+                          top: 16,
+                          right: 16,
                           child: GestureDetector(
                             onTap: () async {
                               _triggerLikeAnimation();
@@ -589,10 +561,56 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // Seller Info Row
+                        Row(
+                          children: [
+                            Container(
+                              width: 20,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                color: Colors.grey,
+                                shape: BoxShape.circle,
+                                image: product.sellerAvatarUrl != null &&
+                                        product.sellerAvatarUrl!.isNotEmpty
+                                    ? DecorationImage(
+                                        image: NetworkImage(
+                                          product.sellerAvatarUrl!,
+                                        ),
+                                        fit: BoxFit.cover,
+                                      )
+                                    : null,
+                              ),
+                              child: product.sellerAvatarUrl == null ||
+                                      product.sellerAvatarUrl!.isEmpty
+                                  ? const Icon(
+                                      Icons.person,
+                                      size: 12,
+                                      color: Colors.white,
+                                    )
+                                  : null,
+                            ),
+                            const SizedBox(width: 8),
+                            Flexible(
+                              child: Text(
+                                '@${product.sellerUsername}',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.inter(
+                                  color: AppColors.textSecondary,
+                                  fontSize: 12,
+                                  height: 16 / 12,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 4),
+
                         // Title
                         Text(
                           product.title,
@@ -600,126 +618,56 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
                           overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.inter(
                             color: AppColors.textPrimary,
-                            fontSize: 22,
-                            fontWeight: FontWeight.w800,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            height: 30 / 20,
                           ),
                         ),
 
-                        const SizedBox(height: 4),
+                        const SizedBox(height: 8),
 
-                        // Subtitle (condition)
-                        if (product.conditionName.isNotEmpty)
-                          Text(
-                            product.conditionName,
-                            style: GoogleFonts.inter(
-                              color: AppColors.textSecondary,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-
-                        const Spacer(),
-
-                        // Price & Seller Row
+                        // Price Row with Flash Sale
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            // Price
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Original price (if flash sale)
-                                if (isFlashSale &&
-                                    product.originalPrice != null)
-                                  Text(
-                                    '\$${product.originalPrice!.toStringAsFixed(2)}',
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.textSecondary,
-                                      fontSize: 14,
-                                      decoration: TextDecoration.lineThrough,
-                                    ),
-                                  ),
-                                Text(
-                                  _formatPrice(product),
-                                  style: GoogleFonts.inter(
-                                    color:
-                                        isFlashSale ? Colors.red : priceColor,
-                                    fontSize: 26,
-                                    fontWeight: FontWeight.w900,
-                                  ),
-                                ),
-                              ],
+                            Text(
+                              _formatPrice(product),
+                              style: GoogleFonts.inter(
+                                color: AppColors.textPrimary,
+                                fontSize: 24,
+                                fontWeight: FontWeight.w700,
+                                height: 36 / 24,
+                              ),
                             ),
-
-                            // Seller Info
-                            Row(
-                              children: [
-                                // Seller Avatar
-                                Container(
-                                  width: 28,
-                                  height: 28,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey,
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: Colors.white,
-                                      width: 1,
-                                    ),
-                                    image: product.sellerAvatarUrl != null &&
-                                            product.sellerAvatarUrl!.isNotEmpty
-                                        ? DecorationImage(
-                                            image: NetworkImage(
-                                              product.sellerAvatarUrl!,
-                                            ),
-                                            fit: BoxFit.cover,
-                                          )
-                                        : null,
-                                  ),
-                                  child: product.sellerAvatarUrl == null ||
-                                          product.sellerAvatarUrl!.isEmpty
-                                      ? const Icon(
-                                          Icons.person,
-                                          size: 16,
-                                          color: Colors.white,
-                                        )
-                                      : null,
+                            if (isFlashSale &&
+                                product.originalPrice != null) ...[
+                              const SizedBox(width: 8),
+                              Text(
+                                '\$${product.originalPrice!.toStringAsFixed(2)}',
+                                style: GoogleFonts.inter(
+                                  color: AppColors.textSecondary,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  decoration: TextDecoration.lineThrough,
+                                  height: 16 / 16,
                                 ),
-                                const SizedBox(width: 8),
-
-                                // Seller Username & Rating
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '@${product.sellerUsername}',
-                                      style: GoogleFonts.inter(
-                                        color: AppColors.textSecondary,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                    if (product.sellerRating > 0)
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.star_rounded,
-                                            size: 12,
-                                            color: Colors.amber,
-                                          ),
-                                          const SizedBox(width: 2),
-                                          Text(
-                                            '${product.sellerRating.toStringAsFixed(1)} (${product.sellerTotalReviews})',
-                                            style: GoogleFonts.inter(
-                                              color: AppColors.textSecondary,
-                                              fontSize: 10,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                  ],
+                              ),
+                              const SizedBox(width: 6),
+                              Icon(
+                                Icons.bolt,
+                                color: const Color(0xFFFF2D55),
+                                size: 16,
+                              ),
+                              Text(
+                                _formatDiscount(product),
+                                style: GoogleFonts.inter(
+                                  color: const Color(0xFFFF2D55),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  height: 16 / 16,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ],
                         ),
                       ],

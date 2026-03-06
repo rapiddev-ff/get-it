@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:go_router/go_router.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '/features/browse/domain/models/category_model.dart';
 import '/features/home/domain/models/product_details_model.dart';
 import '/core/constants/app_constants.dart';
 import '/features/home/presentation/widgets/empty_state/empty_state_widget.dart';
 import '/features/home/presentation/widgets/nav_bar/nav_bar_widget.dart';
+import '/core/router/app_router.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/custom_code/actions/index.dart' as actions;
@@ -36,6 +37,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
   final _textController = TextEditingController();
   final _textFieldFocusNode = FocusNode();
   Category? _choosenCategory;
+  bool _hadProducts = false;
 
   @override
   void initState() {
@@ -48,6 +50,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
 
   @override
   void dispose() {
+    actions.disposeWishlistStream();
     _textFieldFocusNode.dispose();
     _textController.dispose();
     super.dispose();
@@ -77,7 +80,9 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final wishlistProducts = ref.watch(wishlistProvider);
+    final wishlistState = ref.watch(wishlistProvider);
+    final wishlistProducts = wishlistState.products;
+    final isLoading = wishlistState.isLoading;
     final categoriesAsync = ref.watch(categoriesProvider);
     final categories = categoriesAsync.valueOrNull ?? [];
 
@@ -143,7 +148,17 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
             Expanded(
               child: Builder(
                 builder: (context) {
+                  if (isLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.secondary,
+                      ),
+                    );
+                  }
                   if (wishlistProducts.isNotEmpty) {
+                    _hadProducts = true;
+                  }
+                  if (wishlistProducts.isNotEmpty || _hadProducts) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -157,7 +172,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                               focusNode: _textFieldFocusNode,
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_textController',
-                                const Duration(milliseconds: 100),
+                                const Duration(milliseconds: 300),
                                 () => setState(() {}),
                               ),
                               autofocus: false,
@@ -260,7 +275,8 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                       child: Text(
                                         'All (${wishlistProducts.length})',
                                         style: GoogleFonts.inter(
-                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 13.0,
                                           color: AppColors.textPrimary,
                                         ),
                                       ),
@@ -307,14 +323,15 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                         child: Text(
                                           categoriesItem.name,
                                           style: GoogleFonts.inter(
-                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 13.0,
                                             color: AppColors.textPrimary,
                                           ),
                                         ),
                                       ),
                                     ),
                                   );
-                                }).divide(const SizedBox(width: 8.0)),
+                                }),
                               ]
                                   .divide(const SizedBox(width: 8.0))
                                   .addToStart(const SizedBox(width: 16.0))
@@ -334,26 +351,69 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                   _choosenCategory?.id,
                                 );
                                 if (wishlist.isEmpty) {
+                                  final hasSearch =
+                                      _textController.text.trim().isNotEmpty;
+                                  final hasCategory =
+                                      _choosenCategory != null;
+                                  final hasFilters = hasSearch || hasCategory;
+
                                   return Center(
                                     child: SizedBox(
                                       width: double.infinity,
                                       height: double.infinity,
                                       child: EmptyStateWidget(
-                                        icon: Icon(
-                                          Icons.search_off,
-                                          color: AppColors.neutral800,
-                                          size: 100.0,
-                                        ),
-                                        title: 'No matches',
-                                        description:
-                                            'We couldn\'t find anyone matching "${_textController.text}".',
+                                        icon: hasFilters
+                                            ? Icon(
+                                                hasSearch
+                                                    ? Icons.search_off
+                                                    : Icons.filter_list_off,
+                                                color: AppColors.neutral800,
+                                                size: 100.0,
+                                              )
+                                            : FaIcon(
+                                                FontAwesomeIcons.solidHeart,
+                                                color: AppColors.neutral800,
+                                                size: 100.0,
+                                              ),
+                                        title: hasFilters
+                                            ? 'No matches'
+                                            : 'Your wishlist is empty',
+                                        description: hasSearch
+                                            ? 'We couldn\'t find anything matching "${_textController.text}".'
+                                            : hasCategory
+                                                ? 'No items in "${_choosenCategory?.name ?? ''}" category.'
+                                                : 'Tap the heart on any item to save it here for later.',
                                         hasButton: true,
                                         sidePadding: 16.0,
-                                        buttonText: 'Clear Search',
+                                        buttonText: hasFilters
+                                            ? (hasSearch
+                                                ? 'Clear Search'
+                                                : 'Show All')
+                                            : 'Browse Items',
                                         buttonAction: () async {
-                                          setState(() {
-                                            _textController.clear();
-                                          });
+                                          if (hasFilters) {
+                                            setState(() {
+                                              if (hasSearch) {
+                                                _textController.clear();
+                                              }
+                                              if (hasCategory) {
+                                                _choosenCategory = null;
+                                              }
+                                            });
+                                          } else {
+                                            context.goNamed(
+                                                BrowseWidget.routeName,
+                                                extra: <String, dynamic>{
+                                                  kTransitionInfoKey:
+                                                      TransitionInfo(
+                                                    hasTransition: true,
+                                                    transitionType:
+                                                        PageTransitionType.fade,
+                                                    duration: Duration.zero,
+                                                  ),
+                                                },
+                                              );
+                                          }
                                         },
                                       ),
                                     ),
@@ -361,7 +421,6 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                 }
 
                                 return MasonryGridView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
                                   gridDelegate:
                                       const SliverSimpleGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
@@ -369,7 +428,6 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                   crossAxisSpacing: 24.0,
                                   mainAxisSpacing: 24.0,
                                   itemCount: wishlist.length,
-                                  shrinkWrap: true,
                                   itemBuilder: (context, wishlistIndex) {
                                     final wishlistItem =
                                         wishlist[wishlistIndex];
@@ -391,6 +449,9 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                             'Key1b2_${wishlistIndex}_of_${wishlist.length}'),
                                         productDataType: wishlistItem,
                                         actionWishlish: () async {
+                                          ref
+                                              .read(wishlistProvider.notifier)
+                                              .removeById(wishlistItem.id);
                                           await actions.toggleWishlist(
                                             currentUserUid,
                                             wishlistItem.id,
@@ -421,7 +482,16 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                       hasButton: true,
                       buttonText: 'Browse Items',
                       buttonAction: () async {
-                        context.goNamed(BrowseWidget.routeName);
+                        context.goNamed(
+                          BrowseWidget.routeName,
+                          extra: <String, dynamic>{
+                            kTransitionInfoKey: TransitionInfo(
+                              hasTransition: true,
+                              transitionType: PageTransitionType.fade,
+                              duration: Duration.zero,
+                            ),
+                          },
+                        );
                       },
                     );
                   }

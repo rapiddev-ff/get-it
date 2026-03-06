@@ -65,7 +65,7 @@ class _SettingsEditProfileWidgetState
         TextEditingController(text: userData.username);
     _model.usernameFocusNode ??= FocusNode();
     _model.usernameFocusNode!.addListener(() => setState(() {}));
-    _model.bioTextController ??= TextEditingController();
+    _model.bioTextController ??= TextEditingController(text: userData.bio);
     _model.bioFocusNode ??= FocusNode();
     _model.bioFocusNode!.addListener(() => setState(() {}));
     _model.firstnameTextController ??=
@@ -112,6 +112,7 @@ class _SettingsEditProfileWidgetState
     if (picked == null) return;
     final bytes = await picked.readAsBytes();
     _model.image = bytes;
+    if (!mounted) return;
     setState(() {});
 
     // Upload to storage
@@ -120,6 +121,7 @@ class _SettingsEditProfileWidgetState
       'avatars',
       currentUserUid,
     );
+    if (!mounted) return;
     setState(() {});
   }
 
@@ -441,12 +443,7 @@ class _SettingsEditProfileWidgetState
                           () => setState(() {}),
                         ),
                         onFieldSubmitted: (_) async {
-                          _model.lastnameTextController?.text = '';
                           _model.lastnameFocusNode?.requestFocus();
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            _model.lastnameTextController?.selection =
-                                const TextSelection.collapsed(offset: 0);
-                          });
                         },
                         autofocus: false,
                         textInputAction: TextInputAction.done,
@@ -520,12 +517,7 @@ class _SettingsEditProfileWidgetState
                           () => setState(() {}),
                         ),
                         onFieldSubmitted: (_) async {
-                          _model.lastnameTextController?.text = '';
                           _model.lastnameFocusNode?.requestFocus();
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            _model.lastnameTextController?.selection =
-                                const TextSelection.collapsed(offset: 0);
-                          });
                         },
                         autofocus: false,
                         autofillHints: [AutofillHints.name],
@@ -583,14 +575,7 @@ class _SettingsEditProfileWidgetState
                           () => setState(() {}),
                         ),
                         onFieldSubmitted: (_) async {
-                          setState(() {
-                            _model.usernameTextController?.text = '';
-                            _model.usernameFocusNode?.requestFocus();
-                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                              _model.usernameTextController?.selection =
-                                  const TextSelection.collapsed(offset: 0);
-                            });
-                          });
+                          _model.usernameFocusNode?.requestFocus();
                         },
                         autofocus: false,
                         autofillHints: [AutofillHints.familyName],
@@ -665,7 +650,7 @@ class _SettingsEditProfileWidgetState
                                       await UserProfilesTable().update(
                                         data: {
                                           'first_name':
-                                              _model.bioTextController!.text,
+                                              _model.firstnameTextController!.text,
                                           'last_name': _model
                                               .lastnameTextController!.text,
                                           'username':

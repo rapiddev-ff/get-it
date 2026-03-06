@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class SettingsMyProfileFollowersModel {
   ///  Local state fields for this page.
 
-  String? state = 'As Buyer';
+  String? state = 'Followers';
 
   ///  State fields for stateful widgets in this page.
 
