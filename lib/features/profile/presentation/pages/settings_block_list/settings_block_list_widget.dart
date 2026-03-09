@@ -188,190 +188,230 @@ class _SettingsBlockListWidgetState extends State<SettingsBlockListWidget> {
         ),
         body: SafeArea(
           top: true,
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Blocked Users',
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16.0,
-                      height: 1.5,
-                    ),
+          child: (_blockedUsers?.isEmpty ?? true) &&
+                  (_model.textController?.text.isEmpty ?? true)
+              ? _buildEmptyState()
+              : _buildBlockedList(blockedUsers),
+        ),
+      ),
+    );
+  }
+  Widget _buildEmptyState() {
+    return Column(
+      children: [
+        Expanded(
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.block,
+                  size: 64.0,
+                  color: AppColors.textSecondary,
+                ),
+                SizedBox(height: 16.0),
+                Text(
+                  'No blocked users',
+                  style: GoogleFonts.inter(
+                    color: AppColors.textPrimary,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w600,
                   ),
-                  Text(
-                    'Manage who can contact and buy from you',
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.normal,
-                      color: AppColors.textSecondary,
-                      fontSize: 14.0,
-                      height: 1.5,
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-                    child: Container(
-                      width: double.infinity,
-                      child: TextFormField(
-                        controller: _model.textController,
-                        focusNode: _model.textFieldFocusNode,
-                        onChanged: (_) => EasyDebounce.debounce(
-                          '_model.textController',
-                          Duration(milliseconds: 100),
-                          () => setState(() {}),
-                        ),
-                        autofocus: false,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          isDense: false,
-                          hintText: 'Search blocked users...',
-                          hintStyle: GoogleFonts.inter(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 15.0,
-                            color: AppColors.textSecondary,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: AppColors.neutral700,
-                              width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.circular(4.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: AppColors.secondary,
-                              width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.circular(4.0),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: AppColors.error,
-                              width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.circular(4.0),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: AppColors.error,
-                              width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.circular(4.0),
-                          ),
-                          prefixIcon: Icon(
-                            Icons.search,
-                            color: Colors.white,
-                            size: 24.0,
-                          ),
-                        ),
-                        style: GoogleFonts.inter(
-                          color: AppColors.textPrimary,
-                        ),
-                        cursorColor: AppColors.textPrimary,
-                        enableInteractiveSelection: true,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
-                    child: blockedUsers.isEmpty
-                        ? Center(
-                            child: Padding(
-                              padding: EdgeInsets.all(32.0),
-                              child: Text(
-                                _model.textController!.text.isNotEmpty
-                                    ? 'No matching blocked users'
-                                    : 'No blocked users',
-                                style: GoogleFonts.inter(
-                                  color: AppColors.textSecondary,
-                                  fontSize: 14.0,
-                                ),
-                              ),
-                            ),
-                          )
-                        : ListView.separated(
-                            padding: EdgeInsets.zero,
-                            primary: false,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount: blockedUsers.length,
-                            separatorBuilder: (_, __) =>
-                                SizedBox(height: 16.0),
-                            itemBuilder: (context, index) {
-                              final user = blockedUsers[index];
-                              return SettingsBlockedUserItemWidget(
-                                key: Key('blocked_${user.id}'),
-                                username: user.username,
-                                avatarUrl: user.avatarUrl,
-                                blockedAt: user.blockedAt,
-                                isUnblocking: _unblockingId == user.id,
-                                onUnblock: () => _unblockUser(user),
-                              );
-                            },
-                          ),
-                  ),
-                  Divider(
-                    height: 48.0,
-                    thickness: 2.0,
-                    color: Color(0xFF363636),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: AppColors.backgroundSecondary,
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.info_outline,
-                            color: AppColors.primary,
-                            size: 24.0,
-                          ),
-                          Expanded(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'About Blocking',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16.0,
-                                    height: 1.5,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 8.0, 0.0, 0.0),
-                                  child: Text(
-                                    'Blocked users cannot send you messages, view your full profile, or purchase items from you. They won\'t be notified that they\'ve been blocked.',
-                                    style: GoogleFonts.inter(
-                                      fontSize: 14.0,
-                                      height: 1.5,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ].divide(SizedBox(width: 12.0)),
-                      ),
-                    ),
-                  ),
-                ].addToStart(SizedBox(height: 28.0)),
+                ),
+              ],
+            ),
+          ),
+        ),
+        _buildAboutBlockingCard(),
+        SizedBox(height: 24.0),
+      ],
+    );
+  }
+
+  Widget _buildBlockedList(List<_BlockedUserInfo> blockedUsers) {
+    return Padding(
+      padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Blocked Users',
+              style: GoogleFonts.inter(
+                fontWeight: FontWeight.w500,
+                fontSize: 16.0,
+                height: 1.5,
               ),
             ),
+            Text(
+              'Manage who can contact and buy from you',
+              style: GoogleFonts.inter(
+                fontWeight: FontWeight.normal,
+                color: AppColors.textSecondary,
+                fontSize: 14.0,
+                height: 1.5,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+              child: Container(
+                width: double.infinity,
+                child: TextFormField(
+                  controller: _model.textController,
+                  focusNode: _model.textFieldFocusNode,
+                  onChanged: (_) => EasyDebounce.debounce(
+                    '_model.textController',
+                    Duration(milliseconds: 100),
+                    () => setState(() {}),
+                  ),
+                  autofocus: false,
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    isDense: false,
+                    hintText: 'Search blocked users...',
+                    hintStyle: GoogleFonts.inter(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 15.0,
+                      color: AppColors.textSecondary,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.neutral700,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.secondary,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.error,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: AppColors.error,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(4.0),
+                    ),
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: Colors.white,
+                      size: 24.0,
+                    ),
+                  ),
+                  style: GoogleFonts.inter(
+                    color: AppColors.textPrimary,
+                  ),
+                  cursorColor: AppColors.textPrimary,
+                  enableInteractiveSelection: true,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+              child: blockedUsers.isEmpty
+                  ? Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(32.0),
+                        child: Text(
+                          'No matching blocked users',
+                          style: GoogleFonts.inter(
+                            color: AppColors.textSecondary,
+                            fontSize: 14.0,
+                          ),
+                        ),
+                      ),
+                    )
+                  : ListView.separated(
+                      padding: EdgeInsets.zero,
+                      primary: false,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: blockedUsers.length,
+                      separatorBuilder: (_, __) => SizedBox(height: 16.0),
+                      itemBuilder: (context, index) {
+                        final user = blockedUsers[index];
+                        return SettingsBlockedUserItemWidget(
+                          key: Key('blocked_${user.id}'),
+                          username: user.username,
+                          avatarUrl: user.avatarUrl,
+                          blockedAt: user.blockedAt,
+                          isUnblocking: _unblockingId == user.id,
+                          onUnblock: () => _unblockUser(user),
+                        );
+                      },
+                    ),
+            ),
+            Divider(
+              height: 48.0,
+              thickness: 2.0,
+              color: Color(0xFF363636),
+            ),
+            _buildAboutBlockingCard(),
+          ].addToStart(SizedBox(height: 28.0)),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAboutBlockingCard() {
+    return Padding(
+      padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: AppColors.backgroundSecondary,
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                Icons.info_outline,
+                color: AppColors.primary,
+                size: 24.0,
+              ),
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'About Blocking',
+                      style: GoogleFonts.inter(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16.0,
+                        height: 1.5,
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                      child: Text(
+                        'Blocked users cannot send you messages, view your full profile, or purchase items from you. They won\'t be notified that they\'ve been blocked.',
+                        style: GoogleFonts.inter(
+                          fontSize: 14.0,
+                          height: 1.5,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ].divide(SizedBox(width: 12.0)),
           ),
         ),
       ),
