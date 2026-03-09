@@ -59,3 +59,5 @@ export 'calculate_order_tax.dart' show calculateOrderTax;
 export 'get_next_sku_number.dart' show getNextSkuNumber;
 export 'create_shortlist.dart' show createShortlist;
 export 'deactivate_account.dart' show deactivateAccount, reactivateAccount;
+export 'hide_product.dart' show hideProduct;
+export 'cancel_order.dart' show cancelOrder;

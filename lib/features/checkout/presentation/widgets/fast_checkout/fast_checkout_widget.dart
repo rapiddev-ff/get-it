@@ -1,45 +1,81 @@
 import '/features/home/domain/models/feed_product_model.dart';
+import '/features/auth/presentation/providers/auth_provider.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/utils/value_utils.dart';
 import '/custom_code/actions/index.dart' as actions;
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
-class FastCheckoutWidget extends StatefulWidget {
+class FastCheckoutWidget extends ConsumerStatefulWidget {
   const FastCheckoutWidget({
     super.key,
     required this.feedProduct,
     required this.orderId,
+    this.subtotal,
+    this.quantity = 1,
   });
 
   final FeedProduct? feedProduct;
   final String? orderId;
+  final double? subtotal;
+  final int quantity;
 
   @override
-  State<FastCheckoutWidget> createState() => _FastCheckoutWidgetState();
+  ConsumerState<FastCheckoutWidget> createState() =>
+      _FastCheckoutWidgetState();
 }
 
-class _FastCheckoutWidgetState extends State<FastCheckoutWidget> {
-  String? cancelResult;
+class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
+  bool _isCancelling = false;
+  final _currencyFormat = NumberFormat('\$#,##0.00', 'en_US');
 
   @override
   void initState() {
     super.initState();
 
-    // On component load action.
+    // Auto-close after 10 seconds
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await Future.delayed(
-        Duration(
-          milliseconds: 10000,
-        ),
-      );
-      Navigator.pop(context);
+      await Future.delayed(Duration(milliseconds: 10000));
+      if (mounted) Navigator.pop(context);
     });
+  }
+
+  Future<void> _onCancelOrder() async {
+    if (_isCancelling || widget.orderId == null) return;
+    setState(() => _isCancelling = true);
+
+    try {
+      final error = await actions.cancelOrder(widget.orderId!);
+      if (!mounted) return;
+
+      if (error == null) {
+        actions.toastificationshow(
+            context, 'Order Cancelled', 'Your order has been cancelled and refunded', 'success');
+      } else {
+        actions.toastificationshow(context, 'Cancel Failed', error, 'error');
+      }
+      Navigator.pop(context);
+    } catch (e) {
+      if (mounted) {
+        actions.toastificationshow(
+            context, 'Error', 'Failed to cancel order', 'error');
+        setState(() => _isCancelling = false);
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final userSettings = ref.watch(authProvider).userSettings;
+    final dailyBudget = userSettings?.dailyBudget ?? 0.0;
+    final dailyBudgetUsed = userSettings?.dailyBudgetUsed ?? 0.0;
+    final remainingBudget = dailyBudget - dailyBudgetUsed;
+
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 95.0),
       child: Container(
@@ -51,33 +87,43 @@ class _FastCheckoutWidgetState extends State<FastCheckoutWidget> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
-              child: Text(
-                'Remaining Daily Budget \$1,201.00 / \$2,500.00',
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14.0,
-                  color: AppColors.textPrimary,
-                  height: 1.5,
+            // Daily Budget
+            if (dailyBudget > 0)
+              Padding(
+                padding:
+                    EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
+                child: Text(
+                  'Remaining Daily Budget ${_currencyFormat.format(remainingBudget)} / ${_currencyFormat.format(dailyBudget)}',
+                  style: GoogleFonts.inter(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14.0,
+                    color: AppColors.textPrimary,
+                    height: 1.5,
+                  ),
                 ),
               ),
-            ),
-            Divider(
-              height: 1.0,
-              thickness: 1.0,
-              color: Color(0xFF363636),
-            ),
+            if (dailyBudget > 0)
+              Divider(
+                height: 1.0,
+                thickness: 1.0,
+                color: Color(0xFF363636),
+              ),
+
+            // Product info
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16.0, 20.0, 16.0, 20.0),
+              padding:
+                  EdgeInsetsDirectional.fromSTEB(16.0, 20.0, 16.0, 20.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(4.0),
-                    child: Image.network(
-                      'https://picsum.photos/seed/357/600',
+                    child: CachedNetworkImage(
+                      imageUrl: valueOrDefault<String>(
+                        widget.feedProduct?.mainImageUrl,
+                        'https://picsum.photos/seed/357/600',
+                      ),
                       width: 60.0,
                       height: 80.0,
                       fit: BoxFit.cover,
@@ -88,6 +134,7 @@ class _FastCheckoutWidgetState extends State<FastCheckoutWidget> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // Status badge
                         Container(
                           decoration: BoxDecoration(
                             color: AppColors.white,
@@ -117,8 +164,14 @@ class _FastCheckoutWidgetState extends State<FastCheckoutWidget> {
                             ),
                           ),
                         ),
+                        // Product name
                         Text(
-                          'Charizard Base Set Shadowless',
+                          valueOrDefault<String>(
+                            widget.feedProduct?.title,
+                            'N/A',
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.inter(
                             fontWeight: FontWeight.normal,
                             fontSize: 12.0,
@@ -126,8 +179,9 @@ class _FastCheckoutWidgetState extends State<FastCheckoutWidget> {
                             height: 1.5,
                           ),
                         ),
+                        // Subtotal
                         Text(
-                          '\$1,299.00',
+                          _currencyFormat.format(widget.subtotal ?? (widget.feedProduct?.price ?? 0) * widget.quantity),
                           style: GoogleFonts.inter(
                             fontWeight: FontWeight.w600,
                             fontSize: 14.0,
@@ -138,34 +192,38 @@ class _FastCheckoutWidgetState extends State<FastCheckoutWidget> {
                       ].divide(SizedBox(height: 4.0)),
                     ),
                   ),
+                  // Cancel Order button
                   InkWell(
                     splashColor: Colors.transparent,
                     focusColor: Colors.transparent,
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
-                    onTap: () async {
-                      cancelResult = await actions.refundOrderAction(
-                        widget.orderId!,
-                      );
-                      actions.toastificationshow(context, 'Refund', cancelResult!, 'info');
-                      Navigator.pop(context);
-
-                      setState(() {});
-                    },
-                    child: Text(
-                      'Undo',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.primary,
-                        fontSize: 14.0,
-                        decoration: TextDecoration.underline,
-                        height: 1.5,
-                      ),
-                    ),
+                    onTap: _isCancelling ? null : _onCancelOrder,
+                    child: _isCancelling
+                        ? SizedBox(
+                            width: 16,
+                            height: 16,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2.0,
+                              color: AppColors.primary,
+                            ),
+                          )
+                        : Text(
+                            'Cancel',
+                            style: GoogleFonts.inter(
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.primary,
+                              fontSize: 14.0,
+                              decoration: TextDecoration.underline,
+                              height: 1.5,
+                            ),
+                          ),
                   ),
                 ].divide(SizedBox(width: 12.0)),
               ),
             ),
+
+            // Close button
             Container(
               width: double.infinity,
               height: 56.0,
@@ -188,7 +246,8 @@ class _FastCheckoutWidgetState extends State<FastCheckoutWidget> {
                   Navigator.pop(context);
                 },
                 style: TextButton.styleFrom(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   backgroundColor: Colors.transparent,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(

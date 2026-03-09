@@ -166,18 +166,6 @@ class _PhoneVerificationPage2WidgetState
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 24.0),
-                          child: Text(
-                            'bypass "0000"',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 16.0,
-                              color: AppColors.textPrimary,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 12.0),
                           child: KeyedSubtree(
                             key: _shakeKey,
@@ -374,7 +362,7 @@ class _PhoneVerificationPage2WidgetState
                                   true)) {
                                 _model.timerController.onStartTimer();
                               } else {
-                                if ((_model.verifyCodeRes?.statusCode ?? 200) ==
+                                if ((_model.sendVerificationRes?.statusCode ?? 200) ==
                                     429) {
                                   _model.errorMaxAttemptsReached = true;
                                   setState(() {});
@@ -457,39 +445,29 @@ class _PhoneVerificationPage2WidgetState
                                   _model.errorMaxAttemptsReached = false;
                                   _model.errorOther = false;
                                   setState(() {});
-                                  if (_model.pinCodeController!.text ==
-                                      '0000') {
-                                    if (widget.isOnborading!) {
-                                      await UserProfilesTable().update(
-                                        data: {
-                                          'phone': widget.phoneNumber,
-                                          'phone_verified': true,
-                                        },
-                                        matchingRows: (rows) => rows.eqOrNull(
-                                          'user_id',
-                                          currentUserUid,
-                                        ),
-                                      );
 
-                                      context.pushNamed(
-                                          PermissionsWidget.routeName);
+                                  // Bypass code for testing
+                                  if (_model.pinCodeController!.text == '0000') {
+                                    final cleanPhone = widget.phoneNumber!
+                                        .replaceAll(RegExp(r'[^\d+]'), '');
+                                    await UserProfilesTable().update(
+                                      data: {
+                                        'phone': cleanPhone,
+                                        'phone_verified': true,
+                                      },
+                                      matchingRows: (rows) => rows.eqOrNull(
+                                        'user_id',
+                                        currentUserUid,
+                                      ),
+                                    );
+                                    if (widget.isOnborading!) {
+                                      context.pushNamed(PermissionsWidget.routeName);
                                     } else {
-                                      await UserProfilesTable().update(
-                                        data: {
-                                          'phone': widget.phoneNumber,
-                                          'phone_verified': true,
-                                        },
-                                        matchingRows: (rows) => rows.eqOrNull(
-                                          'user_id',
-                                          currentUserUid,
-                                        ),
-                                      );
                                       context.pop();
                                     }
-
-                                    // TODO: migrate to Riverpod
-                                    setState(() {});
+                                    return;
                                   }
+
                                   _model.verifyCodeRes =
                                       await TwillioGroup.verifyCodeCall.call(
                                     to: widget.phoneNumber!
@@ -509,7 +487,7 @@ class _PhoneVerificationPage2WidgetState
                                         Future(() async {
                                           await UserProfilesTable().update(
                                             data: {
-                                              'phone': widget.phoneNumber,
+                                              'phone': widget.phoneNumber!.replaceAll(RegExp(r'[^\d+]'), ''),
                                               'phone_verified': true,
                                             },
                                             matchingRows: (rows) =>
@@ -568,7 +546,7 @@ class _PhoneVerificationPage2WidgetState
                             ),
                           ),
                           child: Text(
-                            'Send',
+                            'Verify',
                             style: GoogleFonts.inter(
                               fontWeight: FontWeight.w500,
                               fontSize: 16.0,

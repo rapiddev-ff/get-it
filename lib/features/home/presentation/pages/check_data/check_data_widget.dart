@@ -63,6 +63,13 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
       );
       getPaymentMethods = await actions.getSavedPaymentMethods();
       if (!mounted) return;
+      if (getAppInitialData == null) {
+        // RPC failed — sign out and send back to welcome
+        await authManager.signOut();
+        if (!mounted) return;
+        context.goNamed(WelcomeWidget.routeName);
+        return;
+      }
       final userData = functions.convertUserToDataType(
           getAppInitialData!, getPaymentMethods);
       widgetRef.read(authProvider.notifier).setUser(userData);

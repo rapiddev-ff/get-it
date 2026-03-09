@@ -14,8 +14,11 @@ import '/backend/supabase/supabase.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '/custom_code/actions/index.dart' as actions;
 import '/features/auth/data/supabase_auth/auth_util.dart';
+import '/features/auth/presentation/providers/auth_settings_provider.dart';
 import '/features/auth/presentation/pages/phone_verification_page/phone_verification_page_widget.dart';
 import '/features/auth/presentation/widgets/password_component/password_component_widget.dart';
 import '/features/profile/presentation/pages/settings_privacy/settings_privacy_widget.dart';
@@ -24,17 +27,17 @@ import 'sign_up_model.dart';
 
 export 'sign_up_model.dart';
 
-class SignUpWidget extends StatefulWidget {
+class SignUpWidget extends ConsumerStatefulWidget {
   const SignUpWidget({super.key});
 
   static String routeName = 'signUp';
   static String routePath = 'signUp';
 
   @override
-  State<SignUpWidget> createState() => _SignUpWidgetState();
+  ConsumerState<SignUpWidget> createState() => _SignUpWidgetState();
 }
 
-class _SignUpWidgetState extends State<SignUpWidget> {
+class _SignUpWidgetState extends ConsumerState<SignUpWidget> {
   late SignUpModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -194,18 +197,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                                     () => setState(() {}),
                                   ),
                                   onFieldSubmitted: (_) async {
-                                    setState(() {
-                                      _model.passwordTextController?.text = '';
-                                      _model.textFieldFocusNode2
-                                          ?.requestFocus();
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback((_) {
-                                        _model.passwordTextController
-                                                ?.selection =
-                                            const TextSelection.collapsed(
-                                                offset: 0);
-                                      });
-                                    });
+                                    _model.textFieldFocusNode2?.requestFocus();
                                   },
                                   autofocus: false,
                                   obscureText: false,
@@ -332,19 +324,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                                     () => setState(() {}),
                                   ),
                                   onFieldSubmitted: (_) async {
-                                    setState(() {
-                                      _model.confirmPasswordTextController
-                                          ?.text = '';
-                                      _model.textFieldFocusNode3
-                                          ?.requestFocus();
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback((_) {
-                                        _model.confirmPasswordTextController
-                                                ?.selection =
-                                            const TextSelection.collapsed(
-                                                offset: 0);
-                                      });
-                                    });
+                                    _model.textFieldFocusNode3?.requestFocus();
                                   },
                                   autofocus: false,
                                   obscureText: !_model.passwordVisibility1,
@@ -823,6 +803,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                               } else {
                                 _model.errorPasswordRequired = true;
                                 setState(() {});
+                                if (shouldSetState) setState(() {});
+                                return;
                               }
 
                               if (_model.confirmPasswordTextController!.text !=
@@ -870,6 +852,9 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                                 actions.toastificationshow(context, 'Error', 'Passwords don\'t match!', 'error');
                                 return;
                               }
+
+                              // Always keep signed in on registration
+                              await ref.read(keepSignedInProvider.notifier).set(true);
 
                               final user =
                                   await authManager.createAccountWithEmail(

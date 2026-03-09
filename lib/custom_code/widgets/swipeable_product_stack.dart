@@ -124,10 +124,22 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
   }
 
   void _resetCard() {
+    _swipeController.reset();
     setState(() {
       _offset = Offset.zero;
       _rotation = 0.0;
     });
+  }
+
+  @override
+  void didUpdateWidget(covariant SwipeableProductStack oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // If products list changed (e.g. realtime re-fetch), clamp index
+    if (widget.products.length != oldWidget.products.length) {
+      if (_currentIndex >= widget.products.length && widget.products.isNotEmpty) {
+        _currentIndex = widget.products.length - 1;
+      }
+    }
   }
 
   void _nextCard() {
@@ -169,20 +181,29 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
     final currentIndex = _currentIndex;
 
     if (dy > _upSwipeThreshold && dy > dx && _offset.dy < 0) {
-      // SWIPE UP -> SKIP
+      // SWIPE UP -> SKIP (product removed from list by callback)
       _animateOffScreen(Offset(0.0, -screenWidth * 2), () async {
         await widget.onSkip?.call(productId, currentIndex);
-        _nextCard();
+        _resetCard();
+        // Check if we've run out of products
+        if (_currentIndex >= widget.products.length) {
+          widget.onEmpty?.call();
+        }
+        setState(() {});
       });
     } else if (dx > _swipeThreshold) {
       if (_offset.dx < 0) {
-        // SWIPE LEFT -> HIDE
+        // SWIPE LEFT -> HIDE (product removed from list by callback)
         _animateOffScreen(Offset(-screenWidth * 2, _offset.dy), () async {
           await widget.onHide?.call(productId, currentIndex);
-          _nextCard();
+          _resetCard();
+          if (_currentIndex >= widget.products.length) {
+            widget.onEmpty?.call();
+          }
+          setState(() {});
         });
       } else {
-        // SWIPE RIGHT -> BUY
+        // SWIPE RIGHT -> BUY (product stays in list, just move index)
         _animateOffScreen(Offset(screenWidth * 2, _offset.dy), () async {
           await widget.onBuy?.call(currentProduct);
           _nextCard();
@@ -193,15 +214,15 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
     }
   }
 
-  void _animateOffScreen(Offset endOffset, VoidCallback onComplete) {
+  void _animateOffScreen(Offset endOffset, Future<void> Function() onComplete) {
     final startOffset = _offset;
     _swipeAnimation = Tween<Offset>(
       begin: startOffset,
       end: endOffset,
     ).animate(_swipeController);
 
-    _swipeController.forward(from: 0.0).then((_) {
-      onComplete();
+    _swipeController.forward(from: 0.0).then((_) async {
+      await onComplete();
     });
   }
 
@@ -561,10 +582,12 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
+                    padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        const SizedBox(height: 8),
+
                         // Seller Info Row
                         Row(
                           children: [
@@ -623,6 +646,22 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
                             height: 30 / 20,
                           ),
                         ),
+
+                        // Condition
+                        if (product.conditionName.isNotEmpty) ...[
+                          const SizedBox(height: 4),
+                          Text(
+                            product.conditionName,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.inter(
+                              color: AppColors.textSecondary,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              height: 20 / 14,
+                            ),
+                          ),
+                        ],
 
                         const SizedBox(height: 8),
 

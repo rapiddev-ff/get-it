@@ -6,7 +6,6 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:webviewx_plus/webviewx_plus.dart';
 import 'dart:async';
 
 import '/backend/api_requests/api_calls.dart';
@@ -213,7 +212,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget> {
                                   style: GoogleFonts.inter(
                                     color: AppColors.textPrimary,
                                   ),
-                                  keyboardType: TextInputType.emailAddress,
+                                  keyboardType: TextInputType.visiblePassword,
                                   cursorColor: AppColors.textPrimary,
                                   enableInteractiveSelection: true,
                                 ),
@@ -327,7 +326,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget> {
                                   style: GoogleFonts.inter(
                                     color: AppColors.textPrimary,
                                   ),
-                                  keyboardType: TextInputType.emailAddress,
+                                  keyboardType: TextInputType.visiblePassword,
                                   cursorColor: AppColors.textPrimary,
                                   enableInteractiveSelection: true,
                                 ),
@@ -474,7 +473,10 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget> {
                               } else {
                                 _model.errorPaswordsDontMatch = true;
                                 setState(() {});
+                                return;
                               }
+
+                              if (_model.errorPasswordRequired) return;
 
                               await SupabaseEdgeGroup.resetPasswordCall.call(
                                 code: widget.code,
@@ -482,6 +484,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget> {
                               );
 
                               await actions.resetPasswordRecoveryState();
+                              if (!mounted) return;
                               await showDialog(
                                 context: context,
                                 builder: (dialogContext) {
@@ -491,8 +494,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget> {
                                     backgroundColor: Colors.transparent,
                                     alignment: AlignmentDirectional(0.0, 0.0)
                                         .resolve(Directionality.of(context)),
-                                    child: WebViewAware(
-                                      child: GestureDetector(
+                                    child: GestureDetector(
                                         onTap: () {
                                           FocusScope.of(dialogContext)
                                               .unfocus();
@@ -518,7 +520,6 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget> {
                                           },
                                         ),
                                       ),
-                                    ),
                                   );
                                 },
                               );

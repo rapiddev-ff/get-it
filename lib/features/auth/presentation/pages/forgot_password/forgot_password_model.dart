@@ -6,6 +6,7 @@ class ForgotPasswordModel {
   String? Function(BuildContext, String?)? textControllerValidator;
 
   dynamic requestPasswordReset;
+  bool isLoading = false;
 
   void dispose() {
     textFieldFocusNode?.dispose();

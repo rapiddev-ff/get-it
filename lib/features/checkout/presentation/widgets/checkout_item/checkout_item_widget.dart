@@ -74,7 +74,10 @@ class CheckoutItemWidget extends StatelessWidget {
                   ].divide(SizedBox(width: 12.0)),
                 ),
                 Text(
-                  'PSA 9 Mint',
+                  valueOrDefault<String>(
+                    feedProduct?.conditionName,
+                    '',
+                  ),
                   maxLines: 1,
                   style: GoogleFonts.inter(
                     color: AppColors.textSecondary,

@@ -3,6 +3,7 @@ import '/backend/supabase/supabase.dart';
 import '/features/profile/presentation/pages/settings_business/settings_business_widget.dart';
 import '/features/profile/presentation/pages/settings_item/settings_item_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
+import '/core/utils/data_converters.dart' as functions;
 import '/index.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
@@ -41,6 +42,21 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
 
     _model.switchValue =
         ref.read(authProvider).userSettings?.swipePaymentEnabled ?? false;
+
+    // Fetch latest stripe status
+    _fetchStripeStatus();
+  }
+
+  Future<void> _fetchStripeStatus() async {
+    final stripeRows = await StripeAccountsTable().queryRows(
+      queryFn: (q) => q.eqOrNull('user_id', currentUserUid),
+    );
+    if (!mounted) return;
+    ref.read(authProvider.notifier).updateUser(
+          (e) => e.copyWith(
+            stripe: functions.convertStripeStatus(stripeRows.firstOrNull),
+          ),
+        );
   }
 
   @override
@@ -294,6 +310,17 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                                 color: AppColors.textPrimary,
                                               ),
                                             ),
+                                            if (!(authState.userSettings
+                                                    ?.swipePaymentEnabled ??
+                                                false))
+                                              Text(
+                                                'Off',
+                                                style: GoogleFonts.inter(
+                                                  fontSize: 14.0,
+                                                  color:
+                                                      AppColors.textSecondary,
+                                                ),
+                                              ),
                                             if ((authState.userSettings
                                                     ?.swipePaymentEnabled ??
                                                 false))
@@ -626,31 +653,23 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                     ),
                                     Text(
                                       () {
-                                        if (authState.stripe?.accountStatus ==
-                                            'not_connected') {
-                                          return 'Connect Stripe to start selling';
-                                        } else if (authState
-                                                .stripe?.accountStatus ==
-                                            'onboarding') {
-                                          return 'Complete your Stripe setup to start selling';
-                                        } else if (authState
-                                                .stripe?.accountStatus ==
-                                            'in_review') {
-                                          return 'Stripe is reviewing your account';
-                                        } else if (authState
-                                                .stripe?.accountStatus ==
-                                            'restricted') {
-                                          return 'Your account requires attention';
-                                        } else if (authState
-                                                .stripe?.accountStatus ==
-                                            'enabled') {
-                                          return 'Your seller account is active';
-                                        } else if (authState
-                                                .stripe?.accountStatus ==
-                                            'rejected') {
-                                          return 'Your account has been rejected';
-                                        } else {
-                                          return 'n/a';
+                                        switch (authState.stripe?.accountStatus ?? '') {
+                                          case 'not_connected':
+                                            return 'Connect Stripe to start selling';
+                                          case 'onboarding':
+                                            return 'Complete your Stripe setup';
+                                          case 'in_review':
+                                            return 'Stripe is reviewing your account';
+                                          case 'restricted':
+                                            return 'Your account requires attention';
+                                          case 'enabled':
+                                            return 'Your seller account is active';
+                                          case 'rejected':
+                                            return 'Your account has been rejected';
+                                          case 'disabled':
+                                            return 'Your account has been disabled';
+                                          default:
+                                            return 'Connect Stripe to start selling';
                                         }
                                       }(),
                                       style: GoogleFonts.inter(
@@ -662,17 +681,26 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                 ),
                               ),
                               if ((authState.stripe?.hasAccount ?? false) &&
-                                  !(authState.stripe?.canSell ?? false))
-                                FaIcon(
-                                  FontAwesomeIcons.hourglass,
-                                  color: Color(0xFFF2BD43),
-                                  size: 22.0,
-                                ),
-                              if ((authState.stripe?.canSell ?? false))
-                                FaIcon(
-                                  FontAwesomeIcons.check,
-                                  color: Color(0xFF4ADE80),
-                                  size: 24.0,
+                                  (authState.stripe?.statusLabel ?? '').isNotEmpty)
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0, vertical: 4.0),
+                                  decoration: BoxDecoration(
+                                    color: Color(int.parse(
+                                            (authState.stripe?.statusColor ?? '#9E9E9E')
+                                                .replaceFirst('#', ''),
+                                            radix: 16) |
+                                        0xFF000000),
+                                    borderRadius: BorderRadius.circular(4.0),
+                                  ),
+                                  child: Text(
+                                    authState.stripe?.statusLabel ?? '',
+                                    style: GoogleFonts.inter(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12.0,
+                                    ),
+                                  ),
                                 ),
                               if (!(authState.stripe?.hasAccount ?? false))
                                 Container(

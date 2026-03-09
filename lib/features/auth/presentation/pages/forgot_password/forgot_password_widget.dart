@@ -34,6 +34,9 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
   late StreamSubscription<bool> _keyboardVisibilitySubscription;
   bool _isKeyboardVisible = false;
 
+  static final _emailRegExp =
+      RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+
   @override
   void initState() {
     super.initState();
@@ -240,33 +243,51 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                           borderRadius: BorderRadius.circular(4.0),
                         ),
                         child: TextButton(
-                          onPressed: () async {
-                            _model.requestPasswordReset =
-                                await actions.requestPasswordReset(
-                              _model.textController!.text,
-                            );
-                            if ((_model.requestPasswordReset is Map)
-                                ? _model.requestPasswordReset['success']
-                                : null) {
-                              context.pushNamed(
-                                ForgotPasswordStep2Widget.routeName,
-                                queryParameters: {
-                                  'email': _model.textController!.text,
-                                },
-                              );
-                            } else {
+                          onPressed: _model.isLoading
+                              ? null
+                              : () async {
+                            final email = _model.textController!.text.trim();
+                            if (email.isEmpty || !_emailRegExp.hasMatch(email)) {
                               await actions.toastificationshow(
                                 context,
                                 'Error!',
-                                ((_model.requestPasswordReset is Map)
-                                        ? _model.requestPasswordReset['message']
-                                        : null)
-                                    .toString(),
+                                'Please enter a valid email address',
                                 'error',
                               );
+                              return;
                             }
-
-                            setState(() {});
+                            setState(() => _model.isLoading = true);
+                            try {
+                              _model.requestPasswordReset =
+                                  await actions.requestPasswordReset(
+                                email,
+                              );
+                              if (!mounted) return;
+                              if ((_model.requestPasswordReset is Map)
+                                  ? _model.requestPasswordReset['success']
+                                  : null) {
+                                context.pushNamed(
+                                  ForgotPasswordStep2Widget.routeName,
+                                  queryParameters: {
+                                    'email': _model.textController!.text,
+                                  },
+                                );
+                              } else {
+                                await actions.toastificationshow(
+                                  context,
+                                  'Error!',
+                                  ((_model.requestPasswordReset is Map)
+                                          ? _model.requestPasswordReset['message']
+                                          : null)
+                                      .toString(),
+                                  'error',
+                                );
+                              }
+                            } finally {
+                              if (mounted) {
+                                setState(() => _model.isLoading = false);
+                              }
+                            }
                           },
                           style: TextButton.styleFrom(
                             padding: EdgeInsetsDirectional.fromSTEB(
@@ -275,12 +296,21 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                           ),
-                          child: Text(
-                            'Next',
-                            style: GoogleFonts.inter(
-                              color: Colors.white,
-                            ),
-                          ),
+                          child: _model.isLoading
+                              ? SizedBox(
+                                  width: 24,
+                                  height: 24,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2.5,
+                                    color: Colors.white,
+                                  ),
+                                )
+                              : Text(
+                                  'Next',
+                                  style: GoogleFonts.inter(
+                                    color: Colors.white,
+                                  ),
+                                ),
                         ),
                       ),
                     ]

@@ -13,26 +13,28 @@ import '/features/home/presentation/pages/check_data/check_data_widget.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '/custom_code/actions/index.dart' as actions;
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/auth/presentation/pages/forgot_password/forgot_password_widget.dart';
+import '/features/auth/presentation/providers/auth_settings_provider.dart';
 import 'sign_in_model.dart';
 
 export 'sign_in_model.dart';
 
-class SignInWidget extends StatefulWidget {
+class SignInWidget extends ConsumerStatefulWidget {
   const SignInWidget({super.key});
 
   static String routeName = 'signIn';
   static String routePath = 'signIn';
 
   @override
-  State<SignInWidget> createState() => _SignInWidgetState();
+  ConsumerState<SignInWidget> createState() => _SignInWidgetState();
 }
 
-class _SignInWidgetState extends State<SignInWidget> {
+class _SignInWidgetState extends ConsumerState<SignInWidget> {
   late SignInModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -176,18 +178,7 @@ class _SignInWidgetState extends State<SignInWidget> {
                                     () => setState(() {}),
                                   ),
                                   onFieldSubmitted: (_) async {
-                                    setState(() {
-                                      _model.passwordTextController?.text = '';
-                                      _model.textFieldFocusNode2
-                                          ?.requestFocus();
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback((_) {
-                                        _model.passwordTextController
-                                                ?.selection =
-                                            const TextSelection.collapsed(
-                                                offset: 0);
-                                      });
-                                    });
+                                    _model.textFieldFocusNode2?.requestFocus();
                                   },
                                   autofocus: false,
                                   enabled: true,
@@ -353,7 +344,7 @@ class _SignInWidgetState extends State<SignInWidget> {
                                     ),
                                   ),
                                   style: GoogleFonts.inter(),
-                                  keyboardType: TextInputType.emailAddress,
+                                  keyboardType: TextInputType.visiblePassword,
                                   cursorColor: AppColors.textPrimary,
                                   enableInteractiveSelection: true,
                                 ),
@@ -504,7 +495,6 @@ class _SignInWidgetState extends State<SignInWidget> {
                         ),
                         child: TextButton(
                           onPressed: () async {
-                            var _shouldSetState = false;
                             _model.errorEmailRequired = false;
                             _model.errorEmailFormat = false;
                             _model.errorPasswordRequired = false;
@@ -537,47 +527,32 @@ class _SignInWidgetState extends State<SignInWidget> {
                             }
 
                             setState(() {});
-                            _model.supabaseLogin = await actions.supabaseLogin(
+
+                            // Persist keepSignedIn preference via provider
+                            await ref.read(keepSignedInProvider.notifier).set(
+                              _model.keepSignedIn,
+                            );
+
+                            final user = await authManager.signInWithEmail(
+                              context,
                               _model.emailTextController!.text,
                               _model.passwordTextController!.text,
                             );
-                            _shouldSetState = true;
-                            final loginSuccess = (_model.supabaseLogin is Map)
-                                ? _model.supabaseLogin['success']
-                                : null;
-                            if (loginSuccess == true) {
-                              // Persist keepSignedIn preference
-                              await const FlutterSecureStorage().write(
-                                key: 'ff_keepSignedIn',
-                                value: _model.keepSignedIn.toString(),
-                              );
 
-                              final user = await authManager.signInWithEmail(
-                                context,
-                                _model.emailTextController!.text,
-                                _model.passwordTextController!.text,
-                              );
-                              if (user == null) {
-                                return;
-                              }
+                            if (!mounted) return;
 
-                              if (mounted) {
-                                context.goNamed(
-                                  CheckDataWidget.routeName,
-                                  queryParameters: {
-                                    'fromSignIn': true.toString(),
-                                  },
-                                );
-                              }
+                            if (user != null) {
+                              context.goNamed(
+                                CheckDataWidget.routeName,
+                                queryParameters: {
+                                  'fromSignIn': true.toString(),
+                                },
+                              );
                             } else {
-                              final loginMessage = (_model.supabaseLogin is Map)
-                                  ? _model.supabaseLogin['message']
-                                  : null;
-                              _model.errorSignIn = loginMessage?.toString();
+                              _model.errorSignIn =
+                                  'Email or password is incorrect. Please try again';
                               setState(() {});
                             }
-
-                            if (_shouldSetState) setState(() {});
                           },
                           style: TextButton.styleFrom(
                             elevation: 0,

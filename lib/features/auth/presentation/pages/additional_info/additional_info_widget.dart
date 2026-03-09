@@ -9,6 +9,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '/backend/supabase/supabase.dart';
@@ -17,6 +18,7 @@ import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/auth/data/supabase_auth/auth_util.dart';
+import '/features/auth/presentation/providers/auth_provider.dart';
 import '/features/home/presentation/pages/home_page/home_page_widget.dart';
 import 'package:uuid/uuid.dart';
 import 'package:mime/mime.dart';
@@ -24,17 +26,17 @@ import 'additional_info_model.dart';
 
 export 'additional_info_model.dart';
 
-class AdditionalInfoWidget extends StatefulWidget {
+class AdditionalInfoWidget extends ConsumerStatefulWidget {
   const AdditionalInfoWidget({super.key});
 
   static String routeName = 'additionalInfo';
   static String routePath = 'additionalInfo';
 
   @override
-  State<AdditionalInfoWidget> createState() => _AdditionalInfoWidgetState();
+  ConsumerState<AdditionalInfoWidget> createState() => _AdditionalInfoWidgetState();
 }
 
-class _AdditionalInfoWidgetState extends State<AdditionalInfoWidget> {
+class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget> {
   late AdditionalInfoModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -157,6 +159,11 @@ class _AdditionalInfoWidgetState extends State<AdditionalInfoWidget> {
             );
         _model.uploadToBucket =
             supabase.storage.from('avatars').getPublicUrl(filePath);
+      } catch (e) {
+        if (mounted) {
+          actions.toastificationshow(
+              context, 'Error', 'Failed to upload image. Please try again', 'error');
+        }
       } finally {
         _model.isDataUploading_uploadImage = false;
       }
@@ -318,13 +325,7 @@ class _AdditionalInfoWidgetState extends State<AdditionalInfoWidget> {
                                 () => setState(() {}),
                               ),
                               onFieldSubmitted: (_) async {
-                                _model.lastnameTextController?.text = '';
                                 _model.lastnameFocusNode?.requestFocus();
-                                WidgetsBinding.instance
-                                    .addPostFrameCallback((_) {
-                                  _model.lastnameTextController?.selection =
-                                      const TextSelection.collapsed(offset: 0);
-                                });
                               },
                               autofocus: false,
                               autofillHints: const [AutofillHints.name],
@@ -382,16 +383,7 @@ class _AdditionalInfoWidgetState extends State<AdditionalInfoWidget> {
                                 () => setState(() {}),
                               ),
                               onFieldSubmitted: (_) async {
-                                setState(() {
-                                  _model.usernameTextController?.text = '';
-                                  _model.usernameFocusNode?.requestFocus();
-                                  WidgetsBinding.instance
-                                      .addPostFrameCallback((_) {
-                                    _model.usernameTextController?.selection =
-                                        const TextSelection.collapsed(
-                                            offset: 0);
-                                  });
-                                });
+                                _model.usernameFocusNode?.requestFocus();
                               },
                               autofocus: false,
                               autofillHints: const [AutofillHints.familyName],
@@ -481,7 +473,7 @@ class _AdditionalInfoWidgetState extends State<AdditionalInfoWidget> {
                                       : null,
                               inputFormatters: [
                                 FilteringTextInputFormatter.allow(
-                                    RegExp(r'^[a-zA-Z0-9_\-\.@!#\$%&\*]+'))
+                                    RegExp(r'^[a-zA-Z0-9_]+'))
                               ],
                             ),
                           ),
@@ -588,11 +580,17 @@ class _AdditionalInfoWidgetState extends State<AdditionalInfoWidget> {
                                     '',
                                   );
 
+                                  // Update authProvider with new profile data
+                                  ref.read(authProvider.notifier).updateUser((e) => e.copyWith(
+                                    firstName: _model.firstnameTextController!.text,
+                                    lastName: _model.lastnameTextController!.text,
+                                    username: _normalizeUsername(_model.usernameTextController!.text),
+                                    avatarUrl: _model.uploadToBucket ?? '',
+                                  ));
+
                                   if (context.mounted) {
                                     context.goNamed(HomePageWidget.routeName);
                                   }
-
-                                  setState(() {});
                                 },
                           style: TextButton.styleFrom(
                             padding: const EdgeInsetsDirectional.fromSTEB(

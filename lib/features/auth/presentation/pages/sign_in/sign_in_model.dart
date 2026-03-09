@@ -16,8 +16,6 @@ class SignInModel {
   late bool passwordVisibility;
   String? Function(BuildContext, String?)? passwordTextControllerValidator;
 
-  dynamic supabaseLogin;
-
   void initState(BuildContext context) {
     passwordVisibility = false;
   }

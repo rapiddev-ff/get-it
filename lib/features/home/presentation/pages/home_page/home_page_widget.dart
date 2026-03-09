@@ -4,7 +4,7 @@ import '/features/home/presentation/providers/feed_provider.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import '/backend/supabase/supabase.dart';
 import '/features/home/presentation/widgets/nav_bar/nav_bar_widget.dart';
-import '/features/checkout/presentation/widgets/fast_checkout/fast_checkout_widget.dart';
+import '/features/checkout/presentation/widgets/quick_purchase_popup/quick_purchase_popup_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/core/utils/data_converters.dart' as functions;
@@ -42,8 +42,8 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
   List<FeedProduct>? getFeed;
   dynamic getSellerDashboard;
   List<StripeAccountsRow>? getStripe;
-  OrdersRow? createOrder;
   late ExpandableController expandableExpandableController;
+  bool _connectingStripe = false;
 
   /// Helper to safely extract a string from a JSON map.
   static String? _jsonStr(dynamic json, String key) {
@@ -300,72 +300,120 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                             emptyMessage: 'test',
                             products: ref.watch(feedProvider).feedProducts,
                             onBuy: (product) async {
-                              if (ref
-                                      .read(authProvider)
-                                      .userSettings
-                                      ?.swipePaymentEnabled ??
-                                  false) {
-                                createOrder = await OrdersTable().insert({
-                                  'buyer_id': currentUserUid,
-                                  'seller_id': product.sellerId,
-                                  'total_amount': product.price,
-                                  'tax_amount': 10.0,
-                                  'status': 'pending',
-                                  'subtotal': product.price,
-                                });
-                                if (createOrder == null) return;
-                                final defaultCard = ref
-                                    .read(authProvider)
-                                    .paymentMethod
-                                    .where((e) => e.isDefault)
-                                    .firstOrNull;
-                                if (defaultCard == null) return;
-                                showDialog(
-                                  barrierDismissible: false,
-                                  context: context,
-                                  builder: (dialogContext) {
-                                    return Dialog(
-                                      elevation: 0,
-                                      insetPadding: EdgeInsets.zero,
-                                      backgroundColor: Colors.transparent,
-                                      alignment: AlignmentDirectional(0.0, 1.0)
-                                          .resolve(Directionality.of(context)),
-                                      child: WebViewAware(
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            FocusScope.of(dialogContext)
-                                                .unfocus();
-                                            FocusManager.instance.primaryFocus
-                                                ?.unfocus();
-                                          },
-                                          child: FastCheckoutWidget(
-                                            feedProduct: product,
-                                            orderId: createOrder!.id,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                );
+                              final user = ref.read(authProvider);
+                              final settings = user.userSettings;
+                              final swipeEnabled =
+                                  settings?.swipePaymentEnabled ?? false;
 
-                                await actions.payWithSavedCard(
-                                  createOrder!.id,
-                                  defaultCard.id,
-                                  7,
-                                );
-                              } else {
+                              if (!swipeEnabled) {
+                                // Standard checkout flow
                                 context.pushNamed(
                                   CheckoutWidget.routeName,
                                   queryParameters: {
                                     'feedProductItem': product.serialize(),
                                   },
                                 );
+                                return;
                               }
+
+                              // Quick Purchase: validate prerequisites
+                              final hasAddress = user.shippingAddress != null &&
+                                  (user.shippingAddress!.addressLine1)
+                                      .isNotEmpty;
+                              final defaultCard = user.paymentMethod
+                                  .where((e) => e.isDefault)
+                                  .firstOrNull;
+
+                              if (!hasAddress || defaultCard == null) {
+                                // Missing address or payment → redirect to Checkout
+                                context.pushNamed(
+                                  CheckoutWidget.routeName,
+                                  queryParameters: {
+                                    'feedProductItem': product.serialize(),
+                                  },
+                                );
+                                return;
+                              }
+
+                              // Budget validation
+                              final dailyBudget =
+                                  settings?.dailyBudget ?? 0.0;
+                              final dailyBudgetUsed =
+                                  settings?.dailyBudgetUsed ?? 0.0;
+                              final remaining =
+                                  dailyBudget - dailyBudgetUsed;
+
+                              if (dailyBudget > 0 &&
+                                  product.price > remaining) {
+                                // Budget exceeded → show error and redirect to Checkout
+                                actions.toastificationshow(
+                                  context,
+                                  'Budget Exceeded',
+                                  'Swipe Purchase Budget Exceeded',
+                                  'error',
+                                );
+                                context.pushNamed(
+                                  CheckoutWidget.routeName,
+                                  queryParameters: {
+                                    'feedProductItem': product.serialize(),
+                                  },
+                                );
+                                return;
+                              }
+
+                              // All checks passed → show Quick Purchase popup
+                              showDialog(
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (dialogContext) {
+                                  return Dialog(
+                                    elevation: 0,
+                                    insetPadding: EdgeInsets.zero,
+                                    backgroundColor: Colors.transparent,
+                                    alignment:
+                                        AlignmentDirectional(0.0, 1.0)
+                                            .resolve(
+                                                Directionality.of(context)),
+                                    child: WebViewAware(
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          FocusScope.of(dialogContext)
+                                              .unfocus();
+                                          FocusManager
+                                              .instance.primaryFocus
+                                              ?.unfocus();
+                                        },
+                                        child: QuickPurchasePopupWidget(
+                                          feedProduct: product,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
 
                               setState(() {});
                             },
-                            onHide: (productId, index) async {},
-                            onSkip: (productId, index) async {},
+                            onHide: (productId, index) async {
+                              ref
+                                  .read(feedProvider.notifier)
+                                  .addToSwipedProductIds(productId);
+                              ref
+                                  .read(feedProvider.notifier)
+                                  .removeAtIndexFromFeedProducts(index);
+                              await actions.hideProduct(
+                                currentUserUid,
+                                productId,
+                              );
+                            },
+                            onSkip: (productId, index) async {
+                              ref
+                                  .read(feedProvider.notifier)
+                                  .addToSwipedProductIds(productId);
+                              ref
+                                  .read(feedProvider.notifier)
+                                  .removeAtIndexFromFeedProducts(index);
+                            },
                             onLike: (productId, index) async {
                               await Future.wait([
                                 Future(() async {
@@ -1114,19 +1162,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                                         ),
                                       ),
                                       Text(
-                                        functions.getRequirementMessages(ref
-                                                .read(authProvider)
-                                                .stripe
-                                                ?.currentlyDue
-                                                .toList() ??
-                                            []),
-                                        style: GoogleFonts.inter(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12.0,
-                                          height: 1.5,
-                                        ),
-                                      ),
-                                      Text(
                                         'Connect Stripe to get paid and enable payouts',
                                         style: GoogleFonts.inter(
                                           fontWeight: FontWeight.normal,
@@ -1135,51 +1170,124 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                                           height: 1.5,
                                         ),
                                       ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 52.0, 16.0, 0.0),
-                                        child: Container(
-                                          width: double.infinity,
-                                          height: 56.0,
-                                          decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                Color(0xFF7D56FF),
-                                                Color(0xFF6187F1)
+                                      if (authData.stripe?.detailsSubmitted ?? false) ...[
+                                        // Account submitted but not fully active — show status badge
+                                        Padding(
+                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 24.0, 0.0, 0.0),
+                                          child: Container(
+                                            width: double.infinity,
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 16.0, vertical: 14.0),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.backgroundSecondary,
+                                              borderRadius:
+                                                  BorderRadius.circular(4.0),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  'Stripe Status',
+                                                  style: GoogleFonts.inter(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 14.0,
+                                                  ),
+                                                ),
+                                                Container(
+                                                  padding: const EdgeInsets.symmetric(
+                                                      horizontal: 12.0,
+                                                      vertical: 4.0),
+                                                  decoration: BoxDecoration(
+                                                    color: Color(int.parse(
+                                                            (authData.stripe?.statusColor ?? '#9E9E9E')
+                                                                .replaceFirst('#', ''),
+                                                            radix: 16) |
+                                                        0xFF000000),
+                                                    borderRadius:
+                                                        BorderRadius.circular(4.0),
+                                                  ),
+                                                  child: Text(
+                                                    authData.stripe?.statusLabel ??
+                                                        'Unknown',
+                                                    style: GoogleFonts.inter(
+                                                      color: Colors.white,
+                                                      fontWeight: FontWeight.w600,
+                                                      fontSize: 12.0,
+                                                    ),
+                                                  ),
+                                                ),
                                               ],
-                                              stops: [0.0, 1.0],
-                                              begin: AlignmentDirectional(
-                                                  0.0, -1.0),
-                                              end: AlignmentDirectional(0, 1.0),
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(4.0),
-                                          ),
-                                          child: TextButton(
-                                            onPressed: () async {
-                                              await actions
-                                                  .startStripeConnectOnboarding();
-                                            },
-                                            style: TextButton.styleFrom(
-                                              backgroundColor:
-                                                  Color(0x008E6CFF),
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      16.0, 0.0, 16.0, 0.0),
-                                            ),
-                                            child: Text(
-                                              'Connect Stripe',
-                                              style: GoogleFonts.inter(
-                                                color: Colors.white,
-                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
+                                      ] else ...[
+                                        // No account yet — show Connect Stripe button
+                                        Padding(
+                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                              16.0, 52.0, 16.0, 0.0),
+                                          child: Container(
+                                            width: double.infinity,
+                                            height: 56.0,
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  Color(0xFF7D56FF),
+                                                  Color(0xFF6187F1)
+                                                ],
+                                                stops: [0.0, 1.0],
+                                                begin: AlignmentDirectional(
+                                                    0.0, -1.0),
+                                                end: AlignmentDirectional(0, 1.0),
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(4.0),
+                                            ),
+                                            child: TextButton(
+                                              onPressed: _connectingStripe
+                                                  ? null
+                                                  : () async {
+                                                      setState(() => _connectingStripe = true);
+                                                      try {
+                                                        await actions
+                                                            .startStripeConnectOnboarding();
+                                                      } finally {
+                                                        if (mounted) {
+                                                          setState(() => _connectingStripe = false);
+                                                        }
+                                                      }
+                                                    },
+                                              style: TextButton.styleFrom(
+                                                backgroundColor:
+                                                    Color(0x008E6CFF),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8.0),
+                                                ),
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        16.0, 0.0, 16.0, 0.0),
+                                              ),
+                                              child: _connectingStripe
+                                                  ? SizedBox(
+                                                      width: 22.0,
+                                                      height: 22.0,
+                                                      child: CircularProgressIndicator(
+                                                        strokeWidth: 2.0,
+                                                        color: Colors.white,
+                                                      ),
+                                                    )
+                                                  : Text(
+                                                      'Connect Stripe',
+                                                      style: GoogleFonts.inter(
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ],
                                   ),
                                 ),

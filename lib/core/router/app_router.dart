@@ -64,6 +64,10 @@ class AppStateNotifier extends ChangeNotifier {
     final shouldUpdate =
         user?.uid == null || newUser.uid == null || user?.uid != newUser.uid;
     initialUser ??= newUser;
+    // Reset initialDataLoaded when user changes or logs out
+    if (shouldUpdate) {
+      initialDataLoaded = false;
+    }
     user = newUser;
     // Refresh the app on auth change unless explicitly marked otherwise.
     // No need to update unless the user has changed.
@@ -635,7 +639,7 @@ extension GoRouterExtensions on GoRouter {
       !ignoreRedirect && appState.hasRedirect();
   void clearRedirectLocation() => appState.clearRedirectLocation();
   void setRedirectLocationIfUnset(String location) =>
-      appState.updateNotifyOnAuthChange(false);
+      appState.setRedirectLocationIfUnset(location);
 }
 
 extension _GoRouterStateExtensions on GoRouterState {

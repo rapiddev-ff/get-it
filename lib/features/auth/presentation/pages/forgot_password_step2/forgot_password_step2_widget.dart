@@ -134,7 +134,7 @@ class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             0.0, 24.0, 0.0, 24.0),
                         child: Text(
-                          'Almost there! We\'ve sent a password reset link to   Don\'t see it? Check your spam folder or wait a few minutes for delivery.${widget.email}. Click the link in the email to create your new password.',
+                          'Almost there! We\'ve sent a password reset link to ${widget.email}. Click the link in the email to create your new password. Don\'t see it? Check your spam folder or wait a few minutes for delivery.',
                           textAlign: TextAlign.center,
                           style: GoogleFonts.inter(
                             color: AppColors.textPrimary,
@@ -177,13 +177,15 @@ class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget> {
                           borderRadius: BorderRadius.circular(4.0),
                         ),
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.pop();
+                          },
                           style: TextButton.styleFrom(
                             elevation: 0,
                             backgroundColor: Colors.transparent,
                           ),
                           child: Text(
-                            'Next',
+                            'Back to Sign In',
                             style: GoogleFonts.inter(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,

@@ -46,12 +46,14 @@ class GetItSupabaseUser extends BaseAuthUser {
 
   @override
   bool get emailVerified {
-    // Reloads the user when checking in order to get the most up to date
-    // email verified status.
-    if (loggedIn && user!.emailConfirmedAt == null) {
-      refreshUser();
-    }
     return user?.emailConfirmedAt != null;
+  }
+
+  /// Call this explicitly before checking emailVerified if you need
+  /// the most up-to-date status from the server.
+  Future<bool> refreshAndCheckEmailVerified() async {
+    await refreshUser();
+    return emailVerified;
   }
 
   @override

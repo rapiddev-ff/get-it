@@ -8,6 +8,7 @@ import '/features/checkout/presentation/widgets/checkout_item/checkout_item_widg
 import '/features/profile/presentation/pages/settings_payment_method_add/settings_payment_method_add_widget.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import '/features/checkout/presentation/providers/checkout_provider.dart';
+import '/features/checkout/presentation/widgets/fast_checkout/fast_checkout_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -38,33 +39,190 @@ class CheckoutWidget extends ConsumerStatefulWidget {
 
 class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _currencyFormat = NumberFormat('\$#,##0.00', 'en_US');
 
-  // Inlined model state
   CheckoutTotals? checkoutTotals;
   int quantity = 1;
-  String? selectedAddress;
   bool isProcessing = false;
   bool isLoading = true;
-  double? tax;
-  String? cancelResult;
-  double? getTaxFromStripeAdd;
-  double? getTaxFromStripeMinus;
+  double tax = 0.0;
   CheckoutOrderResult? orderResult;
 
   @override
   void initState() {
     super.initState();
-
-    // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      isLoading = true;
       quantity = widget.initialQuantity;
-      setState(() {});
+      _autoSelectDefaultPaymentMethod();
+      await _loadTotalsAndTax();
     });
+  }
+
+  void _autoSelectDefaultPaymentMethod() {
+    final user = ref.read(authProvider);
+    final defaultId = user.defaultPaymentMethodId;
+    final methods = user.paymentMethod;
+
+    if (methods.isEmpty) return;
+
+    // Try to find default payment method
+    final defaultMethod = methods.where((m) => m.id == defaultId).firstOrNull;
+    if (defaultMethod != null) {
+      ref.read(checkoutProvider.notifier).setPaymentMethod(defaultMethod);
+    } else {
+      // Fall back to first method
+      ref.read(checkoutProvider.notifier).setPaymentMethod(methods.first);
+    }
+  }
+
+  Future<void> _loadTotalsAndTax() async {
+    setState(() => isLoading = true);
+
+    try {
+      final totals = await actions.calculateCheckoutTotals(
+        widget.feedProductItem!.id,
+        quantity,
+      );
+      if (totals != null) {
+        checkoutTotals = totals;
+      }
+
+      await _recalculateTax();
+    } finally {
+      if (mounted) setState(() => isLoading = false);
+    }
+  }
+
+  Future<void> _recalculateTax() async {
+    final address = ref.read(authProvider).shippingAddress;
+    if (address == null || (address.addressLine1).isEmpty) {
+      tax = 0.0;
+      return;
+    }
+
+    final subtotal = widget.feedProductItem!.price * quantity;
+    final shipping = _shippingCost;
+
+    tax = await actions.calculateOrderTax(
+      subtotal,
+      shipping,
+      address.addressLine1,
+      address.city,
+      address.state,
+      address.zipCode,
+    );
+    if (mounted) setState(() {});
+  }
+
+  double get _subtotal => widget.feedProductItem!.price * quantity;
+
+  double get _shippingCost {
+    if (checkoutTotals != null) return checkoutTotals!.shippingCost;
+    final flat = widget.feedProductItem!.customFlatRate ?? 0.0;
+    final additional = widget.feedProductItem!.customAdditionalItemFee ?? 0.0;
+    if (quantity <= 1) return flat;
+    return flat + additional * (quantity - 1);
+  }
+
+  double get _platformFee => _subtotal * 0.1;
+
+  double get _total => _subtotal + _shippingCost + tax + _platformFee;
+
+  bool get _hasShippingAddress {
+    final addr = ref.read(authProvider).shippingAddress;
+    return addr != null && addr.addressLine1.isNotEmpty;
+  }
+
+  bool get _hasPaymentMethod {
+    return ref.read(checkoutProvider).id.isNotEmpty;
+  }
+
+  Future<void> _onCompletePurchase() async {
+    if (isProcessing) return;
+
+    if (!_hasShippingAddress) {
+      actions.toastificationshow(
+          context, 'Missing Address', 'Please add a shipping address', 'error');
+      return;
+    }
+
+    if (!_hasPaymentMethod) {
+      actions.toastificationshow(context, 'Missing Payment',
+          'Please select a payment method', 'error');
+      return;
+    }
+
+    setState(() => isProcessing = true);
+
+    try {
+      final shippingAddressId =
+          ref.read(authProvider).shippingAddress?.id ?? '';
+      final paymentMethodId = ref.read(checkoutProvider).id;
+
+      orderResult = await actions.createCheckoutOrder(
+        widget.feedProductItem!.id,
+        quantity,
+        shippingAddressId,
+        paymentMethodId,
+        '',
+        widget.shortlistId,
+      );
+
+      if (orderResult == null || !orderResult!.success) {
+        actions.toastificationshow(
+            context, 'Error', 'Failed to create order', 'error');
+        return;
+      }
+
+      final payResult = await actions.payWithSavedCard(
+        orderResult!.orderId,
+        paymentMethodId,
+        7,
+      );
+
+      if (payResult is Map && payResult['success'] == true) {
+        if (mounted) {
+          Navigator.pop(context);
+          _showConfirmationPopup();
+        }
+      } else {
+        final errorMsg = payResult is Map
+            ? (payResult['error'] ?? 'Payment failed').toString()
+            : 'Payment failed';
+        if (mounted) {
+          actions.toastificationshow(
+              context, 'Payment Error', errorMsg, 'error');
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        actions.toastificationshow(
+            context, 'Error', 'Something went wrong', 'error');
+      }
+    } finally {
+      if (mounted) setState(() => isProcessing = false);
+    }
+  }
+
+  void _showConfirmationPopup() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isDismissible: true,
+      builder: (_) => FastCheckoutWidget(
+        feedProduct: widget.feedProductItem,
+        orderId: orderResult?.orderId,
+        subtotal: _subtotal,
+        quantity: quantity,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final user = ref.watch(authProvider);
+    final selectedPayment = ref.watch(checkoutProvider);
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -137,46 +295,20 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Product item
                 CheckoutItemWidget(
                   quantity: quantity,
                   feedProduct: widget.feedProductItem!,
                   addQuantityAction: () async {
                     quantity = quantity + 1;
                     setState(() {});
-                    getTaxFromStripeAdd = await actions.calculateOrderTax(
-                      widget.feedProductItem!.price * quantity,
-                      (widget.feedProductItem!.customFlatRate ?? 0.0) +
-                          (widget.feedProductItem!.customAdditionalItemFee ??
-                              0.0),
-                      ref.read(authProvider).shippingAddress?.addressLine1 ??
-                          '',
-                      ref.read(authProvider).shippingAddress?.city ?? '',
-                      ref.read(authProvider).shippingAddress?.state ?? '',
-                      ref.read(authProvider).shippingAddress?.zipCode ?? '',
-                    );
-                    tax = getTaxFromStripeAdd;
-                    setState(() {});
-
-                    setState(() {});
+                    await _recalculateTax();
                   },
                   minusQuantityAction: () async {
-                    quantity = quantity + -1;
+                    if (quantity <= 1) return;
+                    quantity = quantity - 1;
                     setState(() {});
-                    getTaxFromStripeMinus = await actions.calculateOrderTax(
-                      widget.feedProductItem!.price * quantity,
-                      (widget.feedProductItem!.customFlatRate ?? 0.0) +
-                          (widget.feedProductItem!.customAdditionalItemFee ??
-                              0.0),
-                      ref.read(authProvider).shippingAddress?.addressLine1 ??
-                          '',
-                      ref.read(authProvider).shippingAddress?.city ?? '',
-                      ref.read(authProvider).shippingAddress?.state ?? '',
-                      ref.read(authProvider).shippingAddress?.zipCode ?? '',
-                    );
-                    tax = getTaxFromStripeMinus;
-                    setState(() {});
-
-                    setState(() {});
+                    await _recalculateTax();
                   },
                 ),
                 Divider(
@@ -184,16 +316,21 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                   thickness: 1.0,
                   color: Color(0xFF363636),
                 ),
+
+                // Shipping Address section
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   child: InkWell(
                     splashColor: Colors.transparent,
                     focusColor: Colors.transparent,
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () async {
-                      context.pushNamed(
+                      await context.pushNamed(
                           CheckoutEditShippingAddressWidget.routeName);
+                      // Recalculate tax after address change
+                      await _recalculateTax();
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
@@ -214,14 +351,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                           size: 14.0,
                         ),
                         Text(
-                          (ref
-                                          .read(authProvider)
-                                          .shippingAddress
-                                          ?.addressLine1 ??
-                                      '') !=
-                                  ''
-                              ? 'Edit'
-                              : 'Add Address',
+                          _hasShippingAddress ? 'Edit' : 'Add Address',
                           style: GoogleFonts.inter(
                             fontWeight: FontWeight.w500,
                             color: AppColors.secondary,
@@ -232,69 +362,99 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: AppColors.backgroundSecondary,
-                      borderRadius: BorderRadius.circular(4.0),
+                if (_hasShippingAddress)
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                        16.0, 16.0, 16.0, 0.0),
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: AppColors.backgroundSecondary,
+                        borderRadius: BorderRadius.circular(4.0),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(12.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              user.shippingAddress?.fullName ?? '',
+                              style: GoogleFonts.inter(
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.textPrimary,
+                              ),
+                            ),
+                            Text(
+                              [
+                                user.shippingAddress?.addressLine1 ?? '',
+                                if ((user.shippingAddress?.addressLine2 ?? '')
+                                    .isNotEmpty)
+                                  user.shippingAddress!.addressLine2,
+                              ].join(', '),
+                              maxLines: 1,
+                              style: GoogleFonts.inter(
+                                color: AppColors.textSecondary,
+                                fontSize: 12.0,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              '${user.shippingAddress?.city ?? ''}, ${user.shippingAddress?.state ?? ''}, ${user.shippingAddress?.zipCode ?? ''}',
+                              maxLines: 1,
+                              style: GoogleFonts.inter(
+                                color: AppColors.textSecondary,
+                                fontSize: 12.0,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              user.shippingAddress?.country ?? '',
+                              maxLines: 1,
+                              style: GoogleFonts.inter(
+                                color: AppColors.textSecondary,
+                                fontSize: 12.0,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ].divide(SizedBox(height: 4.0)),
+                        ),
+                      ),
                     ),
-                    child: Padding(
-                      padding: EdgeInsets.all(12.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            ref.read(authProvider).shippingAddress?.fullName ??
-                                '',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.textPrimary,
-                            ),
+                  )
+                else
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                        16.0, 16.0, 16.0, 0.0),
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: AppColors.backgroundSecondary,
+                        borderRadius: BorderRadius.circular(4.0),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(12.0),
+                        child: Text(
+                          'No shipping address added',
+                          style: GoogleFonts.inter(
+                            color: AppColors.textSecondary,
+                            fontSize: 14.0,
                           ),
-                          Text(
-                            '${ref.read(authProvider).shippingAddress?.addressLine1 ?? ''}, ${ref.read(authProvider).shippingAddress?.addressLine2 ?? ''}',
-                            maxLines: 1,
-                            style: GoogleFonts.inter(
-                              color: AppColors.textSecondary,
-                              fontSize: 12.0,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            '${ref.read(authProvider).shippingAddress?.city ?? ''}, ${ref.read(authProvider).shippingAddress?.state ?? ''}, ${ref.read(authProvider).shippingAddress?.zipCode ?? ''}',
-                            maxLines: 1,
-                            style: GoogleFonts.inter(
-                              color: AppColors.textSecondary,
-                              fontSize: 12.0,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            ref.read(authProvider).shippingAddress?.country ??
-                                '',
-                            maxLines: 1,
-                            style: GoogleFonts.inter(
-                              color: AppColors.textSecondary,
-                              fontSize: 12.0,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ].divide(SizedBox(height: 4.0)),
+                        ),
                       ),
                     ),
                   ),
-                ),
+
                 Divider(
                   height: 48.0,
                   thickness: 1.0,
                   color: Color(0xFF363636),
                 ),
+
+                // Payment Method section
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
                   child: Text(
                     'Payment Method',
                     style: GoogleFonts.inter(
@@ -304,95 +464,123 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
-                  child: Builder(
-                    builder: (context) {
-                      final paymentMethods =
-                          ref.read(authProvider).paymentMethod.toList();
+                if (user.paymentMethod.isEmpty)
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                        16.0, 16.0, 16.0, 0.0),
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: AppColors.backgroundSecondary,
+                        borderRadius: BorderRadius.circular(4.0),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(12.0),
+                        child: Text(
+                          'No payment methods saved',
+                          style: GoogleFonts.inter(
+                            color: AppColors.textSecondary,
+                            fontSize: 14.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                else
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                        16.0, 16.0, 16.0, 0.0),
+                    child: Builder(
+                      builder: (context) {
+                        final paymentMethods = user.paymentMethod.toList();
 
-                      return ListView.separated(
-                        padding: EdgeInsets.zero,
-                        primary: false,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        itemCount: paymentMethods.length,
-                        separatorBuilder: (_, __) => SizedBox(height: 16.0),
-                        itemBuilder: (context, paymentMethodsIndex) {
-                          final paymentMethodsItem =
-                              paymentMethods[paymentMethodsIndex];
-                          return InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              ref
-                                  .read(checkoutProvider.notifier)
-                                  .setPaymentMethod(paymentMethodsItem);
-                              setState(() {});
-                            },
-                            child: Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: AppColors.backgroundSecondary,
-                                borderRadius: BorderRadius.circular(4.0),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.all(12.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Opacity(
-                                      opacity: ref.read(checkoutProvider).id ==
-                                              paymentMethodsItem.id
-                                          ? 1.0
-                                          : 0.0,
-                                      child: Icon(
-                                        Icons.circle_rounded,
-                                        color: AppColors.secondary,
-                                        size: 10.0,
+                        return ListView.separated(
+                          padding: EdgeInsets.zero,
+                          primary: false,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemCount: paymentMethods.length,
+                          separatorBuilder: (_, __) =>
+                              SizedBox(height: 16.0),
+                          itemBuilder: (context, paymentMethodsIndex) {
+                            final paymentMethodsItem =
+                                paymentMethods[paymentMethodsIndex];
+                            final isSelected =
+                                selectedPayment.id == paymentMethodsItem.id;
+                            return InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                ref
+                                    .read(checkoutProvider.notifier)
+                                    .setPaymentMethod(paymentMethodsItem);
+                              },
+                              child: Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: AppColors.backgroundSecondary,
+                                  borderRadius: BorderRadius.circular(4.0),
+                                  border: isSelected
+                                      ? Border.all(
+                                          color: AppColors.secondary,
+                                          width: 1.0)
+                                      : null,
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(12.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Icon(
+                                        isSelected
+                                            ? Icons.radio_button_checked
+                                            : Icons.radio_button_off,
+                                        color: isSelected
+                                            ? AppColors.secondary
+                                            : AppColors.textSecondary,
+                                        size: 20.0,
                                       ),
-                                    ),
-                                    FaIcon(
-                                      FontAwesomeIcons.ccVisa,
-                                      color: AppColors.textPrimary,
-                                      size: 32.0,
-                                    ),
-                                    Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '**** **** ****${paymentMethodsItem.card?.last4 ?? ''}',
-                                          style: GoogleFonts.inter(
-                                            fontWeight: FontWeight.w500,
-                                            color: AppColors.textPrimary,
+                                      FaIcon(
+                                        _cardBrandIcon(
+                                            paymentMethodsItem.card?.brand),
+                                        color: AppColors.textPrimary,
+                                        size: 32.0,
+                                      ),
+                                      Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '**** **** **** ${paymentMethodsItem.card?.last4 ?? ''}',
+                                            style: GoogleFonts.inter(
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.textPrimary,
+                                            ),
                                           ),
-                                        ),
-                                        Text(
-                                          'Expires ${paymentMethodsItem.card?.expMonth.toString() ?? ''}/${paymentMethodsItem.card?.expYear.toString() ?? ''}',
-                                          maxLines: 1,
-                                          style: GoogleFonts.inter(
-                                            color: AppColors.textSecondary,
-                                            fontSize: 12.0,
+                                          Text(
+                                            'Expires ${paymentMethodsItem.card?.expMonth.toString() ?? ''}/${paymentMethodsItem.card?.expYear.toString() ?? ''}',
+                                            maxLines: 1,
+                                            style: GoogleFonts.inter(
+                                              color: AppColors.textSecondary,
+                                              fontSize: 12.0,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
                                           ),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ].divide(SizedBox(height: 4.0)),
-                                    ),
-                                  ].divide(SizedBox(width: 12.0)),
+                                        ].divide(SizedBox(height: 4.0)),
+                                      ),
+                                    ].divide(SizedBox(width: 12.0)),
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
-                      );
-                    },
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
-                ),
                 Padding(
                   padding:
                       EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
@@ -402,8 +590,12 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () async {
-                      context
-                          .pushNamed(SettingsPaymentMethodAddWidget.routeName);
+                      await context.pushNamed(
+                          SettingsPaymentMethodAddWidget.routeName);
+                      // Auto-select newly added method
+                      if (mounted) {
+                        _autoSelectDefaultPaymentMethod();
+                      }
                     },
                     child: Container(
                       width: double.infinity,
@@ -440,8 +632,11 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                   thickness: 1.0,
                   color: Color(0xFF363636),
                 ),
+
+                // Order Summary section
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
                   child: Text(
                     'Order Summary',
                     style: GoogleFonts.inter(
@@ -467,117 +662,18 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  'Subtotal',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 14.0,
-                                    color: AppColors.textPrimary,
-                                    height: 1.5,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                NumberFormat('#,##0.##', 'en_US').format(
-                                  widget.feedProductItem!.price * quantity,
-                                ),
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14.0,
-                                  color: AppColors.textPrimary,
-                                  height: 1.5,
-                                ),
-                              ),
-                            ].divide(SizedBox(width: 8.0)),
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  'Shipping',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 14.0,
-                                    color: AppColors.textPrimary,
-                                    height: 1.5,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                NumberFormat('#,##0.##', 'en_US').format(
-                                  (widget.feedProductItem!.customFlatRate ??
-                                          0.0) +
-                                      (widget.feedProductItem!
-                                              .customAdditionalItemFee ??
-                                          0.0),
-                                ),
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14.0,
-                                  color: AppColors.textPrimary,
-                                  height: 1.5,
-                                ),
-                              ),
-                            ].divide(SizedBox(width: 8.0)),
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  'Tax',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 14.0,
-                                    color: AppColors.textPrimary,
-                                    height: 1.5,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                '-',
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14.0,
-                                  color: AppColors.textPrimary,
-                                  height: 1.5,
-                                ),
-                              ),
-                            ].divide(SizedBox(width: 8.0)),
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  'Platform Fee',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 14.0,
-                                    color: AppColors.textPrimary,
-                                    height: 1.5,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                NumberFormat('#,##0.##', 'en_US').format(
-                                  (widget.feedProductItem!.price * quantity) *
-                                      0.1,
-                                ),
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14.0,
-                                  color: AppColors.textPrimary,
-                                  height: 1.5,
-                                ),
-                              ),
-                            ].divide(SizedBox(width: 8.0)),
-                          ),
+                          _summaryRow('Subtotal', _currencyFormat.format(_subtotal)),
+                          _summaryRow('Shipping',
+                              widget.feedProductItem!.freeShipping
+                                  ? 'Free'
+                                  : _currencyFormat.format(_shippingCost)),
+                          _summaryRow(
+                              'Tax',
+                              _hasShippingAddress
+                                  ? _currencyFormat.format(tax)
+                                  : '-'),
+                          _summaryRow(
+                              'Platform Fee', _currencyFormat.format(_platformFee)),
                           Divider(
                             height: 1.0,
                             thickness: 1.0,
@@ -598,7 +694,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                                 ),
                               ),
                               Text(
-                                '\$1,432.11 ',
+                                _currencyFormat.format(_total),
                                 style: GoogleFonts.inter(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 18.0,
@@ -618,8 +714,11 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                   thickness: 1.0,
                   color: Color(0xFF363636),
                 ),
+
+                // Buyer Protection
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -670,6 +769,8 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                     ),
                   ),
                 ),
+
+                // Complete Purchase button
                 Padding(
                   padding:
                       EdgeInsetsDirectional.fromSTEB(16.0, 36.0, 16.0, 0.0),
@@ -686,24 +787,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                       borderRadius: BorderRadius.circular(4.0),
                     ),
                     child: TextButton(
-                      onPressed: () async {
-                        orderResult = await actions.createCheckoutOrder(
-                          widget.feedProductItem!.id,
-                          quantity,
-                          'f08c02f4-18c9-4f9e-9ae2-c207682fe5c5',
-                          '2ebe07f5-d5b8-45bf-a0f0-daf11fad1aca',
-                          '',
-                          widget.shortlistId,
-                        );
-                        await actions.payWithSavedCard(
-                          orderResult!.orderId,
-                          ref.read(authProvider).defaultPaymentMethodId,
-                          7,
-                        );
-                        Navigator.pop(context);
-
-                        setState(() {});
-                      },
+                      onPressed: isProcessing ? null : _onCompletePurchase,
                       style: TextButton.styleFrom(
                         padding: EdgeInsetsDirectional.fromSTEB(
                             16.0, 0.0, 16.0, 0.0),
@@ -712,15 +796,26 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
-                      child: Text(
-                        'Complete Purchase - \$1,432.11',
-                        style: GoogleFonts.inter(
-                          color: Colors.white,
-                        ),
-                      ),
+                      child: isProcessing
+                          ? SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2.0,
+                                color: Colors.white,
+                              ),
+                            )
+                          : Text(
+                              'Complete Purchase - ${_currencyFormat.format(_total)}',
+                              style: GoogleFonts.inter(
+                                color: Colors.white,
+                              ),
+                            ),
                     ),
                   ),
                 ),
+
+                // Terms
                 Padding(
                   padding:
                       EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
@@ -743,5 +838,48 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
         ),
       ),
     );
+  }
+
+  Widget _summaryRow(String label, String value) {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Expanded(
+          child: Text(
+            label,
+            style: GoogleFonts.inter(
+              fontWeight: FontWeight.normal,
+              fontSize: 14.0,
+              color: AppColors.textPrimary,
+              height: 1.5,
+            ),
+          ),
+        ),
+        Text(
+          value,
+          style: GoogleFonts.inter(
+            fontWeight: FontWeight.w500,
+            fontSize: 14.0,
+            color: AppColors.textPrimary,
+            height: 1.5,
+          ),
+        ),
+      ].divide(SizedBox(width: 8.0)),
+    );
+  }
+
+  IconData _cardBrandIcon(String? brand) {
+    switch (brand?.toLowerCase()) {
+      case 'visa':
+        return FontAwesomeIcons.ccVisa;
+      case 'mastercard':
+        return FontAwesomeIcons.ccMastercard;
+      case 'amex':
+        return FontAwesomeIcons.ccAmex;
+      case 'discover':
+        return FontAwesomeIcons.ccDiscover;
+      default:
+        return FontAwesomeIcons.creditCard;
+    }
   }
 }

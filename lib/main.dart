@@ -12,6 +12,7 @@ import '/core/l10n/internationalization.dart';
 import '/core/router/app_router.dart';
 import '/core/theme/app_theme.dart';
 import '/core/utils/widget_extensions.dart';
+import '/features/auth/presentation/providers/auth_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,8 +25,6 @@ void main() async {
   await actions.setStatusbarColor();
 
   await SupaFlow.initialize();
-
-  await actions.checkReminderMeAuth();
 
   runApp(ProviderScope(
     child: MyApp(),
@@ -72,9 +71,18 @@ class _MyAppState extends ConsumerState<MyApp> {
     _router = createRouter(_appStateNotifier);
     userStream = getItSupabaseUserStream()
       ..listen((user) {
+        // Clear all user-specific state on logout
+        if (!user.loggedIn) {
+          ref.read(authProvider.notifier).clear();
+        }
         _appStateNotifier.update(user);
       });
     jwtTokenStream.listen((_) {});
+
+    // Check keepSignedIn AFTER ProviderScope and user stream are set up,
+    // so that signOut events are properly received by authProvider.
+    actions.checkReminderMeAuth();
+
     Future.delayed(
       Duration(milliseconds: 1000),
       () => _appStateNotifier.stopShowingSplashImage(),

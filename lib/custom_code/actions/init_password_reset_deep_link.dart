@@ -5,6 +5,8 @@ import 'dart:async';
 import 'package:app_links/app_links.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '/core/router/app_router.dart' show appNavigatorKey;
+
 StreamSubscription<Uri>? _linkSubscription;
 bool _isInitialized = false;
 
@@ -17,48 +19,54 @@ Future<void> initPasswordResetDeepLink(BuildContext context) async {
   final appLinks = AppLinks();
   final prefs = await SharedPreferences.getInstance();
 
-  // Отменяем старый listener если есть
+  // Cancel old listener if exists
   await _linkSubscription?.cancel();
   _linkSubscription = null;
 
-  // Проверяем initial link с задержкой
+  // Check initial link after frame callback
   WidgetsBinding.instance.addPostFrameCallback((_) async {
     try {
       final initialUri = await appLinks.getInitialLink();
       if (initialUri != null) {
-        if (context.mounted) {
-          await _handleDeepLink(initialUri, context, prefs);
-        }
+        await _handleDeepLink(initialUri, prefs);
       }
     } catch (e) {}
   });
 
-  // Слушаем новые deep links
+  // Listen for new deep links — use appNavigatorKey to avoid stale context
   _linkSubscription = appLinks.uriLinkStream.listen((Uri uri) async {
-    if (context.mounted) {
-      final prefs = await SharedPreferences.getInstance();
-      await _handleDeepLink(uri, context, prefs);
+    final prefs = await SharedPreferences.getInstance();
+    final navContext = appNavigatorKey.currentContext;
+    if (navContext != null && navContext.mounted) {
+      await _handleDeepLink(uri, prefs);
     } else {
-      // Сохраняем код для обработки позже
+      // Save code for later processing
       final code = uri.queryParameters['code'];
       if (code != null && code.isNotEmpty) {
-        final prefs = await SharedPreferences.getInstance();
         await prefs.setString('pending_reset_code', code);
       }
     }
   });
 
-  // Проверяем есть ли сохранённый pending код
+  // Check for saved pending code
   final pendingCode = prefs.getString('pending_reset_code');
-  if (pendingCode != null && pendingCode.isNotEmpty && context.mounted) {
+  if (pendingCode != null && pendingCode.isNotEmpty) {
     await prefs.remove('pending_reset_code');
-    context.go('/forgotPasswordStep3?code=$pendingCode');
+    final navContext = appNavigatorKey.currentContext;
+    if (navContext != null && navContext.mounted) {
+      navContext.go('/forgotPasswordStep3?code=$pendingCode');
+    }
   }
 }
 
-Future<void> _handleDeepLink(
-    Uri uri, BuildContext context, SharedPreferences prefs) async {
-  if (!context.mounted) {
+Future<void> _handleDeepLink(Uri uri, SharedPreferences prefs) async {
+  final navContext = appNavigatorKey.currentContext;
+  if (navContext == null || !navContext.mounted) {
+    // Save code for later processing
+    final code = uri.queryParameters['code'];
+    if (code != null && code.isNotEmpty) {
+      await prefs.setString('pending_reset_code', code);
+    }
     return;
   }
 
@@ -81,14 +89,14 @@ Future<void> _handleDeepLink(
       await prefs.setString('last_processed_reset_link', uri.toString());
       await prefs.setString('last_used_reset_code', code);
 
-      if (context.mounted) {
-        context.go('/forgotPasswordStep3?code=$code');
+      if (navContext.mounted) {
+        navContext.go('/forgotPasswordStep3?code=$code');
       }
     }
   }
 }
 
-// НЕ сбрасывай _isInitialized - это вызывает проблемы
+// Do NOT reset _isInitialized - it causes issues
 Future<void> clearPasswordResetState() async {
   final prefs = await SharedPreferences.getInstance();
   await prefs.remove('last_processed_reset_link');

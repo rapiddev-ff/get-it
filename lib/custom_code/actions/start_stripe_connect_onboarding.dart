@@ -6,39 +6,33 @@ import 'package:http/http.dart' as http;
 Future<dynamic> startStripeConnectOnboarding() async {
   try {
     final supabase = Supabase.instance.client;
-
-    // Check and refresh session
     final session = supabase.auth.currentSession;
-    final user = supabase.auth.currentUser;
 
-    if (user == null || session == null) {
+    if (session == null) {
       return {'success': false, 'error': 'Not authenticated - no session'};
     }
 
-    // Force refresh to get a fresh token
-    final refreshResult = await supabase.auth.refreshSession();
-    final freshSession = refreshResult.session;
-
-    if (freshSession == null) {
-      return {'success': false, 'error': 'Failed to refresh session'};
+    // Only refresh if token expires within 60 seconds
+    String accessToken = session.accessToken;
+    final expiresAt = session.expiresAt;
+    if (expiresAt != null &&
+        DateTime.fromMillisecondsSinceEpoch(expiresAt * 1000)
+            .difference(DateTime.now())
+            .inSeconds <
+            60) {
+      final refreshResult = await supabase.auth.refreshSession();
+      accessToken = refreshResult.session?.accessToken ?? accessToken;
     }
 
-    final accessToken = freshSession.accessToken;
-
-    // Get Supabase URL
+    final userId = supabase.auth.currentUser!.id;
     final supabaseUrl = SupaFlow.client.rest.url.replaceAll('/rest/v1', '');
     final functionUrl = '$supabaseUrl/functions/v1/stripe-connect-onboarding';
 
-    // ========================================
-    // ПРАВИЛЬНЫЕ HTTPS URLs для Stripe
-    // Используем Supabase Edge Function как redirect handler
-    // ========================================
     final String refreshUrl =
-        '$supabaseUrl/functions/v1/stripe-redirect?type=refresh&user_id=${user.id}';
+        '$supabaseUrl/functions/v1/stripe-redirect?type=refresh&user_id=$userId';
     final String returnUrl =
-        '$supabaseUrl/functions/v1/stripe-redirect?type=success&user_id=${user.id}';
+        '$supabaseUrl/functions/v1/stripe-redirect?type=success&user_id=$userId';
 
-    // Make direct HTTP call
     final response = await http.post(
       Uri.parse(functionUrl),
       headers: {
@@ -66,25 +60,14 @@ Future<dynamic> startStripeConnectOnboarding() async {
     final url = data['url'] as String?;
 
     if (url != null) {
-      final uri = Uri.parse(url);
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
-
-        return {
-          'success': true,
-          'url': url,
-          'account_id': data['account_id'],
-          'is_new_account': data['is_new_account'] ?? false,
-          'is_dashboard_link': data['is_dashboard_link'] ?? false,
-          'message': 'Opening Stripe onboarding...',
-        };
-      } else {
-        return {
-          'success': false,
-          'error': 'Cannot launch URL: $url',
-          'error_code': 'LAUNCH_FAILED',
-        };
-      }
+      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+      return {
+        'success': true,
+        'url': url,
+        'account_id': data['account_id'],
+        'is_new_account': data['is_new_account'] ?? false,
+        'is_dashboard_link': data['is_dashboard_link'] ?? false,
+      };
     }
 
     return {
