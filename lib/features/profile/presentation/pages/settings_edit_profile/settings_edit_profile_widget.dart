@@ -143,11 +143,7 @@ class _SettingsEditProfileWidgetState
           ),
           title: Text(
             'Edit Profile',
-            style: GoogleFonts.inter(
-              color: Colors.white,
-              fontSize: 18.0,
-              fontWeight: FontWeight.w500,
-            ),
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, color: Colors.white),
           ),
         ),
         body: SafeArea(
@@ -159,11 +155,7 @@ class _SettingsEditProfileWidgetState
                 children: [
                   Text(
                     'Public Profile',
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16.0,
-                      height: 1.5,
-                    ),
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 4.0, bottom: 20.0),
@@ -401,11 +393,7 @@ class _SettingsEditProfileWidgetState
                   ),
                   Text(
                     'Private Account Details',
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16.0,
-                      height: 1.5,
-                    ),
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 4.0, bottom: 20.0),
@@ -622,11 +610,7 @@ class _SettingsEditProfileWidgetState
                       ),
                       child: Text(
                         'Cancel',
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                          fontSize: 17.0,
-                        ),
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
                       ),
                     ),
                   ),

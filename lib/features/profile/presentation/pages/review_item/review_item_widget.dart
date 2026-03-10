@@ -6,7 +6,6 @@ import '/core/utils/value_utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ReviewItemWidget extends StatelessWidget {
   const ReviewItemWidget({
@@ -75,10 +74,7 @@ class ReviewItemWidget extends StatelessWidget {
                           "yMMMd",
                           review.createdAt ?? DateTime.now(),
                         ),
-                        style: GoogleFonts.inter(
-                          fontSize: 12.0,
-                          color: AppColors.textSecondary,
-                        ),
+                        style: Theme.of(context).textTheme.labelSmall!,
                       ),
                     ],
                   ),

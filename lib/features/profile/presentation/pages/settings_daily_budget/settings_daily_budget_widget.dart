@@ -73,12 +73,7 @@ class _SettingsDailyBudgetWidgetState
           ),
           title: Text(
             'Edit Daily Budget',
-            style: GoogleFonts.inter(
-              color: Colors.white,
-              fontSize: 18.0,
-              fontWeight: FontWeight.w500,
-              height: 1.5,
-            ),
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, color: Colors.white, height: 1.5),
           ),
         ),
         body: SafeArea(
@@ -131,7 +126,7 @@ class _SettingsDailyBudgetWidgetState
                               prefixStyle:
                                   Theme.of(context).textTheme.bodyLarge!,
                             ),
-                            style: GoogleFonts.inter(),
+                            style: Theme.of(context).textTheme.bodyMedium!,
                             keyboardType: TextInputType.number,
                             cursorColor: AppColors.textPrimary,
                             enableInteractiveSelection: true,

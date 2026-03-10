@@ -447,10 +447,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
             ),
             Text(
               'Here\'s your business overview',
-              style: GoogleFonts.inter(
-                fontWeight: FontWeight.normal,
-                color: AppColors.textSecondary,
-              ),
+              style: Theme.of(context).textTheme.labelMedium!,
             ),
             Padding(
               padding: EdgeInsets.only(top: 40.0),
@@ -468,10 +465,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                     children: [
                       Text(
                         'Revenue',
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.normal,
-                          color: AppColors.textSecondary,
-                        ),
+                        style: Theme.of(context).textTheme.labelMedium!,
                       ),
                       Text(
                         valueOrDefault<String>(
@@ -710,11 +704,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                     child: Center(
                       child: Text(
                         'View All Orders',
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.0,
-                          color: AppColors.secondary,
-                        ),
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, color: AppColors.secondary),
                       ),
                     ),
                   ),
@@ -844,9 +834,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                               )
                             : Text(
                                 'Connect Stripe',
-                                style: GoogleFonts.inter(
-                                  color: Colors.white,
-                                ),
+                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
                               ),
                       ),
                     ),
@@ -927,10 +915,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
               ),
               Text(
                 label,
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.normal,
-                  color: AppColors.textSecondary,
-                ),
+                style: Theme.of(context).textTheme.labelMedium!,
               ),
             ].divide(SizedBox(height: 4.0)),
           ),
@@ -1013,10 +998,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                 if (subtitle != null)
                   Text(
                     subtitle,
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.normal,
-                      color: AppColors.textSecondary,
-                    ),
+                    style: Theme.of(context).textTheme.labelMedium!,
                   ),
               ],
             ),

@@ -404,12 +404,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                             children: [
                                               Text(
                                                 '3',
-                                                style: GoogleFonts.inter(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 28.0,
-                                                  color: AppColors.textPrimary,
-                                                  height: 1.5,
-                                                ),
+                                                style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                                               ),
                                               Text(
                                                 'Days',
@@ -449,12 +444,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                             children: [
                                               Text(
                                                 '7',
-                                                style: GoogleFonts.inter(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 28.0,
-                                                  color: AppColors.textPrimary,
-                                                  height: 1.5,
-                                                ),
+                                                style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                                               ),
                                               Text(
                                                 'Days',
@@ -492,14 +482,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                                 children: [
                                                   Text(
                                                     '14',
-                                                    style: GoogleFonts.inter(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 28.0,
-                                                      color:
-                                                          AppColors.textPrimary,
-                                                      height: 1.5,
-                                                    ),
+                                                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                                                   ),
                                                   Text(
                                                     'Days',
@@ -701,11 +684,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                             ),
                                             Text(
                                               '247 buyers found',
-                                              style: GoogleFonts.inter(
-                                                fontSize: 14.0,
-                                                color: AppColors.textSecondary,
-                                                height: 1.5,
-                                              ),
+                                              style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
                                             ),
                                           ].divide(SizedBox(width: 8.0)),
                                         ),
@@ -977,11 +956,7 @@ class _HomeDashoardPromoteStep2WidgetState
                       padding: EdgeInsets.only(top: 12.0),
                       child: Text(
                         'In-App Purchase',
-                        style: GoogleFonts.inter(
-                          fontSize: 14.0,
-                          color: AppColors.textSecondary,
-                          height: 1.5,
-                        ),
+                        style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
                       ),
                     ),
                   ),

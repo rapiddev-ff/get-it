@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '/backend/supabase/supabase.dart';
 import '/core/theme/app_colors.dart';
@@ -194,11 +193,7 @@ class _HomeDashoardInventoryAddConditionWidgetState
                     ),
                     child: Text(
                       'Cancel',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 17.0,
-                        color: Colors.white,
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
                     ),
                   ),
                 ),

@@ -11,7 +11,6 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'settings_change_email_model.dart';
 
 class SettingsChangeEmailWidget extends ConsumerStatefulWidget {
@@ -72,12 +71,7 @@ class _SettingsChangeEmailWidgetState extends ConsumerState<SettingsChangeEmailW
           ),
           title: Text(
             'Edit Email',
-            style: GoogleFonts.inter(
-              color: Colors.white,
-              fontSize: 18.0,
-              fontWeight: FontWeight.w500,
-              height: 1.5,
-            ),
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, color: Colors.white, height: 1.5),
           ),
         ),
         body: SafeArea(

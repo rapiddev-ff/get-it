@@ -8,7 +8,6 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import '/core/providers/current_user_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class HomeDashoardShortlistAddWidget extends ConsumerStatefulWidget {
@@ -161,10 +160,7 @@ class _HomeDashoardShortlistAddWidgetState
                           decoration: InputDecoration(
                             isDense: false,
                             hintText: 'Search products, characters, years...',
-                            hintStyle: GoogleFonts.inter(
-                              fontSize: 15.0,
-                              color: AppColors.textSecondary,
-                            ),
+                            hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 15.0),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: AppColors.neutral700,

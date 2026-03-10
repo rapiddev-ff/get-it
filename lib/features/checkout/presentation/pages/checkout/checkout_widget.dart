@@ -720,9 +720,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                             )
                           : Text(
                               'Complete Purchase - ${_currencyFormat.format(_total)}',
-                              style: GoogleFonts.inter(
-                                color: Colors.white,
-                              ),
+                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
                             ),
                     ),
                   ),

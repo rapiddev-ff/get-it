@@ -164,11 +164,7 @@ class _HomeDashoardShortlistWidgetState
                                             horizontal: 16.0),
                                         child: Text(
                                           'Create New Shortlist',
-                                          style: GoogleFonts.inter(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 16.0,
-                                            color: Colors.white,
-                                          ),
+                                          style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white),
                                         ),
                                       ),
                                     ),
@@ -231,11 +227,7 @@ class _HomeDashoardShortlistWidgetState
                                     SizedBox(width: 8.0),
                                     Text(
                                       'Create New Shortlist',
-                                      style: GoogleFonts.inter(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 16.0,
-                                        color: Colors.white,
-                                      ),
+                                      style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white),
                                     ),
                                   ],
                                 ),

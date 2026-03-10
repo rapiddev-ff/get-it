@@ -237,10 +237,7 @@ class _HomeSellerProfileReviewsWidgetState
                                       ),
                                       Text(
                                         '(${_model.state == 'As Buyer' ? _currentTotalReviewsAsBuyer : _currentTotalReviewsAsSeller}) reviews',
-                                        style: GoogleFonts.inter(
-                                          fontSize: 14.0,
-                                          color: AppColors.textSecondary,
-                                        ),
+                                        style: Theme.of(context).textTheme.labelMedium!,
                                       ),
                                     ].divide(SizedBox(width: 8.0)),
                                   ),
@@ -268,10 +265,7 @@ class _HomeSellerProfileReviewsWidgetState
                                           ),
                                           Text(
                                             'Items',
-                                            style: GoogleFonts.inter(
-                                              fontSize: 12.0,
-                                              color: AppColors.textSecondary,
-                                            ),
+                                            style: Theme.of(context).textTheme.labelSmall!,
                                           ),
                                         ],
                                       ),
@@ -293,10 +287,7 @@ class _HomeSellerProfileReviewsWidgetState
                                           ),
                                           Text(
                                             'Sold',
-                                            style: GoogleFonts.inter(
-                                              fontSize: 12.0,
-                                              color: AppColors.textSecondary,
-                                            ),
+                                            style: Theme.of(context).textTheme.labelSmall!,
                                           ),
                                         ],
                                       ),
@@ -319,10 +310,7 @@ class _HomeSellerProfileReviewsWidgetState
                                           ),
                                           Text(
                                             'Followers',
-                                            style: GoogleFonts.inter(
-                                              fontSize: 12.0,
-                                              color: AppColors.textSecondary,
-                                            ),
+                                            style: Theme.of(context).textTheme.labelSmall!,
                                           ),
                                         ],
                                       ),
@@ -460,9 +448,7 @@ class _HomeSellerProfileReviewsWidgetState
                             ),
                             label: Text(
                               'Write a Review',
-                              style: GoogleFonts.inter(
-                                color: Colors.white,
-                              ),
+                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
                             ),
                             style: TextButton.styleFrom(
                               padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -683,10 +669,7 @@ class _HomeSellerProfileReviewsWidgetState
                       createdAt != null
                           ? dateTimeFormat('relative', createdAt)
                           : '',
-                      style: GoogleFonts.inter(
-                        fontSize: 12.0,
-                        color: AppColors.textSecondary,
-                      ),
+                      style: Theme.of(context).textTheme.labelSmall!,
                     ),
                     Container(
                       width: 26.0,
@@ -769,10 +752,7 @@ class _HomeSellerProfileReviewsWidgetState
                 reviewRole == 'as_seller'
                     ? 'Sold on ${DateFormat('MMM dd, yyyy').format(orderDate)}'
                     : 'Purchased on ${DateFormat('MMM dd, yyyy').format(orderDate)}',
-                style: GoogleFonts.inter(
-                  fontSize: 12.0,
-                  color: AppColors.textSecondary,
-                ),
+                style: Theme.of(context).textTheme.labelSmall!,
               ),
           ].divide(SizedBox(height: 16.0)),
         ),

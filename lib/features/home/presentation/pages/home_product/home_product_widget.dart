@@ -642,10 +642,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                     SizedBox(height: 4.0),
                                     Text(
                                       'Carefully packaged with tracking included.',
-                                      style: GoogleFonts.inter(
-                                        fontSize: 14.0,
-                                        color: AppColors.textSecondary,
-                                      ),
+                                      style: Theme.of(context).textTheme.labelMedium!,
                                     ),
                                   ],
                                 ),
@@ -698,11 +695,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                       ),
                                       child: Text(
                                         'Ask Question',
-                                        style: GoogleFonts.inter(
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.white,
-                                          fontSize: 17.0,
-                                        ),
+                                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
                                       ),
                                     ),
                                   ),
@@ -799,11 +792,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                           SizedBox(width: 8.0),
                                           Text(
                                             'Buy Now',
-                                            style: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.white,
-                                              fontSize: 17.0,
-                                            ),
+                                            style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
                                           ),
                                         ],
                                       ),

@@ -599,11 +599,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                               ),
                               Text(
                                 '${selectedProductIds.length} Items',
-                                style: GoogleFonts.inter(
-                                  fontSize: 14.0,
-                                  color: AppColors.textSecondary,
-                                  height: 1.5,
-                                ),
+                                style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
                               ),
                             ],
                           ),
@@ -830,11 +826,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                       ),
                       child: Text(
                         _isSaving ? 'Saving...' : 'Save as Draft',
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 17.0,
-                          color: Colors.white,
-                        ),
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
                       ),
                     ),
                   ),

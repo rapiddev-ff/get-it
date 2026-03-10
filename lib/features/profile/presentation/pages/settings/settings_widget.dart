@@ -293,11 +293,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                                 false))
                                               Text(
                                                 'Off',
-                                                style: GoogleFonts.inter(
-                                                  fontSize: 14.0,
-                                                  color:
-                                                      AppColors.textSecondary,
-                                                ),
+                                                style: Theme.of(context).textTheme.labelMedium!,
                                               ),
                                             if ((authState.userSettings
                                                     ?.swipePaymentEnabled ??
@@ -933,11 +929,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                         ),
                         label: Text(
                           'Logout',
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 17.0,
-                            color: Colors.white,
-                          ),
+                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
                         ),
                         style: TextButton.styleFrom(
                           padding: EdgeInsets.symmetric(horizontal: 16.0),

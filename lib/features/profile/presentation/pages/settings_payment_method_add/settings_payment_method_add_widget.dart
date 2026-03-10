@@ -136,11 +136,7 @@ class _SettingsPaymentMethodAddWidgetState
           ),
           title: Text(
             'Payment Method',
-            style: GoogleFonts.inter(
-              color: Colors.white,
-              fontSize: 18.0,
-              fontWeight: FontWeight.w500,
-            ),
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, color: Colors.white),
           ),
         ),
         body: SafeArea(
@@ -594,10 +590,7 @@ class _SettingsPaymentMethodAddWidgetState
                                 ).animate().fade(duration: 600.ms),
                                 Text(
                                   'This card will  be used for future purchases',
-                                  style: GoogleFonts.inter(
-                                    color: AppColors.textSecondary,
-                                    fontSize: 14.0,
-                                  ),
+                                  style: Theme.of(context).textTheme.labelMedium!,
                                 ).animate().fade(duration: 600.ms),
                               ],
                             ),
@@ -668,11 +661,7 @@ class _SettingsPaymentMethodAddWidgetState
                             ),
                             child: Text(
                               'Cancel',
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
-                                fontSize: 17.0,
-                              ),
+                              style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
                             ),
                           ),
                         ),

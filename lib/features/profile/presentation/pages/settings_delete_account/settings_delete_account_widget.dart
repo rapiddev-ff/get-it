@@ -34,12 +34,7 @@ class SettingsDeleteAccountWidget extends StatelessWidget {
           ),
           title: Text(
             'Delete Account',
-            style: GoogleFonts.inter(
-              color: Colors.white,
-              fontSize: 18.0,
-              fontWeight: FontWeight.w500,
-              height: 1.5,
-            ),
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, color: Colors.white, height: 1.5),
           ),
         ),
         body: SafeArea(
@@ -67,11 +62,7 @@ class SettingsDeleteAccountWidget extends StatelessWidget {
                   child: Text(
                     'Are you sure you want to delete your account?',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 24.0,
-                      height: 1.5,
-                    ),
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                   ),
                 ),
                 Padding(
@@ -175,11 +166,7 @@ class SettingsDeleteAccountWidget extends StatelessWidget {
                           },
                           child: Text(
                             'Back',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 17.0,
-                              color: Colors.white,
-                            ),
+                            style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
                           ),
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(

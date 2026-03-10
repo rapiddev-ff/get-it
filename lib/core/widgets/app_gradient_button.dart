@@ -109,11 +109,7 @@ class AppOutlineButton extends StatelessWidget {
         ),
         child: Text(
           text,
-          style: GoogleFonts.inter(
-            fontWeight: FontWeight.w500,
-            fontSize: 17.0,
-            color: Colors.white,
-          ),
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
         ),
       ),
     );

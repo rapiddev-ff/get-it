@@ -256,8 +256,7 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
           Icon(Icons.error_outline, size: 48, color: AppColors.error),
           const SizedBox(height: 16),
           Text('Error loading products',
-              style: GoogleFonts.inter(
-                  fontSize: 14, color: AppColors.textPrimary)),
+              style: Theme.of(context).textTheme.bodyMedium!),
           const SizedBox(height: 8),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),

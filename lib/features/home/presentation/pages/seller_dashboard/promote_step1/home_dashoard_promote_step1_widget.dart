@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
@@ -111,10 +110,7 @@ class _HomeDashoardPromoteStep1WidgetState
                           decoration: InputDecoration(
                             isDense: false,
                             hintText: 'Search inventory...',
-                            hintStyle: GoogleFonts.inter(
-                              fontSize: 15.0,
-                              color: AppColors.textSecondary,
-                            ),
+                            hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 15.0),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: AppColors.neutral700,

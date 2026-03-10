@@ -102,11 +102,7 @@ class _SettingsShippingDefaultsWidgetState
                         children: [
                           Text(
                             'Shipping Cost',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 24.0,
-                              height: 1.5,
-                            ),
+                            style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: 8.0),
@@ -147,10 +143,7 @@ class _SettingsShippingDefaultsWidgetState
                                     padding: EdgeInsets.only(right: 4.0),
                                     child: Text(
                                       '\$',
-                                      style: GoogleFonts.inter(
-                                        fontSize: 16.0,
-                                        color: Colors.white,
-                                      ),
+                                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -206,10 +199,7 @@ class _SettingsShippingDefaultsWidgetState
                                     padding: EdgeInsets.only(right: 4.0),
                                     child: Text(
                                       '\$',
-                                      style: GoogleFonts.inter(
-                                        fontSize: 16.0,
-                                        color: Colors.white,
-                                      ),
+                                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
                                     ),
                                   ),
                                 ),

@@ -154,11 +154,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                     widget.product?.title,
                                     'n/a',
                                   ),
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.textPrimary,
-                                    height: 1.5,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                                 ),
                                 if (widget.product?.conditionName.isNotEmpty ==
                                     true)
@@ -175,11 +171,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                       Expanded(
                                         child: Text(
                                           '\$${NumberFormat('#,##0.00', 'en_US').format(widget.product?.price ?? 0)}',
-                                          style: GoogleFonts.inter(
-                                            fontWeight: FontWeight.w500,
-                                            color: AppColors.textPrimary,
-                                            height: 1.5,
-                                          ),
+                                          style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                                         ),
                                       ),
                                       Text(
@@ -233,11 +225,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                 widget.sellerDataType?.username,
                                 'n/a',
                               ),
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0,
-                                color: AppColors.textPrimary,
-                              ),
+                              style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
                             ),
                             Padding(
                               padding: EdgeInsets.only(top: 8.0),
@@ -274,10 +262,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                   ),
                                   Text(
                                     '${(widget.reviewRole == 'as_buyer' ? widget.sellerDataType?.totalReviewsAsBuyer : widget.sellerDataType?.totalReviewsAsSeller)?.toString() ?? '0'} reviews',
-                                    style: GoogleFonts.inter(
-                                      fontSize: 14.0,
-                                      color: AppColors.textSecondary,
-                                    ),
+                                    style: Theme.of(context).textTheme.labelMedium!,
                                   ),
                                 ].divide(SizedBox(width: 8.0)),
                               ),
@@ -309,12 +294,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                             alignment: Alignment.topLeft,
                             child: Text(
                               'Rate Your Experience',
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16.0,
-                                color: AppColors.textPrimary,
-                                height: 1.5,
-                              ),
+                              style: Theme.of(context).textTheme.titleSmall!.copyWith(height: 1.5),
                             ),
                           ),
                           Padding(
@@ -353,12 +333,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                         children: [
                           Text(
                             'Write Your Review',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16.0,
-                              color: AppColors.textPrimary,
-                              height: 1.5,
-                            ),
+                            style: Theme.of(context).textTheme.titleSmall!.copyWith(height: 1.5),
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: 16.0),
@@ -472,12 +447,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                         children: [
                           Text(
                             'Add Photos (Optional)',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16.0,
-                              color: AppColors.textPrimary,
-                              height: 1.5,
-                            ),
+                            style: Theme.of(context).textTheme.titleSmall!.copyWith(height: 1.5),
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: 16.0),
@@ -525,11 +495,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                         child: Text(
                                           'Upload photos of the item you received 3 LIMIT\n',
                                           maxLines: 1,
-                                          style: GoogleFonts.inter(
-                                            color: AppColors.textSecondary,
-                                            fontSize: 14.0,
-                                            height: 1.5,
-                                          ),
+                                          style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ),

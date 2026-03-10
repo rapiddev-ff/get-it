@@ -215,10 +215,7 @@ class _SettingsMyProfileWidgetState
                                             ?.toString(),
                                         '0',
                                       )} reviews)',
-                                    style: GoogleFonts.inter(
-                                      fontSize: 14.0,
-                                      color: AppColors.textSecondary,
-                                    ),
+                                    style: Theme.of(context).textTheme.labelMedium!,
                                   ),
                                 ].divide(SizedBox(width: 8.0)),
                               ),
@@ -253,10 +250,7 @@ class _SettingsMyProfileWidgetState
                                           ),
                                           Text(
                                             'Items',
-                                            style: GoogleFonts.inter(
-                                              fontSize: 12.0,
-                                              color: AppColors.textSecondary,
-                                            ),
+                                            style: Theme.of(context).textTheme.labelSmall!,
                                           ),
                                         ],
                                       ),
@@ -280,10 +274,7 @@ class _SettingsMyProfileWidgetState
                                           ),
                                           Text(
                                             'Sold',
-                                            style: GoogleFonts.inter(
-                                              fontSize: 12.0,
-                                              color: AppColors.textSecondary,
-                                            ),
+                                            style: Theme.of(context).textTheme.labelSmall!,
                                           ),
                                         ],
                                       ),
@@ -306,10 +297,7 @@ class _SettingsMyProfileWidgetState
                                         ),
                                         Text(
                                           'Followers',
-                                          style: GoogleFonts.inter(
-                                            fontSize: 12.0,
-                                            color: AppColors.textSecondary,
-                                          ),
+                                          style: Theme.of(context).textTheme.labelSmall!,
                                         ),
                                       ],
                                     ),
@@ -332,10 +320,7 @@ class _SettingsMyProfileWidgetState
                                         ),
                                         Text(
                                           'Followers',
-                                          style: GoogleFonts.inter(
-                                            fontSize: 12.0,
-                                            color: AppColors.textSecondary,
-                                          ),
+                                          style: Theme.of(context).textTheme.labelSmall!,
                                         ),
                                       ],
                                     ),
@@ -583,11 +568,7 @@ class _SettingsMyProfileWidgetState
                   _jsonGet(json, 'as_buyer.total')?.toString(),
                   '0',
                 )} reviews',
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14.0,
-                  color: AppColors.secondary,
-                ),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, color: AppColors.secondary),
               ),
             ),
           ].divide(SizedBox(width: 12.0)),
@@ -624,11 +605,7 @@ class _SettingsMyProfileWidgetState
                   _jsonGet(json, 'as_buyer.total')?.toString(),
                   '0',
                 )} reviews',
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14.0,
-                  color: AppColors.secondary,
-                ),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, color: AppColors.secondary),
               ),
             ),
           ].divide(SizedBox(width: 12.0)),
@@ -665,11 +642,7 @@ class _SettingsMyProfileWidgetState
                   _jsonGet(json, 'as_seller.total')?.toString(),
                   '0',
                 )} reviews',
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14.0,
-                  color: AppColors.secondary,
-                ),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, color: AppColors.secondary),
               ),
             ),
           ].divide(SizedBox(width: 12.0)),

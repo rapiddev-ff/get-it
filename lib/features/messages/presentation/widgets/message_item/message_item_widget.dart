@@ -124,10 +124,7 @@ class MessageItemWidget extends ConsumerWidget {
                               conversationDataType?.otherUserUsername,
                               'N/A',
                             ),
-                            style: GoogleFonts.inter(
-                              fontSize: 14.0,
-                              height: 1.5,
-                            ),
+                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
                           ),
                         ),
                         if (valueOrDefault<String>(
@@ -176,11 +173,7 @@ class MessageItemWidget extends ConsumerWidget {
                       Text(
                         conversationDataType!.lastMessageText ?? '',
                         maxLines: 1,
-                        style: GoogleFonts.inter(
-                          color: AppColors.textSecondary,
-                          fontSize: 14.0,
-                          height: 1.5,
-                        ),
+                        style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
                         overflow: TextOverflow.ellipsis,
                       ),
                   ].divide(SizedBox(height: 4.0)),
@@ -265,10 +258,7 @@ class MessageItemWidget extends ConsumerWidget {
                               conversationDataType?.otherUserUsername,
                               'N/A',
                             ),
-                            style: GoogleFonts.inter(
-                              fontSize: 14.0,
-                              height: 1.5,
-                            ),
+                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
                           ),
                         ),
                         Text(
@@ -290,11 +280,7 @@ class MessageItemWidget extends ConsumerWidget {
                         'n/a ',
                       ),
                       maxLines: 1,
-                      style: GoogleFonts.inter(
-                        color: AppColors.textSecondary,
-                        fontSize: 14.0,
-                        height: 1.5,
-                      ),
+                      style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ].divide(SizedBox(height: 4.0)),

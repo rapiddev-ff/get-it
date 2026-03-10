@@ -135,10 +135,7 @@ class _ChatBuyerProfileWidgetState
                             ),
                             Text(
                               'Member since March 2025',
-                              style: GoogleFonts.inter(
-                                color: AppColors.textSecondary,
-                                fontSize: 14.0,
-                              ),
+                              style: Theme.of(context).textTheme.labelMedium!,
                             ),
                             Row(
                               children: [
@@ -259,10 +256,7 @@ class _ChatBuyerProfileWidgetState
                                           : null,
                                       '0',
                                     )} reviews)',
-                                  style: GoogleFonts.inter(
-                                    color: AppColors.textSecondary,
-                                    fontSize: 14.0,
-                                  ),
+                                  style: Theme.of(context).textTheme.labelMedium!,
                                 ),
                               ].divide(SizedBox(width: 8.0)),
                             ),
@@ -405,10 +399,7 @@ class _ChatBuyerProfileWidgetState
                                   padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Reviews from sellers about your purchases',
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.textSecondary,
-                                      fontSize: 14.0,
-                                    ),
+                                    style: Theme.of(context).textTheme.labelMedium!,
                                   ),
                                 ),
                                 if (_jsonField(

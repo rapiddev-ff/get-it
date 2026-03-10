@@ -90,9 +90,7 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
                             children: [
                               Text(
                                 'Transaction ID:',
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14.0),
                               ),
                               Flexible(
                                 child: Text(
@@ -112,9 +110,7 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
                             children: [
                               Text(
                                 'Amount:',
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14.0),
                               ),
                               Text(
                                 'AED 100',
@@ -130,15 +126,11 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
                             children: [
                               Text(
                                 'Payment Method:',
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14.0),
                               ),
                               Text(
                                 'Stripe',
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14.0),
                               ),
                             ],
                           ),
@@ -147,9 +139,7 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
                             children: [
                               Text(
                                 'Date:',
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14.0),
                               ),
                               Text(
                                 DateFormat.yMMMd().format(DateTime.now()),

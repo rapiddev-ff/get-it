@@ -164,11 +164,7 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                 widget.sellerDataType?.username,
                                 'N/A',
                               ),
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0,
-                                color: AppColors.textPrimary,
-                              ),
+                              style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
                             ),
                             Padding(
                               padding: EdgeInsets.only(top: 8.0),
@@ -208,10 +204,7 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                           ?.toString(),
                                       '0',
                                     )} reviews',
-                                    style: GoogleFonts.inter(
-                                      fontSize: 14.0,
-                                      color: AppColors.textSecondary,
-                                    ),
+                                    style: Theme.of(context).textTheme.labelMedium!,
                                   ),
                                 ].divide(SizedBox(width: 8.0)),
                               ),
@@ -289,9 +282,7 @@ class _HomeSellerProfileReviewsStep1WidgetState
                               child: Center(
                                 child: Text(
                                   'No products available for review.',
-                                  style: GoogleFonts.inter(
-                                    color: AppColors.textSecondary,
-                                  ),
+                                  style: Theme.of(context).textTheme.labelMedium!,
                                 ),
                               ),
                             )
@@ -394,13 +385,7 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                                 children: [
                                                   Text(
                                                     productTitle,
-                                                    style: GoogleFonts.inter(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color:
-                                                          AppColors.textPrimary,
-                                                      height: 1.5,
-                                                    ),
+                                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                                                   ),
                                                   if (conditionName.isNotEmpty)
                                                     Text(

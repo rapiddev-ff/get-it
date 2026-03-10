@@ -284,10 +284,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                                 horizontal: 12.0, vertical: 10.0),
                             child: Text(
                               'View Item',
-                              style: GoogleFonts.inter(
-                                fontSize: 14.0,
-                                height: 1.5,
-                              ),
+                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
                             ),
                           ),
                         ),

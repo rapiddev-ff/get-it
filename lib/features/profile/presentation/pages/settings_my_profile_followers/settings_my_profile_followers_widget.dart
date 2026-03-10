@@ -266,11 +266,7 @@ class _SettingsMyProfileFollowersWidgetState
           ),
           title: Text(
             'My Profile',
-            style: GoogleFonts.inter(
-              color: Colors.white,
-              fontSize: 18.0,
-              fontWeight: FontWeight.w500,
-            ),
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, color: Colors.white),
           ),
         ),
         body: SafeArea(

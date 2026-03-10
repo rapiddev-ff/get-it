@@ -1,7 +1,6 @@
 import '/core/theme/app_colors.dart';
 import '/core/widgets/app_gradient_button.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class SettingsDialogWidget extends StatelessWidget {
   const SettingsDialogWidget({
@@ -50,12 +49,7 @@ class SettingsDialogWidget extends StatelessWidget {
                 child: Text(
                   title,
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 24.0,
-                    color: AppColors.textPrimary,
-                    height: 1.5,
-                  ),
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                 ),
               ),
               Padding(

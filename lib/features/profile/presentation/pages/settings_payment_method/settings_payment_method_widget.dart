@@ -6,7 +6,6 @@ import '/core/widgets/dismiss_keyboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import 'package:go_router/go_router.dart';
 
@@ -44,11 +43,7 @@ class _SettingsPaymentMethodWidgetState
           ),
           title: Text(
             'Payment Method',
-            style: GoogleFonts.inter(
-              color: Colors.white,
-              fontSize: 18.0,
-              fontWeight: FontWeight.w500,
-            ),
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, color: Colors.white),
           ),
         ),
         body: SafeArea(
@@ -114,11 +109,7 @@ class _SettingsPaymentMethodWidgetState
                         ),
                         label: Text(
                           'Add New Payment Method',
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
-                            fontSize: 17.0,
-                          ),
+                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
                         ),
                         style: TextButton.styleFrom(
                           minimumSize: Size(double.infinity, 56.0),

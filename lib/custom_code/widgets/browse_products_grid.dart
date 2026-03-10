@@ -274,7 +274,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
                   : 'Check back later for new listings',
               textAlign: TextAlign.center,
               style:
-                  GoogleFonts.inter(fontSize: 14, color: AppColors.textPrimary),
+                  Theme.of(context).textTheme.bodyMedium!,
             ),
           ],
         ),
@@ -442,7 +442,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
             Text(
               'Failed to load products',
               style:
-                  GoogleFonts.inter(fontSize: 14, color: AppColors.textPrimary),
+                  Theme.of(context).textTheme.bodyMedium!,
             ),
             const SizedBox(height: 8),
             Text(

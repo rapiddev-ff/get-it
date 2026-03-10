@@ -94,9 +94,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                         children: [
                           TextSpan(
                             text: 'Already have an account?',
-                            style: GoogleFonts.inter(
-                              color: AppColors.textSecondary,
-                            ),
+                            style: Theme.of(context).textTheme.labelMedium!,
                           ),
                           TextSpan(
                             text: ' Sign In',
@@ -105,7 +103,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                             ),
                           ),
                         ],
-                        style: GoogleFonts.inter(),
+                        style: Theme.of(context).textTheme.bodyMedium!,
                       ),
                     ),
                   ),

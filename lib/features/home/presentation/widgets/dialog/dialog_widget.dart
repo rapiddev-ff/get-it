@@ -54,11 +54,7 @@ class DialogWidget extends StatelessWidget {
                 child: Text(
                   title,
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 24.0,
-                    height: 1.5,
-                  ),
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                 ),
               ),
               Padding(

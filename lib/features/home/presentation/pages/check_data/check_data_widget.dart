@@ -165,11 +165,7 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
                   Text(
                     'We\'re so happy to see you back!\nYour account was previously deactivated.\nPlease confirm you would like to reactivate your account again!',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
-                      fontSize: 14.0,
-                      color: AppColors.textSecondary,
-                      height: 1.5,
-                    ),
+                    style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
                   ),
                   SizedBox(height: 24.0),
                   AppGradientButton(

@@ -173,12 +173,7 @@ class _SettingsBlockListWidgetState
           ),
           title: Text(
             'Block List',
-            style: GoogleFonts.inter(
-              color: Colors.white,
-              fontSize: 18.0,
-              fontWeight: FontWeight.w500,
-              height: 1.5,
-            ),
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, color: Colors.white, height: 1.5),
           ),
         ),
         body: SafeArea(
@@ -228,11 +223,7 @@ class _SettingsBlockListWidgetState
           children: [
             Text(
               'Blocked Users',
-              style: GoogleFonts.inter(
-                fontWeight: FontWeight.w500,
-                fontSize: 16.0,
-                height: 1.5,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
             ),
             Text(
               'Manage who can contact and buy from you',
@@ -369,20 +360,13 @@ class _SettingsBlockListWidgetState
                   children: [
                     Text(
                       'About Blocking',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16.0,
-                        height: 1.5,
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 8.0),
                       child: Text(
                         'Blocked users cannot send you messages, view your full profile, or purchase items from you. They won\'t be notified that they\'ve been blocked.',
-                        style: GoogleFonts.inter(
-                          fontSize: 14.0,
-                          height: 1.5,
-                        ),
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
                       ),
                     ),
                   ],

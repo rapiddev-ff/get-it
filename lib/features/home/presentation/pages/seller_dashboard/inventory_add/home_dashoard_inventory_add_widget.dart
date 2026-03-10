@@ -697,8 +697,7 @@ class _HomeDashoardInventoryAddWidgetState
           padding: EdgeInsets.only(left: 16.0, top: 10.0, right: 16.0),
           child: Text(
             'Add up to 10 photos. First photo will be the main image.',
-            style: GoogleFonts.inter(
-                fontSize: 12.0, color: AppColors.textSecondary),
+            style: Theme.of(context).textTheme.labelSmall!,
           ),
         ),
         Divider(
@@ -1501,10 +1500,7 @@ class _HomeDashoardInventoryAddWidgetState
             SizedBox(width: 8.0),
             Text(
               'AI Scan',
-              style: GoogleFonts.inter(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16.0,
-                  color: Colors.white),
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white),
             ),
           ],
         ),

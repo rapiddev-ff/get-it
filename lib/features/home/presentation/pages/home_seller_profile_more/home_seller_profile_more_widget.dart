@@ -3,7 +3,6 @@ import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class HomeSellerProfileMoreWidget extends StatefulWidget {
   const HomeSellerProfileMoreWidget({
@@ -47,7 +46,7 @@ class _HomeSellerProfileMoreWidgetState
                 ),
                 Text(
                   'Share Profile',
-                  style: GoogleFonts.inter(),
+                  style: Theme.of(context).textTheme.bodyMedium!,
                 ),
               ].divide(SizedBox(width: 16.0)),
             ),
@@ -68,7 +67,7 @@ class _HomeSellerProfileMoreWidgetState
                 ),
                 Text(
                   'Follow User',
-                  style: GoogleFonts.inter(),
+                  style: Theme.of(context).textTheme.bodyMedium!,
                 ),
               ].divide(SizedBox(width: 16.0)),
             ),
@@ -101,7 +100,7 @@ class _HomeSellerProfileMoreWidgetState
                   ),
                   Text(
                     'Block User',
-                    style: GoogleFonts.inter(),
+                    style: Theme.of(context).textTheme.bodyMedium!,
                   ),
                 ].divide(SizedBox(width: 16.0)),
               ),

@@ -357,9 +357,7 @@ class _HomeDashoardShippingWidgetState
                                 ),
                                 TextSpan(
                                   text: ' • ',
-                                  style: GoogleFonts.inter(
-                                    color: AppColors.textSecondary,
-                                  ),
+                                  style: Theme.of(context).textTheme.labelMedium!,
                                 ),
                                 TextSpan(
                                   text:
@@ -385,11 +383,7 @@ class _HomeDashoardShippingWidgetState
                                   horizontal: 12.0, vertical: 6.0),
                               child: Text(
                                 'Pending',
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12.0,
-                                  color: AppColors.textPrimary,
-                                ),
+                                style: Theme.of(context).textTheme.bodySmall!.copyWith(fontWeight: FontWeight.w500),
                               ),
                             ),
                           ),
@@ -419,11 +413,7 @@ class _HomeDashoardShippingWidgetState
                                   horizontal: 12.0, vertical: 6.0),
                               child: Text(
                                 'Shipped',
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12.0,
-                                  color: AppColors.textPrimary,
-                                ),
+                                style: Theme.of(context).textTheme.bodySmall!.copyWith(fontWeight: FontWeight.w500),
                               ),
                             ),
                           ),
@@ -438,11 +428,7 @@ class _HomeDashoardShippingWidgetState
                                   horizontal: 12.0, vertical: 6.0),
                               child: Text(
                                 'Delivered',
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12.0,
-                                  color: AppColors.textPrimary,
-                                ),
+                                style: Theme.of(context).textTheme.bodySmall!.copyWith(fontWeight: FontWeight.w500),
                               ),
                             ),
                           ),

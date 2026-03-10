@@ -12,7 +12,6 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'settings_change_phone_model.dart';
 
@@ -72,12 +71,7 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
           ),
           title: Text(
             'Edit Phone Number',
-            style: GoogleFonts.inter(
-              color: Colors.white,
-              fontSize: 18.0,
-              fontWeight: FontWeight.w500,
-              height: 1.5,
-            ),
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, color: Colors.white, height: 1.5),
           ),
         ),
         body: SafeArea(
@@ -111,7 +105,7 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
                           enabled: true,
                           obscureText: false,
                           decoration: appInputDecoration('Your phone number'),
-                          style: GoogleFonts.inter(),
+                          style: Theme.of(context).textTheme.bodyMedium!,
                           keyboardType: TextInputType.number,
                           cursorColor: AppColors.textPrimary,
                           enableInteractiveSelection: true,

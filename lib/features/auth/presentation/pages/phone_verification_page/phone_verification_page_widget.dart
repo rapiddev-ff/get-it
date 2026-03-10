@@ -213,7 +213,7 @@ class _PhoneVerificationPageWidgetState
                                         AppConstants.radiusTextField4),
                                   ),
                                 ),
-                                style: GoogleFonts.inter(),
+                                style: Theme.of(context).textTheme.bodyMedium!,
                                 keyboardType: TextInputType.number,
                                 cursorColor: AppColors.textPrimary,
                                 enableInteractiveSelection: true,

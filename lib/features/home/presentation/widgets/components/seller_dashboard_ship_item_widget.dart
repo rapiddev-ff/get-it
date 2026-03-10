@@ -141,7 +141,7 @@ class SellerDashboardShipItemWidget extends StatelessWidget {
                             ),
                           )
                         ],
-                        style: GoogleFonts.inter(),
+                        style: Theme.of(context).textTheme.bodyMedium!,
                       ),
                     ),
                   ].divide(SizedBox(height: 2.0)),
@@ -158,7 +158,7 @@ class SellerDashboardShipItemWidget extends StatelessWidget {
                       EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                   child: Text(
                     _isSalePending ? 'Pending' : 'Ship',
-                    style: GoogleFonts.inter(),
+                    style: Theme.of(context).textTheme.bodyMedium!,
                   ),
                 ),
               ),

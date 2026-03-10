@@ -455,9 +455,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                 children: [
                                   TextSpan(
                                     text: 'I accept the ',
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.textSecondary,
-                                    ),
+                                    style: Theme.of(context).textTheme.labelMedium!,
                                   ),
                                   TextSpan(
                                     text: 'Terms & Conditions',
@@ -474,9 +472,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                   ),
                                   TextSpan(
                                     text: ' and ',
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.textSecondary,
-                                    ),
+                                    style: Theme.of(context).textTheme.labelMedium!,
                                   ),
                                   TextSpan(
                                     text: 'Privacy Policy',
@@ -492,9 +488,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                       },
                                   ),
                                 ],
-                                style: GoogleFonts.inter(
-                                  color: AppColors.textSecondary,
-                                ),
+                                style: Theme.of(context).textTheme.labelMedium!,
                               ),
                             ),
                           ),

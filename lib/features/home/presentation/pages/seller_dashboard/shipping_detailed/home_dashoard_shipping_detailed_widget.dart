@@ -863,8 +863,7 @@ class _SellerCancelDialogState extends State<_SellerCancelDialog> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Please select a reason:',
-              style: GoogleFonts.inter(
-                  color: AppColors.textSecondary, fontSize: 14.0)),
+              style: Theme.of(context).textTheme.labelMedium!),
           SizedBox(height: 12.0),
           _buildReasonTile('item_sold_out', 'Item sold out'),
           _buildReasonTile(
@@ -877,8 +876,7 @@ class _SellerCancelDialogState extends State<_SellerCancelDialog> {
               maxLines: 3,
               decoration: InputDecoration(
                 hintText: 'Describe the reason...',
-                hintStyle: GoogleFonts.inter(
-                    color: AppColors.textSecondary, fontSize: 14.0),
+                hintStyle: Theme.of(context).textTheme.labelMedium!,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
                   borderSide: BorderSide(color: AppColors.neutral700),

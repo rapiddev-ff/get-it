@@ -392,11 +392,7 @@ class _HomeDashoardEarningsWidgetState
             SizedBox(height: 4.0),
             Text(
               amount,
-              style: GoogleFonts.inter(
-                fontWeight: FontWeight.bold,
-                fontSize: 20.0,
-                color: AppColors.textPrimary,
-              ),
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -410,11 +406,7 @@ class _HomeDashoardEarningsWidgetState
       children: [
         Text(
           value,
-          style: GoogleFonts.inter(
-            fontWeight: FontWeight.bold,
-            fontSize: 20.0,
-            color: AppColors.textPrimary,
-          ),
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 4.0),
         Text(

@@ -112,9 +112,7 @@ class _SettingsBusinessAddressWidgetState
                           padding: EdgeInsets.only(top: 20.0),
                           child: Text(
                             'Address',
-                            style: GoogleFonts.inter(
-                              fontSize: 15.0,
-                            ),
+                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
                           ),
                         ),
                         Padding(
@@ -159,9 +157,7 @@ class _SettingsBusinessAddressWidgetState
                                   children: [
                                     Text(
                                       'Country',
-                                      style: GoogleFonts.inter(
-                                        fontSize: 15.0,
-                                      ),
+                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
                                     ),
                                     DropdownButtonFormField<String>(
                                       initialValue: () {
@@ -244,9 +240,7 @@ class _SettingsBusinessAddressWidgetState
                                   children: [
                                     Text(
                                       'State',
-                                      style: GoogleFonts.inter(
-                                        fontSize: 15.0,
-                                      ),
+                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
                                     ),
                                     Builder(
                                       builder: (context) {
@@ -356,9 +350,7 @@ class _SettingsBusinessAddressWidgetState
                                   children: [
                                     Text(
                                       'City',
-                                      style: GoogleFonts.inter(
-                                        fontSize: 15.0,
-                                      ),
+                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
                                     ),
                                     Container(
                                       width: double.infinity,
@@ -383,9 +375,7 @@ class _SettingsBusinessAddressWidgetState
                                   children: [
                                     Text(
                                       'Zip Code',
-                                      style: GoogleFonts.inter(
-                                        fontSize: 15.0,
-                                      ),
+                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
                                     ),
                                     Container(
                                       width: double.infinity,

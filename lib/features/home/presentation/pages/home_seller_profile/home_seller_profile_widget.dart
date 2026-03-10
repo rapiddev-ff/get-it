@@ -432,10 +432,7 @@ class _HomeSellerProfileWidgetState
                                       ),
                                       Text(
                                         '(${(roleState == 'As Buyer' ? getSellerData?.totalReviewsAsBuyer : getSellerData?.totalReviewsAsSeller)?.toString()}) reviews',
-                                        style: GoogleFonts.inter(
-                                          fontSize: 14.0,
-                                          color: AppColors.textSecondary,
-                                        ),
+                                        style: Theme.of(context).textTheme.labelMedium!,
                                       ),
                                     ].divide(SizedBox(width: 8.0)),
                                   ),
@@ -460,10 +457,7 @@ class _HomeSellerProfileWidgetState
                                           ),
                                           Text(
                                             'Items',
-                                            style: GoogleFonts.inter(
-                                              fontSize: 12.0,
-                                              color: AppColors.textSecondary,
-                                            ),
+                                            style: Theme.of(context).textTheme.labelSmall!,
                                           ),
                                         ],
                                       ),
@@ -483,10 +477,7 @@ class _HomeSellerProfileWidgetState
                                           ),
                                           Text(
                                             'Sold',
-                                            style: GoogleFonts.inter(
-                                              fontSize: 12.0,
-                                              color: AppColors.textSecondary,
-                                            ),
+                                            style: Theme.of(context).textTheme.labelSmall!,
                                           ),
                                         ],
                                       ),
@@ -506,10 +497,7 @@ class _HomeSellerProfileWidgetState
                                           ),
                                           Text(
                                             'Followers',
-                                            style: GoogleFonts.inter(
-                                              fontSize: 12.0,
-                                              color: AppColors.textSecondary,
-                                            ),
+                                            style: Theme.of(context).textTheme.labelSmall!,
                                           ),
                                         ],
                                       ),
@@ -578,10 +566,7 @@ class _HomeSellerProfileWidgetState
                             ),
                             label: Text(
                               'Message',
-                              style: GoogleFonts.inter(
-                                fontSize: 16.0,
-                                color: Colors.white,
-                              ),
+                              style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
                             ),
                             style: TextButton.styleFrom(
                               padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -1123,10 +1108,7 @@ class _HomeSellerProfileWidgetState
                   reviewsItem.createdAt != null
                       ? DateFormat('yMMMd').format(reviewsItem.createdAt!)
                       : '',
-                  style: GoogleFonts.inter(
-                    fontSize: 12.0,
-                    color: AppColors.textSecondary,
-                  ),
+                  style: Theme.of(context).textTheme.labelSmall!,
                 ),
               ].divide(SizedBox(width: 12.0)),
             ),

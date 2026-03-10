@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '/core/theme/app_colors.dart';
 import '/core/widgets/app_gradient_button.dart';
@@ -48,12 +47,7 @@ class DialogProductDraftWidget extends StatelessWidget {
                 child: Text(
                   'Draft saved',
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 24.0,
-                    color: AppColors.textPrimary,
-                    height: 1.5,
-                  ),
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                 ),
               ),
               Padding(
@@ -92,11 +86,7 @@ class DialogProductDraftWidget extends StatelessWidget {
                   ),
                   child: Text(
                     'Keep editing',
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16.0,
-                      color: Colors.white,
-                    ),
+                    style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white),
                   ),
                 ),
               ),
@@ -116,11 +106,7 @@ class DialogProductDraftWidget extends StatelessWidget {
                   ),
                   child: Text(
                     'Go to Inventory',
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16.0,
-                      color: Colors.white,
-                    ),
+                    style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white),
                   ),
                 ),
               ),
