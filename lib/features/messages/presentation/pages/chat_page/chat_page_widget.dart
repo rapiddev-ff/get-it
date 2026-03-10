@@ -87,7 +87,6 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
             backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             title: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 IconButton(
                   icon: Icon(
@@ -364,7 +363,6 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
       child: Padding(
         padding: EdgeInsets.all(16.0),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
               child: Container(

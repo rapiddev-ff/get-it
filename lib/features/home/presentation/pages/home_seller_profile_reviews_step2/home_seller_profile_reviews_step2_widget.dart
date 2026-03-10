@@ -217,7 +217,6 @@ class _HomeSellerProfileReviewsStep2WidgetState
                 Padding(
                   padding: EdgeInsets.only(left: 16.0, top: 24.0, right: 16.0),
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
                         width: 80.0,

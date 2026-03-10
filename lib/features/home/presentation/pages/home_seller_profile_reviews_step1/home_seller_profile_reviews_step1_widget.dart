@@ -140,7 +140,6 @@ class _HomeSellerProfileReviewsStep1WidgetState
                 Padding(
                   padding: EdgeInsets.only(left: 16.0, top: 24.0, right: 16.0),
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
                         width: 80.0,
@@ -252,7 +251,6 @@ class _HomeSellerProfileReviewsStep1WidgetState
                       padding: EdgeInsets.symmetric(
                           horizontal: 16.0, vertical: 12.0),
                       child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(
                             Icons.info_outline,

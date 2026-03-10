@@ -531,7 +531,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       FaIcon(
                         FontAwesomeIcons.camera,
@@ -582,7 +581,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             FaIcon(
                               FontAwesomeIcons.shopify,
@@ -982,7 +980,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 FaIcon(
                   icon,
@@ -1025,8 +1022,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                 left: 16.0, top: 12.0, right: 16.0, bottom: 16.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 FaIcon(
                   icon,

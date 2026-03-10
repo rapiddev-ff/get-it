@@ -755,7 +755,6 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                 }
                               },
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Icon(
                                     Icons.add_circle_outline,

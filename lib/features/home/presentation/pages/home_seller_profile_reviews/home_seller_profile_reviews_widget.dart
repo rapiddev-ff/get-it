@@ -644,7 +644,6 @@ class _HomeSellerProfileReviewsWidgetState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
                   width: 32.0,
@@ -743,8 +742,6 @@ class _HomeSellerProfileReviewsWidgetState
                   padding:
                       EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       if (productImageUrl.isNotEmpty)
                         ClipRRect(

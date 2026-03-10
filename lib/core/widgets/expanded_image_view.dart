@@ -41,7 +41,6 @@ class ExpandedImageView extends StatelessWidget {
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),

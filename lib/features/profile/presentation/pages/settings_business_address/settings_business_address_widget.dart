@@ -98,7 +98,6 @@ class _SettingsBusinessAddressWidgetState
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Expanded(
                   child: SingleChildScrollView(

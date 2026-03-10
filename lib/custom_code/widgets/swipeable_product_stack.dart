@@ -668,7 +668,6 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
 
                         // Price Row with Flash Sale
                         Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
                               _formatPrice(product),
@@ -750,7 +749,6 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _buildSwipeBar(61, leftBarColor),
           const SizedBox(width: 8),

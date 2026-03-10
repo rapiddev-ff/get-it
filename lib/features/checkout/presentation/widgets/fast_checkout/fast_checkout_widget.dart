@@ -111,7 +111,6 @@ class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(4.0),
