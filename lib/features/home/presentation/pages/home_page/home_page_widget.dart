@@ -8,7 +8,16 @@ import '/features/checkout/presentation/widgets/quick_purchase_popup/quick_purch
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/core/utils/data_converters.dart' as functions;
-import '/index.dart';
+import '/features/profile/presentation/pages/settings/settings_widget.dart';
+import '/features/notifications/presentation/pages/notification/notification_widget.dart';
+import '/features/home/presentation/pages/home_product/home_product_widget.dart';
+import '/features/checkout/presentation/pages/checkout/checkout_widget.dart';
+import '/features/home/presentation/pages/seller_dashboard/earnings/home_dashoard_earnings_widget.dart';
+import '/features/home/presentation/pages/seller_dashboard/shipping/home_dashoard_shipping_widget.dart';
+import '/features/home/presentation/pages/seller_dashboard/inventory/home_dashoard_inventory_widget.dart';
+import '/features/home/presentation/pages/seller_dashboard/inventory_add/home_dashoard_inventory_add_widget.dart';
+import '/features/home/presentation/pages/seller_dashboard/promote_step1/home_dashoard_promote_step1_widget.dart';
+import '/features/home/presentation/pages/seller_dashboard/shortlist/home_dashoard_shortlist_widget.dart';
 import '/core/theme/app_colors.dart';
 import '/core/constants/app_constants.dart';
 import '/core/utils/value_utils.dart';

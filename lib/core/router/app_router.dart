@@ -12,7 +12,9 @@ import '/core/router/serialization_util.dart';
 import '/core/router/app_state_notifier.dart';
 import '/core/router/route_definitions.dart';
 import '/core/theme/app_colors.dart';
-import '/index.dart';
+import '/features/home/presentation/pages/check_data/check_data_widget.dart';
+import '/features/auth/presentation/pages/welcome/welcome_widget.dart';
+import '/features/home/presentation/pages/home_page/home_page_widget.dart';
 
 export 'package:go_router/go_router.dart';
 export '/core/router/serialization_util.dart';

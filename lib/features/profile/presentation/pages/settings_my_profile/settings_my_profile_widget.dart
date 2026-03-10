@@ -1,7 +1,9 @@
 import '/backend/api_requests/api_calls.dart';
 import '/features/home/domain/models/review_model.dart';
 import '/features/profile/presentation/pages/review_item/review_item_widget.dart';
-import '/index.dart';
+import '/features/profile/presentation/pages/settings_my_profile_followers/settings_my_profile_followers_widget.dart';
+import '/features/profile/presentation/pages/settings_delete_account/settings_delete_account_widget.dart';
+import '/features/profile/presentation/pages/settings_deactivate_account/settings_deactivate_account_widget.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';

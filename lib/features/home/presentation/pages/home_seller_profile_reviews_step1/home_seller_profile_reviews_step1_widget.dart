@@ -5,7 +5,7 @@ import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import '/custom_code/actions/index.dart' as actions;
-import '/index.dart';
+import '/features/home/presentation/pages/home_seller_profile_reviews_step2/home_seller_profile_reviews_step2_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';

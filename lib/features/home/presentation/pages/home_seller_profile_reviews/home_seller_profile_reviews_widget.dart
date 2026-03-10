@@ -8,7 +8,7 @@ import '/core/widgets/dismiss_keyboard.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:go_router/go_router.dart';
 import '/features/home/presentation/pages/home_seller_profile_more/home_seller_profile_more_widget.dart';
-import '/index.dart';
+import '/features/home/presentation/pages/home_seller_profile_reviews_step1/home_seller_profile_reviews_step1_widget.dart';
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';

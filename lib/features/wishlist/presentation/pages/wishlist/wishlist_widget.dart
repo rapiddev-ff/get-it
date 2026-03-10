@@ -21,7 +21,10 @@ import '/custom_code/actions/index.dart' as actions;
 import '/features/browse/presentation/providers/browse_provider.dart';
 import '/features/wishlist/presentation/pages/wishlist_item/wishlist_item_widget.dart';
 import '/features/wishlist/presentation/providers/wishlist_provider.dart';
-import '/index.dart';
+import '/features/profile/presentation/pages/settings/settings_widget.dart';
+import '/features/notifications/presentation/pages/notification/notification_widget.dart';
+import '/features/home/presentation/pages/home_product/home_product_widget.dart';
+import '/features/browse/presentation/pages/browse/browse_widget.dart';
 
 class WishlistWidget extends ConsumerStatefulWidget {
   const WishlistWidget({super.key});
