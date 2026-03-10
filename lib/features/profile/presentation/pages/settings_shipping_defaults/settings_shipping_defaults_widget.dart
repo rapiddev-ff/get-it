@@ -78,12 +78,10 @@ class _SettingsShippingDefaultsWidgetState
           ),
           title: Text(
             'Shipping Defaults',
-            style: GoogleFonts.inter(
-              fontWeight: FontWeight.w600,
-              fontSize: 18.0,
-              color: Colors.white,
-              height: 1.5,
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(color: Colors.white, height: 1.5),
           ),
         ),
         body: SafeArea(

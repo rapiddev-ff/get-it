@@ -463,12 +463,12 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                                           top: 4.0),
                                                       child: Text(
                                                         'Already reviewed',
-                                                        style:
-                                                            GoogleFonts.inter(
-                                                          color:
-                                                              AppColors.primary,
-                                                          fontSize: 12.0,
-                                                        ),
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall!
+                                                            .copyWith(
+                                                                color: AppColors
+                                                                    .primary),
                                                       ),
                                                     ),
                                                 ].divide(SizedBox(height: 2.0)),

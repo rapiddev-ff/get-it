@@ -44,11 +44,7 @@ class StripeSuccessCopyWidget extends StatelessWidget {
                   child: Text(
                     'Payment Successful!',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 28.0,
-                      color: AppColors.textPrimary,
-                    ),
+                    style: Theme.of(context).textTheme.headlineMedium!,
                   ),
                 ),
                 Padding(
@@ -177,11 +173,8 @@ class StripeSuccessCopyWidget extends StatelessWidget {
                     ),
                     child: Text(
                       'Go to my erders',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14.0,
-                        color: Colors.white,
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          fontWeight: FontWeight.w500, color: Colors.white),
                     ),
                   ),
                 ),

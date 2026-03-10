@@ -338,11 +338,10 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                   children: [
                     Text(
                       price,
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16.0,
-                        color: AppColors.textPrimary,
-                      ),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(fontWeight: FontWeight.w700),
                     ),
                     Spacer(),
                     Text(
@@ -749,11 +748,12 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                   ),
                                   Text(
                                     'Add Products',
-                                    style: GoogleFonts.inter(
-                                      fontSize: 14.0,
-                                      color: AppColors.brandPurpleLight,
-                                      height: 1.5,
-                                    ),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                            color: AppColors.brandPurpleLight,
+                                            height: 1.5),
                                   ),
                                 ].divide(SizedBox(width: 8.0)),
                               ),

@@ -8,7 +8,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class FastCheckoutWidget extends ConsumerStatefulWidget {
@@ -92,12 +91,10 @@ class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
                 child: Text(
                   'Remaining Daily Budget ${_currencyFormat.format(remainingBudget)} / ${_currencyFormat.format(dailyBudget)}',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14.0,
-                    color: AppColors.textPrimary,
-                    height: 1.5,
-                  ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(fontWeight: FontWeight.bold, height: 1.5),
                 ),
               ),
             if (dailyBudget > 0)
@@ -148,12 +145,11 @@ class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
                                 ),
                                 Text(
                                   'Purchased',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.black,
-                                    fontSize: 12.0,
-                                    height: 1.5,
-                                  ),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall!
+                                      .copyWith(
+                                          color: Colors.black, height: 1.5),
                                 ),
                               ].divide(SizedBox(width: 4.0)),
                             ),
@@ -177,12 +173,11 @@ class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
                           _currencyFormat.format(widget.subtotal ??
                               (widget.feedProduct?.price ?? 0) *
                                   widget.quantity),
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14.0,
-                            color: AppColors.textPrimary,
-                            height: 1.5,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                  fontWeight: FontWeight.w600, height: 1.5),
                         ),
                       ].divide(SizedBox(height: 4.0)),
                     ),
@@ -201,13 +196,14 @@ class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
                           )
                         : Text(
                             'Cancel',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.primary,
-                              fontSize: 14.0,
-                              decoration: TextDecoration.underline,
-                              height: 1.5,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.primary,
+                                    height: 1.5,
+                                    decoration: TextDecoration.underline),
                           ),
                   ),
                 ].divide(SizedBox(width: 12.0)),
@@ -250,11 +246,10 @@ class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
                 ),
                 child: Text(
                   'Close',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.normal,
-                    color: Colors.white,
-                    fontSize: 14.0,
-                  ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: Colors.white),
                 ),
               ),
             ),

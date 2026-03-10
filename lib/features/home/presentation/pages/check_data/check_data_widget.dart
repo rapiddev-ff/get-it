@@ -156,11 +156,10 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
                   SizedBox(height: 16.0),
                   Text(
                     'Reactivate My Account',
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20.0,
-                      color: Colors.white,
-                    ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge!
+                        .copyWith(color: Colors.white),
                   ),
                   SizedBox(height: 12.0),
                   Text(
@@ -266,13 +265,11 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
                 ).animate().fade(duration: 600.ms),
                 Text(
                   'Snap.Catalog. Organize',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.normal,
-                    fontStyle: FontStyle.italic,
-                    color: AppColors.textSecondary,
-                    fontSize: 18.0,
-                    letterSpacing: 0.0,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      fontWeight: FontWeight.normal,
+                      color: AppColors.textSecondary,
+                      letterSpacing: 0.0,
+                      fontStyle: FontStyle.italic),
                 ).animate().fade(duration: 600.ms),
                 Spacer(),
               ],

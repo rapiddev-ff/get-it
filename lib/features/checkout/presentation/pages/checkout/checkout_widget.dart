@@ -327,11 +327,12 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                         ),
                         Text(
                           _hasShippingAddress ? 'Edit' : 'Add Address',
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.secondary,
-                            fontSize: 14.0,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.secondary),
                         ),
                       ].divide(SizedBox(width: 4.0)),
                     ),

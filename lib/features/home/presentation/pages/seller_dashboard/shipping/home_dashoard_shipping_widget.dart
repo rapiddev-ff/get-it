@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/core/providers/current_user_provider.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import '/core/theme/app_colors.dart';
@@ -374,11 +373,12 @@ class _HomeDashoardShippingWidgetState
                                 TextSpan(
                                   text:
                                       '\$${_formatPrice(order['total_amount'])}',
-                                  style: GoogleFonts.inter(
-                                    fontSize: 12.0,
-                                    color: AppColors.brandBlueMedium,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall!
+                                      .copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          color: AppColors.brandBlueMedium),
                                 ),
                               ],
                             ),

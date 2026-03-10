@@ -136,11 +136,10 @@ class _PhoneVerificationPage2WidgetState
                               autoDisposeControllers: false,
                               appContext: context,
                               length: 4,
-                              textStyle: GoogleFonts.inter(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 20.0,
-                                color: Colors.white,
-                              ),
+                              textStyle: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge!
+                                  .copyWith(color: Colors.white),
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               enableActiveFill: false,
                               autoFocus: true,
@@ -345,12 +344,14 @@ class _PhoneVerificationPage2WidgetState
                                       ),
                                       TextSpan(
                                         text: 'Resend Code',
-                                        style: GoogleFonts.inter(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16.0,
-                                          color: Colors.white,
-                                          decoration: TextDecoration.underline,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.white,
+                                                decoration:
+                                                    TextDecoration.underline),
                                       ),
                                     ],
                                     style:

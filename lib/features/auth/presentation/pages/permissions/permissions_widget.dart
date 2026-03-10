@@ -82,12 +82,12 @@ class _PermissionsWidgetState extends State<PermissionsWidget>
                         padding: const EdgeInsets.only(top: 16.0),
                         child: Text(
                           'Let\u2019s Get You Set Up.',
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0,
-                            letterSpacing: 0.0,
-                            color: AppColors.textPrimary,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 0.0),
                         ),
                       ),
                       Padding(
@@ -185,13 +185,13 @@ class _PermissionsWidgetState extends State<PermissionsWidget>
                         child: Text(
                           'No thanks, I\'ll do this later.',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.normal,
-                            color: Colors.white,
-                            fontSize: 16.0,
-                            letterSpacing: 0.0,
-                            height: 1.5,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(
+                                  color: Colors.white,
+                                  height: 1.5,
+                                  letterSpacing: 0.0),
                         ),
                       ),
                     ]

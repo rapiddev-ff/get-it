@@ -448,10 +448,10 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                           if (_hasValue(product.title))
                             Text(
                               product.title,
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0,
-                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge!
+                                  .copyWith(fontWeight: FontWeight.bold),
                             ),
                           Padding(
                             padding: EdgeInsets.only(top: 4.0),
@@ -902,11 +902,8 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
               ),
               Text(
                 discountLabel,
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14.0,
-                  color: AppColors.errorLight,
-                ),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontWeight: FontWeight.w500, color: AppColors.errorLight),
               ),
             ],
           ),
@@ -1057,11 +1054,8 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                     ),
                     child: Text(
                       'Close',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                        fontSize: 16.0,
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.w500, color: Colors.white),
                     ),
                   ),
                 ),

@@ -71,10 +71,10 @@ class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget>
                 padding: EdgeInsets.symmetric(horizontal: 24.0),
                 child: Text(
                   'Check Your Inbox',
-                  style: GoogleFonts.inter(
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineSmall!
+                      .copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
               Expanded(

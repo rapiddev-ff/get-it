@@ -76,11 +76,10 @@ class _SettingsPaymentCardItemWidgetState
                         ),
                         Text(
                           'Expires ${widget.paymentMethod?.card?.expMonth.toString() ?? ''}/${widget.paymentMethod?.card?.expYear.toString() ?? ''}',
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 12.0,
-                            color: AppColors.textSecondary,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(color: AppColors.textSecondary),
                         ),
                       ],
                     ),
@@ -114,11 +113,10 @@ class _SettingsPaymentCardItemWidgetState
               padding: EdgeInsets.only(top: 12.0),
               child: Text(
                 'Billing Address:',
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 12.0,
-                  color: AppColors.textSecondary,
-                ),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall!
+                    .copyWith(color: AppColors.textSecondary),
               ),
             ),
             Text(

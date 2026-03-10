@@ -59,12 +59,10 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                 ),
                 Text(
                   'Snap.Catalog. Organize',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.normal,
-                    fontStyle: FontStyle.italic,
-                    color: AppColors.textSecondary,
-                    fontSize: 18.0,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      fontWeight: FontWeight.normal,
+                      color: AppColors.textSecondary,
+                      fontStyle: FontStyle.italic),
                 ),
                 Spacer(),
                 Padding(

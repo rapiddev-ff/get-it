@@ -3,7 +3,6 @@ import '/core/theme/app_colors.dart';
 import '/features/auth/presentation/providers/auth_settings_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class SwipeableProductStack extends ConsumerStatefulWidget {
   const SwipeableProductStack({
@@ -341,11 +340,9 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
           const SizedBox(height: 8),
           Text(
             'Check back later for new items',
-            style: GoogleFonts.inter(
-              color: AppColors.textSecondary.withValues(alpha: 0.7),
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeight.w400,
+                color: AppColors.textSecondary.withValues(alpha: 0.7)),
           ),
         ],
       ),
@@ -537,12 +534,13 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
                                 ),
                                 child: Text(
                                   'Tap to view details',
-                                  style: GoogleFonts.inter(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    height: 18 / 12,
-                                  ),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall!
+                                      .copyWith(
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.white,
+                                          height: 18 / 12),
                                 ),
                               ),
                             ),
@@ -640,12 +638,11 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
                           product.title,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.inter(
-                            color: AppColors.textPrimary,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            height: 30 / 20,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(
+                                  fontWeight: FontWeight.w700, height: 30 / 20),
                         ),
 
                         // Condition
@@ -655,12 +652,13 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
                             product.conditionName,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.inter(
-                              color: AppColors.textSecondary,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              height: 20 / 14,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.textSecondary,
+                                    height: 20 / 14),
                           ),
                         ],
 
@@ -671,25 +669,26 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
                           children: [
                             Text(
                               _formatPrice(product),
-                              style: GoogleFonts.inter(
-                                color: AppColors.textPrimary,
-                                fontSize: 24,
-                                fontWeight: FontWeight.w700,
-                                height: 36 / 24,
-                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall!
+                                  .copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      height: 36 / 24),
                             ),
                             if (isFlashSale &&
                                 product.originalPrice != null) ...[
                               const SizedBox(width: 8),
                               Text(
                                 '\$${product.originalPrice!.toStringAsFixed(2)}',
-                                style: GoogleFonts.inter(
-                                  color: AppColors.textSecondary,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  decoration: TextDecoration.lineThrough,
-                                  height: 16 / 16,
-                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.textSecondary,
+                                        height: 16 / 16,
+                                        decoration: TextDecoration.lineThrough),
                               ),
                               const SizedBox(width: 6),
                               Icon(
@@ -699,12 +698,13 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
                               ),
                               Text(
                                 _formatDiscount(product),
-                                style: GoogleFonts.inter(
-                                  color: AppColors.errorPink,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  height: 16 / 16,
-                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColors.errorPink,
+                                        height: 16 / 16),
                               ),
                             ],
                           ],

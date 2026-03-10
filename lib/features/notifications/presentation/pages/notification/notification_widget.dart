@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '/core/theme/app_colors.dart';
 import '/core/widgets/dismiss_keyboard.dart';
@@ -94,12 +93,13 @@ class NotificationWidget extends StatelessWidget {
                               const EdgeInsets.only(left: 24.0, right: 16.0),
                           child: Text(
                             'Clear All',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16.0,
-                              color: AppColors.brandPurpleLight,
-                              decoration: TextDecoration.underline,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.brandPurpleLight,
+                                    decoration: TextDecoration.underline),
                           ),
                         ),
                       ],

@@ -389,11 +389,12 @@ class _QuickPurchasePopupWidgetState
                           )
                         : Text(
                             'Confirm - ${_currencyFormat.format(_total)}',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                              fontSize: 14.0,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white),
                           ),
                   ),
                 ),
@@ -413,11 +414,8 @@ class _QuickPurchasePopupWidgetState
                     ),
                     child: Text(
                       'Cancel',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                        fontSize: 14.0,
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          fontWeight: FontWeight.w500, color: Colors.white),
                     ),
                   ),
                 ),

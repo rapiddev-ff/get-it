@@ -741,11 +741,10 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
               children: [
                 Text(
                   'Start selling on Get It',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24.0,
-                    height: 1.5,
-                  ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineSmall!
+                      .copyWith(fontWeight: FontWeight.bold, height: 1.5),
                 ),
                 Text(
                   'Connect Stripe to get paid and enable payouts',
@@ -789,11 +788,12 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                             ),
                             child: Text(
                               authData.stripe?.statusLabel ?? 'Unknown',
-                              style: GoogleFonts.inter(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12.0,
-                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white),
                             ),
                           ),
                         ],

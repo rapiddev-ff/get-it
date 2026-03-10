@@ -3,7 +3,6 @@ import '/core/utils/list_extensions.dart';
 import '/features/home/presentation/pages/seller_dashboard/shipping_detailed/home_dashoard_shipping_detailed_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class SellerDashboardShipItemWidget extends StatelessWidget {
@@ -134,10 +133,10 @@ class SellerDashboardShipItemWidget extends StatelessWidget {
                           ),
                           TextSpan(
                             text: '\$${_formatPrice(order['total_amount'])}',
-                            style: GoogleFonts.inter(
-                              color: AppColors.brandBlueMedium,
-                              fontSize: 12.0,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(color: AppColors.brandBlueMedium),
                           )
                         ],
                         style: Theme.of(context).textTheme.bodyMedium!,

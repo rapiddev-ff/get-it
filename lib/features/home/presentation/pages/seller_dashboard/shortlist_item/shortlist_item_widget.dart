@@ -313,7 +313,7 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
           : '';
       return RichText(
         text: TextSpan(
-          style: GoogleFonts.inter(fontSize: 12.0, height: 1.5),
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(height: 1.5),
           children: [
             TextSpan(
               text: '${widget.totalItems} items',
@@ -335,7 +335,7 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
     if (_isDraft) {
       return RichText(
         text: TextSpan(
-          style: GoogleFonts.inter(fontSize: 12.0, height: 1.5),
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(height: 1.5),
           children: [
             TextSpan(
               text: '${widget.totalItems} items',
@@ -373,11 +373,8 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
             children: [
               Text(
                 '\$${NumberFormat('#,##0', 'en_US').format(sales)}',
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18.0,
-                  color: AppColors.secondary,
-                ),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    fontWeight: FontWeight.w700, color: AppColors.secondary),
               ),
               SizedBox(height: 2.0),
               Text(
@@ -392,11 +389,10 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
             children: [
               Text(
                 '$sold of ${widget.totalItems}',
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 18.0,
-                  color: AppColors.textPrimary,
-                ),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(fontWeight: FontWeight.w700),
               ),
               SizedBox(height: 2.0),
               Text(

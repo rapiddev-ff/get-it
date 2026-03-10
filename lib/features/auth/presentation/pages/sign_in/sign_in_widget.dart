@@ -110,10 +110,7 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                           padding: EdgeInsets.only(bottom: 28.0),
                           child: Text(
                             'Sign In',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 28.0,
-                            ),
+                            style: Theme.of(context).textTheme.headlineMedium!,
                           ),
                         ),
                         Padding(
@@ -324,10 +321,11 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                                       },
                                       child: Text(
                                         'Forgot Password?',
-                                        style: GoogleFonts.inter(
-                                          color: AppColors.secondary,
-                                          fontSize: 14.0,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                                color: AppColors.secondary),
                                       ),
                                     ).animate().fade(duration: 600.ms),
                                   ].divide(SizedBox(width: 8.0)),

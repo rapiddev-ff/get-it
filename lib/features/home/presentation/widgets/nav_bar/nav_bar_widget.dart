@@ -8,7 +8,6 @@ import '/features/messages/presentation/pages/messages/messages_widget.dart';
 import '/features/wishlist/presentation/pages/wishlist/wishlist_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
 class NavBarWidget extends StatefulWidget {
@@ -112,11 +111,10 @@ class _NavBarWidgetState extends State<NavBarWidget>
                       ),
                       Text(
                         'Home',
-                        style: GoogleFonts.inter(
-                          fontSize: 12.0,
-                          letterSpacing: 0.0,
-                          height: 1.67,
-                        ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .copyWith(height: 1.67, letterSpacing: 0.0),
                       ),
                     ].divide(SizedBox(height: 4.0)),
                   ),
@@ -196,11 +194,10 @@ class _NavBarWidgetState extends State<NavBarWidget>
                       ),
                       Text(
                         'Browse',
-                        style: GoogleFonts.inter(
-                          fontSize: 12.0,
-                          letterSpacing: 0.0,
-                          height: 1.67,
-                        ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .copyWith(height: 1.67, letterSpacing: 0.0),
                       ),
                     ].divide(SizedBox(height: 4.0)),
                   ),
@@ -256,11 +253,10 @@ class _NavBarWidgetState extends State<NavBarWidget>
                       ),
                       Text(
                         'Messages',
-                        style: GoogleFonts.inter(
-                          fontSize: 12.0,
-                          letterSpacing: 0.0,
-                          height: 1.67,
-                        ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .copyWith(height: 1.67, letterSpacing: 0.0),
                       ),
                     ].divide(SizedBox(height: 4.0)),
                   ),
@@ -316,11 +312,10 @@ class _NavBarWidgetState extends State<NavBarWidget>
                       ),
                       Text(
                         'Wishlist',
-                        style: GoogleFonts.inter(
-                          fontSize: 12.0,
-                          letterSpacing: 0.0,
-                          height: 1.67,
-                        ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .copyWith(height: 1.67, letterSpacing: 0.0),
                       ),
                     ].divide(SizedBox(height: 4.0)),
                   ),

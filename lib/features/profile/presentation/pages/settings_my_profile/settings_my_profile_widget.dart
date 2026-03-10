@@ -119,11 +119,10 @@ class _SettingsMyProfileWidgetState
           ),
           title: Text(
             'My Profile',
-            style: GoogleFonts.inter(
-              fontWeight: FontWeight.normal,
-              fontSize: 18.0,
-              color: Colors.white,
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(fontWeight: FontWeight.normal, color: Colors.white),
           ),
         ),
         body: SafeArea(
@@ -715,11 +714,10 @@ class _SettingsMyProfileWidgetState
                               _jsonGet(json, '$role.avg_rating')?.toString(),
                               '0',
                             ),
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 24.0,
-                              color: AppColors.textPrimary,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall!
+                                .copyWith(fontWeight: FontWeight.w500),
                           ),
                         ),
                         RatingBarIndicator(

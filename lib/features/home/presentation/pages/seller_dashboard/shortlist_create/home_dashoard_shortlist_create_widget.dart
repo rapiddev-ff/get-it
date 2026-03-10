@@ -87,11 +87,9 @@ class _HomeDashoardShortlistCreateWidgetState
                   CupertinoButton(
                     child: Text(
                       'Done',
-                      style: GoogleFonts.inter(
-                        color: AppColors.secondary,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.secondary),
                     ),
                     onPressed: () {
                       setState(() {

@@ -183,10 +183,7 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
                           padding: const EdgeInsets.only(bottom: 34.0),
                           child: Text(
                             'About You',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 28.0,
-                            ),
+                            style: Theme.of(context).textTheme.headlineMedium!,
                           ),
                         ),
                         Align(

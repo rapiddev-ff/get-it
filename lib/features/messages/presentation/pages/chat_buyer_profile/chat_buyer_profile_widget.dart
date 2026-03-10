@@ -79,10 +79,10 @@ class _ChatBuyerProfileWidgetState
           ),
           title: Text(
             'Buyer Profile',
-            style: GoogleFonts.inter(
-              color: Colors.white,
-              fontSize: 18.0,
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(color: Colors.white),
           ),
           actions: [
             IconButton(
@@ -394,11 +394,12 @@ class _ChatBuyerProfileWidgetState
                                               : null,
                                           '0',
                                         )} reviews',
-                                        style: GoogleFonts.inter(
-                                          fontWeight: FontWeight.w500,
-                                          color: AppColors.secondary,
-                                          fontSize: 14.0,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.secondary),
                                       ),
                                     ),
                                   ].divide(SizedBox(width: 12.0)),

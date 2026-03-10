@@ -755,12 +755,12 @@ class _HomeSellerProfileReviewsWidgetState
                             if (productPrice > 0)
                               Text(
                                 '\$${NumberFormat('#,##0.00', 'en_US').format(productPrice)}',
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 12.0,
-                                  color: AppColors.textPrimary,
-                                  height: 1.5,
-                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall!
+                                    .copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        height: 1.5),
                               ),
                           ].divide(SizedBox(height: 4.0)),
                         ),

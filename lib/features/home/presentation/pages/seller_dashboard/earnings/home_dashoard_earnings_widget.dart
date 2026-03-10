@@ -538,11 +538,10 @@ class _HomeDashoardEarningsWidgetState
               children: [
                 Text(
                   '\$${_formatPrice(order['total_amount'])}',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.0,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 16.0),
                 Container(

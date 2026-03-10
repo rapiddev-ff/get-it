@@ -690,11 +690,10 @@ class _SettingsMyProfileFollowersWidgetState
           padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
           child: Text(
             label,
-            style: GoogleFonts.inter(
-              color: Colors.white,
-              fontSize: 14.0,
-              fontWeight: FontWeight.w500,
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .copyWith(fontWeight: FontWeight.w500, color: Colors.white),
           ),
         ),
       ),

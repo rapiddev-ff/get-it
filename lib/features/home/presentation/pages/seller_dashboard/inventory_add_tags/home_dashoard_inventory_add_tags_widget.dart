@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 
 import '/features/browse/domain/models/tag_model.dart';
@@ -128,12 +127,10 @@ class _HomeDashoardInventoryAddTagsWidgetState
                       },
                       child: Text(
                         'Clear All',
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16.0,
-                          color: AppColors.primary,
-                          decoration: TextDecoration.underline,
-                        ),
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.primary,
+                            decoration: TextDecoration.underline),
                       ),
                     ),
                   ],

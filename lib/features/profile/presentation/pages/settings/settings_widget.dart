@@ -101,11 +101,10 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
           ),
           title: Text(
             'Settings',
-            style: GoogleFonts.inter(
-              fontWeight: FontWeight.normal,
-              fontSize: 18.0,
-              color: Colors.white,
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(fontWeight: FontWeight.normal, color: Colors.white),
           ),
         ),
         body: SafeArea(
@@ -665,11 +664,12 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                   ),
                                   child: Text(
                                     authState.stripe?.statusLabel ?? '',
-                                    style: GoogleFonts.inter(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 12.0,
-                                    ),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white),
                                   ),
                                 ),
                               if (!(authState.stripe?.hasAccount ?? false))
