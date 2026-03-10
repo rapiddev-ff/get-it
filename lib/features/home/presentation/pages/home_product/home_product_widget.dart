@@ -22,7 +22,6 @@ import '/core/providers/current_user_provider.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -536,11 +535,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                                     ),
                                                     Text(
                                                       '${product.seller?.ratingAsSeller ?? 0} (${product.seller?.totalReviewsAsSeller ?? 0} reviews)',
-                                                      style: GoogleFonts.inter(
-                                                        color: AppColors
-                                                            .textSecondary,
-                                                        fontSize: 12.0,
-                                                      ),
+                                                      style: Theme.of(context).textTheme.labelSmall!,
                                                     ),
                                                   ].divide(
                                                       SizedBox(width: 8.0)),

@@ -407,12 +407,7 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                                     Text(
                                                       conditionName,
                                                       maxLines: 1,
-                                                      style: GoogleFonts.inter(
-                                                        color: AppColors
-                                                            .textSecondary,
-                                                        fontSize: 12.0,
-                                                        height: 1.5,
-                                                      ),
+                                                      style: Theme.of(context).textTheme.labelSmall!.copyWith(height: 1.5),
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                     ),
@@ -442,13 +437,7 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                                               ? '$dateLabel ${DateFormat('MMM dd, yyyy').format(paidAt)}'
                                                               : '',
                                                           maxLines: 1,
-                                                          style:
-                                                              GoogleFonts.inter(
-                                                            color: AppColors
-                                                                .textSecondary,
-                                                            fontSize: 12.0,
-                                                            height: 1.5,
-                                                          ),
+                                                          style: Theme.of(context).textTheme.labelSmall!.copyWith(height: 1.5),
                                                           overflow: TextOverflow
                                                               .ellipsis,
                                                         ),
