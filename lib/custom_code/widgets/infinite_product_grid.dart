@@ -204,7 +204,7 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
           ),
           Container(
             decoration: const BoxDecoration(
-              color: Color(0xFF363636),
+              color: AppColors.surfaceDark,
               borderRadius: BorderRadius.vertical(
                 bottom: Radius.circular(4),
               ),

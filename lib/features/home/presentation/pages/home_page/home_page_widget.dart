@@ -188,7 +188,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                                   fontWeight: FontWeight.normal,
                                   color: _state == 'Shop'
                                       ? AppColors.textPrimary
-                                      : Color(0xFFAFAFB4),
+                                      : AppColors.textSecondary,
                                   height: 2.0,
                                 ),
                               ),
@@ -240,7 +240,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                                 style: GoogleFonts.inter(
                                   color: _state == 'Seller Dashboard'
                                       ? AppColors.textPrimary
-                                      : Color(0xFFAFAFB4),
+                                      : AppColors.textSecondary,
                                   height: 2.0,
                                 ),
                               ),
@@ -285,7 +285,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
         child: custom_widgets.SwipeableProductStack(
           width: double.infinity,
           height: 500.0,
-          colorBuy: Color(0xFF8E6CFF),
+          colorBuy: AppColors.primary,
           colorHide: Color(0xFF3570FC),
           colorSkip: AppColors.accent2,
           cardBgColor: AppColors.backgroundSecondary,
@@ -477,7 +477,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                           '${_jsonStr(getSellerDashboard, 'revenue_change_pct')}% from last month',
                           style: GoogleFonts.inter(
                             fontWeight: FontWeight.normal,
-                            color: Color(0xFF4ADE80),
+                            color: AppColors.statusSuccess,
                           ),
                         ),
                     ].divide(SizedBox(height: 3.0)),
@@ -508,7 +508,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
+                    colors: [AppColors.brandPurple, AppColors.brandBlue],
                     stops: [0.0, 1.0],
                     begin: AlignmentDirectional(-1.0, -0.87),
                     end: AlignmentDirectional(1.0, 0.87),
@@ -797,7 +797,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                       height: 56.0,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
+                          colors: [AppColors.brandPurple, AppColors.brandBlue],
                           stops: [0.0, 1.0],
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,

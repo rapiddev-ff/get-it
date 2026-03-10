@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/core/theme/app_colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 /// Primary action button with the app's standard purple gradient.
@@ -23,9 +24,9 @@ class AppGradientButton extends StatelessWidget {
   final double borderRadius;
   final bool isLoading;
 
-  static const _activeStart = Color(0xFF7D56FF);
-  static const _activeEnd = Color(0xFF6187F1);
-  static const _disabledColor = Color(0xFF363636);
+  static const _activeStart = AppColors.brandPurple;
+  static const _activeEnd = AppColors.brandBlue;
+  static const _disabledColor = AppColors.surfaceDark;
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +102,7 @@ class AppOutlineButton extends StatelessWidget {
         style: OutlinedButton.styleFrom(
           minimumSize: Size(double.infinity, height),
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          side: const BorderSide(color: Color(0xFF545454)),
+          side: const BorderSide(color: AppColors.neutral800),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),
           ),

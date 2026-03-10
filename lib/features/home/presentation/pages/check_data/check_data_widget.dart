@@ -143,7 +143,7 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
                       padding: EdgeInsets.all(14.0),
                       child: Icon(
                         Icons.waving_hand_rounded,
-                        color: Color(0xFF8E6CFF),
+                        color: AppColors.primary,
                         size: 24.0,
                       ),
                     ),
@@ -163,7 +163,7 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
                     textAlign: TextAlign.center,
                     style: GoogleFonts.inter(
                       fontSize: 14.0,
-                      color: Color(0xFFAFAFB4),
+                      color: AppColors.textSecondary,
                       height: 1.5,
                     ),
                   ),
@@ -265,7 +265,7 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
                   style: GoogleFonts.inter(
                     fontWeight: FontWeight.normal,
                     fontStyle: FontStyle.italic,
-                    color: Color(0xFFAFAFB4),
+                    color: AppColors.textSecondary,
                     fontSize: 18.0,
                     letterSpacing: 0.0,
                   ),

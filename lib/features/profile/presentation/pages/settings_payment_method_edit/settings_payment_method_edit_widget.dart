@@ -300,7 +300,7 @@ class _SettingsPaymentMethodEditWidgetState
                   Divider(
                     height: 48.0,
                     thickness: 1.0,
-                    color: Color(0xFF363636),
+                    color: AppColors.surfaceDark,
                   ),
                   Text(
                     'Billing Address',
@@ -645,7 +645,7 @@ class _SettingsPaymentMethodEditWidgetState
                                 Text(
                                   'This card will  be used for future purchases',
                                   style: GoogleFonts.inter(
-                                    color: Color(0xFFAFAFB4),
+                                    color: AppColors.textSecondary,
                                     fontSize: 14.0,
                                   ),
                                 ).animate().fade(duration: 600.ms),
@@ -659,7 +659,7 @@ class _SettingsPaymentMethodEditWidgetState
                   Divider(
                     height: 48.0,
                     thickness: 1.0,
-                    color: Color(0xFF363636),
+                    color: AppColors.surfaceDark,
                   ),
                   Container(
                     width: double.infinity,

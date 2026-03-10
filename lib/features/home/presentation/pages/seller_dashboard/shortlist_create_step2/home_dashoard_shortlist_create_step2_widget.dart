@@ -441,7 +441,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        color: Color(0xFF111111),
+                        color: AppColors.backgroundPrimary,
                       ),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
@@ -588,7 +588,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                           Divider(
                             height: 48.0,
                             thickness: 1.0,
-                            color: Color(0xFF363636),
+                            color: AppColors.surfaceDark,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -645,7 +645,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                     gradient: LinearGradient(
                                       colors: [
                                         AppColors.secondary,
-                                        Color(0xFF6187F1)
+                                        AppColors.brandBlue
                                       ],
                                       stops: [0.0, 1.0],
                                       begin: Alignment.topCenter,
@@ -668,7 +668,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                           Divider(
                             height: 44.0,
                             thickness: 1.0,
-                            color: Color(0xFF363636),
+                            color: AppColors.surfaceDark,
                           ),
                           if (selectedProductIds.isEmpty) ...[
                             Text(
@@ -728,14 +728,14 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                 children: [
                                   Icon(
                                     Icons.add_circle_outline,
-                                    color: Color(0xFF9B85FF),
+                                    color: AppColors.brandPurpleLight,
                                     size: 24.0,
                                   ),
                                   Text(
                                     'Add Products',
                                     style: GoogleFonts.inter(
                                       fontSize: 14.0,
-                                      color: Color(0xFF9B85FF),
+                                      color: AppColors.brandPurpleLight,
                                       height: 1.5,
                                     ),
                                   ),
@@ -825,7 +825,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                         minimumSize: Size(double.infinity, 56.0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4.0),
-                          side: BorderSide(color: Color(0xFF545454)),
+                          side: BorderSide(color: AppColors.neutral800),
                         ),
                       ),
                       child: Text(

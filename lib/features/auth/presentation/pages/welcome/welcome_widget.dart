@@ -1,5 +1,6 @@
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
+import '/core/theme/app_colors.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -67,7 +68,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                   style: GoogleFonts.inter(
                     fontWeight: FontWeight.normal,
                     fontStyle: FontStyle.italic,
-                    color: Color(0xFFAFAFB4),
+                    color: AppColors.textSecondary,
                     fontSize: 18.0,
                   ),
                 ),
@@ -94,13 +95,13 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                           TextSpan(
                             text: 'Already have an account?',
                             style: GoogleFonts.inter(
-                              color: Color(0xFFAFAFB4),
+                              color: AppColors.textSecondary,
                             ),
                           ),
                           TextSpan(
                             text: ' Sign In',
                             style: GoogleFonts.inter(
-                              color: Color(0xFF9B85FF),
+                              color: AppColors.brandPurpleLight,
                             ),
                           ),
                         ],

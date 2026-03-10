@@ -143,8 +143,8 @@ class _HomeDashoardShortlistWidgetState
                                     decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         colors: [
-                                          Color(0xFF7D56FF),
-                                          Color(0xFF6187F1)
+                                          AppColors.brandPurple,
+                                          AppColors.brandBlue
                                         ],
                                         stops: [0.0, 1.0],
                                         begin: Alignment.topCenter,
@@ -204,8 +204,8 @@ class _HomeDashoardShortlistWidgetState
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: [
-                                    Color(0xFF7D56FF),
-                                    Color(0xFF6187F1)
+                                    AppColors.brandPurple,
+                                    AppColors.brandBlue
                                   ],
                                   stops: [0.0, 1.0],
                                   begin: Alignment.topCenter,

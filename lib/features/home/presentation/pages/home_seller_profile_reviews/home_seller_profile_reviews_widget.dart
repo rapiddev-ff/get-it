@@ -218,13 +218,13 @@ class _HomeSellerProfileReviewsWidgetState
                                       RatingBarIndicator(
                                         itemBuilder: (context, index) => Icon(
                                           Icons.star_rounded,
-                                          color: Color(0xFFFACC15),
+                                          color: AppColors.statusYellow,
                                         ),
                                         direction: Axis.horizontal,
                                         rating: _model.state == 'As Buyer'
                                             ? _currentRatingAsBuyer
                                             : _currentRatingAsSeller,
-                                        unratedColor: Color(0xFF7B7B7B),
+                                        unratedColor: AppColors.neutral700,
                                         itemCount: 5,
                                         itemSize: 18.0,
                                       ),
@@ -239,7 +239,7 @@ class _HomeSellerProfileReviewsWidgetState
                                         '(${_model.state == 'As Buyer' ? _currentTotalReviewsAsBuyer : _currentTotalReviewsAsSeller}) reviews',
                                         style: GoogleFonts.inter(
                                           fontSize: 14.0,
-                                          color: Color(0xFFAFAFB4),
+                                          color: AppColors.textSecondary,
                                         ),
                                       ),
                                     ].divide(SizedBox(width: 8.0)),
@@ -270,7 +270,7 @@ class _HomeSellerProfileReviewsWidgetState
                                             'Items',
                                             style: GoogleFonts.inter(
                                               fontSize: 12.0,
-                                              color: Color(0xFFAFAFB4),
+                                              color: AppColors.textSecondary,
                                             ),
                                           ),
                                         ],
@@ -295,7 +295,7 @@ class _HomeSellerProfileReviewsWidgetState
                                             'Sold',
                                             style: GoogleFonts.inter(
                                               fontSize: 12.0,
-                                              color: Color(0xFFAFAFB4),
+                                              color: AppColors.textSecondary,
                                             ),
                                           ),
                                         ],
@@ -321,7 +321,7 @@ class _HomeSellerProfileReviewsWidgetState
                                             'Followers',
                                             style: GoogleFonts.inter(
                                               fontSize: 12.0,
-                                              color: Color(0xFFAFAFB4),
+                                              color: AppColors.textSecondary,
                                             ),
                                           ),
                                         ],
@@ -359,7 +359,7 @@ class _HomeSellerProfileReviewsWidgetState
                                             fontWeight: FontWeight.normal,
                                             color: _model.state == 'As Buyer'
                                                 ? AppColors.textPrimary
-                                                : Color(0xFFAFAFB4),
+                                                : AppColors.textSecondary,
                                             height: 2.0,
                                           ),
                                         ),
@@ -396,7 +396,7 @@ class _HomeSellerProfileReviewsWidgetState
                                           style: GoogleFonts.inter(
                                             color: _model.state == 'As Seller'
                                                 ? AppColors.textPrimary
-                                                : Color(0xFFAFAFB4),
+                                                : AppColors.textSecondary,
                                             height: 2.0,
                                           ),
                                         ),
@@ -429,7 +429,7 @@ class _HomeSellerProfileReviewsWidgetState
                           height: 56.0,
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
+                              colors: [AppColors.brandPurple, AppColors.brandBlue],
                               stops: [0.0, 1.0],
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
@@ -666,11 +666,11 @@ class _HomeSellerProfileReviewsWidgetState
                       RatingBarIndicator(
                         itemBuilder: (context, index) => Icon(
                           Icons.star_rounded,
-                          color: Color(0xFFFACC15),
+                          color: AppColors.statusYellow,
                         ),
                         direction: Axis.horizontal,
                         rating: rating,
-                        unratedColor: Color(0xFF7B7B7B),
+                        unratedColor: AppColors.neutral700,
                         itemCount: 5,
                         itemSize: 12.0,
                       ),
@@ -685,14 +685,14 @@ class _HomeSellerProfileReviewsWidgetState
                           : '',
                       style: GoogleFonts.inter(
                         fontSize: 12.0,
-                        color: Color(0xFFAFAFB4),
+                        color: AppColors.textSecondary,
                       ),
                     ),
                     Container(
                       width: 26.0,
                       height: 26.0,
                       decoration: BoxDecoration(
-                        color: Color(0xFF111111),
+                        color: AppColors.backgroundPrimary,
                         shape: BoxShape.circle,
                       ),
                       child: Center(
@@ -711,7 +711,7 @@ class _HomeSellerProfileReviewsWidgetState
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Color(0xFF111111),
+                  color: AppColors.backgroundPrimary,
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: Padding(
@@ -771,7 +771,7 @@ class _HomeSellerProfileReviewsWidgetState
                     : 'Purchased on ${DateFormat('MMM dd, yyyy').format(orderDate)}',
                 style: GoogleFonts.inter(
                   fontSize: 12.0,
-                  color: Color(0xFFAFAFB4),
+                  color: AppColors.textSecondary,
                 ),
               ),
           ].divide(SizedBox(height: 16.0)),

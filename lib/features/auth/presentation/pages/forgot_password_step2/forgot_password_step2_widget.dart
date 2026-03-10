@@ -126,7 +126,7 @@ class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget>
                         'Didn\u2019t get anything?',
                         textAlign: TextAlign.center,
                         style: GoogleFonts.inter(
-                          color: Color(0xFFAFAFB4),
+                          color: AppColors.textSecondary,
                           fontSize: 16.0,
                           height: 1.5,
                         ),

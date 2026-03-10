@@ -202,7 +202,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
             label,
             style: GoogleFonts.inter(
               fontWeight: FontWeight.normal,
-              color: Color(0xFFAFAFB4),
+              color: AppColors.textSecondary,
               fontSize: 16.0,
             ),
           ),
@@ -289,7 +289,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                   return Center(
                                     child: Icon(
                                       Icons.image_not_supported_outlined,
-                                      color: Color(0xFFAFAFB4),
+                                      color: AppColors.textSecondary,
                                       size: 48.0,
                                     ),
                                   );
@@ -339,7 +339,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                                       (context, url, error) =>
                                                           Icon(
                                                     Icons.broken_image,
-                                                    color: Color(0xFFAFAFB4),
+                                                    color: AppColors.textSecondary,
                                                     size: 48.0,
                                                   ),
                                                 ),
@@ -534,7 +534,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                                       '${product.seller?.ratingAsSeller ?? 0} (${product.seller?.totalReviewsAsSeller ?? 0} reviews)',
                                                       style: GoogleFonts.inter(
                                                         color:
-                                                            Color(0xFFAFAFB4),
+                                                            AppColors.textSecondary,
                                                         fontSize: 12.0,
                                                       ),
                                                     ),
@@ -547,7 +547,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                         ),
                                         Icon(
                                           Icons.chevron_right_rounded,
-                                          color: Color(0xFFAFAFB4),
+                                          color: AppColors.textSecondary,
                                           size: 24.0,
                                         ),
                                       ].divide(SizedBox(width: 12.0)),
@@ -579,7 +579,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                             Divider(
                               height: 48.0,
                               thickness: 2.0,
-                              color: Color(0xFF363636),
+                              color: AppColors.surfaceDark,
                             ),
                             Text(
                               'Condition & Details',
@@ -602,7 +602,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                             Divider(
                               height: 48.0,
                               thickness: 2.0,
-                              color: Color(0xFF363636),
+                              color: AppColors.surfaceDark,
                             ),
                             Container(
                               width: double.infinity,
@@ -642,7 +642,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                       'Carefully packaged with tracking included.',
                                       style: GoogleFonts.inter(
                                         fontSize: 14.0,
-                                        color: Color(0xFFAFAFB4),
+                                        color: AppColors.textSecondary,
                                       ),
                                     ),
                                   ],
@@ -655,7 +655,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                             Divider(
                               height: 48.0,
                               thickness: 2.0,
-                              color: Color(0xFF363636),
+                              color: AppColors.surfaceDark,
                             ),
                             Row(
                               children: [
@@ -712,8 +712,8 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                     decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         colors: [
-                                          Color(0xFF7D56FF),
-                                          Color(0xFF6187F1)
+                                          AppColors.brandPurple,
+                                          AppColors.brandBlue
                                         ],
                                         stops: [0.0, 1.0],
                                         begin: Alignment.topCenter,
@@ -868,9 +868,9 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
             style: GoogleFonts.inter(
               fontWeight: FontWeight.normal,
               fontSize: 14.0,
-              color: Color(0xFFAFAFB4),
+              color: AppColors.textSecondary,
               decoration: TextDecoration.lineThrough,
-              decorationColor: Color(0xFFAFAFB4),
+              decorationColor: AppColors.textSecondary,
             ),
           ),
         ],
@@ -905,7 +905,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
         color: AppColors.backgroundSecondary,
         borderRadius: BorderRadius.circular(100.0),
         border: Border.all(
-          color: Color(0xFF363636),
+          color: AppColors.surfaceDark,
         ),
       ),
       child: Padding(

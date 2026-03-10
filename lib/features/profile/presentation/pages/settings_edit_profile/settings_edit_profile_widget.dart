@@ -188,7 +188,7 @@ class _SettingsEditProfileWidgetState
                             width: 128.0,
                             height: 128.0,
                             decoration: BoxDecoration(
-                              color: Color(0xFF363636),
+                              color: AppColors.surfaceDark,
                               shape: BoxShape.circle,
                             ),
                             child: InkWell(
@@ -331,15 +331,15 @@ class _SettingsEditProfileWidgetState
                                 : 'Unavailable',
                             style: GoogleFonts.inter(
                               color: _model.usernameAvailable
-                                  ? Color(0xFF4ADE80)
-                                  : Color(0xFFEF4444),
+                                  ? AppColors.statusSuccess
+                                  : AppColors.destructive500,
                               fontSize: 12.0,
                             ),
                           ).animate().fade(duration: 600.ms),
                           if (_model.usernameAvailable)
                             Icon(
                               Icons.check,
-                              color: Color(0xFF4ADE80),
+                              color: AppColors.statusSuccess,
                               size: 20.0,
                             ),
                           if (!_model.usernameAvailable)
@@ -397,7 +397,7 @@ class _SettingsEditProfileWidgetState
                   Divider(
                     height: 48.0,
                     thickness: 1.0,
-                    color: Color(0xFF363636),
+                    color: AppColors.surfaceDark,
                   ),
                   Text(
                     'Private Account Details',
@@ -513,7 +513,7 @@ class _SettingsEditProfileWidgetState
                   Divider(
                     height: 56.0,
                     thickness: 1.0,
-                    color: Color(0xFF363636),
+                    color: AppColors.surfaceDark,
                   ),
                   Builder(
                     builder: (context) {
@@ -531,11 +531,11 @@ class _SettingsEditProfileWidgetState
                           gradient: LinearGradient(
                             colors: [
                               isFormValid
-                                  ? Color(0xFF7D56FF)
-                                  : Color(0xFF363636),
+                                  ? AppColors.brandPurple
+                                  : AppColors.surfaceDark,
                               isFormValid
-                                  ? Color(0xFF6187F1)
-                                  : Color(0xFF363636),
+                                  ? AppColors.brandBlue
+                                  : AppColors.surfaceDark,
                             ],
                             stops: [0.0, 1.0],
                             begin: Alignment.topCenter,
@@ -617,7 +617,7 @@ class _SettingsEditProfileWidgetState
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4.0),
-                          side: BorderSide(color: Color(0xFF545454)),
+                          side: BorderSide(color: AppColors.neutral800),
                         ),
                       ),
                       child: Text(

@@ -195,7 +195,7 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
                                   width: 128.0,
                                   height: 128.0,
                                   decoration: const BoxDecoration(
-                                    color: Color(0xFF363636),
+                                    color: AppColors.surfaceDark,
                                     shape: BoxShape.circle,
                                   ),
                                   child: InkWell(
@@ -406,15 +406,15 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
                                   style: GoogleFonts.inter(
                                     color: (_model.checkIsUsernameAvailable ??
                                             false)
-                                        ? const Color(0xFF4ADE80)
-                                        : const Color(0xFFEF4444),
+                                        ? AppColors.statusSuccess
+                                        : AppColors.destructive500,
                                     fontSize: 12.0,
                                   ),
                                 ).animate().fade(duration: 600.ms),
                                 if (_model.checkIsUsernameAvailable ?? false)
                                   const Icon(
                                     Icons.check,
-                                    color: Color(0xFF4ADE80),
+                                    color: AppColors.statusSuccess,
                                     size: 20.0,
                                   ),
                                 if (!(_model.checkIsUsernameAvailable ?? true))

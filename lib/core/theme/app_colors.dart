@@ -70,6 +70,20 @@ abstract class AppColors {
   static const Color primary700 = Color(0xFF4DA5FF);
   static const Color primary800 = Color(0xFF007EFF);
 
+  // Surface (cards, dividers, overlays)
+  static const Color surfaceDark = Color(0xFF363636);
+  static const Color surfaceDarker = Color(0xFF202021);
+
+  // Brand accent
+  static const Color brandBlue = Color(0xFF6187F1);
+  static const Color brandPurple = Color(0xFF7D56FF);
+  static const Color brandPurpleLight = Color(0xFF9B85FF);
+
+  // Status
+  static const Color statusWarning = Color(0xFFD97706);
+  static const Color statusSuccess = Color(0xFF4ADE80);
+  static const Color statusYellow = Color(0xFFFACC15);
+
   // Accent overlays
   static const Color accent1 = Color(0x4C4B39EF);
   static const Color accent2 = Color(0x4D39D2C0);

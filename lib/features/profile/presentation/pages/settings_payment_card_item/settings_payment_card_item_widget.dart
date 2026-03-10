@@ -79,7 +79,7 @@ class _SettingsPaymentCardItemWidgetState
                           style: GoogleFonts.inter(
                             fontWeight: FontWeight.normal,
                             fontSize: 12.0,
-                            color: Color(0xFFAFAFB4),
+                            color: AppColors.textSecondary,
                           ),
                         ),
                       ],
@@ -108,7 +108,7 @@ class _SettingsPaymentCardItemWidgetState
             Divider(
               height: 1.0,
               thickness: 1.0,
-              color: Color(0xFF363636),
+              color: AppColors.surfaceDark,
             ),
             Padding(
               padding: EdgeInsets.only(top: 12.0),
@@ -117,7 +117,7 @@ class _SettingsPaymentCardItemWidgetState
                 style: GoogleFonts.inter(
                   fontWeight: FontWeight.normal,
                   fontSize: 12.0,
-                  color: Color(0xFFAFAFB4),
+                  color: AppColors.textSecondary,
                 ),
               ),
             ),
@@ -160,7 +160,7 @@ class _SettingsPaymentCardItemWidgetState
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Color(0xFF363636),
+                          color: AppColors.surfaceDark,
                           borderRadius: BorderRadius.circular(4.0),
                         ),
                         child: Padding(
@@ -194,7 +194,7 @@ class _SettingsPaymentCardItemWidgetState
                                   bgColor: Color(0x338E6CFF),
                                   icon: FaIcon(
                                     FontAwesomeIcons.trash,
-                                    color: Color(0xFF8E6CFF),
+                                    color: AppColors.primary,
                                     size: 20.0,
                                   ),
                                   actionText: 'Remove Card',
@@ -218,7 +218,7 @@ class _SettingsPaymentCardItemWidgetState
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(4.0),
                             border: Border.all(
-                              color: Color(0xFF545454),
+                              color: AppColors.neutral800,
                               width: 1.0,
                             ),
                           ),

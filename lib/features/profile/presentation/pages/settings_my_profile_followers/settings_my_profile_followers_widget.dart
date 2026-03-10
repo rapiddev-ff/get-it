@@ -325,7 +325,7 @@ class _SettingsMyProfileFollowersWidgetState
                           fontWeight: FontWeight.normal,
                           color: _model.state == 'Followers'
                               ? AppColors.textPrimary
-                              : Color(0xFFAFAFB4),
+                              : AppColors.textSecondary,
                           height: 2.0,
                         ),
                       ),
@@ -360,7 +360,7 @@ class _SettingsMyProfileFollowersWidgetState
                         style: GoogleFonts.inter(
                           color: _model.state == 'Following'
                               ? AppColors.textPrimary
-                              : Color(0xFFAFAFB4),
+                              : AppColors.textSecondary,
                           height: 2.0,
                         ),
                       ),
@@ -679,7 +679,7 @@ class _SettingsMyProfileFollowersWidgetState
       child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
+            colors: [AppColors.brandPurple, AppColors.brandBlue],
             stops: [0.0, 1.0],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,

@@ -96,7 +96,7 @@ class NotificationWidget extends StatelessWidget {
                             style: GoogleFonts.inter(
                               fontWeight: FontWeight.w500,
                               fontSize: 16.0,
-                              color: const Color(0xFF9B85FF),
+                              color: AppColors.brandPurpleLight,
                               decoration: TextDecoration.underline,
                             ),
                           ),

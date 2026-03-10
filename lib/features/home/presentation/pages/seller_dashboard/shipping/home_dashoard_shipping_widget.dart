@@ -377,7 +377,7 @@ class _HomeDashoardShippingWidgetState
                         if (isSalePending)
                           Container(
                             decoration: BoxDecoration(
-                              color: Color(0xFFD97706),
+                              color: AppColors.statusWarning,
                               borderRadius: BorderRadius.circular(6.0),
                             ),
                             child: Padding(
@@ -430,7 +430,7 @@ class _HomeDashoardShippingWidgetState
                         if (isDelivered)
                           Container(
                             decoration: BoxDecoration(
-                              color: Color(0xFF22C55E),
+                              color: AppColors.statusSuccess,
                               borderRadius: BorderRadius.circular(6.0),
                             ),
                             child: Padding(

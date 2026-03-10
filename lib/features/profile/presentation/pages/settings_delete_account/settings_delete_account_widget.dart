@@ -183,7 +183,7 @@ class SettingsDeleteAccountWidget extends StatelessWidget {
                           ),
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(
-                              color: Color(0xFF545454),
+                              color: AppColors.neutral800,
                               width: 1.0,
                             ),
                             shape: RoundedRectangleBorder(

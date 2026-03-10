@@ -53,7 +53,7 @@ class SettingsItemWidget extends StatelessWidget {
               if (showTrailingIcon ?? true)
                 Icon(
                   Icons.chevron_right_outlined,
-                  color: Color(0xFFAFAFB4),
+                  color: AppColors.textSecondary,
                   size: 24.0,
                 ),
             ].divide(SizedBox(width: 12.0)),

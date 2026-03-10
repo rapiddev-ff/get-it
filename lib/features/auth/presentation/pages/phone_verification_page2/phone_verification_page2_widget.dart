@@ -154,8 +154,8 @@ class _PhoneVerificationPage2WidgetState
                                 borderWidth: 0.0,
                                 borderRadius: BorderRadius.circular(12.0),
                                 shape: PinCodeFieldShape.box,
-                                activeColor: const Color(0xFF7B7B7B),
-                                inactiveColor: const Color(0xFF7B7B7B),
+                                activeColor: AppColors.neutral700,
+                                inactiveColor: AppColors.neutral700,
                                 selectedColor: AppColors.neutral700,
                                 activeFillColor: const Color(0xFFF6F6F6),
                                 inactiveFillColor: const Color(0xFFF6F6F6),
@@ -337,7 +337,7 @@ class _PhoneVerificationPage2WidgetState
                                         style: GoogleFonts.inter(
                                           fontWeight: FontWeight.w500,
                                           fontSize: 16.0,
-                                          color: const Color(0xFFAFAFB4),
+                                          color: AppColors.textSecondary,
                                         ),
                                       ),
                                       TextSpan(

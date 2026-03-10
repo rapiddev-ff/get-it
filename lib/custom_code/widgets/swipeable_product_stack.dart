@@ -357,7 +357,7 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
     double cardHeight,
     double screenWidth,
   ) {
-    final bgColor = widget.cardBgColor ?? const Color(0xFF252525);
+    final bgColor = widget.cardBgColor ?? AppColors.backgroundSecondary;
     final cBuy = widget.colorBuy ?? const Color(0xFF4B39EF);
     final cHide = widget.colorHide ?? AppColors.error;
 
@@ -890,7 +890,7 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
                   height: 149,
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
-                      colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
+                      colors: [AppColors.brandPurple, AppColors.brandBlue],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                     ),

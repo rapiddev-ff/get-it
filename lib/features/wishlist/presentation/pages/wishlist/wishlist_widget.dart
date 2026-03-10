@@ -229,10 +229,10 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                       gradient: LinearGradient(
                                         colors: [
                                           _choosenCategory == null
-                                              ? const Color(0xFF7D56FF)
+                                              ? AppColors.brandPurple
                                               : AppColors.backgroundSecondary,
                                           _choosenCategory == null
-                                              ? const Color(0xFF6187F1)
+                                              ? AppColors.brandBlue
                                               : AppColors.backgroundSecondary,
                                         ],
                                         stops: const [0.0, 1.0],
@@ -272,10 +272,10 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                         gradient: LinearGradient(
                                           colors: [
                                             _choosenCategory == categoriesItem
-                                                ? const Color(0xFF7D56FF)
+                                                ? AppColors.brandPurple
                                                 : AppColors.backgroundSecondary,
                                             _choosenCategory == categoriesItem
-                                                ? const Color(0xFF6187F1)
+                                                ? AppColors.brandBlue
                                                 : AppColors.backgroundSecondary,
                                           ],
                                           stops: const [0.0, 1.0],

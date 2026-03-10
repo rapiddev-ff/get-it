@@ -150,7 +150,7 @@ class SellerDashboardShipItemWidget extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   color:
-                      _isSalePending ? Color(0xFFD97706) : AppColors.secondary,
+                      _isSalePending ? AppColors.statusWarning : AppColors.secondary,
                   borderRadius: BorderRadius.circular(6.0),
                 ),
                 child: Padding(

@@ -324,7 +324,7 @@ class _HomeDashoardShortlistCreateWidgetState
                     Divider(
                       height: 48.0,
                       thickness: 1.0,
-                      color: Color(0xFF363636),
+                      color: AppColors.surfaceDark,
                     ),
                     Text(
                       'Privacy Settings',
@@ -445,7 +445,7 @@ class _HomeDashoardShortlistCreateWidgetState
                         minimumSize: Size(double.infinity, 56.0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4.0),
-                          side: BorderSide(color: Color(0xFF545454)),
+                          side: BorderSide(color: AppColors.neutral800),
                         ),
                       ),
                       child: Text(

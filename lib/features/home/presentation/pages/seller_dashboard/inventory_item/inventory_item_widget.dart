@@ -50,7 +50,7 @@ class InventoryItemWidget extends StatelessWidget {
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Color(0xFF363636),
+            color: AppColors.surfaceDark,
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(4.0),
               bottomRight: Radius.circular(4.0),

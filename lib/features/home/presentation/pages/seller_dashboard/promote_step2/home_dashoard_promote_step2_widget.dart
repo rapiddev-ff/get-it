@@ -109,7 +109,7 @@ class _HomeDashoardPromoteStep2WidgetState
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      color: Color(0xFF111111),
+                      color: AppColors.backgroundPrimary,
                     ),
                     child: Padding(
                       padding: EdgeInsets.symmetric(
@@ -172,7 +172,7 @@ class _HomeDashoardPromoteStep2WidgetState
                   Divider(
                     height: 1.0,
                     thickness: 1.0,
-                    color: Color(0xFF363636),
+                    color: AppColors.surfaceDark,
                   ),
                   Padding(
                     padding:
@@ -206,7 +206,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: Color(0xFF7B7B7B),
+                                    color: AppColors.neutral700,
                                   ),
                                 ),
                               ),
@@ -299,7 +299,7 @@ class _HomeDashoardPromoteStep2WidgetState
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: Color(0xFF7B7B7B),
+                                  color: AppColors.neutral700,
                                 ),
                               ),
                             ),
@@ -535,8 +535,8 @@ class _HomeDashoardPromoteStep2WidgetState
                                                 decoration: BoxDecoration(
                                                   gradient: LinearGradient(
                                                     colors: [
-                                                      Color(0xFF7D56FF),
-                                                      Color(0xFF6187F1)
+                                                      AppColors.brandPurple,
+                                                      AppColors.brandBlue
                                                     ],
                                                     stops: [0.0, 1.0],
                                                     begin: AlignmentDirectional(
@@ -592,7 +592,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           border: Border.all(
-                                            color: Color(0xFF7B7B7B),
+                                            color: AppColors.neutral700,
                                           ),
                                         ),
                                       ),
@@ -635,7 +635,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                           decoration: BoxDecoration(
                                             shape: BoxShape.circle,
                                             border: Border.all(
-                                              color: Color(0xFF7B7B7B),
+                                              color: AppColors.neutral700,
                                             ),
                                           ),
                                         ),
@@ -940,7 +940,7 @@ class _HomeDashoardPromoteStep2WidgetState
                             Divider(
                               height: 1.0,
                               thickness: 1.0,
-                              color: Color(0xFF545454),
+                              color: AppColors.neutral800,
                             ),
                             Row(
                               children: [

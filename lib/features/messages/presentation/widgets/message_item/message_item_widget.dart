@@ -80,7 +80,7 @@ class MessageItemWidget extends ConsumerWidget {
                           width: 20.0,
                           height: 20.0,
                           decoration: BoxDecoration(
-                            color: Color(0xFFEF4444),
+                            color: AppColors.destructive500,
                             shape: BoxShape.circle,
                           ),
                           child: Center(
@@ -192,7 +192,7 @@ class MessageItemWidget extends ConsumerWidget {
         Divider(
           height: 1.0,
           thickness: 1.0,
-          color: Color(0xFF363636),
+          color: AppColors.surfaceDark,
         ),
       ],
     );
@@ -236,7 +236,7 @@ class MessageItemWidget extends ConsumerWidget {
                           width: 20.0,
                           height: 20.0,
                           decoration: BoxDecoration(
-                            color: Color(0xFFEF4444),
+                            color: AppColors.destructive500,
                             shape: BoxShape.circle,
                           ),
                           child: Center(
@@ -306,7 +306,7 @@ class MessageItemWidget extends ConsumerWidget {
         Divider(
           height: 1.0,
           thickness: 1.0,
-          color: Color(0xFF363636),
+          color: AppColors.surfaceDark,
         ),
       ],
     );

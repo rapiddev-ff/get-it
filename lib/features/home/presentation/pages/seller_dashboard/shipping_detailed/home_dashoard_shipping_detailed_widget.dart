@@ -329,7 +329,7 @@ class _HomeDashoardShippingDetailedWidgetState
                         children: [
                           // Product card
                           Container(
-                            decoration: BoxDecoration(color: Color(0xFF111111)),
+                            decoration: BoxDecoration(color: AppColors.backgroundPrimary),
                             child: Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 16.0, vertical: 24.0),
@@ -421,7 +421,7 @@ class _HomeDashoardShippingDetailedWidgetState
                           Divider(
                             height: 1.0,
                             thickness: 1.0,
-                            color: Color(0xFF363636),
+                            color: AppColors.surfaceDark,
                           ),
                           // Shipping Address
                           Padding(
@@ -508,7 +508,7 @@ class _HomeDashoardShippingDetailedWidgetState
                           Divider(
                             height: 32.0,
                             thickness: 1.0,
-                            color: Color(0xFF363636),
+                            color: AppColors.surfaceDark,
                           ),
                           // Add Tracking #
                           Padding(
@@ -631,7 +631,7 @@ class _HomeDashoardShippingDetailedWidgetState
                                     gradient: LinearGradient(
                                       colors: [
                                         Color(0xFF16A34A),
-                                        Color(0xFF22C55E),
+                                        AppColors.statusSuccess,
                                       ],
                                       begin: Alignment.topCenter,
                                       end: Alignment.bottomCenter,
@@ -661,7 +661,7 @@ class _HomeDashoardShippingDetailedWidgetState
                           Divider(
                             height: 48.0,
                             thickness: 1.0,
-                            color: Color(0xFF363636),
+                            color: AppColors.surfaceDark,
                           ),
                           // Status indicators
                           Padding(
@@ -700,7 +700,7 @@ class _HomeDashoardShippingDetailedWidgetState
                                   color:
                                       Color(0xFF78350F).withValues(alpha: 0.3),
                                   borderRadius: BorderRadius.circular(8.0),
-                                  border: Border.all(color: Color(0xFFD97706)),
+                                  border: Border.all(color: AppColors.statusWarning),
                                 ),
                                 child: Padding(
                                   padding: EdgeInsets.all(12.0),
@@ -748,7 +748,7 @@ class _HomeDashoardShippingDetailedWidgetState
                                         gradient: LinearGradient(
                                           colors: [
                                             AppColors.secondary,
-                                            Color(0xFF6187F1)
+                                            AppColors.brandBlue
                                           ],
                                           stops: [0.0, 1.0],
                                           begin: Alignment.topCenter,
@@ -802,7 +802,7 @@ class _HomeDashoardShippingDetailedWidgetState
       decoration: BoxDecoration(
         gradient: isActive
             ? LinearGradient(
-                colors: [AppColors.secondary, Color(0xFF6187F1)],
+                colors: [AppColors.secondary, AppColors.brandBlue],
                 stops: [0.0, 1.0],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,

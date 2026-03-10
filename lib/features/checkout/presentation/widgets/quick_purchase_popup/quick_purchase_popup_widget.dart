@@ -206,7 +206,7 @@ class _QuickPurchasePopupWidgetState
               style: Theme.of(context).textTheme.titleMedium!,
             ),
           ),
-          Divider(height: 1.0, thickness: 1.0, color: Color(0xFF363636)),
+          Divider(height: 1.0, thickness: 1.0, color: AppColors.surfaceDark),
 
           // Product info
           Padding(
@@ -301,7 +301,7 @@ class _QuickPurchasePopupWidgetState
             ),
           ),
 
-          Divider(height: 1.0, thickness: 1.0, color: Color(0xFF363636)),
+          Divider(height: 1.0, thickness: 1.0, color: AppColors.surfaceDark),
 
           // Order Summary
           Padding(
@@ -328,7 +328,7 @@ class _QuickPurchasePopupWidgetState
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 8.0),
                   child: Divider(
-                      height: 1.0, thickness: 1.0, color: Color(0xFF545454)),
+                      height: 1.0, thickness: 1.0, color: AppColors.neutral800),
                 ),
                 Row(
                   children: [
@@ -359,7 +359,7 @@ class _QuickPurchasePopupWidgetState
                   height: 48.0,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
+                      colors: [AppColors.brandPurple, AppColors.brandBlue],
                       stops: [0.0, 1.0],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
@@ -402,7 +402,7 @@ class _QuickPurchasePopupWidgetState
                     onPressed:
                         _isProcessing ? null : () => Navigator.pop(context),
                     style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: Color(0xFF545454)),
+                      side: BorderSide(color: AppColors.neutral800),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4.0),
                       ),

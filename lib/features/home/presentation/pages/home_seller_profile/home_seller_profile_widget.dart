@@ -404,7 +404,7 @@ class _HomeSellerProfileWidgetState
                                       RatingBarIndicator(
                                         itemBuilder: (context, index) => Icon(
                                           Icons.star_rounded,
-                                          color: Color(0xFFFACC15),
+                                          color: AppColors.statusYellow,
                                         ),
                                         direction: Axis.horizontal,
                                         rating: valueOrDefault<double>(
@@ -413,7 +413,7 @@ class _HomeSellerProfileWidgetState
                                               : getSellerData?.ratingAsSeller,
                                           0.0,
                                         ),
-                                        unratedColor: Color(0xFF7B7B7B),
+                                        unratedColor: AppColors.neutral700,
                                         itemCount: 5,
                                         itemSize: 18.0,
                                       ),
@@ -432,7 +432,7 @@ class _HomeSellerProfileWidgetState
                                         '(${(roleState == 'As Buyer' ? getSellerData?.totalReviewsAsBuyer : getSellerData?.totalReviewsAsSeller)?.toString()}) reviews',
                                         style: GoogleFonts.inter(
                                           fontSize: 14.0,
-                                          color: Color(0xFFAFAFB4),
+                                          color: AppColors.textSecondary,
                                         ),
                                       ),
                                     ].divide(SizedBox(width: 8.0)),
@@ -460,7 +460,7 @@ class _HomeSellerProfileWidgetState
                                             'Items',
                                             style: GoogleFonts.inter(
                                               fontSize: 12.0,
-                                              color: Color(0xFFAFAFB4),
+                                              color: AppColors.textSecondary,
                                             ),
                                           ),
                                         ],
@@ -483,7 +483,7 @@ class _HomeSellerProfileWidgetState
                                             'Sold',
                                             style: GoogleFonts.inter(
                                               fontSize: 12.0,
-                                              color: Color(0xFFAFAFB4),
+                                              color: AppColors.textSecondary,
                                             ),
                                           ),
                                         ],
@@ -506,7 +506,7 @@ class _HomeSellerProfileWidgetState
                                             'Followers',
                                             style: GoogleFonts.inter(
                                               fontSize: 12.0,
-                                              color: Color(0xFFAFAFB4),
+                                              color: AppColors.textSecondary,
                                             ),
                                           ),
                                         ],
@@ -541,7 +541,7 @@ class _HomeSellerProfileWidgetState
                           height: 56.0,
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
+                              colors: [AppColors.brandPurple, AppColors.brandBlue],
                               stops: [0.0, 1.0],
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
@@ -621,7 +621,7 @@ class _HomeSellerProfileWidgetState
                                                 fontSize: 14.0,
                                                 color: roleState == 'As Buyer'
                                                     ? AppColors.textPrimary
-                                                    : Color(0xFFAFAFB4),
+                                                    : AppColors.textSecondary,
                                                 height: 2.0,
                                               ),
                                             ),
@@ -662,7 +662,7 @@ class _HomeSellerProfileWidgetState
                                                 fontSize: 14.0,
                                                 color: roleState == 'As Seller'
                                                     ? AppColors.textPrimary
-                                                    : Color(0xFFAFAFB4),
+                                                    : AppColors.textSecondary,
                                                 height: 2.0,
                                               ),
                                             ),
@@ -728,7 +728,7 @@ class _HomeSellerProfileWidgetState
                                           fontSize: 14.0,
                                           color: state == 'Products'
                                               ? AppColors.textPrimary
-                                              : Color(0xFFAFAFB4),
+                                              : AppColors.textSecondary,
                                           height: 2.0,
                                         ),
                                       ),
@@ -765,7 +765,7 @@ class _HomeSellerProfileWidgetState
                                           fontSize: 14.0,
                                           color: state == 'Short Lists'
                                               ? AppColors.textPrimary
-                                              : Color(0xFFAFAFB4),
+                                              : AppColors.textSecondary,
                                           height: 2.0,
                                         ),
                                       ),
@@ -868,11 +868,11 @@ class _HomeSellerProfileWidgetState
                                             gradient: LinearGradient(
                                               colors: [
                                                 choosenFilter == 'All'
-                                                    ? Color(0xFF7D56FF)
+                                                    ? AppColors.brandPurple
                                                     : AppColors
                                                         .backgroundSecondary,
                                                 choosenFilter == 'All'
-                                                    ? Color(0xFF6187F1)
+                                                    ? AppColors.brandBlue
                                                     : AppColors
                                                         .backgroundSecondary
                                               ],
@@ -1106,11 +1106,11 @@ class _HomeSellerProfileWidgetState
                       RatingBarIndicator(
                         itemBuilder: (context, index) => Icon(
                           Icons.star_rounded,
-                          color: Color(0xFFFACC15),
+                          color: AppColors.statusYellow,
                         ),
                         direction: Axis.horizontal,
                         rating: reviewsItem.rating.toDouble(),
-                        unratedColor: Color(0xFF7B7B7B),
+                        unratedColor: AppColors.neutral700,
                         itemCount: 5,
                         itemSize: 18.0,
                       ),
@@ -1123,7 +1123,7 @@ class _HomeSellerProfileWidgetState
                       : '',
                   style: GoogleFonts.inter(
                     fontSize: 12.0,
-                    color: Color(0xFFAFAFB4),
+                    color: AppColors.textSecondary,
                   ),
                 ),
               ].divide(SizedBox(width: 12.0)),

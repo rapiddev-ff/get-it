@@ -207,10 +207,10 @@ class _HomeDashoardInventoryWidgetState
                                 gradient: LinearGradient(
                                   colors: [
                                     choosenCategory == null
-                                        ? Color(0xFF7D56FF)
+                                        ? AppColors.brandPurple
                                         : AppColors.backgroundSecondary,
                                     choosenCategory == null
-                                        ? Color(0xFF6187F1)
+                                        ? AppColors.brandBlue
                                         : AppColors.backgroundSecondary
                                   ],
                                   stops: [0.0, 1.0],
@@ -250,10 +250,10 @@ class _HomeDashoardInventoryWidgetState
                                         gradient: LinearGradient(
                                           colors: [
                                             choosenCategory == categoriesItem
-                                                ? Color(0xFF7D56FF)
+                                                ? AppColors.brandPurple
                                                 : AppColors.backgroundSecondary,
                                             choosenCategory == categoriesItem
-                                                ? Color(0xFF6187F1)
+                                                ? AppColors.brandBlue
                                                 : AppColors.backgroundSecondary
                                           ],
                                           stops: [0.0, 1.0],
@@ -289,7 +289,7 @@ class _HomeDashoardInventoryWidgetState
                   Divider(
                     height: 48.0,
                     thickness: 1.0,
-                    color: Color(0xFF363636),
+                    color: AppColors.surfaceDark,
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.0),

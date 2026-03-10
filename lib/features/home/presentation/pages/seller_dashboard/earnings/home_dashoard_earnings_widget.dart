@@ -152,13 +152,13 @@ class _HomeDashoardEarningsWidgetState
   Color _getStatusColor(String status) {
     switch (status) {
       case 'sale_pending':
-        return Color(0xFFD97706);
+        return AppColors.statusWarning;
       case 'paid':
         return AppColors.secondary;
       case 'shipped':
         return Color(0xFF2D5AA0);
       case 'delivered':
-        return Color(0xFF22C55E);
+        return AppColors.statusSuccess;
       case 'cancelled':
         return AppColors.error;
       case 'refunded':
@@ -258,7 +258,7 @@ class _HomeDashoardEarningsWidgetState
                                       child: _buildEarningCard(
                                         'Available',
                                         '\$${_formatPrice(_availableAmount)}',
-                                        Color(0xFF22C55E),
+                                        AppColors.statusSuccess,
                                       ),
                                     ),
                                     SizedBox(width: 12.0),
@@ -266,7 +266,7 @@ class _HomeDashoardEarningsWidgetState
                                       child: _buildEarningCard(
                                         'Pending',
                                         '\$${_formatPrice(_pendingAmount)}',
-                                        Color(0xFFD97706),
+                                        AppColors.statusWarning,
                                       ),
                                     ),
                                   ],
@@ -338,7 +338,7 @@ class _HomeDashoardEarningsWidgetState
         decoration: BoxDecoration(
           gradient: isActive
               ? LinearGradient(
-                  colors: [AppColors.secondary, Color(0xFF6187F1)],
+                  colors: [AppColors.secondary, AppColors.brandBlue],
                   stops: [0.0, 1.0],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,

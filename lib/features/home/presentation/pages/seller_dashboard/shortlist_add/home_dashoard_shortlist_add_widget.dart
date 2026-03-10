@@ -218,7 +218,7 @@ class _HomeDashoardShortlistAddWidgetState
                                 gradient: LinearGradient(
                                   colors: [
                                     AppColors.secondary,
-                                    Color(0xFF6187F1)
+                                    AppColors.brandBlue
                                   ],
                                   stops: [0.0, 1.0],
                                   begin: Alignment.topCenter,
@@ -267,7 +267,7 @@ class _HomeDashoardShortlistAddWidgetState
                                       border: Border.all(
                                         color: _allSelected
                                             ? AppColors.secondary
-                                            : Color(0xFF7B7B7B),
+                                            : AppColors.neutral700,
                                       ),
                                     ),
                                     child: _allSelected
@@ -368,7 +368,7 @@ class _HomeDashoardShortlistAddWidgetState
                   color: isSelected ? AppColors.secondary : Colors.transparent,
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: isSelected ? AppColors.secondary : Color(0xFF7B7B7B),
+                    color: isSelected ? AppColors.secondary : AppColors.neutral700,
                   ),
                 ),
                 child: isSelected

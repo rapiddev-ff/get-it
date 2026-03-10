@@ -61,7 +61,7 @@ class CheckoutItemWidget extends StatelessWidget {
                     ),
                     Icon(
                       Icons.close_outlined,
-                      color: Color(0xFF9B85FF),
+                      color: AppColors.brandPurpleLight,
                       size: 24.0,
                     ),
                   ].divide(SizedBox(width: 12.0)),

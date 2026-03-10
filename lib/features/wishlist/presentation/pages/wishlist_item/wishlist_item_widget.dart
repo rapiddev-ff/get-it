@@ -29,7 +29,7 @@ class WishlistItemWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4.0),
         border: Border.all(
-          color: const Color(0xFF363636),
+          color: AppColors.surfaceDark,
         ),
       ),
       child: Column(
@@ -70,7 +70,7 @@ class WishlistItemWidget extends StatelessWidget {
                       },
                       child: const FaIcon(
                         FontAwesomeIcons.solidHeart,
-                        color: Color(0xFFEF4444),
+                        color: AppColors.destructive500,
                         size: 24.0,
                       ),
                     ),
@@ -82,7 +82,7 @@ class WishlistItemWidget extends StatelessWidget {
           Container(
             width: double.infinity,
             decoration: const BoxDecoration(
-              color: Color(0xFF363636),
+              color: AppColors.surfaceDark,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(4.0),
                 bottomRight: Radius.circular(4.0),

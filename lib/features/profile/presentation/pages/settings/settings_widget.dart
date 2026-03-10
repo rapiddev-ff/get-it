@@ -139,7 +139,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                             ),
                             Icon(
                               Icons.arrow_forward_ios,
-                              color: Color(0xFFAFAFB4),
+                              color: AppColors.textSecondary,
                               size: 24.0,
                             ),
                           ].divide(SizedBox(width: 12.0)),
@@ -649,8 +649,8 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
                                       colors: [
-                                        Color(0xFF7D56FF),
-                                        Color(0xFF6187F1)
+                                        AppColors.brandPurple,
+                                        AppColors.brandBlue
                                       ],
                                       stops: [0.0, 1.0],
                                       begin: Alignment.topCenter,
@@ -724,8 +724,8 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [
-                                      Color(0xFF7D56FF),
-                                      Color(0xFF6187F1)
+                                      AppColors.brandPurple,
+                                      AppColors.brandBlue
                                     ],
                                     stops: [0.0, 1.0],
                                     begin: Alignment.topCenter,
@@ -776,7 +776,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                   Divider(
                     height: 64.0,
                     thickness: 2.0,
-                    color: Color(0xFF363636),
+                    color: AppColors.surfaceDark,
                   ),
                   InkWell(
                     onTap: () async {
@@ -806,7 +806,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                             ),
                             Icon(
                               Icons.chevron_right_outlined,
-                              color: Color(0xFFAFAFB4),
+                              color: AppColors.textSecondary,
                               size: 24.0,
                             ),
                           ].divide(SizedBox(width: 12.0)),
@@ -845,7 +845,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                               ),
                               Icon(
                                 Icons.chevron_right_outlined,
-                                color: Color(0xFFAFAFB4),
+                                color: AppColors.textSecondary,
                                 size: 24.0,
                               ),
                             ].divide(SizedBox(width: 12.0)),
@@ -885,7 +885,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                               ),
                               Icon(
                                 Icons.chevron_right_outlined,
-                                color: Color(0xFFAFAFB4),
+                                color: AppColors.textSecondary,
                                 size: 24.0,
                               ),
                             ].divide(SizedBox(width: 12.0)),
@@ -903,7 +903,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                         color: AppColors.backgroundPrimary,
                         borderRadius: BorderRadius.circular(4.0),
                         border: Border.all(
-                          color: Color(0xFF545454),
+                          color: AppColors.neutral800,
                         ),
                       ),
                       child: TextButton.icon(

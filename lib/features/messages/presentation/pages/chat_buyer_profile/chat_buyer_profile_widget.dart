@@ -136,7 +136,7 @@ class _ChatBuyerProfileWidgetState
                             Text(
                               'Member since March 2025',
                               style: GoogleFonts.inter(
-                                color: Color(0xFFAFAFB4),
+                                color: AppColors.textSecondary,
                                 fontSize: 14.0,
                               ),
                             ),
@@ -145,7 +145,7 @@ class _ChatBuyerProfileWidgetState
                                 RatingBarIndicator(
                                   itemBuilder: (context, index) => Icon(
                                     Icons.star_rounded,
-                                    color: Color(0xFFFACC15),
+                                    color: AppColors.statusYellow,
                                   ),
                                   direction: Axis.horizontal,
                                   rating: userData.isSeller
@@ -181,7 +181,7 @@ class _ChatBuyerProfileWidgetState
                                               : null,
                                           0,
                                         ).toDouble()),
-                                  unratedColor: Color(0xFF7B7B7B),
+                                  unratedColor: AppColors.neutral700,
                                   itemCount: 5,
                                   itemSize: 18.0,
                                 ),
@@ -260,7 +260,7 @@ class _ChatBuyerProfileWidgetState
                                       '0',
                                     )} reviews)',
                                   style: GoogleFonts.inter(
-                                    color: Color(0xFFAFAFB4),
+                                    color: AppColors.textSecondary,
                                     fontSize: 14.0,
                                   ),
                                 ),
@@ -274,7 +274,7 @@ class _ChatBuyerProfileWidgetState
                   Divider(
                     height: 32.0,
                     thickness: 1.0,
-                    color: Color(0xFF363636),
+                    color: AppColors.surfaceDark,
                   ),
                   Column(
                     mainAxisSize: MainAxisSize.min,
@@ -303,7 +303,7 @@ class _ChatBuyerProfileWidgetState
                                           fontSize: 14.0,
                                           color: _state == 'Reviews'
                                               ? AppColors.textPrimary
-                                              : Color(0xFFAFAFB4),
+                                              : AppColors.textSecondary,
                                           height: 2.0,
                                         ),
                                       ),
@@ -335,7 +335,7 @@ class _ChatBuyerProfileWidgetState
                                         fontSize: 14.0,
                                         color: _state == 'As Seller'
                                             ? AppColors.textPrimary
-                                            : Color(0xFFAFAFB4),
+                                            : AppColors.textSecondary,
                                         height: 2.0,
                                       ),
                                     ),
@@ -406,7 +406,7 @@ class _ChatBuyerProfileWidgetState
                                   child: Text(
                                     'Reviews from sellers about your purchases',
                                     style: GoogleFonts.inter(
-                                      color: Color(0xFFAFAFB4),
+                                      color: AppColors.textSecondary,
                                       fontSize: 14.0,
                                     ),
                                   ),
@@ -485,7 +485,7 @@ class _ChatBuyerProfileWidgetState
                                           'View All Reviews',
                                           style: GoogleFonts.inter(
                                             fontWeight: FontWeight.w500,
-                                            color: Color(0xFF9B85FF),
+                                            color: AppColors.brandPurpleLight,
                                             fontSize: 17.0,
                                           ),
                                         ),

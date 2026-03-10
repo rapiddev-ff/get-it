@@ -272,7 +272,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                         child: Container(
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
+                              colors: [AppColors.brandPurple, AppColors.brandBlue],
                               stops: [0.0, 1.0],
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
@@ -478,7 +478,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                 height: 38.0,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
+                    colors: [AppColors.brandPurple, AppColors.brandBlue],
                     stops: [0.0, 1.0],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,

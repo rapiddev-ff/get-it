@@ -167,7 +167,7 @@ class _SettingsMyProfileWidgetState
                                   RatingBarIndicator(
                                     itemBuilder: (context, index) => Icon(
                                       Icons.star_rounded,
-                                      color: Color(0xFFFACC15),
+                                      color: AppColors.statusYellow,
                                     ),
                                     direction: Axis.horizontal,
                                     rating: authState.isSeller
@@ -181,7 +181,7 @@ class _SettingsMyProfileWidgetState
                                                 json, 'as_buyer.avg_rating'),
                                             0,
                                           ).toDouble()),
-                                    unratedColor: Color(0xFF7B7B7B),
+                                    unratedColor: AppColors.neutral700,
                                     itemCount: 5,
                                     itemSize: 18.0,
                                   ),
@@ -215,7 +215,7 @@ class _SettingsMyProfileWidgetState
                                       )} reviews)',
                                     style: GoogleFonts.inter(
                                       fontSize: 14.0,
-                                      color: Color(0xFFAFAFB4),
+                                      color: AppColors.textSecondary,
                                     ),
                                   ),
                                 ].divide(SizedBox(width: 8.0)),
@@ -253,7 +253,7 @@ class _SettingsMyProfileWidgetState
                                             'Items',
                                             style: GoogleFonts.inter(
                                               fontSize: 12.0,
-                                              color: Color(0xFFAFAFB4),
+                                              color: AppColors.textSecondary,
                                             ),
                                           ),
                                         ],
@@ -280,7 +280,7 @@ class _SettingsMyProfileWidgetState
                                             'Sold',
                                             style: GoogleFonts.inter(
                                               fontSize: 12.0,
-                                              color: Color(0xFFAFAFB4),
+                                              color: AppColors.textSecondary,
                                             ),
                                           ),
                                         ],
@@ -306,7 +306,7 @@ class _SettingsMyProfileWidgetState
                                           'Followers',
                                           style: GoogleFonts.inter(
                                             fontSize: 12.0,
-                                            color: Color(0xFFAFAFB4),
+                                            color: AppColors.textSecondary,
                                           ),
                                         ),
                                       ],
@@ -332,7 +332,7 @@ class _SettingsMyProfileWidgetState
                                           'Followers',
                                           style: GoogleFonts.inter(
                                             fontSize: 12.0,
-                                            color: Color(0xFFAFAFB4),
+                                            color: AppColors.textSecondary,
                                           ),
                                         ),
                                       ],
@@ -356,7 +356,7 @@ class _SettingsMyProfileWidgetState
                   Divider(
                     height: 48.0,
                     thickness: 1.0,
-                    color: Color(0xFF363636),
+                    color: AppColors.surfaceDark,
                   ),
                   Builder(
                     builder: (context) {
@@ -395,7 +395,7 @@ class _SettingsMyProfileWidgetState
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8.0),
                           border: Border.all(
-                            color: Color(0xFF545454),
+                            color: AppColors.neutral800,
                           ),
                         ),
                         child: Padding(
@@ -415,7 +415,7 @@ class _SettingsMyProfileWidgetState
                               ),
                               Icon(
                                 Icons.chevron_right_outlined,
-                                color: Color(0xFFAFAFB4),
+                                color: AppColors.textSecondary,
                                 size: 24.0,
                               ),
                             ].divide(SizedBox(width: 12.0)),
@@ -436,7 +436,7 @@ class _SettingsMyProfileWidgetState
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8.0),
                           border: Border.all(
-                            color: Color(0xFF545454),
+                            color: AppColors.neutral800,
                           ),
                         ),
                         child: Padding(
@@ -456,7 +456,7 @@ class _SettingsMyProfileWidgetState
                               ),
                               Icon(
                                 Icons.chevron_right_outlined,
-                                color: Color(0xFFAFAFB4),
+                                color: AppColors.textSecondary,
                                 size: 24.0,
                               ),
                             ].divide(SizedBox(width: 12.0)),
@@ -500,7 +500,7 @@ class _SettingsMyProfileWidgetState
                           fontWeight: FontWeight.normal,
                           color: _model.state == 'As Buyer'
                               ? AppColors.textPrimary
-                              : Color(0xFFAFAFB4),
+                              : AppColors.textSecondary,
                           height: 2.0,
                         ),
                       ),
@@ -536,7 +536,7 @@ class _SettingsMyProfileWidgetState
                           fontWeight: FontWeight.normal,
                           color: _model.state == 'As Seller'
                               ? AppColors.textPrimary
-                              : Color(0xFFAFAFB4),
+                              : AppColors.textSecondary,
                           height: 2.0,
                         ),
                       ),
@@ -721,21 +721,21 @@ class _SettingsMyProfileWidgetState
                         RatingBarIndicator(
                           itemBuilder: (context, index) => Icon(
                             Icons.star_rounded,
-                            color: Color(0xFFFACC15),
+                            color: AppColors.statusYellow,
                           ),
                           direction: Axis.horizontal,
                           rating: valueOrDefault<int>(
                             _jsonGet(json, '$role.avg_rating'),
                             0,
                           ).toDouble(),
-                          unratedColor: Color(0xFF7B7B7B),
+                          unratedColor: AppColors.neutral700,
                           itemCount: 5,
                           itemSize: 18.0,
                         ),
                       ],
                     ),
                     _buildStarRow(json, role, 0, '5', Color(0xFF16A349)),
-                    _buildStarRow(json, role, 1, '4', Color(0xFF4ADE80)),
+                    _buildStarRow(json, role, 1, '4', AppColors.statusSuccess),
                     _buildStarRow(json, role, 2, '3', Color(0xFFEABD08)),
                   ],
                 ),
@@ -769,7 +769,7 @@ class _SettingsMyProfileWidgetState
               animation: true,
               animateFromLastPercent: true,
               progressColor: color,
-              backgroundColor: Color(0xFF363636),
+              backgroundColor: AppColors.surfaceDark,
               barRadius: Radius.circular(100.0),
               padding: EdgeInsets.zero,
             ),
@@ -840,7 +840,7 @@ class _SettingsMyProfileWidgetState
             style: GoogleFonts.inter(
               fontWeight: FontWeight.w500,
               fontSize: 17.0,
-              color: Color(0xFF9B85FF),
+              color: AppColors.brandPurpleLight,
             ),
           ),
         ),

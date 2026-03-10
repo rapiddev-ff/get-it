@@ -265,15 +265,15 @@ class _HomeDashoardInventoryAddTagsWidgetState
                                                 name: tagsListItem.name,
                                                 slug: tagsListItem.slug,
                                               ))
-                                                  ? Color(0xFF7D56FF)
-                                                  : Color(0xFF252525),
+                                                  ? AppColors.brandPurple
+                                                  : AppColors.backgroundSecondary,
                                               tags.contains(Tag(
                                                 id: tagsListItem.id,
                                                 name: tagsListItem.name,
                                                 slug: tagsListItem.slug,
                                               ))
-                                                  ? Color(0xFF6187F1)
-                                                  : Color(0xFF252525),
+                                                  ? AppColors.brandBlue
+                                                  : AppColors.backgroundSecondary,
                                             ],
                                             stops: [0.0, 1.0],
                                             begin: Alignment.topCenter,
@@ -331,7 +331,7 @@ class _HomeDashoardInventoryAddTagsWidgetState
                             style: OutlinedButton.styleFrom(
                               minimumSize: Size(double.infinity, 56.0),
                               padding: EdgeInsets.symmetric(horizontal: 16.0),
-                              side: BorderSide(color: Color(0xFF545454)),
+                              side: BorderSide(color: AppColors.neutral800),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(4.0),
                               ),

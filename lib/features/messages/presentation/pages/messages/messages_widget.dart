@@ -171,7 +171,7 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
                   fontSize: 14.0,
                   color: _state == label
                       ? AppColors.textPrimary
-                      : Color(0xFFAFAFB4),
+                      : AppColors.textSecondary,
                   height: 1.5,
                 ),
               ),

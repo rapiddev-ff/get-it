@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/core/theme/app_colors.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '/core/utils/list_extensions.dart';
@@ -48,7 +49,7 @@ class _PasswordComponentWidgetState extends State<PasswordComponentWidget> {
               if (widget.isActive) {
                 return Icon(
                   Icons.check_sharp,
-                  color: Color(0xFF4ADE80),
+                  color: AppColors.statusSuccess,
                   size: 22.0,
                 ).animate().fade(duration: 600.ms);
               } else {

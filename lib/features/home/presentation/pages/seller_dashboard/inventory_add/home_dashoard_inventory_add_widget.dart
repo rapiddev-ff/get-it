@@ -358,7 +358,7 @@ class _HomeDashoardInventoryAddWidgetState
   static final _sectionDivider = Divider(
     height: 48.0,
     thickness: 1.0,
-    color: Color(0xFF363636),
+    color: AppColors.surfaceDark,
   );
 
   Widget _sectionTitle(String text) => Text(
@@ -704,7 +704,7 @@ class _HomeDashoardInventoryAddWidgetState
         Divider(
           height: 32.0,
           thickness: 1.0,
-          color: Color(0xFF363636),
+          color: AppColors.surfaceDark,
         ),
       ],
     );
@@ -1438,7 +1438,7 @@ class _HomeDashoardInventoryAddWidgetState
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Color(0xFF252525),
+                        color: AppColors.backgroundSecondary,
                         borderRadius: BorderRadius.circular(100.0),
                       ),
                       child: Padding(
@@ -1475,7 +1475,7 @@ class _HomeDashoardInventoryAddWidgetState
       height: 56.0,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
+          colors: [AppColors.brandPurple, AppColors.brandBlue],
           stops: [0.0, 1.0],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,

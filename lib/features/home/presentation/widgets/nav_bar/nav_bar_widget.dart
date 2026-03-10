@@ -69,18 +69,18 @@ class _NavBarWidgetState extends State<NavBarWidget>
                             colors: [
                               () {
                                 if (route == '/homePage') {
-                                  return Color(0xFF7D56FF);
+                                  return AppColors.brandPurple;
                                 } else if (route == '/homeDashoardEarnings') {
-                                  return Color(0xFF7D56FF);
+                                  return AppColors.brandPurple;
                                 } else {
                                   return Colors.transparent;
                                 }
                               }(),
                               () {
                                 if (route == '/homePage') {
-                                  return Color(0xFF6187F1);
+                                  return AppColors.brandBlue;
                                 } else if (route == '/homeDashoardEarnings') {
-                                  return Color(0xFF6187F1);
+                                  return AppColors.brandBlue;
                                 } else {
                                   return Colors.transparent;
                                 }
@@ -101,7 +101,7 @@ class _NavBarWidgetState extends State<NavBarWidget>
                             } else if (route == '/homeDashoardEarnings') {
                               return AppColors.textPrimary;
                             } else {
-                              return Color(0xFFAFAFB4);
+                              return AppColors.textSecondary;
                             }
                           }(),
                           size: 18.0,
@@ -146,22 +146,22 @@ class _NavBarWidgetState extends State<NavBarWidget>
                             colors: [
                               () {
                                 if (route == '/browse') {
-                                  return Color(0xFF7D56FF);
+                                  return AppColors.brandPurple;
                                 } else if (route == '/browseCategories') {
-                                  return Color(0xFF7D56FF);
+                                  return AppColors.brandPurple;
                                 } else if (route == '/browseProducts') {
-                                  return Color(0xFF7D56FF);
+                                  return AppColors.brandPurple;
                                 } else {
                                   return Colors.transparent;
                                 }
                               }(),
                               () {
                                 if (route == '/browse') {
-                                  return Color(0xFF6187F1);
+                                  return AppColors.brandBlue;
                                 } else if (route == '/browseCategories') {
-                                  return Color(0xFF6187F1);
+                                  return AppColors.brandBlue;
                                 } else if (route == '/browseProducts') {
-                                  return Color(0xFF6187F1);
+                                  return AppColors.brandBlue;
                                 } else {
                                   return Colors.transparent;
                                 }
@@ -184,7 +184,7 @@ class _NavBarWidgetState extends State<NavBarWidget>
                               } else if (route == '/browseProducts') {
                                 return AppColors.textPrimary;
                               } else {
-                                return Color(0xFFAFAFB4);
+                                return AppColors.textSecondary;
                               }
                             }(),
                             size: 18.0,
@@ -229,10 +229,10 @@ class _NavBarWidgetState extends State<NavBarWidget>
                           gradient: LinearGradient(
                             colors: [
                               route == '/messages'
-                                  ? Color(0xFF7D56FF)
+                                  ? AppColors.brandPurple
                                   : Colors.transparent,
                               route == '/messages'
-                                  ? Color(0xFF6187F1)
+                                  ? AppColors.brandBlue
                                   : Colors.transparent
                             ],
                             stops: [0.0, 1.0],
@@ -246,7 +246,7 @@ class _NavBarWidgetState extends State<NavBarWidget>
                             FontAwesomeIcons.solidMessage,
                             color: route == '/messages'
                                 ? AppColors.textPrimary
-                                : Color(0xFFAFAFB4),
+                                : AppColors.textSecondary,
                             size: 18.0,
                           ),
                         ),
@@ -289,10 +289,10 @@ class _NavBarWidgetState extends State<NavBarWidget>
                           gradient: LinearGradient(
                             colors: [
                               route == '/wishlist'
-                                  ? Color(0xFF7D56FF)
+                                  ? AppColors.brandPurple
                                   : Colors.transparent,
                               route == '/wishlist'
-                                  ? Color(0xFF6187F1)
+                                  ? AppColors.brandBlue
                                   : Colors.transparent
                             ],
                             stops: [0.0, 1.0],
@@ -306,7 +306,7 @@ class _NavBarWidgetState extends State<NavBarWidget>
                             Icons.favorite_outlined,
                             color: route == '/wishlist'
                                 ? AppColors.textPrimary
-                                : Color(0xFFAFAFB4),
+                                : AppColors.textSecondary,
                             size: 18.0,
                           ),
                         ),

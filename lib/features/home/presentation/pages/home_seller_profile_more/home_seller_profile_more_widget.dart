@@ -54,7 +54,7 @@ class _HomeSellerProfileMoreWidgetState
             Divider(
               height: 1.0,
               thickness: 1.0,
-              color: Color(0xFF545454),
+              color: AppColors.neutral800,
             ),
             Row(
               children: [
@@ -75,7 +75,7 @@ class _HomeSellerProfileMoreWidgetState
             Divider(
               height: 1.0,
               thickness: 1.0,
-              color: Color(0xFF545454),
+              color: AppColors.neutral800,
             ),
             InkWell(
               onTap: () async {

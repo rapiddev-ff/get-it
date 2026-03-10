@@ -143,7 +143,7 @@ class _PermissionsWidgetState extends State<PermissionsWidget>
                                   width: 40.0,
                                   height: 40.0,
                                   decoration: const BoxDecoration(
-                                    color: Color(0xFF363636),
+                                    color: AppColors.surfaceDark,
                                     shape: BoxShape.circle,
                                   ),
                                   child: const Icon(

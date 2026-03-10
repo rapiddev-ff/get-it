@@ -59,7 +59,7 @@ class FollowerItemWidget extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
+                      colors: [AppColors.brandPurple, AppColors.brandBlue],
                       stops: [0.0, 1.0],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,

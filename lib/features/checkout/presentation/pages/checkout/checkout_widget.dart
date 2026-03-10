@@ -298,7 +298,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                 Divider(
                   height: 48.0,
                   thickness: 1.0,
-                  color: Color(0xFF363636),
+                  color: AppColors.surfaceDark,
                 ),
 
                 // Shipping Address section
@@ -410,7 +410,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                 Divider(
                   height: 48.0,
                   thickness: 1.0,
-                  color: Color(0xFF363636),
+                  color: AppColors.surfaceDark,
                 ),
 
                 // Payment Method section
@@ -568,7 +568,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                 Divider(
                   height: 48.0,
                   thickness: 1.0,
-                  color: Color(0xFF363636),
+                  color: AppColors.surfaceDark,
                 ),
 
                 // Order Summary section
@@ -611,7 +611,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                           Divider(
                             height: 1.0,
                             thickness: 1.0,
-                            color: Color(0xFF545454),
+                            color: AppColors.neutral800,
                           ),
                           Row(
                             children: [
@@ -635,7 +635,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                 Divider(
                   height: 48.0,
                   thickness: 1.0,
-                  color: Color(0xFF363636),
+                  color: AppColors.surfaceDark,
                 ),
 
                 // Buyer Protection
@@ -693,7 +693,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                     height: 56.0,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
+                        colors: [AppColors.brandPurple, AppColors.brandBlue],
                         stops: [0.0, 1.0],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,

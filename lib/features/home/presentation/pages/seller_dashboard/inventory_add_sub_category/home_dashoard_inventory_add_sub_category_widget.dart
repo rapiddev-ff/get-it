@@ -158,7 +158,7 @@ class _HomeDashoardInventoryAddSubCategoryWidgetState
                     style: OutlinedButton.styleFrom(
                       minimumSize: Size(double.infinity, 56.0),
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      side: BorderSide(color: Color(0xFF545454)),
+                      side: BorderSide(color: AppColors.neutral800),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4.0),
                       ),

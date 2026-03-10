@@ -104,7 +104,7 @@ class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
               Divider(
                 height: 1.0,
                 thickness: 1.0,
-                color: Color(0xFF363636),
+                color: AppColors.surfaceDark,
               ),
 
             // Product info
@@ -222,7 +222,7 @@ class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
               height: 56.0,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
+                  colors: [AppColors.brandPurple, AppColors.brandBlue],
                   stops: [0.0, 1.0],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,

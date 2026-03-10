@@ -456,7 +456,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                   TextSpan(
                                     text: 'I accept the ',
                                     style: GoogleFonts.inter(
-                                      color: const Color(0xFFAFAFB4),
+                                      color: AppColors.textSecondary,
                                     ),
                                   ),
                                   TextSpan(
@@ -475,7 +475,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                   TextSpan(
                                     text: ' and ',
                                     style: GoogleFonts.inter(
-                                      color: const Color(0xFFAFAFB4),
+                                      color: AppColors.textSecondary,
                                     ),
                                   ),
                                   TextSpan(

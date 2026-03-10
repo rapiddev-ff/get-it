@@ -335,7 +335,7 @@ class _SettingsBlockListWidgetState
             Divider(
               height: 48.0,
               thickness: 2.0,
-              color: Color(0xFF363636),
+              color: AppColors.surfaceDark,
             ),
             _buildAboutBlockingCard(),
           ].addToStart(SizedBox(height: 28.0)),

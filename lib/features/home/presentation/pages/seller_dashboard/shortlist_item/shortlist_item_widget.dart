@@ -235,7 +235,7 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
       decoration: BoxDecoration(
-        color: Color(0xFF363636),
+        color: AppColors.surfaceDark,
         borderRadius: BorderRadius.circular(100.0),
       ),
       child: Text(
@@ -279,13 +279,13 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
           decoration: BoxDecoration(
             gradient: isPrimary
                 ? LinearGradient(
-                    colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
+                    colors: [AppColors.brandPurple, AppColors.brandBlue],
                     stops: [0.0, 1.0],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                   )
                 : null,
-            color: isPrimary ? null : Color(0xFF363636),
+            color: isPrimary ? null : AppColors.surfaceDark,
             borderRadius: BorderRadius.circular(4.0),
           ),
           child: Padding(

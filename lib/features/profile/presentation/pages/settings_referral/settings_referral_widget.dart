@@ -88,7 +88,7 @@ class _SettingsReferralWidgetState
                                   child: Container(
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                      color: Color(0xFF111111),
+                                      color: AppColors.backgroundPrimary,
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
                                     child: Padding(

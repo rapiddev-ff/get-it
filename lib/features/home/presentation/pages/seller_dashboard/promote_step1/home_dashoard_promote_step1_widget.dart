@@ -168,7 +168,7 @@ class _HomeDashoardPromoteStep1WidgetState
                               gradient: LinearGradient(
                                 colors: [
                                   AppColors.secondary,
-                                  Color(0xFF6187F1)
+                                  AppColors.brandBlue
                                 ],
                                 stops: [0.0, 1.0],
                                 begin: Alignment.topCenter,

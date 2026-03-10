@@ -362,7 +362,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                     bgColor: Color(0x338E6CFF),
                                     icon: FaIcon(
                                       FontAwesomeIcons.circleCheck,
-                                      color: Color(0xFF8E6CFF),
+                                      color: AppColors.primary,
                                       size: 20.0,
                                     ),
                                     actionText: 'Go to Login',

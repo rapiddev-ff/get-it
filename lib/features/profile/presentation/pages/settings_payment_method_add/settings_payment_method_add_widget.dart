@@ -273,7 +273,7 @@ class _SettingsPaymentMethodAddWidgetState
                   Divider(
                     height: 48.0,
                     thickness: 1.0,
-                    color: Color(0xFF363636),
+                    color: AppColors.surfaceDark,
                   ),
                   Text(
                     'Billing Address',
@@ -595,7 +595,7 @@ class _SettingsPaymentMethodAddWidgetState
                                 Text(
                                   'This card will  be used for future purchases',
                                   style: GoogleFonts.inter(
-                                    color: Color(0xFFAFAFB4),
+                                    color: AppColors.textSecondary,
                                     fontSize: 14.0,
                                   ),
                                 ).animate().fade(duration: 600.ms),
@@ -609,7 +609,7 @@ class _SettingsPaymentMethodAddWidgetState
                   Divider(
                     height: 48.0,
                     thickness: 1.0,
-                    color: Color(0xFF363636),
+                    color: AppColors.surfaceDark,
                   ),
                   Container(
                     width: double.infinity,
@@ -663,7 +663,7 @@ class _SettingsPaymentMethodAddWidgetState
                               padding: EdgeInsets.symmetric(horizontal: 16.0),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(4.0),
-                                side: BorderSide(color: Color(0xFF545454)),
+                                side: BorderSide(color: AppColors.neutral800),
                               ),
                             ),
                             child: Text(
@@ -682,7 +682,7 @@ class _SettingsPaymentMethodAddWidgetState
                             height: 56.0,
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
-                                colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
+                                colors: [AppColors.brandPurple, AppColors.brandBlue],
                                 stops: [0.0, 1.0],
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,

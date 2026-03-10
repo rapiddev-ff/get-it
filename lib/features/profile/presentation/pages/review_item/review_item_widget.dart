@@ -25,7 +25,7 @@ class ReviewItemWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
         border: Border.all(
-          color: Color(0xFF545454),
+          color: AppColors.neutral800,
         ),
       ),
       child: Padding(
@@ -77,7 +77,7 @@ class ReviewItemWidget extends StatelessWidget {
                         ),
                         style: GoogleFonts.inter(
                           fontSize: 12.0,
-                          color: Color(0xFFAFAFB4),
+                          color: AppColors.textSecondary,
                         ),
                       ),
                     ],
@@ -86,11 +86,11 @@ class ReviewItemWidget extends StatelessWidget {
                 RatingBarIndicator(
                   itemBuilder: (context, index) => Icon(
                     Icons.star_rounded,
-                    color: Color(0xFFFACC15),
+                    color: AppColors.statusYellow,
                   ),
                   direction: Axis.horizontal,
                   rating: review.rating.toDouble(),
-                  unratedColor: Color(0xFF7B7B7B),
+                  unratedColor: AppColors.neutral700,
                   itemCount: 5,
                   itemSize: 18.0,
                 ),

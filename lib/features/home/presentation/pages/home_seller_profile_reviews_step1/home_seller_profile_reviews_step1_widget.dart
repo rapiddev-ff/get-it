@@ -177,7 +177,7 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                   RatingBarIndicator(
                                     itemBuilder: (context, index) => Icon(
                                       Icons.star_rounded,
-                                      color: Color(0xFFFACC15),
+                                      color: AppColors.statusYellow,
                                     ),
                                     direction: Axis.horizontal,
                                     rating: valueOrDefault<double>(
@@ -188,7 +188,7 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                       ).toDouble(),
                                       0.0,
                                     ),
-                                    unratedColor: Color(0xFF7B7B7B),
+                                    unratedColor: AppColors.neutral700,
                                     itemCount: 5,
                                     itemSize: 15.0,
                                   ),
@@ -210,7 +210,7 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                     )} reviews',
                                     style: GoogleFonts.inter(
                                       fontSize: 14.0,
-                                      color: Color(0xFFAFAFB4),
+                                      color: AppColors.textSecondary,
                                     ),
                                   ),
                                 ].divide(SizedBox(width: 8.0)),
@@ -234,7 +234,7 @@ class _HomeSellerProfileReviewsStep1WidgetState
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(4.0),
                       border: Border.all(
-                        color: Color(0xFF363636),
+                        color: AppColors.surfaceDark,
                         width: 2.0,
                       ),
                     ),
