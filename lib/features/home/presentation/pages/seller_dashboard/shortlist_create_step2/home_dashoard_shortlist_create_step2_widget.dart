@@ -589,7 +589,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                 onChanged: (newValue) async {
                                   setState(() => switchValue = newValue);
                                 },
-                                activeColor: AppColors.primary,
+                                activeThumbColor: AppColors.primary,
                                 activeTrackColor: AppColors.primary,
                                 inactiveTrackColor: AppColors.alternate,
                                 inactiveThumbColor:

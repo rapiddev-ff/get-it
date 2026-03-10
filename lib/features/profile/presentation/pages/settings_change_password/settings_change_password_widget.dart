@@ -1,7 +1,7 @@
 import '/features/auth/presentation/widgets/password_component/password_component_widget.dart';
 import '/core/theme/app_colors.dart';
-import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_text_field.dart';
 import 'dart:async';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:easy_debounce/easy_debounce.dart';
@@ -152,45 +152,8 @@ class _SettingsChangePasswordWidgetState
                                   enabled: true,
                                   autofillHints: [AutofillHints.password],
                                   obscureText: !_model.passwordVisibility1,
-                                  decoration: InputDecoration(
-                                    isDense: false,
-                                    hintText: 'Enter Current Password',
-                                    hintStyle: GoogleFonts.inter(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 16.0,
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.neutral700,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.secondary,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
+                                  decoration: appInputDecoration(
+                                    'Enter Current Password',
                                     suffixIcon: InkWell(
                                       onTap: () {
                                         setState(() =>
@@ -207,7 +170,7 @@ class _SettingsChangePasswordWidgetState
                                       ),
                                     ),
                                   ),
-                                  style: GoogleFonts.inter(),
+                                  style: appTextFieldStyle,
                                   cursorColor: AppColors.textPrimary,
                                   enableInteractiveSelection: true,
                                 ),
@@ -262,45 +225,8 @@ class _SettingsChangePasswordWidgetState
                                   enabled: true,
                                   autofillHints: [AutofillHints.password],
                                   obscureText: !_model.passwordVisibility2,
-                                  decoration: InputDecoration(
-                                    isDense: false,
-                                    hintText: 'Enter New Password',
-                                    hintStyle: GoogleFonts.inter(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 16.0,
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.neutral700,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.secondary,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
+                                  decoration: appInputDecoration(
+                                    'Enter New Password',
                                     suffixIcon: InkWell(
                                       onTap: () {
                                         setState(() =>
@@ -317,7 +243,7 @@ class _SettingsChangePasswordWidgetState
                                       ),
                                     ),
                                   ),
-                                  style: GoogleFonts.inter(),
+                                  style: appTextFieldStyle,
                                   cursorColor: AppColors.textPrimary,
                                   enableInteractiveSelection: true,
                                 ),
@@ -369,45 +295,8 @@ class _SettingsChangePasswordWidgetState
                                   enabled: true,
                                   autofillHints: [AutofillHints.password],
                                   obscureText: !_model.passwordVisibility3,
-                                  decoration: InputDecoration(
-                                    isDense: false,
-                                    hintText: 'Confirm New Password',
-                                    hintStyle: GoogleFonts.inter(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 16.0,
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.neutral700,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.secondary,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
+                                  decoration: appInputDecoration(
+                                    'Confirm New Password',
                                     suffixIcon: InkWell(
                                       onTap: () {
                                         setState(() =>
@@ -424,7 +313,7 @@ class _SettingsChangePasswordWidgetState
                                       ),
                                     ),
                                   ),
-                                  style: GoogleFonts.inter(),
+                                  style: appTextFieldStyle,
                                   cursorColor: AppColors.textPrimary,
                                   enableInteractiveSelection: true,
                                 ),

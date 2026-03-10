@@ -124,7 +124,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                         ),
                         alignment: AlignmentDirectional(0.0, 0.0),
                         child: FaIcon(
-                          FontAwesomeIcons.home,
+                          FontAwesomeIcons.house,
                           color: () {
                             if (route == '/homePage') {
                               return AppColors.textPrimary;
@@ -285,7 +285,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                         child: Align(
                           alignment: AlignmentDirectional(0.0, 0.0),
                           child: FaIcon(
-                            FontAwesomeIcons.solidCommentAlt,
+                            FontAwesomeIcons.solidMessage,
                             color: route == '/messages'
                                 ? AppColors.textPrimary
                                 : Color(0xFFAFAFB4),

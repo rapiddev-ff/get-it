@@ -10,8 +10,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 import '/core/theme/app_colors.dart';
-import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_text_field.dart';
 import '/features/auth/domain/models/business_address_model.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import 'settings_business_address_model.dart';
@@ -154,63 +154,15 @@ class _SettingsBusinessAddressWidgetState
                               0.0, 8.0, 0.0, 0.0),
                           child: Container(
                             width: double.infinity,
-                            child: TextFormField(
+                            child: AppTextField(
                               controller: _model.addressLine1TextController,
                               focusNode: _model.addressLine1FocusNode,
+                              hintText: '123, Main street',
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.addressLine1TextController',
                                 Duration(milliseconds: 100),
                                 () => setState(() {}),
                               ),
-                              autofocus: false,
-                              enabled: true,
-                              autofillHints: [AutofillHints.streetAddressLine1],
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                isDense: false,
-                                hintText: '123, Main street',
-                                hintStyle: GoogleFonts.inter(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 16.0,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColors.neutral700,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(
-                                      AppConstants.radiusTextField4),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColors.secondary,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(
-                                      AppConstants.radiusTextField4),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColors.error,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(
-                                      AppConstants.radiusTextField4),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColors.error,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(
-                                      AppConstants.radiusTextField4),
-                                ),
-                              ),
-                              style: GoogleFonts.inter(
-                                fontSize: 14.0,
-                              ),
-                              cursorColor: AppColors.textPrimary,
-                              enableInteractiveSelection: true,
                             ),
                           ),
                         ),
@@ -219,63 +171,15 @@ class _SettingsBusinessAddressWidgetState
                               0.0, 20.0, 0.0, 0.0),
                           child: Container(
                             width: double.infinity,
-                            child: TextFormField(
+                            child: AppTextField(
                               controller: _model.addressLine2TextController,
                               focusNode: _model.addressLine2FocusNode,
+                              hintText: 'Apartment, suite, etc. (optional)',
                               onChanged: (_) => EasyDebounce.debounce(
                                 '_model.addressLine2TextController',
                                 Duration(milliseconds: 100),
                                 () => setState(() {}),
                               ),
-                              autofocus: false,
-                              enabled: true,
-                              autofillHints: [AutofillHints.streetAddressLine2],
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                isDense: false,
-                                hintText: 'Apartment, suite, etc. (optional)',
-                                hintStyle: GoogleFonts.inter(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 16.0,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColors.neutral700,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(
-                                      AppConstants.radiusTextField4),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColors.secondary,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(
-                                      AppConstants.radiusTextField4),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColors.error,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(
-                                      AppConstants.radiusTextField4),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColors.error,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(
-                                      AppConstants.radiusTextField4),
-                                ),
-                              ),
-                              style: GoogleFonts.inter(
-                                fontSize: 14.0,
-                              ),
-                              cursorColor: AppColors.textPrimary,
-                              enableInteractiveSelection: true,
                             ),
                           ),
                         ),
@@ -297,7 +201,7 @@ class _SettingsBusinessAddressWidgetState
                                       ),
                                     ),
                                     DropdownButtonFormField<String>(
-                                        value: () {
+                                        initialValue: () {
                                           final saved = _model
                                                   .countryDropdownValue ??=
                                               ref
@@ -394,7 +298,7 @@ class _SettingsBusinessAddressWidgetState
                                             (_model.countryDropdownValue ==
                                                 'CA')) {
                                           return DropdownButtonFormField<String>(
-                                              value: () {
+                                              initialValue: () {
                                                 final saved = _model
                                                         .stateDropdownValue ??=
                                                     ref
@@ -478,72 +382,17 @@ class _SettingsBusinessAddressWidgetState
                                         } else {
                                           return Container(
                                             width: double.infinity,
-                                            child: TextFormField(
+                                            child: AppTextField(
                                               controller:
                                                   _model.stateTextController,
                                               focusNode: _model.stateFocusNode,
+                                              hintText: 'State',
                                               onChanged: (_) =>
                                                   EasyDebounce.debounce(
                                                 '_model.stateTextController',
                                                 Duration(milliseconds: 100),
                                                 () => setState(() {}),
                                               ),
-                                              autofocus: false,
-                                              enabled: true,
-                                              obscureText: false,
-                                              decoration: InputDecoration(
-                                                isDense: false,
-                                                hintText: 'State',
-                                                hintStyle: GoogleFonts.inter(
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 16.0,
-                                                ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: AppColors.neutral700,
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius: BorderRadius
-                                                      .circular(AppConstants
-                                                          .radiusTextField4),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: AppColors.secondary,
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius: BorderRadius
-                                                      .circular(AppConstants
-                                                          .radiusTextField4),
-                                                ),
-                                                errorBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: AppColors.error,
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius: BorderRadius
-                                                      .circular(AppConstants
-                                                          .radiusTextField4),
-                                                ),
-                                                focusedErrorBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: AppColors.error,
-                                                    width: 1.0,
-                                                  ),
-                                                  borderRadius: BorderRadius
-                                                      .circular(AppConstants
-                                                          .radiusTextField4),
-                                                ),
-                                              ),
-                                              style: GoogleFonts.inter(
-                                                fontSize: 14.0,
-                                              ),
-                                              cursorColor:
-                                                  AppColors.textPrimary,
-                                              enableInteractiveSelection: true,
                                             ),
                                           );
                                         }
@@ -574,63 +423,15 @@ class _SettingsBusinessAddressWidgetState
                                     ),
                                     Container(
                                       width: double.infinity,
-                                      child: TextFormField(
+                                      child: AppTextField(
                                         controller: _model.cityTextController,
                                         focusNode: _model.cityFocusNode,
+                                        hintText: 'City',
                                         onChanged: (_) => EasyDebounce.debounce(
                                           '_model.cityTextController',
                                           Duration(milliseconds: 100),
                                           () => setState(() {}),
                                         ),
-                                        autofocus: false,
-                                        enabled: true,
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          isDense: false,
-                                          hintText: 'City',
-                                          hintStyle: GoogleFonts.inter(
-                                            fontWeight: FontWeight.normal,
-                                            fontSize: 16.0,
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: AppColors.neutral700,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius: BorderRadius.circular(
-                                                AppConstants.radiusTextField4),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: AppColors.secondary,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius: BorderRadius.circular(
-                                                AppConstants.radiusTextField4),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: AppColors.error,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius: BorderRadius.circular(
-                                                AppConstants.radiusTextField4),
-                                          ),
-                                          focusedErrorBorder:
-                                              OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: AppColors.error,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius: BorderRadius.circular(
-                                                AppConstants.radiusTextField4),
-                                          ),
-                                        ),
-                                        style: GoogleFonts.inter(
-                                          fontSize: 14.0,
-                                        ),
-                                        cursorColor: AppColors.textPrimary,
-                                        enableInteractiveSelection: true,
                                       ),
                                     ),
                                   ].divide(SizedBox(height: 8.0)),
@@ -649,65 +450,17 @@ class _SettingsBusinessAddressWidgetState
                                     ),
                                     Container(
                                       width: double.infinity,
-                                      child: TextFormField(
+                                      child: AppTextField(
                                         controller:
                                             _model.zipCodeTextController,
                                         focusNode: _model.zipCodeFocusNode,
+                                        hintText: '10001',
+                                        keyboardType: TextInputType.number,
                                         onChanged: (_) => EasyDebounce.debounce(
                                           '_model.zipCodeTextController',
                                           Duration(milliseconds: 100),
                                           () => setState(() {}),
                                         ),
-                                        autofocus: false,
-                                        enabled: true,
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          isDense: false,
-                                          hintText: '10001',
-                                          hintStyle: GoogleFonts.inter(
-                                            fontWeight: FontWeight.normal,
-                                            fontSize: 16.0,
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: AppColors.neutral700,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius: BorderRadius.circular(
-                                                AppConstants.radiusTextField4),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: AppColors.secondary,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius: BorderRadius.circular(
-                                                AppConstants.radiusTextField4),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: AppColors.error,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius: BorderRadius.circular(
-                                                AppConstants.radiusTextField4),
-                                          ),
-                                          focusedErrorBorder:
-                                              OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: AppColors.error,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius: BorderRadius.circular(
-                                                AppConstants.radiusTextField4),
-                                          ),
-                                        ),
-                                        style: GoogleFonts.inter(
-                                          fontSize: 14.0,
-                                        ),
-                                        keyboardType: TextInputType.number,
-                                        cursorColor: AppColors.textPrimary,
-                                        enableInteractiveSelection: true,
                                       ),
                                     ),
                                   ].divide(SizedBox(height: 8.0)),

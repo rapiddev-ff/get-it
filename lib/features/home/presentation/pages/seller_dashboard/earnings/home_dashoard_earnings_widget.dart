@@ -27,6 +27,7 @@ class _HomeDashoardEarningsWidgetState
 
   bool _isLoading = true;
   Map<String, dynamic> _earnings = {};
+  List<Map<String, dynamic>> _allOrders = [];
   List<Map<String, dynamic>> _orders = [];
 
   static const _filters = ['All Time', 'This Week', 'This Month', '90 Days'];
@@ -51,34 +52,36 @@ class _HomeDashoardEarningsWidgetState
     }
   }
 
+  void _applyFilter() {
+    final startDate = _getStartDate();
+    _orders = _allOrders.where((o) {
+      final status = o['status']?.toString() ?? '';
+      if (status == 'cancelled' || status == 'refunded') return false;
+      if (startDate != null) {
+        final createdAt = DateTime.tryParse(o['created_at']?.toString() ?? '');
+        if (createdAt != null && createdAt.isBefore(startDate)) return false;
+      }
+      return true;
+    }).toList();
+  }
+
   Future<void> _loadData() async {
     setState(() => _isLoading = true);
     try {
-      final startDate = _getStartDate();
       final results = await Future.wait([
-        actions.getSellerEarnings(startDate, null),
+        actions.getSellerEarnings(null, null),
         actions.getSellerOrders(),
       ]);
 
       if (!mounted) return;
 
       final earningsData = results[0] as Map<String, dynamic>;
-      var allOrders = results[1] as List<Map<String, dynamic>>;
+      _allOrders = results[1] as List<Map<String, dynamic>>;
 
-      // Filter orders by date range (exclude cancelled/refunded)
-      allOrders = allOrders.where((o) {
-        final status = o['status']?.toString() ?? '';
-        if (status == 'cancelled' || status == 'refunded') return false;
-        if (startDate != null) {
-          final createdAt = DateTime.tryParse(o['created_at']?.toString() ?? '');
-          if (createdAt != null && createdAt.isBefore(startDate)) return false;
-        }
-        return true;
-      }).toList();
+      _applyFilter();
 
       setState(() {
         _earnings = earningsData;
-        _orders = allOrders;
         _isLoading = false;
       });
     } catch (_) {
@@ -164,14 +167,14 @@ class _HomeDashoardEarningsWidgetState
     }
   }
 
-  double get _totalEarnings =>
-      (_earnings['total_earnings'] as num?)?.toDouble() ?? 0.0;
   double get _availableAmount =>
       (_earnings['available_amount'] as num?)?.toDouble() ?? 0.0;
   double get _pendingAmount =>
       (_earnings['pending_amount'] as num?)?.toDouble() ?? 0.0;
   int get _totalSales => _orders.length;
-  double get _avgSale => _totalSales > 0 ? _totalEarnings / _totalSales : 0.0;
+  double get _filteredRevenue => _orders.fold(
+      0.0, (sum, o) => sum + ((o['total_amount'] as num?)?.toDouble() ?? 0.0));
+  double get _avgSale => _totalSales > 0 ? _filteredRevenue / _totalSales : 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -225,14 +228,10 @@ class _HomeDashoardEarningsWidgetState
         body: _isLoading
             ? Center(
                 child: CircularProgressIndicator(color: AppColors.secondary))
-            : RefreshIndicator(
-                onRefresh: _loadData,
-                color: AppColors.secondary,
-                child: Padding(
+            : Padding(
                   padding:
                       EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   child: SingleChildScrollView(
-                    physics: AlwaysScrollableScrollPhysics(),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -350,7 +349,6 @@ class _HomeDashoardEarningsWidgetState
                     ),
                   ),
                 ),
-              ),
       ),
     );
   }
@@ -359,8 +357,10 @@ class _HomeDashoardEarningsWidgetState
     final isActive = _activeFilter == label;
     return GestureDetector(
       onTap: () {
-        setState(() => _activeFilter = label);
-        _loadData();
+        setState(() {
+          _activeFilter = label;
+          _applyFilter();
+        });
       },
       child: Container(
         decoration: BoxDecoration(

@@ -793,7 +793,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                                                   children: [
                                                     FaIcon(
                                                       FontAwesomeIcons
-                                                          .solidEdit,
+                                                          .solidPenToSquare,
                                                       color:
                                                           AppColors.secondary,
                                                       size: 22.0,
@@ -901,7 +901,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                                                       CrossAxisAlignment.center,
                                                   children: [
                                                     FaIcon(
-                                                      FontAwesomeIcons.boxes,
+                                                      FontAwesomeIcons.boxesStacked,
                                                       color:
                                                           AppColors.secondary,
                                                       size: 22.0,

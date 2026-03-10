@@ -9,7 +9,7 @@ import '/features/wishlist/presentation/providers/wishlist_provider.dart';
 import '/backend/supabase/supabase.dart';
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
 
 RealtimeChannel? _wishlistSubscription;
 

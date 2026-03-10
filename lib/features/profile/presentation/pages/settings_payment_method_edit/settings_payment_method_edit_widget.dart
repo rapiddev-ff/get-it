@@ -3,6 +3,7 @@ import '/features/checkout/domain/models/billing_details_model.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/core/theme/app_colors.dart';
 import '/core/utils/form_validators.dart';
+import '/core/widgets/app_text_field.dart';
 import '/core/utils/geo_data.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/router/app_router.dart';
@@ -136,40 +137,6 @@ class _SettingsPaymentMethodEditWidgetState
     );
   }
 
-  static InputDecoration _editableFieldDecoration({
-    required String hintText,
-  }) {
-    return InputDecoration(
-      isDense: false,
-      hintText: hintText,
-      hintStyle: GoogleFonts.inter(
-        fontWeight: FontWeight.normal,
-        fontSize: 16.0,
-        color: AppColors.textSecondary,
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: AppColors.neutral700, width: 1.0),
-        borderRadius: BorderRadius.circular(4.0),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: AppColors.secondary, width: 1.0),
-        borderRadius: BorderRadius.circular(4.0),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: AppColors.error, width: 1.0),
-        borderRadius: BorderRadius.circular(4.0),
-      ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: AppColors.error, width: 1.0),
-        borderRadius: BorderRadius.circular(4.0),
-      ),
-    );
-  }
-
-  static TextStyle _bodyStyle() {
-    return GoogleFonts.inter(fontSize: 14.0, color: AppColors.textPrimary);
-  }
-
   static TextStyle _labelStyle() {
     return GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary);
   }
@@ -259,7 +226,7 @@ class _SettingsPaymentMethodEditWidgetState
                         decoration: _fieldDecoration(
                           hintText: 'Enter 16 digit card number',
                         ),
-                        style: _bodyStyle(),
+                        style: appTextFieldStyle,
                         keyboardType: TextInputType.number,
                         cursorColor: AppColors.textPrimary,
                         inputFormatters: [_model.cardNumberMask],
@@ -288,7 +255,7 @@ class _SettingsPaymentMethodEditWidgetState
                                   obscureText: false,
                                   decoration:
                                       _fieldDecoration(hintText: 'MM/YY'),
-                                  style: _bodyStyle(),
+                                  style: appTextFieldStyle,
                                   keyboardType: TextInputType.number,
                                   cursorColor: AppColors.textPrimary,
                                   inputFormatters: [_model.expireDateMask],
@@ -313,7 +280,7 @@ class _SettingsPaymentMethodEditWidgetState
                                   readOnly: true,
                                   obscureText: false,
                                   decoration: _fieldDecoration(hintText: 'CVC'),
-                                  style: _bodyStyle(),
+                                  style: appTextFieldStyle,
                                   keyboardType: TextInputType.number,
                                   cursorColor: AppColors.textPrimary,
                                 ),
@@ -342,7 +309,7 @@ class _SettingsPaymentMethodEditWidgetState
                         decoration: _fieldDecoration(
                           hintText: 'Full name as shown as card',
                         ),
-                        style: _bodyStyle(),
+                        style: appTextFieldStyle,
                         cursorColor: AppColors.textPrimary,
                       ),
                     ),
@@ -378,10 +345,8 @@ class _SettingsPaymentMethodEditWidgetState
                         ),
                         autofocus: false,
                         obscureText: false,
-                        decoration: _editableFieldDecoration(
-                          hintText: 'example@example.com',
-                        ),
-                        style: _bodyStyle(),
+                        decoration: appInputDecoration('example@example.com'),
+                        style: appTextFieldStyle,
                         keyboardType: TextInputType.emailAddress,
                         cursorColor: AppColors.textPrimary,
                       ),
@@ -407,10 +372,8 @@ class _SettingsPaymentMethodEditWidgetState
                         autofocus: false,
                         autofillHints: [AutofillHints.name],
                         obscureText: false,
-                        decoration: _editableFieldDecoration(
-                          hintText: 'Enter full name',
-                        ),
-                        style: _bodyStyle(),
+                        decoration: appInputDecoration('Enter full name'),
+                        style: appTextFieldStyle,
                         cursorColor: AppColors.textPrimary,
                       ),
                     ),
@@ -435,10 +398,8 @@ class _SettingsPaymentMethodEditWidgetState
                         autofocus: false,
                         autofillHints: [AutofillHints.streetAddressLine1],
                         obscureText: false,
-                        decoration: _editableFieldDecoration(
-                          hintText: '123, Main street',
-                        ),
-                        style: _bodyStyle(),
+                        decoration: appInputDecoration('123, Main street'),
+                        style: appTextFieldStyle,
                         cursorColor: AppColors.textPrimary,
                       ),
                     ),
@@ -459,10 +420,8 @@ class _SettingsPaymentMethodEditWidgetState
                         autofocus: false,
                         autofillHints: [AutofillHints.streetAddressLine2],
                         obscureText: false,
-                        decoration: _editableFieldDecoration(
-                          hintText: 'Apartment, suite, etc. (optional)',
-                        ),
-                        style: _bodyStyle(),
+                        decoration: appInputDecoration('Apartment, suite, etc. (optional)'),
+                        style: appTextFieldStyle,
                         cursorColor: AppColors.textPrimary,
                       ),
                     ),
@@ -480,7 +439,7 @@ class _SettingsPaymentMethodEditWidgetState
                             children: [
                               Text('Country', style: _labelStyle()),
                               DropdownButtonFormField<String>(
-                                  value: () {
+                                  initialValue: () {
                                     final saved = _model.countryDropdownValue ??=
                                         widget.paymentMethod?.billingDetails
                                                 ?.country ??
@@ -507,7 +466,7 @@ class _SettingsPaymentMethodEditWidgetState
                                       .map((c) => DropdownMenuItem(
                                             value: c['code'],
                                             child: Text(c['name']!,
-                                                style: _bodyStyle()),
+                                                style: appTextFieldStyle),
                                           ))
                                       .toList(),
                                   onChanged: (val) => setState(
@@ -519,7 +478,7 @@ class _SettingsPaymentMethodEditWidgetState
                                     color: AppColors.textSecondary,
                                     size: 24.0,
                                   ),
-                                  style: _bodyStyle(),
+                                  style: appTextFieldStyle,
                                   isExpanded: true,
                                 ),
                             ].divide(SizedBox(height: 8.0)),
@@ -536,7 +495,7 @@ class _SettingsPaymentMethodEditWidgetState
                                   if ((_model.countryDropdownValue == 'US') ||
                                       (_model.countryDropdownValue == 'CA')) {
                                     return DropdownButtonFormField<String>(
-                                        value: () {
+                                        initialValue: () {
                                           final saved = _model
                                                   .stateDropdownValue ??=
                                               widget.paymentMethod
@@ -557,7 +516,7 @@ class _SettingsPaymentMethodEditWidgetState
                                             .map((name) => DropdownMenuItem(
                                                   value: name,
                                                   child: Text(name,
-                                                      style: _bodyStyle()),
+                                                      style: appTextFieldStyle),
                                                 ))
                                             .toList(),
                                         onChanged: (val) => setState(() =>
@@ -571,7 +530,7 @@ class _SettingsPaymentMethodEditWidgetState
                                           color: AppColors.textSecondary,
                                           size: 24.0,
                                         ),
-                                        style: _bodyStyle(),
+                                        style: appTextFieldStyle,
                                         isExpanded: true,
                                       );
                                   } else {
@@ -587,10 +546,8 @@ class _SettingsPaymentMethodEditWidgetState
                                         ),
                                         autofocus: false,
                                         obscureText: false,
-                                        decoration: _editableFieldDecoration(
-                                          hintText: 'State',
-                                        ),
-                                        style: _bodyStyle(),
+                                        decoration: appInputDecoration('State'),
+                                        style: appTextFieldStyle,
                                         cursorColor: AppColors.textPrimary,
                                       ),
                                     );
@@ -627,9 +584,8 @@ class _SettingsPaymentMethodEditWidgetState
                                   ),
                                   autofocus: false,
                                   obscureText: false,
-                                  decoration: _editableFieldDecoration(
-                                      hintText: 'City'),
-                                  style: _bodyStyle(),
+                                  decoration: appInputDecoration('City'),
+                                  style: appTextFieldStyle,
                                   cursorColor: AppColors.textPrimary,
                                 ),
                               ),
@@ -654,9 +610,8 @@ class _SettingsPaymentMethodEditWidgetState
                                   ),
                                   autofocus: false,
                                   obscureText: false,
-                                  decoration: _editableFieldDecoration(
-                                      hintText: '10001'),
-                                  style: _bodyStyle(),
+                                  decoration: appInputDecoration('10001'),
+                                  style: appTextFieldStyle,
                                   keyboardType: TextInputType.number,
                                   cursorColor: AppColors.textPrimary,
                                 ),

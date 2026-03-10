@@ -3,10 +3,10 @@ import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
-import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/geo_data.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_text_field.dart';
 import '/core/widgets/autocomplete_options_list.dart';
 import '/core/widgets/app_drop_down.dart';
 import '/core/widgets/form_field_controller.dart';
@@ -231,64 +231,15 @@ class _CheckoutEditShippingAddressWidgetState
                                 0.0, 8.0, 0.0, 0.0),
                             child: Container(
                               width: double.infinity,
-                              child: TextFormField(
+                              child: AppTextField(
                                 controller: fullNameTextController,
                                 focusNode: fullNameFocusNode,
+                                hintText: 'Enter Full Name',
                                 onChanged: (_) => EasyDebounce.debounce(
                                   'fullNameTextController',
                                   Duration(milliseconds: 100),
                                   () => setState(() {}),
                                 ),
-                                autofocus: false,
-                                enabled: true,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  isDense: false,
-                                  hintText: 'Enter Full Name',
-                                  hintStyle: GoogleFonts.inter(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16.0,
-                                    color: AppColors.textSecondary,
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.neutral700,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.secondary,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
-                                ),
-                                style: GoogleFonts.inter(
-                                  color: AppColors.textPrimary,
-                                ),
-                                cursorColor: AppColors.textPrimary,
-                                enableInteractiveSelection: true,
-                                validator: null,
                               ),
                             ),
                           ),
@@ -484,50 +435,8 @@ class _CheckoutEditShippingAddressWidgetState
                                     enabled: true,
                                     textInputAction: TextInputAction.done,
                                     obscureText: false,
-                                    decoration: InputDecoration(
-                                      isDense: false,
-                                      hintText: 'Enter street address',
-                                      hintStyle: GoogleFonts.inter(
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 16.0,
-                                        color: AppColors.textSecondary,
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: AppColors.neutral700,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius: BorderRadius.circular(
-                                            AppConstants.radiusTextField4),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: AppColors.secondary,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius: BorderRadius.circular(
-                                            AppConstants.radiusTextField4),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: AppColors.error,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius: BorderRadius.circular(
-                                            AppConstants.radiusTextField4),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: AppColors.error,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius: BorderRadius.circular(
-                                            AppConstants.radiusTextField4),
-                                      ),
-                                    ),
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.textPrimary,
-                                    ),
+                                    decoration: appInputDecoration('Enter street address'),
+                                    style: appTextFieldStyle,
                                     cursorColor: AppColors.textPrimary,
                                     enableInteractiveSelection: true,
                                     validator: null,
@@ -552,64 +461,15 @@ class _CheckoutEditShippingAddressWidgetState
                                 0.0, 8.0, 0.0, 0.0),
                             child: Container(
                               width: double.infinity,
-                              child: TextFormField(
+                              child: AppTextField(
                                 controller: aptsuiteunitTextController,
                                 focusNode: aptsuiteunitFocusNode,
+                                hintText: 'Enter apt, suite, unit',
                                 onChanged: (_) => EasyDebounce.debounce(
                                   'aptsuiteunitTextController',
                                   Duration(milliseconds: 100),
                                   () => setState(() {}),
                                 ),
-                                autofocus: false,
-                                enabled: true,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  isDense: false,
-                                  hintText: 'Enter apt, suite, unit',
-                                  hintStyle: GoogleFonts.inter(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16.0,
-                                    color: AppColors.textSecondary,
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.neutral700,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.secondary,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
-                                ),
-                                style: GoogleFonts.inter(
-                                  color: AppColors.textPrimary,
-                                ),
-                                cursorColor: AppColors.textPrimary,
-                                enableInteractiveSelection: true,
-                                validator: null,
                               ),
                             ),
                           ),
@@ -629,64 +489,15 @@ class _CheckoutEditShippingAddressWidgetState
                                 0.0, 8.0, 0.0, 0.0),
                             child: Container(
                               width: double.infinity,
-                              child: TextFormField(
+                              child: AppTextField(
                                 controller: cityTextController,
                                 focusNode: cityFocusNode,
+                                hintText: 'Enter city',
                                 onChanged: (_) => EasyDebounce.debounce(
                                   'cityTextController',
                                   Duration(milliseconds: 100),
                                   () => setState(() {}),
                                 ),
-                                autofocus: false,
-                                enabled: true,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  isDense: false,
-                                  hintText: 'Enter city',
-                                  hintStyle: GoogleFonts.inter(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16.0,
-                                    color: AppColors.textSecondary,
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.neutral700,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.secondary,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
-                                ),
-                                style: GoogleFonts.inter(
-                                  color: AppColors.textPrimary,
-                                ),
-                                cursorColor: AppColors.textPrimary,
-                                enableInteractiveSelection: true,
-                                validator: null,
                               ),
                             ),
                           ),
@@ -813,79 +624,16 @@ class _CheckoutEditShippingAddressWidgetState
                                           } else {
                                             return Container(
                                               width: double.infinity,
-                                              child: TextFormField(
+                                              child: AppTextField(
                                                 controller: stateTextController,
                                                 focusNode: stateFocusNode,
+                                                hintText: 'State',
                                                 onChanged: (_) =>
                                                     EasyDebounce.debounce(
                                                   'stateTextController',
                                                   Duration(milliseconds: 100),
                                                   () => setState(() {}),
                                                 ),
-                                                autofocus: false,
-                                                enabled: true,
-                                                obscureText: false,
-                                                decoration: InputDecoration(
-                                                  isDense: false,
-                                                  hintText: 'State',
-                                                  hintStyle: GoogleFonts.inter(
-                                                    fontWeight:
-                                                        FontWeight.normal,
-                                                    fontSize: 16.0,
-                                                    color:
-                                                        AppColors.textSecondary,
-                                                  ),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color:
-                                                          AppColors.neutral700,
-                                                      width: 1.0,
-                                                    ),
-                                                    borderRadius: BorderRadius
-                                                        .circular(AppConstants
-                                                            .radiusTextField4),
-                                                  ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color:
-                                                          AppColors.secondary,
-                                                      width: 1.0,
-                                                    ),
-                                                    borderRadius: BorderRadius
-                                                        .circular(AppConstants
-                                                            .radiusTextField4),
-                                                  ),
-                                                  errorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color: AppColors.error,
-                                                      width: 1.0,
-                                                    ),
-                                                    borderRadius: BorderRadius
-                                                        .circular(AppConstants
-                                                            .radiusTextField4),
-                                                  ),
-                                                  focusedErrorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color: AppColors.error,
-                                                      width: 1.0,
-                                                    ),
-                                                    borderRadius: BorderRadius
-                                                        .circular(AppConstants
-                                                            .radiusTextField4),
-                                                  ),
-                                                ),
-                                                style: GoogleFonts.inter(
-                                                  color: AppColors.textPrimary,
-                                                ),
-                                                cursorColor:
-                                                    AppColors.textPrimary,
-                                                enableInteractiveSelection:
-                                                    true,
-                                                validator: null,
                                               ),
                                             );
                                           }
@@ -909,75 +657,17 @@ class _CheckoutEditShippingAddressWidgetState
                                       ),
                                       Container(
                                         width: double.infinity,
-                                        child: TextFormField(
+                                        child: AppTextField(
                                           controller: zipCodeTextController,
                                           focusNode: zipCodeFocusNode,
+                                          hintText: '10001',
+                                          keyboardType: TextInputType.number,
                                           onChanged: (_) =>
                                               EasyDebounce.debounce(
                                             'zipCodeTextController',
                                             Duration(milliseconds: 100),
                                             () => setState(() {}),
                                           ),
-                                          autofocus: false,
-                                          enabled: true,
-                                          obscureText: false,
-                                          decoration: InputDecoration(
-                                            isDense: false,
-                                            hintText: '10001',
-                                            hintStyle: GoogleFonts.inter(
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 16.0,
-                                              color: AppColors.textSecondary,
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: AppColors.neutral700,
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      AppConstants
-                                                          .radiusTextField4),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: AppColors.secondary,
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      AppConstants
-                                                          .radiusTextField4),
-                                            ),
-                                            errorBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: AppColors.error,
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      AppConstants
-                                                          .radiusTextField4),
-                                            ),
-                                            focusedErrorBorder:
-                                                OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: AppColors.error,
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      AppConstants
-                                                          .radiusTextField4),
-                                            ),
-                                          ),
-                                          style: GoogleFonts.inter(
-                                            color: AppColors.textPrimary,
-                                          ),
-                                          keyboardType: TextInputType.number,
-                                          cursorColor: AppColors.textPrimary,
-                                          enableInteractiveSelection: true,
-                                          validator: null,
                                         ),
                                       ),
                                     ].divide(SizedBox(height: 8.0)),

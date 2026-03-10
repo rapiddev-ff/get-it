@@ -340,7 +340,7 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
           Text(
             'Check back later for new items',
             style: GoogleFonts.inter(
-              color: AppColors.textSecondary.withOpacity(0.7),
+              color: AppColors.textSecondary.withValues(alpha:0.7),
               fontSize: 14,
               fontWeight: FontWeight.w400,
             ),
@@ -397,7 +397,7 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
               border: Border.all(color: const Color(0xFF383838), width: 1.0),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
+                  color: Colors.black.withValues(alpha:0.3),
                   blurRadius: 15,
                   offset: const Offset(0, 8),
                 ),
@@ -426,7 +426,7 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
                                   width: cardWidth,
                                   height: cardHeight * 0.62,
                                   color:
-                                      AppColors.textSecondary.withOpacity(0.2),
+                                      AppColors.textSecondary.withValues(alpha:0.2),
                                   child: Icon(
                                     Icons.broken_image,
                                     color: AppColors.textSecondary,
@@ -437,7 +437,7 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
                             : Container(
                                 width: cardWidth,
                                 height: cardHeight * 0.62,
-                                color: AppColors.textSecondary.withOpacity(0.2),
+                                color: AppColors.textSecondary.withValues(alpha:0.2),
                                 child: Icon(
                                   Icons.image,
                                   color: AppColors.textSecondary,
@@ -530,7 +530,7 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
                                   vertical: 8,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.6),
+                                  color: Colors.black.withValues(alpha:0.6),
                                   borderRadius: BorderRadius.circular(24),
                                 ),
                                 child: Text(
@@ -561,7 +561,7 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
                             child: Container(
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.4),
+                                color: Colors.black.withValues(alpha:0.4),
                                 shape: BoxShape.circle,
                               ),
                               child: Icon(
@@ -787,7 +787,7 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
     return Positioned.fill(
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.7),
+          color: Colors.black.withValues(alpha:0.7),
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Stack(
@@ -826,7 +826,7 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: 'Inter',
-                    color: Colors.white.withOpacity(0.9),
+                    color: Colors.white.withValues(alpha:0.9),
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                   ),

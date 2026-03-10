@@ -1,10 +1,9 @@
-import '/backend/supabase/supabase.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Hides a product permanently from the current user's feed.
-/// Calls the `hide_product` RPC which inserts into `hidden_products` table.
 Future<bool> hideProduct(String userId, String productId) async {
   try {
-    await SupaFlow.client.rpc(
+    await Supabase.instance.client.rpc(
       'hide_product',
       params: {
         'p_user_id': userId,

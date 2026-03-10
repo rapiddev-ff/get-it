@@ -1,25 +1,16 @@
+import 'dart:convert';
+
+import 'package:supabase_flutter/supabase_flutter.dart';
+
 import '/core/config/app_config.dart';
 import '/core/utils/json_utils.dart';
 import 'api_manager.dart';
 
 export 'api_manager.dart' show ApiCallResponse;
 
-/// Start Twillio Group Code
+/// Start Twillio Group Code (via Supabase Edge Functions)
 
 class TwillioGroup {
-  static String getBaseUrl({
-    String? authToken,
-    String? serviceSID,
-  }) {
-    authToken ??= AppConfig.twillioBase64;
-    serviceSID ??= AppConfig.serviceSid;
-    return 'https://verify.twilio.com/v2';
-  }
-
-  static Map<String, String> headers = {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'Authorization': 'Basic [authToken]',
-  };
   static SendVerificationCall sendVerificationCall = SendVerificationCall();
   static VerifyCodeCall verifyCodeCall = VerifyCodeCall();
 }
@@ -27,36 +18,21 @@ class TwillioGroup {
 class SendVerificationCall {
   Future<ApiCallResponse> call({
     String? to = '',
-    String? authToken,
-    String? serviceSID,
   }) async {
-    authToken ??= AppConfig.twillioBase64;
-    serviceSID ??= AppConfig.serviceSid;
-    final baseUrl = TwillioGroup.getBaseUrl(
-      authToken: authToken,
-      serviceSID: serviceSID,
+    final supabase = Supabase.instance.client;
+    final response = await supabase.functions.invoke(
+      'twilio-send-verification',
+      body: {'to': to},
     );
 
-    return ApiManager.instance.makeApiCall(
-      callName: 'SendVerification',
-      apiUrl: '${baseUrl}/Services/${serviceSID}/Verifications',
-      callType: ApiCallType.POST,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Basic ${authToken}',
-      },
-      params: {
-        'To': to,
-        'Channel': "sms",
-      },
-      bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
-    );
+    final statusCode = response.status;
+    final jsonBody = response.data;
+
+    final body = jsonBody is Map
+        ? jsonBody
+        : (jsonBody is String ? jsonDecode(jsonBody) : {});
+
+    return ApiCallResponse(body, {}, statusCode);
   }
 }
 
@@ -64,36 +40,20 @@ class VerifyCodeCall {
   Future<ApiCallResponse> call({
     String? to = '',
     String? code = '',
-    String? authToken,
-    String? serviceSID,
   }) async {
-    authToken ??= AppConfig.twillioBase64;
-    serviceSID ??= AppConfig.serviceSid;
-    final baseUrl = TwillioGroup.getBaseUrl(
-      authToken: authToken,
-      serviceSID: serviceSID,
+    final supabase = Supabase.instance.client;
+    final response = await supabase.functions.invoke(
+      'twilio-verify-code',
+      body: {'to': to, 'code': code},
     );
 
-    return ApiManager.instance.makeApiCall(
-      callName: 'VerifyCode',
-      apiUrl: '${baseUrl}/Services/${serviceSID}/VerificationCheck',
-      callType: ApiCallType.POST,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Basic ${authToken}',
-      },
-      params: {
-        'To': to,
-        'Code': code,
-      },
-      bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
-    );
+    final statusCode = response.status;
+    final jsonBody = response.data;
+    final body = jsonBody is Map
+        ? jsonBody
+        : (jsonBody is String ? jsonDecode(jsonBody) : {});
+
+    return ApiCallResponse(body, {}, statusCode);
   }
 
   bool? isValid(dynamic response) => castToType<bool>(getJsonField(
@@ -390,145 +350,8 @@ class GetuserreviewsCall {
 
 /// End Supabase RPC Group Code
 
-/// Start Stripe Group Code
-
-class StripeGroup {
-  static String getBaseUrl({
-    String? skStripe,
-  }) {
-    skStripe ??= AppConfig.stripeSecret;
-    return 'https://api.stripe.com/v1';
-  }
-
-  static Map<String, String> headers = {
-    'Authorization': 'Bearer [skStripe]',
-  };
-  static CreateACustomerCall createACustomerCall = CreateACustomerCall();
-  static CreateAnAccountCall createAnAccountCall = CreateAnAccountCall();
-  static CreateAnAccountLinkCall createAnAccountLinkCall =
-      CreateAnAccountLinkCall();
-}
-
-class CreateACustomerCall {
-  Future<ApiCallResponse> call({
-    String? name = '',
-    String? email = '',
-    String? userId = '',
-    String? shoperId = '',
-    String? skStripe,
-  }) async {
-    skStripe ??= AppConfig.stripeSecret;
-    final baseUrl = StripeGroup.getBaseUrl(
-      skStripe: skStripe,
-    );
-
-    return ApiManager.instance.makeApiCall(
-      callName: 'Create a customer',
-      apiUrl: '${baseUrl}/customers',
-      callType: ApiCallType.POST,
-      headers: {
-        'Authorization': 'Bearer ${skStripe}',
-      },
-      params: {
-        'name': name,
-        'email': email,
-        'metadata[user]': userId,
-        'metadata[test2]': shoperId,
-      },
-      bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
-    );
-  }
-
-  String? customerId(dynamic response) => castToType<String>(getJsonField(
-        response,
-        r'''$.id''',
-      ));
-}
-
-class CreateAnAccountCall {
-  Future<ApiCallResponse> call({
-    String? userId = '',
-    String? type = '',
-    String? id = '',
-    String? email = '',
-    String? skStripe,
-  }) async {
-    skStripe ??= AppConfig.stripeSecret;
-    final baseUrl = StripeGroup.getBaseUrl(
-      skStripe: skStripe,
-    );
-
-    return ApiManager.instance.makeApiCall(
-      callName: 'Create an account',
-      apiUrl: '${baseUrl}/accounts',
-      callType: ApiCallType.POST,
-      headers: {
-        'Authorization': 'Bearer ${skStripe}',
-      },
-      params: {
-        'business_type': "individual",
-        'type': "express",
-        'metadata[user_id]': userId,
-        'metadata[type]': type,
-        'metadata[id]': id,
-        'settings[payouts][schedule][delay_days]': 7,
-        'email': email,
-      },
-      bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
-    );
-  }
-}
-
-class CreateAnAccountLinkCall {
-  Future<ApiCallResponse> call({
-    String? account = '',
-    String? type = '',
-    String? skStripe,
-  }) async {
-    skStripe ??= AppConfig.stripeSecret;
-    final baseUrl = StripeGroup.getBaseUrl(
-      skStripe: skStripe,
-    );
-
-    return ApiManager.instance.makeApiCall(
-      callName: 'Create an account link',
-      apiUrl: '${baseUrl}/account_links',
-      callType: ApiCallType.POST,
-      headers: {
-        'Authorization': 'Bearer ${skStripe}',
-      },
-      params: {
-        'account': account,
-        'type': type,
-        'refresh_url': "https://reelshoppers.flutterflow.app/stripe_error",
-        'return_url': "https://reelshoppers.flutterflow.app/stripe_done",
-        'collection_options[fields]': "eventually_due",
-        'collection_options[future_requirements]': "include",
-      },
-      bodyType: BodyType.X_WWW_FORM_URL_ENCODED,
-      returnBody: true,
-      encodeBodyUtf8: false,
-      decodeUtf8: false,
-      cache: false,
-      isStreamingApi: false,
-      alwaysAllowBody: false,
-    );
-  }
-}
-
-/// End Stripe Group Code
+/// Stripe operations are handled via Supabase Edge Functions.
+/// See lib/custom_code/actions/ for Stripe-related actions.
 
 /// Start supabase Edge Group Code
 

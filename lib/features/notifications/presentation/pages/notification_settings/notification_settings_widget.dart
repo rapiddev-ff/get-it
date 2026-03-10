@@ -115,7 +115,7 @@ class _NotificationSettingsWidgetState
                       onChanged: (newValue) {
                         setState(() => _switchValue = newValue);
                       },
-                      activeColor: AppColors.primary,
+                      activeThumbColor: AppColors.primary,
                       activeTrackColor: AppColors.primary,
                       inactiveTrackColor: AppColors.alternate,
                       inactiveThumbColor: AppColors.backgroundSecondary,

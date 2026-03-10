@@ -1,11 +1,21 @@
 import 'dart:async';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class RealtimeService {
-  static RealtimeService? _instance;
-  static RealtimeService get instance => _instance ??= RealtimeService._();
+final realtimeServiceProvider = Provider<RealtimeService>((ref) {
+  final service = RealtimeService(Supabase.instance.client);
+  ref.onDispose(() => service.disposeAll());
+  return service;
+});
 
-  RealtimeService._();
+class RealtimeService {
+  /// @deprecated Use realtimeServiceProvider instead.
+  static RealtimeService? _instance;
+  static RealtimeService get instance => _instance ??= RealtimeService(Supabase.instance.client);
+
+  final SupabaseClient _client;
+
+  RealtimeService(this._client);
 
   RealtimeChannel? _conversationsChannel;
   RealtimeChannel? _messagesChannel;
@@ -14,7 +24,6 @@ class RealtimeService {
   Timer? _debounceTimer;
   bool _isRefreshing = false;
 
-  SupabaseClient get _client => Supabase.instance.client;
   String? get _currentUserId => _client.auth.currentUser?.id;
 
   // ==========================================

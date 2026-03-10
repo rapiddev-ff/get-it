@@ -14,6 +14,7 @@ import '/backend/supabase/supabase.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_text_field.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '/custom_code/actions/index.dart' as actions;
@@ -201,50 +202,8 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget> {
                                   },
                                   autofocus: false,
                                   obscureText: false,
-                                  decoration: InputDecoration(
-                                    isDense: false,
-                                    hintText: 'Your email address',
-                                    hintStyle: GoogleFonts.inter(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 16.0,
-                                      color: AppColors.textSecondary,
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: AppColors.neutral700,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: AppColors.secondary,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: AppColors.error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: AppColors.error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                  ),
-                                  style: GoogleFonts.inter(
-                                    color: AppColors.textPrimary,
-                                  ),
+                                  decoration: appInputDecoration('Your email address'),
+                                  style: appTextFieldStyle,
                                   keyboardType: TextInputType.emailAddress,
                                   cursorColor: AppColors.textPrimary,
                                   enableInteractiveSelection: true,
@@ -328,46 +287,8 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget> {
                                   },
                                   autofocus: false,
                                   obscureText: !_model.passwordVisibility1,
-                                  decoration: InputDecoration(
-                                    isDense: false,
-                                    hintText: 'Your Password',
-                                    hintStyle: GoogleFonts.inter(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 16.0,
-                                      color: AppColors.textSecondary,
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: AppColors.neutral700,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: AppColors.secondary,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: AppColors.error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: AppColors.error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
+                                  decoration: appInputDecoration(
+                                    'Your Password',
                                     suffixIcon: InkWell(
                                       onTap: () {
                                         setState(() =>
@@ -384,9 +305,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget> {
                                       ),
                                     ),
                                   ),
-                                  style: GoogleFonts.inter(
-                                    color: AppColors.textPrimary,
-                                  ),
+                                  style: appTextFieldStyle,
                                   keyboardType: TextInputType.emailAddress,
                                   cursorColor: AppColors.textPrimary,
                                   enableInteractiveSelection: true,
@@ -444,46 +363,8 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget> {
                                   ),
                                   autofocus: false,
                                   obscureText: !_model.passwordVisibility2,
-                                  decoration: InputDecoration(
-                                    isDense: false,
-                                    hintText: 'Confirm Your Password',
-                                    hintStyle: GoogleFonts.inter(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 16.0,
-                                      color: AppColors.textSecondary,
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: AppColors.neutral700,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: AppColors.secondary,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: AppColors.error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: AppColors.error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
+                                  decoration: appInputDecoration(
+                                    'Confirm Your Password',
                                     suffixIcon: InkWell(
                                       onTap: () {
                                         setState(() =>
@@ -500,9 +381,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget> {
                                       ),
                                     ),
                                   ),
-                                  style: GoogleFonts.inter(
-                                    color: AppColors.textPrimary,
-                                  ),
+                                  style: appTextFieldStyle,
                                   keyboardType: TextInputType.emailAddress,
                                   cursorColor: AppColors.textPrimary,
                                   enableInteractiveSelection: true,

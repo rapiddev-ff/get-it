@@ -460,7 +460,7 @@ class _SettingsPaymentMethodAddWidgetState
                               SizedBox(
                                 height: 52.0,
                                 child: DropdownButtonFormField<String>(
-                                  value: (_model.countryDropdownValue ?? '')
+                                  initialValue: (_model.countryDropdownValue ?? '')
                                           .isEmpty
                                       ? null
                                       : _model.countryDropdownValue,
@@ -500,7 +500,7 @@ class _SettingsPaymentMethodAddWidgetState
                                     return SizedBox(
                                       height: 52.0,
                                       child: DropdownButtonFormField<String>(
-                                        value: (_model.stateDropdownValue ?? '')
+                                        initialValue: (_model.stateDropdownValue ?? '')
                                                 .isEmpty
                                             ? null
                                             : _model.stateDropdownValue,

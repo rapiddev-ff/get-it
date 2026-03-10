@@ -445,7 +445,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                             ]);
                                           }
                                         },
-                                        activeColor: AppColors.primary,
+                                        activeThumbColor: AppColors.primary,
                                         activeTrackColor: AppColors.primary,
                                         inactiveTrackColor: AppColors.alternate,
                                         inactiveThumbColor:
@@ -875,7 +875,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             FaIcon(
-                              FontAwesomeIcons.solidFileAlt,
+                              FontAwesomeIcons.solidFileLines,
                               color: AppColors.textPrimary,
                               size: 20.0,
                             ),
@@ -923,7 +923,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               FaIcon(
-                                FontAwesomeIcons.shieldAlt,
+                                FontAwesomeIcons.shieldHalved,
                                 color: AppColors.textPrimary,
                                 size: 20.0,
                               ),

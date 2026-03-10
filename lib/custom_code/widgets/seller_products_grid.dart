@@ -167,7 +167,7 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.1),
+                color: Colors.white.withValues(alpha: 0.1),
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(12),
                   topRight: Radius.circular(12),
@@ -189,7 +189,7 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
                     height: 14,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.1),
+                      color: Colors.white.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -199,7 +199,7 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
                     height: 14,
                     width: 80,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.1),
+                      color: Colors.white.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -209,7 +209,7 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
                     height: 16,
                     width: 60,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.1),
+                      color: Colors.white.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -225,7 +225,7 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
   Widget _buildShimmerGrid() {
     return Shimmer.fromColors(
       baseColor: AppColors.backgroundSecondary,
-      highlightColor: AppColors.backgroundPrimary.withOpacity(0.5),
+      highlightColor: AppColors.backgroundPrimary.withValues(alpha: 0.5),
       child: GridView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),

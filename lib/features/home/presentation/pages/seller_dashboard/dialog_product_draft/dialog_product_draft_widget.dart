@@ -36,7 +36,7 @@ class DialogProductDraftWidget extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.all(14.0),
                   child: FaIcon(
-                    FontAwesomeIcons.checkCircle,
+                    FontAwesomeIcons.circleCheck,
                     color: AppColors.primary,
                     size: 24.0,
                   ),
