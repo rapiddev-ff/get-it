@@ -340,8 +340,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             AppRoute(
               name: HomeDashoardShippingDetailedWidget.routeName,
               path: HomeDashoardShippingDetailedWidget.routePath,
-              builder: (context, params) =>
-                  HomeDashoardShippingDetailedWidget(),
+              builder: (context, params) {
+                final allParams = params.state.uri.queryParameters;
+                return HomeDashoardShippingDetailedWidget(
+                  orderId: allParams['orderId'],
+                );
+              },
             ),
             AppRoute(
               name: HomeDashoardInventoryWidget.routeName,

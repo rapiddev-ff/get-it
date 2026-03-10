@@ -4,6 +4,7 @@ import '/features/home/presentation/providers/feed_provider.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import '/backend/supabase/supabase.dart';
 import '/features/home/presentation/widgets/nav_bar/nav_bar_widget.dart';
+import '/features/home/presentation/widgets/components/seller_dashboard_ship_item_widget.dart';
 import '/features/checkout/presentation/widgets/quick_purchase_popup/quick_purchase_popup_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
@@ -44,6 +45,8 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
   List<StripeAccountsRow>? getStripe;
   late ExpandableController expandableExpandableController;
   bool _connectingStripe = false;
+  List<Map<String, dynamic>> _itemsToShip = [];
+  int _pendingShipCount = 0;
 
   /// Helper to safely extract a string from a JSON map.
   static String? _jsonStr(dynamic json, String key) {
@@ -74,6 +77,15 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
               'get_seller_dashboard',
               <String, dynamic>{},
             );
+          }),
+          Future(() async {
+            if (!mounted) return;
+            _itemsToShip = await actions.getSellerOrders(
+              statusFilter: 'to_ship',
+              limit: 3,
+            );
+            final counts = await actions.getSellerOrderCounts();
+            _pendingShipCount = counts['to_ship'] ?? 0;
           }),
         ]);
       } catch (_) {
@@ -1134,6 +1146,102 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                                       ].divide(SizedBox(width: 16.0)),
                                     ),
                                   ),
+                                  // Items to Ship section
+                                  if (_itemsToShip.isNotEmpty) ...[
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 40.0, 0.0, 0.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Items to Ship',
+                                            style: GoogleFonts.inter(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 18.0,
+                                            ),
+                                          ),
+                                          if (_pendingShipCount > 0)
+                                            Text(
+                                              '$_pendingShipCount pending',
+                                              style: GoogleFonts.inter(
+                                                fontWeight: FontWeight.normal,
+                                                fontSize: 14.0,
+                                                color: AppColors.textSecondary,
+                                              ),
+                                            ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 16.0, 0.0, 0.0),
+                                      child: Column(
+                                        children: _itemsToShip
+                                            .map((order) =>
+                                                SellerDashboardShipItemWidget(
+                                                  order: order,
+                                                  onShipped: () {
+                                                    // Reload items to ship
+                                                    Future(() async {
+                                                      if (!mounted) return;
+                                                      _itemsToShip =
+                                                          await actions
+                                                              .getSellerOrders(
+                                                        statusFilter:
+                                                            'to_ship',
+                                                        limit: 3,
+                                                      );
+                                                      final counts =
+                                                          await actions
+                                                              .getSellerOrderCounts();
+                                                      _pendingShipCount =
+                                                          counts['to_ship'] ??
+                                                              0;
+                                                      if (mounted) {
+                                                        setState(() {});
+                                                      }
+                                                    });
+                                                  },
+                                                ))
+                                            .toList()
+                                            .divide(SizedBox(height: 12.0)),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 16.0, 0.0, 0.0),
+                                      child: InkWell(
+                                        onTap: () {
+                                          context.pushNamed(
+                                              HomeDashoardShippingWidget
+                                                  .routeName);
+                                        },
+                                        child: Container(
+                                          width: double.infinity,
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 12.0),
+                                          decoration: BoxDecoration(
+                                            color:
+                                                AppColors.backgroundSecondary,
+                                            borderRadius:
+                                                BorderRadius.circular(4.0),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              'View All Orders',
+                                              style: GoogleFonts.inter(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14.0,
+                                                color: AppColors.secondary,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ]
                                     .addToStart(SizedBox(height: 28.0))
                                     .addToEnd(SizedBox(height: 32.0)),

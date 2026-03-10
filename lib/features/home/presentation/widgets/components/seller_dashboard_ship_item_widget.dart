@@ -1,22 +1,74 @@
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
-import '/index.dart';
+import '/features/home/presentation/pages/seller_dashboard/shipping_detailed/home_dashoard_shipping_detailed_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class SellerDashboardShipItemWidget extends StatelessWidget {
-  const SellerDashboardShipItemWidget({super.key});
+  const SellerDashboardShipItemWidget({
+    super.key,
+    required this.order,
+    this.onShipped,
+  });
+
+  final Map<String, dynamic> order;
+  final VoidCallback? onShipped;
+
+  String _formatPrice(dynamic price) {
+    final value = (price is num) ? price.toDouble() : 0.0;
+    return NumberFormat('#,##0.00', 'en_US').format(value);
+  }
+
+  String _getProductTitle() {
+    final items = order['order_items'];
+    if (items is List && items.isNotEmpty) {
+      return items[0]['product_title']?.toString() ?? 'Unknown Product';
+    }
+    return 'Unknown Product';
+  }
+
+  String _getBuyerUsername() {
+    final buyer = order['buyer'];
+    if (buyer is Map) {
+      return buyer['username']?.toString() ?? 'unknown';
+    }
+    return 'unknown';
+  }
+
+  String _getProductImageUrl() {
+    final items = order['order_items'];
+    if (items is List && items.isNotEmpty) {
+      final product = items[0]['products'];
+      if (product is Map) {
+        return product['main_image_url']?.toString() ?? '';
+      }
+    }
+    return '';
+  }
+
+  String get _status => order['status']?.toString() ?? '';
+  bool get _isSalePending => _status == 'sale_pending';
 
   @override
   Widget build(BuildContext context) {
+    final orderId = order['id']?.toString() ?? '';
+    final imageUrl = _getProductImageUrl();
+
     return InkWell(
       splashColor: Colors.transparent,
       focusColor: Colors.transparent,
       hoverColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onTap: () async {
-        context.pushNamed(HomeDashoardShippingDetailedWidget.routeName);
+        final result = await context.pushNamed<bool>(
+          HomeDashoardShippingDetailedWidget.routeName,
+          queryParameters: {'orderId': orderId},
+        );
+        if (result == true) {
+          onShipped?.call();
+        }
       },
       child: Container(
         width: double.infinity,
@@ -31,12 +83,27 @@ class SellerDashboardShipItemWidget extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(4.0),
-                child: Image.network(
-                  'https://picsum.photos/seed/357/600',
-                  width: 66.0,
-                  height: 66.0,
-                  fit: BoxFit.cover,
-                ),
+                child: imageUrl.isNotEmpty
+                    ? Image.network(
+                        imageUrl,
+                        width: 66.0,
+                        height: 66.0,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => Container(
+                          width: 66.0,
+                          height: 66.0,
+                          color: AppColors.backgroundPrimary,
+                          child:
+                              Icon(Icons.image, color: AppColors.textSecondary),
+                        ),
+                      )
+                    : Container(
+                        width: 66.0,
+                        height: 66.0,
+                        color: AppColors.backgroundPrimary,
+                        child:
+                            Icon(Icons.image, color: AppColors.textSecondary),
+                      ),
               ),
               Expanded(
                 child: Column(
@@ -44,13 +111,15 @@ class SellerDashboardShipItemWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'X-Men #1 (1963)',
+                      _getProductTitle(),
+                      maxLines: 1,
                       style: GoogleFonts.inter(
                         fontWeight: FontWeight.w500,
                       ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      'Sold to @collector_mike',
+                      'Sold to @${_getBuyerUsername()}',
                       maxLines: 1,
                       style: GoogleFonts.inter(
                         color: AppColors.textSecondary,
@@ -63,7 +132,7 @@ class SellerDashboardShipItemWidget extends StatelessWidget {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                            text: 'Order #XM001',
+                            text: 'Order #${order['order_number'] ?? ''}',
                             style: GoogleFonts.inter(
                               fontSize: 12.0,
                             ),
@@ -73,7 +142,7 @@ class SellerDashboardShipItemWidget extends StatelessWidget {
                             style: TextStyle(),
                           ),
                           TextSpan(
-                            text: '\$450.00',
+                            text: '\$${_formatPrice(order['total_amount'])}',
                             style: GoogleFonts.inter(
                               color: Color(0xFF689FFF),
                               fontSize: 12.0,
@@ -88,13 +157,14 @@ class SellerDashboardShipItemWidget extends StatelessWidget {
               ),
               Container(
                 decoration: BoxDecoration(
-                  color: AppColors.secondary,
+                  color: _isSalePending ? Color(0xFFD97706) : AppColors.secondary,
                   borderRadius: BorderRadius.circular(6.0),
                 ),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(12.0, 8.0, 12.0, 8.0),
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(12.0, 8.0, 12.0, 8.0),
                   child: Text(
-                    'Ship',
+                    _isSalePending ? 'Pending' : 'Ship',
                     style: GoogleFonts.inter(),
                   ),
                 ),
