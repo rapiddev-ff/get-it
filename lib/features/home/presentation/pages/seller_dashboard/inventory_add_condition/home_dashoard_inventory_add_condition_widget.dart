@@ -126,10 +126,7 @@ class _HomeDashoardInventoryAddConditionWidgetState
                                         EdgeInsets.symmetric(vertical: 14.0),
                                     child: Text(
                                       listViewConditionsRow.name,
-                                      style: GoogleFonts.inter(
-                                        fontSize: 15.0,
-                                        color: AppColors.textPrimary,
-                                      ),
+                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
                                     ),
                                   ),
                                 ),

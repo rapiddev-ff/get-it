@@ -1,4 +1,3 @@
-import '/core/theme/app_colors.dart';
 import '/core/utils/value_utils.dart';
 import '/core/widgets/app_gradient_button.dart';
 import 'package:flutter/material.dart';
@@ -65,12 +64,7 @@ class EmptyStateWidget extends StatelessWidget {
             child: Text(
               description,
               textAlign: TextAlign.center,
-              style: GoogleFonts.inter(
-                fontWeight: FontWeight.normal,
-                fontSize: 14.0,
-                color: AppColors.textSecondary,
-                height: 1.5,
-              ),
+              style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
             ),
           ),
           if (hasButton)

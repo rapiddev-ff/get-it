@@ -1,7 +1,6 @@
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class SettingsItemWidget extends StatelessWidget {
   const SettingsItemWidget({
@@ -42,11 +41,7 @@ class SettingsItemWidget extends StatelessWidget {
                   children: [
                     Text(
                       tittle,
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14.0,
-                        color: AppColors.textPrimary,
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                     ),
                     Text(
                       value,

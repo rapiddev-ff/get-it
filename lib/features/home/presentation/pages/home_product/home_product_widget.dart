@@ -246,10 +246,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                 ),
                 Text(
                   'Product Details',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.0,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
                 IconButton(
                   style: IconButton.styleFrom(
@@ -518,10 +515,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                                   product.seller?.username))
                                                 Text(
                                                   product.seller!.username,
-                                                  style: GoogleFonts.inter(
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 16.0,
-                                                  ),
+                                                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
                                                 ),
                                               Padding(
                                                 padding: EdgeInsetsDirectional
@@ -567,10 +561,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                               padding: EdgeInsets.only(top: 24.0),
                               child: Text(
                                 'Description',
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16.0,
-                                ),
+                                style: Theme.of(context).textTheme.titleSmall!,
                               ),
                             ),
                             Padding(
@@ -592,10 +583,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                             ),
                             Text(
                               'Condition & Details',
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16.0,
-                              ),
+                              style: Theme.of(context).textTheme.titleSmall!,
                             ),
                             if (product.conditions.isNotEmpty)
                               _buildDetailRow(
@@ -638,10 +626,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                         ),
                                         Text(
                                           'Shipping Information',
-                                          style: GoogleFonts.inter(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 16.0,
-                                          ),
+                                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
                                         ),
                                       ].divide(SizedBox(width: 12.0)),
                                     ),
@@ -650,11 +635,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                       product.freeShipping
                                           ? 'Free shipping'
                                           : 'Shipping cost: ${_formatCurrency(_getShippingCost(product), prefix: '\$')}',
-                                      style: GoogleFonts.inter(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.0,
-                                        color: AppColors.textPrimary,
-                                      ),
+                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                                     ),
                                     SizedBox(height: 4.0),
                                     Text(
@@ -850,10 +831,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
     if (!hasFlashSale && !hasDiscount) {
       return Text(
         _formatCurrency(product.price, prefix: '\$'),
-        style: GoogleFonts.inter(
-          fontWeight: FontWeight.bold,
-          fontSize: 24.0,
-        ),
+        style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
       );
     }
 
@@ -881,10 +859,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
       children: [
         Text(
           _formatCurrency(currentPrice, prefix: '\$'),
-          style: GoogleFonts.inter(
-            fontWeight: FontWeight.bold,
-            fontSize: 24.0,
-          ),
+          style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
         ),
         if (originalPrice != null) ...[
           SizedBox(width: 8.0),
@@ -937,10 +912,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
         padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 5.0),
         child: Text(
           label,
-          style: GoogleFonts.inter(
-            fontWeight: FontWeight.normal,
-            fontSize: 14.0,
-          ),
+          style: Theme.of(context).textTheme.bodyMedium!,
         ),
       ),
     );
@@ -1013,10 +985,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
     final textPainter = TextPainter(
       text: TextSpan(
         text: text,
-        style: GoogleFonts.inter(
-          fontWeight: FontWeight.normal,
-          fontSize: 14.0,
-        ),
+        style: Theme.of(context).textTheme.bodyMedium!,
       ),
       maxLines: 1,
       textDirection: ui.TextDirection.ltr,
@@ -1041,10 +1010,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
               children: [
                 Text(
                   'Tags',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24.0,
-                  ),
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 24.0),
                 Flexible(

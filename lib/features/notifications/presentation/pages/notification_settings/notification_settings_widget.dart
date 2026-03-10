@@ -90,11 +90,7 @@ class _NotificationSettingsWidgetState
                     Expanded(
                       child: Text(
                         'Notification Type',
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16.0,
-                          color: AppColors.textPrimary,
-                        ),
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
                       ),
                     ),
                     Switch.adaptive(

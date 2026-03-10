@@ -56,12 +56,7 @@ class CheckoutItemWidget extends StatelessWidget {
                           feedProduct?.title,
                           'N/A',
                         ),
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18.0,
-                          color: AppColors.textPrimary,
-                          height: 1.5,
-                        ),
+                        style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                       ),
                     ),
                     Icon(
@@ -77,11 +72,7 @@ class CheckoutItemWidget extends StatelessWidget {
                     '',
                   ),
                   maxLines: 1,
-                  style: GoogleFonts.inter(
-                    color: AppColors.textSecondary,
-                    fontSize: 12.0,
-                    height: 1.5,
-                  ),
+                  style: Theme.of(context).textTheme.labelSmall!.copyWith(height: 1.5),
                   overflow: TextOverflow.ellipsis,
                 ),
                 RichText(
@@ -97,11 +88,7 @@ class CheckoutItemWidget extends StatelessWidget {
                       ),
                       TextSpan(
                         text: '@',
-                        style: GoogleFonts.inter(
-                          color: AppColors.textSecondary,
-                          fontSize: 12.0,
-                          height: 1.5,
-                        ),
+                        style: Theme.of(context).textTheme.labelSmall!.copyWith(height: 1.5),
                       ),
                       TextSpan(
                         text: valueOrDefault<String>(
@@ -128,12 +115,7 @@ class CheckoutItemWidget extends StatelessWidget {
                         child: Text(
                           NumberFormat('#,##0.##', 'en_US')
                               .format(feedProduct!.price * (quantity!)),
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18.0,
-                            color: AppColors.textPrimary,
-                            height: 1.5,
-                          ),
+                          style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                         ),
                       ),
                       InkWell(
@@ -151,11 +133,7 @@ class CheckoutItemWidget extends StatelessWidget {
                           quantity?.toString(),
                           '1',
                         ),
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16.0,
-                          color: AppColors.textPrimary,
-                        ),
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
                       ),
                       InkWell(
                         onTap: () async {

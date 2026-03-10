@@ -144,9 +144,7 @@ class _SettingsReportWidgetState extends ConsumerState<SettingsReportWidget>
                             obscureText: false,
                             decoration: appInputDecoration(
                                 'Please give us as much detail about the problem you are experiencing.'),
-                            style: GoogleFonts.inter(
-                              fontSize: 14.0,
-                            ),
+                            style: Theme.of(context).textTheme.bodyMedium!,
                             maxLines: null,
                             minLines: 5,
                             maxLength: 1000,
@@ -168,12 +166,7 @@ class _SettingsReportWidgetState extends ConsumerState<SettingsReportWidget>
                           children: [
                             Text(
                               '${_model.textController?.text.length ?? 0}/1000',
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14.0,
-                                color: AppColors.textSecondary,
-                                height: 1.5,
-                              ),
+                              style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
                             ),
                           ],
                         ),

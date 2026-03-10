@@ -158,11 +158,7 @@ class _SettingsMyProfileWidgetState
                           children: [
                             Text(
                               '@${authState.username}',
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18.0,
-                                color: AppColors.textPrimary,
-                              ),
+                              style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
                             ),
                             Padding(
                               padding: EdgeInsets.only(top: 8.0),
@@ -205,11 +201,7 @@ class _SettingsMyProfileWidgetState
                                           .toString(),
                                       '0',
                                     ),
-                                    style: GoogleFonts.inter(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14.0,
-                                      color: AppColors.textPrimary,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                                   ),
                                   Text(
                                     '(${authState.isSeller ? valueOrDefault<String>(
@@ -579,11 +571,7 @@ class _SettingsMyProfileWidgetState
             Expanded(
               child: Text(
                 'My Ratings from Sellers',
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18.0,
-                  color: AppColors.textPrimary,
-                ),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
               ),
             ),
             Padding(
@@ -624,11 +612,7 @@ class _SettingsMyProfileWidgetState
             Expanded(
               child: Text(
                 'My Ratings from Sellers',
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18.0,
-                  color: AppColors.textPrimary,
-                ),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
               ),
             ),
             Padding(
@@ -669,11 +653,7 @@ class _SettingsMyProfileWidgetState
             Expanded(
               child: Text(
                 'My Ratings from Buyers',
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18.0,
-                  color: AppColors.textPrimary,
-                ),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
               ),
             ),
             Padding(

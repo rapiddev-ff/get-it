@@ -51,11 +51,7 @@ class _StripeRefreshWidgetState extends State<StripeRefreshWidget> {
                   child: Text(
                     'Stripe Connection Failed',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24.0,
-                      color: AppColors.textPrimary,
-                    ),
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
                   ),
                 ),
                 Padding(

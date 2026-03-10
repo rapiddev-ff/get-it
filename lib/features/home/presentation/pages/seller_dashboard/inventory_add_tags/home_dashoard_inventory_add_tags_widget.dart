@@ -293,11 +293,7 @@ class _HomeDashoardInventoryAddTagsWidgetState
                                             children: [
                                               Text(
                                                 tagsListItem.name,
-                                                style: GoogleFonts.inter(
-                                                  fontSize: 14.0,
-                                                  color: AppColors.textPrimary,
-                                                  height: 1.5,
-                                                ),
+                                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
                                               ),
                                               if (tags.contains(Tag(
                                                 id: tagsListItem.id,

@@ -260,11 +260,7 @@ class _SettingsBlockListWidgetState
                   decoration: InputDecoration(
                     isDense: false,
                     hintText: 'Search blocked users...',
-                    hintStyle: GoogleFonts.inter(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 15.0,
-                      color: AppColors.textSecondary,
-                    ),
+                    hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 15.0),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: AppColors.neutral700,
@@ -299,9 +295,7 @@ class _SettingsBlockListWidgetState
                       size: 24.0,
                     ),
                   ),
-                  style: GoogleFonts.inter(
-                    color: AppColors.textPrimary,
-                  ),
+                  style: Theme.of(context).textTheme.bodyMedium!,
                   cursorColor: AppColors.textPrimary,
                   enableInteractiveSelection: true,
                 ),

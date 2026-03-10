@@ -209,11 +209,7 @@ class _HomeSellerProfileReviewsWidgetState
                                     widget.sellerDataType?.username,
                                     'N/A',
                                   ),
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18.0,
-                                    color: AppColors.textPrimary,
-                                  ),
+                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(top: 8.0),
@@ -237,11 +233,7 @@ class _HomeSellerProfileReviewsWidgetState
                                                 ? _currentRatingAsBuyer
                                                 : _currentRatingAsSeller)
                                             .toString(),
-                                        style: GoogleFonts.inter(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14.0,
-                                          color: AppColors.textPrimary,
-                                        ),
+                                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                                       ),
                                       Text(
                                         '(${_model.state == 'As Buyer' ? _currentTotalReviewsAsBuyer : _currentTotalReviewsAsSeller}) reviews',
@@ -669,12 +661,7 @@ class _HomeSellerProfileReviewsWidgetState
                         reviewerUsername.isNotEmpty
                             ? '@$reviewerUsername'
                             : 'Anonymous',
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.0,
-                          color: AppColors.textPrimary,
-                          height: 1.5,
-                        ),
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                       ),
                       RatingBarIndicator(
                         itemBuilder: (context, index) => Icon(
@@ -753,12 +740,7 @@ class _HomeSellerProfileReviewsWidgetState
                             if (productTitle.isNotEmpty)
                               Text(
                                 productTitle,
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 14.0,
-                                  color: AppColors.textPrimary,
-                                  height: 1.5,
-                                ),
+                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
                               ),
                             if (productPrice > 0)
                               Text(
@@ -780,12 +762,7 @@ class _HomeSellerProfileReviewsWidgetState
             if (content.isNotEmpty)
               Text(
                 content,
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 14.0,
-                  color: AppColors.textSecondary,
-                  height: 1.5,
-                ),
+                style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
               ),
             if (orderDate != null)
               Text(

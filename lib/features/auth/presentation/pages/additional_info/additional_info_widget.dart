@@ -78,16 +78,9 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
     return 'valid';
   }
 
-  TextStyle get _labelStyle => GoogleFonts.inter(
-        fontWeight: FontWeight.w500,
-        color: AppColors.textPrimary,
-        height: 1.4,
-      );
+  TextStyle get _labelStyle => Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4);
 
-  TextStyle get _errorSmallStyle => GoogleFonts.inter(
-        color: AppColors.error,
-        fontSize: 12.0,
-      );
+  TextStyle get _errorSmallStyle => Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error);
 
   bool get _isFormValid {
     return (_model.firstnameTextController?.text ?? '').isNotEmpty &&

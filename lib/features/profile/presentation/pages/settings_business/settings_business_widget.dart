@@ -128,9 +128,7 @@ class _SettingsBusinessWidgetState extends State<SettingsBusinessWidget> {
                           BorderRadius.circular(AppConstants.radiusTextField4),
                     ),
                   ),
-                  style: GoogleFonts.inter(
-                    fontSize: 14.0,
-                  ),
+                  style: Theme.of(context).textTheme.bodyMedium!,
                   cursorColor: AppColors.textPrimary,
                   enableInteractiveSelection: true,
                 ),

@@ -115,11 +115,7 @@ class _PhoneVerificationPage2WidgetState
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: Text(
                             'Enter Verification Code',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24.0,
-                              color: AppColors.textPrimary,
-                            ),
+                            style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
                           ),
                         ),
                         Padding(

@@ -327,11 +327,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                   product?.title ?? 'Loading...',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.0,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                 ),
                 SizedBox(height: 6.0),
                 Row(
@@ -511,11 +507,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                             children: [
                               Text(
                                 'Discount',
-                                style: GoogleFonts.inter(
-                                  fontSize: 15.0,
-                                  color: AppColors.textPrimary,
-                                  height: 1.5,
-                                ),
+                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
                               ),
                               Switch.adaptive(
                                 value: switchValue!,
@@ -535,11 +527,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                               padding: EdgeInsets.only(top: 20.0),
                               child: Text(
                                 'Discount Percentage',
-                                style: GoogleFonts.inter(
-                                  fontSize: 15.0,
-                                  color: AppColors.textPrimary,
-                                  height: 1.5,
-                                ),
+                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
                               ),
                             ),
                             Padding(
@@ -607,11 +595,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                             children: [
                               Text(
                                 'Search Shortlist',
-                                style: GoogleFonts.inter(
-                                  fontSize: 15.0,
-                                  color: AppColors.textPrimary,
-                                  height: 1.5,
-                                ),
+                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
                               ),
                               Text(
                                 '${selectedProductIds.length} Items',
@@ -674,11 +658,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                         horizontal: 16.0, vertical: 8.0),
                                     child: Text(
                                       'Requested',
-                                      style: GoogleFonts.inter(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15.0,
-                                        color: AppColors.textPrimary,
-                                      ),
+                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0),
                                     ),
                                   ),
                                 ),

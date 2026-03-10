@@ -168,11 +168,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                 isDense: false,
                                 hintText:
                                     'Search products, characters, years...',
-                                hintStyle: GoogleFonts.inter(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 15.0,
-                                  color: AppColors.textSecondary,
-                                ),
+                                hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 15.0),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: const BorderSide(
                                     color: AppColors.neutral700,

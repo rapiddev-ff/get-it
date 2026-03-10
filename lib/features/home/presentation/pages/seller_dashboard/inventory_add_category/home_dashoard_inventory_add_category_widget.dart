@@ -108,10 +108,7 @@ class _HomeDashoardInventoryAddCategoryWidgetState
                                         EdgeInsets.symmetric(vertical: 14.0),
                                     child: Text(
                                       listViewCategoriesRow.name,
-                                      style: GoogleFonts.inter(
-                                        fontSize: 15.0,
-                                        color: AppColors.textPrimary,
-                                      ),
+                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
                                     ),
                                   ),
                                 ),

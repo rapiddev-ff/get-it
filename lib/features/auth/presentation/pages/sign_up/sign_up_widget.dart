@@ -115,11 +115,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: Text(
                             'Create Your Account ',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24.0,
-                              color: AppColors.textPrimary,
-                            ),
+                            style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
                           ),
                         ),
                         Padding(
@@ -144,11 +140,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                 padding: const EdgeInsets.only(bottom: 8.0),
                                 child: Text(
                                   'Email',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.textPrimary,
-                                    height: 1.4,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
                                 ),
                               ),
                               SizedBox(
@@ -179,10 +171,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                   padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Please enter your email.',
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.error,
-                                      fontSize: 12.0,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               if (_model.errorEmailFormat)
@@ -190,10 +179,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                   padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Check your email format.',
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.error,
-                                      fontSize: 12.0,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               if (_model.emailAlreadyInUse)
@@ -201,10 +187,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                   padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Email already in use - try signing in instead.',
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.error,
-                                      fontSize: 12.0,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                             ],
@@ -225,11 +208,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                 padding: const EdgeInsets.only(bottom: 8.0),
                                 child: Text(
                                   'Password',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.textPrimary,
-                                    height: 1.4,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
                                 ),
                               ),
                               SizedBox(
@@ -276,10 +255,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                   padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Password is required.',
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.error,
-                                      fontSize: 12.0,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                             ],
@@ -300,11 +276,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                 padding: const EdgeInsets.only(bottom: 8.0),
                                 child: Text(
                                   'Confirm Password',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.textPrimary,
-                                    height: 1.4,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
                                 ),
                               ),
                               SizedBox(
@@ -349,10 +321,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                   padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Confirm Password is required.',
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.error,
-                                      fontSize: 12.0,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               if (_model.errorPaswordsDontMatch)
@@ -360,10 +329,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                   padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Passwords don\'t match',
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.error,
-                                      fontSize: 12.0,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               Padding(
@@ -540,10 +506,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                           padding: const EdgeInsets.only(top: 4.0),
                           child: Text(
                             'Terms not accepted',
-                            style: GoogleFonts.inter(
-                              color: AppColors.error,
-                              fontSize: 12.0,
-                            ),
+                            style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                           ).animate().fade(duration: 600.ms),
                         ),
                       Padding(

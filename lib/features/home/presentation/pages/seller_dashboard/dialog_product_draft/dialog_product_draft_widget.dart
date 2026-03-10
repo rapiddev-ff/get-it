@@ -61,12 +61,7 @@ class DialogProductDraftWidget extends StatelessWidget {
                 child: Text(
                   'You can come back and finish this product anytime from your drafts.',
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.normal,
-                    fontSize: 14.0,
-                    color: AppColors.textPrimary,
-                    height: 1.5,
-                  ),
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
                 ),
               ),
               Padding(

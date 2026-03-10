@@ -134,11 +134,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                             Expanded(
                               child: Text(
                                 'View Profile',
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16.0,
-                                  color: AppColors.textPrimary,
-                                ),
+                                style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
                               ),
                             ),
                             Icon(
@@ -265,11 +261,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                 children: [
                                   Text(
                                     'Enable Swipe Payment',
-                                    style: GoogleFonts.inter(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14.0,
-                                      color: AppColors.textPrimary,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                                   ),
                                   Row(
                                     children: [
@@ -446,11 +438,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                         ),
                         Text(
                           'Business',
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18.0,
-                            color: AppColors.textPrimary,
-                          ),
+                          style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
                         ),
                       ].divide(SizedBox(width: 12.0)),
                     ),
@@ -600,11 +588,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                       !(authState.stripe?.hasAccount ?? false)
                                           ? 'Connect Stripe'
                                           : 'Seller Dashboard',
-                                      style: GoogleFonts.inter(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.0,
-                                        color: AppColors.textPrimary,
-                                      ),
+                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                                     ),
                                     Text(
                                       () {
@@ -717,11 +701,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                 children: [
                                   Text(
                                     'Connect Shopify',
-                                    style: GoogleFonts.inter(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14.0,
-                                      color: AppColors.textPrimary,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                                   ),
                                   Text(
                                     'Not Connected',

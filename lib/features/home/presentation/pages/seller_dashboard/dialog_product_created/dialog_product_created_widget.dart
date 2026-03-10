@@ -65,12 +65,7 @@ class DialogProductCreatedWidget extends StatelessWidget {
                 child: Text(
                   'Your product is live.',
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.normal,
-                    fontSize: 14.0,
-                    color: AppColors.textPrimary,
-                    height: 1.5,
-                  ),
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
                 ),
               ),
               Padding(

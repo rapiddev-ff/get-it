@@ -177,11 +177,7 @@ class _HomeDashoardShippingWidgetState
                                       children: [
                                         Text(
                                           '${_counts['to_ship'] ?? 0}',
-                                          style: GoogleFonts.inter(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 24.0,
-                                            color: AppColors.textPrimary,
-                                          ),
+                                          style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
                                         ),
                                         Text(
                                           'To Ship',
@@ -211,11 +207,7 @@ class _HomeDashoardShippingWidgetState
                                       children: [
                                         Text(
                                           '${_counts['shipped'] ?? 0}',
-                                          style: GoogleFonts.inter(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 24.0,
-                                            color: AppColors.textPrimary,
-                                          ),
+                                          style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
                                         ),
                                         Text(
                                           'Shipped',
@@ -338,11 +330,7 @@ class _HomeDashoardShippingWidgetState
                     Text(
                       _getProductTitle(order),
                       maxLines: 1,
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14.0,
-                        color: AppColors.textPrimary,
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
@@ -416,11 +404,7 @@ class _HomeDashoardShippingWidgetState
                                   horizontal: 12.0, vertical: 6.0),
                               child: Text(
                                 'Ship',
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14.0,
-                                  color: AppColors.textPrimary,
-                                ),
+                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                               ),
                             ),
                           ),

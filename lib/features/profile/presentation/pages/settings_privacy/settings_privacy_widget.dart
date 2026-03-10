@@ -73,10 +73,7 @@ class SettingsPrivacyWidget extends StatelessWidget {
               children: [
                 Text(
                   'Accepting The Terms',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18.0,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 8.0),
@@ -89,10 +86,7 @@ class SettingsPrivacyWidget extends StatelessWidget {
                   padding: EdgeInsets.only(top: 24.0),
                   child: Text(
                     'Using CardSmart App',
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18.0,
-                    ),
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
                   ),
                 ),
                 Padding(

@@ -106,10 +106,7 @@ class _SettingsBusinessAddressWidgetState
                       children: [
                         Text(
                           'Business Address',
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18.0,
-                          ),
+                          style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
                         ),
                         Padding(
                           padding: EdgeInsets.only(top: 20.0),
@@ -199,8 +196,7 @@ class _SettingsBusinessAddressWidgetState
                                           .map((c) => DropdownMenuItem(
                                                 value: c['code'],
                                                 child: Text(c['name']!,
-                                                    style: GoogleFonts.inter(
-                                                        fontSize: 14.0)),
+                                                    style: Theme.of(context).textTheme.bodyMedium!),
                                               ))
                                           .toList(),
                                       onChanged: (val) => setState(() =>
@@ -235,7 +231,7 @@ class _SettingsBusinessAddressWidgetState
                                         color: AppColors.textSecondary,
                                         size: 24.0,
                                       ),
-                                      style: GoogleFonts.inter(fontSize: 14.0),
+                                      style: Theme.of(context).textTheme.bodyMedium!,
                                       isExpanded: true,
                                     ),
                                   ].divide(SizedBox(height: 8.0)),
@@ -283,9 +279,7 @@ class _SettingsBusinessAddressWidgetState
                                                       value: name,
                                                       child: Text(name,
                                                           style:
-                                                              GoogleFonts.inter(
-                                                                  fontSize:
-                                                                      14.0)),
+                                                              Theme.of(context).textTheme.bodyMedium!),
                                                     ))
                                                 .toList(),
                                             onChanged: (val) => setState(() =>
@@ -323,8 +317,7 @@ class _SettingsBusinessAddressWidgetState
                                               color: AppColors.textSecondary,
                                               size: 24.0,
                                             ),
-                                            style: GoogleFonts.inter(
-                                                fontSize: 14.0),
+                                            style: Theme.of(context).textTheme.bodyMedium!,
                                             isExpanded: true,
                                           );
                                         } else {

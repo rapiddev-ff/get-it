@@ -89,10 +89,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
                           padding: EdgeInsets.only(bottom: 8.0),
                           child: Text(
                             'Reset Your Password',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24.0,
-                            ),
+                            style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
                           ),
                         ),
                         Padding(
@@ -109,11 +106,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
                               padding: EdgeInsets.only(bottom: 4.0),
                               child: Text(
                                 'Email',
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.textPrimary,
-                                  height: 1.4,
-                                ),
+                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
                               ),
                             ),
                             Container(

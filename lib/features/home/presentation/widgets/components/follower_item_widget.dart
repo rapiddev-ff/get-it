@@ -1,7 +1,6 @@
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class FollowerItemWidget extends StatelessWidget {
   const FollowerItemWidget({
@@ -51,10 +50,7 @@ class FollowerItemWidget extends StatelessWidget {
               Expanded(
                 child: Text(
                   '@$username',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16.0,
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -75,10 +71,7 @@ class FollowerItemWidget extends StatelessWidget {
                         EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
                     child: Text(
                       'Message',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.normal,
-                        fontSize: 14.0,
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium!,
                     ),
                   ),
                 ),

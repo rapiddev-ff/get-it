@@ -248,11 +248,7 @@ class _SettingsEditProfileWidgetState
                     padding: EdgeInsets.only(top: 20.0),
                     child: Text(
                       'Username',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.textPrimary,
-                        height: 1.4,
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
                     ),
                   ),
                   Padding(
@@ -287,9 +283,7 @@ class _SettingsEditProfileWidgetState
                         autofillHints: [AutofillHints.username],
                         obscureText: false,
                         decoration: appInputDecoration('Username'),
-                        style: GoogleFonts.inter(
-                          color: AppColors.textPrimary,
-                        ),
+                        style: Theme.of(context).textTheme.bodyMedium!,
                         cursorColor: AppColors.textPrimary,
                         enableInteractiveSelection: true,
                         inputFormatters: [
@@ -306,10 +300,7 @@ class _SettingsEditProfileWidgetState
                       padding: EdgeInsets.only(top: 4.0),
                       child: Text(
                         'This username cannot be used.',
-                        style: GoogleFonts.inter(
-                          color: AppColors.error,
-                          fontSize: 12.0,
-                        ),
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                       ).animate().fade(duration: 600.ms),
                     ),
                   if ((FormValidators.usernameValidationResult(
@@ -321,10 +312,7 @@ class _SettingsEditProfileWidgetState
                       child: Text(
                         FormValidators.usernameValidationResult(
                             _model.usernameTextController!.text),
-                        style: GoogleFonts.inter(
-                          color: AppColors.error,
-                          fontSize: 12.0,
-                        ),
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                       ).animate().fade(duration: 600.ms),
                     ),
                   if ((_model.usernameTextController!.text != '') &&
@@ -367,11 +355,7 @@ class _SettingsEditProfileWidgetState
                     padding: EdgeInsets.only(top: 16.0),
                     child: Text(
                       'Bio',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.textPrimary,
-                        height: 1.4,
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
                     ),
                   ),
                   Padding(
@@ -395,9 +379,7 @@ class _SettingsEditProfileWidgetState
                         decoration: appInputDecoration(
                           'Describe yourself or your collection focus',
                         ),
-                        style: GoogleFonts.inter(
-                          color: AppColors.textPrimary,
-                        ),
+                        style: Theme.of(context).textTheme.bodyMedium!,
                         maxLines: null,
                         minLines: 4,
                         maxLength: 500,
@@ -439,11 +421,7 @@ class _SettingsEditProfileWidgetState
                   ),
                   Text(
                     'First Name',
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.textPrimary,
-                      height: 1.4,
-                    ),
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 8.0),
@@ -465,9 +443,7 @@ class _SettingsEditProfileWidgetState
                         textInputAction: TextInputAction.done,
                         obscureText: false,
                         decoration: appInputDecoration('First Name'),
-                        style: GoogleFonts.inter(
-                          color: AppColors.textPrimary,
-                        ),
+                        style: Theme.of(context).textTheme.bodyMedium!,
                         cursorColor: AppColors.textPrimary,
                         enableInteractiveSelection: true,
                         inputFormatters: [
@@ -484,21 +460,14 @@ class _SettingsEditProfileWidgetState
                       padding: EdgeInsets.only(top: 4.0),
                       child: Text(
                         'First name cannot be used.',
-                        style: GoogleFonts.inter(
-                          color: AppColors.error,
-                          fontSize: 12.0,
-                        ),
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                       ).animate().fade(duration: 600.ms),
                     ),
                   Padding(
                     padding: EdgeInsets.only(top: 20.0),
                     child: Text(
                       'Last Name',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.textPrimary,
-                        height: 1.4,
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
                     ),
                   ),
                   Padding(
@@ -521,9 +490,7 @@ class _SettingsEditProfileWidgetState
                         textInputAction: TextInputAction.done,
                         obscureText: false,
                         decoration: appInputDecoration('Last Name'),
-                        style: GoogleFonts.inter(
-                          color: AppColors.textPrimary,
-                        ),
+                        style: Theme.of(context).textTheme.bodyMedium!,
                         cursorColor: AppColors.textPrimary,
                         enableInteractiveSelection: true,
                         inputFormatters: [
@@ -540,10 +507,7 @@ class _SettingsEditProfileWidgetState
                       padding: EdgeInsets.only(top: 4.0),
                       child: Text(
                         'Last name cannot be used.',
-                        style: GoogleFonts.inter(
-                          color: AppColors.error,
-                          fontSize: 12.0,
-                        ),
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                       ).animate().fade(duration: 600.ms),
                     ),
                   Divider(

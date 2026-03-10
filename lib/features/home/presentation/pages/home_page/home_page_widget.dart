@@ -137,10 +137,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                 ),
                 Text(
                   AppConstants.appName,
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.0,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
                 IconButton(
                   style: IconButton.styleFrom(
@@ -437,10 +434,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
           children: [
             Text(
               'Welcome back, ${authData.firstName}',
-              style: GoogleFonts.inter(
-                fontWeight: FontWeight.bold,
-                fontSize: 24.0,
-              ),
+              style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
             ),
             Text(
               'Here\'s your business overview',
@@ -475,10 +469,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                           _jsonStr(getSellerDashboard, 'revenue'),
                           '-',
                         ),
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24.0,
-                        ),
+                        style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
                       ),
                       if (_jsonStr(getSellerDashboard, 'revenue_change_pct') !=
                           null)
@@ -508,10 +499,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
               padding: EdgeInsets.only(top: 40.0),
               child: Text(
                 'Catalog New Items',
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 18.0,
-                ),
+                style: Theme.of(context).textTheme.titleMedium!,
               ),
             ),
             Padding(
@@ -542,10 +530,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                         padding: EdgeInsets.only(top: 8.0),
                         child: Text(
                           'AI Scan Item',
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16.0,
-                          ),
+                          style: Theme.of(context).textTheme.titleSmall!,
                         ),
                       ),
                       Text(
@@ -590,10 +575,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                             ),
                             Text(
                               'Shopify Sync',
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14.0,
-                              ),
+                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                             ),
                           ].divide(SizedBox(height: 8.0)),
                         ),
@@ -607,10 +589,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
               padding: EdgeInsets.only(top: 40.0),
               child: Text(
                 'Quick Actions',
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 18.0,
-                ),
+                style: Theme.of(context).textTheme.titleMedium!,
               ),
             ),
             Padding(
@@ -671,10 +650,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                   children: [
                     Text(
                       'Items to Ship',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18.0,
-                      ),
+                      style: Theme.of(context).textTheme.titleMedium!,
                     ),
                     if (_pendingShipCount > 0)
                       Text(
@@ -785,10 +761,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                         children: [
                           Text(
                             'Stripe Status',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14.0,
-                            ),
+                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                           ),
                           Container(
                             padding: const EdgeInsets.symmetric(
@@ -941,10 +914,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                   _jsonStr(getSellerDashboard, key),
                   '-',
                 ),
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24.0,
-                ),
+                style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
                 label,
@@ -987,10 +957,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                 ),
                 Text(
                   label,
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.0,
-                  ),
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                 ),
               ].divide(SizedBox(height: 8.0)),
             ),
@@ -1031,10 +998,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                   padding: EdgeInsets.only(top: 8.0),
                   child: Text(
                     label,
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14.0,
-                    ),
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                   ),
                 ),
                 if (subtitle != null)

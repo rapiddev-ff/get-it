@@ -165,11 +165,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                   Text(
                                     widget.product!.conditionName,
                                     maxLines: 1,
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.textSecondary,
-                                      fontSize: 12.0,
-                                      height: 1.5,
-                                    ),
+                                    style: Theme.of(context).textTheme.labelSmall!.copyWith(height: 1.5),
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 Padding(
@@ -191,11 +187,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                             ? 'Purchased ${DateFormat('MMM dd, yyyy').format(widget.product!.createdAt!)}'
                                             : '',
                                         maxLines: 1,
-                                        style: GoogleFonts.inter(
-                                          color: AppColors.textSecondary,
-                                          fontSize: 12.0,
-                                          height: 1.5,
-                                        ),
+                                        style: Theme.of(context).textTheme.labelSmall!.copyWith(height: 1.5),
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ],
@@ -278,11 +270,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                           ?.toString(),
                                       '0',
                                     ),
-                                    style: GoogleFonts.inter(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14.0,
-                                      color: AppColors.textPrimary,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                                   ),
                                   Text(
                                     '${(widget.reviewRole == 'as_buyer' ? widget.sellerDataType?.totalReviewsAsBuyer : widget.sellerDataType?.totalReviewsAsSeller)?.toString() ?? '0'} reviews',
@@ -426,9 +414,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                         AppConstants.radiusTextField4),
                                   ),
                                 ),
-                                style: GoogleFonts.inter(
-                                  color: AppColors.textPrimary,
-                                ),
+                                style: Theme.of(context).textTheme.bodyMedium!,
                                 maxLines: null,
                                 minLines: 5,
                                 maxLength: 500,
@@ -453,22 +439,14 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                   child: Text(
                                     'Minimum 20 characters',
                                     maxLines: 1,
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.textSecondary,
-                                      fontSize: 12.0,
-                                      height: 1.5,
-                                    ),
+                                    style: Theme.of(context).textTheme.labelSmall!.copyWith(height: 1.5),
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                                 Text(
                                   '${textController?.text.length ?? 0}/500',
                                   maxLines: 1,
-                                  style: GoogleFonts.inter(
-                                    color: AppColors.textSecondary,
-                                    fontSize: 12.0,
-                                    height: 1.5,
-                                  ),
+                                  style: Theme.of(context).textTheme.labelSmall!.copyWith(height: 1.5),
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ],

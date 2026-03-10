@@ -68,11 +68,7 @@ class ReviewItemWidget extends StatelessWidget {
                           review.reviewer?.username,
                           'N/A',
                         ),
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.0,
-                          color: AppColors.textPrimary,
-                        ),
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                       ),
                       Text(
                         dateTimeFormat(

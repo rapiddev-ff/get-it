@@ -231,11 +231,7 @@ class _HomeDashoardShortlistAddWidgetState
                                     horizontal: 16.0, vertical: 8.0),
                                 child: Text(
                                   '${selectedIds.length} selected',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 15.0,
-                                    color: AppColors.textPrimary,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0),
                                 ),
                               ),
                             ),
@@ -281,11 +277,7 @@ class _HomeDashoardShortlistAddWidgetState
                                   ),
                                   Text(
                                     'Select All',
-                                    style: GoogleFonts.inter(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 15.0,
-                                      color: AppColors.textPrimary,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0),
                                   ),
                                 ].divide(SizedBox(width: 8.0)),
                               ),
@@ -391,11 +383,7 @@ class _HomeDashoardShortlistAddWidgetState
                   children: [
                     Text(
                       product.title,
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16.0,
-                        color: AppColors.textPrimary,
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 4.0),
                     Row(

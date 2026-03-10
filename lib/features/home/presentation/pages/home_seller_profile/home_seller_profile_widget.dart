@@ -309,10 +309,7 @@ class _HomeSellerProfileWidgetState
                 ),
                 Text(
                   'Seller Profile',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.0,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
                 Builder(
                   builder: (context) => IconButton(
@@ -398,10 +395,7 @@ class _HomeSellerProfileWidgetState
                                     getSellerData?.username,
                                     'N/A',
                                   ),
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18.0,
-                                  ),
+                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(top: 8.0),
@@ -432,11 +426,7 @@ class _HomeSellerProfileWidgetState
                                               ?.toString(),
                                           '0',
                                         ),
-                                        style: GoogleFonts.inter(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14.0,
-                                          color: AppColors.textPrimary,
-                                        ),
+                                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                                       ),
                                       Text(
                                         '(${(roleState == 'As Buyer' ? getSellerData?.totalReviewsAsBuyer : getSellerData?.totalReviewsAsSeller)?.toString()}) reviews',
@@ -464,10 +454,7 @@ class _HomeSellerProfileWidgetState
                                                   .toString(),
                                               '0',
                                             ),
-                                            style: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 16.0,
-                                            ),
+                                            style: Theme.of(context).textTheme.titleSmall!,
                                           ),
                                           Text(
                                             'Items',
@@ -490,10 +477,7 @@ class _HomeSellerProfileWidgetState
                                                   .toString(),
                                               '0 ',
                                             ),
-                                            style: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 16.0,
-                                            ),
+                                            style: Theme.of(context).textTheme.titleSmall!,
                                           ),
                                           Text(
                                             'Sold',
@@ -516,10 +500,7 @@ class _HomeSellerProfileWidgetState
                                                   .toString(),
                                               '0',
                                             ),
-                                            style: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 16.0,
-                                            ),
+                                            style: Theme.of(context).textTheme.titleSmall!,
                                           ),
                                           Text(
                                             'Followers',
@@ -550,10 +531,7 @@ class _HomeSellerProfileWidgetState
                               getSellerData?.bio,
                               'N/A',
                             ),
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 14.0,
-                            ),
+                            style: Theme.of(context).textTheme.bodyMedium!,
                           ),
                         ),
                       Padding(
@@ -832,11 +810,7 @@ class _HomeSellerProfileWidgetState
                                       isDense: false,
                                       hintText:
                                           'Search products, characters, years...',
-                                      hintStyle: GoogleFonts.inter(
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 15.0,
-                                        color: AppColors.textSecondary,
-                                      ),
+                                      hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 15.0),
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: AppColors.neutral700,
@@ -875,9 +849,7 @@ class _HomeSellerProfileWidgetState
                                         size: 24.0,
                                       ),
                                     ),
-                                    style: GoogleFonts.inter(
-                                      fontSize: 14.0,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodyMedium!,
                                     cursorColor: AppColors.textPrimary,
                                     enableInteractiveSelection: true,
                                   ),
@@ -918,9 +890,7 @@ class _HomeSellerProfileWidgetState
                                                 vertical: 8.0),
                                             child: Text(
                                               'All (24)',
-                                              style: GoogleFonts.inter(
-                                                fontSize: 14.0,
-                                              ),
+                                              style: Theme.of(context).textTheme.bodyMedium!,
                                             ),
                                           ),
                                         ),
@@ -1131,10 +1101,7 @@ class _HomeSellerProfileWidgetState
                     children: [
                       Text(
                         reviewsItem.reviewer?.username ?? '',
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.0,
-                        ),
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                       ),
                       RatingBarIndicator(
                         itemBuilder: (context, index) => Icon(
@@ -1163,10 +1130,7 @@ class _HomeSellerProfileWidgetState
             ),
             Text(
               reviewsItem.content,
-              style: GoogleFonts.inter(
-                fontWeight: FontWeight.normal,
-                fontSize: 14.0,
-              ),
+              style: Theme.of(context).textTheme.bodyMedium!,
             ),
           ].divide(SizedBox(height: 12.0)),
         ),

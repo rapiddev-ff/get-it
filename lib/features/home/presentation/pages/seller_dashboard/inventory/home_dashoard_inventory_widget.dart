@@ -295,11 +295,7 @@ class _HomeDashoardInventoryWidgetState
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: Text(
                       '${itemsCount?.toString()} Items',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16.0,
-                        color: AppColors.textPrimary,
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
                     ),
                   ),
                   Expanded(

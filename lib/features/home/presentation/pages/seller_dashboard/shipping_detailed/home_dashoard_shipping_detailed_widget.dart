@@ -231,14 +231,14 @@ class _HomeDashoardShippingDetailedWidgetState
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.backgroundSecondary,
         title: Text('Mark as Delivered',
-            style: GoogleFonts.inter(color: AppColors.textPrimary)),
+            style: Theme.of(context).textTheme.bodyMedium!),
         content: Text('Are you sure this order has been delivered?',
-            style: GoogleFonts.inter(color: AppColors.textSecondary)),
+            style: Theme.of(context).textTheme.labelMedium!),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
             child: Text('No',
-                style: GoogleFonts.inter(color: AppColors.textSecondary)),
+                style: Theme.of(context).textTheme.labelMedium!),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
@@ -320,7 +320,7 @@ class _HomeDashoardShippingDetailedWidgetState
                 ? Center(
                     child: Text('Order not found',
                         style:
-                            GoogleFonts.inter(color: AppColors.textSecondary)))
+                            Theme.of(context).textTheme.labelMedium!))
                 : SafeArea(
                     child: SingleChildScrollView(
                       child: Column(
@@ -377,11 +377,7 @@ class _HomeDashoardShippingDetailedWidgetState
                                             ),
                                             Text(
                                               _getProductTitle(),
-                                              style: GoogleFonts.inter(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14.0,
-                                                color: AppColors.textPrimary,
-                                              ),
+                                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                                             ),
                                             Text(
                                               'Qty: ${_getQuantity()}',
@@ -410,11 +406,7 @@ class _HomeDashoardShippingDetailedWidgetState
                                                   .fromSTEB(0.0, 4.0, 0.0, 0.0),
                                               child: Text(
                                                 '\$${_formatPrice(_order!['total_amount'])}',
-                                                style: GoogleFonts.inter(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 14.0,
-                                                  color: AppColors.textPrimary,
-                                                ),
+                                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                                               ),
                                             ),
                                           ].divide(SizedBox(height: 4.0)),
@@ -437,11 +429,7 @@ class _HomeDashoardShippingDetailedWidgetState
                                 left: 16.0, top: 24.0, right: 16.0),
                             child: Text(
                               'Shipping Address',
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16.0,
-                                color: AppColors.textPrimary,
-                              ),
+                              style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
                             ),
                           ),
                           Padding(
@@ -462,11 +450,7 @@ class _HomeDashoardShippingDetailedWidgetState
                                     if (address != null) ...[
                                       Text(
                                         address['full_name']?.toString() ?? '',
-                                        style: GoogleFonts.inter(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14.0,
-                                          color: AppColors.textPrimary,
-                                        ),
+                                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                                       ),
                                       Text(
                                         [
@@ -631,11 +615,7 @@ class _HomeDashoardShippingDetailedWidgetState
                                   ),
                                   child: Text(
                                     'Update Tracking',
-                                    style: GoogleFonts.inter(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 15.0,
-                                      color: AppColors.textPrimary,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0),
                                   ),
                                 ),
                               ),
@@ -671,11 +651,7 @@ class _HomeDashoardShippingDetailedWidgetState
                                     ),
                                     child: Text(
                                       'Mark as Delivered',
-                                      style: GoogleFonts.inter(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15.0,
-                                        color: AppColors.textPrimary,
-                                      ),
+                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0),
                                     ),
                                   ),
                                 ),
@@ -761,11 +737,7 @@ class _HomeDashoardShippingDetailedWidgetState
                                       ),
                                       child: Text(
                                         'Cancel',
-                                        style: GoogleFonts.inter(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 15.0,
-                                          color: AppColors.textPrimary,
-                                        ),
+                                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0),
                                       ),
                                     ),
                                   ),
@@ -808,11 +780,7 @@ class _HomeDashoardShippingDetailedWidgetState
                                               )
                                             : Text(
                                                 'Mark as Shipped',
-                                                style: GoogleFonts.inter(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 15.0,
-                                                  color: AppColors.textPrimary,
-                                                ),
+                                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0),
                                               ),
                                       ),
                                     ),
@@ -935,7 +903,7 @@ class _SellerCancelDialogState extends State<_SellerCancelDialog> {
         TextButton(
           onPressed: () => Navigator.pop(context),
           child: Text('Back',
-              style: GoogleFonts.inter(color: AppColors.textSecondary)),
+              style: Theme.of(context).textTheme.labelMedium!),
         ),
         TextButton(
           onPressed: _selectedReason == null

@@ -126,11 +126,7 @@ class _SettingsPaymentCardItemWidgetState
                 widget.paymentMethod?.billingDetails?.name,
                 'N/A',
               ),
-              style: GoogleFonts.inter(
-                fontWeight: FontWeight.w500,
-                fontSize: 16.0,
-                color: AppColors.textPrimary,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
             ),
             Text(
               '${valueOrDefault<String>(

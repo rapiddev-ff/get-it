@@ -183,11 +183,7 @@ class _HomeDashoardShortlistCreateWidgetState
                   children: [
                     Text(
                       'Shortlist Name',
-                      style: GoogleFonts.inter(
-                        fontSize: 15.0,
-                        color: AppColors.textPrimary,
-                        height: 1.5,
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 8.0),
@@ -216,11 +212,7 @@ class _HomeDashoardShortlistCreateWidgetState
                       padding: EdgeInsets.only(top: 24.0),
                       child: Text(
                         'Event/Convention',
-                        style: GoogleFonts.inter(
-                          fontSize: 15.0,
-                          color: AppColors.textPrimary,
-                          height: 1.5,
-                        ),
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
                       ),
                     ),
                     Padding(
@@ -256,11 +248,7 @@ class _HomeDashoardShortlistCreateWidgetState
                               children: [
                                 Text(
                                   'Start Date',
-                                  style: GoogleFonts.inter(
-                                    fontSize: 15.0,
-                                    color: AppColors.textPrimary,
-                                    height: 1.5,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
                                 ),
                                 GestureDetector(
                                   onTap: () =>
@@ -298,11 +286,7 @@ class _HomeDashoardShortlistCreateWidgetState
                               children: [
                                 Text(
                                   'End Date',
-                                  style: GoogleFonts.inter(
-                                    fontSize: 15.0,
-                                    color: AppColors.textPrimary,
-                                    height: 1.5,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
                                 ),
                                 GestureDetector(
                                   onTap: () =>
@@ -344,11 +328,7 @@ class _HomeDashoardShortlistCreateWidgetState
                     ),
                     Text(
                       'Privacy Settings',
-                      style: GoogleFonts.inter(
-                        fontSize: 15.0,
-                        color: AppColors.textPrimary,
-                        height: 1.5,
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 12.0),

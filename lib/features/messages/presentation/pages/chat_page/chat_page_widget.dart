@@ -245,11 +245,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                                 'n/a',
                               ),
                               maxLines: 1,
-                              style: GoogleFonts.inter(
-                                color: AppColors.textSecondary,
-                                fontSize: 12.0,
-                                height: 1.5,
-                              ),
+                              style: Theme.of(context).textTheme.labelSmall!.copyWith(height: 1.5),
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
@@ -411,7 +407,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                             borderRadius: BorderRadius.circular(100.0),
                           ),
                         ),
-                        style: GoogleFonts.inter(fontSize: 14.0),
+                        style: Theme.of(context).textTheme.bodyMedium!,
                         keyboardType: TextInputType.text,
                         cursorColor: AppColors.textPrimary,
                         enableInteractiveSelection: true,

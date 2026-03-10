@@ -131,10 +131,7 @@ class _ChatBuyerProfileWidgetState
                           children: [
                             Text(
                               '@${userData.username}',
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18.0,
-                              ),
+                              style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
                             ),
                             Text(
                               'Member since March 2025',
@@ -373,10 +370,7 @@ class _ChatBuyerProfileWidgetState
                                     Expanded(
                                       child: Text(
                                         'Seller Reviews',
-                                        style: GoogleFonts.inter(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 18.0,
-                                        ),
+                                        style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
                                       ),
                                     ),
                                     Padding(
@@ -503,7 +497,7 @@ class _ChatBuyerProfileWidgetState
                           } else {
                             return Text(
                               'Hello World',
-                              style: GoogleFonts.inter(fontSize: 14.0),
+                              style: Theme.of(context).textTheme.bodyMedium!,
                             );
                           }
                         },

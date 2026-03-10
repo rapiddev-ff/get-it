@@ -363,10 +363,7 @@ class _HomeDashoardInventoryAddWidgetState
 
   Widget _sectionTitle(String text) => Text(
         text,
-        style: GoogleFonts.inter(
-            fontWeight: FontWeight.w500,
-            fontSize: 18.0,
-            color: AppColors.textPrimary),
+        style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
       );
 
   Widget _fieldLabel(String text) => Padding(
@@ -374,7 +371,7 @@ class _HomeDashoardInventoryAddWidgetState
         child: Text(
           text,
           style:
-              GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+              Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
         ),
       );
 
@@ -401,8 +398,7 @@ class _HomeDashoardInventoryAddWidgetState
                 Expanded(
                   child: Text(
                     selectedValue ?? placeholder,
-                    style: GoogleFonts.inter(
-                        fontSize: 16.0, color: AppColors.textPrimary),
+                    style: Theme.of(context).textTheme.bodyLarge!,
                   ),
                 ),
                 Icon(
@@ -441,8 +437,7 @@ class _HomeDashoardInventoryAddWidgetState
               padding: EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
                 label,
-                style: GoogleFonts.inter(
-                    fontSize: 15.0, color: AppColors.textPrimary),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
               ),
             ),
           ),
@@ -555,10 +550,7 @@ class _HomeDashoardInventoryAddWidgetState
           padding: EdgeInsets.symmetric(horizontal: 16.0),
           child: Text(
             'Product Photos',
-            style: GoogleFonts.inter(
-                fontWeight: FontWeight.w500,
-                fontSize: 14.0,
-                color: AppColors.textPrimary),
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
           ),
         ),
         Padding(
@@ -966,8 +958,7 @@ class _HomeDashoardInventoryAddWidgetState
                             )
                           : Text(
                               'Select condition',
-                              style: GoogleFonts.inter(
-                                  fontSize: 16.0, color: AppColors.textPrimary),
+                              style: Theme.of(context).textTheme.bodyLarge!,
                             ),
                     ),
                     Icon(
@@ -991,8 +982,7 @@ class _HomeDashoardInventoryAddWidgetState
                   children: [
                     Text(
                       'Year (Optional)',
-                      style: GoogleFonts.inter(
-                          fontSize: 15.0, color: AppColors.textPrimary),
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
                     ),
                     Container(
                       width: double.infinity,
@@ -1023,8 +1013,7 @@ class _HomeDashoardInventoryAddWidgetState
                   children: [
                     Text(
                       'Issue # (Optional)',
-                      style: GoogleFonts.inter(
-                          fontSize: 15.0, color: AppColors.textPrimary),
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
                     ),
                     Container(
                       width: double.infinity,
@@ -1098,8 +1087,7 @@ class _HomeDashoardInventoryAddWidgetState
                   children: [
                     Text(
                       'Flash Sale',
-                      style: GoogleFonts.inter(
-                          fontSize: 15.0, color: AppColors.textPrimary),
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
                     ),
                     if (switchFlashSaleValue ?? true)
                       AppDropDown<int>(
@@ -1113,8 +1101,7 @@ class _HomeDashoardInventoryAddWidgetState
                             setState(() => flashDropDownValue = val),
                         width: 115.0,
                         height: 50.0,
-                        textStyle: GoogleFonts.inter(
-                            fontSize: 14.0, color: AppColors.textPrimary),
+                        textStyle: Theme.of(context).textTheme.bodyMedium!,
                         hintText: '20 hours',
                         icon: Icon(
                           Icons.keyboard_arrow_down_rounded,
@@ -1167,8 +1154,7 @@ class _HomeDashoardInventoryAddWidgetState
               children: [
                 Text(
                   'Amount',
-                  style: GoogleFonts.inter(
-                      fontSize: 15.0, color: AppColors.textPrimary),
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
                 ),
                 discount == 'percentage'
                     ? Container(
@@ -1282,8 +1268,7 @@ class _HomeDashoardInventoryAddWidgetState
               children: [
                 Text(
                   'Flat Shipping Cost',
-                  style: GoogleFonts.inter(
-                      fontSize: 15.0, color: AppColors.textPrimary),
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
                 ),
                 Container(
                   width: double.infinity,
@@ -1309,8 +1294,7 @@ class _HomeDashoardInventoryAddWidgetState
                   padding: EdgeInsets.only(top: 4.0),
                   child: Text(
                     'Additional Item Fee',
-                    style: GoogleFonts.inter(
-                        fontSize: 15.0, color: AppColors.textPrimary),
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
                   ),
                 ),
                 Container(
@@ -1347,7 +1331,7 @@ class _HomeDashoardInventoryAddWidgetState
         Text(
           'Description',
           style:
-              GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+              Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
         ),
         Padding(
           padding: EdgeInsets.only(top: 8.0),
@@ -1391,7 +1375,7 @@ class _HomeDashoardInventoryAddWidgetState
         Text(
           'Add Product Tags',
           style:
-              GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+              Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
         ),
         Padding(
           padding: EdgeInsets.only(top: 8.0),
@@ -1425,8 +1409,7 @@ class _HomeDashoardInventoryAddWidgetState
                     Expanded(
                       child: Text(
                         'Add Tags',
-                        style: GoogleFonts.inter(
-                            fontSize: 16.0, color: AppColors.textPrimary),
+                        style: Theme.of(context).textTheme.bodyLarge!,
                       ),
                     ),
                     Icon(
@@ -1466,8 +1449,7 @@ class _HomeDashoardInventoryAddWidgetState
                           children: [
                             Text(
                               tagsItem.name,
-                              style: GoogleFonts.inter(
-                                  fontSize: 14.0, color: AppColors.textPrimary),
+                              style: Theme.of(context).textTheme.bodyMedium!,
                             ),
                             Icon(
                               Icons.close,
@@ -1540,8 +1522,7 @@ class _HomeDashoardInventoryAddWidgetState
             Expanded(
               child: Text(
                 'Add to Convention Shortlist',
-                style: GoogleFonts.inter(
-                    fontSize: 15.0, color: AppColors.textPrimary),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
               ),
             ),
             Switch.adaptive(
@@ -1567,8 +1548,7 @@ class _HomeDashoardInventoryAddWidgetState
             padding: EdgeInsets.only(top: 8.0),
             child: Text(
               'Select Convention',
-              style: GoogleFonts.inter(
-                  fontSize: 15.0, color: AppColors.textPrimary),
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
             ),
           ),
         if (switchConventionSettingsValue ?? true)
@@ -1582,8 +1562,7 @@ class _HomeDashoardInventoryAddWidgetState
               onChanged: (val) => setState(() => dropDownValue = val),
               width: double.infinity,
               height: 50.0,
-              textStyle: GoogleFonts.inter(
-                  fontSize: 14.0, color: AppColors.textPrimary),
+              textStyle: Theme.of(context).textTheme.bodyMedium!,
               hintText: 'Select shortlist',
               icon: Icon(
                 Icons.keyboard_arrow_down_rounded,

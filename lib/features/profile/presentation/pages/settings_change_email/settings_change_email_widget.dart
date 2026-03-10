@@ -99,10 +99,7 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget>
                                 padding: EdgeInsets.only(bottom: 4.0),
                                 child: Text(
                                   'Current Password',
-                                  style: GoogleFonts.inter(
-                                    color: AppColors.textSecondary,
-                                    height: 1.4,
-                                  ),
+                                  style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.4),
                                 ),
                               ),
                               Container(
@@ -148,10 +145,7 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget>
                                       EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'Password is required.',
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.error,
-                                      fontSize: 12.0,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               if (_model.errorPassword)
@@ -160,10 +154,7 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget>
                                       EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'Incorrect password. Try again.',
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.error,
-                                      fontSize: 12.0,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                             ],
@@ -178,10 +169,7 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget>
                                 padding: EdgeInsets.only(bottom: 4.0),
                                 child: Text(
                                   'New Email',
-                                  style: GoogleFonts.inter(
-                                    color: AppColors.textSecondary,
-                                    height: 1.4,
-                                  ),
+                                  style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.4),
                                 ),
                               ),
                               Container(
@@ -211,10 +199,7 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget>
                                       EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'Please enter your email.',
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.error,
-                                      fontSize: 12.0,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               if (_model.errorEmailFormat)
@@ -223,10 +208,7 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget>
                                       EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'Check your email format.',
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.error,
-                                      fontSize: 12.0,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               if (_model.emailAlreadyInUse)
@@ -235,10 +217,7 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget>
                                       EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'Email already in use.',
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.error,
-                                      fontSize: 12.0,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                             ],

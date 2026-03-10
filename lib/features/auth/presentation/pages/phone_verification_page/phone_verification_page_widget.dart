@@ -137,10 +137,7 @@ class _PhoneVerificationPageWidgetState
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: Text(
                             'Verify Your Account',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24.0,
-                            ),
+                            style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
                           ),
                         ),
                         Padding(
@@ -239,10 +236,7 @@ class _PhoneVerificationPageWidgetState
                                   _phoneValidationResult(
                                           _model.textController!.text) ??
                                       'N/A',
-                                  style: GoogleFonts.inter(
-                                    color: AppColors.error,
-                                    fontSize: 12.0,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                                 ).animate().fade(duration: 600.ms),
                               ),
                           ],

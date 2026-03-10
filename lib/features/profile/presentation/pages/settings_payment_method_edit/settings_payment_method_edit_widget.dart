@@ -197,10 +197,7 @@ class _SettingsPaymentMethodEditWidgetState
                 children: [
                   Text(
                     'Card Information',
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18.0,
-                    ),
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 8.0),
@@ -307,10 +304,7 @@ class _SettingsPaymentMethodEditWidgetState
                   ),
                   Text(
                     'Billing Address',
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18.0,
-                    ),
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 20.0),
@@ -689,16 +683,13 @@ class _SettingsPaymentMethodEditWidgetState
                               children: [
                                 Text(
                                   'Secure Payments',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16.0,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(top: 8.0),
                                   child: Text(
                                     'Your payment information is encrypted and securely processed by Stripe. We never store your card details on our servers.',
-                                    style: GoogleFonts.inter(fontSize: 14.0),
+                                    style: Theme.of(context).textTheme.bodyMedium!,
                                   ),
                                 ),
                               ],

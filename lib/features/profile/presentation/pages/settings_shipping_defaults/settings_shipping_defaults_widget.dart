@@ -112,12 +112,7 @@ class _SettingsShippingDefaultsWidgetState
                             padding: EdgeInsets.only(top: 8.0),
                             child: Text(
                               'Applies to all your items by default. Products can override this.',
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14.0,
-                                color: AppColors.textSecondary,
-                                height: 1.5,
-                              ),
+                              style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
                             ),
                           ),
                           Padding(
@@ -176,12 +171,7 @@ class _SettingsShippingDefaultsWidgetState
                             padding: EdgeInsets.only(top: 8.0),
                             child: Text(
                               'Charged once per order (first item).',
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14.0,
-                                color: AppColors.textSecondary,
-                                height: 1.5,
-                              ),
+                              style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
                             ),
                           ),
                           Padding(
@@ -240,12 +230,7 @@ class _SettingsShippingDefaultsWidgetState
                             padding: EdgeInsets.only(top: 8.0),
                             child: Text(
                               'Added for each additional item.',
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14.0,
-                                color: AppColors.textSecondary,
-                                height: 1.5,
-                              ),
+                              style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
                             ),
                           ),
                         ],

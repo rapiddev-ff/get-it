@@ -152,10 +152,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                   padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Password is required.',
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.error,
-                                      fontSize: 12.0,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                             ],
@@ -223,10 +220,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                   padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Confirm Password is required.',
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.error,
-                                      fontSize: 12.0,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               if (_model.errorPaswordsDontMatch)
@@ -234,10 +228,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                   padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Passwords don\'t match',
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.error,
-                                      fontSize: 12.0,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               Padding(

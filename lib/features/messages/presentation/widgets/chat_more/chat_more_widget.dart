@@ -4,7 +4,6 @@ import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 
 class ChatMoreWidget extends ConsumerStatefulWidget {
@@ -59,7 +58,7 @@ class _ChatMoreWidgetState extends ConsumerState<ChatMoreWidget> {
                   ),
                   Text(
                     'Block user',
-                    style: GoogleFonts.inter(fontSize: 14.0),
+                    style: Theme.of(context).textTheme.bodyMedium!,
                   ),
                 ].divide(SizedBox(width: 16.0)),
               ),
@@ -76,7 +75,7 @@ class _ChatMoreWidgetState extends ConsumerState<ChatMoreWidget> {
                 ),
                 Text(
                   'Follow',
-                  style: GoogleFonts.inter(fontSize: 14.0),
+                  style: Theme.of(context).textTheme.bodyMedium!,
                 ),
               ].divide(SizedBox(width: 16.0)),
             ),
@@ -106,7 +105,7 @@ class _ChatMoreWidgetState extends ConsumerState<ChatMoreWidget> {
                   ),
                   Text(
                     'Delete chat',
-                    style: GoogleFonts.inter(fontSize: 14.0),
+                    style: Theme.of(context).textTheme.bodyMedium!,
                   ),
                 ].divide(SizedBox(width: 16.0)),
               ),

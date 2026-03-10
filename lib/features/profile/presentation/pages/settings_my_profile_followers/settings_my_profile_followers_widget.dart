@@ -222,11 +222,7 @@ class _SettingsMyProfileFollowersWidgetState
     return InputDecoration(
       isDense: false,
       hintText: hintText,
-      hintStyle: GoogleFonts.inter(
-        fontWeight: FontWeight.normal,
-        fontSize: 15.0,
-        color: AppColors.textSecondary,
-      ),
+      hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 15.0),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.neutral700, width: 1.0),
         borderRadius: BorderRadius.circular(4.0),
@@ -427,7 +423,7 @@ class _SettingsMyProfileFollowersWidgetState
             autofocus: false,
             obscureText: false,
             decoration: _searchDecoration(hintText: 'Search'),
-            style: GoogleFonts.inter(color: AppColors.textPrimary),
+            style: Theme.of(context).textTheme.bodyMedium!,
             cursorColor: AppColors.textPrimary,
             enableInteractiveSelection: true,
           ),
@@ -527,7 +523,7 @@ class _SettingsMyProfileFollowersWidgetState
             autofocus: false,
             obscureText: false,
             decoration: _searchDecoration(hintText: 'Search'),
-            style: GoogleFonts.inter(color: AppColors.textPrimary),
+            style: Theme.of(context).textTheme.bodyMedium!,
             cursorColor: AppColors.textPrimary,
             enableInteractiveSelection: true,
           ),

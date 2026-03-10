@@ -107,10 +107,7 @@ class _SettingsDailyBudgetWidgetState
                         padding: EdgeInsets.only(bottom: 4.0),
                         child: Text(
                           'Swipe Payment will stop when you reach this amount in a day.',
-                          style: GoogleFonts.inter(
-                            color: AppColors.textSecondary,
-                            height: 1.4,
-                          ),
+                          style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.4),
                         ),
                       ),
                       Padding(

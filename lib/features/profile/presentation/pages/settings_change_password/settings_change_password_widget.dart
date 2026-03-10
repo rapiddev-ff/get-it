@@ -97,10 +97,7 @@ class _SettingsChangePasswordWidgetState
                                 padding: EdgeInsets.only(bottom: 4.0),
                                 child: Text(
                                   'Current Password',
-                                  style: GoogleFonts.inter(
-                                    color: AppColors.textSecondary,
-                                    height: 1.4,
-                                  ),
+                                  style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.4),
                                 ),
                               ),
                               Container(
@@ -149,10 +146,7 @@ class _SettingsChangePasswordWidgetState
                                       EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'Current Password is required.',
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.error,
-                                      fontSize: 12.0,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                             ],
@@ -167,10 +161,7 @@ class _SettingsChangePasswordWidgetState
                                 padding: EdgeInsets.only(bottom: 4.0),
                                 child: Text(
                                   'New Password',
-                                  style: GoogleFonts.inter(
-                                    color: AppColors.textSecondary,
-                                    height: 1.4,
-                                  ),
+                                  style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.4),
                                 ),
                               ),
                               Container(
@@ -219,10 +210,7 @@ class _SettingsChangePasswordWidgetState
                                       EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'New Password is required.',
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.error,
-                                      fontSize: 12.0,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                             ],
@@ -237,10 +225,7 @@ class _SettingsChangePasswordWidgetState
                                 padding: EdgeInsets.only(bottom: 4.0),
                                 child: Text(
                                   'Confirm Password',
-                                  style: GoogleFonts.inter(
-                                    color: AppColors.textSecondary,
-                                    height: 1.4,
-                                  ),
+                                  style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.4),
                                 ),
                               ),
                               Container(
@@ -286,10 +271,7 @@ class _SettingsChangePasswordWidgetState
                                       EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'Confirm Password is required.',
-                                    style: GoogleFonts.inter(
-                                      color: AppColors.error,
-                                      fontSize: 12.0,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                             ],

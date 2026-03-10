@@ -69,12 +69,7 @@ class BrowseProductsItemWidget extends StatelessWidget {
                         'n/a',
                       ),
                       maxLines: 2,
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 15.0,
-                        color: AppColors.textPrimary,
-                        height: 1.5,
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0, height: 1.5),
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 8.0),

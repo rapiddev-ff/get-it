@@ -199,11 +199,7 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                           ?.toString(),
                                       '0',
                                     ),
-                                    style: GoogleFonts.inter(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14.0,
-                                      color: AppColors.textPrimary,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                                   ),
                                   Text(
                                     '${valueOrDefault<String>(
@@ -272,12 +268,7 @@ class _HomeSellerProfileReviewsStep1WidgetState
                     widget.reviewRole == 'as_seller'
                         ? 'Your purchases from this seller'
                         : 'Products you sold to this buyer',
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18.0,
-                      color: AppColors.textPrimary,
-                      height: 1.5,
-                    ),
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                   ),
                 ),
                 Padding(

@@ -98,10 +98,7 @@ class _SettingsReferralWidgetState
                                         children: [
                                           Text(
                                             'Get Paid To Share CardSmart',
-                                            style: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 16.0,
-                                            ),
+                                            style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
                                           ),
                                           Text(
                                             'Share CardSmart with other vendors and earn commission every time they make a sale. ',

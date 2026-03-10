@@ -15,7 +15,6 @@ import '/core/providers/current_user_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 
 class BrowseWidget extends ConsumerStatefulWidget {
@@ -118,11 +117,7 @@ class _BrowseWidgetState extends ConsumerState<BrowseWidget> {
                         autofocus: false,
                         decoration: InputDecoration(
                           hintText: 'Search products, characters, years...',
-                          hintStyle: GoogleFonts.inter(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 15.0,
-                            color: AppColors.textSecondary,
-                          ),
+                          hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 15.0),
                           enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
                               color: AppColors.neutral700,

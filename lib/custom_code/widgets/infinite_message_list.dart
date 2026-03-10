@@ -2,9 +2,7 @@ import '/features/messages/domain/models/message_model.dart';
 import '/features/messages/domain/models/message_image_model.dart';
 import '/features/home/domain/models/counter_offer_model.dart';
 import '/backend/supabase/supabase.dart';
-import '/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -408,7 +406,7 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
       return Center(
           child: widget.emptyWidget?.call() ??
               Text('No messages yet',
-                  style: GoogleFonts.inter(color: AppColors.textSecondary)));
+                  style: Theme.of(context).textTheme.labelMedium!));
     }
 
     return ListView.separated(

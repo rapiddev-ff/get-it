@@ -141,11 +141,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                   children: [
                                     Text(
                                       '1998 Pokemon Base Set Charizard',
-                                      style: GoogleFonts.inter(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14.0,
-                                        color: AppColors.textPrimary,
-                                      ),
+                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                                     ),
                                     Text(
                                       'PSA 9 Mint Condition',
@@ -160,11 +156,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                         padding: EdgeInsets.only(top: 4.0),
                                         child: Text(
                                           '\$2,450.00',
-                                          style: GoogleFonts.inter(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14.0,
-                                            color: AppColors.textPrimary,
-                                          ),
+                                          style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                                         ),
                                       ),
                                     ),
@@ -187,11 +179,7 @@ class _HomeDashoardPromoteStep2WidgetState
                         EdgeInsets.only(left: 16.0, top: 24.0, right: 16.0),
                     child: Text(
                       'Choose Promotion Type',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16.0,
-                        color: AppColors.textPrimary,
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
                     ),
                   ),
                   Padding(
@@ -236,11 +224,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                         ),
                                         Text(
                                           'Boost',
-                                          style: GoogleFonts.inter(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 16.0,
-                                            color: AppColors.textPrimary,
-                                          ),
+                                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
                                         ),
                                         Container(
                                           decoration: BoxDecoration(
@@ -263,11 +247,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                     ),
                                     Text(
                                       'Increase visibility across the entire platform. Your product will appear more frequently in swipe feeds and search results.',
-                                      style: GoogleFonts.inter(
-                                        fontSize: 14.0,
-                                        color: AppColors.textPrimary,
-                                        height: 1.5,
-                                      ),
+                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
                                     ),
                                     Row(
                                       children: [
@@ -337,11 +317,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                       ),
                                       Text(
                                         'Sponsored Placement',
-                                        style: GoogleFonts.inter(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16.0,
-                                          color: AppColors.textPrimary,
-                                        ),
+                                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
                                       ),
                                       Container(
                                         decoration: BoxDecoration(
@@ -364,11 +340,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                   ),
                                   Text(
                                     'Target specific collectors interested in your product tags. Higher conversion rate for niche items.',
-                                    style: GoogleFonts.inter(
-                                      fontSize: 14.0,
-                                      color: AppColors.textPrimary,
-                                      height: 1.5,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
                                   ),
                                   Row(
                                     children: [
@@ -411,11 +383,7 @@ class _HomeDashoardPromoteStep2WidgetState
                             children: [
                               Text(
                                 'Select Duration',
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 18.0,
-                                  color: AppColors.textPrimary,
-                                ),
+                                style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
                               ),
                               Padding(
                                 padding: EdgeInsets.only(top: 16.0),
@@ -458,13 +426,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                                         0.0, 8.0, 0.0, 0.0),
                                                 child: Text(
                                                   '\$9.99',
-                                                  style: GoogleFonts.inter(
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 18.0,
-                                                    color:
-                                                        AppColors.textPrimary,
-                                                    height: 1.5,
-                                                  ),
+                                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                                                 ),
                                               ),
                                             ],
@@ -496,12 +458,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                               ),
                                               Text(
                                                 'Days',
-                                                style: GoogleFonts.inter(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 14.0,
-                                                  color: AppColors.textPrimary,
-                                                  height: 1.5,
-                                                ),
+                                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                                               ),
                                               Padding(
                                                 padding: EdgeInsetsDirectional
@@ -509,13 +466,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                                         0.0, 8.0, 0.0, 0.0),
                                                 child: Text(
                                                   '\$19.99',
-                                                  style: GoogleFonts.inter(
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 18.0,
-                                                    color:
-                                                        AppColors.textPrimary,
-                                                    height: 1.5,
-                                                  ),
+                                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                                                 ),
                                               ),
                                             ],
@@ -552,14 +503,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                                   ),
                                                   Text(
                                                     'Days',
-                                                    style: GoogleFonts.inter(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 14.0,
-                                                      color:
-                                                          AppColors.textPrimary,
-                                                      height: 1.5,
-                                                    ),
+                                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                                                   ),
                                                   Padding(
                                                     padding:
@@ -660,19 +604,11 @@ class _HomeDashoardPromoteStep2WidgetState
                                           children: [
                                             Text(
                                               'Product Update',
-                                              style: GoogleFonts.inter(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 16.0,
-                                                color: AppColors.textPrimary,
-                                              ),
+                                              style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
                                             ),
                                             Text(
                                               'Send updates about specific.\$0.25/recipient products',
-                                              style: GoogleFonts.inter(
-                                                fontSize: 14.0,
-                                                color: AppColors.textPrimary,
-                                                height: 1.5,
-                                              ),
+                                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
                                             ),
                                           ].divide(SizedBox(height: 8.0)),
                                         ),
@@ -711,19 +647,11 @@ class _HomeDashoardPromoteStep2WidgetState
                                             children: [
                                               Text(
                                                 'New Arrival Alert',
-                                                style: GoogleFonts.inter(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 16.0,
-                                                  color: AppColors.textPrimary,
-                                                ),
+                                                style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
                                               ),
                                               Text(
                                                 'Notify about new inventory',
-                                                style: GoogleFonts.inter(
-                                                  fontSize: 14.0,
-                                                  color: AppColors.textPrimary,
-                                                  height: 1.5,
-                                                ),
+                                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
                                               ),
                                             ].divide(SizedBox(height: 8.0)),
                                           ),
@@ -737,11 +665,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                 padding: EdgeInsets.only(top: 28.0),
                                 child: Text(
                                   'Target Previous Buyers',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18.0,
-                                    color: AppColors.textPrimary,
-                                  ),
+                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
                                 ),
                               ),
                               Padding(
@@ -787,11 +711,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                         ),
                                         Text(
                                           'Product Category',
-                                          style: GoogleFonts.inter(
-                                            fontSize: 15.0,
-                                            color: AppColors.textPrimary,
-                                            height: 1.5,
-                                          ),
+                                          style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
                                         ),
                                         DropdownButtonFormField<String>(
                                           initialValue: dropDownValue,
@@ -848,11 +768,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                           padding: EdgeInsets.only(top: 8.0),
                                           child: Text(
                                             'Character/Franchise',
-                                            style: GoogleFonts.inter(
-                                              fontSize: 15.0,
-                                              color: AppColors.textPrimary,
-                                              height: 1.5,
-                                            ),
+                                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
                                           ),
                                         ),
                                         Container(
@@ -881,11 +797,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                           padding: EdgeInsets.only(top: 8.0),
                                           child: Text(
                                             'Purchase Date Range',
-                                            style: GoogleFonts.inter(
-                                              fontSize: 15.0,
-                                              color: AppColors.textPrimary,
-                                              height: 1.5,
-                                            ),
+                                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
                                           ),
                                         ),
                                         Row(
@@ -964,11 +876,7 @@ class _HomeDashoardPromoteStep2WidgetState
                         EdgeInsets.only(left: 16.0, top: 32.0, right: 16.0),
                     child: Text(
                       'Promotion Summary',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18.0,
-                        color: AppColors.textPrimary,
-                      ),
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
                     ),
                   ),
                   Padding(
@@ -992,21 +900,12 @@ class _HomeDashoardPromoteStep2WidgetState
                                 Expanded(
                                   child: Text(
                                     'Promotion Type',
-                                    style: GoogleFonts.inter(
-                                      fontSize: 15.0,
-                                      color: AppColors.textPrimary,
-                                      height: 1.5,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
                                   ),
                                 ),
                                 Text(
                                   'Promotion Type',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 15.0,
-                                    color: AppColors.textPrimary,
-                                    height: 1.5,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0, height: 1.5),
                                 ),
                               ].divide(SizedBox(width: 8.0)),
                             ),
@@ -1015,21 +914,12 @@ class _HomeDashoardPromoteStep2WidgetState
                                 Expanded(
                                   child: Text(
                                     'Duration',
-                                    style: GoogleFonts.inter(
-                                      fontSize: 15.0,
-                                      color: AppColors.textPrimary,
-                                      height: 1.5,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
                                   ),
                                 ),
                                 Text(
                                   '3 Days',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 15.0,
-                                    color: AppColors.textPrimary,
-                                    height: 1.5,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0, height: 1.5),
                                 ),
                               ].divide(SizedBox(width: 8.0)),
                             ),
@@ -1038,21 +928,12 @@ class _HomeDashoardPromoteStep2WidgetState
                                 Expanded(
                                   child: Text(
                                     'Estimated Reach',
-                                    style: GoogleFonts.inter(
-                                      fontSize: 15.0,
-                                      color: AppColors.textPrimary,
-                                      height: 1.5,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
                                   ),
                                 ),
                                 Text(
                                   '2,500+ views',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 15.0,
-                                    color: AppColors.textPrimary,
-                                    height: 1.5,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0, height: 1.5),
                                 ),
                               ].divide(SizedBox(width: 8.0)),
                             ),
@@ -1066,22 +947,12 @@ class _HomeDashoardPromoteStep2WidgetState
                                 Expanded(
                                   child: Text(
                                     'Total Cost',
-                                    style: GoogleFonts.inter(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 18.0,
-                                      color: AppColors.textPrimary,
-                                      height: 1.5,
-                                    ),
+                                    style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                                   ),
                                 ),
                                 Text(
                                   '\$9.99',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18.0,
-                                    color: AppColors.textPrimary,
-                                    height: 1.5,
-                                  ),
+                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                                 ),
                               ].divide(SizedBox(width: 8.0)),
                             ),

@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import '/core/providers/current_user_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:octo_image/octo_image.dart';
 
 class ChatItemWidget extends ConsumerWidget {
@@ -74,7 +73,7 @@ class ChatItemWidget extends ConsumerWidget {
                             messageDataType?.content,
                             'N/A',
                           ),
-                          style: GoogleFonts.inter(fontSize: 14.0),
+                          style: Theme.of(context).textTheme.bodyMedium!,
                         ),
                       ),
                     ),
@@ -213,7 +212,7 @@ class ChatItemWidget extends ConsumerWidget {
                       messageDataType?.content,
                       'N/A',
                     ),
-                    style: GoogleFonts.inter(fontSize: 14.0),
+                    style: Theme.of(context).textTheme.bodyMedium!,
                   ),
                 ),
               ),

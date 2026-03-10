@@ -249,11 +249,7 @@ class _HomeDashoardEarningsWidgetState
                               children: [
                                 Text(
                                   'Earnings Breakdown',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16.0,
-                                    color: AppColors.textPrimary,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
                                 ),
                                 SizedBox(height: 16.0),
                                 Row(
@@ -513,11 +509,7 @@ class _HomeDashoardEarningsWidgetState
                   Text(
                     _getProductTitle(order),
                     maxLines: 1,
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14.0,
-                      color: AppColors.textPrimary,
-                    ),
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
