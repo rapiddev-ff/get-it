@@ -832,7 +832,7 @@ class _SettingsMyProfileWidgetState
         child: TextButton(
           onPressed: () {},
           style: TextButton.styleFrom(
-            backgroundColor: Color(0x008E6CFF),
+            backgroundColor: AppColors.primary.withValues(alpha: 0),
             padding: EdgeInsets.symmetric(horizontal: 16.0),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),

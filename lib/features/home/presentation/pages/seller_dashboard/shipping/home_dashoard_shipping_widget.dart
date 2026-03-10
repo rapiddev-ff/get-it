@@ -376,7 +376,7 @@ class _HomeDashoardShippingWidgetState
                                       '\$${_formatPrice(order['total_amount'])}',
                                   style: GoogleFonts.inter(
                                     fontSize: 12.0,
-                                    color: Color(0xFF689FFF),
+                                    color: AppColors.brandBlueMedium,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -423,7 +423,7 @@ class _HomeDashoardShippingWidgetState
                         if (isShipped)
                           Container(
                             decoration: BoxDecoration(
-                              color: Color(0xFF2D5AA0),
+                              color: AppColors.brandBlueDark,
                               borderRadius: BorderRadius.circular(6.0),
                             ),
                             child: Padding(

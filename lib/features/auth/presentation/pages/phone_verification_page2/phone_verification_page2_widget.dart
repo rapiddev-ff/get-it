@@ -160,9 +160,9 @@ class _PhoneVerificationPage2WidgetState
                                 activeColor: AppColors.neutral700,
                                 inactiveColor: AppColors.neutral700,
                                 selectedColor: AppColors.neutral700,
-                                activeFillColor: const Color(0xFFF6F6F6),
-                                inactiveFillColor: const Color(0xFFF6F6F6),
-                                selectedFillColor: const Color(0xFFF6F6F6),
+                                activeFillColor: AppColors.surfaceLight,
+                                inactiveFillColor: AppColors.surfaceLight,
+                                selectedFillColor: AppColors.surfaceLight,
                               ),
                               controller: _model.pinCodeController,
                               onChanged: (_) async {
@@ -224,7 +224,7 @@ class _PhoneVerificationPage2WidgetState
                                   style: GoogleFonts.inter(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 11.0,
-                                    color: const Color(0xFFB34343),
+                                    color: AppColors.errorDark,
                                   ),
                                 ),
                               ),
@@ -251,7 +251,7 @@ class _PhoneVerificationPage2WidgetState
                                     style: GoogleFonts.inter(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 11.0,
-                                      color: const Color(0xFFB34343),
+                                      color: AppColors.errorDark,
                                     ),
                                   );
                                 },
@@ -262,7 +262,7 @@ class _PhoneVerificationPage2WidgetState
                                   style: GoogleFonts.inter(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 11.0,
-                                    color: const Color(0xFFB34343),
+                                    color: AppColors.errorDark,
                                   ),
                                 ),
                               ),

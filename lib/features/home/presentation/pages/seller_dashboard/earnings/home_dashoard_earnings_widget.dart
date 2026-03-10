@@ -156,7 +156,7 @@ class _HomeDashoardEarningsWidgetState
       case 'paid':
         return AppColors.secondary;
       case 'shipped':
-        return Color(0xFF2D5AA0);
+        return AppColors.brandBlueDark;
       case 'delivered':
         return AppColors.statusSuccess;
       case 'cancelled':

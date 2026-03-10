@@ -295,7 +295,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
           width: double.infinity,
           height: 500.0,
           colorBuy: AppColors.primary,
-          colorHide: Color(0xFF3570FC),
+          colorHide: AppColors.brandBlueStrong,
           colorSkip: AppColors.accent2,
           cardBgColor: AppColors.backgroundSecondary,
           priceTextColor: AppColors.primary,
@@ -830,7 +830,8 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                                 }
                               },
                         style: TextButton.styleFrom(
-                          backgroundColor: Color(0x008E6CFF),
+                          backgroundColor:
+                              AppColors.primary.withValues(alpha: 0),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),

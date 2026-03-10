@@ -209,7 +209,7 @@ class _SettingsEditProfileWidgetState
                                     return Center(
                                       child: FaIcon(
                                         FontAwesomeIcons.userLarge,
-                                        color: Color(0xFF797A79),
+                                        color: AppColors.neutral650,
                                         size: 70.0,
                                       ),
                                     );

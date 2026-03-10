@@ -135,7 +135,7 @@ class SellerDashboardShipItemWidget extends StatelessWidget {
                           TextSpan(
                             text: '\$${_formatPrice(order['total_amount'])}',
                             style: GoogleFonts.inter(
-                              color: Color(0xFF689FFF),
+                              color: AppColors.brandBlueMedium,
                               fontSize: 12.0,
                             ),
                           )

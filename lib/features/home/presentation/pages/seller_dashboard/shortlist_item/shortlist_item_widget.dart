@@ -325,7 +325,7 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
             ),
             TextSpan(
               text: 'Expired${expiredStr.isNotEmpty ? ' $expiredStr' : ''}',
-              style: TextStyle(color: Color(0xFFFF3B30)),
+              style: TextStyle(color: AppColors.errorBright),
             ),
           ],
         ),

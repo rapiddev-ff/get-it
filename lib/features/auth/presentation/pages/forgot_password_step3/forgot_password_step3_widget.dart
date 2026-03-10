@@ -364,7 +364,8 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                     title: 'Password Reset Successful',
                                     subtitle:
                                         'Your password has been successfully updated.You can now log in using your new password.',
-                                    bgColor: Color(0x338E6CFF),
+                                    bgColor: AppColors.primary
+                                        .withValues(alpha: 0.2),
                                     icon: FaIcon(
                                       FontAwesomeIcons.circleCheck,
                                       color: AppColors.primary,

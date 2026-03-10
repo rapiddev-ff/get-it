@@ -145,7 +145,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
       case 'active':
         return Color(0xFF34C759);
       case 'sold':
-        return Color(0xFFFF3B30);
+        return AppColors.errorBright;
       case 'draft':
         return AppColors.textSecondary;
       default:
@@ -284,13 +284,13 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                           imageUrl,
                           fit: BoxFit.cover,
                           errorBuilder: (_, __, ___) => Container(
-                            color: Color(0xFF2A2A2A),
+                            color: AppColors.surfaceDarkAlt,
                             child: Icon(Icons.image,
                                 color: AppColors.textSecondary, size: 40),
                           ),
                         )
                       : Container(
-                          color: Color(0xFF2A2A2A),
+                          color: AppColors.surfaceDarkAlt,
                           child: Icon(Icons.image,
                               color: AppColors.textSecondary, size: 40),
                         ),

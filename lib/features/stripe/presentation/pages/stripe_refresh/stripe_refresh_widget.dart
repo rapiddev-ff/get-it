@@ -28,7 +28,7 @@ class StripeRefreshWidget extends StatelessWidget {
                     width: 120.0,
                     height: 120.0,
                     decoration: BoxDecoration(
-                      color: Color(0xFFFFE6E6),
+                      color: AppColors.destructive100,
                       shape: BoxShape.circle,
                     ),
                     child: Center(

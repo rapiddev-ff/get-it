@@ -194,7 +194,8 @@ class _SettingsPaymentCardItemWidgetState
                                   title: 'Delete Payment Method',
                                   subtitle:
                                       'Are you sure you want to remove this card? This action cannot be undone.',
-                                  bgColor: Color(0x338E6CFF),
+                                  bgColor:
+                                      AppColors.primary.withValues(alpha: 0.2),
                                   icon: FaIcon(
                                     FontAwesomeIcons.trash,
                                     color: AppColors.primary,

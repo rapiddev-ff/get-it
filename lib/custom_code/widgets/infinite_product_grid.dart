@@ -186,7 +186,7 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
 
   Widget _buildShimmerCard() {
     return Shimmer.fromColors(
-      baseColor: const Color(0xFF2A2A2A),
+      baseColor: AppColors.surfaceDarkAlt,
       highlightColor: const Color(0xFF3D3D3D),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

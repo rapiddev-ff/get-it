@@ -77,7 +77,7 @@ class _SettingsDeactivateAccountWidgetState
                 Spacer(),
                 Container(
                   decoration: BoxDecoration(
-                    color: Color(0x42EF4444),
+                    color: AppColors.destructive500.withValues(alpha: 0.26),
                     shape: BoxShape.circle,
                   ),
                   child: Padding(

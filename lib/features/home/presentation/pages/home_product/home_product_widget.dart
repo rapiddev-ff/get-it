@@ -88,7 +88,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
   Widget _buildShimmer() {
     return Shimmer.fromColors(
       baseColor: AppColors.backgroundSecondary,
-      highlightColor: Color(0xFF3A3A3A),
+      highlightColor: AppColors.surfaceMedium,
       child: SingleChildScrollView(
         physics: NeverScrollableScrollPhysics(),
         child: Column(
@@ -325,7 +325,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                                     baseColor: AppColors
                                                         .backgroundSecondary,
                                                     highlightColor:
-                                                        Color(0xFF3A3A3A),
+                                                        AppColors.surfaceMedium,
                                                     child: Container(
                                                       width: 310.0,
                                                       height: 320.0,
@@ -381,7 +381,8 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                                 radius: 8.0,
                                                 dotWidth: 8.0,
                                                 dotHeight: 8.0,
-                                                dotColor: Color(0x80FFFFFF),
+                                                dotColor: Colors.white
+                                                    .withValues(alpha: 0.5),
                                                 activeDotColor: Colors.white,
                                                 paintStyle: PaintingStyle.fill,
                                               ),
@@ -786,7 +787,8 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                         );
                                       },
                                       style: TextButton.styleFrom(
-                                        backgroundColor: Color(0x008E6CFF),
+                                        backgroundColor: AppColors.primary
+                                            .withValues(alpha: 0),
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 16.0),
                                         shape: RoundedRectangleBorder(
@@ -895,7 +897,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
             children: [
               Icon(
                 Icons.bolt,
-                color: Color(0xFFFF6B6B),
+                color: AppColors.errorLight,
                 size: 16.0,
               ),
               Text(
@@ -903,7 +905,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                 style: GoogleFonts.inter(
                   fontWeight: FontWeight.w500,
                   fontSize: 14.0,
-                  color: Color(0xFFFF6B6B),
+                  color: AppColors.errorLight,
                 ),
               ),
             ],

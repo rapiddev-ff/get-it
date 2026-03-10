@@ -343,7 +343,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                       ),
                                       Container(
                                         decoration: BoxDecoration(
-                                          color: Color(0xFF3570FC),
+                                          color: AppColors.brandBlueStrong,
                                           borderRadius:
                                               BorderRadius.circular(6.0),
                                         ),

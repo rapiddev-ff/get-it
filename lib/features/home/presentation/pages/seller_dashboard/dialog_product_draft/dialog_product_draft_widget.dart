@@ -30,7 +30,7 @@ class DialogProductDraftWidget extends StatelessWidget {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  color: Color(0x348E6CFF),
+                  color: AppColors.primary.withValues(alpha: 0.2),
                   shape: BoxShape.circle,
                 ),
                 child: Padding(

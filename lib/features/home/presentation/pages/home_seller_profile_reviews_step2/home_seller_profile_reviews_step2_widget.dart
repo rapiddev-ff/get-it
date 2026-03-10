@@ -299,7 +299,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                 Divider(
                   height: 56.0,
                   thickness: 1.0,
-                  color: Color(0xFFE5E7EB),
+                  color: AppColors.alternate,
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.0),

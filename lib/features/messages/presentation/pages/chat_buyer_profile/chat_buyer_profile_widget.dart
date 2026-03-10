@@ -458,7 +458,8 @@ class _ChatBuyerProfileWidgetState
                                           },
                                         ).animate().shimmer(
                                               duration: 600.ms,
-                                              color: Color(0x80FFFFFF),
+                                              color: Colors.white
+                                                  .withValues(alpha: 0.5),
                                             );
                                       },
                                     ),
@@ -476,7 +477,8 @@ class _ChatBuyerProfileWidgetState
                                       child: TextButton(
                                         onPressed: () {},
                                         style: TextButton.styleFrom(
-                                          backgroundColor: Color(0x008E6CFF),
+                                          backgroundColor: AppColors.primary
+                                              .withValues(alpha: 0),
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(8.0),

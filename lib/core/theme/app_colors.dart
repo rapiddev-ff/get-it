@@ -84,6 +84,25 @@ abstract class AppColors {
   static const Color statusSuccess = Color(0xFF4ADE80);
   static const Color statusYellow = Color(0xFFFACC15);
 
+  // Surface variants
+  static const Color surfaceDarkAlt = Color(0xFF29292A);
+  static const Color surfaceMedium = Color(0xFF3A3A3A);
+  static const Color surfaceLight = Color(0xFFF6F6F6);
+
+  // Error variants
+  static const Color errorDark = Color(0xFFB34343);
+  static const Color errorLight = Color(0xFFFF6B6B);
+  static const Color errorBright = Color(0xFFFF3B30);
+  static const Color errorPink = Color(0xFFFF2D55);
+
+  // Brand blue variants
+  static const Color brandBlueMedium = Color(0xFF689FFF);
+  static const Color brandBlueStrong = Color(0xFF3570FC);
+  static const Color brandBlueDark = Color(0xFF2D5AA0);
+
+  // Neutral additions
+  static const Color neutral650 = Color(0xFF797A79);
+
   // Accent overlays
   static const Color accent1 = Color(0x4C4B39EF);
   static const Color accent2 = Color(0x4D39D2C0);

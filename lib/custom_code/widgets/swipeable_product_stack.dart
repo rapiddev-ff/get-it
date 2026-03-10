@@ -694,13 +694,13 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
                               const SizedBox(width: 6),
                               Icon(
                                 Icons.bolt,
-                                color: const Color(0xFFFF2D55),
+                                color: AppColors.errorPink,
                                 size: 16,
                               ),
                               Text(
                                 _formatDiscount(product),
                                 style: GoogleFonts.inter(
-                                  color: const Color(0xFFFF2D55),
+                                  color: AppColors.errorPink,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
                                   height: 16 / 16,

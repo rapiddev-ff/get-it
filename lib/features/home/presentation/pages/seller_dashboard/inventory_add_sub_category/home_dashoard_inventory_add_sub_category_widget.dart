@@ -43,7 +43,7 @@ class _HomeDashoardInventoryAddSubCategoryWidgetState
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Color(0xFF202021),
+        color: AppColors.surfaceDarker,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(0.0),
           bottomRight: Radius.circular(0.0),
@@ -141,7 +141,7 @@ class _HomeDashoardInventoryAddSubCategoryWidgetState
                           Divider(
                             height: 1.0,
                             thickness: 1.0,
-                            color: Color(0xFF29292A),
+                            color: AppColors.surfaceDarkAlt,
                           ),
                         ],
                       );

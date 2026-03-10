@@ -1016,7 +1016,7 @@ class _HomeSellerProfileWidgetState
         child: EmptyStateWidget(
           icon: Icon(
             Icons.verified,
-            color: Color(0x008E6CFF),
+            color: AppColors.primary.withValues(alpha: 0),
             size: 0.0,
           ),
           title: 'No reviews yet',
