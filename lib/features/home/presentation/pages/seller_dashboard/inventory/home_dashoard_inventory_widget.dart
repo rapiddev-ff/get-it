@@ -43,7 +43,6 @@ class _HomeDashoardInventoryWidgetState
 
     textController ??= TextEditingController();
     textFieldFocusNode ??= FocusNode();
-    textFieldFocusNode!.addListener(() => setState(() {}));
   }
 
   @override

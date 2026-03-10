@@ -55,7 +55,6 @@ class _HomeSellerProfileReviewsStep2WidgetState
 
     textController ??= TextEditingController();
     textFieldFocusNode ??= FocusNode();
-    textFieldFocusNode!.addListener(() => setState(() {}));
   }
 
   @override

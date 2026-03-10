@@ -71,42 +71,20 @@ class _SettingsPaymentMethodAddWidgetState
     super.initState();
 
     cardNumberTextController = TextEditingController();
-    cardNumberFocusNode = FocusNode();
-    cardNumberFocusNode.addListener(() => setState(() {}));
-    cardNumberMask = MaskTextInputFormatter(mask: '#### #### #### ####');
+    cardNumberFocusNode = FocusNode();    cardNumberMask = MaskTextInputFormatter(mask: '#### #### #### ####');
     expireDateTextController = TextEditingController();
-    expireDateFocusNode = FocusNode();
-    expireDateFocusNode.addListener(() => setState(() {}));
-    expireDateMask = MaskTextInputFormatter(mask: '##/##');
+    expireDateFocusNode = FocusNode();    expireDateMask = MaskTextInputFormatter(mask: '##/##');
     textFieldaCVCTextController = TextEditingController();
-    textFieldaCVCFocusNode = FocusNode();
-    textFieldaCVCFocusNode.addListener(() => setState(() {}));
-    textFieldaCVCMask = MaskTextInputFormatter(mask: '###');
+    textFieldaCVCFocusNode = FocusNode();    textFieldaCVCMask = MaskTextInputFormatter(mask: '###');
     cardholderNameTextController = TextEditingController();
-    cardholderNameFocusNode = FocusNode();
-    cardholderNameFocusNode.addListener(() => setState(() {}));
-    emailAddressTextController = TextEditingController();
-    emailAddressFocusNode = FocusNode();
-    emailAddressFocusNode.addListener(() => setState(() {}));
-    fullNameTextController = TextEditingController();
-    fullNameFocusNode = FocusNode();
-    fullNameFocusNode.addListener(() => setState(() {}));
-    addressLine1TextController = TextEditingController();
-    addressLine1FocusNode = FocusNode();
-    addressLine1FocusNode.addListener(() => setState(() {}));
-    addressLine2TextController = TextEditingController();
-    addressLine2FocusNode = FocusNode();
-    addressLine2FocusNode.addListener(() => setState(() {}));
-    stateTextController = TextEditingController();
-    stateFocusNode = FocusNode();
-    stateFocusNode.addListener(() => setState(() {}));
-    cityTextController = TextEditingController();
-    cityFocusNode = FocusNode();
-    cityFocusNode.addListener(() => setState(() {}));
-    zipCodeTextController = TextEditingController();
-    zipCodeFocusNode = FocusNode();
-    zipCodeFocusNode.addListener(() => setState(() {}));
-  }
+    cardholderNameFocusNode = FocusNode();    emailAddressTextController = TextEditingController();
+    emailAddressFocusNode = FocusNode();    fullNameTextController = TextEditingController();
+    fullNameFocusNode = FocusNode();    addressLine1TextController = TextEditingController();
+    addressLine1FocusNode = FocusNode();    addressLine2TextController = TextEditingController();
+    addressLine2FocusNode = FocusNode();    stateTextController = TextEditingController();
+    stateFocusNode = FocusNode();    cityTextController = TextEditingController();
+    cityFocusNode = FocusNode();    zipCodeTextController = TextEditingController();
+    zipCodeFocusNode = FocusNode();  }
 
   @override
   void dispose() {

@@ -56,15 +56,9 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
     super.initState();
 
     firstnameTextController = TextEditingController();
-    firstnameFocusNode = FocusNode();
-    firstnameFocusNode.addListener(() => setState(() {}));
-    lastnameTextController = TextEditingController();
-    lastnameFocusNode = FocusNode();
-    lastnameFocusNode.addListener(() => setState(() {}));
-    usernameTextController = TextEditingController();
-    usernameFocusNode = FocusNode();
-    usernameFocusNode.addListener(() => setState(() {}));
-  }
+    firstnameFocusNode = FocusNode();    lastnameTextController = TextEditingController();
+    lastnameFocusNode = FocusNode();    usernameTextController = TextEditingController();
+    usernameFocusNode = FocusNode();  }
 
   @override
   void dispose() {

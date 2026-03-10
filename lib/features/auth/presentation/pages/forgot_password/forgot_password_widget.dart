@@ -38,9 +38,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
     super.initState();
 
     textController = TextEditingController();
-    textFieldFocusNode = FocusNode();
-    textFieldFocusNode.addListener(() => setState(() {}));
-  }
+    textFieldFocusNode = FocusNode();  }
 
   @override
   void dispose() {

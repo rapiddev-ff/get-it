@@ -46,11 +46,9 @@ class _SettingsShippingDefaultsWidgetState
     textController1 = TextEditingController(
         text: _formatDecimal(userData.userSettings?.defaultFlatShippingRate));
     textFieldFocusNode1 = FocusNode();
-    textFieldFocusNode1.addListener(() => setState(() {}));
     textController2 = TextEditingController(
         text: _formatDecimal(userData.userSettings?.defaultAdditionalItemFee));
     textFieldFocusNode2 = FocusNode();
-    textFieldFocusNode2.addListener(() => setState(() {}));
   }
 
   @override

@@ -43,9 +43,7 @@ class _SettingsDailyBudgetWidgetState
         : '0';
 
     textController = TextEditingController(text: formattedBudget);
-    textFieldFocusNode = FocusNode();
-    textFieldFocusNode.addListener(() => setState(() {}));
-  }
+    textFieldFocusNode = FocusNode();  }
 
   @override
   void dispose() {

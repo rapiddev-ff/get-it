@@ -38,8 +38,6 @@ class _SettingsBlockListWidgetState
 
     textController = TextEditingController();
     textFieldFocusNode = FocusNode();
-    textFieldFocusNode.addListener(() => setState(() {}));
-
     _loadBlockedUsers();
   }
 

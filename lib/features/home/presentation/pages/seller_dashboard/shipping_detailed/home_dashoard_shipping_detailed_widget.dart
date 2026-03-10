@@ -43,7 +43,6 @@ class _HomeDashoardShippingDetailedWidgetState
     super.initState();
     textController = TextEditingController();
     textFieldFocusNode = FocusNode();
-    textFieldFocusNode!.addListener(() => setState(() {}));
   }
 
   @override

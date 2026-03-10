@@ -90,33 +90,19 @@ class _SettingsPaymentMethodEditWidgetState
     cardholderNameFocusNode = FocusNode();
     emailAddressTextController = TextEditingController(
         text: widget.paymentMethod?.billingDetails?.email);
-    emailAddressFocusNode = FocusNode();
-    emailAddressFocusNode.addListener(() => setState(() {}));
-    fullNameTextController =
+    emailAddressFocusNode = FocusNode();    fullNameTextController =
         TextEditingController(text: widget.paymentMethod?.billingDetails?.name);
-    fullNameFocusNode = FocusNode();
-    fullNameFocusNode.addListener(() => setState(() {}));
-    addressLine1TextController = TextEditingController(
+    fullNameFocusNode = FocusNode();    addressLine1TextController = TextEditingController(
         text: widget.paymentMethod?.billingDetails?.addressLine1);
-    addressLine1FocusNode = FocusNode();
-    addressLine1FocusNode.addListener(() => setState(() {}));
-    addressLine2TextController = TextEditingController(
+    addressLine1FocusNode = FocusNode();    addressLine2TextController = TextEditingController(
         text: widget.paymentMethod?.billingDetails?.addressLine2);
-    addressLine2FocusNode = FocusNode();
-    addressLine2FocusNode.addListener(() => setState(() {}));
-    stateTextController = TextEditingController(
+    addressLine2FocusNode = FocusNode();    stateTextController = TextEditingController(
         text: widget.paymentMethod?.billingDetails?.state);
-    stateFocusNode = FocusNode();
-    stateFocusNode.addListener(() => setState(() {}));
-    cityTextController =
+    stateFocusNode = FocusNode();    cityTextController =
         TextEditingController(text: widget.paymentMethod?.billingDetails?.city);
-    cityFocusNode = FocusNode();
-    cityFocusNode.addListener(() => setState(() {}));
-    zipCodeTextController = TextEditingController(
+    cityFocusNode = FocusNode();    zipCodeTextController = TextEditingController(
         text: widget.paymentMethod?.billingDetails?.postalCode);
     zipCodeFocusNode = FocusNode();
-    zipCodeFocusNode.addListener(() => setState(() {}));
-
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {
           textFieldaCVCTextController.text = '***';
         }));

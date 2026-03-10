@@ -105,21 +105,16 @@ class _CheckoutEditShippingAddressWidgetState
         text:
             '${ref.read(authProvider).firstName} ${ref.read(authProvider).lastName}');
     fullNameFocusNode ??= FocusNode();
-    fullNameFocusNode!.addListener(() => setState(() {}));
     streetaddressTextController ??= TextEditingController();
 
     aptsuiteunitTextController ??= TextEditingController();
     aptsuiteunitFocusNode ??= FocusNode();
-    aptsuiteunitFocusNode!.addListener(() => setState(() {}));
     cityTextController ??= TextEditingController();
     cityFocusNode ??= FocusNode();
-    cityFocusNode!.addListener(() => setState(() {}));
     stateTextController ??= TextEditingController();
     stateFocusNode ??= FocusNode();
-    stateFocusNode!.addListener(() => setState(() {}));
     zipCodeTextController ??= TextEditingController();
     zipCodeFocusNode ??= FocusNode();
-    zipCodeFocusNode!.addListener(() => setState(() {}));
   }
 
   @override

@@ -42,9 +42,7 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
     super.initState();
 
     textController = TextEditingController();
-    textFieldFocusNode = FocusNode();
-    textFieldFocusNode.addListener(() => setState(() {}));
-    textFieldMask = MaskTextInputFormatter(mask: '+# (###) ###-##-##');
+    textFieldFocusNode = FocusNode();    textFieldMask = MaskTextInputFormatter(mask: '+# (###) ###-##-##');
   }
 
   @override

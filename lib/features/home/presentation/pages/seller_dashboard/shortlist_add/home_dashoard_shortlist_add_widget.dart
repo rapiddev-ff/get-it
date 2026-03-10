@@ -36,7 +36,6 @@ class _HomeDashoardShortlistAddWidgetState
     super.initState();
     textController = TextEditingController();
     textFieldFocusNode = FocusNode();
-    textFieldFocusNode!.addListener(() => setState(() {}));
     _loadProducts();
   }
 

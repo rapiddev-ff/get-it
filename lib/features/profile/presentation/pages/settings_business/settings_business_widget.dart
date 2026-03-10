@@ -33,9 +33,7 @@ class _SettingsBusinessWidgetState extends State<SettingsBusinessWidget> {
     super.initState();
 
     textController = TextEditingController(text: widget.initialVal);
-    textFieldFocusNode = FocusNode();
-    textFieldFocusNode.addListener(() => setState(() {}));
-  }
+    textFieldFocusNode = FocusNode();  }
 
   @override
   void dispose() {

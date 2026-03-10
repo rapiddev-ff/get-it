@@ -237,45 +237,33 @@ class _HomeDashoardInventoryAddWidgetState
 
     titleTextController ??= TextEditingController();
     titleFocusNode ??= FocusNode();
-    titleFocusNode!.addListener(() => setState(() {}));
     skuPrefixTextController ??= TextEditingController();
     skuPrefixFocusNode ??= FocusNode();
-    skuPrefixFocusNode!.addListener(() => setState(() {}));
     skuNumberTextController ??= TextEditingController();
     skuNumberFocusNode ??= FocusNode();
-    skuNumberFocusNode!.addListener(() => setState(() {}));
     quantityTextController ??= TextEditingController();
     quantityFocusNode ??= FocusNode();
-    quantityFocusNode!.addListener(() => setState(() {}));
     quantityMask = MaskTextInputFormatter(mask: '####');
     yearTextController ??= TextEditingController();
     yearFocusNode ??= FocusNode();
-    yearFocusNode!.addListener(() => setState(() {}));
     yearMask = MaskTextInputFormatter(mask: '####');
     issueTextController ??= TextEditingController();
     issueFocusNode ??= FocusNode();
-    issueFocusNode!.addListener(() => setState(() {}));
     issueMask = MaskTextInputFormatter(mask: '#######');
     priceTextController ??= TextEditingController();
     priceFocusNode ??= FocusNode();
-    priceFocusNode!.addListener(() => setState(() {}));
     switchFlashSaleValue = false;
     percentageDiscountTextController ??= TextEditingController();
     percentageDiscountFocusNode ??= FocusNode();
-    percentageDiscountFocusNode!.addListener(() => setState(() {}));
     percentageDiscountMask = MaskTextInputFormatter(mask: '##');
     dollarDiscountTextController ??= TextEditingController();
     dollarDiscountFocusNode ??= FocusNode();
-    dollarDiscountFocusNode!.addListener(() => setState(() {}));
     flatShippingCostTextController ??= TextEditingController();
     flatShippingCostFocusNode ??= FocusNode();
-    flatShippingCostFocusNode!.addListener(() => setState(() {}));
     additionalItemFeeTextController ??= TextEditingController();
     additionalItemFeeFocusNode ??= FocusNode();
-    additionalItemFeeFocusNode!.addListener(() => setState(() {}));
     descTextController ??= TextEditingController();
     descFocusNode ??= FocusNode();
-    descFocusNode!.addListener(() => setState(() {}));
     switchConventionSettingsValue = false;
   }
 

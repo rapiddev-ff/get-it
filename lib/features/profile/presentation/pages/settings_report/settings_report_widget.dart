@@ -35,9 +35,7 @@ class _SettingsReportWidgetState extends ConsumerState<SettingsReportWidget>
     super.initState();
 
     textController = TextEditingController();
-    textFieldFocusNode = FocusNode();
-    textFieldFocusNode.addListener(() => setState(() {}));
-  }
+    textFieldFocusNode = FocusNode();  }
 
   @override
   void dispose() {

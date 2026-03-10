@@ -34,7 +34,6 @@ class _HomeDashoardPromoteStep1WidgetState
 
     textController ??= TextEditingController();
     textFieldFocusNode ??= FocusNode();
-    textFieldFocusNode!.addListener(() => setState(() {}));
   }
 
   @override

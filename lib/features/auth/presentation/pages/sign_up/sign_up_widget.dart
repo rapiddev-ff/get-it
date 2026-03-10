@@ -67,13 +67,10 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
 
     emailTextController = TextEditingController();
     textFieldFocusNode1 = FocusNode();
-    textFieldFocusNode1.addListener(() => setState(() {}));
     passwordTextController = TextEditingController();
     textFieldFocusNode2 = FocusNode();
-    textFieldFocusNode2.addListener(() => setState(() {}));
     confirmPasswordTextController = TextEditingController();
     textFieldFocusNode3 = FocusNode();
-    textFieldFocusNode3.addListener(() => setState(() {}));
   }
 
   @override

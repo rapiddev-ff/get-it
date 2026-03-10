@@ -77,18 +77,10 @@ class _SettingsEditProfileWidgetState
 
     final userData = ref.read(authProvider);
     usernameTextController = TextEditingController(text: userData.username);
-    usernameFocusNode = FocusNode();
-    usernameFocusNode.addListener(() => setState(() {}));
-    bioTextController = TextEditingController(text: userData.bio);
-    bioFocusNode = FocusNode();
-    bioFocusNode.addListener(() => setState(() {}));
-    firstnameTextController = TextEditingController(text: userData.firstName);
-    firstnameFocusNode = FocusNode();
-    firstnameFocusNode.addListener(() => setState(() {}));
-    lastnameTextController = TextEditingController(text: userData.lastName);
-    lastnameFocusNode = FocusNode();
-    lastnameFocusNode.addListener(() => setState(() {}));
-  }
+    usernameFocusNode = FocusNode();    bioTextController = TextEditingController(text: userData.bio);
+    bioFocusNode = FocusNode();    firstnameTextController = TextEditingController(text: userData.firstName);
+    firstnameFocusNode = FocusNode();    lastnameTextController = TextEditingController(text: userData.lastName);
+    lastnameFocusNode = FocusNode();  }
 
   @override
   void dispose() {

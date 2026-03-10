@@ -90,10 +90,8 @@ class _SettingsMyProfileFollowersWidgetState
 
     textController1 = TextEditingController();
     textFieldFocusNode1 = FocusNode();
-    textFieldFocusNode1.addListener(() => setState(() {}));
     textController2 = TextEditingController();
     textFieldFocusNode2 = FocusNode();
-    textFieldFocusNode2.addListener(() => setState(() {}));
 
     _followersScrollController.addListener(_onFollowersScroll);
     _followingScrollController.addListener(_onFollowingScroll);

@@ -48,9 +48,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       await actions.initWishlistStream(ref, ref.read(currentUserIdProvider));
     });
-    if (!mounted) return;
-    _textFieldFocusNode.addListener(() => setState(() {}));
-  }
+    if (!mounted) return;  }
 
   @override
   void dispose() {

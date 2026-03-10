@@ -49,13 +49,10 @@ class _SettingsChangePasswordWidgetState
 
     textController1 = TextEditingController();
     textFieldFocusNode1 = FocusNode();
-    textFieldFocusNode1.addListener(() => setState(() {}));
     textController2 = TextEditingController();
     textFieldFocusNode2 = FocusNode();
-    textFieldFocusNode2.addListener(() => setState(() {}));
     textController3 = TextEditingController();
     textFieldFocusNode3 = FocusNode();
-    textFieldFocusNode3.addListener(() => setState(() {}));
   }
 
   @override

@@ -53,25 +53,15 @@ class _SettingsBusinessAddressWidgetState
     final userData = ref.read(authProvider);
     addressLine1TextController = TextEditingController(
         text: userData.businessAddress?.addressLine1 ?? '');
-    addressLine1FocusNode = FocusNode();
-    addressLine1FocusNode.addListener(() => setState(() {}));
-    addressLine2TextController = TextEditingController(
+    addressLine1FocusNode = FocusNode();    addressLine2TextController = TextEditingController(
         text: userData.businessAddress?.addressLine2 ?? '');
-    addressLine2FocusNode = FocusNode();
-    addressLine2FocusNode.addListener(() => setState(() {}));
-    stateTextController =
+    addressLine2FocusNode = FocusNode();    stateTextController =
         TextEditingController(text: userData.businessAddress?.state ?? '');
-    stateFocusNode = FocusNode();
-    stateFocusNode.addListener(() => setState(() {}));
-    cityTextController =
+    stateFocusNode = FocusNode();    cityTextController =
         TextEditingController(text: userData.businessAddress?.city ?? '');
-    cityFocusNode = FocusNode();
-    cityFocusNode.addListener(() => setState(() {}));
-    zipCodeTextController =
+    cityFocusNode = FocusNode();    zipCodeTextController =
         TextEditingController(text: userData.businessAddress?.zipCode ?? '');
-    zipCodeFocusNode = FocusNode();
-    zipCodeFocusNode.addListener(() => setState(() {}));
-  }
+    zipCodeFocusNode = FocusNode();  }
 
   @override
   void dispose() {

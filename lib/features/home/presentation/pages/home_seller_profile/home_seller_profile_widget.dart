@@ -94,7 +94,6 @@ class _HomeSellerProfileWidgetState
 
     textController ??= TextEditingController();
     textFieldFocusNode ??= FocusNode();
-    textFieldFocusNode!.addListener(() => setState(() {}));
   }
 
   Future<void> _refreshSellerData() async {
