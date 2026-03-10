@@ -1,18 +1,16 @@
 import '/features/home/domain/models/seller_model.dart';
 import '/features/home/domain/models/seller_product_model.dart';
 import '/core/theme/app_colors.dart';
+import '/core/utils/keyboard_visibility_mixin.dart';
 import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_gradient_button.dart';
 import '/core/utils/value_utils.dart';
-import 'dart:async';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_debounce/easy_debounce.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -41,11 +39,9 @@ class HomeSellerProfileReviewsStep2Widget extends StatefulWidget {
 }
 
 class _HomeSellerProfileReviewsStep2WidgetState
-    extends State<HomeSellerProfileReviewsStep2Widget> {
+    extends State<HomeSellerProfileReviewsStep2Widget>
+    with KeyboardVisibilityMixin {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  late StreamSubscription<bool> _keyboardVisibilitySubscription;
-  bool _isKeyboardVisible = false;
-
   // Inlined from model
   List<Uint8List> images = [];
   double? ratingBarValue2;
@@ -57,15 +53,6 @@ class _HomeSellerProfileReviewsStep2WidgetState
   void initState() {
     super.initState();
 
-    if (!kIsWeb) {
-      _keyboardVisibilitySubscription =
-          KeyboardVisibilityController().onChange.listen((bool visible) {
-        setState(() {
-          _isKeyboardVisible = visible;
-        });
-      });
-    }
-
     textController ??= TextEditingController();
     textFieldFocusNode ??= FocusNode();
     textFieldFocusNode!.addListener(() => setState(() {}));
@@ -75,10 +62,6 @@ class _HomeSellerProfileReviewsStep2WidgetState
   void dispose() {
     textFieldFocusNode?.dispose();
     textController?.dispose();
-
-    if (!kIsWeb) {
-      _keyboardVisibilitySubscription.cancel();
-    }
     super.dispose();
   }
 
@@ -669,9 +652,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                     ),
                   ),
                 ),
-                if (!(kIsWeb
-                    ? MediaQuery.viewInsetsOf(context).bottom > 0
-                    : _isKeyboardVisible))
+                if (!isKeyboardShowing(context))
                   Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(16.0, 32.0, 16.0, 0.0),

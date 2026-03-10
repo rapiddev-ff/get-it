@@ -1,11 +1,9 @@
-import 'dart:async';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '/core/theme/app_colors.dart';
+import '/core/utils/keyboard_visibility_mixin.dart';
 import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_gradient_button.dart';
@@ -28,35 +26,20 @@ class ForgotPasswordStep2Widget extends StatefulWidget {
       _ForgotPasswordStep2WidgetState();
 }
 
-class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget> {
+class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget>
+    with KeyboardVisibilityMixin {
   late ForgotPasswordStep2Model _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  late StreamSubscription<bool> _keyboardVisibilitySubscription;
-  bool _isKeyboardVisible = false;
-
   @override
   void initState() {
     super.initState();
     _model = ForgotPasswordStep2Model();
-
-    if (!kIsWeb) {
-      _keyboardVisibilitySubscription =
-          KeyboardVisibilityController().onChange.listen((bool visible) {
-        setState(() {
-          _isKeyboardVisible = visible;
-        });
-      });
-    }
   }
 
   @override
   void dispose() {
     _model.dispose();
-
-    if (!kIsWeb) {
-      _keyboardVisibilitySubscription.cancel();
-    }
     super.dispose();
   }
 
@@ -148,9 +131,7 @@ class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget> {
                   ),
                 ),
               ),
-              if (!(kIsWeb
-                  ? MediaQuery.viewInsetsOf(context).bottom > 0
-                  : _isKeyboardVisible))
+              if (!isKeyboardShowing(context))
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                   child: Column(

@@ -1,15 +1,13 @@
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/core/theme/app_colors.dart';
+import '/core/utils/keyboard_visibility_mixin.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_text_field.dart';
 import '/core/widgets/app_gradient_button.dart';
-import 'dart:async';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:easy_debounce/easy_debounce.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'settings_change_email_model.dart';
@@ -30,26 +28,15 @@ class SettingsChangeEmailWidget extends StatefulWidget {
       _SettingsChangeEmailWidgetState();
 }
 
-class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget> {
+class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget>
+    with KeyboardVisibilityMixin {
   late SettingsChangeEmailModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  late StreamSubscription<bool> _keyboardVisibilitySubscription;
-  bool _isKeyboardVisible = false;
-
   @override
   void initState() {
     super.initState();
     _model = SettingsChangeEmailModel();
-
-    if (!kIsWeb) {
-      _keyboardVisibilitySubscription =
-          KeyboardVisibilityController().onChange.listen((bool visible) {
-        setState(() {
-          _isKeyboardVisible = visible;
-        });
-      });
-    }
 
     _model.textController1 ??= TextEditingController();
     _model.textFieldFocusNode1 ??= FocusNode();
@@ -62,10 +49,6 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget> {
   @override
   void dispose() {
     _model.dispose();
-
-    if (!kIsWeb) {
-      _keyboardVisibilitySubscription.cancel();
-    }
     super.dispose();
   }
 
@@ -283,9 +266,7 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget> {
                   ),
                 ),
               ),
-              if (!(kIsWeb
-                  ? MediaQuery.viewInsetsOf(context).bottom > 0
-                  : _isKeyboardVisible))
+              if (!isKeyboardShowing(context))
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                   child: Column(

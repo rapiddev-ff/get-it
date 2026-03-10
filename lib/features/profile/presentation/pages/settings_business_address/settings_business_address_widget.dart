@@ -1,15 +1,13 @@
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/utils/geo_data.dart';
-import 'dart:async';
 import 'package:easy_debounce/easy_debounce.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 import '/core/theme/app_colors.dart';
+import '/core/utils/keyboard_visibility_mixin.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_text_field.dart';
 import '/core/widgets/app_gradient_button.dart';
@@ -30,26 +28,15 @@ class SettingsBusinessAddressWidget extends ConsumerStatefulWidget {
 }
 
 class _SettingsBusinessAddressWidgetState
-    extends ConsumerState<SettingsBusinessAddressWidget> {
+    extends ConsumerState<SettingsBusinessAddressWidget>
+    with KeyboardVisibilityMixin {
   late SettingsBusinessAddressModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  late StreamSubscription<bool> _keyboardVisibilitySubscription;
-  bool _isKeyboardVisible = false;
-
   @override
   void initState() {
     super.initState();
     _model = SettingsBusinessAddressModel();
-
-    if (!kIsWeb) {
-      _keyboardVisibilitySubscription =
-          KeyboardVisibilityController().onChange.listen((bool visible) {
-        setState(() {
-          _isKeyboardVisible = visible;
-        });
-      });
-    }
 
     final userData = ref.read(authProvider);
     _model.addressLine1TextController ??= TextEditingController(
@@ -77,10 +64,6 @@ class _SettingsBusinessAddressWidgetState
   @override
   void dispose() {
     _model.dispose();
-
-    if (!kIsWeb) {
-      _keyboardVisibilitySubscription.cancel();
-    }
     super.dispose();
   }
 
@@ -476,9 +459,7 @@ class _SettingsBusinessAddressWidgetState
                     ),
                   ),
                 ),
-                if (!(kIsWeb
-                    ? MediaQuery.viewInsetsOf(context).bottom > 0
-                    : _isKeyboardVisible))
+                if (!isKeyboardShowing(context))
                   Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 36.0, 0.0, 32.0),

@@ -1,10 +1,7 @@
-import 'dart:async';
 
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -14,6 +11,7 @@ import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
+import '/core/utils/keyboard_visibility_mixin.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_gradient_button.dart';
 import '/features/auth/data/supabase_auth/auth_util.dart';
@@ -41,13 +39,11 @@ class PhoneVerificationPage2Widget extends StatefulWidget {
 }
 
 class _PhoneVerificationPage2WidgetState
-    extends State<PhoneVerificationPage2Widget> {
+    extends State<PhoneVerificationPage2Widget>
+    with KeyboardVisibilityMixin {
   late PhoneVerificationPage2Model _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  late StreamSubscription<bool> _keyboardVisibilitySubscription;
-  bool _isKeyboardVisible = false;
-
   Key _shakeKey = UniqueKey();
 
   @override
@@ -61,15 +57,6 @@ class _PhoneVerificationPage2WidgetState
       _model.timerController.onStartTimer();
     });
 
-    if (!kIsWeb) {
-      _keyboardVisibilitySubscription =
-          KeyboardVisibilityController().onChange.listen((bool visible) {
-        setState(() {
-          _isKeyboardVisible = visible;
-        });
-      });
-    }
-
     _model.pinCodeFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -78,10 +65,6 @@ class _PhoneVerificationPage2WidgetState
   @override
   void dispose() {
     _model.dispose();
-
-    if (!kIsWeb) {
-      _keyboardVisibilitySubscription.cancel();
-    }
     super.dispose();
   }
 
@@ -317,9 +300,7 @@ class _PhoneVerificationPage2WidgetState
                   ),
                 ),
               ),
-              if (!(kIsWeb
-                  ? MediaQuery.viewInsetsOf(context).bottom > 0
-                  : _isKeyboardVisible))
+              if (!isKeyboardShowing(context))
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(
                       24.0, 0.0, 24.0, 0.0),

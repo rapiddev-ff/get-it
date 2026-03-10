@@ -1,15 +1,13 @@
-import 'dart:async';
 
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
+import '/core/utils/keyboard_visibility_mixin.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_gradient_button.dart';
 import '/features/auth/presentation/pages/additional_info/additional_info_widget.dart';
@@ -27,35 +25,20 @@ class PermissionsWidget extends StatefulWidget {
   State<PermissionsWidget> createState() => _PermissionsWidgetState();
 }
 
-class _PermissionsWidgetState extends State<PermissionsWidget> {
+class _PermissionsWidgetState extends State<PermissionsWidget>
+    with KeyboardVisibilityMixin {
   late PermissionsModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  late StreamSubscription<bool> _keyboardVisibilitySubscription;
-  bool _isKeyboardVisible = false;
-
   @override
   void initState() {
     super.initState();
     _model = PermissionsModel();
-
-    if (!kIsWeb) {
-      _keyboardVisibilitySubscription =
-          KeyboardVisibilityController().onChange.listen((bool visible) {
-        setState(() {
-          _isKeyboardVisible = visible;
-        });
-      });
-    }
   }
 
   @override
   void dispose() {
     _model.dispose();
-
-    if (!kIsWeb) {
-      _keyboardVisibilitySubscription.cancel();
-    }
     super.dispose();
   }
 
@@ -216,9 +199,7 @@ class _PermissionsWidgetState extends State<PermissionsWidget> {
                   ),
                 ),
               ),
-              if (!(kIsWeb
-                  ? MediaQuery.viewInsetsOf(context).bottom > 0
-                  : _isKeyboardVisible))
+              if (!isKeyboardShowing(context))
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(
                       24.0, 0.0, 24.0, 0.0),

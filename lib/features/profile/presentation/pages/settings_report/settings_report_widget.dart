@@ -1,14 +1,12 @@
-import 'dart:async';
 import 'package:easy_debounce/easy_debounce.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/supabase/database/tables/support_reports.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/core/theme/app_colors.dart';
+import '/core/utils/keyboard_visibility_mixin.dart';
 import '/core/widgets/app_text_field.dart';
 import '/core/widgets/app_gradient_button.dart';
 import '/core/utils/list_extensions.dart';
@@ -25,27 +23,16 @@ class SettingsReportWidget extends StatefulWidget {
   State<SettingsReportWidget> createState() => _SettingsReportWidgetState();
 }
 
-class _SettingsReportWidgetState extends State<SettingsReportWidget> {
+class _SettingsReportWidgetState extends State<SettingsReportWidget>
+    with KeyboardVisibilityMixin {
   late SettingsReportModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-  late StreamSubscription<bool> _keyboardVisibilitySubscription;
-  bool _isKeyboardVisible = false;
-  bool _isSending = false;
+  final scaffoldKey = GlobalKey<ScaffoldState>();  bool _isSending = false;
 
   @override
   void initState() {
     super.initState();
     _model = SettingsReportModel();
-
-    if (!kIsWeb) {
-      _keyboardVisibilitySubscription =
-          KeyboardVisibilityController().onChange.listen((bool visible) {
-        setState(() {
-          _isKeyboardVisible = visible;
-        });
-      });
-    }
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
@@ -55,10 +42,6 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget> {
   @override
   void dispose() {
     _model.dispose();
-
-    if (!kIsWeb) {
-      _keyboardVisibilitySubscription.cancel();
-    }
     super.dispose();
   }
 
@@ -217,9 +200,7 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget> {
                   ),
                 ),
               ),
-              if (!(kIsWeb
-                  ? MediaQuery.viewInsetsOf(context).bottom > 0
-                  : _isKeyboardVisible))
+              if (!isKeyboardShowing(context))
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   child: Column(

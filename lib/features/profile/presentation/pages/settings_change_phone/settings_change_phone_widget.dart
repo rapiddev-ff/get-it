@@ -1,17 +1,15 @@
 import '/backend/api_requests/api_calls.dart';
 import '/features/auth/presentation/pages/phone_verification_page2/phone_verification_page2_widget.dart';
 import '/core/theme/app_colors.dart';
+import '/core/utils/keyboard_visibility_mixin.dart';
 import '/core/widgets/app_text_field.dart';
 import '/core/widgets/app_gradient_button.dart';
 import '/core/utils/list_extensions.dart';
-import 'dart:async';
 import '/custom_code/actions/index.dart' as actions;
 import '/core/utils/form_validators.dart';
 import 'package:easy_debounce/easy_debounce.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -33,26 +31,15 @@ class SettingsChangePhoneWidget extends StatefulWidget {
       _SettingsChangePhoneWidgetState();
 }
 
-class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget> {
+class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
+    with KeyboardVisibilityMixin {
   late SettingsChangePhoneModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  late StreamSubscription<bool> _keyboardVisibilitySubscription;
-  bool _isKeyboardVisible = false;
-
   @override
   void initState() {
     super.initState();
     _model = SettingsChangePhoneModel();
-
-    if (!kIsWeb) {
-      _keyboardVisibilitySubscription =
-          KeyboardVisibilityController().onChange.listen((bool visible) {
-        setState(() {
-          _isKeyboardVisible = visible;
-        });
-      });
-    }
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
@@ -63,10 +50,6 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget> {
   @override
   void dispose() {
     _model.dispose();
-
-    if (!kIsWeb) {
-      _keyboardVisibilitySubscription.cancel();
-    }
     super.dispose();
   }
 
@@ -176,9 +159,7 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget> {
                   ),
                 ),
               ),
-              if (!(kIsWeb
-                  ? MediaQuery.viewInsetsOf(context).bottom > 0
-                  : _isKeyboardVisible))
+              if (!isKeyboardShowing(context))
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                   child: Column(

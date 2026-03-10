@@ -1,17 +1,15 @@
-import 'package:flutter/foundation.dart' hide Category;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:easy_debounce/easy_debounce.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'dart:async';
 
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/browse/domain/models/category_model.dart';
 import '/features/home/domain/models/seller_product_model.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/core/theme/app_colors.dart';
+import '/core/utils/keyboard_visibility_mixin.dart';
 import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
 import '/features/home/presentation/pages/seller_dashboard/inventory_item/inventory_item_widget.dart';
@@ -30,11 +28,9 @@ class HomeDashoardInventoryWidget extends StatefulWidget {
 }
 
 class _HomeDashoardInventoryWidgetState
-    extends State<HomeDashoardInventoryWidget> {
+    extends State<HomeDashoardInventoryWidget>
+    with KeyboardVisibilityMixin {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  late StreamSubscription<bool> _keyboardVisibilitySubscription;
-  bool _isKeyboardVisible = false;
-
   // Inlined model state
   Category? choosenCategory;
   int? itemsCount = 0;
@@ -45,15 +41,6 @@ class _HomeDashoardInventoryWidgetState
   void initState() {
     super.initState();
 
-    if (!kIsWeb) {
-      _keyboardVisibilitySubscription =
-          KeyboardVisibilityController().onChange.listen((bool visible) {
-        setState(() {
-          _isKeyboardVisible = visible;
-        });
-      });
-    }
-
     textController ??= TextEditingController();
     textFieldFocusNode ??= FocusNode();
     textFieldFocusNode!.addListener(() => setState(() {}));
@@ -63,10 +50,6 @@ class _HomeDashoardInventoryWidgetState
   void dispose() {
     textController?.dispose();
     textFieldFocusNode?.dispose();
-
-    if (!kIsWeb) {
-      _keyboardVisibilitySubscription.cancel();
-    }
     super.dispose();
   }
 
@@ -395,9 +378,7 @@ class _HomeDashoardInventoryWidgetState
                     .addToEnd(SizedBox(height: 24.0)),
               ),
             ),
-            if (!(kIsWeb
-                ? MediaQuery.viewInsetsOf(context).bottom > 0
-                : _isKeyboardVisible))
+            if (!isKeyboardShowing(context))
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(

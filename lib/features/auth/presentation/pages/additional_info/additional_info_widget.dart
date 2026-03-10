@@ -1,11 +1,8 @@
-import 'dart:async';
 
 import 'package:easy_debounce/easy_debounce.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,6 +12,7 @@ import 'package:image_picker/image_picker.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
+import '/core/utils/keyboard_visibility_mixin.dart';
 import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/app_text_field.dart';
 import '/core/utils/list_extensions.dart';
@@ -38,26 +36,15 @@ class AdditionalInfoWidget extends ConsumerStatefulWidget {
   ConsumerState<AdditionalInfoWidget> createState() => _AdditionalInfoWidgetState();
 }
 
-class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget> {
+class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
+    with KeyboardVisibilityMixin {
   late AdditionalInfoModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  late StreamSubscription<bool> _keyboardVisibilitySubscription;
-  bool _isKeyboardVisible = false;
-
   @override
   void initState() {
     super.initState();
     _model = AdditionalInfoModel();
-
-    if (!kIsWeb) {
-      _keyboardVisibilitySubscription =
-          KeyboardVisibilityController().onChange.listen((bool visible) {
-        setState(() {
-          _isKeyboardVisible = visible;
-        });
-      });
-    }
 
     _model.firstnameTextController ??= TextEditingController();
     _model.firstnameFocusNode ??= FocusNode();
@@ -73,10 +60,6 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget> {
   @override
   void dispose() {
     _model.dispose();
-
-    if (!kIsWeb) {
-      _keyboardVisibilitySubscription.cancel();
-    }
     super.dispose();
   }
 
@@ -482,9 +465,7 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget> {
                     ),
                   ),
                 ),
-                if (!(kIsWeb
-                    ? MediaQuery.viewInsetsOf(context).bottom > 0
-                    : _isKeyboardVisible))
+                if (!isKeyboardShowing(context))
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [

@@ -1,12 +1,10 @@
-import 'dart:async';
 
 import '/core/theme/app_colors.dart';
+import '/core/utils/keyboard_visibility_mixin.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/router/app_router.dart';
 import '/index.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
@@ -18,29 +16,15 @@ class NavBarWidget extends StatefulWidget {
   State<NavBarWidget> createState() => _NavBarWidgetState();
 }
 
-class _NavBarWidgetState extends State<NavBarWidget> {
-  late StreamSubscription<bool> _keyboardVisibilitySubscription;
-  bool _isKeyboardVisible = false;
-
+class _NavBarWidgetState extends State<NavBarWidget>
+    with KeyboardVisibilityMixin {
   @override
   void initState() {
     super.initState();
-
-    if (!kIsWeb) {
-      _keyboardVisibilitySubscription =
-          KeyboardVisibilityController().onChange.listen((bool visible) {
-        setState(() {
-          _isKeyboardVisible = visible;
-        });
-      });
-    }
   }
 
   @override
   void dispose() {
-    if (!kIsWeb) {
-      _keyboardVisibilitySubscription.cancel();
-    }
     super.dispose();
   }
 
@@ -52,9 +36,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
     final route = _currentRoute(context);
 
     return Visibility(
-      visible: !(kIsWeb
-          ? MediaQuery.viewInsetsOf(context).bottom > 0
-          : _isKeyboardVisible),
+      visible: !isKeyboardShowing(context),
       child: Container(
         width: MediaQuery.sizeOf(context).width * 1.0,
         height: 100.0,
