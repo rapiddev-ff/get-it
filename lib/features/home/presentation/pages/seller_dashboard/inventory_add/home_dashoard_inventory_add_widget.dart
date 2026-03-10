@@ -1,4 +1,3 @@
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
 import '/features/home/presentation/pages/seller_dashboard/dialog_product_created/dialog_product_created_widget.dart';
 import '/features/home/presentation/pages/seller_dashboard/dialog_product_draft/dialog_product_draft_widget.dart';
@@ -22,6 +21,8 @@ import 'package:go_router/go_router.dart';
 import '/features/home/presentation/pages/seller_dashboard/inventory_add_tags/home_dashoard_inventory_add_tags_widget.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -29,7 +30,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
 
-class HomeDashoardInventoryAddWidget extends StatefulWidget {
+class HomeDashoardInventoryAddWidget extends ConsumerStatefulWidget {
   const HomeDashoardInventoryAddWidget({
     super.key,
     this.productId,
@@ -41,12 +42,12 @@ class HomeDashoardInventoryAddWidget extends StatefulWidget {
   static String routePath = 'homeDashoardInventoryAdd';
 
   @override
-  State<HomeDashoardInventoryAddWidget> createState() =>
+  ConsumerState<HomeDashoardInventoryAddWidget> createState() =>
       _HomeDashoardInventoryAddWidgetState();
 }
 
 class _HomeDashoardInventoryAddWidgetState
-    extends State<HomeDashoardInventoryAddWidget> {
+    extends ConsumerState<HomeDashoardInventoryAddWidget> {
   final formKey = GlobalKey<FormState>();
 
   // Model state inlined
@@ -127,7 +128,7 @@ class _HomeDashoardInventoryAddWidgetState
         Future(() async {
           userShortlists = await ShortlistsTable().queryRows(
             queryFn: (q) => q
-                .eqOrNull('user_id', currentUserUid)
+                .eqOrNull('user_id', ref.read(currentUserIdProvider))
                 .order('created_at', ascending: false),
           );
         }),
@@ -137,7 +138,7 @@ class _HomeDashoardInventoryAddWidgetState
         await Future.wait([
           Future(() async {
             getProduct = await actions.getProductDetails(
-                widget.productId!, currentUserUid);
+                widget.productId!, ref.read(currentUserIdProvider));
           }),
         ]);
         titleTextController?.text = getProduct!.title;

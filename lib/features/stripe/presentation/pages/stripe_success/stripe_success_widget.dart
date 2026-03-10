@@ -1,4 +1,3 @@
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/theme/app_colors.dart';
 import '/core/router/app_router.dart';
@@ -6,20 +5,23 @@ import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import '/features/home/presentation/pages/home_page/home_page_widget.dart';
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
-class StripeSuccessWidget extends StatefulWidget {
+class StripeSuccessWidget extends ConsumerStatefulWidget {
   const StripeSuccessWidget({super.key});
 
   static String routeName = 'stripeSuccess';
   static String routePath = 'stripeSuccess';
 
   @override
-  State<StripeSuccessWidget> createState() => _StripeSuccessWidgetState();
+  ConsumerState<StripeSuccessWidget> createState() =>
+      _StripeSuccessWidgetState();
 }
 
-class _StripeSuccessWidgetState extends State<StripeSuccessWidget> {
+class _StripeSuccessWidgetState extends ConsumerState<StripeSuccessWidget> {
   List<StripeAccountsRow>? getStripe;
 
   @override
@@ -80,7 +82,7 @@ class _StripeSuccessWidgetState extends State<StripeSuccessWidget> {
                     getStripe = await StripeAccountsTable().queryRows(
                       queryFn: (q) => q.eqOrNull(
                         'user_id',
-                        currentUserUid,
+                        ref.read(currentUserIdProvider),
                       ),
                     );
                     setState(() {});

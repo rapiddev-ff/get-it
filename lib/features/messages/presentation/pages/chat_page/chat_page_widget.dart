@@ -1,4 +1,3 @@
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/messages/domain/models/conversation_model.dart';
 import '/features/messages/domain/models/message_model.dart';
 import '/features/home/presentation/widgets/empty_state/empty_state_widget.dart';
@@ -17,6 +16,7 @@ import '/features/messages/presentation/pages/chat_buyer_profile/chat_buyer_prof
 import '/features/home/presentation/pages/home_product/home_product_widget.dart';
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -103,7 +103,8 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                     padding: EdgeInsets.only(left: 18.0),
                     child: InkWell(
                       onTap: () async {
-                        if (widget.conversation?.buyerId == currentUserUid) {
+                        if (widget.conversation?.buyerId ==
+                            ref.read(currentUserIdProvider)) {
                           context.pushNamed(
                             HomeSellerProfileWidget.routeName,
                             queryParameters: {

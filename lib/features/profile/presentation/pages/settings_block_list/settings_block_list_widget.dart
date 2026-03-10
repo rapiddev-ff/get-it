@@ -1,4 +1,3 @@
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
@@ -7,23 +6,26 @@ import '/custom_code/actions/index.dart' as actions;
 import '/features/profile/presentation/pages/settings_blocked_user_item/settings_blocked_user_item_widget.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 import 'settings_block_list_model.dart';
 export 'settings_block_list_model.dart';
 
-class SettingsBlockListWidget extends StatefulWidget {
+class SettingsBlockListWidget extends ConsumerStatefulWidget {
   const SettingsBlockListWidget({super.key});
 
   static String routeName = 'settingsBlockList';
   static String routePath = 'settingsBlockList';
 
   @override
-  State<SettingsBlockListWidget> createState() =>
+  ConsumerState<SettingsBlockListWidget> createState() =>
       _SettingsBlockListWidgetState();
 }
 
-class _SettingsBlockListWidgetState extends State<SettingsBlockListWidget> {
+class _SettingsBlockListWidgetState
+    extends ConsumerState<SettingsBlockListWidget> {
   late SettingsBlockListModel _model;
 
   /// Combined blocked user data: blocked_users row + user_profiles data.
@@ -53,7 +55,8 @@ class _SettingsBlockListWidgetState extends State<SettingsBlockListWidget> {
     setState(() => _isLoading = true);
     try {
       final rows = await BlockedUsersTable().queryRows(
-        queryFn: (q) => q.eqOrNull('blocker_id', currentUserUid),
+        queryFn: (q) =>
+            q.eqOrNull('blocker_id', ref.read(currentUserIdProvider)),
       );
 
       if (rows.isEmpty) {

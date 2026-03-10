@@ -1,6 +1,7 @@
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
@@ -671,7 +672,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                             await UserProfilesTable().insert({
                               'email': _model.emailTextController!.text,
                               'created_at': DateTime.now().toIso8601String(),
-                              'user_id': currentUserUid,
+                              'user_id': ref.read(currentUserIdProvider),
                             });
 
                             context.goNamed(

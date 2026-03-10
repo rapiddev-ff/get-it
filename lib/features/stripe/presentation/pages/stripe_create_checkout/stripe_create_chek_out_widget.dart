@@ -1,4 +1,3 @@
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/widgets/app_web_view.dart';
 import '/core/utils/instant_timer.dart';
@@ -7,9 +6,11 @@ import '/core/widgets/dismiss_keyboard.dart';
 import '/features/stripe/presentation/pages/stripe_success/stripe_success_widget.dart';
 import '/features/stripe/presentation/pages/stripe_refresh/stripe_refresh_widget.dart';
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/scheduler.dart';
 
-class StripeCreateChekOutWidget extends StatefulWidget {
+class StripeCreateChekOutWidget extends ConsumerStatefulWidget {
   const StripeCreateChekOutWidget({
     super.key,
     required this.checkoutDetail,
@@ -25,11 +26,12 @@ class StripeCreateChekOutWidget extends StatefulWidget {
   static String routePath = 'stripeCreateChekOut';
 
   @override
-  State<StripeCreateChekOutWidget> createState() =>
+  ConsumerState<StripeCreateChekOutWidget> createState() =>
       _StripeCreateChekOutWidgetState();
 }
 
-class _StripeCreateChekOutWidgetState extends State<StripeCreateChekOutWidget> {
+class _StripeCreateChekOutWidgetState
+    extends ConsumerState<StripeCreateChekOutWidget> {
   InstantTimer? chekPaid;
   List<OrdersRow>? chekoutRowExist;
 
@@ -55,7 +57,7 @@ class _StripeCreateChekOutWidgetState extends State<StripeCreateChekOutWidget> {
                 )
                 .eqOrNull(
                   'buyer_id',
-                  currentUserUid,
+                  ref.read(currentUserIdProvider),
                 ),
           );
           if (chekoutRowExist!.length > 0) {

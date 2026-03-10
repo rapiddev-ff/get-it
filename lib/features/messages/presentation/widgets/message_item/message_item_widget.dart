@@ -1,13 +1,14 @@
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/messages/domain/models/conversation_model.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/date_utils.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class MessageItemWidget extends StatelessWidget {
+class MessageItemWidget extends ConsumerWidget {
   const MessageItemWidget({
     super.key,
     required this.conversationDataType,
@@ -15,20 +16,22 @@ class MessageItemWidget extends StatelessWidget {
 
   final Conversation? conversationDataType;
 
-  bool _hasUnread() {
-    if ((conversationDataType?.buyerId == currentUserUid) &&
+  bool _hasUnread(WidgetRef ref) {
+    final uid = ref.read(currentUserIdProvider);
+    if ((conversationDataType?.buyerId == uid) &&
         (conversationDataType!.buyerUnreadCount > 0)) {
       return true;
-    } else if ((conversationDataType?.sellerId == currentUserUid) &&
+    } else if ((conversationDataType?.sellerId == uid) &&
         (conversationDataType!.sellerUnreadCount > 0)) {
       return true;
     }
     return false;
   }
 
-  String _unreadCount() {
+  String _unreadCount(WidgetRef ref) {
+    final uid = ref.read(currentUserIdProvider);
     return valueOrDefault<String>(
-      conversationDataType?.buyerId == currentUserUid
+      conversationDataType?.buyerId == uid
           ? conversationDataType?.buyerUnreadCount.toString()
           : conversationDataType?.sellerUnreadCount.toString(),
       '0',
@@ -36,16 +39,16 @@ class MessageItemWidget extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     if (conversationDataType?.productId != null &&
         conversationDataType?.productId != '') {
-      return _buildProductConversation(context);
+      return _buildProductConversation(context, ref);
     } else {
-      return _buildDirectConversation(context);
+      return _buildDirectConversation(context, ref);
     }
   }
 
-  Widget _buildProductConversation(BuildContext context) {
+  Widget _buildProductConversation(BuildContext context, WidgetRef ref) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -70,7 +73,7 @@ class MessageItemWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                    if (_hasUnread())
+                    if (_hasUnread(ref))
                       Align(
                         alignment: Alignment.topRight,
                         child: Container(
@@ -82,7 +85,7 @@ class MessageItemWidget extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              _unreadCount(),
+                              _unreadCount(ref),
                               style: GoogleFonts.inter(
                                 fontSize: 12.0,
                               ),
@@ -199,7 +202,7 @@ class MessageItemWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildDirectConversation(BuildContext context) {
+  Widget _buildDirectConversation(BuildContext context, WidgetRef ref) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -230,7 +233,7 @@ class MessageItemWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                    if (_hasUnread())
+                    if (_hasUnread(ref))
                       Align(
                         alignment: Alignment.topRight,
                         child: Container(
@@ -242,7 +245,7 @@ class MessageItemWidget extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              _unreadCount(),
+                              _unreadCount(ref),
                               style: GoogleFonts.inter(
                                 fontSize: 12.0,
                               ),

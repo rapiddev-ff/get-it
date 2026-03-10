@@ -1,8 +1,8 @@
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/utils/geo_data.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
@@ -466,7 +466,7 @@ class _SettingsBusinessAddressWidgetState
                                     },
                                     matchingRows: (rows) => rows.eqOrNull(
                                       'user_id',
-                                      currentUserUid,
+                                      ref.read(currentUserIdProvider),
                                     ),
                                   );
                                 }),

@@ -1,8 +1,9 @@
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/supabase/database/tables/support_reports.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/core/theme/app_colors.dart';
@@ -14,17 +15,18 @@ import '/core/widgets/dismiss_keyboard.dart';
 import 'settings_report_model.dart';
 export 'settings_report_model.dart';
 
-class SettingsReportWidget extends StatefulWidget {
+class SettingsReportWidget extends ConsumerStatefulWidget {
   const SettingsReportWidget({super.key});
 
   static String routeName = 'settingsReport';
   static String routePath = 'settingsReport';
 
   @override
-  State<SettingsReportWidget> createState() => _SettingsReportWidgetState();
+  ConsumerState<SettingsReportWidget> createState() =>
+      _SettingsReportWidgetState();
 }
 
-class _SettingsReportWidgetState extends State<SettingsReportWidget>
+class _SettingsReportWidgetState extends ConsumerState<SettingsReportWidget>
     with KeyboardVisibilityMixin {
   late SettingsReportModel _model;
 
@@ -195,7 +197,7 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget>
                           setState(() => _isSending = true);
                           try {
                             await SupportReportsTable().insert({
-                              'user_id': currentUserUid,
+                              'user_id': ref.read(currentUserIdProvider),
                               'message': _model.textController!.text.trim(),
                             });
                             if (!mounted) return;

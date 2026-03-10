@@ -2,27 +2,28 @@ import '/backend/supabase/supabase.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/dismiss_keyboard.dart';
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/home/presentation/pages/seller_dashboard/shortlist_item/shortlist_item_widget.dart';
 import '/features/home/presentation/pages/seller_dashboard/shortlist_create/home_dashoard_shortlist_create_widget.dart';
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HomeDashoardShortlistWidget extends StatefulWidget {
+class HomeDashoardShortlistWidget extends ConsumerStatefulWidget {
   const HomeDashoardShortlistWidget({super.key});
 
   static String routeName = 'homeDashoardShortlist';
   static String routePath = 'homeDashoardShortlist';
 
   @override
-  State<HomeDashoardShortlistWidget> createState() =>
+  ConsumerState<HomeDashoardShortlistWidget> createState() =>
       _HomeDashoardShortlistWidgetState();
 }
 
 class _HomeDashoardShortlistWidgetState
-    extends State<HomeDashoardShortlistWidget> {
+    extends ConsumerState<HomeDashoardShortlistWidget> {
   List<ShortlistsRow> shortlists = [];
   bool _isLoading = true;
 
@@ -35,7 +36,7 @@ class _HomeDashoardShortlistWidgetState
   Future<void> _loadShortlists() async {
     final rows = await ShortlistsTable().queryRows(
       queryFn: (q) => q
-          .eqOrNull('seller_id', currentUserUid)
+          .eqOrNull('seller_id', ref.read(currentUserIdProvider))
           .neq('status', 'archived')
           .order('created_at'),
     );

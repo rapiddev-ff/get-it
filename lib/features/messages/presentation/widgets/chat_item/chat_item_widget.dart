@@ -1,4 +1,3 @@
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/messages/domain/models/message_model.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
@@ -9,11 +8,13 @@ import '/core/widgets/expanded_image_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:octo_image/octo_image.dart';
 
-class ChatItemWidget extends StatelessWidget {
+class ChatItemWidget extends ConsumerWidget {
   const ChatItemWidget({
     super.key,
     required this.messageDataType,
@@ -22,13 +23,13 @@ class ChatItemWidget extends StatelessWidget {
   final Message? messageDataType;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         // Other user text message
-        if ((messageDataType?.senderId != currentUserUid) &&
+        if ((messageDataType?.senderId != ref.read(currentUserIdProvider)) &&
             (messageDataType?.messageType == 'text'))
           Row(
             mainAxisSize: MainAxisSize.min,
@@ -98,7 +99,7 @@ class ChatItemWidget extends StatelessWidget {
           ),
 
         // Other user image message
-        if ((messageDataType?.senderId != currentUserUid) &&
+        if ((messageDataType?.senderId != ref.read(currentUserIdProvider)) &&
             (messageDataType?.messageType == 'image'))
           Row(
             mainAxisSize: MainAxisSize.min,
@@ -193,7 +194,7 @@ class ChatItemWidget extends StatelessWidget {
           ),
 
         // Current user text message
-        if ((messageDataType?.senderId == currentUserUid) &&
+        if ((messageDataType?.senderId == ref.read(currentUserIdProvider)) &&
             (messageDataType?.messageType == 'text'))
           Column(
             mainAxisSize: MainAxisSize.min,
@@ -240,7 +241,7 @@ class ChatItemWidget extends StatelessWidget {
           ),
 
         // Current user image message
-        if ((messageDataType?.senderId == currentUserUid) &&
+        if ((messageDataType?.senderId == ref.read(currentUserIdProvider)) &&
             (messageDataType?.messageType == 'image'))
           Column(
             mainAxisSize: MainAxisSize.min,

@@ -1,4 +1,3 @@
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/schema/enums/enums.dart';
 import '/features/home/domain/models/seller_product_model.dart';
 import '/features/home/domain/models/seller_model.dart';
@@ -21,6 +20,7 @@ import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -81,7 +81,7 @@ class _HomeSellerProfileWidgetState
       try {
         getSellerData = await actions.getSellerInfo(
           sellerId,
-          currentUserUid,
+          ref.read(currentUserIdProvider),
         );
       } catch (_) {
         // Network or API error — leave getSellerData null (shimmer stays).
@@ -98,7 +98,7 @@ class _HomeSellerProfileWidgetState
   Future<void> _refreshSellerData() async {
     final updated = await actions.getSellerInfo(
       widget.sellerId!,
-      currentUserUid,
+      ref.read(currentUserIdProvider),
     );
     if (!mounted) return;
     if (updated != null) {
@@ -946,7 +946,7 @@ class _HomeSellerProfileWidgetState
                                     width: double.infinity,
                                     height: 200.0,
                                     sellerId: widget.sellerId!,
-                                    userId: currentUserUid,
+                                    userId: ref.read(currentUserIdProvider),
                                     status: ProductStatus.active.name,
                                     crossAxisCount: 2,
                                     childAspectRatio: 0.7,

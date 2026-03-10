@@ -11,6 +11,7 @@ import '/custom_code/actions/index.dart' as actions;
 import '/core/utils/data_converters.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -58,7 +59,7 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
         context,
         'get_app_initial_data',
         <String, String>{
-          'p_user_id': currentUserUid,
+          'p_user_id': ref.read(currentUserIdProvider),
         },
       );
       getPaymentMethods = await actions.getSavedPaymentMethods();

@@ -13,6 +13,7 @@ import '/features/auth/domain/models/user_settings_model.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -48,7 +49,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
 
   Future<void> _fetchStripeStatus() async {
     final stripeRows = await StripeAccountsTable().queryRows(
-      queryFn: (q) => q.eqOrNull('user_id', currentUserUid),
+      queryFn: (q) => q.eqOrNull('user_id', ref.read(currentUserIdProvider)),
     );
     if (!mounted) return;
     ref.read(authProvider.notifier).updateUser(
@@ -377,7 +378,8 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                                   matchingRows: (rows) =>
                                                       rows.eqOrNull(
                                                     'user_id',
-                                                    currentUserUid,
+                                                    ref.read(
+                                                        currentUserIdProvider),
                                                   ),
                                                 );
                                               }),
@@ -410,7 +412,8 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                                   matchingRows: (rows) =>
                                                       rows.eqOrNull(
                                                     'user_id',
-                                                    currentUserUid,
+                                                    ref.read(
+                                                        currentUserIdProvider),
                                                   ),
                                                 );
                                               }),
@@ -482,7 +485,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                       },
                                       matchingRows: (rows) => rows.eqOrNull(
                                         'user_id',
-                                        currentUserUid,
+                                        ref.read(currentUserIdProvider),
                                       ),
                                     );
                                     ref.read(authProvider.notifier).updateUser(
@@ -544,7 +547,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                       },
                                       matchingRows: (rows) => rows.eqOrNull(
                                         'user_id',
-                                        currentUserUid,
+                                        ref.read(currentUserIdProvider),
                                       ),
                                     );
                                     ref.read(authProvider.notifier).updateUser(

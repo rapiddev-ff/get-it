@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '/core/providers/current_user_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -8,19 +10,19 @@ import '/core/utils/list_extensions.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import '/custom_code/actions/index.dart' as actions;
 
-class HomeDashoardEarningsWidget extends StatefulWidget {
+class HomeDashoardEarningsWidget extends ConsumerStatefulWidget {
   const HomeDashoardEarningsWidget({super.key});
 
   static String routeName = 'homeDashoardEarnings';
   static String routePath = 'homeDashoardEarnings';
 
   @override
-  State<HomeDashoardEarningsWidget> createState() =>
+  ConsumerState<HomeDashoardEarningsWidget> createState() =>
       _HomeDashoardEarningsWidgetState();
 }
 
 class _HomeDashoardEarningsWidgetState
-    extends State<HomeDashoardEarningsWidget> {
+    extends ConsumerState<HomeDashoardEarningsWidget> {
   String _activeTab = 'Sales';
   String _activeFilter = 'All Time';
 
@@ -69,7 +71,7 @@ class _HomeDashoardEarningsWidgetState
     try {
       final results = await Future.wait([
         actions.getSellerEarnings(null, null),
-        actions.getSellerOrders(),
+        actions.getSellerOrders(sellerId: ref.read(currentUserIdProvider)),
       ]);
 
       if (!mounted) return;

@@ -1,5 +1,4 @@
 import '/features/checkout/domain/models/shipping_address_model.dart';
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/supabase/supabase.dart';
@@ -14,6 +13,7 @@ import '/core/widgets/form_field_controller.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -669,7 +669,7 @@ class _CheckoutEditShippingAddressWidgetState
                         Future(() async {
                           createShippingAddress =
                               await ShippingAddressesTable().insert({
-                            'user_id': currentUserUid,
+                            'user_id': ref.read(currentUserIdProvider),
                             'full_name': fullNameTextController!.text,
                             'address_line1': streetaddressTextController!.text,
                             'address_line2': aptsuiteunitTextController!.text,

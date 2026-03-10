@@ -1,4 +1,3 @@
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/features/home/domain/models/review_model.dart';
 import '/features/profile/presentation/pages/review_item/review_item_widget.dart';
@@ -10,6 +9,7 @@ import '/core/widgets/dismiss_keyboard.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -78,7 +78,7 @@ class _SettingsMyProfileWidgetState
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       _model.getReviews =
           await SupabaseRPCGroup.getuserprofilewithreviewsCall.call(
-        pUserId: currentUserUid,
+        pUserId: ref.read(currentUserIdProvider),
         pOffset: 0,
         pLimit: 10,
       );

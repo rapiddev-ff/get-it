@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '/core/providers/current_user_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -9,19 +11,19 @@ import '/core/widgets/dismiss_keyboard.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/home/presentation/pages/seller_dashboard/shipping_detailed/home_dashoard_shipping_detailed_widget.dart';
 
-class HomeDashoardShippingWidget extends StatefulWidget {
+class HomeDashoardShippingWidget extends ConsumerStatefulWidget {
   const HomeDashoardShippingWidget({super.key});
 
   static String routeName = 'homeDashoardShipping';
   static String routePath = 'homeDashoardShipping';
 
   @override
-  State<HomeDashoardShippingWidget> createState() =>
+  ConsumerState<HomeDashoardShippingWidget> createState() =>
       _HomeDashoardShippingWidgetState();
 }
 
 class _HomeDashoardShippingWidgetState
-    extends State<HomeDashoardShippingWidget> {
+    extends ConsumerState<HomeDashoardShippingWidget> {
   bool _isLoading = true;
   Map<String, int> _counts = {'to_ship': 0, 'shipped': 0};
   List<Map<String, dynamic>> _orders = [];
@@ -36,8 +38,8 @@ class _HomeDashoardShippingWidgetState
     setState(() => _isLoading = true);
     try {
       final results = await Future.wait([
-        actions.getSellerOrderCounts(),
-        actions.getSellerOrders(),
+        actions.getSellerOrderCounts(sellerId: ref.read(currentUserIdProvider)),
+        actions.getSellerOrders(sellerId: ref.read(currentUserIdProvider)),
       ]);
       if (!mounted) return;
       setState(() {

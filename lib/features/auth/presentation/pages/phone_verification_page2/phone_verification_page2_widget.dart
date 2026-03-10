@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
@@ -14,13 +16,12 @@ import '/core/utils/keyboard_visibility_mixin.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/dismiss_keyboard.dart';
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/auth/presentation/pages/permissions/permissions_widget.dart';
 import 'phone_verification_page2_model.dart';
 
 export 'phone_verification_page2_model.dart';
 
-class PhoneVerificationPage2Widget extends StatefulWidget {
+class PhoneVerificationPage2Widget extends ConsumerStatefulWidget {
   const PhoneVerificationPage2Widget({
     super.key,
     required this.phoneNumber,
@@ -34,12 +35,13 @@ class PhoneVerificationPage2Widget extends StatefulWidget {
   static String routePath = 'phoneVerificationPage2';
 
   @override
-  State<PhoneVerificationPage2Widget> createState() =>
+  ConsumerState<PhoneVerificationPage2Widget> createState() =>
       _PhoneVerificationPage2WidgetState();
 }
 
 class _PhoneVerificationPage2WidgetState
-    extends State<PhoneVerificationPage2Widget> with KeyboardVisibilityMixin {
+    extends ConsumerState<PhoneVerificationPage2Widget>
+    with KeyboardVisibilityMixin {
   late PhoneVerificationPage2Model _model;
 
   Key _shakeKey = UniqueKey();
@@ -393,7 +395,7 @@ class _PhoneVerificationPage2WidgetState
                                     },
                                     matchingRows: (rows) => rows.eqOrNull(
                                       'user_id',
-                                      currentUserUid,
+                                      ref.read(currentUserIdProvider),
                                     ),
                                   );
                                   if (widget.isOnborading!) {
@@ -429,7 +431,7 @@ class _PhoneVerificationPage2WidgetState
                                           },
                                           matchingRows: (rows) => rows.eqOrNull(
                                             'user_id',
-                                            currentUserUid,
+                                            ref.read(currentUserIdProvider),
                                           ),
                                         );
                                       }),

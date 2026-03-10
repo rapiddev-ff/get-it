@@ -1,5 +1,6 @@
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -17,7 +18,6 @@ import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import '/custom_code/actions/index.dart' as actions;
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/browse/presentation/providers/browse_provider.dart';
 import '/features/wishlist/presentation/pages/wishlist_item/wishlist_item_widget.dart';
 import '/features/wishlist/presentation/providers/wishlist_provider.dart';
@@ -43,7 +43,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
   void initState() {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await actions.initWishlistStream(ref, currentUserUid);
+      await actions.initWishlistStream(ref, ref.read(currentUserIdProvider));
     });
     _textFieldFocusNode.addListener(() => setState(() {}));
   }
@@ -429,7 +429,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                               .read(wishlistProvider.notifier)
                                               .removeById(wishlistItem.id);
                                           await actions.toggleWishlist(
-                                            currentUserUid,
+                                            ref.read(currentUserIdProvider),
                                             wishlistItem.id,
                                           );
                                         },

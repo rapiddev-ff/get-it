@@ -1,4 +1,3 @@
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/browse/domain/models/browse_product_model.dart';
 import '/features/browse/presentation/widgets/browse_products_item/browse_products_item_widget.dart';
 import '/features/home/presentation/widgets/empty_state/empty_state_widget.dart';
@@ -12,22 +11,24 @@ import '/core/utils/list_extensions.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 
-class BrowseWidget extends StatefulWidget {
+class BrowseWidget extends ConsumerStatefulWidget {
   const BrowseWidget({super.key});
 
   static String routeName = 'browse';
   static String routePath = 'browse';
 
   @override
-  State<BrowseWidget> createState() => _BrowseWidgetState();
+  ConsumerState<BrowseWidget> createState() => _BrowseWidgetState();
 }
 
-class _BrowseWidgetState extends State<BrowseWidget> {
+class _BrowseWidgetState extends ConsumerState<BrowseWidget> {
   final _textController = TextEditingController();
   final _textFieldFocusNode = FocusNode();
 
@@ -180,7 +181,7 @@ class _BrowseWidgetState extends State<BrowseWidget> {
                           child: custom_widgets.BrowseProductsGrid(
                             width: double.infinity,
                             height: double.infinity,
-                            userId: currentUserUid,
+                            userId: ref.read(currentUserIdProvider),
                             searchQuery: _textController.text,
                             categoryId: null,
                             subcategoryId: null,

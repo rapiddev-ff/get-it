@@ -1,4 +1,3 @@
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/utils/uploaded_file.dart';
 import '/custom_code/actions/index.dart' as actions;
@@ -10,6 +9,7 @@ import '/core/widgets/dismiss_keyboard.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -119,7 +119,7 @@ class _SettingsEditProfileWidgetState
     _model.uploadToBucket = await actions.uploadImageToStorage(
       UploadedFile(bytes: _model.image, name: 'avatar.jpg'),
       'avatars',
-      currentUserUid,
+      ref.read(currentUserIdProvider),
     );
     if (!mounted) return;
     setState(() {});
@@ -600,7 +600,7 @@ class _SettingsEditProfileWidgetState
                                         },
                                         matchingRows: (rows) => rows.eqOrNull(
                                           'user_id',
-                                          currentUserUid,
+                                          ref.read(currentUserIdProvider),
                                         ),
                                       );
                                     }),

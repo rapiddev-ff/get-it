@@ -1,4 +1,3 @@
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/home/domain/models/feed_product_model.dart';
 import '/features/home/presentation/providers/feed_provider.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
@@ -17,6 +16,7 @@ import '/core/utils/list_extensions.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -65,7 +65,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
             if (!mounted) return;
             getFeed = await actions.initFeedProductsStream(
               ref,
-              currentUserUid,
+              ref.read(currentUserIdProvider),
               ref.read(feedProvider).swipedProductIds.toList(),
             );
           }),
@@ -79,11 +79,13 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
           }),
           Future(() async {
             if (!mounted) return;
+            final uid = ref.read(currentUserIdProvider);
             _itemsToShip = await actions.getSellerOrders(
+              sellerId: uid,
               statusFilter: 'to_ship',
               limit: 3,
             );
-            final counts = await actions.getSellerOrderCounts();
+            final counts = await actions.getSellerOrderCounts(sellerId: uid);
             _pendingShipCount = counts['to_ship'] ?? 0;
           }),
         ]);
@@ -218,7 +220,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                             getStripe = await StripeAccountsTable().queryRows(
                               queryFn: (q) => q.eqOrNull(
                                 'user_id',
-                                currentUserUid,
+                                ref.read(currentUserIdProvider),
                               ),
                             );
                             if (!mounted) return;
@@ -376,7 +378,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                 .read(feedProvider.notifier)
                 .removeAtIndexFromFeedProducts(index);
             await actions.hideProduct(
-              currentUserUid,
+              ref.read(currentUserIdProvider),
               productId,
             );
           },
@@ -390,7 +392,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
             await Future.wait([
               Future(() async {
                 await actions.toggleWishlist(
-                  currentUserUid,
+                  ref.read(currentUserIdProvider),
                   productId,
                 );
               }),
@@ -695,12 +697,14 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                             onShipped: () {
                               Future(() async {
                                 if (!mounted) return;
+                                final uid = ref.read(currentUserIdProvider);
                                 _itemsToShip = await actions.getSellerOrders(
+                                  sellerId: uid,
                                   statusFilter: 'to_ship',
                                   limit: 3,
                                 );
-                                final counts =
-                                    await actions.getSellerOrderCounts();
+                                final counts = await actions
+                                    .getSellerOrderCounts(sellerId: uid);
                                 _pendingShipCount = counts['to_ship'] ?? 0;
                                 if (mounted) setState(() {});
                               });

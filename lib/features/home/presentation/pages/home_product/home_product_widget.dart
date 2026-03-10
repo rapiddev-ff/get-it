@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'dart:ui' as ui;
 
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/home/domain/models/product_details_model.dart';
 import '/features/messages/domain/models/conversation_model.dart';
 import '/features/home/domain/models/feed_product_model.dart';
@@ -17,6 +16,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -58,7 +58,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
       try {
         _getProduct = await actions.getProductDetails(
           productId,
-          currentUserUid,
+          ref.read(currentUserIdProvider),
         );
         _isInWishlist = _getProduct?.isInWishlist ?? false;
       } catch (_) {
@@ -414,7 +414,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                     _isInWishlist = !_isInWishlist;
                                   });
                                   final result = await actions.toggleWishlist(
-                                    currentUserUid,
+                                    ref.read(currentUserIdProvider),
                                     product.id,
                                   );
                                   if (mounted) {
@@ -673,7 +673,8 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                               ),
                             ),
                           ],
-                          if (currentUserUid != product.seller?.id) ...[
+                          if (ref.read(currentUserIdProvider) !=
+                              product.seller?.id) ...[
                             Divider(
                               height: 48.0,
                               thickness: 2.0,

@@ -1,5 +1,6 @@
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -119,7 +120,7 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
                 .substring(pickedFile.name.lastIndexOf('.'))
                 .toLowerCase()
             : '.jpg';
-        final filePath = '$currentUserUid/$uuid$ext';
+        final filePath = '$ref.read(currentUserIdProvider)/$uuid$ext';
         final mimeType = lookupMimeType(pickedFile.name) ?? 'image/jpeg';
         await supabase.storage.from('avatars').uploadBinary(
               filePath,
@@ -459,7 +460,7 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
                                   },
                                   matchingRows: (rows) => rows.eqOrNull(
                                     'user_id',
-                                    currentUserUid,
+                                    ref.read(currentUserIdProvider),
                                   ),
                                 );
                                 _model.createStripeCustomer =

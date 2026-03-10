@@ -5,11 +5,11 @@ import '/features/checkout/domain/models/checkout_order_result_model.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/value_utils.dart';
 import '/backend/supabase/supabase.dart';
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/checkout/presentation/widgets/fast_checkout/fast_checkout_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -164,7 +164,8 @@ class _QuickPurchasePopupWidgetState
 
     await UserSettingsTable().update(
       data: {'daily_budget_used': newUsed},
-      matchingRows: (rows) => rows.eqOrNull('user_id', currentUserUid),
+      matchingRows: (rows) =>
+          rows.eqOrNull('user_id', ref.read(currentUserIdProvider)),
     );
   }
 

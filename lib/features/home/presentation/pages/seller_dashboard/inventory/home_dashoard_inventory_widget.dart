@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/browse/domain/models/category_model.dart';
 import '/features/home/domain/models/seller_product_model.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
@@ -17,19 +18,20 @@ import '/features/home/presentation/pages/seller_dashboard/inventory_item/invent
 import '/features/home/presentation/pages/seller_dashboard/inventory_add/home_dashoard_inventory_add_widget.dart';
 import '/features/home/presentation/pages/seller_dashboard/shortlist/home_dashoard_shortlist_widget.dart';
 
-class HomeDashoardInventoryWidget extends StatefulWidget {
+class HomeDashoardInventoryWidget extends ConsumerStatefulWidget {
   const HomeDashoardInventoryWidget({super.key});
 
   static String routeName = 'homeDashoardInventory';
   static String routePath = 'homeDashoardInventory';
 
   @override
-  State<HomeDashoardInventoryWidget> createState() =>
+  ConsumerState<HomeDashoardInventoryWidget> createState() =>
       _HomeDashoardInventoryWidgetState();
 }
 
 class _HomeDashoardInventoryWidgetState
-    extends State<HomeDashoardInventoryWidget> with KeyboardVisibilityMixin {
+    extends ConsumerState<HomeDashoardInventoryWidget>
+    with KeyboardVisibilityMixin {
   // Inlined model state
   Category? choosenCategory;
   int? itemsCount = 0;
@@ -317,8 +319,8 @@ class _HomeDashoardInventoryWidgetState
                       child: custom_widgets.InfiniteProductGrid(
                         width: double.infinity,
                         height: double.infinity,
-                        sellerId: currentUserUid,
-                        userId: currentUserUid,
+                        sellerId: ref.read(currentUserIdProvider),
+                        userId: ref.read(currentUserIdProvider),
                         crossAxisCount: 2,
                         childAspectRatio: 0.65,
                         mainAxisSpacing: 8.0,

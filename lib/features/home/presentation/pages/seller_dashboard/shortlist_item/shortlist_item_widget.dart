@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,10 +10,9 @@ import 'package:intl/intl.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/theme/app_colors.dart';
 import '/custom_code/actions/index.dart' as actions;
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/home/domain/models/seller_shortlist_model.dart';
 
-class ShortlistItemWidget extends StatefulWidget {
+class ShortlistItemWidget extends ConsumerStatefulWidget {
   const ShortlistItemWidget._({
     super.key,
     required this.name,
@@ -77,10 +78,11 @@ class ShortlistItemWidget extends StatefulWidget {
   final VoidCallback? onChanged;
 
   @override
-  State<ShortlistItemWidget> createState() => _ShortlistItemWidgetState();
+  ConsumerState<ShortlistItemWidget> createState() =>
+      _ShortlistItemWidgetState();
 }
 
-class _ShortlistItemWidgetState extends State<ShortlistItemWidget> {
+class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
   List<String> _productTags = [];
   bool _tagsLoaded = false;
 
@@ -191,7 +193,7 @@ class _ShortlistItemWidgetState extends State<ShortlistItemWidget> {
     final result = await SupaFlow.client
         .from('shortlists')
         .insert({
-          'seller_id': currentUserUid,
+          'seller_id': ref.read(currentUserIdProvider),
           'name': '${widget.name} (Copy)',
           'status': 'draft',
           'share_code': code,

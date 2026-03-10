@@ -1,4 +1,3 @@
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
 import '/features/auth/domain/models/user_settings_model.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
@@ -10,6 +9,7 @@ import '/core/utils/list_extensions.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import '/core/providers/current_user_provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -180,7 +180,7 @@ class _SettingsDailyBudgetWidgetState
                                 },
                                 matchingRows: (rows) => rows.eqOrNull(
                                   'user_id',
-                                  currentUserUid,
+                                  ref.read(currentUserIdProvider),
                                 ),
                               );
                             }),
