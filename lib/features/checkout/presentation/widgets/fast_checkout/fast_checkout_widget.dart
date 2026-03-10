@@ -167,12 +167,10 @@ class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 12.0,
-                            color: AppColors.textPrimary,
-                            height: 1.5,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(height: 1.5),
                         ),
                         // Subtotal
                         Text(

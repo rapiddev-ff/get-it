@@ -95,13 +95,10 @@ class _PermissionsWidgetState extends State<PermissionsWidget>
                         child: Text(
                           'To provide you with the best possible experience, we\u2019d like to send you helpful notifications and know your location.',
                           textAlign: TextAlign.start,
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.normal,
-                            color: AppColors.textPrimary,
-                            fontSize: 16.0,
-                            letterSpacing: 0.0,
-                            height: 1.5,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(height: 1.5, letterSpacing: 0.0),
                         ),
                       ),
                       Padding(
@@ -109,13 +106,10 @@ class _PermissionsWidgetState extends State<PermissionsWidget>
                         child: Text(
                           'We\u2019ll ask permission for:',
                           textAlign: TextAlign.start,
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.textPrimary,
-                            fontSize: 16.0,
-                            letterSpacing: 0.0,
-                            height: 1.5,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall!
+                              .copyWith(height: 1.5, letterSpacing: 0.0),
                         ),
                       ),
                       Padding(
@@ -151,13 +145,11 @@ class _PermissionsWidgetState extends State<PermissionsWidget>
                                     child: Text(
                                       'Notifications',
                                       textAlign: TextAlign.start,
-                                      style: GoogleFonts.inter(
-                                        fontWeight: FontWeight.normal,
-                                        color: AppColors.textPrimary,
-                                        fontSize: 16.0,
-                                        letterSpacing: 0.0,
-                                        height: 1.5,
-                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
+                                          .copyWith(
+                                              height: 1.5, letterSpacing: 0.0),
                                     ),
                                   ),
                                 ),

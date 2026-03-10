@@ -442,12 +442,13 @@ class _HomeDashoardPromoteStep2WidgetState
                                               ),
                                               Text(
                                                 'Days',
-                                                style: GoogleFonts.inter(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 16.0,
-                                                  color: AppColors.textPrimary,
-                                                  height: 1.5,
-                                                ),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge!
+                                                    .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        height: 1.5),
                                               ),
                                               Padding(
                                                 padding:
@@ -602,11 +603,9 @@ class _HomeDashoardPromoteStep2WidgetState
                                                       vertical: 2.0),
                                                   child: Text(
                                                     'Best Value',
-                                                    style: GoogleFonts.inter(
-                                                      fontSize: 14.0,
-                                                      color:
-                                                          AppColors.textPrimary,
-                                                    ),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!,
                                                   ),
                                                 ),
                                               ),
@@ -759,11 +758,10 @@ class _HomeDashoardPromoteStep2WidgetState
                                             Expanded(
                                               child: Text(
                                                 'Filter by:',
-                                                style: GoogleFonts.inter(
-                                                  fontSize: 16.0,
-                                                  color: AppColors.textPrimary,
-                                                  height: 1.5,
-                                                ),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge!
+                                                    .copyWith(height: 1.5),
                                               ),
                                             ),
                                             Text(

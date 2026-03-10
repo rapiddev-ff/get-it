@@ -687,11 +687,10 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                                   padding: EdgeInsets.only(top: 8.0),
                                   child: Text(
                                     'Your purchase is protected by our guarantee. Get a full refund if the item doesn\'t match the description.',
-                                    style: GoogleFonts.inter(
-                                      fontSize: 12.0,
-                                      color: AppColors.textPrimary,
-                                      height: 1.5,
-                                    ),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(height: 1.5),
                                   ),
                                 ),
                               ],
@@ -753,12 +752,10 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                   child: Text(
                     'By continuing, you agree to our Terms of Service and Privacy Policy',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.textSecondary,
-                      fontSize: 14.0,
-                      height: 1.5,
-                    ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelMedium!
+                        .copyWith(fontWeight: FontWeight.w500, height: 1.5),
                   ),
                 ),
               ]

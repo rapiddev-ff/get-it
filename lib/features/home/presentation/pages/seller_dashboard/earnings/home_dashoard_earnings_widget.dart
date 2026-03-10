@@ -354,10 +354,7 @@ class _HomeDashoardEarningsWidgetState
           padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
           child: Text(
             label,
-            style: GoogleFonts.inter(
-              fontSize: 14.0,
-              color: isActive ? AppColors.textPrimary : AppColors.textSecondary,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium!,
           ),
         ),
       ),
@@ -438,11 +435,10 @@ class _HomeDashoardEarningsWidgetState
               padding: EdgeInsets.only(bottom: 10.0),
               child: Text(
                 label,
-                style: GoogleFonts.inter(
-                  fontSize: 14.0,
-                  color: isActive ? AppColors.textPrimary : Color(0xFFB4B4B4),
-                  height: 2.0,
-                ),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(height: 2.0),
               ),
             ),
             Opacity(

@@ -202,11 +202,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
         children: [
           Text(
             label,
-            style: GoogleFonts.inter(
-              fontWeight: FontWeight.normal,
-              color: AppColors.textSecondary,
-              fontSize: 16.0,
-            ),
+            style: Theme.of(context).textTheme.labelLarge!,
           ),
           Text(
             value,
@@ -886,13 +882,10 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
           SizedBox(width: 8.0),
           Text(
             _formatCurrency(originalPrice, prefix: '\$'),
-            style: GoogleFonts.inter(
-              fontWeight: FontWeight.normal,
-              fontSize: 14.0,
-              color: AppColors.textSecondary,
-              decoration: TextDecoration.lineThrough,
-              decorationColor: AppColors.textSecondary,
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .labelMedium!
+                .copyWith(decoration: TextDecoration.lineThrough),
           ),
         ],
         if (discountLabel.isNotEmpty) ...[

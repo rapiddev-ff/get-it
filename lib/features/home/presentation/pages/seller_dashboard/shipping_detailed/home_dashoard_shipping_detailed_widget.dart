@@ -532,11 +532,10 @@ class _HomeDashoardShippingDetailedWidgetState
                             padding: EdgeInsets.symmetric(horizontal: 16.0),
                             child: Text(
                               'Add Tracking #',
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 15.0,
-                                color: AppColors.textPrimary,
-                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(fontSize: 15.0),
                             ),
                           ),
                           Padding(
@@ -929,8 +928,7 @@ class _SellerCancelDialogState extends State<_SellerCancelDialog> {
                   borderSide: BorderSide(color: AppColors.secondary),
                 ),
               ),
-              style: GoogleFonts.inter(
-                  color: AppColors.textPrimary, fontSize: 14.0),
+              style: Theme.of(context).textTheme.bodyMedium!,
               cursorColor: AppColors.textPrimary,
             ),
           ],
@@ -978,9 +976,8 @@ class _SellerCancelDialogState extends State<_SellerCancelDialog> {
             ),
             SizedBox(width: 8.0),
             Expanded(
-              child: Text(label,
-                  style: GoogleFonts.inter(
-                      color: AppColors.textPrimary, fontSize: 14.0)),
+              child:
+                  Text(label, style: Theme.of(context).textTheme.bodyMedium!),
             ),
           ],
         ),

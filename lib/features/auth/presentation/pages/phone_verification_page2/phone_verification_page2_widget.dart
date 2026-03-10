@@ -337,11 +337,11 @@ class _PhoneVerificationPage2WidgetState
                                     children: [
                                       TextSpan(
                                         text: 'Didn\u2019t get it?  ',
-                                        style: GoogleFonts.inter(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16.0,
-                                          color: AppColors.textSecondary,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelLarge!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w500),
                                       ),
                                       TextSpan(
                                         text: 'Resend Code',

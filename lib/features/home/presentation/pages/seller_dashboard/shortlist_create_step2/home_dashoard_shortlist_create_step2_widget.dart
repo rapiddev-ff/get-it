@@ -472,12 +472,10 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                         widget.name.isNotEmpty
                                             ? widget.name
                                             : 'New Shortlist',
-                                        style: GoogleFonts.inter(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 20.0,
-                                          color: AppColors.textPrimary,
-                                          height: 1.5,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge!
+                                            .copyWith(height: 1.5),
                                       ),
                                       Text(
                                         '${selectedProductIds.length} items',
@@ -690,11 +688,12 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                           if (selectedProductIds.isEmpty) ...[
                             Text(
                               'Your Shortlist has no products added.',
-                              style: GoogleFonts.inter(
-                                fontSize: 18.0,
-                                color: AppColors.textPrimary,
-                                height: 1.5,
-                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(
+                                      fontWeight: FontWeight.normal,
+                                      height: 1.5),
                             ),
                           ] else ...[
                             GridView.builder(

@@ -869,11 +869,10 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                   child: ExpandablePanel(
                     header: Text(
                       'Why Stripe?',
-                      style: GoogleFonts.inter(
-                        color: AppColors.textPrimary,
-                        fontSize: 18.0,
-                        height: 1.5,
-                      ),
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium!
+                          .copyWith(fontWeight: FontWeight.normal, height: 1.5),
                     ),
                     collapsed: Container(),
                     expanded: Column(

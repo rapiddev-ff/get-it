@@ -359,11 +359,7 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
       '${widget.totalItems} items${createdStr.isNotEmpty ? ' \u2022 Created $createdStr' : ''}',
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
-      style: GoogleFonts.inter(
-        fontSize: 12.0,
-        color: AppColors.textSecondary,
-        height: 1.5,
-      ),
+      style: Theme.of(context).textTheme.labelSmall!.copyWith(height: 1.5),
     );
   }
 
@@ -471,12 +467,10 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
                     children: [
                       Text(
                         widget.name,
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 20.0,
-                          color: AppColors.textPrimary,
-                          height: 1.5,
-                        ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge!
+                            .copyWith(height: 1.5),
                       ),
                       SizedBox(height: 4.0),
                       _buildSubtitle(),

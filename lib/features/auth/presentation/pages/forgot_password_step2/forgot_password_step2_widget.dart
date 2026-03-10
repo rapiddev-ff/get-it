@@ -99,11 +99,10 @@ class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget>
                         child: Text(
                           'Almost there! We\'ve sent a password reset link to ${widget.email}. Click the link in the email to create your new password. Don\'t see it? Check your spam folder or wait a few minutes for delivery.',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.inter(
-                            color: AppColors.textPrimary,
-                            fontSize: 16.0,
-                            height: 1.5,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(height: 1.5),
                         ),
                       ),
                     ].addToStart(SizedBox(height: 24.0)),
@@ -119,11 +118,10 @@ class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget>
                       Text(
                         'Didn\u2019t get anything?',
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.inter(
-                          color: AppColors.textSecondary,
-                          fontSize: 16.0,
-                          height: 1.5,
-                        ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelLarge!
+                            .copyWith(height: 1.5),
                       ),
                       AppGradientButton(
                         text: 'Back to Sign In',

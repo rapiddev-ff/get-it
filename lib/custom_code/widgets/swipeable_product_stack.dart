@@ -333,11 +333,10 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
           const SizedBox(height: 16),
           Text(
             widget.emptyMessage ?? 'No more products to show',
-            style: GoogleFonts.inter(
-              color: AppColors.textSecondary,
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .labelLarge!
+                .copyWith(fontWeight: FontWeight.w500),
           ),
           const SizedBox(height: 8),
           Text(
@@ -625,11 +624,10 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
                                 '@${product.sellerUsername}',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: GoogleFonts.inter(
-                                  color: AppColors.textSecondary,
-                                  fontSize: 12,
-                                  height: 16 / 12,
-                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall!
+                                    .copyWith(height: 16 / 12),
                               ),
                             ),
                           ],

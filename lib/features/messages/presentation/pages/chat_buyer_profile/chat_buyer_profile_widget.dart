@@ -224,11 +224,10 @@ class _ChatBuyerProfileWidgetState
                                         .toString(),
                                     '0',
                                   ),
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.textPrimary,
-                                    fontSize: 14.0,
-                                  ),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(fontWeight: FontWeight.w500),
                                 ),
                                 Text(
                                   '(${userData.isSeller ? valueOrDefault<String>(
