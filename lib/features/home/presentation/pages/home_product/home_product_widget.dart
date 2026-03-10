@@ -741,7 +741,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                         ],
                                         stops: [0.0, 1.0],
                                         begin: Alignment.topCenter,
-                                        end: AlignmentDirectional(0, 1.0),
+                                        end: Alignment.bottomCenter,
                                       ),
                                       borderRadius: BorderRadius.circular(4.0),
                                     ),

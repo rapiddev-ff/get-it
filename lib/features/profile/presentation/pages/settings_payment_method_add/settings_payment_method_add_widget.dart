@@ -699,7 +699,7 @@ class _SettingsPaymentMethodAddWidgetState
                                 colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
                                 stops: [0.0, 1.0],
                                 begin: Alignment.topCenter,
-                                end: AlignmentDirectional(0, 1.0),
+                                end: Alignment.bottomCenter,
                               ),
                               borderRadius: BorderRadius.circular(4.0),
                             ),

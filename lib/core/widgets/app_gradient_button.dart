@@ -41,7 +41,7 @@ class AppGradientButton extends StatelessWidget {
           ],
           stops: const [0.0, 1.0],
           begin: Alignment.topCenter,
-          end: const AlignmentDirectional(0, 1.0),
+          end: Alignment.bottomCenter,
         ),
         borderRadius: BorderRadius.circular(borderRadius),
       ),

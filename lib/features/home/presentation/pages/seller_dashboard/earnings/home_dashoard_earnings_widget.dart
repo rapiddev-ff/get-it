@@ -348,7 +348,7 @@ class _HomeDashoardEarningsWidgetState
                   colors: [AppColors.secondary, Color(0xFF6187F1)],
                   stops: [0.0, 1.0],
                   begin: Alignment.topCenter,
-                  end: AlignmentDirectional(0, 1.0),
+                  end: Alignment.bottomCenter,
                 )
               : null,
           color: isActive ? null : AppColors.backgroundSecondary,

@@ -250,7 +250,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                         stops: const [0.0, 1.0],
                                         begin: const AlignmentDirectional(
                                             0.0, -1.0),
-                                        end: const AlignmentDirectional(0, 1.0),
+                                        end: Alignment.bottomCenter,
                                       ),
                                       borderRadius:
                                           BorderRadius.circular(100.0),

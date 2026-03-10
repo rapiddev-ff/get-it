@@ -221,7 +221,7 @@ class _HomeDashoardInventoryWidgetState
                                   ],
                                   stops: [0.0, 1.0],
                                   begin: Alignment.topCenter,
-                                  end: AlignmentDirectional(0, 1.0),
+                                  end: Alignment.bottomCenter,
                                 ),
                                 borderRadius: BorderRadius.circular(100.0),
                               ),
@@ -266,7 +266,7 @@ class _HomeDashoardInventoryWidgetState
                                           ],
                                           stops: [0.0, 1.0],
                                           begin: Alignment.topCenter,
-                                          end: AlignmentDirectional(0, 1.0),
+                                          end: Alignment.bottomCenter,
                                         ),
                                         borderRadius:
                                             BorderRadius.circular(100.0),
