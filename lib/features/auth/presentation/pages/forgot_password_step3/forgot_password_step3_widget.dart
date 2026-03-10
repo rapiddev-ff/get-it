@@ -78,7 +78,6 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
           ),
         ),
         body: SafeArea(
-          top: true,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

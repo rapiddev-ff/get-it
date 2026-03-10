@@ -327,7 +327,6 @@ class _HomeDashoardShippingDetailedWidgetState
                         style:
                             GoogleFonts.inter(color: AppColors.textSecondary)))
                 : SafeArea(
-                    top: true,
                     child: SingleChildScrollView(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,

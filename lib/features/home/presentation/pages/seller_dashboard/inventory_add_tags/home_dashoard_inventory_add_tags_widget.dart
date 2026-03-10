@@ -147,7 +147,6 @@ class _HomeDashoardInventoryAddTagsWidgetState
               ),
             ),
             body: SafeArea(
-              top: true,
               child: Column(
                 children: [
                   Expanded(

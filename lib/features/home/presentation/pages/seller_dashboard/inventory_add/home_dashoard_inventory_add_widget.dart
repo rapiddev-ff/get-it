@@ -1688,7 +1688,6 @@ class _HomeDashoardInventoryAddWidgetState
           ),
         ),
         body: SafeArea(
-          top: true,
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

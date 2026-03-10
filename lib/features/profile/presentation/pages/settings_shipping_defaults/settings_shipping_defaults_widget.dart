@@ -88,7 +88,6 @@ class _SettingsShippingDefaultsWidgetState
           ),
         ),
         body: SafeArea(
-          top: true,
           child: LayoutBuilder(
             builder: (context, constraints) => SingleChildScrollView(
               child: ConstrainedBox(

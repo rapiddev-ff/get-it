@@ -82,7 +82,6 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
           ),
         ),
         body: SafeArea(
-          top: true,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

@@ -989,7 +989,6 @@ class _HomeSellerProfileWidgetState
                                   ),
                                   primary: false,
                                   shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
                                   itemCount: shortlists.length,
                                   separatorBuilder: (_, __) =>
                                       SizedBox(height: 16.0),
@@ -1058,7 +1057,6 @@ class _HomeSellerProfileWidgetState
           padding: EdgeInsets.fromLTRB(0, 16.0, 0, 16.0),
           primary: false,
           shrinkWrap: true,
-          scrollDirection: Axis.vertical,
           itemCount: displayReviews.length,
           separatorBuilder: (_, __) => SizedBox(height: 16.0),
           itemBuilder: (context, reviewsIndex) {

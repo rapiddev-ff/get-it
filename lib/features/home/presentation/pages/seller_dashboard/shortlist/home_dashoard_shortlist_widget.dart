@@ -103,7 +103,6 @@ class _HomeDashoardShortlistWidgetState
           ),
         ),
         body: SafeArea(
-          top: true,
           child: _isLoading
               ? Center(
                   child: CircularProgressIndicator(

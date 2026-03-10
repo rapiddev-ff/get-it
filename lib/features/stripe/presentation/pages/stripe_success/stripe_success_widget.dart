@@ -28,7 +28,6 @@ class _StripeSuccessWidgetState extends State<StripeSuccessWidget> {
       child: Scaffold(
         backgroundColor: AppColors.backgroundPrimary,
         body: SafeArea(
-          top: true,
           child: Padding(
             padding: EdgeInsets.all(24.0),
             child: Column(

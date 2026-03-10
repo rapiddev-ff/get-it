@@ -223,7 +223,6 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
     return ListView.builder(
       padding: EdgeInsets.zero,
       shrinkWrap: true,
-      scrollDirection: Axis.vertical,
       itemCount: converstations.length,
       itemBuilder: (context, converstationsIndex) {
         final converstationsItem = converstations[converstationsIndex];

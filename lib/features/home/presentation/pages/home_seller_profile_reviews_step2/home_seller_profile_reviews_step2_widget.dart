@@ -121,7 +121,6 @@ class _HomeSellerProfileReviewsStep2WidgetState
           ),
         ),
         body: SafeArea(
-          top: true,
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,

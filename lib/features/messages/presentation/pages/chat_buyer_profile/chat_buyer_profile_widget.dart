@@ -96,7 +96,6 @@ class _ChatBuyerProfileWidgetState
           ],
         ),
         body: SafeArea(
-          top: true,
           child: Padding(
             padding: EdgeInsets.only(left: 16.0, top: 24.0, right: 16.0),
             child: SingleChildScrollView(
@@ -450,7 +449,6 @@ class _ChatBuyerProfileWidgetState
                                           padding: EdgeInsets.zero,
                                           primary: false,
                                           shrinkWrap: true,
-                                          scrollDirection: Axis.vertical,
                                           itemCount: buyerReviews.length,
                                           separatorBuilder: (_, __) =>
                                               SizedBox(height: 16.0),

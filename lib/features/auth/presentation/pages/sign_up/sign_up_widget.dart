@@ -98,7 +98,6 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
           actions: const [],
         ),
         body: SafeArea(
-          top: true,
           child: Column(
             children: [
               Flexible(

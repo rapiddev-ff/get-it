@@ -125,7 +125,6 @@ class _SettingsMyProfileWidgetState
           ),
         ),
         body: SafeArea(
-          top: true,
           child: Padding(
             padding: EdgeInsets.only(left: 16.0, top: 24.0, right: 16.0),
             child: SingleChildScrollView(
@@ -845,7 +844,6 @@ class _SettingsMyProfileWidgetState
           padding: EdgeInsets.zero,
           primary: false,
           shrinkWrap: true,
-          scrollDirection: Axis.vertical,
           itemCount: reviews.length,
           separatorBuilder: (_, __) => SizedBox(height: 16.0),
           itemBuilder: (context, reviewsIndex) {

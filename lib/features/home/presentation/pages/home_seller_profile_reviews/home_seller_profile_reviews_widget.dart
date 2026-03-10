@@ -170,7 +170,6 @@ class _HomeSellerProfileReviewsWidgetState
           ),
         ),
         body: SafeArea(
-          top: true,
           child: Padding(
             padding: EdgeInsets.only(left: 16.0, top: 24.0, right: 16.0),
             child: SingleChildScrollView(
@@ -511,7 +510,6 @@ class _HomeSellerProfileReviewsWidgetState
                               primary: false,
                               shrinkWrap: true,
                               reverse: false,
-                              scrollDirection: Axis.vertical,
                               separatorBuilder: (_, __) =>
                                   SizedBox(height: 16.0),
                               builderDelegate:
@@ -564,7 +562,6 @@ class _HomeSellerProfileReviewsWidgetState
                               primary: false,
                               shrinkWrap: true,
                               reverse: false,
-                              scrollDirection: Axis.vertical,
                               separatorBuilder: (_, __) =>
                                   SizedBox(height: 16.0),
                               builderDelegate:

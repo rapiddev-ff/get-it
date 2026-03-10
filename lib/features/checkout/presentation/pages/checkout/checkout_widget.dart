@@ -280,7 +280,6 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
           ),
         ),
         body: SafeArea(
-          top: true,
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -481,7 +480,6 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                           padding: EdgeInsets.zero,
                           primary: false,
                           shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
                           itemCount: paymentMethods.length,
                           separatorBuilder: (_, __) => SizedBox(height: 16.0),
                           itemBuilder: (context, paymentMethodsIndex) {

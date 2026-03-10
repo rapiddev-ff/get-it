@@ -141,7 +141,6 @@ class _HomeDashoardShortlistAddWidgetState
           ),
         ),
         body: SafeArea(
-          top: true,
           child: Column(
             children: [
               Expanded(

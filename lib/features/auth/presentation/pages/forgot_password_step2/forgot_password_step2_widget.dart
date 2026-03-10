@@ -71,7 +71,6 @@ class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget>
           ),
         ),
         body: SafeArea(
-          top: true,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,

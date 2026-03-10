@@ -93,7 +93,6 @@ class _HomeDashoardInventoryAddCategoryWidgetState
                     padding: EdgeInsets.zero,
                     primary: false,
                     shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
                     itemCount: listViewCategoriesRowList.length,
                     itemBuilder: (context, listViewIndex) {
                       final listViewCategoriesRow =

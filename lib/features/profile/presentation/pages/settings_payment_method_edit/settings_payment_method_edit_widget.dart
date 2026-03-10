@@ -190,7 +190,6 @@ class _SettingsPaymentMethodEditWidgetState
           ),
         ),
         body: SafeArea(
-          top: true,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: SingleChildScrollView(

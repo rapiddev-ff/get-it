@@ -181,7 +181,6 @@ class _SettingsBlockListWidgetState extends State<SettingsBlockListWidget> {
           ),
         ),
         body: SafeArea(
-          top: true,
           child: (_blockedUsers?.isEmpty ?? true) &&
                   (_model.textController?.text.isEmpty ?? true)
               ? _buildEmptyState()
@@ -330,7 +329,6 @@ class _SettingsBlockListWidgetState extends State<SettingsBlockListWidget> {
                       padding: EdgeInsets.zero,
                       primary: false,
                       shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
                       itemCount: blockedUsers.length,
                       separatorBuilder: (_, __) => SizedBox(height: 16.0),
                       itemBuilder: (context, index) {

@@ -101,7 +101,6 @@ class _PhoneVerificationPage2WidgetState
           actions: const [],
         ),
         body: SafeArea(
-          top: true,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

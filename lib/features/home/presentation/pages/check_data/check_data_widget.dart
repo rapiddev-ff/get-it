@@ -247,7 +247,6 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
       child: Scaffold(
         backgroundColor: AppColors.backgroundPrimary,
         body: SafeArea(
-          top: true,
           child: Center(
             child: Column(
               children: [

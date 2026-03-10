@@ -85,7 +85,6 @@ class _StripeCreateChekOutWidgetState extends State<StripeCreateChekOutWidget> {
       child: Scaffold(
         backgroundColor: AppColors.backgroundPrimary,
         body: SafeArea(
-          top: true,
           child: Column(
             children: [
               AppWebView(

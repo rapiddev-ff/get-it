@@ -145,7 +145,6 @@ class _HomeDashoardShippingWidgetState
           ),
         ),
         body: SafeArea(
-          top: true,
           child: _isLoading
               ? Center(
                   child: CircularProgressIndicator(

@@ -106,7 +106,6 @@ class _HomeDashoardPromoteStep2WidgetState
           ),
         ),
         body: SafeArea(
-          top: true,
           child: Padding(
             padding: EdgeInsets.only(left: 1.0),
             child: SingleChildScrollView(

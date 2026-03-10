@@ -92,7 +92,6 @@ class _HomeDashoardPromoteStep1WidgetState
           ),
         ),
         body: SafeArea(
-          top: true,
           child: Column(
             children: [
               Expanded(

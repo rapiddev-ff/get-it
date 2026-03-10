@@ -23,7 +23,6 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
       child: Scaffold(
         backgroundColor: AppColors.backgroundPrimary,
         body: SafeArea(
-          top: true,
           child: Padding(
             padding: EdgeInsets.all(24.0),
             child: Column(

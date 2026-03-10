@@ -132,7 +132,6 @@ class _HomeSellerProfileReviewsStep1WidgetState
           ),
         ),
         body: SafeArea(
-          top: true,
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -316,7 +315,6 @@ class _HomeSellerProfileReviewsStep1WidgetState
                               padding: EdgeInsets.zero,
                               primary: false,
                               shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
                               itemCount: _reviewableProducts.length,
                               separatorBuilder: (_, __) =>
                                   SizedBox(height: 16.0),

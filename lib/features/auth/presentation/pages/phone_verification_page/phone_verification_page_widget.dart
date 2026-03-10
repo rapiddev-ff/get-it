@@ -125,7 +125,6 @@ class _PhoneVerificationPageWidgetState
           actions: const [],
         ),
         body: SafeArea(
-          top: true,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

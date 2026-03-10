@@ -171,7 +171,6 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
           actions: const [],
         ),
         body: SafeArea(
-          top: true,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(

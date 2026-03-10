@@ -104,7 +104,6 @@ class _HomeDashoardInventoryAddConditionWidgetState
                     padding: EdgeInsets.zero,
                     primary: false,
                     shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
                     itemCount: listViewConditionsRowList.length,
                     itemBuilder: (context, listViewIndex) {
                       final listViewConditionsRow =

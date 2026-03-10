@@ -44,7 +44,6 @@ class SettingsDeleteAccountWidget extends StatelessWidget {
           ),
         ),
         body: SafeArea(
-          top: true,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(

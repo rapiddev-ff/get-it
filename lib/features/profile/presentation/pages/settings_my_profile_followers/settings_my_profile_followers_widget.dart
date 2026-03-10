@@ -277,7 +277,6 @@ class _SettingsMyProfileFollowersWidgetState
           ),
         ),
         body: SafeArea(
-          top: true,
           child: Column(
             children: [
               _buildTabBar(),

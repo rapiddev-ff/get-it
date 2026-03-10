@@ -70,7 +70,6 @@ class _PermissionsWidgetState extends State<PermissionsWidget>
           actions: const [],
         ),
         body: SafeArea(
-          top: true,
           child: Column(
             children: [
               Flexible(

@@ -53,7 +53,6 @@ class _SettingsPaymentMethodWidgetState
           ),
         ),
         body: SafeArea(
-          top: true,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: SingleChildScrollView(
@@ -77,7 +76,6 @@ class _SettingsPaymentMethodWidgetState
                           padding: EdgeInsets.zero,
                           primary: false,
                           shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
                           itemCount: paymentMethods.length,
                           separatorBuilder: (_, __) => SizedBox(height: 12.0),
                           itemBuilder: (context, paymentMethodsIndex) {

@@ -53,7 +53,6 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
         child: Scaffold(
           backgroundColor: AppColors.backgroundPrimary,
           body: SafeArea(
-            top: true,
             child: Column(
               children: [
                 Spacer(),

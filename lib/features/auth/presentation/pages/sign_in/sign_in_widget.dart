@@ -97,7 +97,6 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
           ),
         ),
         body: SafeArea(
-          top: true,
           child: Column(
             children: [
               Expanded(
