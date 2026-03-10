@@ -325,7 +325,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                       child: Column(
                         children: [
                           Align(
-                            alignment: AlignmentDirectional(-1.0, -1.0),
+                            alignment: Alignment.topLeft,
                             child: Text(
                               'Rate Your Experience',
                               style: GoogleFonts.inter(

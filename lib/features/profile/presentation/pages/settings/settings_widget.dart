@@ -670,7 +670,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                         Color(0xFF6187F1)
                                       ],
                                       stops: [0.0, 1.0],
-                                      begin: AlignmentDirectional(0.0, -1.0),
+                                      begin: Alignment.topCenter,
                                       end: AlignmentDirectional(0, 1.0),
                                     ),
                                     borderRadius: BorderRadius.circular(4.0),
@@ -753,7 +753,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                       Color(0xFF6187F1)
                                     ],
                                     stops: [0.0, 1.0],
-                                    begin: AlignmentDirectional(0.0, -1.0),
+                                    begin: Alignment.topCenter,
                                     end: AlignmentDirectional(0, 1.0),
                                   ),
                                   borderRadius: BorderRadius.circular(4.0),

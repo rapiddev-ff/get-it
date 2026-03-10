@@ -41,7 +41,7 @@ class _StripeRefreshWidgetState extends State<StripeRefreshWidget> {
                       shape: BoxShape.circle,
                     ),
                     child: Align(
-                      alignment: AlignmentDirectional(0.0, 0.0),
+                      alignment: Alignment.center,
                       child: Icon(
                         Icons.error_outline,
                         color: AppColors.error,

@@ -671,7 +671,7 @@ class _HomeDashoardShippingDetailedWidgetState
                                         Color(0xFF16A34A),
                                         Color(0xFF22C55E),
                                       ],
-                                      begin: AlignmentDirectional(0.0, -1.0),
+                                      begin: Alignment.topCenter,
                                       end: AlignmentDirectional(0, 1.0),
                                     ),
                                     borderRadius: BorderRadius.circular(8.0),
@@ -797,8 +797,7 @@ class _HomeDashoardShippingDetailedWidgetState
                                             Color(0xFF6187F1)
                                           ],
                                           stops: [0.0, 1.0],
-                                          begin:
-                                              AlignmentDirectional(0.0, -1.0),
+                                          begin: Alignment.topCenter,
                                           end: AlignmentDirectional(0, 1.0),
                                         ),
                                         borderRadius:
@@ -855,7 +854,7 @@ class _HomeDashoardShippingDetailedWidgetState
             ? LinearGradient(
                 colors: [AppColors.secondary, Color(0xFF6187F1)],
                 stops: [0.0, 1.0],
-                begin: AlignmentDirectional(0.0, -1.0),
+                begin: Alignment.topCenter,
                 end: AlignmentDirectional(0, 1.0),
               )
             : null,

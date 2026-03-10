@@ -249,7 +249,7 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
         body: SafeArea(
           top: true,
           child: Align(
-            alignment: AlignmentDirectional(0.0, 0.0),
+            alignment: Alignment.center,
             child: Column(
               children: [
                 Spacer(),

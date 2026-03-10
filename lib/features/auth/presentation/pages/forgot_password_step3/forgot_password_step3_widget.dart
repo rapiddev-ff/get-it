@@ -359,7 +359,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                 elevation: 0,
                                 insetPadding: EdgeInsets.zero,
                                 backgroundColor: Colors.transparent,
-                                alignment: AlignmentDirectional(0.0, 0.0)
+                                alignment: Alignment.center
                                     .resolve(Directionality.of(context)),
                                 child: GestureDetector(
                                   onTap: () {

@@ -55,7 +55,7 @@ class _PasswordComponentWidgetState extends State<PasswordComponentWidget> {
                 ).animate().fade(duration: 600.ms);
               } else {
                 return Align(
-                  alignment: AlignmentDirectional(0.0, 0.0),
+                  alignment: Alignment.center,
                   child: Padding(
                     padding: EdgeInsets.all(5.0),
                     child: Container(

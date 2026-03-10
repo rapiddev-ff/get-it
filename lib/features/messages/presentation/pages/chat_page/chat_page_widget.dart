@@ -172,7 +172,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                         avoidOverflow: true,
                         targetAnchor: AlignmentDirectional(-4.0, 5.5)
                             .resolve(Directionality.of(context)),
-                        followerAnchor: AlignmentDirectional(0.0, 0.0)
+                        followerAnchor: Alignment.center
                             .resolve(Directionality.of(context)),
                         builder: (dialogContext) {
                           return Material(
@@ -278,7 +278,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                             gradient: LinearGradient(
                               colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
                               stops: [0.0, 1.0],
-                              begin: AlignmentDirectional(0.0, -1.0),
+                              begin: Alignment.topCenter,
                               end: AlignmentDirectional(0, 1.0),
                             ),
                             borderRadius: BorderRadius.circular(6.0),
@@ -423,7 +423,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                       ),
                     ),
                     Align(
-                      alignment: AlignmentDirectional(1.0, 0.0),
+                      alignment: Alignment.centerRight,
                       child: Padding(
                         padding: EdgeInsets.only(right: 16.0),
                         child: InkWell(
@@ -489,13 +489,13 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                   gradient: LinearGradient(
                     colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
                     stops: [0.0, 1.0],
-                    begin: AlignmentDirectional(0.0, -1.0),
+                    begin: Alignment.topCenter,
                     end: AlignmentDirectional(0, 1.0),
                   ),
                   shape: BoxShape.circle,
                 ),
                 child: Align(
-                  alignment: AlignmentDirectional(0.0, 0.0),
+                  alignment: Alignment.center,
                   child: Icon(
                     Icons.send,
                     color: AppColors.textPrimary,

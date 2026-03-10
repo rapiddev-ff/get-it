@@ -496,8 +496,7 @@ class _HomeDashoardInventoryAddWidgetState
             elevation: 0,
             insetPadding: EdgeInsets.zero,
             backgroundColor: Colors.transparent,
-            alignment: AlignmentDirectional(0.0, 0.0)
-                .resolve(Directionality.of(context)),
+            alignment: Alignment.center.resolve(Directionality.of(context)),
             child: WebViewAware(
               child: GestureDetector(
                 onTap: () {
@@ -630,7 +629,7 @@ class _HomeDashoardInventoryAddWidgetState
                       borderRadius: BorderRadius.circular(4.0),
                     ),
                     child: Align(
-                      alignment: AlignmentDirectional(0.0, 0.0),
+                      alignment: Alignment.center,
                       child: FaIcon(
                         FontAwesomeIcons.camera,
                         color: AppColors.textPrimary,
@@ -661,7 +660,7 @@ class _HomeDashoardInventoryAddWidgetState
                                 ),
                               ),
                               Align(
-                                alignment: AlignmentDirectional(1.0, -1.0),
+                                alignment: Alignment.topRight,
                                 child: Padding(
                                   padding:
                                       EdgeInsets.only(top: 8.0, right: 8.0),
@@ -678,8 +677,7 @@ class _HomeDashoardInventoryAddWidgetState
                                         shape: BoxShape.circle,
                                       ),
                                       child: Align(
-                                        alignment:
-                                            AlignmentDirectional(0.0, 0.0),
+                                        alignment: Alignment.center,
                                         child: Icon(
                                           Icons.close,
                                           color: AppColors.textPrimary,
@@ -1141,7 +1139,7 @@ class _HomeDashoardInventoryAddWidgetState
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(1.0, 0.0),
+                alignment: Alignment.centerRight,
                 child: Switch.adaptive(
                   value: switchFlashSaleValue!,
                   onChanged: (newValue) async {
@@ -1500,7 +1498,7 @@ class _HomeDashoardInventoryAddWidgetState
         gradient: LinearGradient(
           colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
           stops: [0.0, 1.0],
-          begin: AlignmentDirectional(0.0, -1.0),
+          begin: Alignment.topCenter,
           end: AlignmentDirectional(0, 1.0),
         ),
         borderRadius: BorderRadius.circular(4.0),

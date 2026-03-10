@@ -352,7 +352,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                   elevation: 0,
                   insetPadding: EdgeInsets.zero,
                   backgroundColor: Colors.transparent,
-                  alignment: AlignmentDirectional(0.0, 1.0)
+                  alignment: Alignment.bottomCenter
                       .resolve(Directionality.of(context)),
                   child: WebViewAware(
                     child: GestureDetector(
@@ -829,7 +829,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                         gradient: LinearGradient(
                           colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
                           stops: [0.0, 1.0],
-                          begin: AlignmentDirectional(0.0, -1.0),
+                          begin: Alignment.topCenter,
                           end: AlignmentDirectional(0, 1.0),
                         ),
                         borderRadius: BorderRadius.circular(4.0),

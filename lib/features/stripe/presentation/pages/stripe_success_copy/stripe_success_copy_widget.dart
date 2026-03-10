@@ -40,7 +40,7 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
                       shape: BoxShape.circle,
                     ),
                     child: Align(
-                      alignment: AlignmentDirectional(0.0, 0.0),
+                      alignment: Alignment.center,
                       child: Icon(
                         Icons.check_rounded,
                         color: Colors.white,

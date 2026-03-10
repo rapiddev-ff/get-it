@@ -288,8 +288,7 @@ class _HomeDashoardInventoryAddTagsWidgetState
                                                   : Color(0xFF252525),
                                             ],
                                             stops: [0.0, 1.0],
-                                            begin:
-                                                AlignmentDirectional(0.0, -1.0),
+                                            begin: Alignment.topCenter,
                                             end: AlignmentDirectional(0, 1.0),
                                           ),
                                           borderRadius:

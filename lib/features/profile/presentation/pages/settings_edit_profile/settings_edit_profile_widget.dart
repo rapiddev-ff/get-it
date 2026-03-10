@@ -181,7 +181,7 @@ class _SettingsEditProfileWidgetState
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0.0, -1.0),
+                    alignment: Alignment.topCenter,
                     child: Container(
                       width: 128.0,
                       height: 128.0,
@@ -214,7 +214,7 @@ class _SettingsEditProfileWidgetState
                                     );
                                   } else {
                                     return Align(
-                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      alignment: Alignment.center,
                                       child: FaIcon(
                                         FontAwesomeIcons.userLarge,
                                         color: Color(0xFF797A79),
@@ -227,7 +227,7 @@ class _SettingsEditProfileWidgetState
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(1.0, 1.0),
+                            alignment: Alignment.bottomRight,
                             child: Container(
                               width: 40.0,
                               height: 40.0,
@@ -236,7 +236,7 @@ class _SettingsEditProfileWidgetState
                                 shape: BoxShape.circle,
                               ),
                               child: Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
+                                alignment: Alignment.center,
                                 child: FaIcon(
                                   FontAwesomeIcons.camera,
                                   color: Colors.white,
@@ -579,7 +579,7 @@ class _SettingsEditProfileWidgetState
                                   : Color(0xFF363636),
                             ],
                             stops: [0.0, 1.0],
-                            begin: AlignmentDirectional(0.0, -1.0),
+                            begin: Alignment.topCenter,
                             end: AlignmentDirectional(0, 1.0),
                           ),
                           borderRadius: BorderRadius.circular(4.0),

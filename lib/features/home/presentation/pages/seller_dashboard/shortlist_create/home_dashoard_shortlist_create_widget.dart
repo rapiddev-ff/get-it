@@ -387,7 +387,7 @@ class _HomeDashoardShortlistCreateWidgetState
                                   ),
                                 ),
                                 child: Align(
-                                  alignment: AlignmentDirectional(0.0, 0.0),
+                                  alignment: Alignment.center,
                                   child: Icon(
                                     Icons.check_sharp,
                                     color: Colors.white,

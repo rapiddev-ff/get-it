@@ -87,12 +87,12 @@ class _NavBarWidgetState extends State<NavBarWidget>
                               }()
                             ],
                             stops: [0.0, 1.0],
-                            begin: AlignmentDirectional(0.0, -1.0),
+                            begin: Alignment.topCenter,
                             end: AlignmentDirectional(0, 1.0),
                           ),
                           shape: BoxShape.circle,
                         ),
-                        alignment: AlignmentDirectional(0.0, 0.0),
+                        alignment: Alignment.center,
                         child: FaIcon(
                           FontAwesomeIcons.house,
                           color: () {
@@ -168,13 +168,13 @@ class _NavBarWidgetState extends State<NavBarWidget>
                               }()
                             ],
                             stops: [0.0, 1.0],
-                            begin: AlignmentDirectional(0.0, -1.0),
+                            begin: Alignment.topCenter,
                             end: AlignmentDirectional(0, 1.0),
                           ),
                           shape: BoxShape.circle,
                         ),
                         child: Align(
-                          alignment: AlignmentDirectional(0.0, 0.0),
+                          alignment: Alignment.center,
                           child: Icon(
                             Icons.search,
                             color: () {
@@ -237,13 +237,13 @@ class _NavBarWidgetState extends State<NavBarWidget>
                                   : Colors.transparent
                             ],
                             stops: [0.0, 1.0],
-                            begin: AlignmentDirectional(0.0, -1.0),
+                            begin: Alignment.topCenter,
                             end: AlignmentDirectional(0, 1.0),
                           ),
                           shape: BoxShape.circle,
                         ),
                         child: Align(
-                          alignment: AlignmentDirectional(0.0, 0.0),
+                          alignment: Alignment.center,
                           child: FaIcon(
                             FontAwesomeIcons.solidMessage,
                             color: route == '/messages'
@@ -298,13 +298,13 @@ class _NavBarWidgetState extends State<NavBarWidget>
                                   : Colors.transparent
                             ],
                             stops: [0.0, 1.0],
-                            begin: AlignmentDirectional(0.0, -1.0),
+                            begin: Alignment.topCenter,
                             end: AlignmentDirectional(0, 1.0),
                           ),
                           shape: BoxShape.circle,
                         ),
                         child: Align(
-                          alignment: AlignmentDirectional(0.0, 0.0),
+                          alignment: Alignment.center,
                           child: Icon(
                             Icons.favorite_outlined,
                             color: route == '/wishlist'

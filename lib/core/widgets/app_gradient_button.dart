@@ -40,7 +40,7 @@ class AppGradientButton extends StatelessWidget {
             isActive ? _activeEnd : _disabledColor,
           ],
           stops: const [0.0, 1.0],
-          begin: const AlignmentDirectional(0.0, -1.0),
+          begin: Alignment.topCenter,
           end: const AlignmentDirectional(0, 1.0),
         ),
         borderRadius: BorderRadius.circular(borderRadius),

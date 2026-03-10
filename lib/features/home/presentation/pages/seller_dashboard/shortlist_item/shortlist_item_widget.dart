@@ -279,7 +279,7 @@ class _ShortlistItemWidgetState extends State<ShortlistItemWidget> {
                 ? LinearGradient(
                     colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
                     stops: [0.0, 1.0],
-                    begin: AlignmentDirectional(0.0, -1.0),
+                    begin: Alignment.topCenter,
                     end: AlignmentDirectional(0, 1.0),
                   )
                 : null,

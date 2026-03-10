@@ -60,7 +60,7 @@ class MessageItemWidget extends StatelessWidget {
                 child: Stack(
                   children: [
                     Align(
-                      alignment: AlignmentDirectional(0.0, 0.0),
+                      alignment: Alignment.center,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(4.0),
                         child: Image.network(
@@ -73,7 +73,7 @@ class MessageItemWidget extends StatelessWidget {
                     ),
                     if (_hasUnread())
                       Align(
-                        alignment: AlignmentDirectional(1.0, -1.0),
+                        alignment: Alignment.topRight,
                         child: Container(
                           width: 20.0,
                           height: 20.0,
@@ -82,7 +82,7 @@ class MessageItemWidget extends StatelessWidget {
                             shape: BoxShape.circle,
                           ),
                           child: Align(
-                            alignment: AlignmentDirectional(0.0, 0.0),
+                            alignment: Alignment.center,
                             child: Text(
                               _unreadCount(),
                               style: GoogleFonts.inter(
@@ -216,7 +216,7 @@ class MessageItemWidget extends StatelessWidget {
                 child: Stack(
                   children: [
                     Align(
-                      alignment: AlignmentDirectional(0.0, 0.0),
+                      alignment: Alignment.center,
                       child: Container(
                         width: 56.0,
                         height: 56.0,
@@ -235,7 +235,7 @@ class MessageItemWidget extends StatelessWidget {
                     ),
                     if (_hasUnread())
                       Align(
-                        alignment: AlignmentDirectional(1.0, -1.0),
+                        alignment: Alignment.topRight,
                         child: Container(
                           width: 20.0,
                           height: 20.0,
@@ -244,7 +244,7 @@ class MessageItemWidget extends StatelessWidget {
                             shape: BoxShape.circle,
                           ),
                           child: Align(
-                            alignment: AlignmentDirectional(0.0, 0.0),
+                            alignment: Alignment.center,
                             child: Text(
                               _unreadCount(),
                               style: GoogleFonts.inter(

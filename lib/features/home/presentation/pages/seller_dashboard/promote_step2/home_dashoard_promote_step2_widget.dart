@@ -1114,7 +1114,7 @@ class _HomeDashoardPromoteStep2WidgetState
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0.0, -1.0),
+                    alignment: Alignment.topCenter,
                     child: Padding(
                       padding: EdgeInsets.only(top: 12.0),
                       child: Text(

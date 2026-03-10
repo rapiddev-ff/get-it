@@ -335,7 +335,7 @@ class _HomeSellerProfileWidgetState
                         avoidOverflow: true,
                         targetAnchor: AlignmentDirectional(-4.0, 5.5)
                             .resolve(Directionality.of(context)),
-                        followerAnchor: AlignmentDirectional(0.0, 0.0)
+                        followerAnchor: Alignment.center
                             .resolve(Directionality.of(context)),
                         builder: (dialogContext) {
                           return Material(
@@ -566,7 +566,7 @@ class _HomeSellerProfileWidgetState
                             gradient: LinearGradient(
                               colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
                               stops: [0.0, 1.0],
-                              begin: AlignmentDirectional(0.0, -1.0),
+                              begin: Alignment.topCenter,
                               end: AlignmentDirectional(0, 1.0),
                             ),
                             borderRadius: BorderRadius.circular(4.0),
@@ -929,8 +929,7 @@ class _HomeSellerProfileWidgetState
                                         ),
                                       ),
                                       Align(
-                                        alignment:
-                                            AlignmentDirectional(-1.0, 0.0),
+                                        alignment: Alignment.centerLeft,
                                         child: SingleChildScrollView(
                                           scrollDirection: Axis.horizontal,
                                           child: Row(

@@ -319,8 +319,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                           final imagesItem =
                                               images[imagesIndex];
                                           return Align(
-                                            alignment:
-                                                AlignmentDirectional(0.0, -1.0),
+                                            alignment: Alignment.topCenter,
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(
@@ -360,8 +359,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                       ),
                                       if (images.length > 1)
                                         Align(
-                                          alignment:
-                                              AlignmentDirectional(0.0, 1.0),
+                                          alignment: Alignment.bottomCenter,
                                           child: Padding(
                                             padding:
                                                 EdgeInsets.only(bottom: 30.0),
@@ -742,7 +740,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                           Color(0xFF6187F1)
                                         ],
                                         stops: [0.0, 1.0],
-                                        begin: AlignmentDirectional(0.0, -1.0),
+                                        begin: Alignment.topCenter,
                                         end: AlignmentDirectional(0, 1.0),
                                       ),
                                       borderRadius: BorderRadius.circular(4.0),
