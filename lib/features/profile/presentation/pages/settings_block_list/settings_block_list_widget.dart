@@ -225,7 +225,7 @@ class _SettingsBlockListWidgetState extends State<SettingsBlockListWidget> {
 
   Widget _buildBlockedList(List<_BlockedUserInfo> blockedUsers) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -248,7 +248,7 @@ class _SettingsBlockListWidgetState extends State<SettingsBlockListWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+              padding: EdgeInsets.only(top: 24.0),
               child: Container(
                 width: double.infinity,
                 child: TextFormField(
@@ -312,7 +312,7 @@ class _SettingsBlockListWidgetState extends State<SettingsBlockListWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+              padding: EdgeInsets.only(top: 20.0),
               child: blockedUsers.isEmpty
                   ? Center(
                       child: Padding(
@@ -360,7 +360,7 @@ class _SettingsBlockListWidgetState extends State<SettingsBlockListWidget> {
 
   Widget _buildAboutBlockingCard() {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -390,8 +390,7 @@ class _SettingsBlockListWidgetState extends State<SettingsBlockListWidget> {
                       ),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                      padding: EdgeInsets.only(top: 8.0),
                       child: Text(
                         'Blocked users cannot send you messages, view your full profile, or purchase items from you. They won\'t be notified that they\'ve been blocked.',
                         style: GoogleFonts.inter(

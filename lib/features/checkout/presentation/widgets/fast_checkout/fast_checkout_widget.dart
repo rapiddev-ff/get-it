@@ -76,7 +76,7 @@ class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
     final remainingBudget = dailyBudget - dailyBudgetUsed;
 
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 95.0),
+      padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 95.0),
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.backgroundSecondary,
@@ -89,7 +89,7 @@ class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
             // Daily Budget
             if (dailyBudget > 0)
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
                 child: Text(
                   'Remaining Daily Budget ${_currencyFormat.format(remainingBudget)} / ${_currencyFormat.format(dailyBudget)}',
                   style: GoogleFonts.inter(
@@ -109,7 +109,7 @@ class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
 
             // Product info
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16.0, 20.0, 16.0, 20.0),
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -137,8 +137,8 @@ class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
                             borderRadius: BorderRadius.circular(100.0),
                           ),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                8.0, 4.0, 8.0, 4.0),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8.0, vertical: 4.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -240,7 +240,7 @@ class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
                   Navigator.pop(context);
                 },
                 style: TextButton.styleFrom(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
                   backgroundColor: Colors.transparent,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(

@@ -337,8 +337,8 @@ class _HomeDashoardShippingDetailedWidgetState
                           Container(
                             decoration: BoxDecoration(color: Color(0xFF111111)),
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 24.0, 16.0, 24.0),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 16.0, vertical: 24.0),
                               child: Container(
                                 width: double.infinity,
                                 decoration: BoxDecoration(
@@ -346,8 +346,11 @@ class _HomeDashoardShippingDetailedWidgetState
                                   borderRadius: BorderRadius.circular(4.0),
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10.0, 16.0, 16.0, 16.0),
+                                  padding: EdgeInsets.only(
+                                      left: 10.0,
+                                      top: 16.0,
+                                      right: 16.0,
+                                      bottom: 16.0),
                                   child: Row(
                                     children: [
                                       ClipRRect(
@@ -440,8 +443,8 @@ class _HomeDashoardShippingDetailedWidgetState
                           ),
                           // Shipping Address
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 24.0, 16.0, 0.0),
+                            padding: EdgeInsets.only(
+                                left: 16.0, top: 24.0, right: 16.0),
                             child: Text(
                               'Shipping Address',
                               style: GoogleFonts.inter(
@@ -452,8 +455,8 @@ class _HomeDashoardShippingDetailedWidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 16.0, 16.0, 0.0),
+                            padding: EdgeInsets.only(
+                                left: 16.0, top: 16.0, right: 16.0),
                             child: Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
@@ -540,8 +543,7 @@ class _HomeDashoardShippingDetailedWidgetState
                           ),
                           // Add Tracking #
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
                             child: Text(
                               'Add Tracking #',
                               style: GoogleFonts.inter(
@@ -552,8 +554,8 @@ class _HomeDashoardShippingDetailedWidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 8.0, 16.0, 0.0),
+                            padding: EdgeInsets.only(
+                                left: 16.0, top: 8.0, right: 16.0),
                             child: SizedBox(
                               width: double.infinity,
                               child: TextFormField(
@@ -631,8 +633,8 @@ class _HomeDashoardShippingDetailedWidgetState
                           // Save tracking button (for shipped orders only)
                           if (_isShipped) ...[
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 12.0, 16.0, 0.0),
+                              padding: EdgeInsets.only(
+                                  left: 16.0, top: 12.0, right: 16.0),
                               child: SizedBox(
                                 width: double.infinity,
                                 child: TextButton(
@@ -658,8 +660,8 @@ class _HomeDashoardShippingDetailedWidgetState
                             ),
                             // Mark as Delivered button (for shipped orders)
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 8.0, 16.0, 0.0),
+                              padding: EdgeInsets.only(
+                                  left: 16.0, top: 8.0, right: 16.0),
                               child: SizedBox(
                                 width: double.infinity,
                                 child: Container(
@@ -705,8 +707,7 @@ class _HomeDashoardShippingDetailedWidgetState
                           ),
                           // Status indicators
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
                             child: SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: Row(
@@ -733,8 +734,8 @@ class _HomeDashoardShippingDetailedWidgetState
                           // Sale Pending info
                           if (_isSalePending)
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 16.0, 16.0, 0.0),
+                              padding: EdgeInsets.only(
+                                  left: 16.0, top: 16.0, right: 16.0),
                               child: Container(
                                 width: double.infinity,
                                 decoration: BoxDecoration(
@@ -758,8 +759,8 @@ class _HomeDashoardShippingDetailedWidgetState
                           // Action buttons
                           if (_isPaid) ...[
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 32.0, 16.0, 0.0),
+                              padding: EdgeInsets.only(
+                                  left: 16.0, top: 32.0, right: 16.0),
                               child: Row(
                                 children: [
                                   Expanded(
@@ -862,7 +863,7 @@ class _HomeDashoardShippingDetailedWidgetState
         borderRadius: BorderRadius.circular(100.0),
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 16.0, 8.0),
+        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: Text(
           label,
           style: GoogleFonts.inter(

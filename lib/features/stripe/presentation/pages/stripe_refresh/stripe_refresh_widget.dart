@@ -32,7 +32,7 @@ class _StripeRefreshWidgetState extends State<StripeRefreshWidget> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 32.0),
+                  padding: EdgeInsets.only(bottom: 32.0),
                   child: Container(
                     width: 120.0,
                     height: 120.0,
@@ -51,7 +51,7 @@ class _StripeRefreshWidgetState extends State<StripeRefreshWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
+                  padding: EdgeInsets.only(bottom: 16.0),
                   child: Text(
                     'Stripe Connection Failed',
                     textAlign: TextAlign.center,
@@ -63,7 +63,7 @@ class _StripeRefreshWidgetState extends State<StripeRefreshWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 32.0),
+                  padding: EdgeInsets.only(bottom: 32.0),
                   child: Text(
                     'We\'re sorry, but we couldn\'t connect your Stripe account at this time.',
                     textAlign: TextAlign.center,

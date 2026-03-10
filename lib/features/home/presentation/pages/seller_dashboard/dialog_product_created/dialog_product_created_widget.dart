@@ -21,7 +21,7 @@ class DialogProductCreatedWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -29,7 +29,7 @@ class DialogProductCreatedWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(16.0, 32.0, 16.0, 32.0),
+          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 32.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -48,7 +48,7 @@ class DialogProductCreatedWidget extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                padding: EdgeInsets.only(top: 24.0),
                 child: Text(
                   'Product published',
                   textAlign: TextAlign.center,
@@ -61,7 +61,7 @@ class DialogProductCreatedWidget extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                padding: EdgeInsets.only(top: 16.0),
                 child: Text(
                   'Your product is live.',
                   textAlign: TextAlign.center,
@@ -74,7 +74,7 @@ class DialogProductCreatedWidget extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                padding: EdgeInsets.only(top: 16.0),
                 child: AppGradientButton(
                   text: 'Add another product',
                   onPressed: () async {
@@ -83,7 +83,7 @@ class DialogProductCreatedWidget extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                padding: EdgeInsets.only(top: 16.0),
                 child: TextButton(
                   onPressed: () async {
                     if (Navigator.of(context).canPop()) {
@@ -98,8 +98,7 @@ class DialogProductCreatedWidget extends StatelessWidget {
                   },
                   style: TextButton.styleFrom(
                     minimumSize: Size(double.infinity, 56.0),
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       side: BorderSide(
@@ -119,7 +118,7 @@ class DialogProductCreatedWidget extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                padding: EdgeInsets.only(top: 16.0),
                 child: TextButton(
                   onPressed: () async {
                     Navigator.pop(context);
@@ -130,8 +129,7 @@ class DialogProductCreatedWidget extends StatelessWidget {
                   },
                   style: TextButton.styleFrom(
                     minimumSize: Size(double.infinity, 56.0),
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     ),

@@ -172,7 +172,7 @@ class _HomeSellerProfileReviewsWidgetState
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
+            padding: EdgeInsets.only(left: 16.0, top: 24.0, right: 16.0),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -222,8 +222,7 @@ class _HomeSellerProfileReviewsWidgetState
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 8.0, 0.0, 0.0),
+                                  padding: EdgeInsets.only(top: 8.0),
                                   child: Row(
                                     children: [
                                       RatingBarIndicator(
@@ -261,8 +260,7 @@ class _HomeSellerProfileReviewsWidgetState
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 8.0, 0.0, 0.0),
+                                  padding: EdgeInsets.only(top: 8.0),
                                   child: Row(
                                     children: [
                                       Column(
@@ -357,8 +355,7 @@ class _HomeSellerProfileReviewsWidgetState
                         ].divide(SizedBox(width: 12.0)),
                       ),
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                        padding: EdgeInsets.only(top: 24.0),
                         child: Container(
                           width: double.infinity,
                           height: 53.0,
@@ -375,8 +372,7 @@ class _HomeSellerProfileReviewsWidgetState
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 0.0, 10.0),
+                                        padding: EdgeInsets.only(bottom: 10.0),
                                         child: Text(
                                           'As Buyer',
                                           style: GoogleFonts.inter(
@@ -414,8 +410,7 @@ class _HomeSellerProfileReviewsWidgetState
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 0.0, 10.0),
+                                        padding: EdgeInsets.only(bottom: 10.0),
                                         child: Text(
                                           'As Seller',
                                           style: GoogleFonts.inter(
@@ -448,8 +443,7 @@ class _HomeSellerProfileReviewsWidgetState
                         ),
                       ),
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                        padding: EdgeInsets.only(top: 16.0),
                         child: Container(
                           width: double.infinity,
                           height: 56.0,
@@ -491,8 +485,7 @@ class _HomeSellerProfileReviewsWidgetState
                               ),
                             ),
                             style: TextButton.styleFrom(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 0.0, 16.0, 0.0),
+                              padding: EdgeInsets.symmetric(horizontal: 16.0),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
@@ -751,7 +744,8 @@ class _HomeSellerProfileReviewsWidgetState
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(12.0, 8.0, 12.0, 8.0),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,

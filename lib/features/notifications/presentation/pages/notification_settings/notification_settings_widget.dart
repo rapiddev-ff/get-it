@@ -33,21 +33,18 @@ class _NotificationSettingsWidgetState
             actions: const [],
             flexibleSpace: FlexibleSpaceBar(
               title: Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 14.0),
+                padding: const EdgeInsets.only(bottom: 14.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          0.0, 0.0, 0.0, 8.0),
+                      padding: const EdgeInsets.only(bottom: 8.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                8.0, 0.0, 0.0, 0.0),
+                            padding: const EdgeInsets.only(left: 8.0),
                             child: IconButton(
                               style: IconButton.styleFrom(
                                 shape: RoundedRectangleBorder(
@@ -67,8 +64,7 @@ class _NotificationSettingsWidgetState
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          16.0, 0.0, 0.0, 0.0),
+                      padding: const EdgeInsets.only(left: 16.0),
                       child: Text(
                         'Notification Settings',
                         style: GoogleFonts.inter(
@@ -88,8 +84,7 @@ class _NotificationSettingsWidgetState
         body: SafeArea(
           top: true,
           child: Padding(
-            padding:
-                const EdgeInsetsDirectional.fromSTEB(16.0, 32.0, 16.0, 0.0),
+            padding: const EdgeInsets.only(left: 16.0, top: 32.0, right: 16.0),
             child: Column(
               children: [
                 Row(

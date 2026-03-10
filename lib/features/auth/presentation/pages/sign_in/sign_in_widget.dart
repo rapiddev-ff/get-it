@@ -112,8 +112,7 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 28.0),
+                          padding: EdgeInsets.only(bottom: 28.0),
                           child: Text(
                             'Sign In',
                             style: GoogleFonts.inter(
@@ -123,14 +122,12 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 16.0),
+                          padding: EdgeInsets.only(bottom: 16.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 8.0),
+                                padding: EdgeInsets.only(bottom: 8.0),
                                 child: Text(
                                   'Email',
                                   style: GoogleFonts.inter(
@@ -166,8 +163,7 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                               ),
                               if (_model.errorEmailRequired)
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 4.0, 0.0, 0.0),
+                                  padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Please enter your email.',
                                     style: GoogleFonts.inter(
@@ -178,8 +174,7 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                                 ),
                               if (_model.errorEmailFormat)
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 4.0, 0.0, 0.0),
+                                  padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Check your email format.',
                                     style: GoogleFonts.inter(
@@ -192,14 +187,12 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 16.0),
+                          padding: EdgeInsets.only(bottom: 16.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 8.0),
+                                padding: EdgeInsets.only(bottom: 8.0),
                                 child: Text(
                                   'Password',
                                   style: GoogleFonts.inter(
@@ -248,8 +241,7 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                               ),
                               if (_model.errorPasswordRequired)
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 4.0, 0.0, 0.0),
+                                  padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Password is required.',
                                     style: GoogleFonts.inter(
@@ -261,8 +253,7 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                               if (_model.errorSignIn != null &&
                                   _model.errorSignIn != '')
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 4.0, 0.0, 0.0),
+                                  padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     _model.errorSignIn ?? 'n/A',
                                     style: GoogleFonts.inter(
@@ -272,8 +263,7 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 24.0, 0.0, 0.0),
+                                padding: EdgeInsets.only(top: 24.0),
                                 child: Row(
                                   children: [
                                     if (!_model.keepSignedIn)
@@ -359,7 +349,7 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
               ),
               if (!isKeyboardShowing(context))
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(32.0, 0.0, 32.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 32.0),
                   child: Column(
                     children: [
                       AppGradientButton(

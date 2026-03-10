@@ -109,8 +109,7 @@ class _BrowseWidgetState extends State<BrowseWidget> {
           children: [
             Expanded(
               child: Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -175,8 +174,7 @@ class _BrowseWidgetState extends State<BrowseWidget> {
                     ),
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 24.0, 0.0, 0.0),
+                        padding: const EdgeInsets.only(top: 24.0),
                         child: SizedBox(
                           width: double.infinity,
                           height: double.infinity,

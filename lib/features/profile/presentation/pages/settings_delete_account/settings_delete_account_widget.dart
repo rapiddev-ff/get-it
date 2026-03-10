@@ -46,7 +46,7 @@ class SettingsDeleteAccountWidget extends StatelessWidget {
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               children: [
                 Spacer(),
@@ -65,7 +65,7 @@ class SettingsDeleteAccountWidget extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                  padding: EdgeInsets.only(top: 20.0),
                   child: Text(
                     'Are you sure you want to delete your account?',
                     textAlign: TextAlign.center,
@@ -77,7 +77,7 @@ class SettingsDeleteAccountWidget extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                  padding: EdgeInsets.only(top: 20.0),
                   child: Text(
                     'If you confirm for your account to be deleted, ALL of your saved information including names, emails and app data will be deleted. This data is not recoverable.',
                     textAlign: TextAlign.center,
@@ -167,8 +167,7 @@ class SettingsDeleteAccountWidget extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                      padding: EdgeInsets.only(top: 16.0),
                       child: SizedBox(
                         width: double.infinity,
                         height: 56.0,

@@ -173,7 +173,7 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -184,8 +184,7 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 34.0),
+                          padding: const EdgeInsets.only(bottom: 34.0),
                           child: Text(
                             'About You',
                             style: GoogleFonts.inter(
@@ -268,8 +267,7 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
                           style: _labelStyle,
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 8.0, 0.0, 0.0),
+                          padding: const EdgeInsets.only(top: 8.0),
                           child: SizedBox(
                             width: double.infinity,
                             child: TextFormField(
@@ -307,16 +305,14 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
                         ),
                         // Profanity check removed (placeholder: always false)
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 20.0, 0.0, 0.0),
+                          padding: const EdgeInsets.only(top: 20.0),
                           child: Text(
                             'Last Name',
                             style: _labelStyle,
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 8.0, 0.0, 0.0),
+                          padding: const EdgeInsets.only(top: 8.0),
                           child: SizedBox(
                             width: double.infinity,
                             child: TextFormField(
@@ -353,16 +349,14 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
                         ),
                         // Profanity check removed (placeholder: always false)
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 20.0, 0.0, 0.0),
+                          padding: const EdgeInsets.only(top: 20.0),
                           child: Text(
                             'Username',
                             style: _labelStyle,
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 8.0, 0.0, 0.0),
+                          padding: const EdgeInsets.only(top: 8.0),
                           child: SizedBox(
                             width: double.infinity,
                             child: TextFormField(
@@ -405,8 +399,7 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
                         if (usernameValidation != 'valid' &&
                             usernameText.isNotEmpty)
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 4.0, 0.0, 0.0),
+                            padding: const EdgeInsets.only(top: 4.0),
                             child: Text(
                               usernameValidation,
                               style: _errorSmallStyle,
@@ -415,8 +408,7 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
                         if (usernameText.isNotEmpty &&
                             usernameValidation == 'valid')
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 4.0, 0.0, 0.0),
+                            padding: const EdgeInsets.only(top: 4.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [

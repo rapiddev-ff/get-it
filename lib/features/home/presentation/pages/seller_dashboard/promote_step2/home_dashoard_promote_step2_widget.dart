@@ -108,7 +108,7 @@ class _HomeDashoardPromoteStep2WidgetState
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(1.0, 0.0, 0.0, 0.0),
+            padding: EdgeInsets.only(left: 1.0),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,8 +118,8 @@ class _HomeDashoardPromoteStep2WidgetState
                       color: Color(0xFF111111),
                     ),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          16.0, 24.0, 16.0, 24.0),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 24.0),
                       child: Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
@@ -127,8 +127,8 @@ class _HomeDashoardPromoteStep2WidgetState
                           borderRadius: BorderRadius.circular(4.0),
                         ),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              10.0, 16.0, 16.0, 16.0),
+                          padding: EdgeInsets.only(
+                              left: 10.0, top: 16.0, right: 16.0, bottom: 16.0),
                           child: Row(
                             children: [
                               ClipRRect(
@@ -164,8 +164,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                     ),
                                     Expanded(
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 4.0, 0.0, 0.0),
+                                        padding: EdgeInsets.only(top: 4.0),
                                         child: Text(
                                           '\$2,450.00',
                                           style: GoogleFonts.inter(
@@ -192,7 +191,7 @@ class _HomeDashoardPromoteStep2WidgetState
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
+                        EdgeInsets.only(left: 16.0, top: 24.0, right: 16.0),
                     child: Text(
                       'Choose Promotion Type',
                       style: GoogleFonts.inter(
@@ -204,7 +203,7 @@ class _HomeDashoardPromoteStep2WidgetState
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
+                        EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
                     child: InkWell(
                       onTap: () async {
                         state = 'Boost';
@@ -257,9 +256,8 @@ class _HomeDashoardPromoteStep2WidgetState
                                                 BorderRadius.circular(6.0),
                                           ),
                                           child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    8.0, 4.0, 8.0, 4.0),
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 8.0, vertical: 4.0),
                                             child: Text(
                                               'Popular',
                                               style: GoogleFonts.inter(
@@ -313,7 +311,7 @@ class _HomeDashoardPromoteStep2WidgetState
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
+                        EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -361,9 +359,8 @@ class _HomeDashoardPromoteStep2WidgetState
                                               BorderRadius.circular(6.0),
                                         ),
                                         child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  8.0, 4.0, 8.0, 4.0),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8.0, vertical: 4.0),
                                           child: Text(
                                             'Targeted',
                                             style: GoogleFonts.inter(
@@ -416,7 +413,7 @@ class _HomeDashoardPromoteStep2WidgetState
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 52.0, 16.0, 0.0),
+                        EdgeInsets.only(left: 16.0, top: 52.0, right: 16.0),
                     child: Builder(
                       builder: (context) {
                         if (state == 'Boost') {
@@ -432,8 +429,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 16.0, 0.0, 0.0),
+                                padding: EdgeInsets.only(top: 16.0),
                                 child: Row(
                                   children: [
                                     Expanded(
@@ -445,9 +441,8 @@ class _HomeDashoardPromoteStep2WidgetState
                                               BorderRadius.circular(8.0),
                                         ),
                                         child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 12.0, 0.0, 16.0),
+                                          padding: EdgeInsets.only(
+                                              top: 12.0, bottom: 16.0),
                                           child: Column(
                                             children: [
                                               Text(
@@ -497,9 +492,8 @@ class _HomeDashoardPromoteStep2WidgetState
                                               BorderRadius.circular(8.0),
                                         ),
                                         child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 12.0, 0.0, 16.0),
+                                          padding: EdgeInsets.only(
+                                              top: 12.0, bottom: 16.0),
                                           child: Column(
                                             children: [
                                               Text(
@@ -699,8 +693,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 16.0, 0.0, 0.0),
+                                padding: EdgeInsets.only(top: 16.0),
                                 child: Container(
                                   width: double.infinity,
                                   decoration: BoxDecoration(
@@ -752,8 +745,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 28.0, 0.0, 0.0),
+                                padding: EdgeInsets.only(top: 28.0),
                                 child: Text(
                                   'Target Previous Buyers',
                                   style: GoogleFonts.inter(
@@ -764,8 +756,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 12.0, 0.0, 0.0),
+                                padding: EdgeInsets.only(top: 12.0),
                                 child: Container(
                                   width: double.infinity,
                                   decoration: BoxDecoration(
@@ -773,8 +764,11 @@ class _HomeDashoardPromoteStep2WidgetState
                                     borderRadius: BorderRadius.circular(8.0),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 16.0, 16.0, 12.0),
+                                    padding: EdgeInsets.only(
+                                        left: 16.0,
+                                        top: 16.0,
+                                        right: 16.0,
+                                        bottom: 12.0),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       crossAxisAlignment:
@@ -847,8 +841,8 @@ class _HomeDashoardPromoteStep2WidgetState
                                                   BorderRadius.circular(4.0),
                                             ),
                                             contentPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    12.0, 0.0, 12.0, 0.0),
+                                                EdgeInsets.symmetric(
+                                                    horizontal: 12.0),
                                           ),
                                           style: GoogleFonts.inter(
                                             fontSize: 14.0,
@@ -864,9 +858,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                           isExpanded: true,
                                         ),
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 8.0, 0.0, 0.0),
+                                          padding: EdgeInsets.only(top: 8.0),
                                           child: Text(
                                             'Character/Franchise',
                                             style: GoogleFonts.inter(
@@ -899,9 +891,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                           ),
                                         ),
                                         Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 8.0, 0.0, 0.0),
+                                          padding: EdgeInsets.only(top: 8.0),
                                           child: Text(
                                             'Purchase Date Range',
                                             style: GoogleFonts.inter(
@@ -984,7 +974,7 @@ class _HomeDashoardPromoteStep2WidgetState
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 32.0, 16.0, 0.0),
+                        EdgeInsets.only(left: 16.0, top: 32.0, right: 16.0),
                     child: Text(
                       'Promotion Summary',
                       style: GoogleFonts.inter(
@@ -996,7 +986,7 @@ class _HomeDashoardPromoteStep2WidgetState
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
+                        EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -1004,8 +994,8 @@ class _HomeDashoardPromoteStep2WidgetState
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 16.0, 16.0, 12.0),
+                        padding: EdgeInsets.only(
+                            left: 16.0, top: 16.0, right: 16.0, bottom: 12.0),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -1115,7 +1105,7 @@ class _HomeDashoardPromoteStep2WidgetState
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 48.0, 16.0, 0.0),
+                        EdgeInsets.only(left: 16.0, top: 48.0, right: 16.0),
                     child: AppGradientButton(
                       text: 'Sponsor Product -\$86.45',
                       onPressed: () async {
@@ -1126,8 +1116,7 @@ class _HomeDashoardPromoteStep2WidgetState
                   Align(
                     alignment: AlignmentDirectional(0.0, -1.0),
                     child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                      padding: EdgeInsets.only(top: 12.0),
                       child: Text(
                         'In-App Purchase',
                         style: GoogleFonts.inter(

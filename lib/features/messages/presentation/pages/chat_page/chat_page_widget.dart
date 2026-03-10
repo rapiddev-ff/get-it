@@ -101,8 +101,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                 ),
                 Expanded(
                   child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(18.0, 0.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(left: 18.0),
                     child: InkWell(
                       onTap: () async {
                         if (widget.conversation?.buyerId == currentUserUid) {
@@ -140,8 +139,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                           ),
                           Expanded(
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  8.0, 0.0, 0.0, 0.0),
+                              padding: EdgeInsets.only(left: 8.0),
                               child: Text(
                                 valueOrDefault<String>(
                                   widget.conversation?.otherUserUsername,
@@ -209,8 +207,8 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                   color: AppColors.backgroundSecondary,
                 ),
                 child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(10.0, 16.0, 16.0, 16.0),
+                  padding: EdgeInsets.only(
+                      left: 10.0, top: 16.0, right: 16.0, bottom: 16.0),
                   child: Row(
                     children: [
                       ClipRRect(
@@ -286,8 +284,8 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                             borderRadius: BorderRadius.circular(6.0),
                           ),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                12.0, 10.0, 12.0, 10.0),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 12.0, vertical: 10.0),
                             child: Text(
                               'View Item',
                               style: GoogleFonts.inter(
@@ -308,7 +306,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                   color: AppColors.backgroundPrimary,
                 ),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: Container(
                     width: double.infinity,
                     height: double.infinity,
@@ -427,8 +425,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                     Align(
                       alignment: AlignmentDirectional(1.0, 0.0),
                       child: Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 16.0, 0.0),
+                        padding: EdgeInsets.only(right: 16.0),
                         child: InkWell(
                           onTap: () async {
                             final selectedMedia = await selectMedia(

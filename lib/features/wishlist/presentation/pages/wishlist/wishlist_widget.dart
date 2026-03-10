@@ -156,8 +156,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              16.0, 0.0, 16.0, 0.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           child: SizedBox(
                             width: double.infinity,
                             child: TextFormField(
@@ -226,8 +225,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 24.0, 0.0, 0.0),
+                          padding: const EdgeInsets.only(top: 24.0),
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
@@ -258,9 +256,8 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                           BorderRadius.circular(100.0),
                                     ),
                                     child: Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              16.0, 8.0, 16.0, 8.0),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16.0, vertical: 8.0),
                                       child: Text(
                                         'All (${wishlistProducts.length})',
                                         style: GoogleFonts.inter(
@@ -326,8 +323,8 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                         ),
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0, 24.0, 16.0, 0.0),
+                            padding: const EdgeInsets.only(
+                                left: 16.0, top: 24.0, right: 16.0),
                             child: Builder(
                               builder: (context) {
                                 final wishlist = _filterProducts(

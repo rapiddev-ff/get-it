@@ -50,7 +50,7 @@ class EmptyStateWidget extends StatelessWidget {
         children: [
           icon!,
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+            padding: EdgeInsets.only(top: 24.0),
             child: Text(
               title,
               style: GoogleFonts.inter(
@@ -61,7 +61,7 @@ class EmptyStateWidget extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+            padding: EdgeInsets.only(top: 24.0),
             child: Text(
               description,
               textAlign: TextAlign.center,
@@ -75,7 +75,7 @@ class EmptyStateWidget extends StatelessWidget {
           ),
           if (hasButton)
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+              padding: EdgeInsets.only(top: 24.0),
               child: AppGradientButton(
                 text: buttonText,
                 height: 40.0,

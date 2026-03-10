@@ -98,7 +98,7 @@ class _ChatBuyerProfileWidgetState
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
+            padding: EdgeInsets.only(left: 16.0, top: 24.0, right: 16.0),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -300,8 +300,7 @@ class _ChatBuyerProfileWidgetState
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 10.0),
+                                      padding: EdgeInsets.only(bottom: 10.0),
                                       child: Text(
                                         'Reviews',
                                         style: GoogleFonts.inter(
@@ -334,8 +333,7 @@ class _ChatBuyerProfileWidgetState
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 10.0),
+                                    padding: EdgeInsets.only(bottom: 10.0),
                                     child: Text(
                                       'Blocked Sellers',
                                       style: GoogleFonts.inter(
@@ -384,8 +382,7 @@ class _ChatBuyerProfileWidgetState
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 8.0, 0.0),
+                                      padding: EdgeInsets.only(right: 8.0),
                                       child: Text(
                                         '${valueOrDefault<String>(
                                           _jsonField(
@@ -413,8 +410,7 @@ class _ChatBuyerProfileWidgetState
                                   ].divide(SizedBox(width: 12.0)),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 4.0, 0.0, 0.0),
+                                  padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Reviews from sellers about your purchases',
                                     style: GoogleFonts.inter(
@@ -429,8 +425,7 @@ class _ChatBuyerProfileWidgetState
                                     ) !=
                                     null)
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 20.0, 0.0, 0.0),
+                                    padding: EdgeInsets.only(top: 20.0),
                                     child: Builder(
                                       builder: (context) {
                                         final dynamic asBuyerData = _jsonField(
@@ -482,8 +477,7 @@ class _ChatBuyerProfileWidgetState
                                     ) !=
                                     null)
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 16.0, 0.0, 0.0),
+                                    padding: EdgeInsets.only(top: 16.0),
                                     child: SizedBox(
                                       width: double.infinity,
                                       height: 56.0,

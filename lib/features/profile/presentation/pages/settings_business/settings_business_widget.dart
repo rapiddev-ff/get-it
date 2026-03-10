@@ -60,7 +60,8 @@ class _SettingsBusinessWidgetState extends State<SettingsBusinessWidget> {
         ),
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 32.0),
+        padding:
+            EdgeInsets.only(left: 16.0, top: 24.0, right: 16.0, bottom: 32.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +74,7 @@ class _SettingsBusinessWidgetState extends State<SettingsBusinessWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+              padding: EdgeInsets.only(top: 16.0),
               child: Container(
                 width: double.infinity,
                 child: TextFormField(
@@ -136,7 +137,7 @@ class _SettingsBusinessWidgetState extends State<SettingsBusinessWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+              padding: EdgeInsets.only(top: 16.0),
               child: AppGradientButton(
                 text: 'Save',
                 onPressed: () async {

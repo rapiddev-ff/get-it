@@ -58,7 +58,7 @@ class _SettingsPaymentCardItemWidgetState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 21.0),
+              padding: EdgeInsets.only(bottom: 21.0),
               child: Row(
                 children: [
                   FaIcon(
@@ -119,7 +119,7 @@ class _SettingsPaymentCardItemWidgetState
               color: Color(0xFF363636),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+              padding: EdgeInsets.only(top: 12.0),
               child: Text(
                 'Billing Address:',
                 style: GoogleFonts.inter(
@@ -155,7 +155,7 @@ class _SettingsPaymentCardItemWidgetState
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 21.0, 0.0, 0.0),
+              padding: EdgeInsets.only(top: 21.0),
               child: Row(
                 children: [
                   Expanded(

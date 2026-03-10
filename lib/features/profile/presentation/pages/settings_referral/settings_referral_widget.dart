@@ -54,7 +54,7 @@ class _SettingsReferralWidgetState
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
+            padding: EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -69,8 +69,8 @@ class _SettingsReferralWidgetState
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                20.0, 33.0, 20.0, 33.0),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20.0, vertical: 33.0),
                             child: Column(
                               children: [
                                 BarcodeWidget(
@@ -87,8 +87,7 @@ class _SettingsReferralWidgetState
                                   drawText: true,
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 28.0, 0.0, 0.0),
+                                  padding: EdgeInsets.only(top: 28.0),
                                   child: Container(
                                     width: double.infinity,
                                     decoration: BoxDecoration(
@@ -96,8 +95,8 @@ class _SettingsReferralWidgetState
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
                                     child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          16.0, 25.0, 16.0, 25.0),
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 16.0, vertical: 25.0),
                                       child: Column(
                                         children: [
                                           Text(
@@ -136,8 +135,7 @@ class _SettingsReferralWidgetState
                       onPressed: () {},
                     ),
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                      padding: EdgeInsets.only(top: 16.0),
                       child: AppOutlineButton(
                         text: 'Share Shortlist',
                         onPressed: () {},

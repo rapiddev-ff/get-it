@@ -88,13 +88,12 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
             children: [
               Flexible(
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 4.0),
+                        padding: EdgeInsets.only(bottom: 4.0),
                         child: Text(
                           'Phone Number',
                           style: GoogleFonts.inter(
@@ -133,8 +132,7 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
                                   '') &&
                           (_model.textController!.text != ''))
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 4.0, 0.0, 0.0),
+                          padding: EdgeInsets.only(top: 4.0),
                           child: Text(
                             FormValidators.phoneValidationResult(
                                     _model.textController!.text) ??
@@ -151,7 +149,7 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
               ),
               if (!isKeyboardShowing(context))
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [

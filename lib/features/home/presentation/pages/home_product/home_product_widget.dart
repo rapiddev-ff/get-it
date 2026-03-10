@@ -194,7 +194,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
 
   Widget _buildDetailRow(String label, String value) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+      padding: EdgeInsets.only(top: 12.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -364,8 +364,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                               AlignmentDirectional(0.0, 1.0),
                                           child: Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 30.0),
+                                                EdgeInsets.only(bottom: 30.0),
                                             child: smooth_page_indicator
                                                 .SmoothPageIndicator(
                                               controller: _pageViewController ??=
@@ -453,7 +452,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                     ),
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
+                          EdgeInsets.only(left: 16.0, top: 24.0, right: 16.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -466,20 +465,17 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                               ),
                             ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 4.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 4.0),
                             child: _buildPriceRow(product),
                           ),
                           if (product.tags.isNotEmpty)
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 24.0, 0.0, 0.0),
+                              padding: EdgeInsets.only(top: 24.0),
                               child: _buildTagsSection(product),
                             ),
                           if (product.seller != null)
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 24.0, 0.0, 0.0),
+                              padding: EdgeInsets.only(top: 24.0),
                               child: InkWell(
                                 onTap: () async {
                                   context.pushNamed(
@@ -576,8 +572,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                             ),
                           if (_hasValue(product.description)) ...[
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 24.0, 0.0, 0.0),
+                              padding: EdgeInsets.only(top: 24.0),
                               child: Text(
                                 'Description',
                                 style: GoogleFonts.inter(
@@ -587,8 +582,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 4.0, 0.0, 0.0),
+                              padding: EdgeInsets.only(top: 4.0),
                               child: Text(
                                 product.description,
                                 style: GoogleFonts.inter(
@@ -719,8 +713,8 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                       style: TextButton.styleFrom(
                                         backgroundColor:
                                             AppColors.backgroundSecondary,
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 0.0, 16.0, 0.0),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 16.0),
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(4.0),
@@ -810,8 +804,8 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                       },
                                       style: TextButton.styleFrom(
                                         backgroundColor: Color(0x008E6CFF),
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 0.0, 16.0, 0.0),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 16.0),
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(8.0),
@@ -947,7 +941,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
         ),
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(12.0, 5.0, 12.0, 5.0),
+        padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 5.0),
         child: Text(
           label,
           style: GoogleFonts.inter(

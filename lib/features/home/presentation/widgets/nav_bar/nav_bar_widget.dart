@@ -38,7 +38,7 @@ class _NavBarWidgetState extends State<NavBarWidget>
           color: AppColors.backgroundSecondary,
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 24.0),
+          padding: EdgeInsets.only(bottom: 24.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

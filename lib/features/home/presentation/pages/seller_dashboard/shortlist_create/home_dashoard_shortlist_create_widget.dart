@@ -182,7 +182,7 @@ class _HomeDashoardShortlistCreateWidgetState
           ),
         ),
         body: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             children: [
               Flexible(
@@ -198,8 +198,7 @@ class _HomeDashoardShortlistCreateWidgetState
                       ),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                      padding: EdgeInsets.only(top: 8.0),
                       child: Container(
                         width: double.infinity,
                         child: TextFormField(
@@ -222,8 +221,7 @@ class _HomeDashoardShortlistCreateWidgetState
                       ),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                      padding: EdgeInsets.only(top: 24.0),
                       child: Text(
                         'Event/Convention',
                         style: GoogleFonts.inter(
@@ -234,8 +232,7 @@ class _HomeDashoardShortlistCreateWidgetState
                       ),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                      padding: EdgeInsets.only(top: 8.0),
                       child: Container(
                         width: double.infinity,
                         child: TextFormField(
@@ -258,8 +255,7 @@ class _HomeDashoardShortlistCreateWidgetState
                       ),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                      padding: EdgeInsets.only(top: 24.0),
                       child: Row(
                         children: [
                           Expanded(
@@ -363,8 +359,7 @@ class _HomeDashoardShortlistCreateWidgetState
                       ),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                      padding: EdgeInsets.only(top: 12.0),
                       child: GestureDetector(
                         onTap: () => setState(() => isPublic = !isPublic),
                         child: Row(
@@ -443,8 +438,7 @@ class _HomeDashoardShortlistCreateWidgetState
                     },
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 16.0),
                     child: TextButton(
                       onPressed: _isSaving
                           ? null

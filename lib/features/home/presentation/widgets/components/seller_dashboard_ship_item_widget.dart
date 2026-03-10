@@ -157,7 +157,8 @@ class SellerDashboardShipItemWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(6.0),
                 ),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(12.0, 8.0, 12.0, 8.0),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                   child: Text(
                     _isSalePending ? 'Pending' : 'Ship',
                     style: GoogleFonts.inter(),

@@ -94,8 +94,7 @@ class _SettingsShippingDefaultsWidgetState
               child: ConstrainedBox(
                 constraints: BoxConstraints(minHeight: constraints.maxHeight),
                 child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 32.0, 16.0, 0.0),
+                  padding: EdgeInsets.only(left: 16.0, top: 32.0, right: 16.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -112,8 +111,7 @@ class _SettingsShippingDefaultsWidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 8.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 8.0),
                             child: Text(
                               'Applies to all your items by default. Products can override this.',
                               style: GoogleFonts.inter(
@@ -125,8 +123,7 @@ class _SettingsShippingDefaultsWidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 32.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 32.0),
                             child: Text(
                               'Default Flat Shipping Rate',
                               style: GoogleFonts.inter(
@@ -137,8 +134,7 @@ class _SettingsShippingDefaultsWidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 8.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 8.0),
                             child: Container(
                               width: double.infinity,
                               child: TextFormField(
@@ -179,8 +175,7 @@ class _SettingsShippingDefaultsWidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 8.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 8.0),
                             child: Text(
                               'Charged once per order (first item).',
                               style: GoogleFonts.inter(
@@ -192,8 +187,7 @@ class _SettingsShippingDefaultsWidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 32.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 32.0),
                             child: Text(
                               'Additional Item Fee',
                               style: GoogleFonts.inter(
@@ -204,8 +198,7 @@ class _SettingsShippingDefaultsWidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 8.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 8.0),
                             child: Container(
                               width: double.infinity,
                               child: TextFormField(
@@ -246,8 +239,7 @@ class _SettingsShippingDefaultsWidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 8.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 8.0),
                             child: Text(
                               'Added for each additional item.',
                               style: GoogleFonts.inter(
@@ -306,8 +298,7 @@ class _SettingsShippingDefaultsWidgetState
                             },
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 16.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 16.0),
                             child: AppOutlineButton(
                               text: 'Cancel',
                               onPressed: () async {

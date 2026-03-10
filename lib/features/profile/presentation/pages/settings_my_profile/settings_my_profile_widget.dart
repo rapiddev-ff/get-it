@@ -127,7 +127,7 @@ class _SettingsMyProfileWidgetState
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
+            padding: EdgeInsets.only(left: 16.0, top: 24.0, right: 16.0),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -167,8 +167,7 @@ class _SettingsMyProfileWidgetState
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 8.0, 0.0, 0.0),
+                              padding: EdgeInsets.only(top: 8.0),
                               child: Row(
                                 children: [
                                   RatingBarIndicator(
@@ -233,8 +232,7 @@ class _SettingsMyProfileWidgetState
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 8.0, 0.0, 0.0),
+                              padding: EdgeInsets.only(top: 8.0),
                               child: InkWell(
                                 onTap: () async {
                                   context.pushNamed(
@@ -367,8 +365,7 @@ class _SettingsMyProfileWidgetState
                     ].divide(SizedBox(width: 12.0)),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 20.0),
                     child: Text(
                       authState.bio,
                       style: GoogleFonts.inter(
@@ -409,8 +406,7 @@ class _SettingsMyProfileWidgetState
                     },
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 16.0),
                     child: InkWell(
                       onTap: () async {
                         context
@@ -455,8 +451,7 @@ class _SettingsMyProfileWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 24.0),
                     child: InkWell(
                       onTap: () async {
                         context.pushNamed(
@@ -515,7 +510,7 @@ class _SettingsMyProfileWidgetState
       height: 53.0,
       decoration: BoxDecoration(),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
         child: Row(
           children: [
             Expanded(
@@ -528,8 +523,7 @@ class _SettingsMyProfileWidgetState
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
+                      padding: EdgeInsets.only(bottom: 10.0),
                       child: Text(
                         'As Buyer',
                         style: GoogleFonts.inter(
@@ -565,8 +559,7 @@ class _SettingsMyProfileWidgetState
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
+                      padding: EdgeInsets.only(bottom: 10.0),
                       child: Text(
                         'As Seller',
                         style: GoogleFonts.inter(
@@ -616,7 +609,7 @@ class _SettingsMyProfileWidgetState
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
+              padding: EdgeInsets.only(right: 8.0),
               child: Text(
                 '${valueOrDefault<String>(
                   _jsonGet(json, 'as_buyer.total')?.toString(),
@@ -634,7 +627,7 @@ class _SettingsMyProfileWidgetState
         _buildRatingsCard(json, 'as_buyer'),
         if (_jsonGet(json, 'as_buyer.reviews') != null)
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+            padding: EdgeInsets.only(top: 20.0),
             child: _buildReviewsList(json, 'as_buyer', 'Keys29'),
           ),
         if (_jsonGet(json, 'as_buyer.reviews') != null)
@@ -661,7 +654,7 @@ class _SettingsMyProfileWidgetState
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
+              padding: EdgeInsets.only(right: 8.0),
               child: Text(
                 '${valueOrDefault<String>(
                   _jsonGet(json, 'as_buyer.total')?.toString(),
@@ -679,7 +672,7 @@ class _SettingsMyProfileWidgetState
         _buildRatingsCard(json, 'as_buyer'),
         if (_jsonGet(json, 'as_buyer.reviews') != null)
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+            padding: EdgeInsets.only(top: 20.0),
             child: _buildReviewsList(json, 'as_buyer', 'Keyh7p'),
           ),
         if (_jsonGet(json, 'as_buyer.reviews') != null)
@@ -706,7 +699,7 @@ class _SettingsMyProfileWidgetState
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
+              padding: EdgeInsets.only(right: 8.0),
               child: Text(
                 '${valueOrDefault<String>(
                   _jsonGet(json, 'as_seller.total')?.toString(),
@@ -724,7 +717,7 @@ class _SettingsMyProfileWidgetState
         _buildRatingsCard(json, 'as_seller'),
         if (_jsonGet(json, 'as_seller.reviews') != null)
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+            padding: EdgeInsets.only(top: 20.0),
             child: _buildReviewsList(json, 'as_seller', 'Key2m1'),
           ),
         if (_jsonGet(json, 'as_seller.reviews') != null)
@@ -735,7 +728,7 @@ class _SettingsMyProfileWidgetState
 
   Widget _buildRatingsCard(dynamic json, String role) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+      padding: EdgeInsets.only(top: 20.0),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -880,7 +873,7 @@ class _SettingsMyProfileWidgetState
 
   Widget _buildViewAllReviewsButton() {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+      padding: EdgeInsets.only(top: 16.0),
       child: SizedBox(
         width: double.infinity,
         height: 56.0,
@@ -888,7 +881,7 @@ class _SettingsMyProfileWidgetState
           onPressed: () {},
           style: TextButton.styleFrom(
             backgroundColor: Color(0x008E6CFF),
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),

@@ -156,8 +156,7 @@ class _HomeDashoardShippingWidgetState
                   onRefresh: _loadOrders,
                   color: AppColors.secondary,
                   child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: SingleChildScrollView(
                       physics: AlwaysScrollableScrollPhysics(),
                       child: Column(
@@ -172,8 +171,11 @@ class _HomeDashoardShippingWidgetState
                                     borderRadius: BorderRadius.circular(4.0),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 12.0, 16.0, 16.0),
+                                    padding: EdgeInsets.only(
+                                        left: 16.0,
+                                        top: 12.0,
+                                        right: 16.0,
+                                        bottom: 16.0),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
@@ -205,8 +207,11 @@ class _HomeDashoardShippingWidgetState
                                     borderRadius: BorderRadius.circular(4.0),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 12.0, 16.0, 16.0),
+                                    padding: EdgeInsets.only(
+                                        left: 16.0,
+                                        top: 12.0,
+                                        right: 16.0,
+                                        bottom: 16.0),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
@@ -249,8 +254,7 @@ class _HomeDashoardShippingWidgetState
                             )
                           else
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 24.0, 0.0, 0.0),
+                              padding: EdgeInsets.only(top: 24.0),
                               child: ListView.separated(
                                 padding: EdgeInsets.only(bottom: 24.0),
                                 primary: false,
@@ -302,7 +306,8 @@ class _HomeDashoardShippingWidgetState
           borderRadius: BorderRadius.circular(4.0),
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(10.0, 16.0, 16.0, 16.0),
+          padding:
+              EdgeInsets.only(left: 10.0, top: 16.0, right: 16.0, bottom: 16.0),
           child: Row(
             children: [
               ClipRRect(
@@ -409,8 +414,8 @@ class _HomeDashoardShippingWidgetState
                               borderRadius: BorderRadius.circular(6.0),
                             ),
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 6.0, 12.0, 6.0),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12.0, vertical: 6.0),
                               child: Text(
                                 'Pending',
                                 style: GoogleFonts.inter(
@@ -428,8 +433,8 @@ class _HomeDashoardShippingWidgetState
                               borderRadius: BorderRadius.circular(6.0),
                             ),
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 6.0, 12.0, 6.0),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12.0, vertical: 6.0),
                               child: Text(
                                 'Ship',
                                 style: GoogleFonts.inter(
@@ -447,8 +452,8 @@ class _HomeDashoardShippingWidgetState
                               borderRadius: BorderRadius.circular(6.0),
                             ),
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 6.0, 12.0, 6.0),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12.0, vertical: 6.0),
                               child: Text(
                                 'Shipped',
                                 style: GoogleFonts.inter(
@@ -466,8 +471,8 @@ class _HomeDashoardShippingWidgetState
                               borderRadius: BorderRadius.circular(6.0),
                             ),
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 6.0, 12.0, 6.0),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12.0, vertical: 6.0),
                               child: Text(
                                 'Delivered',
                                 style: GoogleFonts.inter(

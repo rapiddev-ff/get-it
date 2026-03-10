@@ -25,21 +25,18 @@ class NotificationWidget extends StatelessWidget {
             actions: const [],
             flexibleSpace: FlexibleSpaceBar(
               title: Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 14.0),
+                padding: const EdgeInsets.only(bottom: 14.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          0.0, 0.0, 0.0, 8.0),
+                      padding: const EdgeInsets.only(bottom: 8.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                8.0, 0.0, 0.0, 0.0),
+                            padding: const EdgeInsets.only(left: 8.0),
                             child: IconButton(
                               style: IconButton.styleFrom(
                                 shape: RoundedRectangleBorder(
@@ -56,8 +53,7 @@ class NotificationWidget extends StatelessWidget {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 8.0, 0.0),
+                            padding: const EdgeInsets.only(right: 8.0),
                             child: IconButton(
                               style: IconButton.styleFrom(
                                 shape: RoundedRectangleBorder(
@@ -83,8 +79,7 @@ class NotificationWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              16.0, 0.0, 0.0, 0.0),
+                          padding: const EdgeInsets.only(left: 16.0),
                           child: Text(
                             'Notifications',
                             style: GoogleFonts.inter(
@@ -95,8 +90,8 @@ class NotificationWidget extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              24.0, 0.0, 16.0, 0.0),
+                          padding:
+                              const EdgeInsets.only(left: 24.0, right: 16.0),
                           child: Text(
                             'Clear All',
                             style: GoogleFonts.inter(

@@ -78,8 +78,7 @@ class SettingsBlockedUserItemWidget extends StatelessWidget {
                   ),
                   if (blockedAt != null)
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                      padding: EdgeInsets.only(top: 4.0),
                       child: Text(
                         'Blocked ${dateTimeFormat("yMMMd", blockedAt!)}',
                         style: GoogleFonts.inter(
@@ -105,7 +104,7 @@ class SettingsBlockedUserItemWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(4.0),
                 ),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(5.0, 8.0, 5.0, 8.0),
+                  padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 8.0),
                   child: isUnblocking
                       ? SizedBox(
                           width: 16.0,

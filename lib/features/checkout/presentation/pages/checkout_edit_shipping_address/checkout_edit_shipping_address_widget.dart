@@ -199,7 +199,7 @@ class _CheckoutEditShippingAddressWidgetState
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               children: [
                 Expanded(
@@ -217,8 +217,7 @@ class _CheckoutEditShippingAddressWidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 8.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 8.0),
                             child: Container(
                               width: double.infinity,
                               child: AppTextField(
@@ -234,8 +233,7 @@ class _CheckoutEditShippingAddressWidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 20.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 20.0),
                             child: Text(
                               'Street address',
                               style: GoogleFonts.inter(
@@ -245,8 +243,7 @@ class _CheckoutEditShippingAddressWidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 8.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 8.0),
                             child: Container(
                               width: double.infinity,
                               child: Autocomplete<String>(
@@ -437,8 +434,7 @@ class _CheckoutEditShippingAddressWidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 20.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 20.0),
                             child: Text(
                               'Apt, suite, unit',
                               style: GoogleFonts.inter(
@@ -448,8 +444,7 @@ class _CheckoutEditShippingAddressWidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 8.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 8.0),
                             child: Container(
                               width: double.infinity,
                               child: AppTextField(
@@ -465,8 +460,7 @@ class _CheckoutEditShippingAddressWidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 20.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 20.0),
                             child: Text(
                               'City',
                               style: GoogleFonts.inter(
@@ -476,8 +470,7 @@ class _CheckoutEditShippingAddressWidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 8.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 8.0),
                             child: Container(
                               width: double.infinity,
                               child: AppTextField(
@@ -493,8 +486,7 @@ class _CheckoutEditShippingAddressWidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 20.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 20.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -535,8 +527,8 @@ class _CheckoutEditShippingAddressWidgetState
                                   borderColor: AppColors.neutral700,
                                   borderWidth: 1.0,
                                   borderRadius: 4.0,
-                                  margin: EdgeInsetsDirectional.fromSTEB(
-                                      12.0, 0.0, 12.0, 0.0),
+                                  margin:
+                                      EdgeInsets.symmetric(horizontal: 12.0),
                                   hidesUnderline: true,
                                   isOverButton: true,
                                   isSearchable: false,
@@ -546,8 +538,7 @@ class _CheckoutEditShippingAddressWidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 20.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 20.0),
                             child: Row(
                               children: [
                                 Expanded(
@@ -673,7 +664,7 @@ class _CheckoutEditShippingAddressWidgetState
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                  padding: EdgeInsets.only(top: 24.0),
                   child: AppGradientButton(
                     text: 'Save Changes',
                     onPressed: () async {
@@ -727,7 +718,7 @@ class _CheckoutEditShippingAddressWidgetState
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                  padding: EdgeInsets.only(top: 16.0),
                   child: AppOutlineButton(
                     text: 'Cancel',
                     onPressed: () async {

@@ -89,13 +89,12 @@ class _SettingsDailyBudgetWidgetState
             children: [
               Flexible(
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 4.0),
+                        padding: EdgeInsets.only(bottom: 4.0),
                         child: Text(
                           'Daily Budget',
                           style: GoogleFonts.inter(
@@ -107,8 +106,7 @@ class _SettingsDailyBudgetWidgetState
                         ),
                       ),
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 4.0),
+                        padding: EdgeInsets.only(bottom: 4.0),
                         child: Text(
                           'Swipe Payment will stop when you reach this amount in a day.',
                           style: GoogleFonts.inter(
@@ -118,8 +116,7 @@ class _SettingsDailyBudgetWidgetState
                         ),
                       ),
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 0.0),
+                        padding: EdgeInsets.only(top: 32.0),
                         child: Container(
                           width: double.infinity,
                           child: TextFormField(
@@ -155,7 +152,7 @@ class _SettingsDailyBudgetWidgetState
               ),
               if (!isKeyboardShowing(context))
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [

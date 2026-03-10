@@ -50,7 +50,8 @@ class MessageItemWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(10.0, 16.0, 16.0, 16.0),
+          padding:
+              EdgeInsets.only(left: 10.0, top: 16.0, right: 16.0, bottom: 16.0),
           child: Row(
             children: [
               SizedBox(
@@ -205,7 +206,8 @@ class MessageItemWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(10.0, 16.0, 16.0, 16.0),
+          padding:
+              EdgeInsets.only(left: 10.0, top: 16.0, right: 16.0, bottom: 16.0),
           child: Row(
             children: [
               SizedBox(

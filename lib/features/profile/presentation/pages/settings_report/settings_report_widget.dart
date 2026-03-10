@@ -58,20 +58,18 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget>
             automaticallyImplyLeading: false,
             flexibleSpace: FlexibleSpaceBar(
               title: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 14.0),
+                padding: EdgeInsets.only(bottom: 14.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
+                      padding: EdgeInsets.only(bottom: 8.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                8.0, 0.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(left: 8.0),
                             child: IconButton(
                               icon: Icon(
                                 Icons.arrow_back_rounded,
@@ -87,8 +85,7 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget>
                       ),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                      padding: EdgeInsets.only(left: 16.0),
                       child: Text(
                         'How Can We Help You?',
                         style: GoogleFonts.inter(
@@ -112,15 +109,13 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget>
             children: [
               Flexible(
                 child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 32.0, 16.0, 0.0),
+                  padding: EdgeInsets.only(left: 16.0, top: 32.0, right: 16.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                        padding: EdgeInsets.only(top: 8.0),
                         child: Text(
                           'Please tell us about the issue you are having and we will respond within 3-5 business days.',
                           style: GoogleFonts.inter(
@@ -132,8 +127,7 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget>
                         ),
                       ),
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                        padding: EdgeInsets.only(top: 24.0),
                         child: Container(
                           width: double.infinity,
                           child: TextFormField(
@@ -168,8 +162,7 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget>
                         ),
                       ),
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                        padding: EdgeInsets.only(top: 8.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -191,7 +184,7 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget>
               ),
               if (!isKeyboardShowing(context))
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: Column(
                     children: [
                       AppGradientButton(
@@ -229,8 +222,7 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget>
                         },
                       ),
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                        padding: EdgeInsets.only(top: 16.0),
                         child: AppOutlineButton(
                           text: 'Cancel',
                           onPressed: () async {

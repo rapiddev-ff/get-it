@@ -108,7 +108,7 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
                 color: AppColors.backgroundSecondary,
               ),
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Row(
                   children: [
                     _buildTab('All'),
@@ -164,7 +164,7 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
+              padding: EdgeInsets.only(bottom: 10.0),
               child: Text(
                 label,
                 style: GoogleFonts.inter(

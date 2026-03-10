@@ -146,7 +146,7 @@ class _HomeDashoardShortlistAddWidgetState
             children: [
               Expanded(
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -217,8 +217,7 @@ class _HomeDashoardShortlistAddWidgetState
                         ),
                       ),
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                        padding: EdgeInsets.only(top: 16.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -236,8 +235,8 @@ class _HomeDashoardShortlistAddWidgetState
                                 borderRadius: BorderRadius.circular(100.0),
                               ),
                               child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 8.0, 16.0, 8.0),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 16.0, vertical: 8.0),
                                 child: Text(
                                   '${selectedIds.length} selected',
                                   style: GoogleFonts.inter(
@@ -252,8 +251,7 @@ class _HomeDashoardShortlistAddWidgetState
                         ),
                       ),
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                        padding: EdgeInsets.only(top: 16.0),
                         child: GestureDetector(
                           onTap: _toggleSelectAll,
                           child: Container(
@@ -262,8 +260,11 @@ class _HomeDashoardShortlistAddWidgetState
                               borderRadius: BorderRadius.circular(100.0),
                             ),
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  7.0, 7.0, 16.0, 7.0),
+                              padding: EdgeInsets.only(
+                                  left: 7.0,
+                                  top: 7.0,
+                                  right: 16.0,
+                                  bottom: 7.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
@@ -337,7 +338,7 @@ class _HomeDashoardShortlistAddWidgetState
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
                 child: AppGradientButton(
                   text:
                       'Add ${selectedIds.length} Product${selectedIds.length == 1 ? '' : 's'}',
@@ -374,7 +375,7 @@ class _HomeDashoardShortlistAddWidgetState
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
+          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
           child: Row(
             children: [
               Container(

@@ -78,7 +78,7 @@ class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                padding: EdgeInsets.symmetric(horizontal: 24.0),
                 child: Text(
                   'Check Your Inbox',
                   style: GoogleFonts.inter(
@@ -89,7 +89,7 @@ class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget>
               ),
               Expanded(
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,8 +106,7 @@ class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget>
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            0.0, 24.0, 0.0, 24.0),
+                        padding: EdgeInsets.symmetric(vertical: 24.0),
                         child: Text(
                           'Almost there! We\'ve sent a password reset link to ${widget.email}. Click the link in the email to create your new password. Don\'t see it? Check your spam folder or wait a few minutes for delivery.',
                           textAlign: TextAlign.center,
@@ -124,7 +123,7 @@ class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget>
               ),
               if (!isKeyboardShowing(context))
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [

@@ -31,14 +31,14 @@ class _HomeSellerProfileMoreWidgetState
         borderRadius: BorderRadius.circular(4.0),
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Row(
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 16.0),
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
                   child: FaIcon(
                     FontAwesomeIcons.share,
                     color: AppColors.textPrimary,
@@ -59,7 +59,7 @@ class _HomeSellerProfileMoreWidgetState
             Row(
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 16.0),
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
                   child: Icon(
                     Icons.person_add_alt,
                     color: AppColors.textPrimary,
@@ -92,8 +92,7 @@ class _HomeSellerProfileMoreWidgetState
               child: Row(
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 16.0),
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
                     child: Icon(
                       Icons.block_sharp,
                       color: AppColors.textPrimary,

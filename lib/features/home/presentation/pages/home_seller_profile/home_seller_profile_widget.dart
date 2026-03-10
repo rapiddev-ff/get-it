@@ -121,7 +121,7 @@ class _HomeSellerProfileWidgetState
       highlightColor: Colors.white.withValues(alpha: 0.1),
       child: SingleChildScrollView(
         physics: NeverScrollableScrollPhysics(),
-        padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
+        padding: EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -364,7 +364,7 @@ class _HomeSellerProfileWidgetState
         body: getSellerData == null
             ? _buildShimmerProfile()
             : Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -405,8 +405,7 @@ class _HomeSellerProfileWidgetState
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 8.0, 0.0, 0.0),
+                                  padding: EdgeInsets.only(top: 8.0),
                                   child: Row(
                                     children: [
                                       RatingBarIndicator(
@@ -451,8 +450,7 @@ class _HomeSellerProfileWidgetState
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 8.0, 0.0, 0.0),
+                                  padding: EdgeInsets.only(top: 8.0),
                                   child: Row(
                                     children: [
                                       Column(
@@ -547,8 +545,7 @@ class _HomeSellerProfileWidgetState
                           ) !=
                           '')
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 20.0, 0.0, 0.0),
+                          padding: EdgeInsets.only(top: 20.0),
                           child: Text(
                             valueOrDefault<String>(
                               getSellerData?.bio,
@@ -561,8 +558,7 @@ class _HomeSellerProfileWidgetState
                           ),
                         ),
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                        padding: EdgeInsets.only(top: 20.0),
                         child: Container(
                           width: double.infinity,
                           height: 56.0,
@@ -611,8 +607,7 @@ class _HomeSellerProfileWidgetState
                               ),
                             ),
                             style: TextButton.styleFrom(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 0.0, 16.0, 0.0),
+                              padding: EdgeInsets.symmetric(horizontal: 16.0),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
@@ -621,8 +616,7 @@ class _HomeSellerProfileWidgetState
                         ),
                       ),
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                        padding: EdgeInsets.only(top: 24.0),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -644,8 +638,7 @@ class _HomeSellerProfileWidgetState
                                         children: [
                                           Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 10.0),
+                                                EdgeInsets.only(bottom: 10.0),
                                             child: Text(
                                               'As Buyer',
                                               style: GoogleFonts.inter(
@@ -687,8 +680,7 @@ class _HomeSellerProfileWidgetState
                                         children: [
                                           Padding(
                                             padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 10.0),
+                                                EdgeInsets.only(bottom: 10.0),
                                             child: Text(
                                               'As Seller',
                                               style: GoogleFonts.inter(
@@ -740,8 +732,7 @@ class _HomeSellerProfileWidgetState
                         ),
                       ),
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                        padding: EdgeInsets.only(top: 24.0),
                         child: Row(
                           children: [
                             Flexible(
@@ -754,8 +745,7 @@ class _HomeSellerProfileWidgetState
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 10.0),
+                                      padding: EdgeInsets.only(bottom: 10.0),
                                       child: Text(
                                         'Products (234)',
                                         style: GoogleFonts.inter(
@@ -793,8 +783,7 @@ class _HomeSellerProfileWidgetState
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 10.0),
+                                      padding: EdgeInsets.only(bottom: 10.0),
                                       child: Text(
                                         'Short Lists (23)',
                                         style: GoogleFonts.inter(
@@ -897,8 +886,7 @@ class _HomeSellerProfileWidgetState
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 24.0, 0.0, 0.0),
+                                  padding: EdgeInsets.only(top: 24.0),
                                   child: Row(
                                     children: [
                                       InkWell(
@@ -928,9 +916,9 @@ class _HomeSellerProfileWidgetState
                                                 BorderRadius.circular(100.0),
                                           ),
                                           child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 8.0, 16.0, 8.0),
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 16.0,
+                                                vertical: 8.0),
                                             child: Text(
                                               'All (24)',
                                               style: GoogleFonts.inter(
@@ -955,8 +943,7 @@ class _HomeSellerProfileWidgetState
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 24.0, 0.0, 0.0),
+                                  padding: EdgeInsets.only(top: 24.0),
                                   child: custom_widgets.SellerProductsGrid(
                                     width: double.infinity,
                                     height: 200.0,
@@ -1082,7 +1069,7 @@ class _HomeSellerProfileWidgetState
         ),
         if (reviews.length > 2)
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
+            padding: EdgeInsets.only(bottom: 16.0),
             child: TextButton(
               onPressed: () async {
                 await context.pushNamed(

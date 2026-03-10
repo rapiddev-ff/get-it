@@ -97,7 +97,7 @@ class _SettingsBusinessAddressWidgetState
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -115,8 +115,7 @@ class _SettingsBusinessAddressWidgetState
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 20.0, 0.0, 0.0),
+                          padding: EdgeInsets.only(top: 20.0),
                           child: Text(
                             'Address',
                             style: GoogleFonts.inter(
@@ -125,8 +124,7 @@ class _SettingsBusinessAddressWidgetState
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 8.0, 0.0, 0.0),
+                          padding: EdgeInsets.only(top: 8.0),
                           child: Container(
                             width: double.infinity,
                             child: AppTextField(
@@ -142,8 +140,7 @@ class _SettingsBusinessAddressWidgetState
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 20.0, 0.0, 0.0),
+                          padding: EdgeInsets.only(top: 20.0),
                           child: Container(
                             width: double.infinity,
                             child: AppTextField(
@@ -159,8 +156,7 @@ class _SettingsBusinessAddressWidgetState
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 20.0, 0.0, 0.0),
+                          padding: EdgeInsets.only(top: 20.0),
                           child: Row(
                             children: [
                               Expanded(
@@ -220,9 +216,8 @@ class _SettingsBusinessAddressWidgetState
                                           fontSize: 14.0,
                                           color: AppColors.textSecondary,
                                         ),
-                                        contentPadding:
-                                            EdgeInsetsDirectional.fromSTEB(
-                                                12.0, 16.0, 12.0, 16.0),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 12.0, vertical: 16.0),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               color: AppColors.neutral700,
@@ -365,8 +360,7 @@ class _SettingsBusinessAddressWidgetState
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 20.0, 0.0, 0.0),
+                          padding: EdgeInsets.only(top: 20.0),
                           child: Row(
                             children: [
                               Expanded(
@@ -436,8 +430,7 @@ class _SettingsBusinessAddressWidgetState
                 ),
                 if (!isKeyboardShowing(context))
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 36.0, 0.0, 32.0),
+                    padding: EdgeInsets.only(top: 36.0, bottom: 32.0),
                     child: Row(
                       children: [
                         Expanded(

@@ -283,7 +283,7 @@ class _SettingsMyProfileFollowersWidgetState
               _buildTabBar(),
               Expanded(
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: _model.state == 'Followers'
                       ? _buildFollowersTab()
                       : _buildFollowingTab(),
@@ -309,7 +309,7 @@ class _SettingsMyProfileFollowersWidgetState
         color: AppColors.backgroundSecondary,
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
         child: Row(
           children: [
             Expanded(
@@ -322,8 +322,7 @@ class _SettingsMyProfileFollowersWidgetState
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
+                      padding: EdgeInsets.only(bottom: 10.0),
                       child: Text(
                         followersLabel,
                         style: GoogleFonts.inter(
@@ -359,8 +358,7 @@ class _SettingsMyProfileFollowersWidgetState
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
+                      padding: EdgeInsets.only(bottom: 10.0),
                       child: Text(
                         followingLabel,
                         style: GoogleFonts.inter(
@@ -436,7 +434,7 @@ class _SettingsMyProfileFollowersWidgetState
         ),
         Expanded(
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+            padding: EdgeInsets.only(top: 20.0),
             child: _buildFollowersList(),
           ),
         ),
@@ -536,7 +534,7 @@ class _SettingsMyProfileFollowersWidgetState
         ),
         Expanded(
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+            padding: EdgeInsets.only(top: 20.0),
             child: _buildFollowingList(),
           ),
         ),
@@ -707,7 +705,7 @@ class _SettingsMyProfileFollowersWidgetState
           borderRadius: BorderRadius.circular(4.0),
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(16.0, 10.0, 16.0, 10.0),
+          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
           child: Text(
             label,
             style: GoogleFonts.inter(

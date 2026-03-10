@@ -31,7 +31,7 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 32.0),
+                  padding: EdgeInsets.only(bottom: 32.0),
                   child: Container(
                     width: 120.0,
                     height: 120.0,
@@ -50,7 +50,7 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
+                  padding: EdgeInsets.only(bottom: 16.0),
                   child: Text(
                     'Payment Successful!',
                     textAlign: TextAlign.center,
@@ -62,7 +62,7 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 32.0),
+                  padding: EdgeInsets.only(bottom: 32.0),
                   child: Text(
                     'Your payment has been processed successfully. Thank you for your purchase!',
                     textAlign: TextAlign.center,
@@ -169,15 +169,14 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.secondary,
                       minimumSize:
                           Size(MediaQuery.sizeOf(context).width * 1.0, 44.0),
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
@@ -193,7 +192,7 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                  padding: EdgeInsets.only(top: 16.0),
                   child: Text(
                     'A receipt has been sent to your email address',
                     textAlign: TextAlign.center,

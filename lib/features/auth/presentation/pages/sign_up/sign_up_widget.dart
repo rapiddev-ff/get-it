@@ -114,8 +114,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 8.0),
+                          padding: const EdgeInsets.only(bottom: 8.0),
                           child: Text(
                             'Create Your Account ',
                             style: GoogleFonts.inter(
@@ -126,8 +125,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 24.0),
+                          padding: const EdgeInsets.only(bottom: 24.0),
                           child: Text(
                             'Let\'s get you started.',
                             style: GoogleFonts.inter(
@@ -149,8 +147,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 8.0),
+                                padding: const EdgeInsets.only(bottom: 8.0),
                                 child: Text(
                                   'Email',
                                   style: GoogleFonts.inter(
@@ -185,8 +182,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                               ),
                               if (_model.errorEmailRequired)
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 4.0, 0.0, 0.0),
+                                  padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Please enter your email.',
                                     style: GoogleFonts.inter(
@@ -197,8 +193,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                 ),
                               if (_model.errorEmailFormat)
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 4.0, 0.0, 0.0),
+                                  padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Check your email format.',
                                     style: GoogleFonts.inter(
@@ -209,8 +204,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                 ),
                               if (_model.emailAlreadyInUse)
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 4.0, 0.0, 0.0),
+                                  padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Email already in use - try signing in instead.',
                                     style: GoogleFonts.inter(
@@ -234,8 +228,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 8.0),
+                                padding: const EdgeInsets.only(bottom: 8.0),
                                 child: Text(
                                   'Password',
                                   style: GoogleFonts.inter(
@@ -286,8 +279,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                               ),
                               if (_model.errorPasswordRequired)
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 4.0, 0.0, 0.0),
+                                  padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Password is required.',
                                     style: GoogleFonts.inter(
@@ -311,8 +303,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 8.0),
+                                padding: const EdgeInsets.only(bottom: 8.0),
                                 child: Text(
                                   'Confirm Password',
                                   style: GoogleFonts.inter(
@@ -361,8 +352,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                               ),
                               if (_model.errorConfirmPasswordRequired)
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 4.0, 0.0, 0.0),
+                                  padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Confirm Password is required.',
                                     style: GoogleFonts.inter(
@@ -373,8 +363,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                 ),
                               if (_model.errorPaswordsDontMatch)
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 4.0, 0.0, 0.0),
+                                  padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Passwords don\'t match',
                                     style: GoogleFonts.inter(
@@ -384,8 +373,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 20.0, 0.0, 0.0),
+                                padding: const EdgeInsets.only(top: 20.0),
                                 child: Column(
                                   children: [
                                     PasswordComponentWidget(
@@ -396,9 +384,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                       text: 'Minimum 8 characters',
                                     ),
                                     Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 4.0, 0.0, 0.0),
+                                      padding: const EdgeInsets.only(top: 4.0),
                                       child: PasswordComponentWidget(
                                         isActive: _model
                                             .passwordTextController!.text
@@ -407,9 +393,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                       ),
                                     ),
                                     Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 4.0, 0.0, 0.0),
+                                      padding: const EdgeInsets.only(top: 4.0),
                                       child: PasswordComponentWidget(
                                         isActive: _model
                                             .passwordTextController!.text
@@ -418,9 +402,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                       ),
                                     ),
                                     Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 4.0, 0.0, 0.0),
+                                      padding: const EdgeInsets.only(top: 4.0),
                                       child: PasswordComponentWidget(
                                         isActive: _model
                                             .passwordTextController!.text
@@ -430,9 +412,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                       ),
                                     ),
                                     Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 4.0, 0.0, 0.0),
+                                      padding: const EdgeInsets.only(top: 4.0),
                                       child: PasswordComponentWidget(
                                         isActive: (_model.passwordTextController
                                                     ?.text ==
@@ -458,8 +438,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
               ),
               if (!isKeyboardShowing(context))
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                      32.0, 0.0, 32.0, 0.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 32.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -565,8 +544,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                       if (!_model.checkBoxIsActive &&
                           (_model.confirmPasswordTextController!.text != ''))
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 4.0, 0.0, 0.0),
+                          padding: const EdgeInsets.only(top: 4.0),
                           child: Text(
                             'Terms not accepted',
                             style: GoogleFonts.inter(
@@ -576,8 +554,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                           ).animate().fade(duration: 600.ms),
                         ),
                       Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 24.0, 0.0, 0.0),
+                        padding: const EdgeInsets.only(top: 24.0),
                         child: AppGradientButton(
                           text: 'Create Account',
                           onPressed: () async {

@@ -464,7 +464,7 @@ class _ShortlistItemWidgetState extends State<ShortlistItemWidget> {
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(24.0, 20.0, 24.0, 20.0),
+        padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,

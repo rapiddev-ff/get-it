@@ -152,8 +152,7 @@ class _HomeDashoardInventoryAddTagsWidgetState
                 children: [
                   Expanded(
                     child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -224,8 +223,7 @@ class _HomeDashoardInventoryAddTagsWidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 24.0, 0.0, 24.0),
+                            padding: EdgeInsets.symmetric(vertical: 24.0),
                             child: Builder(
                               builder: (context) {
                                 final tagsList = _searchTags(
@@ -298,9 +296,11 @@ class _HomeDashoardInventoryAddTagsWidgetState
                                               BorderRadius.circular(100.0),
                                         ),
                                         child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  12.0, 2.0, 12.0, 4.0),
+                                          padding: EdgeInsets.only(
+                                              left: 12.0,
+                                              top: 2.0,
+                                              right: 12.0,
+                                              bottom: 4.0),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
@@ -337,8 +337,7 @@ class _HomeDashoardInventoryAddTagsWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: Row(
                       children: [
                         Expanded(
@@ -348,8 +347,7 @@ class _HomeDashoardInventoryAddTagsWidgetState
                             },
                             style: OutlinedButton.styleFrom(
                               minimumSize: Size(double.infinity, 56.0),
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 0.0, 16.0, 0.0),
+                              padding: EdgeInsets.symmetric(horizontal: 16.0),
                               backgroundColor: AppColors.backgroundPrimary,
                               side: BorderSide(color: Color(0xFF545454)),
                               shape: RoundedRectangleBorder(

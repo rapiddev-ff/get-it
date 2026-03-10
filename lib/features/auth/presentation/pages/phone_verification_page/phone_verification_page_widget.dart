@@ -131,15 +131,13 @@ class _PhoneVerificationPageWidgetState
             children: [
               Flexible(
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                      24.0, 0.0, 24.0, 0.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 8.0),
+                          padding: const EdgeInsets.only(bottom: 8.0),
                           child: Text(
                             'Verify Your Account',
                             style: GoogleFonts.inter(
@@ -149,8 +147,7 @@ class _PhoneVerificationPageWidgetState
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 24.0),
+                          padding: const EdgeInsets.only(bottom: 24.0),
                           child: Text(
                             'We\'ll send you a code to confirm it\'s you.',
                             style: GoogleFonts.inter(
@@ -164,8 +161,7 @@ class _PhoneVerificationPageWidgetState
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 4.0),
+                              padding: const EdgeInsets.only(bottom: 4.0),
                               child: Text(
                                 'Phone Number',
                                 style: GoogleFonts.inter(
@@ -245,8 +241,7 @@ class _PhoneVerificationPageWidgetState
                                     '' &&
                                 _model.textController!.text != '')
                               Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 4.0, 0.0, 0.0),
+                                padding: const EdgeInsets.only(top: 4.0),
                                 child: Text(
                                   _phoneValidationResult(
                                           _model.textController!.text) ??
@@ -266,8 +261,7 @@ class _PhoneVerificationPageWidgetState
               ),
               if (!isKeyboardShowing(context))
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                      24.0, 0.0, 24.0, 0.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [

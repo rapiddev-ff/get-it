@@ -105,7 +105,7 @@ class _SettingsPaymentMethodAddWidgetState
         fontSize: 14.0,
         color: AppColors.textSecondary,
       ),
-      contentPadding: EdgeInsetsDirectional.fromSTEB(12.0, 8.0, 12.0, 8.0),
+      contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.neutral700, width: 1.0),
         borderRadius: BorderRadius.circular(4.0),
@@ -147,7 +147,7 @@ class _SettingsPaymentMethodAddWidgetState
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,12 +160,11 @@ class _SettingsPaymentMethodAddWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 16.0),
                     child: Text('Card Number', style: _labelStyle()),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 8.0),
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
@@ -188,8 +187,7 @@ class _SettingsPaymentMethodAddWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 20.0),
                     child: Row(
                       children: [
                         Expanded(
@@ -253,12 +251,11 @@ class _SettingsPaymentMethodAddWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 20.0),
                     child: Text('Cardholder Name', style: _labelStyle()),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 8.0),
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
@@ -291,12 +288,11 @@ class _SettingsPaymentMethodAddWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 20.0),
                     child: Text('Email Address', style: _labelStyle()),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 8.0),
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
@@ -317,12 +313,11 @@ class _SettingsPaymentMethodAddWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 20.0),
                     child: Text('Full Name', style: _labelStyle()),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 8.0),
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
@@ -343,12 +338,11 @@ class _SettingsPaymentMethodAddWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 20.0),
                     child: Text('Address', style: _labelStyle()),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 8.0),
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
@@ -369,8 +363,7 @@ class _SettingsPaymentMethodAddWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 20.0),
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
@@ -392,8 +385,7 @@ class _SettingsPaymentMethodAddWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 20.0),
                     child: Row(
                       children: [
                         Expanded(
@@ -501,8 +493,7 @@ class _SettingsPaymentMethodAddWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 20.0),
                     child: Row(
                       children: [
                         Expanded(
@@ -562,8 +553,7 @@ class _SettingsPaymentMethodAddWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 24.0),
                     child: InkWell(
                       onTap: () async {
                         _model.setAsDefault = !_model.setAsDefault;
@@ -660,8 +650,7 @@ class _SettingsPaymentMethodAddWidgetState
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 8.0, 0.0, 0.0),
+                                  padding: EdgeInsets.only(top: 8.0),
                                   child: Text(
                                     'Your payment information is encrypted and securely processed by Stripe. We never store your card details on our servers.',
                                     style: GoogleFonts.inter(fontSize: 14.0),
@@ -675,8 +664,7 @@ class _SettingsPaymentMethodAddWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 36.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 36.0),
                     child: Row(
                       children: [
                         Expanded(

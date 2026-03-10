@@ -87,20 +87,18 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget>
             children: [
               Flexible(
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 24.0),
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 16.0),
+                          padding: EdgeInsets.only(bottom: 16.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 4.0),
+                                padding: EdgeInsets.only(bottom: 4.0),
                                 child: Text(
                                   'Current Password',
                                   style: GoogleFonts.inter(
@@ -148,8 +146,8 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget>
                               ),
                               if (_model.errorPasswordRequired)
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 4.0, 0.0, 0.0),
+                                  padding:
+                                      EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'Password is required.',
                                     style: GoogleFonts.inter(
@@ -160,8 +158,8 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget>
                                 ),
                               if (_model.errorPassword)
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 4.0, 0.0, 0.0),
+                                  padding:
+                                      EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'Incorrect password. Try again.',
                                     style: GoogleFonts.inter(
@@ -174,14 +172,12 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget>
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 16.0),
+                          padding: EdgeInsets.only(bottom: 16.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 4.0),
+                                padding: EdgeInsets.only(bottom: 4.0),
                                 child: Text(
                                   'New Email',
                                   style: GoogleFonts.inter(
@@ -213,8 +209,8 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget>
                               ),
                               if (_model.errorEmailRequired)
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 4.0, 0.0, 0.0),
+                                  padding:
+                                      EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'Please enter your email.',
                                     style: GoogleFonts.inter(
@@ -225,8 +221,8 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget>
                                 ),
                               if (_model.errorEmailFormat)
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 4.0, 0.0, 0.0),
+                                  padding:
+                                      EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'Check your email format.',
                                     style: GoogleFonts.inter(
@@ -237,8 +233,8 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget>
                                 ),
                               if (_model.emailAlreadyInUse)
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 4.0, 0.0, 0.0),
+                                  padding:
+                                      EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'Email already in use.',
                                     style: GoogleFonts.inter(
@@ -257,7 +253,7 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget>
               ),
               if (!isKeyboardShowing(context))
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [

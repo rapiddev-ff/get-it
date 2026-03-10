@@ -128,8 +128,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 28.0, 16.0, 0.0),
+                  padding: EdgeInsets.only(left: 16.0, top: 28.0, right: 16.0),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -137,8 +136,8 @@ class _HomeSellerProfileReviewsStep2WidgetState
                       borderRadius: BorderRadius.circular(4.0),
                     ),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          10.0, 16.0, 16.0, 16.0),
+                      padding: EdgeInsets.only(
+                          left: 10.0, top: 16.0, right: 16.0, bottom: 16.0),
                       child: Row(
                         children: [
                           if ((widget.product?.mainImageUrl ?? '').isNotEmpty)
@@ -180,8 +179,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 8.0, 0.0, 0.0),
+                                  padding: EdgeInsets.only(top: 8.0),
                                   child: Row(
                                     children: [
                                       Expanded(
@@ -218,8 +216,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                   ),
                 ),
                 Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
+                  padding: EdgeInsets.only(left: 16.0, top: 24.0, right: 16.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -258,8 +255,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 8.0, 0.0, 0.0),
+                              padding: EdgeInsets.only(top: 8.0),
                               child: Row(
                                 children: [
                                   RatingBarIndicator(
@@ -317,7 +313,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                   color: Color(0xFFE5E7EB),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -341,8 +337,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 24.0, 0.0, 16.0),
+                            padding: EdgeInsets.only(top: 24.0, bottom: 16.0),
                             child: RatingBar.builder(
                               onRatingUpdate: (newValue) =>
                                   setState(() => ratingBarValue2 = newValue),
@@ -363,8 +358,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                   ),
                 ),
                 Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 20.0, 16.0, 0.0),
+                  padding: EdgeInsets.only(left: 16.0, top: 20.0, right: 16.0),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -386,8 +380,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 16.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 16.0),
                             child: Container(
                               width: double.infinity,
                               child: TextFormField(
@@ -463,8 +456,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 8.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 8.0),
                             child: Row(
                               children: [
                                 Expanded(
@@ -498,8 +490,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                   ),
                 ),
                 Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 20.0, 16.0, 0.0),
+                  padding: EdgeInsets.only(left: 16.0, top: 20.0, right: 16.0),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -521,8 +512,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 16.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 16.0),
                             child: InkWell(
                               onTap: () async {
                                 if (images.length >= 3) {
@@ -554,8 +544,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                   ),
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 20.0, 0.0, 20.0),
+                                  padding: EdgeInsets.symmetric(vertical: 20.0),
                                   child: Column(
                                     children: [
                                       FaIcon(
@@ -564,8 +553,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                         size: 24.0,
                                       ),
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 12.0, 0.0, 0.0),
+                                        padding: EdgeInsets.only(top: 12.0),
                                         child: Text(
                                           'Upload photos of the item you received 3 LIMIT\n',
                                           maxLines: 1,
@@ -578,8 +566,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 4.0, 0.0, 0.0),
+                                        padding: EdgeInsets.only(top: 4.0),
                                         child: Text(
                                           'Choose Photos',
                                           maxLines: 1,
@@ -600,8 +587,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                           ),
                           if (images.isNotEmpty)
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 12.0, 0.0, 0.0),
+                              padding: EdgeInsets.only(top: 12.0),
                               child: Builder(
                                 builder: (context) {
                                   final image = images.toList();
@@ -636,7 +622,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                 if (!isKeyboardShowing(context))
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 32.0, 16.0, 0.0),
+                        EdgeInsets.only(left: 16.0, top: 32.0, right: 16.0),
                     child: AppGradientButton(
                       text: 'Submit Review',
                       onPressed: () async {

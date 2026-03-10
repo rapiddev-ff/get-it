@@ -369,7 +369,7 @@ class _HomeDashoardInventoryAddWidgetState
       );
 
   Widget _fieldLabel(String text) => Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+        padding: EdgeInsets.only(top: 16.0),
         child: Text(
           text,
           style:
@@ -383,7 +383,7 @@ class _HomeDashoardInventoryAddWidgetState
     required VoidCallback onTap,
   }) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+      padding: EdgeInsets.only(top: 8.0),
       child: InkWell(
         onTap: onTap,
         child: Container(
@@ -394,7 +394,7 @@ class _HomeDashoardInventoryAddWidgetState
             border: Border.all(color: AppColors.neutral700),
           ),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(8.0, 12.0, 8.0, 12.0),
+            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
             child: Row(
               children: [
                 Expanded(
@@ -437,7 +437,7 @@ class _HomeDashoardInventoryAddWidgetState
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 8.0),
+              padding: EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
                 label,
                 style: GoogleFonts.inter(
@@ -552,7 +552,7 @@ class _HomeDashoardInventoryAddWidgetState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
           child: Text(
             'Product Photos',
             style: GoogleFonts.inter(
@@ -562,7 +562,7 @@ class _HomeDashoardInventoryAddWidgetState
           ),
         ),
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+          padding: EdgeInsets.only(top: 10.0),
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -663,8 +663,8 @@ class _HomeDashoardInventoryAddWidgetState
                               Align(
                                 alignment: AlignmentDirectional(1.0, -1.0),
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 8.0, 8.0, 0.0),
+                                  padding:
+                                      EdgeInsets.only(top: 8.0, right: 8.0),
                                   child: InkWell(
                                     onTap: () async {
                                       removeFromUploadedImages(imagesItem);
@@ -705,7 +705,7 @@ class _HomeDashoardInventoryAddWidgetState
           ),
         ),
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(16.0, 10.0, 16.0, 0.0),
+          padding: EdgeInsets.only(left: 16.0, top: 10.0, right: 16.0),
           child: Text(
             'Add up to 10 photos. First photo will be the main image.',
             style: GoogleFonts.inter(
@@ -729,7 +729,7 @@ class _HomeDashoardInventoryAddWidgetState
         _sectionTitle('Basic Information'),
         _fieldLabel('Product Title'),
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+          padding: EdgeInsets.only(top: 8.0),
           child: Container(
             width: double.infinity,
             child: TextFormField(
@@ -828,7 +828,7 @@ class _HomeDashoardInventoryAddWidgetState
         ),
         _fieldLabel('SKU'),
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+          padding: EdgeInsets.only(top: 8.0),
           child: Row(
             children: [
               Expanded(
@@ -890,7 +890,7 @@ class _HomeDashoardInventoryAddWidgetState
         ),
         _fieldLabel('Quantity'),
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+          padding: EdgeInsets.only(top: 8.0),
           child: Container(
             width: double.infinity,
             child: TextFormField(
@@ -914,7 +914,7 @@ class _HomeDashoardInventoryAddWidgetState
         ),
         _fieldLabel('Condition'),
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+          padding: EdgeInsets.only(top: 8.0),
           child: InkWell(
             onTap: () async {
               await showModalBottomSheet(
@@ -951,7 +951,7 @@ class _HomeDashoardInventoryAddWidgetState
                 border: Border.all(color: AppColors.neutral700),
               ),
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(8.0, 12.0, 8.0, 12.0),
+                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
                 child: Row(
                   children: [
                     Expanded(
@@ -987,7 +987,7 @@ class _HomeDashoardInventoryAddWidgetState
           ),
         ),
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+          padding: EdgeInsets.only(top: 16.0),
           child: Row(
             children: [
               Expanded(
@@ -1069,7 +1069,7 @@ class _HomeDashoardInventoryAddWidgetState
         _sectionTitle('Pricing'),
         _fieldLabel('Price'),
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+          padding: EdgeInsets.only(top: 8.0),
           child: Container(
             width: double.infinity,
             child: TextFormField(
@@ -1095,7 +1095,7 @@ class _HomeDashoardInventoryAddWidgetState
           ),
         ),
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+          padding: EdgeInsets.only(top: 16.0),
           child: Row(
             children: [
               Expanded(
@@ -1131,8 +1131,7 @@ class _HomeDashoardInventoryAddWidgetState
                         borderColor: AppColors.neutral700,
                         borderWidth: 1.0,
                         borderRadius: 4.0,
-                        margin: EdgeInsetsDirectional.fromSTEB(
-                            12.0, 0.0, 12.0, 0.0),
+                        margin: EdgeInsets.symmetric(horizontal: 12.0),
                         hidesUnderline: true,
                         isOverButton: true,
                         isSearchable: false,
@@ -1164,7 +1163,7 @@ class _HomeDashoardInventoryAddWidgetState
 
   Widget _buildDiscountFields() {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+      padding: EdgeInsets.only(top: 16.0),
       child: Row(
         children: [
           Expanded(
@@ -1259,7 +1258,7 @@ class _HomeDashoardInventoryAddWidgetState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
+          padding: EdgeInsets.only(bottom: 8.0),
           child: _sectionTitle('Shipping Cost'),
         ),
         _radioOption(
@@ -1282,7 +1281,7 @@ class _HomeDashoardInventoryAddWidgetState
         ),
         if (shippingCost == 'Set Custom Shipping For This Product')
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+            padding: EdgeInsets.only(top: 16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -1312,7 +1311,7 @@ class _HomeDashoardInventoryAddWidgetState
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                  padding: EdgeInsets.only(top: 4.0),
                   child: Text(
                     'Additional Item Fee',
                     style: GoogleFonts.inter(
@@ -1356,7 +1355,7 @@ class _HomeDashoardInventoryAddWidgetState
               GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
         ),
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+          padding: EdgeInsets.only(top: 8.0),
           child: Container(
             width: double.infinity,
             child: TextFormField(
@@ -1400,7 +1399,7 @@ class _HomeDashoardInventoryAddWidgetState
               GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
         ),
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+          padding: EdgeInsets.only(top: 8.0),
           child: InkWell(
             onTap: () async {
               final result = await Navigator.push<List<Tag>>(
@@ -1425,7 +1424,7 @@ class _HomeDashoardInventoryAddWidgetState
                 borderRadius: _borderRadius,
               ),
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(8.0, 12.0, 8.0, 12.0),
+                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
                 child: Row(
                   children: [
                     Expanded(
@@ -1448,7 +1447,7 @@ class _HomeDashoardInventoryAddWidgetState
         ),
         if (choosenTags.isNotEmpty)
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+            padding: EdgeInsets.only(top: 16.0),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -1465,8 +1464,8 @@ class _HomeDashoardInventoryAddWidgetState
                         borderRadius: BorderRadius.circular(100.0),
                       ),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            12.0, 2.0, 12.0, 4.0),
+                        padding: EdgeInsets.only(
+                            left: 12.0, top: 2.0, right: 12.0, bottom: 4.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -1509,7 +1508,7 @@ class _HomeDashoardInventoryAddWidgetState
       child: TextButton(
         onPressed: () {},
         style: TextButton.styleFrom(
-          padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
@@ -1570,7 +1569,7 @@ class _HomeDashoardInventoryAddWidgetState
         ),
         if (switchConventionSettingsValue ?? true)
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+            padding: EdgeInsets.only(top: 8.0),
             child: Text(
               'Select Convention',
               style: GoogleFonts.inter(
@@ -1579,7 +1578,7 @@ class _HomeDashoardInventoryAddWidgetState
           ),
         if (switchConventionSettingsValue ?? true)
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+            padding: EdgeInsets.only(top: 8.0),
             child: AppDropDown<String>(
               controller: dropDownValueController ??=
                   FormFieldController<String>(null),
@@ -1601,7 +1600,7 @@ class _HomeDashoardInventoryAddWidgetState
               borderColor: AppColors.neutral700,
               borderWidth: 1.0,
               borderRadius: 4.0,
-              margin: EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 12.0, 0.0),
+              margin: EdgeInsets.symmetric(horizontal: 12.0),
               hidesUnderline: true,
               isOverButton: true,
               isSearchable: false,
@@ -1625,7 +1624,7 @@ class _HomeDashoardInventoryAddWidgetState
             (getProduct?.status != 'active'))
           Builder(
             builder: (context) => Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+              padding: EdgeInsets.only(top: 16.0),
               child: SizedBox(
                 width: double.infinity,
                 height: 56.0,
@@ -1703,8 +1702,7 @@ class _HomeDashoardInventoryAddWidgetState
                   key: formKey,
                   autovalidateMode: AutovalidateMode.disabled,
                   child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,

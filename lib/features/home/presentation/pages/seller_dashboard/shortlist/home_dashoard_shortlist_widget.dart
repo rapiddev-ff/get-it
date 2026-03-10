@@ -112,8 +112,7 @@ class _HomeDashoardShortlistWidgetState
                 )
               : shortlists.isEmpty
                   ? Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
                       child: Column(
                         children: [
                           Expanded(
@@ -191,8 +190,7 @@ class _HomeDashoardShortlistWidgetState
                       ),
                     )
                   : SingleChildScrollView(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
                       child: Column(
                         children: [
                           ListView.separated(
@@ -208,8 +206,7 @@ class _HomeDashoardShortlistWidgetState
                             },
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
+                            padding: EdgeInsets.zero,
                             child: Container(
                               width: double.infinity,
                               height: 56.0,
@@ -255,8 +252,7 @@ class _HomeDashoardShortlistWidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 32.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 32.0),
                             child: Container(
                               width: double.infinity,
                               decoration: BoxDecoration(
@@ -264,8 +260,8 @@ class _HomeDashoardShortlistWidgetState
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    24.0, 20.0, 24.0, 20.0),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 24.0, vertical: 20.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [

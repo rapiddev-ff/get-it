@@ -19,7 +19,7 @@ class SettingsDialogWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -27,7 +27,7 @@ class SettingsDialogWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(16.0, 32.0, 16.0, 32.0),
+          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 32.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -46,7 +46,7 @@ class SettingsDialogWidget extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                padding: EdgeInsets.only(top: 24.0),
                 child: Text(
                   title,
                   textAlign: TextAlign.center,
@@ -59,7 +59,7 @@ class SettingsDialogWidget extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                padding: EdgeInsets.only(top: 16.0),
                 child: Text(
                   subtitle,
                   textAlign: TextAlign.center,
@@ -72,7 +72,7 @@ class SettingsDialogWidget extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                padding: EdgeInsets.only(top: 16.0),
                 child: AppGradientButton(
                   text: 'Return to Login',
                   onPressed: () async {

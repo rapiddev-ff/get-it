@@ -155,7 +155,7 @@ class _SettingsEditProfileWidgetState
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,8 +169,7 @@ class _SettingsEditProfileWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 20.0),
+                    padding: EdgeInsets.only(top: 4.0, bottom: 20.0),
                     child: Text(
                       'This info is visible to other users.',
                       style: GoogleFonts.inter(
@@ -251,8 +250,7 @@ class _SettingsEditProfileWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 20.0),
                     child: Text(
                       'Username',
                       style: GoogleFonts.inter(
@@ -263,7 +261,7 @@ class _SettingsEditProfileWidgetState
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 8.0),
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
@@ -310,8 +308,7 @@ class _SettingsEditProfileWidgetState
                           _model.usernameTextController!.text) &&
                       (_model.usernameTextController!.text != ''))
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                      padding: EdgeInsets.only(top: 4.0),
                       child: Text(
                         'This username cannot be used.',
                         style: GoogleFonts.inter(
@@ -325,8 +322,7 @@ class _SettingsEditProfileWidgetState
                           'valid') &&
                       (_model.usernameTextController!.text != ''))
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                      padding: EdgeInsets.only(top: 4.0),
                       child: Text(
                         FormValidators.usernameValidationResult(
                             _model.usernameTextController!.text),
@@ -342,8 +338,7 @@ class _SettingsEditProfileWidgetState
                           'valid') &&
                       _model.isUsernameEdited)
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                      padding: EdgeInsets.only(top: 4.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -374,8 +369,7 @@ class _SettingsEditProfileWidgetState
                       ),
                     ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 16.0),
                     child: Text(
                       'Bio',
                       style: GoogleFonts.inter(
@@ -386,7 +380,7 @@ class _SettingsEditProfileWidgetState
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 8.0),
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
@@ -437,8 +431,7 @@ class _SettingsEditProfileWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 20.0),
+                    padding: EdgeInsets.only(top: 4.0, bottom: 20.0),
                     child: Text(
                       'For verification and security',
                       style: GoogleFonts.inter(
@@ -458,7 +451,7 @@ class _SettingsEditProfileWidgetState
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 8.0),
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
@@ -493,8 +486,7 @@ class _SettingsEditProfileWidgetState
                           _model.firstnameTextController!.text) &&
                       (_model.firstnameTextController!.text != ''))
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                      padding: EdgeInsets.only(top: 4.0),
                       child: Text(
                         'First name cannot be used.',
                         style: GoogleFonts.inter(
@@ -504,8 +496,7 @@ class _SettingsEditProfileWidgetState
                       ).animate().fade(duration: 600.ms),
                     ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 20.0),
                     child: Text(
                       'Last Name',
                       style: GoogleFonts.inter(
@@ -516,7 +507,7 @@ class _SettingsEditProfileWidgetState
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 8.0),
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
@@ -551,8 +542,7 @@ class _SettingsEditProfileWidgetState
                           _model.lastnameTextController!.text) &&
                       (_model.lastnameTextController!.text != ''))
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                      padding: EdgeInsets.only(top: 4.0),
                       child: Text(
                         'Last name cannot be used.',
                         style: GoogleFonts.inter(
@@ -658,8 +648,7 @@ class _SettingsEditProfileWidgetState
                     },
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 16.0),
                     child: TextButton(
                       onPressed: () async {
                         context.pop();

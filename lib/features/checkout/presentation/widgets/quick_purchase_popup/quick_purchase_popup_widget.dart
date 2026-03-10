@@ -377,7 +377,7 @@ class _QuickPurchasePopupWidgetState
 
           // Buttons
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 16.0),
+            padding: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
             child: Column(
               children: [
                 // Confirm button

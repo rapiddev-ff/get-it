@@ -219,7 +219,7 @@ class _HomeDashoardEarningsWidgetState
             ? Center(
                 child: CircularProgressIndicator(color: AppColors.secondary))
             : Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -238,8 +238,7 @@ class _HomeDashoardEarningsWidgetState
                       ),
                       // Earnings Breakdown
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                        padding: EdgeInsets.only(top: 24.0),
                         child: Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
@@ -247,8 +246,7 @@ class _HomeDashoardEarningsWidgetState
                             borderRadius: BorderRadius.circular(4.0),
                           ),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 16.0, 16.0, 16.0),
+                            padding: EdgeInsets.all(16.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -299,8 +297,7 @@ class _HomeDashoardEarningsWidgetState
                       ),
                       // Tabs: Sales | Referrals
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                        padding: EdgeInsets.only(top: 24.0),
                         child: Container(
                           width: double.infinity,
                           height: 53.0,
@@ -308,8 +305,7 @@ class _HomeDashoardEarningsWidgetState
                             color: AppColors.backgroundPrimary,
                           ),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                20.0, 0.0, 20.0, 0.0),
+                            padding: EdgeInsets.symmetric(horizontal: 20.0),
                             child: Row(
                               children: [
                                 _buildTab('Sales'),
@@ -321,8 +317,7 @@ class _HomeDashoardEarningsWidgetState
                       ),
                       // Content
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                        padding: EdgeInsets.only(top: 16.0),
                         child: _activeTab == 'Sales'
                             ? _buildSalesContent()
                             : _buildReferralsContent(),
@@ -360,7 +355,7 @@ class _HomeDashoardEarningsWidgetState
           borderRadius: BorderRadius.circular(100.0),
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 16.0, 8.0),
+          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
           child: Text(
             label,
             style: GoogleFonts.inter(
@@ -452,7 +447,7 @@ class _HomeDashoardEarningsWidgetState
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
+              padding: EdgeInsets.only(bottom: 10.0),
               child: Text(
                 label,
                 style: GoogleFonts.inter(
@@ -587,7 +582,8 @@ class _HomeDashoardEarningsWidgetState
                     borderRadius: BorderRadius.circular(4.0),
                   ),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 4.0, 8.0, 4.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                     child: Text(
                       _getStatusLabel(status),
                       style: GoogleFonts.inter(

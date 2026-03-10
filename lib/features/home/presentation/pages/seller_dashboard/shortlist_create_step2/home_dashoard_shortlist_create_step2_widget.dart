@@ -456,8 +456,8 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                         color: Color(0xFF111111),
                       ),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 24.0, 16.0, 24.0),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 24.0),
                         child: Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
@@ -465,8 +465,8 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                24.0, 20.0, 24.0, 20.0),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 24.0, vertical: 20.0),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -511,8 +511,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                       ),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -542,8 +541,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                           ),
                           if (switchValue == true) ...[
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 20.0, 0.0, 0.0),
+                              padding: EdgeInsets.only(top: 20.0),
                               child: Text(
                                 'Discount Percentage',
                                 style: GoogleFonts.inter(
@@ -554,8 +552,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 8.0, 0.0, 0.0),
+                              padding: EdgeInsets.only(top: 8.0),
                               child: Container(
                                 width: double.infinity,
                                 child: TextFormField(
@@ -586,8 +583,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                             ),
                           ],
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 24.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 24.0),
                             child: Container(
                               width: double.infinity,
                               child: TextFormField(
@@ -638,8 +634,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                             ],
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 16.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 16.0),
                             child: Container(
                               width: double.infinity,
                               child: TextFormField(
@@ -668,8 +663,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 16.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 16.0),
                             child: Row(
                               children: [
                                 Container(
@@ -686,8 +680,8 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                     borderRadius: BorderRadius.circular(100.0),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 8.0, 16.0, 8.0),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 16.0, vertical: 8.0),
                                     child: Text(
                                       'Requested',
                                       style: GoogleFonts.inter(
@@ -737,8 +731,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                             ),
                           ],
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 8.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(top: 8.0),
                             child: InkWell(
                               onTap: () async {
                                 final result =
@@ -789,7 +782,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
                 children: [
                   AppGradientButton(
@@ -826,8 +819,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                     },
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 16.0),
                     child: TextButton(
                       onPressed: _isSaving
                           ? null

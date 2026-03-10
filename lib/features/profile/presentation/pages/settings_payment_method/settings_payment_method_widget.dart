@@ -55,7 +55,7 @@ class _SettingsPaymentMethodWidgetState
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,8 +68,7 @@ class _SettingsPaymentMethodWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 16.0),
                     child: Builder(
                       builder: (context) {
                         final paymentMethods = userData.paymentMethod.toList();
@@ -96,8 +95,7 @@ class _SettingsPaymentMethodWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 28.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 28.0),
                     child: Container(
                       width: double.infinity,
                       height: 56.0,
@@ -136,8 +134,7 @@ class _SettingsPaymentMethodWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 28.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 28.0),
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -166,8 +163,7 @@ class _SettingsPaymentMethodWidgetState
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 8.0, 0.0, 0.0),
+                                    padding: EdgeInsets.only(top: 8.0),
                                     child: Text(
                                       'Your payment information is encrypted and securely processed by Stripe. We never store your card details on our servers.',
                                       style: GoogleFonts.inter(

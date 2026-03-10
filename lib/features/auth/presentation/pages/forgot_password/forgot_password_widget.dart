@@ -83,14 +83,13 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
             children: [
               Flexible(
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 24.0),
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 8.0),
+                          padding: EdgeInsets.only(bottom: 8.0),
                           child: Text(
                             'Reset Your Password',
                             style: GoogleFonts.inter(
@@ -100,8 +99,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 24.0),
+                          padding: EdgeInsets.only(bottom: 24.0),
                           child: Text(
                             'Enter your email address and we\'ll send you a secure link to create a new password.',
                             style: GoogleFonts.inter(
@@ -115,8 +113,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 4.0),
+                              padding: EdgeInsets.only(bottom: 4.0),
                               child: Text(
                                 'Email',
                                 style: GoogleFonts.inter(
@@ -159,7 +156,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
               ),
               if (!isKeyboardShowing(context))
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [

@@ -107,15 +107,13 @@ class _PhoneVerificationPage2WidgetState
             children: [
               Flexible(
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                      24.0, 0.0, 24.0, 0.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 8.0),
+                          padding: const EdgeInsets.only(bottom: 8.0),
                           child: Text(
                             'Enter Verification Code',
                             style: GoogleFonts.inter(
@@ -126,8 +124,7 @@ class _PhoneVerificationPage2WidgetState
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 24.0),
+                          padding: const EdgeInsets.only(bottom: 24.0),
                           child: Text(
                             'We\u2019ve sent a code to ${widget.phoneNumber}. Enter it below to continue.',
                             style: GoogleFonts.inter(
@@ -138,8 +135,7 @@ class _PhoneVerificationPage2WidgetState
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 12.0),
+                          padding: const EdgeInsets.only(bottom: 12.0),
                           child: KeyedSubtree(
                             key: _shakeKey,
                             child: PinCodeTextField(
@@ -193,8 +189,7 @@ class _PhoneVerificationPage2WidgetState
                         ),
                         if (_model.errorCodeIncorrect)
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 0.0, 0.0),
+                            padding: const EdgeInsets.only(left: 16.0),
                             child: Text(
                               'Incorrect code. Try again.',
                               style: GoogleFonts.inter(
@@ -205,8 +200,7 @@ class _PhoneVerificationPage2WidgetState
                           ),
                         if (_model.errorOther)
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 0.0, 0.0),
+                            padding: const EdgeInsets.only(left: 16.0),
                             child: Text(
                               'Error. Try again later.',
                               style: GoogleFonts.inter(
@@ -217,8 +211,7 @@ class _PhoneVerificationPage2WidgetState
                           ),
                         if (_model.errorMaxAttemptsReached)
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 0.0, 0.0),
+                            padding: const EdgeInsets.only(left: 16.0),
                             child: Text(
                               'Too many attempts. Try again later.',
                               style: GoogleFonts.inter(
@@ -290,16 +283,14 @@ class _PhoneVerificationPage2WidgetState
               ),
               if (!isKeyboardShowing(context))
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                      24.0, 0.0, 24.0, 0.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Align(
                         alignment: const AlignmentDirectional(0.0, 0.0),
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 4.0),
+                          padding: const EdgeInsets.only(bottom: 4.0),
                           child: InkWell(
                             onTap: () async {
                               var shouldSetState = false;
@@ -347,8 +338,8 @@ class _PhoneVerificationPage2WidgetState
                             child: Container(
                               decoration: const BoxDecoration(),
                               child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 24.0, 0.0, 24.0),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 24.0),
                                 child: RichText(
                                   textScaler: MediaQuery.of(context).textScaler,
                                   text: TextSpan(

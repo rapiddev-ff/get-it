@@ -78,7 +78,7 @@ class _SettingsDeactivateAccountWidgetState
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               children: [
                 Spacer(),
@@ -97,7 +97,7 @@ class _SettingsDeactivateAccountWidgetState
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                  padding: EdgeInsets.only(top: 20.0),
                   child: Text(
                     'Are you sure you want to deactivate your account?',
                     textAlign: TextAlign.center,
@@ -109,7 +109,7 @@ class _SettingsDeactivateAccountWidgetState
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                  padding: EdgeInsets.only(top: 20.0),
                   child: Text(
                     'If you choose to deactivate your account, you will need to reactivate your account by signing in the future. ',
                     textAlign: TextAlign.center,
@@ -162,8 +162,7 @@ class _SettingsDeactivateAccountWidgetState
                       ),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                      padding: EdgeInsets.only(top: 16.0),
                       child: SizedBox(
                         width: double.infinity,
                         height: 56.0,

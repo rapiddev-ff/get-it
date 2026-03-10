@@ -103,8 +103,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 8.0),
+                                padding: EdgeInsets.only(bottom: 8.0),
                                 child: Text(
                                   'Password',
                                   style: GoogleFonts.inter(
@@ -153,8 +152,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                               ),
                               if (_model.errorPasswordRequired)
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 4.0, 0.0, 0.0),
+                                  padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Password is required.',
                                     style: GoogleFonts.inter(
@@ -176,8 +174,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 8.0),
+                                padding: EdgeInsets.only(bottom: 8.0),
                                 child: Text(
                                   'Confirm Password',
                                   style: GoogleFonts.inter(
@@ -226,8 +223,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                               ),
                               if (_model.errorConfirmPasswordRequired)
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 4.0, 0.0, 0.0),
+                                  padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Confirm Password is required.',
                                     style: GoogleFonts.inter(
@@ -238,8 +234,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                 ),
                               if (_model.errorPaswordsDontMatch)
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 4.0, 0.0, 0.0),
+                                  padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Passwords don\'t match',
                                     style: GoogleFonts.inter(
@@ -249,8 +244,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 20.0, 0.0, 0.0),
+                                padding: EdgeInsets.only(top: 20.0),
                                 child: Column(
                                   children: [
                                     PasswordComponentWidget(
@@ -260,8 +254,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                       text: 'Minimum 8 characters',
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 4.0, 0.0, 0.0),
+                                      padding: EdgeInsets.only(top: 4.0),
                                       child: PasswordComponentWidget(
                                         isActive: (String text) {
                                           return text
@@ -271,8 +264,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 4.0, 0.0, 0.0),
+                                      padding: EdgeInsets.only(top: 4.0),
                                       child: PasswordComponentWidget(
                                         isActive: (String text) {
                                           return text.contains(RegExp(r'\d'));
@@ -281,8 +273,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 4.0, 0.0, 0.0),
+                                      padding: EdgeInsets.only(top: 4.0),
                                       child: PasswordComponentWidget(
                                         isActive: (String text) {
                                           return text.contains(RegExp(
@@ -292,8 +283,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 4.0, 0.0, 0.0),
+                                      padding: EdgeInsets.only(top: 4.0),
                                       child: PasswordComponentWidget(
                                         isActive: (_model
                                                     .textController1!.text ==
@@ -316,7 +306,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
               ),
               if (!isKeyboardShowing(context))
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(32.0, 0.0, 32.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 32.0),
                   child: Column(
                     children: [
                       AppGradientButton(

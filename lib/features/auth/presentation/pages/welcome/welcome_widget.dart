@@ -76,7 +76,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                 ),
                 Spacer(),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 24.0),
                   child: AppGradientButton(
                     text: 'Create Account',
                     onPressed: () async {
@@ -85,7 +85,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 24.0),
+                  padding: EdgeInsets.symmetric(vertical: 24.0),
                   child: InkWell(
                     onTap: () async {
                       context.pushNamed(SignInWidget.routeName);

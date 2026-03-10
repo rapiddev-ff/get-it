@@ -72,7 +72,7 @@ class FollowerItemWidget extends StatelessWidget {
                   ),
                   child: Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(15.0, 8.0, 15.0, 8.0),
+                        EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
                     child: Text(
                       'Message',
                       style: GoogleFonts.inter(

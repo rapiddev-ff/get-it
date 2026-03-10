@@ -88,7 +88,7 @@ class InventoryItemWidget extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                  padding: EdgeInsets.only(top: 8.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -98,8 +98,8 @@ class InventoryItemWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(4.0),
                         ),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              8.0, 4.0, 8.0, 4.0),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 8.0, vertical: 4.0),
                           child: Text(
                             valueOrDefault<String>(
                               sellerProduct?.status,
@@ -113,8 +113,8 @@ class InventoryItemWidget extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(8.0, 4.0, 8.0, 4.0),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 4.0),
                         child: Text(
                           '${valueOrDefault<String>(
                             sellerProduct?.viewsCount.toString(),

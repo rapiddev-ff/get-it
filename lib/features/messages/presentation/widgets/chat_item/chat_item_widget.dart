@@ -66,8 +66,8 @@ class ChatItemWidget extends StatelessWidget {
                         ),
                       ),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 12.0, 16.0, 12.0),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 12.0),
                         child: Text(
                           valueOrDefault<String>(
                             messageDataType?.content,
@@ -78,8 +78,7 @@ class ChatItemWidget extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                      padding: EdgeInsets.only(top: 8.0),
                       child: Text(
                         dateTimeFormat(
                           "jm",
@@ -174,8 +173,7 @@ class ChatItemWidget extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                      padding: EdgeInsets.only(top: 8.0),
                       child: Text(
                         dateTimeFormat(
                           "jm",
@@ -214,7 +212,7 @@ class ChatItemWidget extends StatelessWidget {
                 ),
                 child: Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
+                      EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
                   child: Text(
                     valueOrDefault<String>(
                       messageDataType?.content,
@@ -225,7 +223,7 @@ class ChatItemWidget extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                padding: EdgeInsets.only(top: 8.0),
                 child: Text(
                   dateTimeFormat(
                     "jm",
@@ -297,7 +295,7 @@ class ChatItemWidget extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                padding: EdgeInsets.only(top: 8.0),
                 child: Text(
                   dateTimeFormat(
                     "jm",

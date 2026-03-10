@@ -63,8 +63,7 @@ class WishlistItemWidget extends StatelessWidget {
                 Align(
                   alignment: const AlignmentDirectional(1.0, -1.0),
                   child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0, 10.0, 10.0, 0.0),
+                    padding: const EdgeInsets.only(top: 10.0, right: 10.0),
                     child: GestureDetector(
                       onTap: () async {
                         await actionWishlish?.call();
@@ -126,8 +125,8 @@ class WishlistItemWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(4.0),
                         ),
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              8.0, 4.0, 8.0, 4.0),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0, vertical: 4.0),
                           child: Text(
                             _isSold ? 'Sold' : 'Buy Now',
                             style: GoogleFonts.inter(

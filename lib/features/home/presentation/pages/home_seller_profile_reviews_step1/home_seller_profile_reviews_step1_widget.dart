@@ -139,8 +139,7 @@ class _HomeSellerProfileReviewsStep1WidgetState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
+                  padding: EdgeInsets.only(left: 16.0, top: 24.0, right: 16.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -179,8 +178,7 @@ class _HomeSellerProfileReviewsStep1WidgetState
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 8.0, 0.0, 0.0),
+                              padding: EdgeInsets.only(top: 8.0),
                               child: Row(
                                 children: [
                                   RatingBarIndicator(
@@ -241,7 +239,7 @@ class _HomeSellerProfileReviewsStep1WidgetState
                   color: Color(0xFFE5E7EB),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -252,8 +250,8 @@ class _HomeSellerProfileReviewsStep1WidgetState
                       ),
                     ),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          16.0, 12.0, 16.0, 12.0),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 12.0),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -291,7 +289,7 @@ class _HomeSellerProfileReviewsStep1WidgetState
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: _isLoading
                       ? Center(
                           child: Padding(
@@ -389,8 +387,11 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                             BorderRadius.circular(4.0),
                                       ),
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            10.0, 16.0, 16.0, 16.0),
+                                        padding: EdgeInsets.only(
+                                            left: 10.0,
+                                            top: 16.0,
+                                            right: 16.0,
+                                            bottom: 16.0),
                                         child: Row(
                                           children: [
                                             ClipRRect(

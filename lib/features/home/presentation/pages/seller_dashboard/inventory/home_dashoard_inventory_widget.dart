@@ -105,8 +105,7 @@ class _HomeDashoardInventoryWidgetState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: Row(
                       children: [
                         Expanded(
@@ -199,8 +198,7 @@ class _HomeDashoardInventoryWidgetState
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 24.0),
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
@@ -228,8 +226,8 @@ class _HomeDashoardInventoryWidgetState
                                 borderRadius: BorderRadius.circular(100.0),
                               ),
                               child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 8.0, 16.0, 8.0),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 16.0, vertical: 8.0),
                                 child: Text(
                                   'All ',
                                   style: GoogleFonts.inter(
@@ -275,8 +273,8 @@ class _HomeDashoardInventoryWidgetState
                                             BorderRadius.circular(100.0),
                                       ),
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 8.0, 16.0, 8.0),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 16.0, vertical: 8.0),
                                         child: Text(
                                           categoriesItem.name,
                                           style: GoogleFonts.inter(
@@ -304,8 +302,7 @@ class _HomeDashoardInventoryWidgetState
                     color: Color(0xFF363636),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: Text(
                       '${itemsCount?.toString()} Items',
                       style: GoogleFonts.inter(
@@ -363,8 +360,8 @@ class _HomeDashoardInventoryWidgetState
                   color: AppColors.backgroundSecondary,
                 ),
                 child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 36.0),
+                  padding: EdgeInsets.only(
+                      left: 16.0, top: 12.0, right: 16.0, bottom: 36.0),
                   child: Row(
                     children: [
                       Expanded(
@@ -376,8 +373,7 @@ class _HomeDashoardInventoryWidgetState
                             ),
                           ),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 12.0, 0.0, 14.0),
+                            padding: EdgeInsets.only(top: 12.0, bottom: 14.0),
                             child: Column(
                               children: [
                                 FaIcon(
@@ -411,8 +407,7 @@ class _HomeDashoardInventoryWidgetState
                               ),
                             ),
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 12.0, 0.0, 14.0),
+                              padding: EdgeInsets.only(top: 12.0, bottom: 14.0),
                               child: Column(
                                 children: [
                                   Icon(
@@ -447,8 +442,7 @@ class _HomeDashoardInventoryWidgetState
                               ),
                             ),
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 12.0, 0.0, 14.0),
+                              padding: EdgeInsets.only(top: 12.0, bottom: 14.0),
                               child: Column(
                                 children: [
                                   Icon(

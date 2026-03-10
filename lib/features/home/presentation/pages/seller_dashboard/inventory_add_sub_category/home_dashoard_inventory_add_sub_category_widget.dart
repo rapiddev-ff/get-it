@@ -53,7 +53,8 @@ class _HomeDashoardInventoryAddSubCategoryWidgetState
         ),
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 32.0),
+        padding:
+            EdgeInsets.only(left: 16.0, top: 24.0, right: 16.0, bottom: 32.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +68,7 @@ class _HomeDashoardInventoryAddSubCategoryWidgetState
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 24.0),
+              padding: EdgeInsets.symmetric(vertical: 24.0),
               child: StreamBuilder<List<SubcategoriesRow>>(
                 stream: listViewSupabaseStream ??= SupaFlow.client
                     .from("subcategories")
@@ -115,8 +116,8 @@ class _HomeDashoardInventoryAddSubCategoryWidgetState
                               children: [
                                 Expanded(
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 14.0, 0.0, 14.0),
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 14.0),
                                     child: Text(
                                       listViewSubcategoriesRow.name,
                                       style: GoogleFonts.inter(
@@ -164,8 +165,7 @@ class _HomeDashoardInventoryAddSubCategoryWidgetState
                     },
                     style: OutlinedButton.styleFrom(
                       minimumSize: Size(double.infinity, 56.0),
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
                       side: BorderSide(color: Color(0xFF545454)),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4.0),

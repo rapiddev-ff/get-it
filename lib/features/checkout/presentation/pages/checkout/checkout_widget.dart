@@ -309,7 +309,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
 
                 // Shipping Address section
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: InkWell(
                     onTap: () async {
                       await context.pushNamed(
@@ -349,7 +349,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                 if (_hasShippingAddress)
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
+                        EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -409,7 +409,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                 else
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
+                        EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -437,7 +437,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
 
                 // Payment Method section
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                  padding: EdgeInsets.only(left: 16.0),
                   child: Text(
                     'Payment Method',
                     style: GoogleFonts.inter(
@@ -450,7 +450,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                 if (user.paymentMethod.isEmpty)
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
+                        EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -472,7 +472,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                 else
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
+                        EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
                     child: Builder(
                       builder: (context) {
                         final paymentMethods = user.paymentMethod.toList();
@@ -559,8 +559,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                     ),
                   ),
                 Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
+                  padding: EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
                   child: InkWell(
                     onTap: () async {
                       await context
@@ -607,7 +606,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
 
                 // Order Summary section
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                  padding: EdgeInsets.only(left: 16.0),
                   child: Text(
                     'Order Summary',
                     style: GoogleFonts.inter(
@@ -618,8 +617,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                   ),
                 ),
                 Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
+                  padding: EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -627,8 +625,8 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          16.0, 16.0, 16.0, 24.0),
+                      padding: EdgeInsets.only(
+                          left: 16.0, top: 16.0, right: 16.0, bottom: 24.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -689,7 +687,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
 
                 // Buyer Protection
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -719,8 +717,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 8.0, 0.0, 0.0),
+                                  padding: EdgeInsets.only(top: 8.0),
                                   child: Text(
                                     'Your purchase is protected by our guarantee. Get a full refund if the item doesn\'t match the description.',
                                     style: GoogleFonts.inter(
@@ -741,8 +738,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
 
                 // Complete Purchase button
                 Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 36.0, 16.0, 0.0),
+                  padding: EdgeInsets.only(left: 16.0, top: 36.0, right: 16.0),
                   child: Container(
                     width: double.infinity,
                     height: 56.0,
@@ -758,8 +754,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                     child: TextButton(
                       onPressed: isProcessing ? null : _onCompletePurchase,
                       style: TextButton.styleFrom(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 0.0, 16.0, 0.0),
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
                         backgroundColor: Colors.transparent,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
@@ -786,8 +781,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
 
                 // Terms
                 Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
+                  padding: EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
                   child: Text(
                     'By continuing, you agree to our Terms of Service and Privacy Policy',
                     textAlign: TextAlign.center,

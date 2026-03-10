@@ -85,20 +85,18 @@ class _SettingsChangePasswordWidgetState
             children: [
               Flexible(
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 24.0),
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 16.0),
+                          padding: EdgeInsets.only(bottom: 16.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 4.0),
+                                padding: EdgeInsets.only(bottom: 4.0),
                                 child: Text(
                                   'Current Password',
                                   style: GoogleFonts.inter(
@@ -149,8 +147,8 @@ class _SettingsChangePasswordWidgetState
                               ),
                               if (_model.errorCurrentPasswordRequired)
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 4.0, 0.0, 0.0),
+                                  padding:
+                                      EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'Current Password is required.',
                                     style: GoogleFonts.inter(
@@ -163,14 +161,12 @@ class _SettingsChangePasswordWidgetState
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 16.0),
+                          padding: EdgeInsets.only(bottom: 16.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 4.0),
+                                padding: EdgeInsets.only(bottom: 4.0),
                                 child: Text(
                                   'New Password',
                                   style: GoogleFonts.inter(
@@ -221,8 +217,8 @@ class _SettingsChangePasswordWidgetState
                               ),
                               if (_model.errorPasswordRequired)
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 4.0, 0.0, 0.0),
+                                  padding:
+                                      EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'New Password is required.',
                                     style: GoogleFonts.inter(
@@ -235,14 +231,12 @@ class _SettingsChangePasswordWidgetState
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 24.0),
+                          padding: EdgeInsets.only(bottom: 24.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 4.0),
+                                padding: EdgeInsets.only(bottom: 4.0),
                                 child: Text(
                                   'Confirm Password',
                                   style: GoogleFonts.inter(
@@ -290,8 +284,8 @@ class _SettingsChangePasswordWidgetState
                               ),
                               if (_model.errorConfirmPasswordRequired)
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 4.0, 0.0, 0.0),
+                                  padding:
+                                      EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'Confirm Password is required.',
                                     style: GoogleFonts.inter(
@@ -311,8 +305,7 @@ class _SettingsChangePasswordWidgetState
                               text: 'Minimum 8 characters',
                             ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 4.0, 0.0, 0.0),
+                              padding: EdgeInsets.only(top: 4.0),
                               child: PasswordComponentWidget(
                                 isActive: (String text) {
                                   return text.contains(RegExp(r'[A-Z]'));
@@ -321,8 +314,7 @@ class _SettingsChangePasswordWidgetState
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 4.0, 0.0, 0.0),
+                              padding: EdgeInsets.only(top: 4.0),
                               child: PasswordComponentWidget(
                                 isActive: (String text) {
                                   return text.contains(RegExp(r'\d'));
@@ -331,8 +323,7 @@ class _SettingsChangePasswordWidgetState
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 4.0, 0.0, 0.0),
+                              padding: EdgeInsets.only(top: 4.0),
                               child: PasswordComponentWidget(
                                 isActive: (String text) {
                                   return text.contains(
@@ -342,8 +333,7 @@ class _SettingsChangePasswordWidgetState
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 4.0, 0.0, 0.0),
+                              padding: EdgeInsets.only(top: 4.0),
                               child: PasswordComponentWidget(
                                 isActive: (_model.textController2!.text ==
                                         _model.textController3!.text) &&
@@ -360,7 +350,7 @@ class _SettingsChangePasswordWidgetState
               ),
               if (!isKeyboardShowing(context))
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                  padding: EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [

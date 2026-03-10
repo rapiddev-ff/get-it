@@ -97,7 +97,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -153,8 +153,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 24.0),
                     child: SettingsItemWidget(
                       tittle: 'Referral Code',
                       value:
@@ -166,8 +165,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 16.0),
                     child: SettingsItemWidget(
                       tittle: 'Edit Profile',
                       value:
@@ -179,8 +177,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 16.0),
                     child: SettingsItemWidget(
                       tittle: 'Edit Email',
                       value: authState.email,
@@ -196,8 +193,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 16.0),
                     child: SettingsItemWidget(
                       tittle: 'Edit Phone Number',
                       value: authState.phone,
@@ -213,8 +209,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 16.0),
                     child: SettingsItemWidget(
                       tittle: 'Block List',
                       value: 'View your blocked list',
@@ -225,8 +220,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 16.0),
                     child: SettingsItemWidget(
                       tittle: 'Change Password',
                       value: '********',
@@ -238,8 +232,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 16.0),
                     child: SettingsItemWidget(
                       tittle: 'Payment Method',
                       value: authState.paymentMethod.firstOrNull != null
@@ -253,8 +246,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 16.0),
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -262,8 +254,8 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                         borderRadius: BorderRadius.circular(4.0),
                       ),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 12.0, 16.0, 12.0),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 12.0),
                         child: Row(
                           children: [
                             Expanded(
@@ -444,8 +436,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 32.0),
                     child: Row(
                       children: [
                         FaIcon(
@@ -465,8 +456,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 16.0),
                     child: SettingsItemWidget(
                       tittle: 'Business Name',
                       value: valueOrDefault<String>(
@@ -513,8 +503,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 16.0),
                     child: SettingsItemWidget(
                       tittle: 'Business Address',
                       value: (authState.businessAddress?.country.isNotEmpty ??
@@ -529,8 +518,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 16.0),
                     child: SettingsItemWidget(
                       tittle: 'Business Email',
                       value: valueOrDefault<String>(
@@ -577,8 +565,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 16.0),
                     child: InkWell(
                       onTap: () async {
                         if ((authState.stripe?.hasAccount ?? false) == false) {
@@ -594,8 +581,8 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                           borderRadius: BorderRadius.circular(4.0),
                         ),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 12.0, 16.0, 12.0),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 12.0),
                           child: Row(
                             children: [
                               FaIcon(
@@ -689,8 +676,8 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                     borderRadius: BorderRadius.circular(4.0),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        15.0, 8.0, 15.0, 8.0),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 15.0, vertical: 8.0),
                                     child: Text(
                                       'Connect',
                                       style: GoogleFonts.inter(
@@ -708,8 +695,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 16.0),
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -717,8 +703,8 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                         borderRadius: BorderRadius.circular(4.0),
                       ),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 12.0, 16.0, 12.0),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 12.0),
                         child: Row(
                           children: [
                             FaIcon(
@@ -773,8 +759,8 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                   borderRadius: BorderRadius.circular(4.0),
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      15.0, 8.0, 15.0, 8.0),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 15.0, vertical: 8.0),
                                   child: Text(
                                     'Connect',
                                     style: GoogleFonts.inter(
@@ -792,8 +778,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 16.0),
                     child: SettingsItemWidget(
                       tittle: 'Shipping Defaults',
                       value: () {
@@ -832,8 +817,8 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                         borderRadius: BorderRadius.circular(4.0),
                       ),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 12.0, 16.0, 12.0),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 12.0),
                         child: Row(
                           children: [
                             FaIcon(
@@ -862,8 +847,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 16.0),
                     child: InkWell(
                       onTap: () async {
                         context.pushNamed(SettingsPrivacyWidget.routeName);
@@ -875,8 +859,8 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                           borderRadius: BorderRadius.circular(4.0),
                         ),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 12.0, 16.0, 12.0),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 12.0),
                           child: Row(
                             children: [
                               FaIcon(
@@ -906,8 +890,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 16.0),
                     child: InkWell(
                       onTap: () async {
                         context.pushNamed(SettingsReportWidget.routeName);
@@ -919,8 +902,8 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                           borderRadius: BorderRadius.circular(4.0),
                         ),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 12.0, 16.0, 12.0),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 12.0),
                           child: Row(
                             children: [
                               FaIcon(
@@ -950,8 +933,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 32.0),
                     child: Container(
                       width: double.infinity,
                       height: 56.0,
@@ -982,8 +964,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                           ),
                         ),
                         style: TextButton.styleFrom(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 0.0, 16.0, 0.0),
+                          padding: EdgeInsets.symmetric(horizontal: 16.0),
                         ),
                       ),
                     ),

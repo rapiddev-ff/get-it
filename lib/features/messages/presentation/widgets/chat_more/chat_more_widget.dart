@@ -31,7 +31,7 @@ class _ChatMoreWidgetState extends ConsumerState<ChatMoreWidget> {
         borderRadius: BorderRadius.circular(4.0),
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -50,8 +50,7 @@ class _ChatMoreWidgetState extends ConsumerState<ChatMoreWidget> {
               child: Row(
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 16.0),
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
                     child: Icon(
                       Icons.block_sharp,
                       color: AppColors.textPrimary,
@@ -68,7 +67,7 @@ class _ChatMoreWidgetState extends ConsumerState<ChatMoreWidget> {
             Row(
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 16.0),
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
                   child: Icon(
                     Icons.person_add_alt,
                     color: AppColors.textPrimary,
@@ -98,8 +97,7 @@ class _ChatMoreWidgetState extends ConsumerState<ChatMoreWidget> {
               child: Row(
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 16.0),
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
                     child: FaIcon(
                       FontAwesomeIcons.trashCan,
                       color: AppColors.textPrimary,

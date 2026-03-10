@@ -170,7 +170,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                 color: AppColors.backgroundSecondary,
               ),
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Row(
                   children: [
                     Expanded(
@@ -183,8 +183,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 10.0),
+                              padding: EdgeInsets.only(bottom: 10.0),
                               child: Text(
                                 'Shop',
                                 style: GoogleFonts.inter(
@@ -237,8 +236,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 10.0),
+                              padding: EdgeInsets.only(bottom: 10.0),
                               child: Text(
                                 'Seller Dashboard',
                                 style: GoogleFonts.inter(
@@ -282,7 +280,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
 
   Widget _buildShopTab() {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(16.0, 32.0, 16.0, 32.0),
+      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 32.0),
       child: Container(
         width: double.infinity,
         height: 500.0,
@@ -431,7 +429,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
 
   Widget _buildSellerDashboardActive(dynamic authData) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -451,7 +449,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 40.0, 0.0, 0.0),
+              padding: EdgeInsets.only(top: 40.0),
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -460,7 +458,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                 ),
                 child: Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
+                      EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -496,7 +494,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+              padding: EdgeInsets.only(top: 16.0),
               child: Row(
                 children: [
                   _buildStatCard('active_listings', 'Active'),
@@ -506,7 +504,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 40.0, 0.0, 0.0),
+              padding: EdgeInsets.only(top: 40.0),
               child: Text(
                 'Catalog New Items',
                 style: GoogleFonts.inter(
@@ -516,7 +514,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+              padding: EdgeInsets.only(top: 12.0),
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -541,8 +539,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                         size: 30.0,
                       ),
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                        padding: EdgeInsets.only(top: 8.0),
                         child: Text(
                           'AI Scan Item',
                           style: GoogleFonts.inter(
@@ -564,7 +561,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+              padding: EdgeInsets.only(top: 16.0),
               child: Row(
                 children: [
                   _buildCatalogActionCard(
@@ -580,8 +577,8 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                         borderRadius: BorderRadius.circular(4.0),
                       ),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 12.0, 16.0, 16.0),
+                        padding: EdgeInsets.only(
+                            left: 16.0, top: 12.0, right: 16.0, bottom: 16.0),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -608,7 +605,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 40.0, 0.0, 0.0),
+              padding: EdgeInsets.only(top: 40.0),
               child: Text(
                 'Quick Actions',
                 style: GoogleFonts.inter(
@@ -618,7 +615,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+              padding: EdgeInsets.only(top: 16.0),
               child: Row(
                 children: [
                   _buildQuickActionCard(
@@ -642,7 +639,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+              padding: EdgeInsets.only(top: 16.0),
               child: Row(
                 children: [
                   _buildQuickActionCard(
@@ -669,7 +666,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
             // Items to Ship section
             if (_itemsToShip.isNotEmpty) ...[
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 40.0, 0.0, 0.0),
+                padding: EdgeInsets.only(top: 40.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -693,7 +690,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                padding: EdgeInsets.only(top: 16.0),
                 child: Column(
                   children: _itemsToShip
                       .map((order) => SellerDashboardShipItemWidget(
@@ -717,7 +714,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                padding: EdgeInsets.only(top: 16.0),
                 child: InkWell(
                   onTap: () =>
                       context.pushNamed(HomeDashoardShippingWidget.routeName),
@@ -750,7 +747,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
 
   Widget _buildSellerDashboardOnboarding(dynamic authData) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         children: [
           Expanded(
@@ -777,8 +774,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                 ),
                 if (authData.stripe?.detailsSubmitted ?? false) ...[
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                    padding: EdgeInsets.only(top: 24.0),
                     child: Container(
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(
@@ -825,7 +821,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                 ] else ...[
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 52.0, 16.0, 0.0),
+                        EdgeInsets.only(left: 16.0, top: 52.0, right: 16.0),
                     child: Container(
                       width: double.infinity,
                       height: 56.0,
@@ -856,8 +852,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 0.0, 16.0, 0.0),
+                          padding: EdgeInsets.symmetric(horizontal: 16.0),
                         ),
                         child: _connectingStripe
                             ? SizedBox(
@@ -937,7 +932,8 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
           borderRadius: BorderRadius.circular(4.0),
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 16.0),
+          padding:
+              EdgeInsets.only(left: 16.0, top: 12.0, right: 16.0, bottom: 16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -981,7 +977,8 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
             borderRadius: BorderRadius.circular(4.0),
           ),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 16.0),
+            padding: EdgeInsets.only(
+                left: 16.0, top: 12.0, right: 16.0, bottom: 16.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -1024,7 +1021,8 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
             borderRadius: BorderRadius.circular(4.0),
           ),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 16.0),
+            padding: EdgeInsets.only(
+                left: 16.0, top: 12.0, right: 16.0, bottom: 16.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -1036,7 +1034,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                   size: 22.0,
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                  padding: EdgeInsets.only(top: 8.0),
                   child: Text(
                     label,
                     style: GoogleFonts.inter(

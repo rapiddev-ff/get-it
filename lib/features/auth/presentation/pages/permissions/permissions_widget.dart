@@ -75,8 +75,7 @@ class _PermissionsWidgetState extends State<PermissionsWidget>
             children: [
               Flexible(
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                      16.0, 0.0, 16.0, 0.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,8 +90,7 @@ class _PermissionsWidgetState extends State<PermissionsWidget>
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 16.0, 0.0, 0.0),
+                        padding: const EdgeInsets.only(top: 16.0),
                         child: Text(
                           'Let\u2019s Get You Set Up.',
                           style: GoogleFonts.inter(
@@ -104,8 +102,7 @@ class _PermissionsWidgetState extends State<PermissionsWidget>
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 4.0, 0.0, 0.0),
+                        padding: const EdgeInsets.only(top: 4.0),
                         child: Text(
                           'To provide you with the best possible experience, we\u2019d like to send you helpful notifications and know your location.',
                           textAlign: TextAlign.start,
@@ -119,8 +116,7 @@ class _PermissionsWidgetState extends State<PermissionsWidget>
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 48.0, 0.0, 0.0),
+                        padding: const EdgeInsets.only(top: 48.0),
                         child: Text(
                           'We\u2019ll ask permission for:',
                           textAlign: TextAlign.start,
@@ -134,8 +130,7 @@ class _PermissionsWidgetState extends State<PermissionsWidget>
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 16.0, 0.0, 0.0),
+                        padding: const EdgeInsets.only(top: 16.0),
                         child: Container(
                           width: double.infinity,
                           height: 100.0,
@@ -163,9 +158,7 @@ class _PermissionsWidgetState extends State<PermissionsWidget>
                                 ),
                                 Expanded(
                                   child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 4.0, 0.0, 0.0),
+                                    padding: const EdgeInsets.only(top: 4.0),
                                     child: Text(
                                       'Notifications',
                                       textAlign: TextAlign.start,
@@ -190,8 +183,7 @@ class _PermissionsWidgetState extends State<PermissionsWidget>
               ),
               if (!isKeyboardShowing(context))
                 Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(
-                      24.0, 0.0, 24.0, 0.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [

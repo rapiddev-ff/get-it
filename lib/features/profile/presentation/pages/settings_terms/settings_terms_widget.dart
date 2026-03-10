@@ -22,20 +22,18 @@ class SettingsTermsWidget extends StatelessWidget {
             automaticallyImplyLeading: false,
             flexibleSpace: FlexibleSpaceBar(
               title: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 14.0),
+                padding: EdgeInsets.only(bottom: 14.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
+                      padding: EdgeInsets.only(bottom: 8.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                8.0, 0.0, 0.0, 0.0),
+                            padding: EdgeInsets.only(left: 8.0),
                             child: IconButton(
                               icon: Icon(
                                 Icons.arrow_back_rounded,
@@ -52,8 +50,7 @@ class SettingsTermsWidget extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                      padding: EdgeInsets.only(left: 16.0),
                       child: Text(
                         'Terms & Conditions',
                         style: GoogleFonts.inter(
@@ -72,7 +69,7 @@ class SettingsTermsWidget extends StatelessWidget {
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 32.0, 16.0, 0.0),
+            padding: EdgeInsets.only(left: 16.0, top: 32.0, right: 16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -85,7 +82,7 @@ class SettingsTermsWidget extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                  padding: EdgeInsets.only(top: 8.0),
                   child: Text(
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet ex mattis, lobortis ante vitae, bibendum ex. Vestibulum feugiat mi eu tincidunt congue. Nam viverra. Lorem ipsum dolor ',
                     style: GoogleFonts.inter(
@@ -96,7 +93,7 @@ class SettingsTermsWidget extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                  padding: EdgeInsets.only(top: 24.0),
                   child: Text(
                     'Using CardSmart App',
                     style: GoogleFonts.inter(
@@ -107,7 +104,7 @@ class SettingsTermsWidget extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                  padding: EdgeInsets.only(top: 8.0),
                   child: Text(
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet ex mattis, lobortis ante vitae, bibendum ex. Vestibulum feugiat mi eu tincidunt congue. Nam viverra. Lorem ipsum dolor ',
                     style: GoogleFonts.inter(

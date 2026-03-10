@@ -100,8 +100,7 @@ class _HomeDashoardPromoteStep1WidgetState
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
                       child: Container(
                         width: double.infinity,
                         child: TextFormField(
@@ -170,8 +169,7 @@ class _HomeDashoardPromoteStep1WidgetState
                       ),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                      padding: EdgeInsets.only(top: 16.0),
                       child: Row(
                         children: [
                           Container(
@@ -188,8 +186,8 @@ class _HomeDashoardPromoteStep1WidgetState
                               borderRadius: BorderRadius.circular(100.0),
                             ),
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 8.0, 16.0, 8.0),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 16.0, vertical: 8.0),
                               child: Text(
                                 'Requested',
                                 style: GoogleFonts.inter(
@@ -207,7 +205,7 @@ class _HomeDashoardPromoteStep1WidgetState
                     ),
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
+                          EdgeInsets.only(left: 16.0, top: 24.0, right: 16.0),
                       child: MasonryGridView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         gridDelegate:

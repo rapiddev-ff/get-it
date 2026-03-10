@@ -36,7 +36,7 @@ class _StripeSuccessWidgetState extends State<StripeSuccessWidget> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 32.0),
+                  padding: EdgeInsets.only(bottom: 32.0),
                   child: Container(
                     width: 120.0,
                     height: 120.0,
@@ -55,7 +55,7 @@ class _StripeSuccessWidgetState extends State<StripeSuccessWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
+                  padding: EdgeInsets.only(bottom: 16.0),
                   child: Text(
                     'Stripe Connected Successfully!',
                     textAlign: TextAlign.center,
@@ -67,7 +67,7 @@ class _StripeSuccessWidgetState extends State<StripeSuccessWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 32.0),
+                  padding: EdgeInsets.only(bottom: 32.0),
                   child: Text(
                     'Your Stripe account has been connected successfully. You can now start receiving payments from your sales!',
                     textAlign: TextAlign.center,
