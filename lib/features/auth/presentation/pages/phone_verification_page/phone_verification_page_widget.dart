@@ -1,4 +1,3 @@
-
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -36,11 +35,9 @@ class PhoneVerificationPageWidget extends StatefulWidget {
 }
 
 class _PhoneVerificationPageWidgetState
-    extends State<PhoneVerificationPageWidget>
-    with KeyboardVisibilityMixin {
+    extends State<PhoneVerificationPageWidget> with KeyboardVisibilityMixin {
   late PhoneVerificationPageModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   /// Returns null if the phone number is valid, or an error string if invalid.
   static String? _phoneValidationResult(String? phoneNumber) {
     if (phoneNumber == null || phoneNumber.trim().isEmpty) {
@@ -98,7 +95,6 @@ class _PhoneVerificationPageWidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundPrimary,
@@ -295,8 +291,7 @@ class _PhoneVerificationPageWidgetState
                                 context.pushNamed(
                                   PhoneVerificationPage2Widget.routeName,
                                   queryParameters: {
-                                    'phoneNumber':
-                                        _model.textController!.text,
+                                    'phoneNumber': _model.textController!.text,
                                     'isOnborading':
                                         widget.isOnboarding.toString(),
                                   },

@@ -22,15 +22,12 @@ class SettingsReferralWidget extends ConsumerStatefulWidget {
 
 class _SettingsReferralWidgetState
     extends ConsumerState<SettingsReferralWidget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
     final userData = ref.watch(authProvider);
 
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundPrimary,

@@ -41,7 +41,6 @@ class HomeDashoardShortlistCreateStep2Widget extends StatefulWidget {
 
 class _HomeDashoardShortlistCreateStep2WidgetState
     extends State<HomeDashoardShortlistCreateStep2Widget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   String state = 'Shop';
   bool? switchValue;
   List<String> selectedProductIds = [];
@@ -127,9 +126,8 @@ class _HomeDashoardShortlistCreateStep2WidgetState
       queryFn: (q) => q.inFilterOrNull('id', newIds),
     );
     final images = await ProductImagesTable().queryRows(
-      queryFn: (q) => q
-          .inFilterOrNull('product_id', newIds)
-          .eqOrNull('is_main', true),
+      queryFn: (q) =>
+          q.inFilterOrNull('product_id', newIds).eqOrNull('is_main', true),
     );
     if (!mounted) return;
     setState(() {
@@ -155,8 +153,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
     }
   }
 
-  void _showProductMenu(
-      BuildContext context, ProductsRow? product, int index) {
+  void _showProductMenu(BuildContext context, ProductsRow? product, int index) {
     if (product == null) return;
     showModalBottomSheet(
       context: context,
@@ -180,7 +177,9 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                 _loadProductDetails(selectedProductIds);
               },
             ),
-            Divider(color: AppColors.textSecondary.withValues(alpha: 0.2), height: 1),
+            Divider(
+                color: AppColors.textSecondary.withValues(alpha: 0.2),
+                height: 1),
             _menuItem(
               icon: Icons.delete_outline,
               label: 'Remove from Inventory (Damaged)',
@@ -197,7 +196,9 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                 });
               },
             ),
-            Divider(color: AppColors.textSecondary.withValues(alpha: 0.2), height: 1),
+            Divider(
+                color: AppColors.textSecondary.withValues(alpha: 0.2),
+                height: 1),
             _menuItem(
               icon: Icons.campaign_outlined,
               label: 'Promote Product',
@@ -206,7 +207,9 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                 context.pushNamed('homeDashoardPromoteStep1');
               },
             ),
-            Divider(color: AppColors.textSecondary.withValues(alpha: 0.2), height: 1),
+            Divider(
+                color: AppColors.textSecondary.withValues(alpha: 0.2),
+                height: 1),
             _menuItem(
               icon: Icons.playlist_remove,
               label: 'Remove from Shortlist',
@@ -252,8 +255,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
     );
   }
 
-  Widget _buildProductCard(
-      ProductsRow? product, String? imageUrl, int index) {
+  Widget _buildProductCard(ProductsRow? product, String? imageUrl, int index) {
     final price = product != null
         ? '\$${NumberFormat('#,##0', 'en_US').format(product.price)}'
         : '';
@@ -273,8 +275,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
           Stack(
             children: [
               ClipRRect(
-                borderRadius:
-                    BorderRadius.vertical(top: Radius.circular(12.0)),
+                borderRadius: BorderRadius.vertical(top: Radius.circular(12.0)),
                 child: AspectRatio(
                   aspectRatio: 1.0,
                   child: imageUrl != null
@@ -395,7 +396,6 @@ class _HomeDashoardShortlistCreateStep2WidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(56.0),
@@ -578,9 +578,12 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                   autofocus: false,
                                   enabled: true,
                                   obscureText: false,
-                                  decoration: appInputDecoration('0.00').copyWith(
+                                  decoration:
+                                      appInputDecoration('0.00').copyWith(
                                     prefixText: '% ',
-                                    prefixStyle: GoogleFonts.inter(fontSize: 16.0, color: AppColors.textSecondary),
+                                    prefixStyle: GoogleFonts.inter(
+                                        fontSize: 16.0,
+                                        color: AppColors.textSecondary),
                                   ),
                                   style: appTextFieldStyle,
                                   keyboardType: TextInputType.number,
@@ -753,7 +756,8 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                final result = await Navigator.push<List<String>>(
+                                final result =
+                                    await Navigator.push<List<String>>(
                                   context,
                                   MaterialPageRoute(
                                     builder: (_) =>
@@ -810,8 +814,8 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                     enabled: !_isSaving,
                     onPressed: () async {
                       setState(() => _isSaving = true);
-                      final discountPct = double.tryParse(
-                          textController1!.text.trim());
+                      final discountPct =
+                          double.tryParse(textController1!.text.trim());
                       final result = await actions.createShortlist(
                         name: widget.name,
                         eventName: widget.eventName,
@@ -829,9 +833,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                         context,
                         result['title'] ?? '',
                         result['message'] ?? '',
-                        result['success'] == true
-                            ? 'success'
-                            : 'error',
+                        result['success'] == true ? 'success' : 'error',
                       );
                       if (result['success'] == true) {
                         // Pop back to shortlist list (Step2 → Step1 → list)
@@ -848,8 +850,8 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                           ? null
                           : () async {
                               setState(() => _isSaving = true);
-                              final discountPct = double.tryParse(
-                                  textController1!.text.trim());
+                              final discountPct =
+                                  double.tryParse(textController1!.text.trim());
                               final result = await actions.createShortlist(
                                 name: widget.name,
                                 eventName: widget.eventName,
@@ -867,9 +869,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                 context,
                                 result['title'] ?? '',
                                 result['message'] ?? '',
-                                result['success'] == true
-                                    ? 'success'
-                                    : 'error',
+                                result['success'] == true ? 'success' : 'error',
                               );
                               if (result['success'] == true) {
                                 Navigator.of(context)

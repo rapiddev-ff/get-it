@@ -33,7 +33,6 @@ class _SettingsBusinessAddressWidgetState
     with KeyboardVisibilityMixin {
   late SettingsBusinessAddressModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
@@ -72,7 +71,6 @@ class _SettingsBusinessAddressWidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundSecondary,
@@ -182,82 +180,80 @@ class _SettingsBusinessAddressWidgetState
                                       ),
                                     ),
                                     DropdownButtonFormField<String>(
-                                        initialValue: () {
-                                          final saved = _model
-                                                  .countryDropdownValue ??=
-                                              ref
-                                                      .read(authProvider)
-                                                      .businessAddress
-                                                      ?.country ??
-                                                  '';
-                                          if (saved.isEmpty) return null;
-                                          final codes = GeoData.getCountries()
-                                              .map((c) => c['code']!)
-                                              .toSet();
-                                          if (codes.contains(saved)) {
-                                            return saved;
-                                          }
-                                          // Legacy full name → resolve to code
-                                          final match = GeoData.getCountries()
-                                              .where((c) =>
-                                                  c['name']!.toLowerCase() ==
-                                                  saved.toLowerCase())
-                                              .toList();
-                                          if (match.isNotEmpty) {
-                                            _model.countryDropdownValue =
-                                                match.first['code']!;
-                                            return _model.countryDropdownValue;
-                                          }
-                                          _model.countryDropdownValue = '';
-                                          return null;
-                                        }(),
-                                        items: GeoData.getCountries()
-                                            .map((c) => DropdownMenuItem(
-                                                  value: c['code'],
-                                                  child: Text(c['name']!,
-                                                      style: GoogleFonts.inter(
-                                                          fontSize: 14.0)),
-                                                ))
-                                            .toList(),
-                                        onChanged: (val) => setState(() =>
-                                            _model.countryDropdownValue = val),
-                                        decoration: InputDecoration(
-                                          isDense: true,
-                                          hintText: 'Country',
-                                          hintStyle: GoogleFonts.inter(
-                                            fontWeight: FontWeight.normal,
-                                            fontSize: 14.0,
-                                            color: AppColors.textSecondary,
-                                          ),
-                                          contentPadding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  12.0, 16.0, 12.0, 16.0),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: AppColors.neutral700,
-                                                width: 1.0),
-                                            borderRadius:
-                                                BorderRadius.circular(4.0),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: AppColors.neutral700,
-                                                width: 1.0),
-                                            borderRadius:
-                                                BorderRadius.circular(4.0),
-                                          ),
-                                        ),
-                                        dropdownColor:
-                                            AppColors.backgroundPrimary,
-                                        icon: Icon(
-                                          Icons.keyboard_arrow_down_rounded,
+                                      initialValue: () {
+                                        final saved =
+                                            _model.countryDropdownValue ??= ref
+                                                    .read(authProvider)
+                                                    .businessAddress
+                                                    ?.country ??
+                                                '';
+                                        if (saved.isEmpty) return null;
+                                        final codes = GeoData.getCountries()
+                                            .map((c) => c['code']!)
+                                            .toSet();
+                                        if (codes.contains(saved)) {
+                                          return saved;
+                                        }
+                                        // Legacy full name → resolve to code
+                                        final match = GeoData.getCountries()
+                                            .where((c) =>
+                                                c['name']!.toLowerCase() ==
+                                                saved.toLowerCase())
+                                            .toList();
+                                        if (match.isNotEmpty) {
+                                          _model.countryDropdownValue =
+                                              match.first['code']!;
+                                          return _model.countryDropdownValue;
+                                        }
+                                        _model.countryDropdownValue = '';
+                                        return null;
+                                      }(),
+                                      items: GeoData.getCountries()
+                                          .map((c) => DropdownMenuItem(
+                                                value: c['code'],
+                                                child: Text(c['name']!,
+                                                    style: GoogleFonts.inter(
+                                                        fontSize: 14.0)),
+                                              ))
+                                          .toList(),
+                                      onChanged: (val) => setState(() =>
+                                          _model.countryDropdownValue = val),
+                                      decoration: InputDecoration(
+                                        isDense: true,
+                                        hintText: 'Country',
+                                        hintStyle: GoogleFonts.inter(
+                                          fontWeight: FontWeight.normal,
+                                          fontSize: 14.0,
                                           color: AppColors.textSecondary,
-                                          size: 24.0,
                                         ),
-                                        style:
-                                            GoogleFonts.inter(fontSize: 14.0),
-                                        isExpanded: true,
+                                        contentPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                12.0, 16.0, 12.0, 16.0),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: AppColors.neutral700,
+                                              width: 1.0),
+                                          borderRadius:
+                                              BorderRadius.circular(4.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: AppColors.neutral700,
+                                              width: 1.0),
+                                          borderRadius:
+                                              BorderRadius.circular(4.0),
+                                        ),
                                       ),
+                                      dropdownColor:
+                                          AppColors.backgroundPrimary,
+                                      icon: Icon(
+                                        Icons.keyboard_arrow_down_rounded,
+                                        color: AppColors.textSecondary,
+                                        size: 24.0,
+                                      ),
+                                      style: GoogleFonts.inter(fontSize: 14.0),
+                                      isExpanded: true,
+                                    ),
                                   ].divide(SizedBox(height: 8.0)),
                                 ),
                               ),
@@ -278,88 +274,77 @@ class _SettingsBusinessAddressWidgetState
                                                 'US') ||
                                             (_model.countryDropdownValue ==
                                                 'CA')) {
-                                          return DropdownButtonFormField<String>(
-                                              initialValue: () {
-                                                final saved = _model
-                                                        .stateDropdownValue ??=
-                                                    ref
-                                                            .read(authProvider)
-                                                            .businessAddress
-                                                            ?.state ??
-                                                        '';
-                                                if (saved.isEmpty) return null;
-                                                final valid =
-                                                    GeoData.getStatesByCountry(
-                                                        _model
-                                                            .countryDropdownValue);
-                                                if (valid.contains(saved)) {
-                                                  return saved;
-                                                }
-                                                _model.stateDropdownValue = '';
-                                                return null;
-                                              }(),
-                                              items: GeoData.getStatesByCountry(
-                                                      _model
-                                                          .countryDropdownValue)
-                                                  .map((name) =>
-                                                      DropdownMenuItem(
-                                                        value: name,
-                                                        child: Text(name,
-                                                            style: GoogleFonts
-                                                                .inter(
-                                                                    fontSize:
-                                                                        14.0)),
-                                                      ))
-                                                  .toList(),
-                                              onChanged: (val) => setState(() =>
-                                                  _model.stateDropdownValue =
-                                                      val),
-                                              decoration: InputDecoration(
-                                                isDense: true,
-                                                hintText: 'State',
-                                                hintStyle: GoogleFonts.inter(
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 14.0,
-                                                  color:
-                                                      AppColors.textSecondary,
-                                                ),
-                                                contentPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(12.0, 16.0,
-                                                            12.0, 16.0),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          AppColors.neutral700,
-                                                      width: 1.0),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          4.0),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          AppColors.neutral700,
-                                                      width: 1.0),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          4.0),
-                                                ),
-                                              ),
-                                              dropdownColor:
-                                                  AppColors.backgroundPrimary,
-                                              icon: Icon(
-                                                Icons
-                                                    .keyboard_arrow_down_rounded,
+                                          return DropdownButtonFormField<
+                                              String>(
+                                            initialValue: () {
+                                              final saved = _model
+                                                  .stateDropdownValue ??= ref
+                                                      .read(authProvider)
+                                                      .businessAddress
+                                                      ?.state ??
+                                                  '';
+                                              if (saved.isEmpty) return null;
+                                              final valid = GeoData
+                                                  .getStatesByCountry(_model
+                                                      .countryDropdownValue);
+                                              if (valid.contains(saved)) {
+                                                return saved;
+                                              }
+                                              _model.stateDropdownValue = '';
+                                              return null;
+                                            }(),
+                                            items: GeoData.getStatesByCountry(
+                                                    _model.countryDropdownValue)
+                                                .map((name) => DropdownMenuItem(
+                                                      value: name,
+                                                      child: Text(name,
+                                                          style:
+                                                              GoogleFonts.inter(
+                                                                  fontSize:
+                                                                      14.0)),
+                                                    ))
+                                                .toList(),
+                                            onChanged: (val) => setState(() =>
+                                                _model.stateDropdownValue =
+                                                    val),
+                                            decoration: InputDecoration(
+                                              isDense: true,
+                                              hintText: 'State',
+                                              hintStyle: GoogleFonts.inter(
+                                                fontWeight: FontWeight.normal,
+                                                fontSize: 14.0,
                                                 color: AppColors.textSecondary,
-                                                size: 24.0,
                                               ),
-                                              style: GoogleFonts.inter(
-                                                  fontSize: 14.0),
-                                              isExpanded: true,
-                                            );
+                                              contentPadding:
+                                                  EdgeInsetsDirectional
+                                                      .fromSTEB(12.0, 16.0,
+                                                          12.0, 16.0),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: AppColors.neutral700,
+                                                    width: 1.0),
+                                                borderRadius:
+                                                    BorderRadius.circular(4.0),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: AppColors.neutral700,
+                                                    width: 1.0),
+                                                borderRadius:
+                                                    BorderRadius.circular(4.0),
+                                              ),
+                                            ),
+                                            dropdownColor:
+                                                AppColors.backgroundPrimary,
+                                            icon: Icon(
+                                              Icons.keyboard_arrow_down_rounded,
+                                              color: AppColors.textSecondary,
+                                              size: 24.0,
+                                            ),
+                                            style: GoogleFonts.inter(
+                                                fontSize: 14.0),
+                                            isExpanded: true,
+                                          );
                                         } else {
                                           return Container(
                                             width: double.infinity,
@@ -506,10 +491,9 @@ class _SettingsBusinessAddressWidgetState
                                 Future(() async {
                                   ref.read(authProvider.notifier).updateUser(
                                         (e) => e.copyWith(
-                                          businessAddress:
-                                              (e.businessAddress ??
-                                                      const BusinessAddress())
-                                                  .copyWith(
+                                          businessAddress: (e.businessAddress ??
+                                                  const BusinessAddress())
+                                              .copyWith(
                                             addressLine1: _model
                                                 .addressLine1TextController!
                                                 .text,
@@ -525,10 +509,10 @@ class _SettingsBusinessAddressWidgetState
                                                         'CA')
                                                 ? _model.stateDropdownValue ??
                                                     ''
-                                                : _model.stateTextController!
-                                                    .text,
-                                            city: _model
-                                                .cityTextController!.text,
+                                                : _model
+                                                    .stateTextController!.text,
+                                            city:
+                                                _model.cityTextController!.text,
                                             zipCode: _model
                                                 .zipCodeTextController!.text,
                                           ),

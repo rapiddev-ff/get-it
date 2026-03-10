@@ -37,8 +37,6 @@ class CheckDataWidget extends ConsumerStatefulWidget {
 
 class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
     with TickerProviderStateMixin {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   // State fields inlined from CheckDataModel.
   dynamic getAppInitialData;
   dynamic getPaymentMethods;
@@ -252,7 +250,6 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         body: SafeArea(
           top: true,

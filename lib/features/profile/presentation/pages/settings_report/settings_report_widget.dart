@@ -28,7 +28,7 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget>
     with KeyboardVisibilityMixin {
   late SettingsReportModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();  bool _isSending = false;
+  bool _isSending = false;
 
   @override
   void initState() {
@@ -50,7 +50,6 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget>
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(119.0),
@@ -205,7 +204,9 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget>
                     children: [
                       AppGradientButton(
                         text: 'Send',
-                        enabled: _model.textController!.text.trim().isNotEmpty && !_isSending,
+                        enabled:
+                            _model.textController!.text.trim().isNotEmpty &&
+                                !_isSending,
                         isLoading: _isSending,
                         onPressed: () async {
                           setState(() => _isSending = true);

@@ -200,7 +200,8 @@ class _HomeDashoardInventoryAddConditionWidgetState
                 Expanded(
                   child: OutlinedButton(
                     onPressed: () async {
-                      Navigator.pop(context, widget.conditionsList ?? <ConditionsRow>[]);
+                      Navigator.pop(
+                          context, widget.conditionsList ?? <ConditionsRow>[]);
                     },
                     style: OutlinedButton.styleFrom(
                       minimumSize: Size(double.infinity, 56.0),

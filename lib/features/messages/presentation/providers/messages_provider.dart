@@ -116,8 +116,7 @@ class MessagesNotifier extends Notifier<MessagesState> {
     state = state.copyWith(currentConversation: conversation);
   }
 
-  void updateCurrentConversation(
-      Conversation Function(Conversation) updateFn) {
+  void updateCurrentConversation(Conversation Function(Conversation) updateFn) {
     state = state.copyWith(
         currentConversation: updateFn(state.currentConversation));
   }

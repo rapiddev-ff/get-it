@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
@@ -30,7 +29,6 @@ class _PermissionsWidgetState extends State<PermissionsWidget>
     with KeyboardVisibilityMixin {
   late PermissionsModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
@@ -47,7 +45,6 @@ class _PermissionsWidgetState extends State<PermissionsWidget>
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundPrimary,

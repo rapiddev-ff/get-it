@@ -37,8 +37,6 @@ class _SettingsPaymentMethodAddWidgetState
     with TickerProviderStateMixin {
   late SettingsPaymentMethodAddModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   void initState() {
     super.initState();
@@ -123,7 +121,6 @@ class _SettingsPaymentMethodAddWidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundSecondary,
@@ -185,7 +182,8 @@ class _SettingsPaymentMethodAddWidgetState
                         ),
                         autofocus: false,
                         obscureText: false,
-                        decoration: appInputDecoration('Enter 16 digit card number'),
+                        decoration:
+                            appInputDecoration('Enter 16 digit card number'),
                         style: appTextFieldStyle,
                         keyboardType: TextInputType.number,
                         cursorColor: AppColors.textPrimary,
@@ -278,7 +276,8 @@ class _SettingsPaymentMethodAddWidgetState
                         ),
                         autofocus: false,
                         obscureText: false,
-                        decoration: appInputDecoration('Full name as shown as card'),
+                        decoration:
+                            appInputDecoration('Full name as shown as card'),
                         style: appTextFieldStyle,
                         cursorColor: AppColors.textPrimary,
                       ),
@@ -390,7 +389,8 @@ class _SettingsPaymentMethodAddWidgetState
                         autofocus: false,
                         autofillHints: [AutofillHints.streetAddressLine2],
                         obscureText: false,
-                        decoration: appInputDecoration('Apartment, suite, etc. (optional)'),
+                        decoration: appInputDecoration(
+                            'Apartment, suite, etc. (optional)'),
                         style: appTextFieldStyle,
                         cursorColor: AppColors.textPrimary,
                       ),
@@ -411,10 +411,11 @@ class _SettingsPaymentMethodAddWidgetState
                               SizedBox(
                                 height: 52.0,
                                 child: DropdownButtonFormField<String>(
-                                  initialValue: (_model.countryDropdownValue ?? '')
-                                          .isEmpty
-                                      ? null
-                                      : _model.countryDropdownValue,
+                                  initialValue:
+                                      (_model.countryDropdownValue ?? '')
+                                              .isEmpty
+                                          ? null
+                                          : _model.countryDropdownValue,
                                   items: GeoData.getCountries()
                                       .map((c) => DropdownMenuItem(
                                             value: c['code'],
@@ -451,10 +452,11 @@ class _SettingsPaymentMethodAddWidgetState
                                     return SizedBox(
                                       height: 52.0,
                                       child: DropdownButtonFormField<String>(
-                                        initialValue: (_model.stateDropdownValue ?? '')
-                                                .isEmpty
-                                            ? null
-                                            : _model.stateDropdownValue,
+                                        initialValue:
+                                            (_model.stateDropdownValue ?? '')
+                                                    .isEmpty
+                                                ? null
+                                                : _model.stateDropdownValue,
                                         items: GeoData.getStatesByCountry(
                                                 _model.countryDropdownValue)
                                             .map((name) => DropdownMenuItem(

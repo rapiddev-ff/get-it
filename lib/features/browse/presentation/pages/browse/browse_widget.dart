@@ -28,7 +28,6 @@ class BrowseWidget extends StatefulWidget {
 }
 
 class _BrowseWidgetState extends State<BrowseWidget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   final _textController = TextEditingController();
   final _textFieldFocusNode = FocusNode();
 
@@ -54,7 +53,6 @@ class _BrowseWidgetState extends State<BrowseWidget> {
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(56.0),
@@ -224,8 +222,7 @@ class _BrowseWidgetState extends State<BrowseWidget> {
                                 color: AppColors.neutral800,
                                 size: 140.0,
                               ),
-                              title:
-                                  'No results for "${_textController.text}"',
+                              title: 'No results for "${_textController.text}"',
                               description:
                                   'Try a different keyword or use fewer words.',
                               hasButton: true,

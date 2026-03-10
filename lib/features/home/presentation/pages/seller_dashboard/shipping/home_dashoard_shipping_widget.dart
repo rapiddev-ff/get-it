@@ -22,8 +22,6 @@ class HomeDashoardShippingWidget extends StatefulWidget {
 
 class _HomeDashoardShippingWidgetState
     extends State<HomeDashoardShippingWidget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   bool _isLoading = true;
   Map<String, int> _counts = {'to_ship': 0, 'shipped': 0};
   List<Map<String, dynamic>> _orders = [];
@@ -107,7 +105,6 @@ class _HomeDashoardShippingWidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(56.0),
@@ -163,8 +160,8 @@ class _HomeDashoardShippingWidgetState
                   onRefresh: _loadOrders,
                   color: AppColors.secondary,
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(
-                        16.0, 0.0, 16.0, 0.0),
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                     child: SingleChildScrollView(
                       physics: AlwaysScrollableScrollPhysics(),
                       child: Column(
@@ -315,8 +312,7 @@ class _HomeDashoardShippingWidgetState
           borderRadius: BorderRadius.circular(4.0),
         ),
         child: Padding(
-          padding:
-              EdgeInsetsDirectional.fromSTEB(10.0, 16.0, 16.0, 16.0),
+          padding: EdgeInsetsDirectional.fromSTEB(10.0, 16.0, 16.0, 16.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -332,16 +328,16 @@ class _HomeDashoardShippingWidgetState
                           width: 66.0,
                           height: 66.0,
                           color: AppColors.backgroundPrimary,
-                          child: Icon(Icons.image,
-                              color: AppColors.textSecondary),
+                          child:
+                              Icon(Icons.image, color: AppColors.textSecondary),
                         ),
                       )
                     : Container(
                         width: 66.0,
                         height: 66.0,
                         color: AppColors.backgroundPrimary,
-                        child: Icon(Icons.image,
-                            color: AppColors.textSecondary),
+                        child:
+                            Icon(Icons.image, color: AppColors.textSecondary),
                       ),
               ),
               Expanded(
@@ -393,8 +389,7 @@ class _HomeDashoardShippingWidgetState
                             text: TextSpan(
                               children: [
                                 TextSpan(
-                                  text:
-                                      'Order #${order['order_number'] ?? ''}',
+                                  text: 'Order #${order['order_number'] ?? ''}',
                                   style: GoogleFonts.inter(
                                     fontSize: 12.0,
                                     color: AppColors.textSecondary,

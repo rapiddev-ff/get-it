@@ -32,8 +32,7 @@ class WishlistRepository {
   }
 
   /// Fetches wishlist products for a user.
-  Future<List<Map<String, dynamic>>> getWishlistProducts(
-      String userId) async {
+  Future<List<Map<String, dynamic>>> getWishlistProducts(String userId) async {
     try {
       final response = await _client.rpc(
         'get_wishlist_products',

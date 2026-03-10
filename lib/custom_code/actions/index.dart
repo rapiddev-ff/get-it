@@ -11,7 +11,8 @@ export 'get_seller_info.dart' show getSellerInfo;
 export 'permanently_delete_account.dart' show permanentlyDeleteAccount;
 export 'supabase_login.dart' show supabaseLogin;
 export 'dispose_feed_products_stream.dart' show disposeFeedProductsStream;
-export 'init_wishlist_stream.dart' show initWishlistStream, disposeWishlistStream;
+export 'init_wishlist_stream.dart'
+    show initWishlistStream, disposeWishlistStream;
 export 'set_statusbar_color.dart' show setStatusbarColor;
 export 'start_stripe_connect_onboarding.dart' show startStripeConnectOnboarding;
 export 'get_stripe_account_status.dart' show getStripeAccountStatus;

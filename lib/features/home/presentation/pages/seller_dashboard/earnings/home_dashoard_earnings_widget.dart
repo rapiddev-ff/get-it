@@ -24,8 +24,6 @@ class _HomeDashoardEarningsWidgetState
   String _activeTab = 'Sales';
   String _activeFilter = 'All Time';
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   bool _isLoading = true;
   Map<String, dynamic> _earnings = {};
   List<Map<String, dynamic>> _allOrders = [];
@@ -181,7 +179,6 @@ class _HomeDashoardEarningsWidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(56.0),
@@ -193,8 +190,8 @@ class _HomeDashoardEarningsWidgetState
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  icon: Icon(Icons.arrow_back,
-                      color: AppColors.info, size: 24.0),
+                  icon:
+                      Icon(Icons.arrow_back, color: AppColors.info, size: 24.0),
                   iconSize: 40.0,
                   onPressed: () => context.pop(),
                 ),
@@ -226,126 +223,125 @@ class _HomeDashoardEarningsWidgetState
             ? Center(
                 child: CircularProgressIndicator(color: AppColors.secondary))
             : Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Time filter chips
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: _filters
-                                .map((f) => Padding(
-                                      padding: EdgeInsets.only(right: 8.0),
-                                      child: _buildFilterChip(f),
-                                    ))
-                                .toList(),
-                          ),
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Time filter chips
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: _filters
+                              .map((f) => Padding(
+                                    padding: EdgeInsets.only(right: 8.0),
+                                    child: _buildFilterChip(f),
+                                  ))
+                              .toList(),
                         ),
-                        // Earnings Breakdown
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 24.0, 0.0, 0.0),
-                          child: Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: AppColors.backgroundSecondary,
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 16.0, 16.0, 16.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Earnings Breakdown',
-                                    style: GoogleFonts.inter(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16.0,
-                                      color: AppColors.textPrimary,
+                      ),
+                      // Earnings Breakdown
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: AppColors.backgroundSecondary,
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                16.0, 16.0, 16.0, 16.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Earnings Breakdown',
+                                  style: GoogleFonts.inter(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16.0,
+                                    color: AppColors.textPrimary,
+                                  ),
+                                ),
+                                SizedBox(height: 16.0),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
+                                      child: _buildEarningCard(
+                                        'Available',
+                                        '\$${_formatPrice(_availableAmount)}',
+                                        Color(0xFF22C55E),
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(height: 16.0),
-                                  Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Expanded(
-                                        child: _buildEarningCard(
-                                          'Available',
-                                          '\$${_formatPrice(_availableAmount)}',
-                                          Color(0xFF22C55E),
-                                        ),
+                                    SizedBox(width: 12.0),
+                                    Expanded(
+                                      child: _buildEarningCard(
+                                        'Pending',
+                                        '\$${_formatPrice(_pendingAmount)}',
+                                        Color(0xFFD97706),
                                       ),
-                                      SizedBox(width: 12.0),
-                                      Expanded(
-                                        child: _buildEarningCard(
-                                          'Pending',
-                                          '\$${_formatPrice(_pendingAmount)}',
-                                          Color(0xFFD97706),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 16.0),
-                                  Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      _buildStatColumn(
-                                          '$_totalSales', 'Total Sales'),
-                                      _buildStatColumn(
-                                          '\$${_formatPrice(_avgSale)}',
-                                          'Avg Sale'),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 16.0),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    _buildStatColumn(
+                                        '$_totalSales', 'Total Sales'),
+                                    _buildStatColumn(
+                                        '\$${_formatPrice(_avgSale)}',
+                                        'Avg Sale'),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                        // Tabs: Sales | Referrals
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 24.0, 0.0, 0.0),
-                          child: Container(
-                            width: double.infinity,
-                            height: 53.0,
-                            decoration: BoxDecoration(
-                              color: AppColors.backgroundPrimary,
-                            ),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  20.0, 0.0, 20.0, 0.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  _buildTab('Sales'),
-                                  _buildTab('Referrals'),
-                                ],
-                              ),
+                      ),
+                      // Tabs: Sales | Referrals
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                        child: Container(
+                          width: double.infinity,
+                          height: 53.0,
+                          decoration: BoxDecoration(
+                            color: AppColors.backgroundPrimary,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                20.0, 0.0, 20.0, 0.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                _buildTab('Sales'),
+                                _buildTab('Referrals'),
+                              ],
                             ),
                           ),
                         ),
-                        // Content
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 16.0, 0.0, 0.0),
-                          child: _activeTab == 'Sales'
-                              ? _buildSalesContent()
-                              : _buildReferralsContent(),
-                        ),
-                      ]
-                          .addToStart(SizedBox(height: 28.0))
-                          .addToEnd(SizedBox(height: 32.0)),
-                    ),
+                      ),
+                      // Content
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                        child: _activeTab == 'Sales'
+                            ? _buildSalesContent()
+                            : _buildReferralsContent(),
+                      ),
+                    ]
+                        .addToStart(SizedBox(height: 28.0))
+                        .addToEnd(SizedBox(height: 32.0)),
                   ),
                 ),
+              ),
       ),
     );
   }
@@ -475,9 +471,7 @@ class _HomeDashoardEarningsWidgetState
                 label,
                 style: GoogleFonts.inter(
                   fontSize: 14.0,
-                  color: isActive
-                      ? AppColors.textPrimary
-                      : Color(0xFFB4B4B4),
+                  color: isActive ? AppColors.textPrimary : Color(0xFFB4B4B4),
                   height: 2.0,
                 ),
               ),

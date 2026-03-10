@@ -22,8 +22,6 @@ class StripeSuccessWidget extends StatefulWidget {
 class _StripeSuccessWidgetState extends State<StripeSuccessWidget> {
   List<StripeAccountsRow>? getStripe;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   void dispose() {
     super.dispose();
@@ -33,7 +31,6 @@ class _StripeSuccessWidgetState extends State<StripeSuccessWidget> {
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         body: SafeArea(
           top: true,

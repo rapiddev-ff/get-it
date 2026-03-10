@@ -17,7 +17,6 @@ class OrderRepository {
     String? statusFilter,
     int? limit,
   }) async {
-
     final baseQuery = _client
         .from('orders')
         .select('''
@@ -39,8 +38,8 @@ class OrderRepository {
             .limit(limit);
       } else {
         response = await baseQuery
-            .inFilter('status', ['sale_pending', 'paid'])
-            .order('created_at', ascending: false);
+            .inFilter('status', ['sale_pending', 'paid']).order('created_at',
+                ascending: false);
       }
     } else if (statusFilter == 'shipped') {
       if (limit != null) {
@@ -50,17 +49,15 @@ class OrderRepository {
             .limit(limit);
       } else {
         response = await baseQuery
-            .inFilter('status', ['shipped', 'delivered'])
-            .order('created_at', ascending: false);
+            .inFilter('status', ['shipped', 'delivered']).order('created_at',
+                ascending: false);
       }
     } else {
       if (limit != null) {
-        response = await baseQuery
-            .order('created_at', ascending: false)
-            .limit(limit);
+        response =
+            await baseQuery.order('created_at', ascending: false).limit(limit);
       } else {
-        response = await baseQuery
-            .order('created_at', ascending: false);
+        response = await baseQuery.order('created_at', ascending: false);
       }
     }
 
@@ -71,7 +68,6 @@ class OrderRepository {
   Future<Map<String, int>> getSellerOrderCounts({
     required String sellerId,
   }) async {
-
     final results = await _client
         .from('orders')
         .select('status')

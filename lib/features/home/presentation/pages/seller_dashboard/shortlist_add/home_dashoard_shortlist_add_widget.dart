@@ -23,7 +23,6 @@ class HomeDashoardShortlistAddWidget extends StatefulWidget {
 
 class _HomeDashoardShortlistAddWidgetState
     extends State<HomeDashoardShortlistAddWidget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
 
@@ -89,7 +88,6 @@ class _HomeDashoardShortlistAddWidgetState
 
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(56.0),
@@ -153,8 +151,7 @@ class _HomeDashoardShortlistAddWidgetState
             children: [
               Expanded(
                 child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -174,8 +171,7 @@ class _HomeDashoardShortlistAddWidgetState
                           obscureText: false,
                           decoration: InputDecoration(
                             isDense: false,
-                            hintText:
-                                'Search products, characters, years...',
+                            hintText: 'Search products, characters, years...',
                             hintStyle: GoogleFonts.inter(
                               fontSize: 15.0,
                               color: AppColors.textSecondary,
@@ -227,8 +223,8 @@ class _HomeDashoardShortlistAddWidgetState
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            0.0, 16.0, 0.0, 0.0),
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -263,8 +259,8 @@ class _HomeDashoardShortlistAddWidgetState
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            0.0, 16.0, 0.0, 0.0),
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                         child: GestureDetector(
                           onTap: _toggleSelectAll,
                           child: Container(
@@ -348,10 +344,10 @@ class _HomeDashoardShortlistAddWidgetState
                 ),
               ),
               Padding(
-                padding:
-                    EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                 child: AppGradientButton(
-                  text: 'Add ${selectedIds.length} Product${selectedIds.length == 1 ? '' : 's'}',
+                  text:
+                      'Add ${selectedIds.length} Product${selectedIds.length == 1 ? '' : 's'}',
                   enabled: selectedIds.isNotEmpty,
                   onPressed: () {
                     Navigator.pop(context, selectedIds.toList());
@@ -385,8 +381,7 @@ class _HomeDashoardShortlistAddWidgetState
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Padding(
-          padding:
-              EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
+          padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -394,14 +389,10 @@ class _HomeDashoardShortlistAddWidgetState
                 width: 22.0,
                 height: 22.0,
                 decoration: BoxDecoration(
-                  color: isSelected
-                      ? AppColors.secondary
-                      : Colors.transparent,
+                  color: isSelected ? AppColors.secondary : Colors.transparent,
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: isSelected
-                        ? AppColors.secondary
-                        : Color(0xFF7B7B7B),
+                    color: isSelected ? AppColors.secondary : Color(0xFF7B7B7B),
                   ),
                 ),
                 child: isSelected

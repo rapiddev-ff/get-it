@@ -29,9 +29,7 @@ class HomeDashoardInventoryWidget extends StatefulWidget {
 }
 
 class _HomeDashoardInventoryWidgetState
-    extends State<HomeDashoardInventoryWidget>
-    with KeyboardVisibilityMixin {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+    extends State<HomeDashoardInventoryWidget> with KeyboardVisibilityMixin {
   // Inlined model state
   Category? choosenCategory;
   int? itemsCount = 0;
@@ -58,7 +56,6 @@ class _HomeDashoardInventoryWidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(56.0),

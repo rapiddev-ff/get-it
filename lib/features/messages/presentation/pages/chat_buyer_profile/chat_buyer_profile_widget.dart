@@ -33,8 +33,6 @@ class ChatBuyerProfileWidget extends ConsumerStatefulWidget {
 
 class _ChatBuyerProfileWidgetState
     extends ConsumerState<ChatBuyerProfileWidget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   String? _state = 'Reviews';
   ApiCallResponse? _getReviews;
 
@@ -65,7 +63,6 @@ class _ChatBuyerProfileWidgetState
 
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundSecondary,

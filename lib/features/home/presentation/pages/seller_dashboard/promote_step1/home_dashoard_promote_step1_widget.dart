@@ -24,8 +24,6 @@ class HomeDashoardPromoteStep1Widget extends StatefulWidget {
 
 class _HomeDashoardPromoteStep1WidgetState
     extends State<HomeDashoardPromoteStep1Widget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   // Inlined model state
   String state = 'Shop';
   FocusNode? textFieldFocusNode;
@@ -51,7 +49,6 @@ class _HomeDashoardPromoteStep1WidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(56.0),

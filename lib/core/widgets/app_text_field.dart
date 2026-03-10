@@ -22,7 +22,8 @@ InputDecoration appInputDecoration(
     prefix: prefix,
     suffixIcon: suffixIcon,
     hintText: hintText,
-    hintStyle: GoogleFonts.inter(fontSize: 16.0, color: AppColors.textSecondary),
+    hintStyle:
+        GoogleFonts.inter(fontSize: 16.0, color: AppColors.textSecondary),
     enabledBorder: OutlineInputBorder(
       borderSide: BorderSide(color: AppColors.neutral700, width: 1.0),
       borderRadius: borderRadius,
@@ -101,7 +102,8 @@ class AppTextField extends StatelessWidget {
       enabled: enabled,
       readOnly: readOnly,
       obscureText: obscureText,
-      decoration: appInputDecoration(hintText, prefix: prefix, suffixIcon: suffixIcon),
+      decoration:
+          appInputDecoration(hintText, prefix: prefix, suffixIcon: suffixIcon),
       style: appTextFieldStyle,
       keyboardType: keyboardType,
       cursorColor: AppColors.textPrimary,

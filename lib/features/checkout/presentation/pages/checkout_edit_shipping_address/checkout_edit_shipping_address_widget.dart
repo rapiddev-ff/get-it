@@ -30,7 +30,6 @@ class CheckoutEditShippingAddressWidget extends ConsumerStatefulWidget {
 
 class _CheckoutEditShippingAddressWidgetState
     extends ConsumerState<CheckoutEditShippingAddressWidget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   bool streetaddressFocusListenerRegistered = false;
 
   // Inlined model state
@@ -143,7 +142,6 @@ class _CheckoutEditShippingAddressWidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(56.0),
@@ -433,7 +431,8 @@ class _CheckoutEditShippingAddressWidgetState
                                     enabled: true,
                                     textInputAction: TextInputAction.done,
                                     obscureText: false,
-                                    decoration: appInputDecoration('Enter street address'),
+                                    decoration: appInputDecoration(
+                                        'Enter street address'),
                                     style: appTextFieldStyle,
                                     cursorColor: AppColors.textPrimary,
                                     enableInteractiveSelection: true,
@@ -692,8 +691,7 @@ class _CheckoutEditShippingAddressWidgetState
                               await ShippingAddressesTable().insert({
                             'user_id': currentUserUid,
                             'full_name': fullNameTextController!.text,
-                            'address_line1':
-                                streetaddressTextController!.text,
+                            'address_line1': streetaddressTextController!.text,
                             'address_line2': aptsuiteunitTextController!.text,
                             'city': cityTextController!.text,
                             'country': countryDropdownValue,

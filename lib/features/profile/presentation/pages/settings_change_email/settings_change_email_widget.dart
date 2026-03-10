@@ -33,7 +33,6 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget>
     with KeyboardVisibilityMixin {
   late SettingsChangeEmailModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
@@ -57,7 +56,6 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget>
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundSecondary,
@@ -212,7 +210,8 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget>
                                   autofocus: false,
                                   enabled: true,
                                   obscureText: false,
-                                  decoration: appInputDecoration('Your email address'),
+                                  decoration:
+                                      appInputDecoration('Your email address'),
                                   style: appTextFieldStyle,
                                   keyboardType: TextInputType.emailAddress,
                                   cursorColor: AppColors.textPrimary,
@@ -304,8 +303,7 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget>
                           _model.emailAlreadyInUse = false;
                           setState(() {});
                           if (RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                              .hasMatch(
-                                  _model.textController2!.text.trim())) {
+                              .hasMatch(_model.textController2!.text.trim())) {
                             _model.errorEmailFormat = false;
                             setState(() {});
                           } else {

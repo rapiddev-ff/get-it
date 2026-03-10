@@ -43,8 +43,6 @@ class _SettingsPaymentMethodEditWidgetState
     with TickerProviderStateMixin {
   late SettingsPaymentMethodEditModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   void initState() {
     super.initState();
@@ -168,7 +166,6 @@ class _SettingsPaymentMethodEditWidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundSecondary,
@@ -418,7 +415,8 @@ class _SettingsPaymentMethodEditWidgetState
                         autofocus: false,
                         autofillHints: [AutofillHints.streetAddressLine2],
                         obscureText: false,
-                        decoration: appInputDecoration('Apartment, suite, etc. (optional)'),
+                        decoration: appInputDecoration(
+                            'Apartment, suite, etc. (optional)'),
                         style: appTextFieldStyle,
                         cursorColor: AppColors.textPrimary,
                       ),
@@ -437,48 +435,48 @@ class _SettingsPaymentMethodEditWidgetState
                             children: [
                               Text('Country', style: _labelStyle()),
                               DropdownButtonFormField<String>(
-                                  initialValue: () {
-                                    final saved = _model.countryDropdownValue ??=
-                                        widget.paymentMethod?.billingDetails
-                                                ?.country ??
-                                            '';
-                                    if (saved.isEmpty) return null;
-                                    final codes = GeoData.getCountries()
-                                        .map((c) => c['code']!)
-                                        .toSet();
-                                    if (codes.contains(saved)) return saved;
-                                    final match = GeoData.getCountries()
-                                        .where((c) =>
-                                            c['name']!.toLowerCase() ==
-                                            saved.toLowerCase())
-                                        .toList();
-                                    if (match.isNotEmpty) {
-                                      _model.countryDropdownValue =
-                                          match.first['code']!;
-                                      return _model.countryDropdownValue;
-                                    }
-                                    _model.countryDropdownValue = '';
-                                    return null;
-                                  }(),
-                                  items: GeoData.getCountries()
-                                      .map((c) => DropdownMenuItem(
-                                            value: c['code'],
-                                            child: Text(c['name']!,
-                                                style: appTextFieldStyle),
-                                          ))
-                                      .toList(),
-                                  onChanged: (val) => setState(
-                                      () => _model.countryDropdownValue = val),
-                                  decoration: _dropdownDecoration('Country'),
-                                  dropdownColor: AppColors.backgroundPrimary,
-                                  icon: Icon(
-                                    Icons.keyboard_arrow_down_rounded,
-                                    color: AppColors.textSecondary,
-                                    size: 24.0,
-                                  ),
-                                  style: appTextFieldStyle,
-                                  isExpanded: true,
+                                initialValue: () {
+                                  final saved = _model.countryDropdownValue ??=
+                                      widget.paymentMethod?.billingDetails
+                                              ?.country ??
+                                          '';
+                                  if (saved.isEmpty) return null;
+                                  final codes = GeoData.getCountries()
+                                      .map((c) => c['code']!)
+                                      .toSet();
+                                  if (codes.contains(saved)) return saved;
+                                  final match = GeoData.getCountries()
+                                      .where((c) =>
+                                          c['name']!.toLowerCase() ==
+                                          saved.toLowerCase())
+                                      .toList();
+                                  if (match.isNotEmpty) {
+                                    _model.countryDropdownValue =
+                                        match.first['code']!;
+                                    return _model.countryDropdownValue;
+                                  }
+                                  _model.countryDropdownValue = '';
+                                  return null;
+                                }(),
+                                items: GeoData.getCountries()
+                                    .map((c) => DropdownMenuItem(
+                                          value: c['code'],
+                                          child: Text(c['name']!,
+                                              style: appTextFieldStyle),
+                                        ))
+                                    .toList(),
+                                onChanged: (val) => setState(
+                                    () => _model.countryDropdownValue = val),
+                                decoration: _dropdownDecoration('Country'),
+                                dropdownColor: AppColors.backgroundPrimary,
+                                icon: Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  color: AppColors.textSecondary,
+                                  size: 24.0,
                                 ),
+                                style: appTextFieldStyle,
+                                isExpanded: true,
+                              ),
                             ].divide(SizedBox(height: 8.0)),
                           ),
                         ),
@@ -493,44 +491,44 @@ class _SettingsPaymentMethodEditWidgetState
                                   if ((_model.countryDropdownValue == 'US') ||
                                       (_model.countryDropdownValue == 'CA')) {
                                     return DropdownButtonFormField<String>(
-                                        initialValue: () {
-                                          final saved = _model
-                                                  .stateDropdownValue ??=
-                                              widget.paymentMethod
-                                                      ?.billingDetails?.state ??
-                                                  '';
-                                          if (saved.isEmpty) return null;
-                                          final valid =
-                                              GeoData.getStatesByCountry(
-                                                  _model.countryDropdownValue);
-                                          if (valid.contains(saved)) {
-                                            return saved;
-                                          }
-                                          _model.stateDropdownValue = '';
-                                          return null;
-                                        }(),
-                                        items: GeoData.getStatesByCountry(
-                                                _model.countryDropdownValue)
-                                            .map((name) => DropdownMenuItem(
-                                                  value: name,
-                                                  child: Text(name,
-                                                      style: appTextFieldStyle),
-                                                ))
-                                            .toList(),
-                                        onChanged: (val) => setState(() =>
-                                            _model.stateDropdownValue = val),
-                                        decoration:
-                                            _dropdownDecoration('State'),
-                                        dropdownColor:
-                                            AppColors.backgroundPrimary,
-                                        icon: Icon(
-                                          Icons.keyboard_arrow_down_rounded,
-                                          color: AppColors.textSecondary,
-                                          size: 24.0,
-                                        ),
-                                        style: appTextFieldStyle,
-                                        isExpanded: true,
-                                      );
+                                      initialValue: () {
+                                        final saved =
+                                            _model.stateDropdownValue ??= widget
+                                                    .paymentMethod
+                                                    ?.billingDetails
+                                                    ?.state ??
+                                                '';
+                                        if (saved.isEmpty) return null;
+                                        final valid =
+                                            GeoData.getStatesByCountry(
+                                                _model.countryDropdownValue);
+                                        if (valid.contains(saved)) {
+                                          return saved;
+                                        }
+                                        _model.stateDropdownValue = '';
+                                        return null;
+                                      }(),
+                                      items: GeoData.getStatesByCountry(
+                                              _model.countryDropdownValue)
+                                          .map((name) => DropdownMenuItem(
+                                                value: name,
+                                                child: Text(name,
+                                                    style: appTextFieldStyle),
+                                              ))
+                                          .toList(),
+                                      onChanged: (val) => setState(() =>
+                                          _model.stateDropdownValue = val),
+                                      decoration: _dropdownDecoration('State'),
+                                      dropdownColor:
+                                          AppColors.backgroundPrimary,
+                                      icon: Icon(
+                                        Icons.keyboard_arrow_down_rounded,
+                                        color: AppColors.textSecondary,
+                                        size: 24.0,
+                                      ),
+                                      style: appTextFieldStyle,
+                                      isExpanded: true,
+                                    );
                                   } else {
                                     return Container(
                                       width: double.infinity,
@@ -763,10 +761,8 @@ class _SettingsPaymentMethodEditWidgetState
                                   FormValidators.paymentValidator(
                                       _model.cardNumberTextController!.text,
                                       _model.expireDateTextController!.text,
-                                      _model
-                                          .textFieldaCVCTextController!.text,
-                                      _model
-                                          .cardholderNameTextController!.text,
+                                      _model.textFieldaCVCTextController!.text,
+                                      _model.cardholderNameTextController!.text,
                                       _model.emailAddressTextController!.text,
                                       _model.fullNameTextController!.text,
                                       _model.addressLine1TextController!.text,
@@ -780,17 +776,14 @@ class _SettingsPaymentMethodEditWidgetState
                                       _model.cityTextController!.text,
                                       _model.zipCodeTextController!.text);
                               if (validationResult['success'] == true) {
-                                ref
-                                    .read(authProvider.notifier)
-                                    .updateUser((e) {
+                                ref.read(authProvider.notifier).updateUser((e) {
                                   final methods = [...e.paymentMethod];
                                   final pm = methods[widget.index!];
                                   methods[widget.index!] = pm.copyWith(
                                     billingDetails: (pm.billingDetails ??
                                             const BillingDetails())
                                         .copyWith(
-                                      name:
-                                          _model.fullNameTextController!.text,
+                                      name: _model.fullNameTextController!.text,
                                       email: _model
                                           .emailAddressTextController!.text,
                                       addressLine1: _model

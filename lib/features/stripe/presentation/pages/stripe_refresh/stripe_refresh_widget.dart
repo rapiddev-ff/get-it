@@ -18,13 +18,10 @@ class StripeRefreshWidget extends StatefulWidget {
 }
 
 class _StripeRefreshWidgetState extends State<StripeRefreshWidget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         body: SafeArea(
           top: true,

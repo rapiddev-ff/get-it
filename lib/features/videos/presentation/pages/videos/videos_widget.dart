@@ -19,8 +19,6 @@ class VideosWidget extends StatefulWidget {
 class _VideosWidgetState extends State<VideosWidget> {
   late VideosModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   void initState() {
     super.initState();
@@ -37,7 +35,6 @@ class _VideosWidgetState extends State<VideosWidget> {
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         body: Column(
           mainAxisSize: MainAxisSize.max,

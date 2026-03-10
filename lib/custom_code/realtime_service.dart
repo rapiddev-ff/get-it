@@ -11,7 +11,8 @@ final realtimeServiceProvider = Provider<RealtimeService>((ref) {
 class RealtimeService {
   /// @deprecated Use realtimeServiceProvider instead.
   static RealtimeService? _instance;
-  static RealtimeService get instance => _instance ??= RealtimeService(Supabase.instance.client);
+  static RealtimeService get instance =>
+      _instance ??= RealtimeService(Supabase.instance.client);
 
   final SupabaseClient _client;
 

@@ -31,8 +31,6 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
     with KeyboardVisibilityMixin {
   late ForgotPasswordModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   static final _emailRegExp =
       RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
 
@@ -56,7 +54,6 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundPrimary,
@@ -148,7 +145,8 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
                                 autofocus: false,
                                 enabled: true,
                                 obscureText: false,
-                                decoration: appInputDecoration('Your email address'),
+                                decoration:
+                                    appInputDecoration('Your email address'),
                                 style: appTextFieldStyle,
                                 keyboardType: TextInputType.emailAddress,
                                 cursorColor: AppColors.textPrimary,
@@ -178,8 +176,10 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
                         onPressed: _model.isLoading
                             ? null
                             : () async {
-                                final email = _model.textController!.text.trim();
-                                if (email.isEmpty || !_emailRegExp.hasMatch(email)) {
+                                final email =
+                                    _model.textController!.text.trim();
+                                if (email.isEmpty ||
+                                    !_emailRegExp.hasMatch(email)) {
                                   await actions.toastificationshow(
                                     context,
                                     'Error!',
@@ -209,7 +209,8 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
                                       context,
                                       'Error!',
                                       ((_model.requestPasswordReset is Map)
-                                              ? _model.requestPasswordReset['message']
+                                              ? _model.requestPasswordReset[
+                                                  'message']
                                               : null)
                                           .toString(),
                                       'error',

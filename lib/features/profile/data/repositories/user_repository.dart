@@ -38,10 +38,7 @@ class UserRepository {
 
   /// Updates user profile fields.
   Future<void> updateProfile(String userId, Map<String, dynamic> data) async {
-    await _client
-        .from('user_profiles')
-        .update(data)
-        .eq('user_id', userId);
+    await _client.from('user_profiles').update(data).eq('user_id', userId);
   }
 
   /// Deactivates the user account.

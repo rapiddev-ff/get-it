@@ -34,8 +34,6 @@ class SettingsWidget extends ConsumerStatefulWidget {
 class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
   late SettingsModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   void initState() {
     super.initState();
@@ -73,7 +71,6 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
 
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundSecondary,
@@ -497,7 +494,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                           context: context,
                           builder: (context) {
                             return DismissKeyboard(
-      child: Padding(
+                              child: Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
                                 child: SettingsBusinessWidget(
                                   title: 'Business Name',
@@ -561,7 +558,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                           context: context,
                           builder: (context) {
                             return DismissKeyboard(
-      child: Padding(
+                              child: Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
                                 child: SettingsBusinessWidget(
                                   title: 'Business Email',
@@ -642,7 +639,9 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                     ),
                                     Text(
                                       () {
-                                        switch (authState.stripe?.accountStatus ?? '') {
+                                        switch (
+                                            authState.stripe?.accountStatus ??
+                                                '') {
                                           case 'not_connected':
                                             return 'Connect Stripe to start selling';
                                           case 'onboarding':
@@ -670,13 +669,15 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                 ),
                               ),
                               if ((authState.stripe?.hasAccount ?? false) &&
-                                  (authState.stripe?.statusLabel ?? '').isNotEmpty)
+                                  (authState.stripe?.statusLabel ?? '')
+                                      .isNotEmpty)
                                 Container(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 12.0, vertical: 4.0),
                                   decoration: BoxDecoration(
                                     color: Color(int.parse(
-                                            (authState.stripe?.statusColor ?? '#9E9E9E')
+                                            (authState.stripe?.statusColor ??
+                                                    '#9E9E9E')
                                                 .replaceFirst('#', ''),
                                             radix: 16) |
                                         0xFF000000),

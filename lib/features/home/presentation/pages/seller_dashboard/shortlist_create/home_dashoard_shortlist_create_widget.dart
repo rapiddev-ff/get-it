@@ -25,7 +25,6 @@ class HomeDashoardShortlistCreateWidget extends StatefulWidget {
 
 class _HomeDashoardShortlistCreateWidgetState
     extends State<HomeDashoardShortlistCreateWidget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   String state = 'Shop';
   bool isPublic = true;
   bool _isSaving = false;
@@ -130,7 +129,6 @@ class _HomeDashoardShortlistCreateWidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(56.0),
@@ -292,8 +290,7 @@ class _HomeDashoardShortlistCreateWidgetState
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 12.0, vertical: 16.0),
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                          4.0),
+                                      borderRadius: BorderRadius.circular(4.0),
                                       border: Border.all(
                                         color: AppColors.neutral700,
                                         width: 1.0,
@@ -336,8 +333,7 @@ class _HomeDashoardShortlistCreateWidgetState
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 12.0, vertical: 16.0),
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                          4.0),
+                                      borderRadius: BorderRadius.circular(4.0),
                                       border: Border.all(
                                         color: AppColors.neutral700,
                                         width: 1.0,

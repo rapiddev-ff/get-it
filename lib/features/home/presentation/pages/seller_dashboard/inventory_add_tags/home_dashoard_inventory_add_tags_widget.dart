@@ -28,8 +28,6 @@ class HomeDashoardInventoryAddTagsWidget extends StatefulWidget {
 
 class _HomeDashoardInventoryAddTagsWidgetState
     extends State<HomeDashoardInventoryAddTagsWidget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   // Inlined model state
   List<Tag> tags = [];
   Stream<List<TagsRow>>? homeDashoardInventoryAddTagsSupabaseStream;
@@ -101,8 +99,7 @@ class _HomeDashoardInventoryAddTagsWidgetState
         List<TagsRow> homeDashoardInventoryAddTagsTagsRowList = snapshot.data!;
 
         return DismissKeyboard(
-      child: Scaffold(
-            key: scaffoldKey,
+          child: Scaffold(
             backgroundColor: AppColors.backgroundPrimary,
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(56.0),

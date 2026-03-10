@@ -391,9 +391,8 @@ class ApiManager {
     List<http.MultipartFile> files = [];
     params.entries.where((e) => isFile(e.value)).forEach((e) {
       final param = e.value;
-      final uploadedFiles = param is List
-          ? param as List<UploadedFile>
-          : [param as UploadedFile];
+      final uploadedFiles =
+          param is List ? param as List<UploadedFile> : [param as UploadedFile];
       for (var uploadedFile in uploadedFiles) {
         files.add(
           http.MultipartFile.fromBytes(

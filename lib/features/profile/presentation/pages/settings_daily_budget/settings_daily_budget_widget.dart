@@ -33,7 +33,6 @@ class _SettingsDailyBudgetWidgetState
     with KeyboardVisibilityMixin {
   late SettingsDailyBudgetModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
@@ -59,7 +58,6 @@ class _SettingsDailyBudgetWidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundSecondary,
@@ -140,7 +138,8 @@ class _SettingsDailyBudgetWidgetState
                             autofocus: false,
                             enabled: true,
                             obscureText: false,
-                            decoration: appInputDecoration('Daily Budget').copyWith(
+                            decoration:
+                                appInputDecoration('Daily Budget').copyWith(
                               prefixText: '\$ ',
                               prefixStyle: GoogleFonts.inter(
                                 fontWeight: FontWeight.normal,
@@ -175,8 +174,8 @@ class _SettingsDailyBudgetWidgetState
                                       userSettings: (e.userSettings ??
                                               const UserSettings())
                                           .copyWith(
-                                        dailyBudget: double.tryParse(_model
-                                                .textController!.text) ??
+                                        dailyBudget: double.tryParse(
+                                                _model.textController!.text) ??
                                             0.0,
                                       ),
                                     ),

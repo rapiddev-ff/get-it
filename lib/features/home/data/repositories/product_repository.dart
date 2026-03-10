@@ -35,8 +35,7 @@ class ProductRepository {
         params['p_exclude_ids'] = excludeIds;
       }
 
-      final response =
-          await _client.rpc('get_feed_products', params: params);
+      final response = await _client.rpc('get_feed_products', params: params);
 
       if (response is List && response.isNotEmpty) {
         return response.map((item) => _parseFeedProduct(item)).toList();
@@ -129,8 +128,7 @@ class ProductRepository {
       title: item['title']?.toString() ?? '',
       description: item['description']?.toString() ?? '',
       price: double.tryParse(item['price']?.toString() ?? '0') ?? 0.0,
-      originalPrice:
-          double.tryParse(item['original_price']?.toString() ?? '0'),
+      originalPrice: double.tryParse(item['original_price']?.toString() ?? '0'),
       flashSaleEnabled: item['flash_sale_enabled'] ?? false,
       flashSalePrice:
           double.tryParse(item['flash_sale_price']?.toString() ?? '0'),

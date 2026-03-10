@@ -106,7 +106,8 @@ class _ShortlistItemWidgetState extends State<ShortlistItemWidget> {
     );
     if (!mounted) return;
     setState(() {
-      _productTags = products.map((p) => p.title).where((t) => t.isNotEmpty).toList();
+      _productTags =
+          products.map((p) => p.title).where((t) => t.isNotEmpty).toList();
       _tagsLoaded = true;
     });
   }
@@ -137,16 +138,19 @@ class _ShortlistItemWidgetState extends State<ShortlistItemWidget> {
 
   void _onShare() {
     if (widget.shareCode == null || widget.shareCode!.isEmpty) {
-      actions.toastificationshow(context, 'Error', 'No share code available', 'error');
+      actions.toastificationshow(
+          context, 'Error', 'No share code available', 'error');
       return;
     }
     final shareUrl = 'https://getitapp.com/s/${widget.shareCode}';
     Clipboard.setData(ClipboardData(text: shareUrl));
-    actions.toastificationshow(context, 'Copied', 'Share link copied to clipboard', 'success');
+    actions.toastificationshow(
+        context, 'Copied', 'Share link copied to clipboard', 'success');
   }
 
   void _onDownload() {
-    actions.toastificationshow(context, 'Info', 'QR code download coming soon', 'info');
+    actions.toastificationshow(
+        context, 'Info', 'QR code download coming soon', 'info');
   }
 
   void _onEdit() {
@@ -167,7 +171,8 @@ class _ShortlistItemWidgetState extends State<ShortlistItemWidget> {
       matchingRows: (q) => q.eqOrNull('id', widget.shortlistId),
     );
     if (!mounted) return;
-    actions.toastificationshow(context, 'Published', 'Shortlist is now active', 'success');
+    actions.toastificationshow(
+        context, 'Published', 'Shortlist is now active', 'success');
     widget.onChanged?.call();
   }
 
@@ -205,7 +210,8 @@ class _ShortlistItemWidgetState extends State<ShortlistItemWidget> {
       });
     }
     if (!mounted) return;
-    actions.toastificationshow(context, 'Duplicated', 'Shortlist duplicated as draft', 'success');
+    actions.toastificationshow(
+        context, 'Duplicated', 'Shortlist duplicated as draft', 'success');
     widget.onChanged?.call();
   }
 
@@ -216,7 +222,8 @@ class _ShortlistItemWidgetState extends State<ShortlistItemWidget> {
       matchingRows: (q) => q.eqOrNull('id', widget.shortlistId),
     );
     if (!mounted) return;
-    actions.toastificationshow(context, 'Archived', 'Shortlist has been archived', 'success');
+    actions.toastificationshow(
+        context, 'Archived', 'Shortlist has been archived', 'success');
     widget.onChanged?.call();
   }
 
@@ -298,8 +305,9 @@ class _ShortlistItemWidgetState extends State<ShortlistItemWidget> {
   }
 
   Widget _buildSubtitle() {
-    final createdStr =
-        widget.createdAt != null ? DateFormat.MMMd().format(widget.createdAt!) : '';
+    final createdStr = widget.createdAt != null
+        ? DateFormat.MMMd().format(widget.createdAt!)
+        : '';
 
     if (_isExpired) {
       final expiredStr = widget.endDate != null

@@ -73,7 +73,6 @@ class WishlistNotifier extends Notifier<WishlistState> {
   }
 }
 
-final wishlistProvider =
-    NotifierProvider<WishlistNotifier, WishlistState>(
+final wishlistProvider = NotifierProvider<WishlistNotifier, WishlistState>(
   WishlistNotifier.new,
 );

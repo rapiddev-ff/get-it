@@ -1,4 +1,3 @@
-
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +41,6 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
     with KeyboardVisibilityMixin {
   late SignUpModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   static bool _checkEmailFormat(String email) {
     return RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
         .hasMatch(email);
@@ -75,7 +73,6 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundPrimary,
@@ -183,7 +180,8 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                   },
                                   autofocus: false,
                                   obscureText: false,
-                                  decoration: appInputDecoration('Your email address'),
+                                  decoration:
+                                      appInputDecoration('Your email address'),
                                   style: appTextFieldStyle,
                                   keyboardType: TextInputType.emailAddress,
                                   cursorColor: AppColors.textPrimary,
@@ -676,8 +674,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                               return;
                             }
 
-                            if (!((_model.passwordTextController!.text
-                                        .length >=
+                            if (!((_model.passwordTextController!.text.length >=
                                     8) &&
                                 _model.passwordTextController!.text
                                     .contains(RegExp(r'[A-Z]')) &&
@@ -696,12 +693,15 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
 
                             if (_model.passwordTextController!.text !=
                                 _model.confirmPasswordTextController!.text) {
-                              actions.toastificationshow(context, 'Error', 'Passwords don\'t match!', 'error');
+                              actions.toastificationshow(context, 'Error',
+                                  'Passwords don\'t match!', 'error');
                               return;
                             }
 
                             // Always keep signed in on registration
-                            await ref.read(keepSignedInProvider.notifier).set(true);
+                            await ref
+                                .read(keepSignedInProvider.notifier)
+                                .set(true);
 
                             final user =
                                 await authManager.createAccountWithEmail(

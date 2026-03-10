@@ -1,4 +1,3 @@
-
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,14 +33,14 @@ class AdditionalInfoWidget extends ConsumerStatefulWidget {
   static String routePath = 'additionalInfo';
 
   @override
-  ConsumerState<AdditionalInfoWidget> createState() => _AdditionalInfoWidgetState();
+  ConsumerState<AdditionalInfoWidget> createState() =>
+      _AdditionalInfoWidgetState();
 }
 
 class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
     with KeyboardVisibilityMixin {
   late AdditionalInfoModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
@@ -131,8 +130,8 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
             supabase.storage.from('avatars').getPublicUrl(filePath);
       } catch (e) {
         if (mounted) {
-          actions.toastificationshow(
-              context, 'Error', 'Failed to upload image. Please try again', 'error');
+          actions.toastificationshow(context, 'Error',
+              'Failed to upload image. Please try again', 'error');
         }
       } finally {
         _model.isDataUploading_uploadImage = false;
@@ -148,7 +147,6 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
 
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundPrimary,
@@ -496,12 +494,18 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
                                 );
 
                                 // Update authProvider with new profile data
-                                ref.read(authProvider.notifier).updateUser((e) => e.copyWith(
-                                  firstName: _model.firstnameTextController!.text,
-                                  lastName: _model.lastnameTextController!.text,
-                                  username: _normalizeUsername(_model.usernameTextController!.text),
-                                  avatarUrl: _model.uploadToBucket ?? '',
-                                ));
+                                ref
+                                    .read(authProvider.notifier)
+                                    .updateUser((e) => e.copyWith(
+                                          firstName: _model
+                                              .firstnameTextController!.text,
+                                          lastName: _model
+                                              .lastnameTextController!.text,
+                                          username: _normalizeUsername(_model
+                                              .usernameTextController!.text),
+                                          avatarUrl:
+                                              _model.uploadToBucket ?? '',
+                                        ));
 
                                 if (context.mounted) {
                                   context.goNamed(HomePageWidget.routeName);

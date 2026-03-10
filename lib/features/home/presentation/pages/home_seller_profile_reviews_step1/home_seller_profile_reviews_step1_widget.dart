@@ -34,8 +34,6 @@ class HomeSellerProfileReviewsStep1Widget extends StatefulWidget {
 
 class _HomeSellerProfileReviewsStep1WidgetState
     extends State<HomeSellerProfileReviewsStep1Widget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   // Inlined from model
   String? state = 'As Buyer';
   dynamic getUserProfileWithReviews;
@@ -82,7 +80,6 @@ class _HomeSellerProfileReviewsStep1WidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundSecondary,
@@ -356,9 +353,10 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                     ? DateTime.tryParse(paidAtStr)
                                     : null;
 
-                                final dateLabel = widget.reviewRole == 'as_seller'
-                                    ? 'Purchased'
-                                    : 'Sold';
+                                final dateLabel =
+                                    widget.reviewRole == 'as_seller'
+                                        ? 'Purchased'
+                                        : 'Sold';
 
                                 return Opacity(
                                   opacity: alreadyReviewed ? 0.5 : 1.0,
@@ -370,8 +368,8 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                     onTap: alreadyReviewed
                                         ? null
                                         : () async {
-                                            final result = await context
-                                                .pushNamed<bool>(
+                                            final result =
+                                                await context.pushNamed<bool>(
                                               HomeSellerProfileReviewsStep2Widget
                                                   .routeName,
                                               queryParameters: {
@@ -387,8 +385,7 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                                   mainImageUrl: productImage,
                                                   createdAt: paidAt,
                                                 ).serialize(),
-                                                'reviewRole':
-                                                    widget.reviewRole,
+                                                'reviewRole': widget.reviewRole,
                                               },
                                             );
                                             if (result == true && mounted) {
@@ -403,9 +400,8 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                             BorderRadius.circular(4.0),
                                       ),
                                       child: Padding(
-                                        padding:
-                                            EdgeInsetsDirectional.fromSTEB(
-                                                10.0, 16.0, 16.0, 16.0),
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            10.0, 16.0, 16.0, 16.0),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
@@ -430,8 +426,8 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                                     style: GoogleFonts.inter(
                                                       fontWeight:
                                                           FontWeight.w500,
-                                                      color: AppColors
-                                                          .textPrimary,
+                                                      color:
+                                                          AppColors.textPrimary,
                                                       height: 1.5,
                                                     ),
                                                   ),
@@ -476,8 +472,8 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                                               ? '$dateLabel ${DateFormat('MMM dd, yyyy').format(paidAt)}'
                                                               : '',
                                                           maxLines: 1,
-                                                          style: GoogleFonts
-                                                              .inter(
+                                                          style:
+                                                              GoogleFonts.inter(
                                                             color: AppColors
                                                                 .textSecondary,
                                                             fontSize: 12.0,
@@ -508,16 +504,14 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                                         ),
                                                       ),
                                                     ),
-                                                ].divide(
-                                                    SizedBox(height: 2.0)),
+                                                ].divide(SizedBox(height: 2.0)),
                                               ),
                                             ),
                                             if (!alreadyReviewed)
                                               Icon(
                                                 Icons
                                                     .keyboard_arrow_right_sharp,
-                                                color:
-                                                    AppColors.textSecondary,
+                                                color: AppColors.textSecondary,
                                                 size: 20.0,
                                               ),
                                           ].divide(SizedBox(width: 12.0)),

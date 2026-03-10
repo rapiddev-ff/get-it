@@ -26,8 +26,7 @@ class FastCheckoutWidget extends ConsumerStatefulWidget {
   final int quantity;
 
   @override
-  ConsumerState<FastCheckoutWidget> createState() =>
-      _FastCheckoutWidgetState();
+  ConsumerState<FastCheckoutWidget> createState() => _FastCheckoutWidgetState();
 }
 
 class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
@@ -54,8 +53,8 @@ class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
       if (!mounted) return;
 
       if (error == null) {
-        actions.toastificationshow(
-            context, 'Order Cancelled', 'Your order has been cancelled and refunded', 'success');
+        actions.toastificationshow(context, 'Order Cancelled',
+            'Your order has been cancelled and refunded', 'success');
       } else {
         actions.toastificationshow(context, 'Cancel Failed', error, 'error');
       }
@@ -90,8 +89,7 @@ class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
             // Daily Budget
             if (dailyBudget > 0)
               Padding(
-                padding:
-                    EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
                 child: Text(
                   'Remaining Daily Budget ${_currencyFormat.format(remainingBudget)} / ${_currencyFormat.format(dailyBudget)}',
                   style: GoogleFonts.inter(
@@ -111,8 +109,7 @@ class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
 
             // Product info
             Padding(
-              padding:
-                  EdgeInsetsDirectional.fromSTEB(16.0, 20.0, 16.0, 20.0),
+              padding: EdgeInsetsDirectional.fromSTEB(16.0, 20.0, 16.0, 20.0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -181,7 +178,9 @@ class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
                         ),
                         // Subtotal
                         Text(
-                          _currencyFormat.format(widget.subtotal ?? (widget.feedProduct?.price ?? 0) * widget.quantity),
+                          _currencyFormat.format(widget.subtotal ??
+                              (widget.feedProduct?.price ?? 0) *
+                                  widget.quantity),
                           style: GoogleFonts.inter(
                             fontWeight: FontWeight.w600,
                             fontSize: 14.0,
@@ -246,8 +245,7 @@ class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
                   Navigator.pop(context);
                 },
                 style: TextButton.styleFrom(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   backgroundColor: Colors.transparent,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(

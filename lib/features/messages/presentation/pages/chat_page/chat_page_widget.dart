@@ -40,7 +40,6 @@ class ChatPageWidget extends ConsumerStatefulWidget {
 }
 
 class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   final _textController = TextEditingController();
   final _textFieldFocusNode = FocusNode();
 
@@ -81,7 +80,6 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundSecondary,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(56.0),
@@ -288,8 +286,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                           context.pushNamed(
                             HomeProductWidget.routeName,
                             queryParameters: {
-                              'productId':
-                                  widget.conversation?.productId ?? '',
+                              'productId': widget.conversation?.productId ?? '',
                             },
                           );
                         },
@@ -326,8 +323,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                   color: AppColors.backgroundPrimary,
                 ),
                 child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   child: Container(
                     width: double.infinity,
                     height: double.infinity,
@@ -447,8 +443,8 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                     Align(
                       alignment: AlignmentDirectional(1.0, 0.0),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            0.0, 0.0, 16.0, 0.0),
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 16.0, 0.0),
                         child: InkWell(
                           splashColor: Colors.transparent,
                           focusColor: Colors.transparent,
@@ -460,25 +456,22 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                               multiImage: true,
                             );
                             if (selectedMedia != null &&
-                                selectedMedia.every((m) =>
-                                    validateFileFormat(
-                                        m.storagePath, context))) {
+                                selectedMedia.every((m) => validateFileFormat(
+                                    m.storagePath, context))) {
                               final selectedUploadedFiles = selectedMedia
                                   .map((m) => UploadedFile(
-                                        name:
-                                            m.storagePath.split('/').last,
+                                        name: m.storagePath.split('/').last,
                                         bytes: m.bytes,
                                         height: m.dimensions?.height,
                                         width: m.dimensions?.width,
                                         blurHash: m.blurHash,
-                                        originalFilename:
-                                            m.originalFilename,
+                                        originalFilename: m.originalFilename,
                                       ))
                                   .toList();
 
                               if (selectedUploadedFiles.isNotEmpty &&
-                                  (selectedUploadedFiles.first.bytes
-                                          ?.isNotEmpty ??
+                                  (selectedUploadedFiles
+                                          .first.bytes?.isNotEmpty ??
                                       false)) {
                                 await actions.uploadAndSendImages(
                                   ref,

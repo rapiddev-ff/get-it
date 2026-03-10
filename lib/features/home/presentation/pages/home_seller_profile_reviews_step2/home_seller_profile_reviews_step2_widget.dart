@@ -42,7 +42,6 @@ class HomeSellerProfileReviewsStep2Widget extends StatefulWidget {
 class _HomeSellerProfileReviewsStep2WidgetState
     extends State<HomeSellerProfileReviewsStep2Widget>
     with KeyboardVisibilityMixin {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   // Inlined from model
   List<Uint8List> images = [];
   double? ratingBarValue2;
@@ -70,7 +69,6 @@ class _HomeSellerProfileReviewsStep2WidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundSecondary,
@@ -174,7 +172,8 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                     height: 1.5,
                                   ),
                                 ),
-                                if (widget.product?.conditionName.isNotEmpty == true)
+                                if (widget.product?.conditionName.isNotEmpty ==
+                                    true)
                                   Text(
                                     widget.product!.conditionName,
                                     maxLines: 1,
@@ -280,7 +279,8 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                     rating: valueOrDefault<double>(
                                       widget.reviewRole == 'as_buyer'
                                           ? widget.sellerDataType?.ratingAsBuyer
-                                          : widget.sellerDataType?.ratingAsSeller,
+                                          : widget
+                                              .sellerDataType?.ratingAsSeller,
                                       0.0,
                                     ),
                                     unratedColor: Color(0xFF7B7B7B),
@@ -290,8 +290,10 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                   Text(
                                     valueOrDefault<String>(
                                       (widget.reviewRole == 'as_buyer'
-                                              ? widget.sellerDataType?.ratingAsBuyer
-                                              : widget.sellerDataType?.ratingAsSeller)
+                                              ? widget
+                                                  .sellerDataType?.ratingAsBuyer
+                                              : widget.sellerDataType
+                                                  ?.ratingAsSeller)
                                           ?.toString(),
                                       '0',
                                     ),
@@ -656,62 +658,63 @@ class _HomeSellerProfileReviewsStep2WidgetState
                     child: AppGradientButton(
                       text: 'Submit Review',
                       onPressed: () async {
-                          if (ratingBarValue2 == null || ratingBarValue2! < 1) {
-                            await actions.toastificationshow(
-                              context,
-                              'Rating Required',
-                              'Please select at least 1 star.',
-                              'error',
-                            );
-                            return;
-                          }
-                          if ((textController?.text.trim().length ?? 0) > 0 &&
-                              (textController?.text.trim().length ?? 0) < 20) {
-                            await actions.toastificationshow(
-                              context,
-                              'Review Too Short',
-                              'Please write at least 20 characters.',
-                              'error',
-                            );
-                            return;
-                          }
-                          uploadReviewImages = await actions.uploadReviewImages(
-                            images
-                                .map((bytes) => UploadedFile(
-                                      bytes: bytes,
-                                      name: 'review_image.jpg',
-                                    ))
-                                .toList(),
-                          );
-                          final result = await actions.submitReview(
-                            widget.product!.orderId,
-                            widget.product!.id,
-                            widget.reviewRole,
-                            ratingBarValue2!.round(),
-                            textController!.text,
-                            widget.product?.title,
-                            uploadReviewImages?.toList(),
-                          );
-                          if (!mounted) return;
-                          if (result is Map && result['success'] == false) {
-                            await actions.toastificationshow(
-                              context,
-                              'Error',
-                              result['error']?.toString() ?? 'Failed to submit review.',
-                              'error',
-                            );
-                            return;
-                          }
+                        if (ratingBarValue2 == null || ratingBarValue2! < 1) {
                           await actions.toastificationshow(
                             context,
-                            'Review Submitted',
-                            'Thank you for your feedback!',
-                            'success',
+                            'Rating Required',
+                            'Please select at least 1 star.',
+                            'error',
                           );
-                          if (!mounted) return;
-                          Navigator.of(context).pop(true);
-                        },
-                      ),
+                          return;
+                        }
+                        if ((textController?.text.trim().length ?? 0) > 0 &&
+                            (textController?.text.trim().length ?? 0) < 20) {
+                          await actions.toastificationshow(
+                            context,
+                            'Review Too Short',
+                            'Please write at least 20 characters.',
+                            'error',
+                          );
+                          return;
+                        }
+                        uploadReviewImages = await actions.uploadReviewImages(
+                          images
+                              .map((bytes) => UploadedFile(
+                                    bytes: bytes,
+                                    name: 'review_image.jpg',
+                                  ))
+                              .toList(),
+                        );
+                        final result = await actions.submitReview(
+                          widget.product!.orderId,
+                          widget.product!.id,
+                          widget.reviewRole,
+                          ratingBarValue2!.round(),
+                          textController!.text,
+                          widget.product?.title,
+                          uploadReviewImages?.toList(),
+                        );
+                        if (!mounted) return;
+                        if (result is Map && result['success'] == false) {
+                          await actions.toastificationshow(
+                            context,
+                            'Error',
+                            result['error']?.toString() ??
+                                'Failed to submit review.',
+                            'error',
+                          );
+                          return;
+                        }
+                        await actions.toastificationshow(
+                          context,
+                          'Review Submitted',
+                          'Thank you for your feedback!',
+                          'success',
+                        );
+                        if (!mounted) return;
+                        Navigator.of(context).pop(true);
+                      },
+                    ),
                   ),
               ].addToEnd(SizedBox(height: 32.0)),
             ),

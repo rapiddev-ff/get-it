@@ -29,7 +29,6 @@ class MessagesWidget extends ConsumerStatefulWidget {
 }
 
 class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   String _state = 'All';
 
   @override
@@ -59,7 +58,6 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
 
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(56.0),

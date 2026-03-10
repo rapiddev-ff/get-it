@@ -32,8 +32,6 @@ class _HomeDashoardShippingDetailedWidgetState
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   bool _isLoading = true;
   bool _isSaving = false;
   Map<String, dynamic>? _order;
@@ -61,15 +59,11 @@ class _HomeDashoardShippingDetailedWidgetState
     if (_orderId == null) return;
     setState(() => _isLoading = true);
     try {
-      final result = await SupaFlow.client
-          .from('orders')
-          .select('''
+      final result = await SupaFlow.client.from('orders').select('''
             *,
             order_items(product_id, product_title, product_price, quantity, products(main_image_url)),
             buyer:users!orders_buyer_id_fkey(id, username, photo_url)
-          ''')
-          .eq('id', _orderId!)
-          .single();
+          ''').eq('id', _orderId!).single();
 
       if (!mounted) return;
       setState(() {
@@ -168,7 +162,8 @@ class _HomeDashoardShippingDetailedWidgetState
       return;
     }
 
-    actions.toastificationshow(context, 'Success', 'Order marked as shipped', 'success');
+    actions.toastificationshow(
+        context, 'Success', 'Order marked as shipped', 'success');
     context.pop(true);
   }
 
@@ -192,7 +187,8 @@ class _HomeDashoardShippingDetailedWidgetState
       return;
     }
 
-    actions.toastificationshow(context, 'Success', 'Tracking number updated', 'success');
+    actions.toastificationshow(
+        context, 'Success', 'Tracking number updated', 'success');
   }
 
   Future<void> _cancelOrder() async {
@@ -222,7 +218,8 @@ class _HomeDashoardShippingDetailedWidgetState
       return;
     }
 
-    actions.toastificationshow(context, 'Success', 'Order cancelled', 'success');
+    actions.toastificationshow(
+        context, 'Success', 'Order cancelled', 'success');
     context.pop(true);
   }
 
@@ -235,8 +232,7 @@ class _HomeDashoardShippingDetailedWidgetState
         backgroundColor: AppColors.backgroundSecondary,
         title: Text('Mark as Delivered',
             style: GoogleFonts.inter(color: AppColors.textPrimary)),
-        content: Text(
-            'Are you sure this order has been delivered?',
+        content: Text('Are you sure this order has been delivered?',
             style: GoogleFonts.inter(color: AppColors.textSecondary)),
         actions: [
           TextButton(
@@ -286,7 +282,6 @@ class _HomeDashoardShippingDetailedWidgetState
 
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(56.0),
@@ -298,8 +293,8 @@ class _HomeDashoardShippingDetailedWidgetState
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  icon: Icon(Icons.arrow_back,
-                      color: AppColors.info, size: 24.0),
+                  icon:
+                      Icon(Icons.arrow_back, color: AppColors.info, size: 24.0),
                   iconSize: 40.0,
                   onPressed: () => context.pop(),
                 ),
@@ -329,13 +324,12 @@ class _HomeDashoardShippingDetailedWidgetState
         ),
         body: _isLoading
             ? Center(
-                child:
-                    CircularProgressIndicator(color: AppColors.secondary))
+                child: CircularProgressIndicator(color: AppColors.secondary))
             : _order == null
                 ? Center(
                     child: Text('Order not found',
-                        style: GoogleFonts.inter(
-                            color: AppColors.textSecondary)))
+                        style:
+                            GoogleFonts.inter(color: AppColors.textSecondary)))
                 : SafeArea(
                     top: true,
                     child: SingleChildScrollView(
@@ -345,8 +339,7 @@ class _HomeDashoardShippingDetailedWidgetState
                         children: [
                           // Product card
                           Container(
-                            decoration: BoxDecoration(
-                                color: Color(0xFF111111)),
+                            decoration: BoxDecoration(color: Color(0xFF111111)),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   16.0, 24.0, 16.0, 24.0),
@@ -371,9 +364,8 @@ class _HomeDashoardShippingDetailedWidgetState
                                                 width: 66.0,
                                                 height: 66.0,
                                                 fit: BoxFit.cover,
-                                                errorBuilder:
-                                                    (_, __, ___) =>
-                                                        _imagePlaceholder(),
+                                                errorBuilder: (_, __, ___) =>
+                                                    _imagePlaceholder(),
                                               )
                                             : _imagePlaceholder(),
                                       ),
@@ -388,19 +380,16 @@ class _HomeDashoardShippingDetailedWidgetState
                                               maxLines: 1,
                                               style: GoogleFonts.inter(
                                                 fontSize: 12.0,
-                                                color:
-                                                    AppColors.textSecondary,
+                                                color: AppColors.textSecondary,
                                               ),
-                                              overflow:
-                                                  TextOverflow.ellipsis,
+                                              overflow: TextOverflow.ellipsis,
                                             ),
                                             Text(
                                               _getProductTitle(),
                                               style: GoogleFonts.inter(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 14.0,
-                                                color:
-                                                    AppColors.textPrimary,
+                                                color: AppColors.textPrimary,
                                               ),
                                             ),
                                             Text(
@@ -408,8 +397,7 @@ class _HomeDashoardShippingDetailedWidgetState
                                               maxLines: 1,
                                               style: GoogleFonts.inter(
                                                 fontSize: 12.0,
-                                                color:
-                                                    AppColors.textSecondary,
+                                                color: AppColors.textSecondary,
                                               ),
                                             ),
                                             Text(
@@ -417,34 +405,27 @@ class _HomeDashoardShippingDetailedWidgetState
                                               maxLines: 1,
                                               style: GoogleFonts.inter(
                                                 fontSize: 12.0,
-                                                color:
-                                                    AppColors.textSecondary,
+                                                color: AppColors.textSecondary,
                                               ),
-                                              overflow:
-                                                  TextOverflow.ellipsis,
+                                              overflow: TextOverflow.ellipsis,
                                             ),
                                             Text(
                                               'Order #${_order!['order_number'] ?? ''}',
                                               maxLines: 1,
                                               style: GoogleFonts.inter(
                                                 fontSize: 12.0,
-                                                color:
-                                                    AppColors.textSecondary,
+                                                color: AppColors.textSecondary,
                                               ),
                                             ),
                                             Padding(
-                                              padding:
-                                                  EdgeInsetsDirectional
-                                                      .fromSTEB(0.0, 4.0,
-                                                          0.0, 0.0),
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 4.0, 0.0, 0.0),
                                               child: Text(
                                                 '\$${_formatPrice(_order!['total_amount'])}',
                                                 style: GoogleFonts.inter(
-                                                  fontWeight:
-                                                      FontWeight.w500,
+                                                  fontWeight: FontWeight.w500,
                                                   fontSize: 14.0,
-                                                  color: AppColors
-                                                      .textPrimary,
+                                                  color: AppColors.textPrimary,
                                                 ),
                                               ),
                                             ),
@@ -488,13 +469,11 @@ class _HomeDashoardShippingDetailedWidgetState
                                 padding: EdgeInsets.all(12.0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     if (address != null) ...[
                                       Text(
-                                        address['full_name']?.toString() ??
-                                            '',
+                                        address['full_name']?.toString() ?? '',
                                         style: GoogleFonts.inter(
                                           fontWeight: FontWeight.w500,
                                           fontSize: 14.0,
@@ -527,8 +506,7 @@ class _HomeDashoardShippingDetailedWidgetState
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       Text(
-                                        address['country']?.toString() ??
-                                            '',
+                                        address['country']?.toString() ?? '',
                                         maxLines: 1,
                                         style: GoogleFonts.inter(
                                           fontSize: 12.0,
@@ -663,15 +641,13 @@ class _HomeDashoardShippingDetailedWidgetState
                               child: SizedBox(
                                 width: double.infinity,
                                 child: TextButton(
-                                  onPressed:
-                                      _isSaving ? null : _updateTracking,
+                                  onPressed: _isSaving ? null : _updateTracking,
                                   style: TextButton.styleFrom(
                                     backgroundColor: AppColors.secondary,
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 12.0),
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 12.0),
                                     shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(8.0),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
                                   child: Text(
@@ -707,8 +683,8 @@ class _HomeDashoardShippingDetailedWidgetState
                                     onPressed:
                                         _isSaving ? null : _markAsDelivered,
                                     style: TextButton.styleFrom(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 12.0),
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 12.0),
                                       shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(8.0),
@@ -742,16 +718,19 @@ class _HomeDashoardShippingDetailedWidgetState
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   _buildStatusBadge(
-                                      'Sale Pending', _isSalePending || _isPaid || _isShipped || _isDelivered),
+                                      'Sale Pending',
+                                      _isSalePending ||
+                                          _isPaid ||
+                                          _isShipped ||
+                                          _isDelivered),
                                   SizedBox(width: 8.0),
-                                  _buildStatusBadge(
-                                      'Purchased', _isPaid || _isShipped || _isDelivered),
+                                  _buildStatusBadge('Purchased',
+                                      _isPaid || _isShipped || _isDelivered),
                                   SizedBox(width: 8.0),
                                   _buildStatusBadge(
                                       'Shipped', _isShipped || _isDelivered),
                                   SizedBox(width: 8.0),
-                                  _buildStatusBadge(
-                                      'Delivered', _isDelivered),
+                                  _buildStatusBadge('Delivered', _isDelivered),
                                 ],
                               ),
                             ),
@@ -764,7 +743,8 @@ class _HomeDashoardShippingDetailedWidgetState
                               child: Container(
                                 width: double.infinity,
                                 decoration: BoxDecoration(
-                                  color: Color(0xFF78350F).withValues(alpha: 0.3),
+                                  color:
+                                      Color(0xFF78350F).withValues(alpha: 0.3),
                                   borderRadius: BorderRadius.circular(8.0),
                                   border: Border.all(color: Color(0xFFD97706)),
                                 ),
@@ -789,9 +769,8 @@ class _HomeDashoardShippingDetailedWidgetState
                                 children: [
                                   Expanded(
                                     child: OutlinedButton(
-                                      onPressed: _isSaving
-                                          ? null
-                                          : _cancelOrder,
+                                      onPressed:
+                                          _isSaving ? null : _cancelOrder,
                                       style: OutlinedButton.styleFrom(
                                         side: BorderSide(
                                             color: AppColors.neutral700),
@@ -822,18 +801,16 @@ class _HomeDashoardShippingDetailedWidgetState
                                             Color(0xFF6187F1)
                                           ],
                                           stops: [0.0, 1.0],
-                                          begin: AlignmentDirectional(
-                                              0.0, -1.0),
-                                          end: AlignmentDirectional(
-                                              0, 1.0),
+                                          begin:
+                                              AlignmentDirectional(0.0, -1.0),
+                                          end: AlignmentDirectional(0, 1.0),
                                         ),
                                         borderRadius:
                                             BorderRadius.circular(8.0),
                                       ),
                                       child: TextButton(
-                                        onPressed: _isSaving
-                                            ? null
-                                            : _markAsShipped,
+                                        onPressed:
+                                            _isSaving ? null : _markAsShipped,
                                         style: TextButton.styleFrom(
                                           padding: EdgeInsets.symmetric(
                                               vertical: 14.0),
@@ -848,19 +825,16 @@ class _HomeDashoardShippingDetailedWidgetState
                                                 height: 20,
                                                 child:
                                                     CircularProgressIndicator(
-                                                  color: AppColors
-                                                      .textPrimary,
+                                                  color: AppColors.textPrimary,
                                                   strokeWidth: 2,
                                                 ),
                                               )
                                             : Text(
                                                 'Mark as Shipped',
                                                 style: GoogleFonts.inter(
-                                                  fontWeight:
-                                                      FontWeight.w500,
+                                                  fontWeight: FontWeight.w500,
                                                   fontSize: 15.0,
-                                                  color: AppColors
-                                                      .textPrimary,
+                                                  color: AppColors.textPrimary,
                                                 ),
                                               ),
                                       ),
@@ -893,16 +867,13 @@ class _HomeDashoardShippingDetailedWidgetState
         borderRadius: BorderRadius.circular(100.0),
       ),
       child: Padding(
-        padding:
-            EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 16.0, 8.0),
+        padding: EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 16.0, 8.0),
         child: Text(
           label,
           style: GoogleFonts.inter(
             fontWeight: FontWeight.w500,
             fontSize: 13.0,
-            color: isActive
-                ? AppColors.textPrimary
-                : AppColors.textSecondary,
+            color: isActive ? AppColors.textPrimary : AppColors.textSecondary,
           ),
         ),
       ),
@@ -951,7 +922,8 @@ class _SellerCancelDialogState extends State<_SellerCancelDialog> {
                   color: AppColors.textSecondary, fontSize: 14.0)),
           SizedBox(height: 12.0),
           _buildReasonTile('item_sold_out', 'Item sold out'),
-          _buildReasonTile('double_sold', 'Item double-sold on another platform'),
+          _buildReasonTile(
+              'double_sold', 'Item double-sold on another platform'),
           _buildReasonTile('other', 'Other'),
           if (_selectedReason == 'other') ...[
             SizedBox(height: 8.0),

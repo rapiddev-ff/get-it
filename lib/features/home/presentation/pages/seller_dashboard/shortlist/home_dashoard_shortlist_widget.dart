@@ -116,8 +116,8 @@ class _HomeDashoardShortlistWidgetState
                 )
               : shortlists.isEmpty
                   ? Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          16.0, 0.0, 16.0, 0.0),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                       child: Column(
                         children: [
                           Expanded(
@@ -141,8 +141,8 @@ class _HomeDashoardShortlistWidgetState
                                   ),
                                   SizedBox(height: 8.0),
                                   Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 24.0),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 24.0),
                                     child: Text(
                                       'Create a shortlist for an event to share products with a QR code and track scans.',
                                       textAlign: TextAlign.center,
@@ -161,12 +161,10 @@ class _HomeDashoardShortlistWidgetState
                                           Color(0xFF6187F1)
                                         ],
                                         stops: [0.0, 1.0],
-                                        begin:
-                                            AlignmentDirectional(0.0, -1.0),
+                                        begin: AlignmentDirectional(0.0, -1.0),
                                         end: AlignmentDirectional(0, 1.0),
                                       ),
-                                      borderRadius:
-                                          BorderRadius.circular(8.0),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                     child: TextButton(
                                       onPressed: () async {
@@ -197,18 +195,16 @@ class _HomeDashoardShortlistWidgetState
                       ),
                     )
                   : SingleChildScrollView(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          16.0, 0.0, 16.0, 0.0),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                       child: Column(
                         children: [
                           ListView.separated(
-                            padding:
-                                EdgeInsets.fromLTRB(0, 24.0, 0, 24.0),
+                            padding: EdgeInsets.fromLTRB(0, 24.0, 0, 24.0),
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: shortlists.length,
-                            separatorBuilder: (_, __) =>
-                                SizedBox(height: 12.0),
+                            separatorBuilder: (_, __) => SizedBox(height: 12.0),
                             itemBuilder: (context, index) {
                               return ShortlistItemWidget(
                                   shortlist: shortlists[index],
@@ -241,8 +237,7 @@ class _HomeDashoardShortlistWidgetState
                                   _loadShortlists();
                                 },
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(
                                       Icons.add,
@@ -277,8 +272,7 @@ class _HomeDashoardShortlistWidgetState
                                     24.0, 20.0, 24.0, 20.0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       'How QR Codes Work',

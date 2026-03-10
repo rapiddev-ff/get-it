@@ -156,8 +156,7 @@ class _QuickPurchasePopupWidgetState
 
     ref.read(authProvider.notifier).updateUser(
           (e) => e.copyWith(
-            userSettings:
-                (e.userSettings ?? const UserSettings()).copyWith(
+            userSettings: (e.userSettings ?? const UserSettings()).copyWith(
               dailyBudgetUsed: newUsed,
             ),
           ),
@@ -278,8 +277,7 @@ class _QuickPurchasePopupWidgetState
                               width: 28,
                               height: 28,
                               decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: AppColors.neutral700),
+                                border: Border.all(color: AppColors.neutral700),
                                 borderRadius: BorderRadius.circular(4.0),
                               ),
                               child: Icon(Icons.remove,
@@ -306,8 +304,7 @@ class _QuickPurchasePopupWidgetState
                               width: 28,
                               height: 28,
                               decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: AppColors.neutral700),
+                                border: Border.all(color: AppColors.neutral700),
                                 borderRadius: BorderRadius.circular(4.0),
                               ),
                               child: Icon(Icons.add,
@@ -350,9 +347,7 @@ class _QuickPurchasePopupWidgetState
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 8.0),
                   child: Divider(
-                      height: 1.0,
-                      thickness: 1.0,
-                      color: Color(0xFF545454)),
+                      height: 1.0, thickness: 1.0, color: Color(0xFF545454)),
                 ),
                 Row(
                   children: [

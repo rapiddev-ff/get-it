@@ -24,7 +24,8 @@ Future<Map<String, dynamic>> createShortlist({
     final userId = supabase.auth.currentUser?.id;
 
     if (userId == null) {
-      return errorResult('Not Logged In', 'You must be logged in to create a shortlist.');
+      return errorResult(
+          'Not Logged In', 'You must be logged in to create a shortlist.');
     }
 
     if (name.trim().isEmpty) {
@@ -32,13 +33,15 @@ Future<Map<String, dynamic>> createShortlist({
     }
 
     if (!['active', 'draft'].contains(status)) {
-      return errorResult('Invalid Status', 'Status must be "active" or "draft".');
+      return errorResult(
+          'Invalid Status', 'Status must be "active" or "draft".');
     }
 
     // Generate random 8-char share code
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     final random = Random();
-    final shareCode = List.generate(8, (_) => chars[random.nextInt(chars.length)]).join();
+    final shareCode =
+        List.generate(8, (_) => chars[random.nextInt(chars.length)]).join();
 
     // Parse dates
     DateTime? parsedStartDate;
@@ -86,11 +89,15 @@ Future<Map<String, dynamic>> createShortlist({
 
     // Insert shortlist items
     if (productIds.isNotEmpty) {
-      final items = productIds.asMap().entries.map((entry) => {
-            'shortlist_id': shortlistId,
-            'product_id': entry.value,
-            'sort_order': entry.key,
-          }).toList();
+      final items = productIds
+          .asMap()
+          .entries
+          .map((entry) => {
+                'shortlist_id': shortlistId,
+                'product_id': entry.value,
+                'sort_order': entry.key,
+              })
+          .toList();
 
       await supabase.from('shortlist_items').insert(items);
     }

@@ -34,7 +34,6 @@ class WishlistWidget extends ConsumerStatefulWidget {
 }
 
 class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _textController = TextEditingController();
   final _textFieldFocusNode = FocusNode();
   Category? _choosenCategory;
@@ -89,7 +88,6 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
 
     return DismissKeyboard(
       child: Scaffold(
-        key: _scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(56.0),
@@ -350,8 +348,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                 if (wishlist.isEmpty) {
                                   final hasSearch =
                                       _textController.text.trim().isNotEmpty;
-                                  final hasCategory =
-                                      _choosenCategory != null;
+                                  final hasCategory = _choosenCategory != null;
                                   final hasFilters = hasSearch || hasCategory;
 
                                   return Center(
@@ -399,17 +396,17 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                             });
                                           } else {
                                             context.goNamed(
-                                                BrowseWidget.routeName,
-                                                extra: <String, dynamic>{
-                                                  kTransitionInfoKey:
-                                                      TransitionInfo(
-                                                    hasTransition: true,
-                                                    transitionType:
-                                                        PageTransitionType.fade,
-                                                    duration: Duration.zero,
-                                                  ),
-                                                },
-                                              );
+                                              BrowseWidget.routeName,
+                                              extra: <String, dynamic>{
+                                                kTransitionInfoKey:
+                                                    TransitionInfo(
+                                                  hasTransition: true,
+                                                  transitionType:
+                                                      PageTransitionType.fade,
+                                                  duration: Duration.zero,
+                                                ),
+                                              },
+                                            );
                                           }
                                         },
                                       ),

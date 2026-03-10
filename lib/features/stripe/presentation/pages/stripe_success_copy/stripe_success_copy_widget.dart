@@ -17,13 +17,10 @@ class StripeSuccessCopyWidget extends StatefulWidget {
 }
 
 class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         body: SafeArea(
           top: true,

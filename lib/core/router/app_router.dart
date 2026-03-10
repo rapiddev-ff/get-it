@@ -38,9 +38,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   ? HomePageWidget()
                   : CheckDataWidget())
               : WelcomeWidget(),
-          routes: appRoutes()
-              .map((r) => r.toRoute(appStateNotifier))
-              .toList(),
+          routes: appRoutes().map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

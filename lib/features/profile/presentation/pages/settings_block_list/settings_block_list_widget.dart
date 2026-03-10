@@ -26,8 +26,6 @@ class SettingsBlockListWidget extends StatefulWidget {
 class _SettingsBlockListWidgetState extends State<SettingsBlockListWidget> {
   late SettingsBlockListModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   /// Combined blocked user data: blocked_users row + user_profiles data.
   List<_BlockedUserInfo>? _blockedUsers;
   bool _isLoading = true;
@@ -59,10 +57,11 @@ class _SettingsBlockListWidgetState extends State<SettingsBlockListWidget> {
       );
 
       if (rows.isEmpty) {
-        if (mounted) setState(() {
-          _blockedUsers = [];
-          _isLoading = false;
-        });
+        if (mounted)
+          setState(() {
+            _blockedUsers = [];
+            _isLoading = false;
+          });
         return;
       }
 
@@ -88,15 +87,17 @@ class _SettingsBlockListWidgetState extends State<SettingsBlockListWidget> {
         );
       }).toList();
 
-      if (mounted) setState(() {
-        _blockedUsers = result;
-        _isLoading = false;
-      });
+      if (mounted)
+        setState(() {
+          _blockedUsers = result;
+          _isLoading = false;
+        });
     } catch (e) {
-      if (mounted) setState(() {
-        _blockedUsers = [];
-        _isLoading = false;
-      });
+      if (mounted)
+        setState(() {
+          _blockedUsers = [];
+          _isLoading = false;
+        });
     }
   }
 
@@ -155,7 +156,6 @@ class _SettingsBlockListWidgetState extends State<SettingsBlockListWidget> {
 
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundSecondary,
@@ -193,6 +193,7 @@ class _SettingsBlockListWidgetState extends State<SettingsBlockListWidget> {
       ),
     );
   }
+
   Widget _buildEmptyState() {
     return Column(
       children: [

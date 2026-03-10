@@ -25,9 +25,11 @@ class SupabaseAuthManager extends AuthManager with EmailSignInManager {
       }
       await currentUser?.delete();
     } on AuthException {
-      actions.toastificationshow(context, 'Error', 'Failed to delete account. Please try again', 'error');
+      actions.toastificationshow(context, 'Error',
+          'Failed to delete account. Please try again', 'error');
     } catch (e) {
-      actions.toastificationshow(context, 'Error', 'Account deletion is not supported yet', 'error');
+      actions.toastificationshow(
+          context, 'Error', 'Account deletion is not supported yet', 'error');
     }
   }
 
@@ -42,10 +44,12 @@ class SupabaseAuthManager extends AuthManager with EmailSignInManager {
       }
       await currentUser?.updateEmail(email);
     } on AuthException {
-      actions.toastificationshow(context, 'Error', 'Failed to update email. Please try again', 'error');
+      actions.toastificationshow(context, 'Error',
+          'Failed to update email. Please try again', 'error');
       return;
     }
-    actions.toastificationshow(context, 'Success', 'Email change confirmation email sent', 'success');
+    actions.toastificationshow(
+        context, 'Success', 'Email change confirmation email sent', 'success');
   }
 
   Future updatePassword({
@@ -58,10 +62,12 @@ class SupabaseAuthManager extends AuthManager with EmailSignInManager {
       }
       await currentUser?.updatePassword(newPassword);
     } on AuthException {
-      actions.toastificationshow(context, 'Error', 'Failed to update password. Please try again', 'error');
+      actions.toastificationshow(context, 'Error',
+          'Failed to update password. Please try again', 'error');
       return;
     }
-    actions.toastificationshow(context, 'Success', 'Password updated successfully', 'success');
+    actions.toastificationshow(
+        context, 'Success', 'Password updated successfully', 'success');
   }
 
   @override
@@ -74,10 +80,12 @@ class SupabaseAuthManager extends AuthManager with EmailSignInManager {
       await SupaFlow.client.auth
           .resetPasswordForEmail(email, redirectTo: redirectTo);
     } on AuthException {
-      actions.toastificationshow(context, 'Error', 'Failed to send password reset email. Please try again', 'error');
+      actions.toastificationshow(context, 'Error',
+          'Failed to send password reset email. Please try again', 'error');
       return null;
     }
-    actions.toastificationshow(context, 'Success', 'Password reset email sent', 'success');
+    actions.toastificationshow(
+        context, 'Success', 'Password reset email sent', 'success');
   }
 
   @override

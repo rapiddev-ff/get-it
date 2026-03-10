@@ -234,7 +234,8 @@ bool validateFileFormat(String filePath, BuildContext context) {
   if (allowedFormats.contains(mime(filePath))) {
     return true;
   }
-  actions.toastificationshow(context, 'Error', 'Invalid file format: ${mime(filePath)}', 'error');
+  actions.toastificationshow(
+      context, 'Error', 'Invalid file format: ${mime(filePath)}', 'error');
   return false;
 }
 

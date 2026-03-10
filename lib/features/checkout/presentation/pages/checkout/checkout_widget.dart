@@ -39,7 +39,6 @@ class CheckoutWidget extends ConsumerStatefulWidget {
 }
 
 class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   final _currencyFormat = NumberFormat('\$#,##0.00', 'en_US');
 
   CheckoutTotals? checkoutTotals;
@@ -226,7 +225,6 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
 
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(56.0),
@@ -316,8 +314,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
 
                 // Shipping Address section
                 Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   child: InkWell(
                     splashColor: Colors.transparent,
                     focusColor: Colors.transparent,
@@ -361,8 +358,8 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                 ),
                 if (_hasShippingAddress)
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(
-                        16.0, 16.0, 16.0, 0.0),
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -421,8 +418,8 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                   )
                 else
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(
-                        16.0, 16.0, 16.0, 0.0),
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -450,8 +447,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
 
                 // Payment Method section
                 Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
                   child: Text(
                     'Payment Method',
                     style: GoogleFonts.inter(
@@ -463,8 +459,8 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                 ),
                 if (user.paymentMethod.isEmpty)
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(
-                        16.0, 16.0, 16.0, 0.0),
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -485,8 +481,8 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                   )
                 else
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(
-                        16.0, 16.0, 16.0, 0.0),
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
                     child: Builder(
                       builder: (context) {
                         final paymentMethods = user.paymentMethod.toList();
@@ -497,8 +493,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
                           itemCount: paymentMethods.length,
-                          separatorBuilder: (_, __) =>
-                              SizedBox(height: 16.0),
+                          separatorBuilder: (_, __) => SizedBox(height: 16.0),
                           itemBuilder: (context, paymentMethodsIndex) {
                             final paymentMethodsItem =
                                 paymentMethods[paymentMethodsIndex];
@@ -587,8 +582,8 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () async {
-                      await context.pushNamed(
-                          SettingsPaymentMethodAddWidget.routeName);
+                      await context
+                          .pushNamed(SettingsPaymentMethodAddWidget.routeName);
                       // Auto-select newly added method
                       if (mounted) {
                         _autoSelectDefaultPaymentMethod();
@@ -632,8 +627,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
 
                 // Order Summary section
                 Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
                   child: Text(
                     'Order Summary',
                     style: GoogleFonts.inter(
@@ -659,8 +653,10 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          _summaryRow('Subtotal', _currencyFormat.format(_subtotal)),
-                          _summaryRow('Shipping',
+                          _summaryRow(
+                              'Subtotal', _currencyFormat.format(_subtotal)),
+                          _summaryRow(
+                              'Shipping',
                               widget.feedProductItem!.freeShipping
                                   ? 'Free'
                                   : _currencyFormat.format(_shippingCost)),
@@ -669,8 +665,8 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                               _hasShippingAddress
                                   ? _currencyFormat.format(tax)
                                   : '-'),
-                          _summaryRow(
-                              'Platform Fee', _currencyFormat.format(_platformFee)),
+                          _summaryRow('Platform Fee',
+                              _currencyFormat.format(_platformFee)),
                           Divider(
                             height: 1.0,
                             thickness: 1.0,
@@ -714,8 +710,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
 
                 // Buyer Protection
                 Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(

@@ -25,11 +25,9 @@ class SettingsChangePasswordWidget extends StatefulWidget {
 }
 
 class _SettingsChangePasswordWidgetState
-    extends State<SettingsChangePasswordWidget>
-    with KeyboardVisibilityMixin {
+    extends State<SettingsChangePasswordWidget> with KeyboardVisibilityMixin {
   late SettingsChangePasswordModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
@@ -56,7 +54,6 @@ class _SettingsChangePasswordWidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundSecondary,
@@ -414,7 +411,8 @@ class _SettingsChangePasswordWidgetState
                           if (newPw.length < 8 ||
                               !newPw.contains(RegExp(r'[A-Z]')) ||
                               !newPw.contains(RegExp(r'\d')) ||
-                              !newPw.contains(RegExp(r'[!@#\$%^&*(),.?":{}|<>_\-]')) ||
+                              !newPw.contains(
+                                  RegExp(r'[!@#\$%^&*(),.?":{}|<>_\-]')) ||
                               newPw != confirmPw) {
                             await actions.toastificationshow(
                               context,

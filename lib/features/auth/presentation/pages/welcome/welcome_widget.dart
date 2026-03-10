@@ -26,8 +26,6 @@ class WelcomeWidget extends StatefulWidget {
 class _WelcomeWidgetState extends State<WelcomeWidget> {
   late WelcomeModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   void initState() {
     super.initState();
@@ -53,7 +51,6 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
       child: PopScope(
         canPop: false,
         child: Scaffold(
-          key: scaffoldKey,
           backgroundColor: AppColors.backgroundPrimary,
           body: SafeArea(
             top: true,

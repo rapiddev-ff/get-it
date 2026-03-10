@@ -40,8 +40,6 @@ class HomeProductWidget extends ConsumerStatefulWidget {
 }
 
 class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   // Inlined from HomeProductModel
   ProductDetails? _getProduct;
   PageController? _pageViewController;
@@ -228,7 +226,6 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
 
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(56.0),
@@ -328,8 +325,8 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                           final imagesItem =
                                               images[imagesIndex];
                                           return Align(
-                                            alignment: AlignmentDirectional(
-                                                0.0, -1.0),
+                                            alignment:
+                                                AlignmentDirectional(0.0, -1.0),
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(
@@ -338,8 +335,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                                 borderRadius:
                                                     BorderRadius.circular(8.0),
                                                 child: CachedNetworkImage(
-                                                  imageUrl:
-                                                      imagesItem.imageUrl,
+                                                  imageUrl: imagesItem.imageUrl,
                                                   width: 310.0,
                                                   height: 320.0,
                                                   fit: BoxFit.cover,
@@ -378,15 +374,14 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                                     0.0, 0.0, 0.0, 30.0),
                                             child: smooth_page_indicator
                                                 .SmoothPageIndicator(
-                                              controller:
-                                                  _pageViewController ??=
-                                                      PageController(
-                                                          initialPage: max(
+                                              controller: _pageViewController ??=
+                                                  PageController(
+                                                      initialPage: max(
+                                                          0,
+                                                          min(
                                                               0,
-                                                              min(
-                                                                  0,
-                                                                  images.length -
-                                                                      1))),
+                                                              images.length -
+                                                                  1))),
                                               count: images.length,
                                               axisDirection: Axis.horizontal,
                                               onDotClicked: (i) async {
@@ -463,8 +458,8 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(
-                          16.0, 24.0, 16.0, 0.0),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -543,8 +538,8 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              if (_hasValue(product
-                                                  .seller?.username))
+                                              if (_hasValue(
+                                                  product.seller?.username))
                                                 Text(
                                                   product.seller!.username,
                                                   style: GoogleFonts.inter(
@@ -562,16 +557,14 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                                   children: [
                                                     Icon(
                                                       Icons.star_sharp,
-                                                      color:
-                                                          Color(0xFFFFD900),
+                                                      color: Color(0xFFFFD900),
                                                       size: 18.0,
                                                     ),
                                                     Text(
                                                       '${product.seller?.ratingAsSeller ?? 0} (${product.seller?.totalReviewsAsSeller ?? 0} reviews)',
-                                                      style:
-                                                          GoogleFonts.inter(
-                                                        color: Color(
-                                                            0xFFAFAFB4),
+                                                      style: GoogleFonts.inter(
+                                                        color:
+                                                            Color(0xFFAFAFB4),
                                                         fontSize: 12.0,
                                                       ),
                                                     ),
@@ -593,303 +586,280 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                 ),
                               ),
                             ),
-                          if (_hasValue(product.description))
-                            ...[
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 24.0, 0.0, 0.0),
-                                child: Text(
-                                  'Description',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16.0,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 4.0, 0.0, 0.0),
-                                child: Text(
-                                  product.description,
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16.0,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          if (_hasConditionOrDetails(product))
-                            ...[
-                              Divider(
-                                height: 48.0,
-                                thickness: 2.0,
-                                color: Color(0xFF363636),
-                              ),
-                              Text(
-                                'Condition & Details',
+                          if (_hasValue(product.description)) ...[
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 24.0, 0.0, 0.0),
+                              child: Text(
+                                'Description',
                                 style: GoogleFonts.inter(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 16.0,
                                 ),
                               ),
-                              if (product.conditions.isNotEmpty)
-                                _buildDetailRow(
-                                  'Condition',
-                                  product.conditions
-                                      .map((c) => c.name)
-                                      .join(', '),
-                                ),
-                              if (product.year != null)
-                                _buildDetailRow(
-                                    'Year', product.year.toString()),
-                              if (product.issueNumber != null)
-                                _buildDetailRow('Issue Number',
-                                    '#${product.issueNumber}'),
-                            ],
-                          if (_hasShippingInfo(product))
-                            ...[
-                              Divider(
-                                height: 48.0,
-                                thickness: 2.0,
-                                color: Color(0xFF363636),
-                              ),
-                              Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: AppColors.backgroundSecondary,
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.all(16.0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Icon(
-                                            Icons.local_shipping,
-                                            color: AppColors.primary,
-                                            size: 18.0,
-                                          ),
-                                          Text(
-                                            'Shipping Information',
-                                            style: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 16.0,
-                                            ),
-                                          ),
-                                        ].divide(SizedBox(width: 12.0)),
-                                      ),
-                                      SizedBox(height: 8.0),
-                                      Text(
-                                        product.freeShipping
-                                            ? 'Free shipping'
-                                            : 'Shipping cost: ${_formatCurrency(_getShippingCost(product), prefix: '\$')}',
-                                        style: GoogleFonts.inter(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 14.0,
-                                          color: AppColors.textPrimary,
-                                        ),
-                                      ),
-                                      SizedBox(height: 4.0),
-                                      Text(
-                                        'Carefully packaged with tracking included.',
-                                        style: GoogleFonts.inter(
-                                          fontSize: 14.0,
-                                          color: Color(0xFFAFAFB4),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 4.0, 0.0, 0.0),
+                              child: Text(
+                                product.description,
+                                style: GoogleFonts.inter(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 16.0,
                                 ),
                               ),
-                            ],
-                          if (currentUserUid != product.seller?.id)
-                            ...[
-                              Divider(
-                                height: 48.0,
-                                thickness: 2.0,
-                                color: Color(0xFF363636),
+                            ),
+                          ],
+                          if (_hasConditionOrDetails(product)) ...[
+                            Divider(
+                              height: 48.0,
+                              thickness: 2.0,
+                              color: Color(0xFF363636),
+                            ),
+                            Text(
+                              'Condition & Details',
+                              style: GoogleFonts.inter(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16.0,
                               ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: SizedBox(
-                                      width: double.infinity,
-                                      height: 56.0,
-                                      child: TextButton(
-                                        onPressed: () async {
-                                          _getOrCreateConversation =
-                                              await actions
-                                                  .getOrCreateConversation(
-                                            product.seller?.id ?? '',
-                                            widget.productId,
-                                          );
-                                          ref
-                                              .read(
-                                                  messagesProvider.notifier)
-                                              .setCurrentConversation(
-                                                  _getOrCreateConversation!);
-                                          if (!mounted) return;
-                                          context.pushNamed(
-                                            ChatPageWidget.routeName,
-                                            queryParameters: {
-                                              'conversation':
-                                                  _getOrCreateConversation!
-                                                      .serialize(),
-                                            },
-                                          );
-                                        },
-                                        style: TextButton.styleFrom(
-                                          backgroundColor:
-                                              AppColors.backgroundSecondary,
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16.0, 0.0, 16.0, 0.0),
-                                          elevation: 0.0,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(4.0),
-                                          ),
+                            ),
+                            if (product.conditions.isNotEmpty)
+                              _buildDetailRow(
+                                'Condition',
+                                product.conditions
+                                    .map((c) => c.name)
+                                    .join(', '),
+                              ),
+                            if (product.year != null)
+                              _buildDetailRow('Year', product.year.toString()),
+                            if (product.issueNumber != null)
+                              _buildDetailRow(
+                                  'Issue Number', '#${product.issueNumber}'),
+                          ],
+                          if (_hasShippingInfo(product)) ...[
+                            Divider(
+                              height: 48.0,
+                              thickness: 2.0,
+                              color: Color(0xFF363636),
+                            ),
+                            Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: AppColors.backgroundSecondary,
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(16.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Icon(
+                                          Icons.local_shipping,
+                                          color: AppColors.primary,
+                                          size: 18.0,
                                         ),
-                                        child: Text(
-                                          'Ask Question',
+                                        Text(
+                                          'Shipping Information',
                                           style: GoogleFonts.inter(
                                             fontWeight: FontWeight.w500,
-                                            color: Colors.white,
-                                            fontSize: 17.0,
+                                            fontSize: 16.0,
                                           ),
                                         ),
+                                      ].divide(SizedBox(width: 12.0)),
+                                    ),
+                                    SizedBox(height: 8.0),
+                                    Text(
+                                      product.freeShipping
+                                          ? 'Free shipping'
+                                          : 'Shipping cost: ${_formatCurrency(_getShippingCost(product), prefix: '\$')}',
+                                      style: GoogleFonts.inter(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14.0,
+                                        color: AppColors.textPrimary,
                                       ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      width: double.infinity,
-                                      height: 56.0,
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            Color(0xFF7D56FF),
-                                            Color(0xFF6187F1)
-                                          ],
-                                          stops: [0.0, 1.0],
-                                          begin: AlignmentDirectional(
-                                              0.0, -1.0),
-                                          end:
-                                              AlignmentDirectional(0, 1.0),
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(4.0),
-                                      ),
-                                      child: TextButton(
-                                        onPressed: () async {
-                                          context.pushNamed(
-                                            CheckoutWidget.routeName,
-                                            queryParameters: {
-                                              'feedProductItem': FeedProduct(
-                                                id: product.id,
-                                                title: product.title,
-                                                description:
-                                                    product.description,
-                                                price: product.price,
-                                                originalPrice:
-                                                    product.originalPrice,
-                                                flashSaleEnabled:
-                                                    product.flashSaleEnabled,
-                                                flashSalePrice:
-                                                    product.flashSalePrice,
-                                                flashSaleEndsAt:
-                                                    product.flashSaleEndsAt,
-                                                conditionName: product
-                                                        .conditions
-                                                        .firstOrNull
-                                                        ?.name ??
-                                                    '',
-                                                mainImageUrl: product.images
-                                                        .firstOrNull
-                                                        ?.imageUrl ??
-                                                    '',
-                                                sellerId:
-                                                    product.seller?.id ??
-                                                        '',
-                                                sellerUsername: product
-                                                        .seller?.username ??
-                                                    '',
-                                                sellerAvatarUrl: product
-                                                    .seller?.avatarUrl,
-                                                sellerRating: product.seller
-                                                        ?.ratingAsSeller ??
-                                                    0.0,
-                                                sellerTotalReviews: product
-                                                        .seller
-                                                        ?.totalReviewsAsSeller ??
-                                                    0,
-                                                isInWishlist:
-                                                    product.isInWishlist,
-                                                createdAt:
-                                                    product.createdAt,
-                                                shippingPrice:
-                                                    product.shippingPrice,
-                                                freeShipping:
-                                                    product.freeShipping,
-                                                useSellerShipping: product
-                                                    .useSellerShipping,
-                                                customFlatRate:
-                                                    product.customFlatRate,
-                                                customAdditionalItemFee:
-                                                    product
-                                                        .customAdditionalItemFee,
-                                              ).serialize(),
-                                              'initialQuantity':
-                                                  1.toString(),
-                                            },
-                                          );
-                                        },
-                                        style: TextButton.styleFrom(
-                                          backgroundColor:
-                                              Color(0x008E6CFF),
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16.0, 0.0, 16.0, 0.0),
-                                          elevation: 0.0,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              AppIcons.kadd,
-                                              color: Colors.white,
-                                              size: 28.0,
-                                            ),
-                                            SizedBox(width: 8.0),
-                                            Text(
-                                              'Buy Now',
-                                              style: GoogleFonts.inter(
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.white,
-                                                fontSize: 17.0,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                    SizedBox(height: 4.0),
+                                    Text(
+                                      'Carefully packaged with tracking included.',
+                                      style: GoogleFonts.inter(
+                                        fontSize: 14.0,
+                                        color: Color(0xFFAFAFB4),
                                       ),
                                     ),
-                                  ),
-                                ].divide(SizedBox(width: 20.0)),
+                                  ],
+                                ),
                               ),
-                            ],
+                            ),
+                          ],
+                          if (currentUserUid != product.seller?.id) ...[
+                            Divider(
+                              height: 48.0,
+                              thickness: 2.0,
+                              color: Color(0xFF363636),
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: SizedBox(
+                                    width: double.infinity,
+                                    height: 56.0,
+                                    child: TextButton(
+                                      onPressed: () async {
+                                        _getOrCreateConversation = await actions
+                                            .getOrCreateConversation(
+                                          product.seller?.id ?? '',
+                                          widget.productId,
+                                        );
+                                        ref
+                                            .read(messagesProvider.notifier)
+                                            .setCurrentConversation(
+                                                _getOrCreateConversation!);
+                                        if (!mounted) return;
+                                        context.pushNamed(
+                                          ChatPageWidget.routeName,
+                                          queryParameters: {
+                                            'conversation':
+                                                _getOrCreateConversation!
+                                                    .serialize(),
+                                          },
+                                        );
+                                      },
+                                      style: TextButton.styleFrom(
+                                        backgroundColor:
+                                            AppColors.backgroundSecondary,
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 16.0, 0.0),
+                                        elevation: 0.0,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(4.0),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        'Ask Question',
+                                        style: GoogleFonts.inter(
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white,
+                                          fontSize: 17.0,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 56.0,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Color(0xFF7D56FF),
+                                          Color(0xFF6187F1)
+                                        ],
+                                        stops: [0.0, 1.0],
+                                        begin: AlignmentDirectional(0.0, -1.0),
+                                        end: AlignmentDirectional(0, 1.0),
+                                      ),
+                                      borderRadius: BorderRadius.circular(4.0),
+                                    ),
+                                    child: TextButton(
+                                      onPressed: () async {
+                                        context.pushNamed(
+                                          CheckoutWidget.routeName,
+                                          queryParameters: {
+                                            'feedProductItem': FeedProduct(
+                                              id: product.id,
+                                              title: product.title,
+                                              description: product.description,
+                                              price: product.price,
+                                              originalPrice:
+                                                  product.originalPrice,
+                                              flashSaleEnabled:
+                                                  product.flashSaleEnabled,
+                                              flashSalePrice:
+                                                  product.flashSalePrice,
+                                              flashSaleEndsAt:
+                                                  product.flashSaleEndsAt,
+                                              conditionName: product.conditions
+                                                      .firstOrNull?.name ??
+                                                  '',
+                                              mainImageUrl: product.images
+                                                      .firstOrNull?.imageUrl ??
+                                                  '',
+                                              sellerId:
+                                                  product.seller?.id ?? '',
+                                              sellerUsername:
+                                                  product.seller?.username ??
+                                                      '',
+                                              sellerAvatarUrl:
+                                                  product.seller?.avatarUrl,
+                                              sellerRating: product
+                                                      .seller?.ratingAsSeller ??
+                                                  0.0,
+                                              sellerTotalReviews: product.seller
+                                                      ?.totalReviewsAsSeller ??
+                                                  0,
+                                              isInWishlist:
+                                                  product.isInWishlist,
+                                              createdAt: product.createdAt,
+                                              shippingPrice:
+                                                  product.shippingPrice,
+                                              freeShipping:
+                                                  product.freeShipping,
+                                              useSellerShipping:
+                                                  product.useSellerShipping,
+                                              customFlatRate:
+                                                  product.customFlatRate,
+                                              customAdditionalItemFee: product
+                                                  .customAdditionalItemFee,
+                                            ).serialize(),
+                                            'initialQuantity': 1.toString(),
+                                          },
+                                        );
+                                      },
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: Color(0x008E6CFF),
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 16.0, 0.0),
+                                        elevation: 0.0,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            AppIcons.kadd,
+                                            color: Colors.white,
+                                            size: 28.0,
+                                          ),
+                                          SizedBox(width: 8.0),
+                                          Text(
+                                            'Buy Now',
+                                            style: GoogleFonts.inter(
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                              fontSize: 17.0,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ].divide(SizedBox(width: 20.0)),
+                            ),
+                          ],
                         ].addToEnd(SizedBox(height: 32.0)),
                       ),
                     ),
@@ -901,8 +871,11 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
   }
 
   Widget _buildPriceRow(ProductDetails product) {
-    final hasFlashSale = product.flashSaleEnabled && product.flashSalePrice != null;
-    final hasDiscount = product.discountType != null && product.discountAmount != null && product.discountAmount! > 0;
+    final hasFlashSale =
+        product.flashSaleEnabled && product.flashSalePrice != null;
+    final hasDiscount = product.discountType != null &&
+        product.discountAmount != null &&
+        product.discountAmount! > 0;
 
     if (!hasFlashSale && !hasDiscount) {
       return Text(
@@ -1018,8 +991,9 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
 
         for (int i = 0; i < tags.length; i++) {
           final tagWidth = _estimateTagWidth(tags[i].name);
-          final widthNeeded =
-              currentRowWidth == 0 ? tagWidth : currentRowWidth + spacing + tagWidth;
+          final widthNeeded = currentRowWidth == 0
+              ? tagWidth
+              : currentRowWidth + spacing + tagWidth;
 
           if (widthNeeded <= constraints.maxWidth) {
             currentRowWidth = widthNeeded;

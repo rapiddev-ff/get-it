@@ -23,8 +23,6 @@ class HomeDashoardPromoteStep2Widget extends StatefulWidget {
 
 class _HomeDashoardPromoteStep2WidgetState
     extends State<HomeDashoardPromoteStep2Widget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   // Inlined model state
   String? state = '';
   String? dropDownValue;
@@ -65,7 +63,6 @@ class _HomeDashoardPromoteStep2WidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(56.0),
@@ -958,7 +955,8 @@ class _HomeDashoardPromoteStep2WidgetState
                                                   autofocus: false,
                                                   enabled: true,
                                                   obscureText: false,
-                                                  decoration: appInputDecoration(
+                                                  decoration:
+                                                      appInputDecoration(
                                                     'MM/DD/YYYY',
                                                   ),
                                                   style: appTextFieldStyle,
@@ -985,7 +983,8 @@ class _HomeDashoardPromoteStep2WidgetState
                                                   autofocus: false,
                                                   enabled: true,
                                                   obscureText: false,
-                                                  decoration: appInputDecoration(
+                                                  decoration:
+                                                      appInputDecoration(
                                                     'MM/DD/YYYY',
                                                   ),
                                                   style: appTextFieldStyle,

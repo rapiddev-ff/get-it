@@ -201,7 +201,8 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
     final currentUserId = Supabase.instance.client.auth.currentUser?.id;
 
     _channel = Supabase.instance.client
-        .channel('messages:${widget.conversationId}:${DateTime.now().millisecondsSinceEpoch}')
+        .channel(
+            'messages:${widget.conversationId}:${DateTime.now().millisecondsSinceEpoch}')
         .onPostgresChanges(
           event: PostgresChangeEvent.insert,
           schema: 'public',

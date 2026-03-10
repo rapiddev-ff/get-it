@@ -40,7 +40,6 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
     with KeyboardVisibilityMixin {
   late ForgotPasswordStep3Model _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
@@ -65,7 +64,6 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundPrimary,
@@ -383,31 +381,29 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                 alignment: AlignmentDirectional(0.0, 0.0)
                                     .resolve(Directionality.of(context)),
                                 child: GestureDetector(
-                                    onTap: () {
-                                      FocusScope.of(dialogContext)
-                                          .unfocus();
-                                      FocusManager.instance.primaryFocus
-                                          ?.unfocus();
-                                    },
-                                    child: DialogWidget(
-                                      title: 'Password Reset Successful',
-                                      subtitle:
-                                          'Your password has been successfully updated.You can now log in using your new password.',
-                                      bgColor: Color(0x338E6CFF),
-                                      icon: FaIcon(
-                                        FontAwesomeIcons.circleCheck,
-                                        color: Color(0xFF8E6CFF),
-                                        size: 20.0,
-                                      ),
-                                      actionText: 'Go to Login',
-                                      action: () async {
-                                        Navigator.pop(context);
-
-                                        context.goNamed(
-                                            SignInWidget.routeName);
-                                      },
+                                  onTap: () {
+                                    FocusScope.of(dialogContext).unfocus();
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
+                                  },
+                                  child: DialogWidget(
+                                    title: 'Password Reset Successful',
+                                    subtitle:
+                                        'Your password has been successfully updated.You can now log in using your new password.',
+                                    bgColor: Color(0x338E6CFF),
+                                    icon: FaIcon(
+                                      FontAwesomeIcons.circleCheck,
+                                      color: Color(0xFF8E6CFF),
+                                      size: 20.0,
                                     ),
+                                    actionText: 'Go to Login',
+                                    action: () async {
+                                      Navigator.pop(context);
+
+                                      context.goNamed(SignInWidget.routeName);
+                                    },
                                   ),
+                                ),
                               );
                             },
                           );

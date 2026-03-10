@@ -28,7 +28,6 @@ class _SettingsMyProfileFollowersWidgetState
     extends State<SettingsMyProfileFollowersWidget> {
   late SettingsMyProfileFollowersModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _followersScrollController = ScrollController();
   final ScrollController _followingScrollController = ScrollController();
   bool _initialLoadDone = false;
@@ -254,7 +253,6 @@ class _SettingsMyProfileFollowersWidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundSecondary,
@@ -289,8 +287,7 @@ class _SettingsMyProfileFollowersWidgetState
               _buildTabBar(),
               Expanded(
                 child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   child: _model.state == 'Followers'
                       ? _buildFollowersTab()
                       : _buildFollowingTab(),
@@ -349,8 +346,7 @@ class _SettingsMyProfileFollowersWidgetState
                       ),
                     ),
                     Opacity(
-                      opacity:
-                          (_model.state == 'Followers' ? 1 : 0).toDouble(),
+                      opacity: (_model.state == 'Followers' ? 1 : 0).toDouble(),
                       child: Container(
                         width: double.infinity,
                         height: 2.0,
@@ -391,8 +387,7 @@ class _SettingsMyProfileFollowersWidgetState
                       ),
                     ),
                     Opacity(
-                      opacity:
-                          (_model.state == 'Following' ? 1 : 0).toDouble(),
+                      opacity: (_model.state == 'Following' ? 1 : 0).toDouble(),
                       child: Container(
                         width: double.infinity,
                         height: 2.0,

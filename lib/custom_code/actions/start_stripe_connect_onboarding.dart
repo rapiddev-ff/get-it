@@ -17,8 +17,8 @@ Future<dynamic> startStripeConnectOnboarding() async {
     final expiresAt = session.expiresAt;
     if (expiresAt != null &&
         DateTime.fromMillisecondsSinceEpoch(expiresAt * 1000)
-            .difference(DateTime.now())
-            .inSeconds <
+                .difference(DateTime.now())
+                .inSeconds <
             60) {
       final refreshResult = await supabase.auth.refreshSession();
       accessToken = refreshResult.session?.accessToken ?? accessToken;

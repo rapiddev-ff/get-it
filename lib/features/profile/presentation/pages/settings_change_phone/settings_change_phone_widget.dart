@@ -36,7 +36,6 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
     with KeyboardVisibilityMixin {
   late SettingsChangePhoneModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
@@ -58,7 +57,6 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundSecondary,
@@ -166,15 +164,14 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
                         text: 'Send',
                         enabled: (_model.textController!.text != '') &&
                             (FormValidators.phoneValidationResult(
-                                    _model.textController!.text) ==
-                                null ||
+                                        _model.textController!.text) ==
+                                    null ||
                                 FormValidators.phoneValidationResult(
                                         _model.textController!.text) ==
                                     ''),
                         onPressed: () async {
-                          _model.apiResultzpe = await SupabaseRPCGroup
-                              .checkphoneexistsCall
-                              .call(
+                          _model.apiResultzpe =
+                              await SupabaseRPCGroup.checkphoneexistsCall.call(
                             userId: _model.textController!.text,
                           );
 
@@ -186,8 +183,7 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
                               'error',
                             );
                           } else {
-                            await TwillioGroup.sendVerificationCall
-                                .call(
+                            await TwillioGroup.sendVerificationCall.call(
                               to: FormValidators.formatPhoneNumber(
                                   _model.textController!.text),
                             );
@@ -198,11 +194,9 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
                             context.pushNamed(
                               PhoneVerificationPage2Widget.routeName,
                               queryParameters: {
-                                'phoneNumber':
-                                    FormValidators.formatPhoneNumber(
-                                        _model.textController!.text),
-                                'isOnborading':
-                                    widget.isOnboarding.toString(),
+                                'phoneNumber': FormValidators.formatPhoneNumber(
+                                    _model.textController!.text),
+                                'isOnborading': widget.isOnboarding.toString(),
                               },
                             );
                           }

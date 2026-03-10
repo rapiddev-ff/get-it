@@ -157,12 +157,12 @@ class SellerDashboardShipItemWidget extends StatelessWidget {
               ),
               Container(
                 decoration: BoxDecoration(
-                  color: _isSalePending ? Color(0xFFD97706) : AppColors.secondary,
+                  color:
+                      _isSalePending ? Color(0xFFD97706) : AppColors.secondary,
                   borderRadius: BorderRadius.circular(6.0),
                 ),
                 child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(12.0, 8.0, 12.0, 8.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(12.0, 8.0, 12.0, 8.0),
                   child: Text(
                     _isSalePending ? 'Pending' : 'Ship',
                     style: GoogleFonts.inter(),

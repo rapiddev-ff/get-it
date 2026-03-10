@@ -106,8 +106,7 @@ class SettingsBlockedUserItemWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(4.0),
                 ),
                 child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(5.0, 8.0, 5.0, 8.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(5.0, 8.0, 5.0, 8.0),
                   child: isUnblocking
                       ? SizedBox(
                           width: 16.0,

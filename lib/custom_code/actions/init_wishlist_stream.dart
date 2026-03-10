@@ -10,7 +10,6 @@ import '/backend/supabase/supabase.dart';
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 RealtimeChannel? _wishlistSubscription;
 
 Future<List<ProductDetails>> initWishlistStream(

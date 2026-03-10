@@ -36,8 +36,6 @@ class _SettingsMyProfileWidgetState
     extends ConsumerState<SettingsMyProfileWidget> {
   late SettingsMyProfileModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   /// Helper to extract a value from JSON by key path like `$.as_buyer.avg_rating`.
   static dynamic _jsonGet(dynamic json, String key) {
     if (json == null) return null;
@@ -103,7 +101,6 @@ class _SettingsMyProfileWidgetState
 
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundSecondary,
@@ -861,9 +858,10 @@ class _SettingsMyProfileWidgetState
           Expanded(
             child: LinearPercentIndicator(
               percent: valueOrDefault<int>(
-                _jsonGet(json, '$role.stars[$index].percent'),
-                0,
-              ).toDouble() / 100.0,
+                    _jsonGet(json, '$role.stars[$index].percent'),
+                    0,
+                  ).toDouble() /
+                  100.0,
               lineHeight: 12.0,
               animation: true,
               animateFromLastPercent: true,

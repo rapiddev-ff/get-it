@@ -73,8 +73,8 @@ Future<dynamic> createProduct(
         double.tryParse(_normalizeDecimal(discountAmountStr?.trim() ?? ''));
     final double? customFlatRate =
         double.tryParse(_normalizeDecimal(customFlatRateStr?.trim() ?? ''));
-    final double? customAdditionalItemFee =
-        double.tryParse(_normalizeDecimal(customAdditionalItemFeeStr?.trim() ?? ''));
+    final double? customAdditionalItemFee = double.tryParse(
+        _normalizeDecimal(customAdditionalItemFeeStr?.trim() ?? ''));
 
     // ─── Photos ───────────────────────────────────────────────────────────────
     // uploadedImages содержит ВСЕ фото (старые + новые)

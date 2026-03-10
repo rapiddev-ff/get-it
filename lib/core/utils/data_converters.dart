@@ -221,10 +221,13 @@ UserData convertUserToDataType(
         ? DateTime.tryParse(userSettingsRow!['budget_reset_at'])
         : null,
     defaultPaymentMethodId: userSettingsRow?['default_payment_method_id'] ?? '',
-    defaultShippingAddressId: userSettingsRow?['default_shipping_address_id'] ?? '',
+    defaultShippingAddressId:
+        userSettingsRow?['default_shipping_address_id'] ?? '',
     fcmToken: userSettingsRow?['fcm_token'] ?? '',
-    defaultFlatShippingRate: userSettingsRow?['default_flat_shipping_rate'] ?? 0.0,
-    defaultAdditionalItemFee: userSettingsRow?['default_additional_item_fee'] ?? 0.0,
+    defaultFlatShippingRate:
+        userSettingsRow?['default_flat_shipping_rate'] ?? 0.0,
+    defaultAdditionalItemFee:
+        userSettingsRow?['default_additional_item_fee'] ?? 0.0,
   );
 
   // ── Parse shipping addresses ───────────────────────────────────────────

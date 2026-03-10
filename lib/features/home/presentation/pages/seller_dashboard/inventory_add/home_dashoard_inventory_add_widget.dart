@@ -47,7 +47,6 @@ class HomeDashoardInventoryAddWidget extends StatefulWidget {
 
 class _HomeDashoardInventoryAddWidgetState
     extends State<HomeDashoardInventoryAddWidget> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
 
   // Model state inlined
@@ -137,7 +136,8 @@ class _HomeDashoardInventoryAddWidgetState
       if (widget.productId != null && widget.productId != '') {
         await Future.wait([
           Future(() async {
-            getProduct = await actions.getProductDetails(widget.productId!, currentUserUid);
+            getProduct = await actions.getProductDetails(
+                widget.productId!, currentUserUid);
           }),
         ]);
         titleTextController?.text = getProduct!.title;
@@ -224,7 +224,8 @@ class _HomeDashoardInventoryAddWidgetState
         conditionsList = getConditions!.toList().cast<ConditionsRow>();
         choosenTags = getProduct!.tags.toList();
         discount = getProduct!.discountType ?? 'percentage';
-        if (getProduct?.shortlistId != null && getProduct!.shortlistId!.isNotEmpty) {
+        if (getProduct?.shortlistId != null &&
+            getProduct!.shortlistId!.isNotEmpty) {
           switchConventionSettingsValue = true;
           dropDownValue = getProduct!.shortlistId;
           dropDownValueController = FormFieldController<String>(dropDownValue);
@@ -319,7 +320,8 @@ class _HomeDashoardInventoryAddWidgetState
       isDense: false,
       prefix: prefix,
       hintText: hint,
-      hintStyle: GoogleFonts.inter(fontSize: 16.0, color: AppColors.textSecondary),
+      hintStyle:
+          GoogleFonts.inter(fontSize: 16.0, color: AppColors.textSecondary),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.neutral700, width: 1.0),
         borderRadius: _borderRadius,
@@ -361,14 +363,17 @@ class _HomeDashoardInventoryAddWidgetState
   Widget _sectionTitle(String text) => Text(
         text,
         style: GoogleFonts.inter(
-            fontWeight: FontWeight.w500, fontSize: 18.0, color: AppColors.textPrimary),
+            fontWeight: FontWeight.w500,
+            fontSize: 18.0,
+            color: AppColors.textPrimary),
       );
 
   Widget _fieldLabel(String text) => Padding(
         padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
         child: Text(
           text,
-          style: GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+          style:
+              GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
         ),
       );
 
@@ -434,7 +439,9 @@ class _HomeDashoardInventoryAddWidgetState
         mainAxisSize: MainAxisSize.max,
         children: [
           Icon(
-            selected ? Icons.radio_button_checked_rounded : Icons.circle_outlined,
+            selected
+                ? Icons.radio_button_checked_rounded
+                : Icons.circle_outlined,
             color: selected ? AppColors.primary : AppColors.textSecondary,
             size: 20.0,
           ),
@@ -499,8 +506,8 @@ class _HomeDashoardInventoryAddWidgetState
             elevation: 0,
             insetPadding: EdgeInsets.zero,
             backgroundColor: Colors.transparent,
-            alignment:
-                AlignmentDirectional(0.0, 0.0).resolve(Directionality.of(context)),
+            alignment: AlignmentDirectional(0.0, 0.0)
+                .resolve(Directionality.of(context)),
             child: WebViewAware(
               child: GestureDetector(
                 onTap: () {
@@ -587,14 +594,15 @@ class _HomeDashoardInventoryAddWidgetState
                       );
                       return;
                     }
-                    final selectedMedia = await selectMediaWithSourceBottomSheet(
+                    final selectedMedia =
+                        await selectMediaWithSourceBottomSheet(
                       context: context,
                       imageQuality: 80,
                       allowPhoto: true,
                     );
                     if (selectedMedia != null &&
-                        selectedMedia.every(
-                            (m) => validateFileFormat(m.storagePath, context))) {
+                        selectedMedia.every((m) =>
+                            validateFileFormat(m.storagePath, context))) {
                       setState(() => isDataUploading_uploadDataEdit = true);
                       try {
                         final selectedUploadedFiles = selectedMedia
@@ -719,7 +727,8 @@ class _HomeDashoardInventoryAddWidgetState
           padding: EdgeInsetsDirectional.fromSTEB(16.0, 10.0, 16.0, 0.0),
           child: Text(
             'Add up to 10 photos. First photo will be the main image.',
-            style: GoogleFonts.inter(fontSize: 12.0, color: AppColors.textSecondary),
+            style: GoogleFonts.inter(
+                fontSize: 12.0, color: AppColors.textSecondary),
           ),
         ),
         Divider(
@@ -774,7 +783,7 @@ class _HomeDashoardInventoryAddWidgetState
               builder: (context) {
                 return WebViewAware(
                   child: DismissKeyboard(
-      child: Padding(
+                    child: Padding(
                       padding: MediaQuery.viewInsetsOf(context),
                       child: HomeDashoardInventoryAddCategoryWidget(
                         category: category,
@@ -810,7 +819,7 @@ class _HomeDashoardInventoryAddWidgetState
                 builder: (context) {
                   return WebViewAware(
                     child: DismissKeyboard(
-      child: Padding(
+                      child: Padding(
                         padding: MediaQuery.viewInsetsOf(context),
                         child: HomeDashoardInventoryAddSubCategoryWidget(
                           categoryRow: category!,
@@ -942,7 +951,7 @@ class _HomeDashoardInventoryAddWidgetState
                 builder: (context) {
                   return WebViewAware(
                     child: DismissKeyboard(
-      child: Padding(
+                      child: Padding(
                         padding: MediaQuery.viewInsetsOf(context),
                         child: HomeDashoardInventoryAddConditionWidget(
                           conditionsList: conditionsList,
@@ -974,8 +983,8 @@ class _HomeDashoardInventoryAddWidgetState
                       child: conditionsList.isNotEmpty
                           ? Row(
                               mainAxisSize: MainAxisSize.max,
-                              children: List.generate(
-                                  conditionsList.length, (conditionsIndex) {
+                              children: List.generate(conditionsList.length,
+                                  (conditionsIndex) {
                                 final conditionsItem =
                                     conditionsList[conditionsIndex];
                                 return Text(
@@ -1378,7 +1387,8 @@ class _HomeDashoardInventoryAddWidgetState
       children: [
         Text(
           'Description',
-          style: GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+          style:
+              GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
         ),
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
@@ -1421,7 +1431,8 @@ class _HomeDashoardInventoryAddWidgetState
       children: [
         Text(
           'Add Product Tags',
-          style: GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
+          style:
+              GoogleFonts.inter(fontSize: 15.0, color: AppColors.textPrimary),
         ),
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
@@ -1482,8 +1493,7 @@ class _HomeDashoardInventoryAddWidgetState
               scrollDirection: Axis.horizontal,
               child: Row(
                 mainAxisSize: MainAxisSize.max,
-                children:
-                    List.generate(choosenTags.length, (tagsIndex) {
+                children: List.generate(choosenTags.length, (tagsIndex) {
                   final tagsItem = choosenTags[tagsIndex];
                   return InkWell(
                     splashColor: Colors.transparent,
@@ -1508,8 +1518,7 @@ class _HomeDashoardInventoryAddWidgetState
                             Text(
                               tagsItem.name,
                               style: GoogleFonts.inter(
-                                  fontSize: 14.0,
-                                  color: AppColors.textPrimary),
+                                  fontSize: 14.0, color: AppColors.textPrimary),
                             ),
                             Icon(
                               Icons.close,
@@ -1687,7 +1696,6 @@ class _HomeDashoardInventoryAddWidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(56.0),
@@ -1746,8 +1754,8 @@ class _HomeDashoardInventoryAddWidgetState
                   key: formKey,
                   autovalidateMode: AutovalidateMode.disabled,
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(
-                        16.0, 0.0, 16.0, 0.0),
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,

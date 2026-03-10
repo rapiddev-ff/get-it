@@ -41,18 +41,20 @@ class _HomeSellerProfileReviewsWidgetState
     extends State<HomeSellerProfileReviewsWidget> {
   late HomeSellerProfileReviewsModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   // Mutable header data for refresh
   double? _ratingAsBuyer;
   double? _ratingAsSeller;
   int? _totalReviewsAsBuyer;
   int? _totalReviewsAsSeller;
 
-  double get _currentRatingAsBuyer => _ratingAsBuyer ?? widget.sellerDataType?.ratingAsBuyer ?? 0.0;
-  double get _currentRatingAsSeller => _ratingAsSeller ?? widget.sellerDataType?.ratingAsSeller ?? 0.0;
-  int get _currentTotalReviewsAsBuyer => _totalReviewsAsBuyer ?? widget.sellerDataType?.totalReviewsAsBuyer ?? 0;
-  int get _currentTotalReviewsAsSeller => _totalReviewsAsSeller ?? widget.sellerDataType?.totalReviewsAsSeller ?? 0;
+  double get _currentRatingAsBuyer =>
+      _ratingAsBuyer ?? widget.sellerDataType?.ratingAsBuyer ?? 0.0;
+  double get _currentRatingAsSeller =>
+      _ratingAsSeller ?? widget.sellerDataType?.ratingAsSeller ?? 0.0;
+  int get _currentTotalReviewsAsBuyer =>
+      _totalReviewsAsBuyer ?? widget.sellerDataType?.totalReviewsAsBuyer ?? 0;
+  int get _currentTotalReviewsAsSeller =>
+      _totalReviewsAsSeller ?? widget.sellerDataType?.totalReviewsAsSeller ?? 0;
 
   @override
   void initState() {
@@ -91,7 +93,6 @@ class _HomeSellerProfileReviewsWidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundSecondary,
@@ -197,7 +198,8 @@ class _HomeSellerProfileReviewsWidgetState
                             child: widget.sellerDataType!.avatarUrl.isNotEmpty
                                 ? CachedNetworkImage(
                                     fadeInDuration: Duration(milliseconds: 100),
-                                    fadeOutDuration: Duration(milliseconds: 100),
+                                    fadeOutDuration:
+                                        Duration(milliseconds: 100),
                                     imageUrl: widget.sellerDataType!.avatarUrl,
                                     fit: BoxFit.cover,
                                   )
@@ -565,8 +567,11 @@ class _HomeSellerProfileReviewsWidgetState
                                     ),
                                   ),
                                 ),
-                                itemBuilder: (context, reviewItem, asBuyerIndex) {
-                                  final item = reviewItem is Map ? reviewItem : <String, dynamic>{};
+                                itemBuilder:
+                                    (context, reviewItem, asBuyerIndex) {
+                                  final item = reviewItem is Map
+                                      ? reviewItem
+                                      : <String, dynamic>{};
                                   return _buildReviewCard(item);
                                 },
                               ),
@@ -574,11 +579,9 @@ class _HomeSellerProfileReviewsWidgetState
                           } else {
                             return PagedListView<ApiPagingParams,
                                 dynamic>.separated(
-                              pagingController:
-                                  _model.setListViewController2(
-                                (nextPageMarker) => SupabaseRPCGroup
-                                    .getuserreviewsCall
-                                    .call(
+                              pagingController: _model.setListViewController2(
+                                (nextPageMarker) =>
+                                    SupabaseRPCGroup.getuserreviewsCall.call(
                                   userId: widget.sellerDataType?.id,
                                   role: 'as_seller',
                                   limit: 20,
@@ -600,28 +603,28 @@ class _HomeSellerProfileReviewsWidgetState
                                     width: 50.0,
                                     height: 50.0,
                                     child: CircularProgressIndicator(
-                                      valueColor:
-                                          AlwaysStoppedAnimation<Color>(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
                                         AppColors.primary,
                                       ),
                                     ),
                                   ),
                                 ),
-                                newPageProgressIndicatorBuilder: (_) =>
-                                    Center(
+                                newPageProgressIndicatorBuilder: (_) => Center(
                                   child: SizedBox(
                                     width: 50.0,
                                     height: 50.0,
                                     child: CircularProgressIndicator(
-                                      valueColor:
-                                          AlwaysStoppedAnimation<Color>(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
                                         AppColors.primary,
                                       ),
                                     ),
                                   ),
                                 ),
-                                itemBuilder: (context, reviewItem, asSellerIndex) {
-                                  final item = reviewItem is Map ? reviewItem : <String, dynamic>{};
+                                itemBuilder:
+                                    (context, reviewItem, asSellerIndex) {
+                                  final item = reviewItem is Map
+                                      ? reviewItem
+                                      : <String, dynamic>{};
                                   return _buildReviewCard(item);
                                 },
                               ),
@@ -643,15 +646,20 @@ class _HomeSellerProfileReviewsWidgetState
   Widget _buildReviewCard(Map item) {
     final reviewerUsername = item['reviewer_username']?.toString() ?? '';
     final reviewerAvatarUrl = item['reviewer_avatar_url']?.toString() ?? '';
-    final rating = (item['rating'] is num) ? (item['rating'] as num).toDouble() : 0.0;
+    final rating =
+        (item['rating'] is num) ? (item['rating'] as num).toDouble() : 0.0;
     final productTitle = item['product_title']?.toString() ?? '';
-    final productPrice = (item['product_price'] is num) ? (item['product_price'] as num).toDouble() : 0.0;
+    final productPrice = (item['product_price'] is num)
+        ? (item['product_price'] as num).toDouble()
+        : 0.0;
     final productImageUrl = item['product_main_image_url']?.toString() ?? '';
     final content = item['content']?.toString() ?? '';
     final createdAtStr = item['created_at']?.toString();
-    final createdAt = createdAtStr != null ? DateTime.tryParse(createdAtStr) : null;
+    final createdAt =
+        createdAtStr != null ? DateTime.tryParse(createdAtStr) : null;
     final orderDateStr = item['order_date']?.toString();
-    final orderDate = orderDateStr != null ? DateTime.tryParse(orderDateStr) : null;
+    final orderDate =
+        orderDateStr != null ? DateTime.tryParse(orderDateStr) : null;
     final reviewRole = item['review_role']?.toString() ?? '';
 
     return Container(
@@ -702,7 +710,9 @@ class _HomeSellerProfileReviewsWidgetState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        reviewerUsername.isNotEmpty ? '@$reviewerUsername' : 'Anonymous',
+                        reviewerUsername.isNotEmpty
+                            ? '@$reviewerUsername'
+                            : 'Anonymous',
                         style: GoogleFonts.inter(
                           fontWeight: FontWeight.w500,
                           fontSize: 14.0,

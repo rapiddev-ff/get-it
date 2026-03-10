@@ -1,4 +1,3 @@
-
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -39,7 +38,6 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
     with KeyboardVisibilityMixin {
   late SignInModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   static final _emailRegExp =
       RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
 
@@ -74,7 +72,6 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundPrimary,
@@ -165,7 +162,8 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                                   autofocus: false,
                                   enabled: true,
                                   obscureText: false,
-                                  decoration: appInputDecoration('Your email address'),
+                                  decoration:
+                                      appInputDecoration('Your email address'),
                                   style: appTextFieldStyle,
                                   keyboardType: TextInputType.emailAddress,
                                   cursorColor: AppColors.textPrimary,
@@ -423,8 +421,8 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
 
                           // Persist keepSignedIn preference via provider
                           await ref.read(keepSignedInProvider.notifier).set(
-                            _model.keepSignedIn,
-                          );
+                                _model.keepSignedIn,
+                              );
 
                           final user = await authManager.signInWithEmail(
                             context,

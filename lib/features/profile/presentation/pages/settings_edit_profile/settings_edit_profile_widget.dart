@@ -37,8 +37,6 @@ class _SettingsEditProfileWidgetState
     with TickerProviderStateMixin {
   late SettingsEditProfileModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   void initState() {
     super.initState();
@@ -131,7 +129,6 @@ class _SettingsEditProfileWidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundPrimary,
@@ -614,8 +611,8 @@ class _SettingsEditProfileWidgetState
                                     Future(() async {
                                       await UserProfilesTable().update(
                                         data: {
-                                          'first_name':
-                                              _model.firstnameTextController!.text,
+                                          'first_name': _model
+                                              .firstnameTextController!.text,
                                           'last_name': _model
                                               .lastnameTextController!.text,
                                           'username':

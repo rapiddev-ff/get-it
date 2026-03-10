@@ -31,8 +31,6 @@ class _SettingsShippingDefaultsWidgetState
     extends ConsumerState<SettingsShippingDefaultsWidget> {
   late SettingsShippingDefaultsModel _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   static String _formatDecimal(double? value) {
     if (value == null) return '';
     return NumberFormat('#,##0.##', 'en_US').format(value);
@@ -65,7 +63,6 @@ class _SettingsShippingDefaultsWidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundSecondary,
@@ -282,9 +279,8 @@ class _SettingsShippingDefaultsWidgetState
                                     <String, double?>{
                                       'p_flat_rate': double.tryParse(
                                           _model.textController1!.text),
-                                      'p_additional_item_fee':
-                                          double.tryParse(
-                                              _model.textController2!.text),
+                                      'p_additional_item_fee': double.tryParse(
+                                          _model.textController2!.text),
                                     },
                                   );
                                 }),

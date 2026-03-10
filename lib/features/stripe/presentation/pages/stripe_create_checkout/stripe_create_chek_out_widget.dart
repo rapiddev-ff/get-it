@@ -34,8 +34,6 @@ class _StripeCreateChekOutWidgetState extends State<StripeCreateChekOutWidget> {
   InstantTimer? chekPaid;
   List<OrdersRow>? chekoutRowExist;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   void initState() {
     super.initState();
@@ -85,7 +83,6 @@ class _StripeCreateChekOutWidgetState extends State<StripeCreateChekOutWidget> {
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         body: SafeArea(
           top: true,

@@ -31,7 +31,6 @@ class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget>
     with KeyboardVisibilityMixin {
   late ForgotPasswordStep2Model _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
@@ -48,7 +47,6 @@ class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget>
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundPrimary,

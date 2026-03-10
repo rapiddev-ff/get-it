@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -40,11 +39,9 @@ class PhoneVerificationPage2Widget extends StatefulWidget {
 }
 
 class _PhoneVerificationPage2WidgetState
-    extends State<PhoneVerificationPage2Widget>
-    with KeyboardVisibilityMixin {
+    extends State<PhoneVerificationPage2Widget> with KeyboardVisibilityMixin {
   late PhoneVerificationPage2Model _model;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   Key _shakeKey = UniqueKey();
 
   @override
@@ -79,7 +76,6 @@ class _PhoneVerificationPage2WidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundPrimary,
@@ -341,7 +337,8 @@ class _PhoneVerificationPage2WidgetState
                                   true)) {
                                 _model.timerController.onStartTimer();
                               } else {
-                                if ((_model.sendVerificationRes?.statusCode ?? 200) ==
+                                if ((_model.sendVerificationRes?.statusCode ??
+                                        200) ==
                                     429) {
                                   _model.errorMaxAttemptsReached = true;
                                   setState(() {});
@@ -424,7 +421,8 @@ class _PhoneVerificationPage2WidgetState
                                     ),
                                   );
                                   if (widget.isOnborading!) {
-                                    context.pushNamed(PermissionsWidget.routeName);
+                                    context
+                                        .pushNamed(PermissionsWidget.routeName);
                                   } else {
                                     context.pop();
                                   }
@@ -439,22 +437,21 @@ class _PhoneVerificationPage2WidgetState
                                 );
 
                                 shouldSetState = true;
-                                if ((_model.verifyCodeRes?.succeeded ??
-                                    true)) {
+                                if ((_model.verifyCodeRes?.succeeded ?? true)) {
                                   if (TwillioGroup.verifyCodeCall.isValid(
-                                        (_model.verifyCodeRes?.jsonBody ??
-                                            ''),
+                                        (_model.verifyCodeRes?.jsonBody ?? ''),
                                       ) ==
                                       true) {
                                     await Future.wait([
                                       Future(() async {
                                         await UserProfilesTable().update(
                                           data: {
-                                            'phone': widget.phoneNumber!.replaceAll(RegExp(r'[^\d+]'), ''),
+                                            'phone': widget.phoneNumber!
+                                                .replaceAll(
+                                                    RegExp(r'[^\d+]'), ''),
                                             'phone_verified': true,
                                           },
-                                          matchingRows: (rows) =>
-                                              rows.eqOrNull(
+                                          matchingRows: (rows) => rows.eqOrNull(
                                             'user_id',
                                             currentUserUid,
                                           ),
