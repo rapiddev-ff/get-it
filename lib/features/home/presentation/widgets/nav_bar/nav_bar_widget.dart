@@ -40,7 +40,6 @@ class _NavBarWidgetState extends State<NavBarWidget>
         child: Padding(
           padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 24.0),
           child: Row(
-            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
@@ -60,7 +59,6 @@ class _NavBarWidgetState extends State<NavBarWidget>
                     }
                   },
                   child: Column(
-                    mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
@@ -138,7 +136,6 @@ class _NavBarWidgetState extends State<NavBarWidget>
                     }
                   },
                   child: Column(
-                    mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
@@ -224,7 +221,6 @@ class _NavBarWidgetState extends State<NavBarWidget>
                     }
                   },
                   child: Column(
-                    mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
@@ -286,7 +282,6 @@ class _NavBarWidgetState extends State<NavBarWidget>
                     }
                   },
                   child: Column(
-                    mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(

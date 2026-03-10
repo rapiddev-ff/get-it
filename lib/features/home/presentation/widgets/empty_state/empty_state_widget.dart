@@ -46,7 +46,6 @@ class EmptyStateWidget extends StatelessWidget {
           ),
           0.0),
       child: Column(
-        mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           icon!,

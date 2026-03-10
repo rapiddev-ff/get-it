@@ -405,7 +405,6 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
               ],
             ),
             child: Column(
-              mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Image Section with 16px padding

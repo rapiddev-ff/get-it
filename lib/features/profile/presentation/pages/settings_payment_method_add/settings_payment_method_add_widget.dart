@@ -150,7 +150,6 @@ class _SettingsPaymentMethodAddWidgetState
             padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
             child: SingleChildScrollView(
               child: Column(
-                mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -192,7 +191,6 @@ class _SettingsPaymentMethodAddWidgetState
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                     child: Row(
-                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
                           child: Column(
@@ -397,11 +395,9 @@ class _SettingsPaymentMethodAddWidgetState
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                     child: Row(
-                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
                           child: Column(
-                            mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text('Country', style: _labelStyle()),
@@ -508,7 +504,6 @@ class _SettingsPaymentMethodAddWidgetState
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                     child: Row(
-                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
                           child: Column(
@@ -575,7 +570,6 @@ class _SettingsPaymentMethodAddWidgetState
                         setState(() {});
                       },
                       child: Row(
-                        mainAxisSize: MainAxisSize.max,
                         children: [
                           if (!_model.setAsDefault)
                             Container(
@@ -610,7 +604,6 @@ class _SettingsPaymentMethodAddWidgetState
                             ),
                           Expanded(
                             child: Column(
-                              mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
@@ -648,7 +641,6 @@ class _SettingsPaymentMethodAddWidgetState
                     child: Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Row(
-                        mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           FaIcon(
@@ -658,7 +650,6 @@ class _SettingsPaymentMethodAddWidgetState
                           ),
                           Expanded(
                             child: Column(
-                              mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
@@ -687,7 +678,6 @@ class _SettingsPaymentMethodAddWidgetState
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 36.0, 0.0, 0.0),
                     child: Row(
-                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
                           child: TextButton(

@@ -396,7 +396,6 @@ class _HomeDashoardInventoryAddWidgetState
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(8.0, 12.0, 8.0, 12.0),
             child: Row(
-              mainAxisSize: MainAxisSize.max,
               children: [
                 Expanded(
                   child: Text(
@@ -428,7 +427,6 @@ class _HomeDashoardInventoryAddWidgetState
     return InkWell(
       onTap: () => onSelected(value),
       child: Row(
-        mainAxisSize: MainAxisSize.max,
         children: [
           Icon(
             selected
@@ -568,7 +566,6 @@ class _HomeDashoardInventoryAddWidgetState
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-              mainAxisSize: MainAxisSize.max,
               children: [
                 InkWell(
                   onTap: () async {
@@ -833,7 +830,6 @@ class _HomeDashoardInventoryAddWidgetState
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
           child: Row(
-            mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
                 child: Container(
@@ -957,12 +953,10 @@ class _HomeDashoardInventoryAddWidgetState
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(8.0, 12.0, 8.0, 12.0),
                 child: Row(
-                  mainAxisSize: MainAxisSize.max,
                   children: [
                     Expanded(
                       child: conditionsList.isNotEmpty
                           ? Row(
-                              mainAxisSize: MainAxisSize.max,
                               children: List.generate(conditionsList.length,
                                   (conditionsIndex) {
                                 final conditionsItem =
@@ -995,11 +989,9 @@ class _HomeDashoardInventoryAddWidgetState
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
           child: Row(
-            mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -1032,7 +1024,6 @@ class _HomeDashoardInventoryAddWidgetState
               ),
               Expanded(
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -1106,11 +1097,9 @@ class _HomeDashoardInventoryAddWidgetState
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
           child: Row(
-            mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
                 child: Row(
-                  mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
                       'Flash Sale',
@@ -1177,11 +1166,9 @@ class _HomeDashoardInventoryAddWidgetState
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
       child: Row(
-        mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
             child: Column(
-              mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -1233,7 +1220,6 @@ class _HomeDashoardInventoryAddWidgetState
                         ),
                       ),
                 Row(
-                  mainAxisSize: MainAxisSize.max,
                   children: [
                     Expanded(
                       child: _radioOption(
@@ -1298,7 +1284,6 @@ class _HomeDashoardInventoryAddWidgetState
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
             child: Column(
-              mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -1442,7 +1427,6 @@ class _HomeDashoardInventoryAddWidgetState
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(8.0, 12.0, 8.0, 12.0),
                 child: Row(
-                  mainAxisSize: MainAxisSize.max,
                   children: [
                     Expanded(
                       child: Text(
@@ -1468,7 +1452,6 @@ class _HomeDashoardInventoryAddWidgetState
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                mainAxisSize: MainAxisSize.max,
                 children: List.generate(choosenTags.length, (tagsIndex) {
                   final tagsItem = choosenTags[tagsIndex];
                   return InkWell(
@@ -1559,7 +1542,6 @@ class _HomeDashoardInventoryAddWidgetState
       children: [
         _sectionTitle('Convention Settings'),
         Row(
-          mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
               child: Text(
@@ -1675,7 +1657,6 @@ class _HomeDashoardInventoryAddWidgetState
             backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             title: Row(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
@@ -1715,7 +1696,6 @@ class _HomeDashoardInventoryAddWidgetState
           top: true,
           child: SingleChildScrollView(
             child: Column(
-              mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildPhotosSection(),

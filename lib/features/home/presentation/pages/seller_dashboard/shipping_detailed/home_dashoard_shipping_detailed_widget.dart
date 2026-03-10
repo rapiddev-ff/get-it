@@ -289,7 +289,6 @@ class _HomeDashoardShippingDetailedWidgetState
             backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             title: Row(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
@@ -350,7 +349,6 @@ class _HomeDashoardShippingDetailedWidgetState
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       10.0, 16.0, 16.0, 16.0),
                                   child: Row(
-                                    mainAxisSize: MainAxisSize.max,
                                     children: [
                                       ClipRRect(
                                         borderRadius:

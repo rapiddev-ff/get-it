@@ -60,7 +60,6 @@ class _SettingsPaymentCardItemWidgetState
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 21.0),
               child: Row(
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   FaIcon(
                     FontAwesomeIcons.ccVisa,
@@ -69,7 +68,6 @@ class _SettingsPaymentCardItemWidgetState
                   ),
                   Expanded(
                     child: Column(
-                      mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -159,7 +157,6 @@ class _SettingsPaymentCardItemWidgetState
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 21.0, 0.0, 0.0),
               child: Row(
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   Expanded(
                     child: InkWell(

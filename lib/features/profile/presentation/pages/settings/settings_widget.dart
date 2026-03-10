@@ -100,7 +100,6 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
             padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
             child: SingleChildScrollView(
               child: Column(
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   InkWell(
                     onTap: () async {
@@ -115,7 +114,6 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                       child: Padding(
                         padding: EdgeInsets.all(16.0),
                         child: Row(
-                          mainAxisSize: MainAxisSize.max,
                           children: [
                             Container(
                               width: 60.0,
@@ -267,7 +265,6 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             16.0, 12.0, 16.0, 12.0),
                         child: Row(
-                          mainAxisSize: MainAxisSize.max,
                           children: [
                             Expanded(
                               child: Column(
@@ -284,11 +281,9 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                     ),
                                   ),
                                   Row(
-                                    mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Expanded(
                                         child: Row(
-                                          mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Text(
                                               'Daily Budget',
@@ -452,7 +447,6 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 0.0),
                     child: Row(
-                      mainAxisSize: MainAxisSize.max,
                       children: [
                         FaIcon(
                           FontAwesomeIcons.solidBuilding,
@@ -603,7 +597,6 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 12.0, 16.0, 12.0),
                           child: Row(
-                            mainAxisSize: MainAxisSize.max,
                             children: [
                               FaIcon(
                                 FontAwesomeIcons.ccStripe,
@@ -727,7 +720,6 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             16.0, 12.0, 16.0, 12.0),
                         child: Row(
-                          mainAxisSize: MainAxisSize.max,
                           children: [
                             FaIcon(
                               FontAwesomeIcons.shopify,
@@ -843,7 +835,6 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             16.0, 12.0, 16.0, 12.0),
                         child: Row(
-                          mainAxisSize: MainAxisSize.max,
                           children: [
                             FaIcon(
                               FontAwesomeIcons.solidFileLines,
@@ -887,7 +878,6 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 12.0, 16.0, 12.0),
                           child: Row(
-                            mainAxisSize: MainAxisSize.max,
                             children: [
                               FaIcon(
                                 FontAwesomeIcons.shieldHalved,
@@ -932,7 +922,6 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 12.0, 16.0, 12.0),
                           child: Row(
-                            mainAxisSize: MainAxisSize.max,
                             children: [
                               FaIcon(
                                 FontAwesomeIcons.headset,

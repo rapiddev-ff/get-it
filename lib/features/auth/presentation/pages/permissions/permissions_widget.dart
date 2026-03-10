@@ -72,14 +72,12 @@ class _PermissionsWidgetState extends State<PermissionsWidget>
         body: SafeArea(
           top: true,
           child: Column(
-            mainAxisSize: MainAxisSize.max,
             children: [
               Flexible(
                 child: Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(
                       16.0, 0.0, 16.0, 0.0),
                   child: Column(
-                    mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -149,7 +147,6 @@ class _PermissionsWidgetState extends State<PermissionsWidget>
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Row(
-                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 Container(
                                   width: 40.0,

@@ -149,7 +149,6 @@ class _CheckoutEditShippingAddressWidgetState
             backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             title: Row(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
@@ -202,14 +201,12 @@ class _CheckoutEditShippingAddressWidgetState
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
             child: Column(
-              mainAxisSize: MainAxisSize.max,
               children: [
                 Expanded(
                   child: Align(
                     alignment: AlignmentDirectional(0.0, 0.0),
                     child: SingleChildScrollView(
                       child: Column(
-                        mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
@@ -499,7 +496,6 @@ class _CheckoutEditShippingAddressWidgetState
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 20.0, 0.0, 0.0),
                             child: Column(
-                              mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
@@ -553,7 +549,6 @@ class _CheckoutEditShippingAddressWidgetState
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 20.0, 0.0, 0.0),
                             child: Row(
-                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 Expanded(
                                   child: Column(

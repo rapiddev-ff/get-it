@@ -87,7 +87,6 @@ class _StripeCreateChekOutWidgetState extends State<StripeCreateChekOutWidget> {
         body: SafeArea(
           top: true,
           child: Column(
-            mainAxisSize: MainAxisSize.max,
             children: [
               AppWebView(
                 content: ((widget.checkoutDetail is Map)

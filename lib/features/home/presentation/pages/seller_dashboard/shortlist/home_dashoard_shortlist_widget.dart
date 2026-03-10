@@ -57,7 +57,6 @@ class _HomeDashoardShortlistWidgetState
             backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             title: Row(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
@@ -268,7 +267,6 @@ class _HomeDashoardShortlistWidgetState
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     24.0, 20.0, 24.0, 20.0),
                                 child: Column(
-                                  mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
@@ -281,7 +279,6 @@ class _HomeDashoardShortlistWidgetState
                                       ),
                                     ),
                                     Row(
-                                      mainAxisSize: MainAxisSize.max,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
@@ -304,7 +301,6 @@ class _HomeDashoardShortlistWidgetState
                                       ].divide(SizedBox(width: 12.0)),
                                     ),
                                     Row(
-                                      mainAxisSize: MainAxisSize.max,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
@@ -327,7 +323,6 @@ class _HomeDashoardShortlistWidgetState
                                       ].divide(SizedBox(width: 12.0)),
                                     ),
                                     Row(
-                                      mainAxisSize: MainAxisSize.max,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [

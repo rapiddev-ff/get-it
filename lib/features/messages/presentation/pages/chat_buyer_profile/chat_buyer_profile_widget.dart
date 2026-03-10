@@ -105,7 +105,6 @@ class _ChatBuyerProfileWidgetState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    mainAxisSize: MainAxisSize.max,
                     children: [
                       Container(
                         width: 66.0,
@@ -147,7 +146,6 @@ class _ChatBuyerProfileWidgetState
                               ),
                             ),
                             Row(
-                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 RatingBarIndicator(
                                   itemBuilder: (context, index) => Icon(
@@ -291,7 +289,6 @@ class _ChatBuyerProfileWidgetState
                         height: 53.0,
                         decoration: BoxDecoration(),
                         child: Row(
-                          mainAxisSize: MainAxisSize.max,
                           children: [
                             Expanded(
                               child: InkWell(
@@ -300,7 +297,6 @@ class _ChatBuyerProfileWidgetState
                                   setState(() {});
                                 },
                                 child: Column(
-                                  mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Padding(
@@ -335,7 +331,6 @@ class _ChatBuyerProfileWidgetState
                             ),
                             Expanded(
                               child: Column(
-                                mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Padding(
@@ -373,11 +368,9 @@ class _ChatBuyerProfileWidgetState
                         builder: (context) {
                           if (_state == 'Reviews') {
                             return Column(
-                              mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                                  mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [

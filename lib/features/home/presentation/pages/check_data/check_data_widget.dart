@@ -251,7 +251,6 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
           child: Align(
             alignment: AlignmentDirectional(0.0, 0.0),
             child: Column(
-              mainAxisSize: MainAxisSize.max,
               children: [
                 Spacer(),
                 Text(

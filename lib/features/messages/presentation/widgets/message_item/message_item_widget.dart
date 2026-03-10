@@ -52,7 +52,6 @@ class MessageItemWidget extends StatelessWidget {
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(10.0, 16.0, 16.0, 16.0),
           child: Row(
-            mainAxisSize: MainAxisSize.max,
             children: [
               SizedBox(
                 width: 65.0,
@@ -101,7 +100,6 @@ class MessageItemWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Container(
                           width: 24.0,
@@ -209,7 +207,6 @@ class MessageItemWidget extends StatelessWidget {
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(10.0, 16.0, 16.0, 16.0),
           child: Row(
-            mainAxisSize: MainAxisSize.max,
             children: [
               SizedBox(
                 width: 65.0,
@@ -264,7 +261,6 @@ class MessageItemWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
                           child: Text(

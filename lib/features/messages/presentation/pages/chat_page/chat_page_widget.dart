@@ -87,7 +87,6 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
             backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             title: Row(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 IconButton(
@@ -123,7 +122,6 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                         }
                       },
                       child: Row(
-                        mainAxisSize: MainAxisSize.max,
                         children: [
                           Container(
                             width: 36.0,
@@ -202,7 +200,6 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
           ),
         ),
         body: Column(
-          mainAxisSize: MainAxisSize.max,
           children: [
             if (widget.conversation?.productId != null &&
                 widget.conversation?.productId != '')
@@ -215,7 +212,6 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                   padding:
                       EdgeInsetsDirectional.fromSTEB(10.0, 16.0, 16.0, 16.0),
                   child: Row(
-                    mainAxisSize: MainAxisSize.max,
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(4.0),
@@ -370,7 +366,6 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
       child: Padding(
         padding: EdgeInsets.all(16.0),
         child: Row(
-          mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(

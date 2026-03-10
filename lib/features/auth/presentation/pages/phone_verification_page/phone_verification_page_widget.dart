@@ -127,7 +127,6 @@ class _PhoneVerificationPageWidgetState
         body: SafeArea(
           top: true,
           child: Column(
-            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
@@ -136,7 +135,6 @@ class _PhoneVerificationPageWidgetState
                       24.0, 0.0, 24.0, 0.0),
                   child: SingleChildScrollView(
                     child: Column(
-                      mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
@@ -163,7 +161,6 @@ class _PhoneVerificationPageWidgetState
                           ),
                         ),
                         Column(
-                          mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(

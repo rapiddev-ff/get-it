@@ -79,7 +79,6 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
         body: SafeArea(
           top: true,
           child: Column(
-            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
@@ -87,7 +86,6 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
                   padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                   child: SingleChildScrollView(
                     child: Column(
-                      mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
@@ -114,7 +112,6 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
                           ),
                         ),
                         Column(
-                          mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(

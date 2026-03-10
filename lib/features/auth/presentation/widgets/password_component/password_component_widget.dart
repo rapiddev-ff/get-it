@@ -40,7 +40,6 @@ class _PasswordComponentWidgetState extends State<PasswordComponentWidget> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisSize: MainAxisSize.max,
       children: [
         Container(
           width: 22.0,

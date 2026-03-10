@@ -99,7 +99,6 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
         body: SafeArea(
           top: true,
           child: Column(
-            mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
                 child: Padding(
@@ -110,7 +109,6 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                       0.0),
                   child: SingleChildScrollView(
                     child: Column(
-                      mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
@@ -128,7 +126,6 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 16.0),
                           child: Column(
-                            mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
@@ -198,7 +195,6 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 16.0),
                           child: Column(
-                            mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
@@ -279,7 +275,6 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 24.0, 0.0, 0.0),
                                 child: Row(
-                                  mainAxisSize: MainAxisSize.max,
                                   children: [
                                     if (!_model.keepSignedIn)
                                       InkWell(
@@ -366,7 +361,6 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(32.0, 0.0, 32.0, 0.0),
                   child: Column(
-                    mainAxisSize: MainAxisSize.max,
                     children: [
                       AppGradientButton(
                         text: 'Sign In',

@@ -107,7 +107,6 @@ class _HomeDashoardInventoryAddTagsWidgetState
                 backgroundColor: AppColors.backgroundSecondary,
                 automaticallyImplyLeading: false,
                 title: Row(
-                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
@@ -150,14 +149,12 @@ class _HomeDashoardInventoryAddTagsWidgetState
             body: SafeArea(
               top: true,
               child: Column(
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   Expanded(
                     child: Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                       child: Column(
-                        mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
@@ -343,7 +340,6 @@ class _HomeDashoardInventoryAddTagsWidgetState
                     padding:
                         EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                     child: Row(
-                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
                           child: OutlinedButton(

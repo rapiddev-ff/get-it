@@ -105,7 +105,6 @@ class _HomeDashoardInventoryAddSubCategoryWidgetState
                       final listViewSubcategoriesRow =
                           listViewSubcategoriesRowList[listViewIndex];
                       return Column(
-                        mainAxisSize: MainAxisSize.max,
                         children: [
                           InkWell(
                             onTap: () async {
@@ -113,7 +112,6 @@ class _HomeDashoardInventoryAddSubCategoryWidgetState
                               setState(() {});
                             },
                             child: Row(
-                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 Expanded(
                                   child: Padding(
@@ -158,7 +156,6 @@ class _HomeDashoardInventoryAddSubCategoryWidgetState
               ),
             ),
             Row(
-              mainAxisSize: MainAxisSize.max,
               children: [
                 Expanded(
                   child: OutlinedButton(

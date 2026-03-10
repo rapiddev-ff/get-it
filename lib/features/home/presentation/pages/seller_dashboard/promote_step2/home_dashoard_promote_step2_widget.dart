@@ -70,7 +70,6 @@ class _HomeDashoardPromoteStep2WidgetState
             backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             title: Row(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
@@ -112,7 +111,6 @@ class _HomeDashoardPromoteStep2WidgetState
             padding: EdgeInsetsDirectional.fromSTEB(1.0, 0.0, 0.0, 0.0),
             child: SingleChildScrollView(
               child: Column(
-                mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
@@ -132,7 +130,6 @@ class _HomeDashoardPromoteStep2WidgetState
                           padding: EdgeInsetsDirectional.fromSTEB(
                               10.0, 16.0, 16.0, 16.0),
                           child: Row(
-                            mainAxisSize: MainAxisSize.max,
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(4.0),
@@ -222,7 +219,6 @@ class _HomeDashoardPromoteStep2WidgetState
                         child: Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Row(
-                            mainAxisSize: MainAxisSize.max,
                             children: [
                               Container(
                                 width: 24.0,
@@ -240,7 +236,6 @@ class _HomeDashoardPromoteStep2WidgetState
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
-                                      mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Icon(
                                           Icons.arrow_back,
@@ -285,7 +280,6 @@ class _HomeDashoardPromoteStep2WidgetState
                                       ),
                                     ),
                                     Row(
-                                      mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Icon(
                                           Icons.arrow_back,
@@ -329,7 +323,6 @@ class _HomeDashoardPromoteStep2WidgetState
                       child: Padding(
                         padding: EdgeInsets.all(16.0),
                         child: Row(
-                          mainAxisSize: MainAxisSize.max,
                           children: [
                             Container(
                               width: 24.0,
@@ -347,7 +340,6 @@ class _HomeDashoardPromoteStep2WidgetState
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Icon(
                                         Icons.arrow_back,
@@ -392,7 +384,6 @@ class _HomeDashoardPromoteStep2WidgetState
                                     ),
                                   ),
                                   Row(
-                                    mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Icon(
                                         Icons.arrow_back,
@@ -430,7 +421,6 @@ class _HomeDashoardPromoteStep2WidgetState
                       builder: (context) {
                         if (state == 'Boost') {
                           return Column(
-                            mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
@@ -445,7 +435,6 @@ class _HomeDashoardPromoteStep2WidgetState
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 16.0, 0.0, 0.0),
                                 child: Row(
-                                  mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Expanded(
                                       child: Container(
@@ -460,7 +449,6 @@ class _HomeDashoardPromoteStep2WidgetState
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 12.0, 0.0, 16.0),
                                           child: Column(
-                                            mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Text(
                                                 '3',
@@ -513,7 +501,6 @@ class _HomeDashoardPromoteStep2WidgetState
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 12.0, 0.0, 16.0),
                                           child: Column(
-                                            mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Text(
                                                 '7',
@@ -568,7 +555,6 @@ class _HomeDashoardPromoteStep2WidgetState
                                                   .fromSTEB(
                                                       0.0, 12.0, 0.0, 16.0),
                                               child: Column(
-                                                mainAxisSize: MainAxisSize.max,
                                                 children: [
                                                   Text(
                                                     '14',
@@ -661,7 +647,6 @@ class _HomeDashoardPromoteStep2WidgetState
                           );
                         } else {
                           return Column(
-                            mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
@@ -673,7 +658,6 @@ class _HomeDashoardPromoteStep2WidgetState
                                 child: Padding(
                                   padding: EdgeInsets.all(16.0),
                                   child: Row(
-                                    mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Container(
                                         width: 24.0,
@@ -726,7 +710,6 @@ class _HomeDashoardPromoteStep2WidgetState
                                   child: Padding(
                                     padding: EdgeInsets.all(16.0),
                                     child: Row(
-                                      mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Container(
                                           width: 24.0,
@@ -798,7 +781,6 @@ class _HomeDashoardPromoteStep2WidgetState
                                           CrossAxisAlignment.start,
                                       children: [
                                         Row(
-                                          mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Expanded(
                                               child: Text(
@@ -930,7 +912,6 @@ class _HomeDashoardPromoteStep2WidgetState
                                           ),
                                         ),
                                         Row(
-                                          mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Expanded(
                                               child: Container(
@@ -1030,7 +1011,6 @@ class _HomeDashoardPromoteStep2WidgetState
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
-                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 Expanded(
                                   child: Text(
@@ -1054,7 +1034,6 @@ class _HomeDashoardPromoteStep2WidgetState
                               ].divide(SizedBox(width: 8.0)),
                             ),
                             Row(
-                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 Expanded(
                                   child: Text(
@@ -1078,7 +1057,6 @@ class _HomeDashoardPromoteStep2WidgetState
                               ].divide(SizedBox(width: 8.0)),
                             ),
                             Row(
-                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 Expanded(
                                   child: Text(
@@ -1107,7 +1085,6 @@ class _HomeDashoardPromoteStep2WidgetState
                               color: Color(0xFF545454),
                             ),
                             Row(
-                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 Expanded(
                                   child: Text(

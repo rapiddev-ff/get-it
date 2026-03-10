@@ -290,7 +290,6 @@ class _HomeSellerProfileWidgetState
             backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             title: Row(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
@@ -371,7 +370,6 @@ class _HomeSellerProfileWidgetState
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Row(
-                        mainAxisSize: MainAxisSize.max,
                         children: [
                           Container(
                             width: 80.0,
@@ -410,7 +408,6 @@ class _HomeSellerProfileWidgetState
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 8.0, 0.0, 0.0),
                                   child: Row(
-                                    mainAxisSize: MainAxisSize.max,
                                     children: [
                                       RatingBarIndicator(
                                         itemBuilder: (context, index) => Icon(
@@ -457,10 +454,8 @@ class _HomeSellerProfileWidgetState
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 8.0, 0.0, 0.0),
                                   child: Row(
-                                    mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Column(
-                                        mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         crossAxisAlignment:
@@ -487,7 +482,6 @@ class _HomeSellerProfileWidgetState
                                         ],
                                       ),
                                       Column(
-                                        mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         crossAxisAlignment:
@@ -514,7 +508,6 @@ class _HomeSellerProfileWidgetState
                                         ],
                                       ),
                                       Column(
-                                        mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         crossAxisAlignment:
@@ -638,7 +631,6 @@ class _HomeSellerProfileWidgetState
                               height: 53.0,
                               decoration: BoxDecoration(),
                               child: Row(
-                                mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Expanded(
                                     child: InkWell(
@@ -647,7 +639,6 @@ class _HomeSellerProfileWidgetState
                                         setState(() {});
                                       },
                                       child: Column(
-                                        mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
                                         children: [
@@ -691,7 +682,6 @@ class _HomeSellerProfileWidgetState
                                         setState(() {});
                                       },
                                       child: Column(
-                                        mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
                                         children: [
@@ -753,7 +743,6 @@ class _HomeSellerProfileWidgetState
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                         child: Row(
-                          mainAxisSize: MainAxisSize.max,
                           children: [
                             Flexible(
                               child: InkWell(
@@ -762,7 +751,6 @@ class _HomeSellerProfileWidgetState
                                   setState(() {});
                                 },
                                 child: Column(
-                                  mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Padding(
@@ -802,7 +790,6 @@ class _HomeSellerProfileWidgetState
                                   setState(() {});
                                 },
                                 child: Column(
-                                  mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Padding(
@@ -913,7 +900,6 @@ class _HomeSellerProfileWidgetState
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 24.0, 0.0, 0.0),
                                   child: Row(
-                                    mainAxisSize: MainAxisSize.max,
                                     children: [
                                       InkWell(
                                         onTap: () async {
@@ -960,7 +946,6 @@ class _HomeSellerProfileWidgetState
                                         child: SingleChildScrollView(
                                           scrollDirection: Axis.horizontal,
                                           child: Row(
-                                            mainAxisSize: MainAxisSize.max,
                                             children: <Widget>[]
                                                 .divide(SizedBox(width: 8.0)),
                                           ),
@@ -1135,7 +1120,6 @@ class _HomeSellerProfileWidgetState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(

@@ -100,7 +100,6 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
         body: SafeArea(
           top: true,
           child: Column(
-            mainAxisSize: MainAxisSize.max,
             children: [
               Flexible(
                 child: Padding(
@@ -112,7 +111,6 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                   ),
                   child: SingleChildScrollView(
                     child: Column(
-                      mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
@@ -148,7 +146,6 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                             16.0,
                           ),
                           child: Column(
-                            mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
@@ -234,7 +231,6 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                             16.0,
                           ),
                           child: Column(
-                            mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
@@ -312,7 +308,6 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                             24.0,
                           ),
                           child: Column(
-                            mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
@@ -392,7 +387,6 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 20.0, 0.0, 0.0),
                                 child: Column(
-                                  mainAxisSize: MainAxisSize.max,
                                   children: [
                                     PasswordComponentWidget(
                                       isActive: (_model.passwordTextController
@@ -467,11 +461,9 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                   padding: const EdgeInsetsDirectional.fromSTEB(
                       32.0, 0.0, 32.0, 0.0),
                   child: Column(
-                    mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
-                        mainAxisSize: MainAxisSize.max,
                         children: [
                           if (!_model.checkBoxIsActive)
                             InkWell(

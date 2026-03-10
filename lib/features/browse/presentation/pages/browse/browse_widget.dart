@@ -60,7 +60,6 @@ class _BrowseWidgetState extends State<BrowseWidget> {
             backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             title: Row(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
@@ -107,14 +106,12 @@ class _BrowseWidgetState extends State<BrowseWidget> {
           ),
         ),
         body: Column(
-          mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
               child: Padding(
                 padding:
                     const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(

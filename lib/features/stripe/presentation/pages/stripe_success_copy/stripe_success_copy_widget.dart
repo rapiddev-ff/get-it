@@ -27,7 +27,6 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
           child: Padding(
             padding: EdgeInsets.all(24.0),
             child: Column(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -89,10 +88,8 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
                     child: Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Column(
-                        mainAxisSize: MainAxisSize.max,
                         children: [
                           Row(
-                            mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
@@ -115,7 +112,6 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
                             ].divide(SizedBox(width: 20.0)),
                           ),
                           Row(
-                            mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
@@ -134,7 +130,6 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
                             ],
                           ),
                           Row(
-                            mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
@@ -152,7 +147,6 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
                             ],
                           ),
                           Row(
-                            mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(

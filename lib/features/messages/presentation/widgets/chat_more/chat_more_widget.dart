@@ -48,7 +48,6 @@ class _ChatMoreWidgetState extends ConsumerState<ChatMoreWidget> {
                 setState(() {});
               },
               child: Row(
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
                     padding:
@@ -67,7 +66,6 @@ class _ChatMoreWidgetState extends ConsumerState<ChatMoreWidget> {
               ),
             ),
             Row(
-              mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 16.0),
@@ -98,7 +96,6 @@ class _ChatMoreWidgetState extends ConsumerState<ChatMoreWidget> {
                 context.pop();
               },
               child: Row(
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
                     padding:

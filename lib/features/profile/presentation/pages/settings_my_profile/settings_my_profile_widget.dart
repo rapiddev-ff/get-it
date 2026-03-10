@@ -134,7 +134,6 @@ class _SettingsMyProfileWidgetState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    mainAxisSize: MainAxisSize.max,
                     children: [
                       Container(
                         width: 80.0,
@@ -171,7 +170,6 @@ class _SettingsMyProfileWidgetState
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 8.0, 0.0, 0.0),
                               child: Row(
-                                mainAxisSize: MainAxisSize.max,
                                 children: [
                                   RatingBarIndicator(
                                     itemBuilder: (context, index) => Icon(
@@ -244,11 +242,9 @@ class _SettingsMyProfileWidgetState
                                           .routeName);
                                 },
                                 child: Row(
-                                  mainAxisSize: MainAxisSize.max,
                                   children: [
                                     if (authState.isSeller)
                                       Column(
-                                        mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         crossAxisAlignment:
@@ -278,7 +274,6 @@ class _SettingsMyProfileWidgetState
                                       ),
                                     if (authState.isSeller)
                                       Column(
-                                        mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         crossAxisAlignment:
@@ -307,7 +302,6 @@ class _SettingsMyProfileWidgetState
                                         ],
                                       ),
                                     Column(
-                                      mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       crossAxisAlignment:
@@ -336,7 +330,6 @@ class _SettingsMyProfileWidgetState
                                       ],
                                     ),
                                     Column(
-                                      mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       crossAxisAlignment:
@@ -434,7 +427,6 @@ class _SettingsMyProfileWidgetState
                         child: Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Row(
-                            mainAxisSize: MainAxisSize.max,
                             children: [
                               FaIcon(
                                 FontAwesomeIcons.trash,
@@ -481,7 +473,6 @@ class _SettingsMyProfileWidgetState
                         child: Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Row(
-                            mainAxisSize: MainAxisSize.max,
                             children: [
                               FaIcon(
                                 FontAwesomeIcons.powerOff,
@@ -526,7 +517,6 @@ class _SettingsMyProfileWidgetState
       child: Padding(
         padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
         child: Row(
-          mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
               child: InkWell(
@@ -535,7 +525,6 @@ class _SettingsMyProfileWidgetState
                   setState(() {});
                 },
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
@@ -573,7 +562,6 @@ class _SettingsMyProfileWidgetState
                   setState(() {});
                 },
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
@@ -613,10 +601,8 @@ class _SettingsMyProfileWidgetState
   /// Buyer-only section (when user is not a seller) -- no tabs.
   Widget _buildBuyerOnlySection(dynamic json) {
     return Column(
-      mainAxisSize: MainAxisSize.max,
       children: [
         Row(
-          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
@@ -660,10 +646,8 @@ class _SettingsMyProfileWidgetState
   /// Buyer ratings section for the tabbed view.
   Widget _buildBuyerRatingsSection(dynamic json, String animKey) {
     return Column(
-      mainAxisSize: MainAxisSize.max,
       children: [
         Row(
-          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
@@ -707,10 +691,8 @@ class _SettingsMyProfileWidgetState
   /// Seller ratings section for the tabbed view.
   Widget _buildSellerRatingsSection(dynamic json, String animKey) {
     return Column(
-      mainAxisSize: MainAxisSize.max,
       children: [
         Row(
-          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
@@ -763,7 +745,6 @@ class _SettingsMyProfileWidgetState
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Row(
-            mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
                 child: Column(
@@ -772,7 +753,6 @@ class _SettingsMyProfileWidgetState
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
                           child: Text(
@@ -822,7 +802,6 @@ class _SettingsMyProfileWidgetState
       padding: EdgeInsetsDirectional.fromSTEB(
           0.0, index == 0 ? 12.0 : 8.0, 0.0, 0.0),
       child: Row(
-        mainAxisSize: MainAxisSize.max,
         children: [
           Text(
             '$star\u2605',

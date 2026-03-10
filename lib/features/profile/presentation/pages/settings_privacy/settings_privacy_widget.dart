@@ -24,7 +24,6 @@ class SettingsPrivacyWidget extends StatelessWidget {
               title: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 14.0),
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -32,7 +31,6 @@ class SettingsPrivacyWidget extends StatelessWidget {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
                       child: Row(
-                        mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
@@ -76,7 +74,6 @@ class SettingsPrivacyWidget extends StatelessWidget {
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(16.0, 32.0, 16.0, 0.0),
             child: Column(
-              mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(

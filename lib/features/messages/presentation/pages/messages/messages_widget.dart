@@ -65,7 +65,6 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
             backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             title: Row(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
@@ -101,7 +100,6 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
           ),
         ),
         body: Column(
-          mainAxisSize: MainAxisSize.max,
           children: [
             Container(
               width: double.infinity,
@@ -112,7 +110,6 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
                 child: Row(
-                  mainAxisSize: MainAxisSize.max,
                   children: [
                     _buildTab('All'),
                     _buildTab('Buying'),
@@ -164,7 +161,6 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
           setState(() {});
         },
         child: Column(
-          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Padding(

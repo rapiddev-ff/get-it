@@ -232,7 +232,6 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
             backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             title: Row(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
@@ -284,7 +283,6 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
           top: true,
           child: SingleChildScrollView(
             child: Column(
-              mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Product item
@@ -320,7 +318,6 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                       await _recalculateTax();
                     },
                     child: Row(
-                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
                           child: Text(
@@ -512,7 +509,6 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                                 child: Padding(
                                   padding: EdgeInsets.all(12.0),
                                   child: Row(
-                                    mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Icon(
                                         isSelected
@@ -585,7 +581,6 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                       child: Padding(
                         padding: EdgeInsets.all(12.0),
                         child: Row(
-                          mainAxisSize: MainAxisSize.max,
                           children: [
                             Icon(
                               Icons.add_circle_outline,
@@ -658,7 +653,6 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                             color: Color(0xFF545454),
                           ),
                           Row(
-                            mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
                                 child: Text(
@@ -705,7 +699,6 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                     child: Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Row(
-                        mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           FaIcon(
@@ -715,7 +708,6 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                           ),
                           Expanded(
                             child: Column(
-                              mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
@@ -819,7 +811,6 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
 
   Widget _summaryRow(String label, String value) {
     return Row(
-      mainAxisSize: MainAxisSize.max,
       children: [
         Expanded(
           child: Text(

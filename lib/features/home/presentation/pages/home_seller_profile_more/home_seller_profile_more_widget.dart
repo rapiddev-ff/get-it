@@ -36,7 +36,6 @@ class _HomeSellerProfileMoreWidgetState
           mainAxisSize: MainAxisSize.min,
           children: [
             Row(
-              mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 16.0),
@@ -58,7 +57,6 @@ class _HomeSellerProfileMoreWidgetState
               color: Color(0xFF545454),
             ),
             Row(
-              mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 16.0),
@@ -92,7 +90,6 @@ class _HomeSellerProfileMoreWidgetState
                 setState(() {});
               },
               child: Row(
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
                     padding:

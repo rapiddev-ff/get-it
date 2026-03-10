@@ -55,7 +55,6 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
           body: SafeArea(
             top: true,
             child: Column(
-              mainAxisSize: MainAxisSize.max,
               children: [
                 Spacer(),
                 Text(

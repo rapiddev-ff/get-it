@@ -85,7 +85,6 @@ class _HomeSellerProfileReviewsStep1WidgetState
           backgroundColor: AppColors.backgroundSecondary,
           automaticallyImplyLeading: false,
           title: Row(
-            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
@@ -143,7 +142,6 @@ class _HomeSellerProfileReviewsStep1WidgetState
                   padding:
                       EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
                   child: Row(
-                    mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
@@ -184,7 +182,6 @@ class _HomeSellerProfileReviewsStep1WidgetState
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 8.0, 0.0, 0.0),
                               child: Row(
-                                mainAxisSize: MainAxisSize.max,
                                 children: [
                                   RatingBarIndicator(
                                     itemBuilder: (context, index) => Icon(
@@ -258,7 +255,6 @@ class _HomeSellerProfileReviewsStep1WidgetState
                       padding: EdgeInsetsDirectional.fromSTEB(
                           16.0, 12.0, 16.0, 12.0),
                       child: Row(
-                        mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Icon(
@@ -396,7 +392,6 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             10.0, 16.0, 16.0, 16.0),
                                         child: Row(
-                                          mainAxisSize: MainAxisSize.max,
                                           children: [
                                             ClipRRect(
                                               borderRadius:

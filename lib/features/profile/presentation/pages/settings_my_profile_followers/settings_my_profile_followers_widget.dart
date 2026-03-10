@@ -279,7 +279,6 @@ class _SettingsMyProfileFollowersWidgetState
         body: SafeArea(
           top: true,
           child: Column(
-            mainAxisSize: MainAxisSize.max,
             children: [
               _buildTabBar(),
               Expanded(
@@ -312,7 +311,6 @@ class _SettingsMyProfileFollowersWidgetState
       child: Padding(
         padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
         child: Row(
-          mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
               child: InkWell(
@@ -321,7 +319,6 @@ class _SettingsMyProfileFollowersWidgetState
                   setState(() {});
                 },
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
@@ -359,7 +356,6 @@ class _SettingsMyProfileFollowersWidgetState
                   setState(() {});
                 },
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
@@ -421,7 +417,6 @@ class _SettingsMyProfileFollowersWidgetState
     }
 
     return Column(
-      mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 28.0),
@@ -522,7 +517,6 @@ class _SettingsMyProfileFollowersWidgetState
     }
 
     return Column(
-      mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 28.0),

@@ -97,7 +97,6 @@ class _SettingsShippingDefaultsWidgetState
                   padding:
                       EdgeInsetsDirectional.fromSTEB(16.0, 32.0, 16.0, 0.0),
                   child: Column(
-                    mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
@@ -262,7 +261,6 @@ class _SettingsShippingDefaultsWidgetState
                         ],
                       ),
                       Column(
-                        mainAxisSize: MainAxisSize.max,
                         children: [
                           AppGradientButton(
                             text: 'Save Shipping Cost',

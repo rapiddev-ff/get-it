@@ -56,7 +56,6 @@ class _HomeDashoardPromoteStep1WidgetState
             backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             title: Row(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
@@ -95,11 +94,9 @@ class _HomeDashoardPromoteStep1WidgetState
         body: SafeArea(
           top: true,
           child: Column(
-            mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
@@ -176,7 +173,6 @@ class _HomeDashoardPromoteStep1WidgetState
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                       child: Row(
-                        mainAxisSize: MainAxisSize.max,
                         children: [
                           Container(
                             decoration: BoxDecoration(

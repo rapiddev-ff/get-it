@@ -80,7 +80,6 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
         body: SafeArea(
           top: true,
           child: Column(
-            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
@@ -92,7 +91,6 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                       0.0),
                   child: SingleChildScrollView(
                     child: Column(
-                      mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
@@ -102,7 +100,6 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                               AppConstants.paddingPage,
                               16.0),
                           child: Column(
-                            mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
@@ -176,7 +173,6 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                               AppConstants.paddingPage,
                               24.0),
                           child: Column(
-                            mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
@@ -256,7 +252,6 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 20.0, 0.0, 0.0),
                                 child: Column(
-                                  mainAxisSize: MainAxisSize.max,
                                   children: [
                                     PasswordComponentWidget(
                                       isActive: (_model
@@ -323,7 +318,6 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(32.0, 0.0, 32.0, 0.0),
                   child: Column(
-                    mainAxisSize: MainAxisSize.max,
                     children: [
                       AppGradientButton(
                         text: 'Reset Password',

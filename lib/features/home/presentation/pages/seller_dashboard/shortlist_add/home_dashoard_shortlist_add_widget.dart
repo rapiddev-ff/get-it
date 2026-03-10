@@ -95,7 +95,6 @@ class _HomeDashoardShortlistAddWidgetState
             backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             title: Row(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
@@ -144,13 +143,11 @@ class _HomeDashoardShortlistAddWidgetState
         body: SafeArea(
           top: true,
           child: Column(
-            mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   child: Column(
-                    mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 24.0),
@@ -223,7 +220,6 @@ class _HomeDashoardShortlistAddWidgetState
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                         child: Row(
-                          mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
@@ -380,7 +376,6 @@ class _HomeDashoardShortlistAddWidgetState
         child: Padding(
           padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
           child: Row(
-            mainAxisSize: MainAxisSize.max,
             children: [
               Container(
                 width: 22.0,
@@ -412,7 +407,6 @@ class _HomeDashoardShortlistAddWidgetState
                     ),
                     SizedBox(height: 4.0),
                     Row(
-                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
                           '\$$priceFormatted',

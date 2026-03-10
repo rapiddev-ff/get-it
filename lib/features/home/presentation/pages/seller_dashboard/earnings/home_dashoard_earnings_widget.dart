@@ -186,7 +186,6 @@ class _HomeDashoardEarningsWidgetState
             backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             title: Row(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
@@ -223,7 +222,6 @@ class _HomeDashoardEarningsWidgetState
                 padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                 child: SingleChildScrollView(
                   child: Column(
-                    mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Time filter chips
@@ -252,7 +250,6 @@ class _HomeDashoardEarningsWidgetState
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 16.0, 16.0, 16.0, 16.0),
                             child: Column(
-                              mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
@@ -265,7 +262,6 @@ class _HomeDashoardEarningsWidgetState
                                 ),
                                 SizedBox(height: 16.0),
                                 Row(
-                                  mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Expanded(
                                       child: _buildEarningCard(
@@ -286,7 +282,6 @@ class _HomeDashoardEarningsWidgetState
                                 ),
                                 SizedBox(height: 16.0),
                                 Row(
-                                  mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
@@ -316,7 +311,6 @@ class _HomeDashoardEarningsWidgetState
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 20.0, 0.0, 20.0, 0.0),
                             child: Row(
-                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 _buildTab('Sales'),
                                 _buildTab('Referrals'),
@@ -455,7 +449,6 @@ class _HomeDashoardEarningsWidgetState
       child: InkWell(
         onTap: () => setState(() => _activeTab = label),
         child: Column(
-          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Padding(
@@ -522,7 +515,6 @@ class _HomeDashoardEarningsWidgetState
       child: Padding(
         padding: EdgeInsets.all(16.0),
         child: Row(
-          mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
               child: Column(

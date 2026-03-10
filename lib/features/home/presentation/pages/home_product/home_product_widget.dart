@@ -196,7 +196,6 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
       child: Row(
-        mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
@@ -233,7 +232,6 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
             backgroundColor: AppColors.backgroundPrimary,
             automaticallyImplyLeading: false,
             title: Row(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
@@ -281,7 +279,6 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
             ? _buildShimmer()
             : SingleChildScrollView(
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
                   children: [
                     Container(
                       width: double.infinity,
@@ -458,7 +455,6 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
                       child: Column(
-                        mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           if (_hasValue(product.title))
@@ -502,7 +498,6 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                   child: Padding(
                                     padding: EdgeInsets.all(16.0),
                                     child: Row(
-                                      mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Container(
                                           width: 48.0,
@@ -644,11 +639,9 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                               child: Padding(
                                 padding: EdgeInsets.all(16.0),
                                 child: Column(
-                                  mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
-                                      mainAxisSize: MainAxisSize.max,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
@@ -697,7 +690,6 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                               color: Color(0xFF363636),
                             ),
                             Row(
-                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 Expanded(
                                   child: SizedBox(

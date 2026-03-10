@@ -74,7 +74,6 @@ class _HomeSellerProfileReviewsStep2WidgetState
           backgroundColor: AppColors.backgroundSecondary,
           automaticallyImplyLeading: false,
           title: Row(
-            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
@@ -141,7 +140,6 @@ class _HomeSellerProfileReviewsStep2WidgetState
                       padding: EdgeInsetsDirectional.fromSTEB(
                           10.0, 16.0, 16.0, 16.0),
                       child: Row(
-                        mainAxisSize: MainAxisSize.max,
                         children: [
                           if ((widget.product?.mainImageUrl ?? '').isNotEmpty)
                             ClipRRect(
@@ -185,7 +183,6 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 8.0, 0.0, 0.0),
                                   child: Row(
-                                    mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Expanded(
                                         child: Text(
@@ -224,7 +221,6 @@ class _HomeSellerProfileReviewsStep2WidgetState
                   padding:
                       EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 0.0),
                   child: Row(
-                    mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
@@ -265,7 +261,6 @@ class _HomeSellerProfileReviewsStep2WidgetState
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 8.0, 0.0, 0.0),
                               child: Row(
-                                mainAxisSize: MainAxisSize.max,
                                 children: [
                                   RatingBarIndicator(
                                     itemBuilder: (context, index) => Icon(
@@ -332,7 +327,6 @@ class _HomeSellerProfileReviewsStep2WidgetState
                     child: Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Column(
-                        mainAxisSize: MainAxisSize.max,
                         children: [
                           Align(
                             alignment: AlignmentDirectional(-1.0, -1.0),
@@ -380,7 +374,6 @@ class _HomeSellerProfileReviewsStep2WidgetState
                     child: Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Column(
-                        mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
@@ -473,7 +466,6 @@ class _HomeSellerProfileReviewsStep2WidgetState
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 8.0, 0.0, 0.0),
                             child: Row(
-                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 Expanded(
                                   child: Text(
@@ -517,7 +509,6 @@ class _HomeSellerProfileReviewsStep2WidgetState
                     child: Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Column(
-                        mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
@@ -566,7 +557,6 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 20.0, 0.0, 20.0),
                                   child: Column(
-                                    mainAxisSize: MainAxisSize.max,
                                     children: [
                                       FaIcon(
                                         FontAwesomeIcons.camera,
@@ -619,7 +609,6 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                   return SingleChildScrollView(
                                     scrollDirection: Axis.horizontal,
                                     child: Row(
-                                      mainAxisSize: MainAxisSize.max,
                                       children: List.generate(image.length,
                                           (imageIndex) {
                                         final imageItem = image[imageIndex];

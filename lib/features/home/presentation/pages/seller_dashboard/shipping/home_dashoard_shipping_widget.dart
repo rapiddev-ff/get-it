@@ -112,7 +112,6 @@ class _HomeDashoardShippingWidgetState
             backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             title: Row(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
@@ -162,11 +161,9 @@ class _HomeDashoardShippingWidgetState
                     child: SingleChildScrollView(
                       physics: AlwaysScrollableScrollPhysics(),
                       child: Column(
-                        mainAxisSize: MainAxisSize.max,
                         children: [
                           // Counters row
                           Row(
-                            mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
                                 child: Container(
@@ -307,7 +304,6 @@ class _HomeDashoardShippingWidgetState
         child: Padding(
           padding: EdgeInsetsDirectional.fromSTEB(10.0, 16.0, 16.0, 16.0),
           child: Row(
-            mainAxisSize: MainAxisSize.max,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(4.0),
@@ -375,7 +371,6 @@ class _HomeDashoardShippingWidgetState
                       overflow: TextOverflow.ellipsis,
                     ),
                     Row(
-                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
                           child: RichText(

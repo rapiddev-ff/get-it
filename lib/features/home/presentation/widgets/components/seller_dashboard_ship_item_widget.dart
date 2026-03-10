@@ -75,7 +75,6 @@ class SellerDashboardShipItemWidget extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Row(
-            mainAxisSize: MainAxisSize.max,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(4.0),

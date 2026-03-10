@@ -99,7 +99,6 @@ class _SettingsBusinessAddressWidgetState
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
             child: Column(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Expanded(
@@ -163,11 +162,9 @@ class _SettingsBusinessAddressWidgetState
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 20.0, 0.0, 0.0),
                           child: Row(
-                            mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
                                 child: Column(
-                                  mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
@@ -371,7 +368,6 @@ class _SettingsBusinessAddressWidgetState
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 20.0, 0.0, 0.0),
                           child: Row(
-                            mainAxisSize: MainAxisSize.max,
                             children: [
                               Expanded(
                                 child: Column(
@@ -443,7 +439,6 @@ class _SettingsBusinessAddressWidgetState
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 36.0, 0.0, 32.0),
                     child: Row(
-                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
                           child: AppOutlineButton(

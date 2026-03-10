@@ -109,7 +109,6 @@ class _HomeDashoardInventoryAddConditionWidgetState
                       final listViewConditionsRow =
                           listViewConditionsRowList[listViewIndex];
                       return Column(
-                        mainAxisSize: MainAxisSize.max,
                         children: [
                           InkWell(
                             onTap: () async {
@@ -124,7 +123,6 @@ class _HomeDashoardInventoryAddConditionWidgetState
                               }
                             },
                             child: Row(
-                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 Expanded(
                                   child: Padding(
@@ -186,7 +184,6 @@ class _HomeDashoardInventoryAddConditionWidgetState
               ),
             ),
             Row(
-              mainAxisSize: MainAxisSize.max,
               children: [
                 Expanded(
                   child: OutlinedButton(

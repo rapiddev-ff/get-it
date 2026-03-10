@@ -37,14 +37,12 @@ class _VideosWidgetState extends State<VideosWidget> {
       child: Scaffold(
         backgroundColor: AppColors.backgroundPrimary,
         body: Column(
-          mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                 child: SingleChildScrollView(
                   child: Column(
-                    mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[]
                         .addToStart(SizedBox(height: 24.0))

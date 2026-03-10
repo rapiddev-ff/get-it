@@ -63,7 +63,6 @@ class _HomeDashoardInventoryWidgetState
             backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             title: Row(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
@@ -100,18 +99,15 @@ class _HomeDashoardInventoryWidgetState
           ),
         ),
         body: Column(
-          mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
               child: Column(
-                mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                     child: Row(
-                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
                           child: Container(
@@ -208,7 +204,6 @@ class _HomeDashoardInventoryWidgetState
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
-                        mainAxisSize: MainAxisSize.max,
                         children: [
                           InkWell(
                             onTap: () async {
@@ -371,7 +366,6 @@ class _HomeDashoardInventoryWidgetState
                   padding:
                       EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 36.0),
                   child: Row(
-                    mainAxisSize: MainAxisSize.max,
                     children: [
                       Expanded(
                         child: Container(
@@ -385,7 +379,6 @@ class _HomeDashoardInventoryWidgetState
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 12.0, 0.0, 14.0),
                             child: Column(
-                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 FaIcon(
                                   FontAwesomeIcons.camera,
@@ -421,7 +414,6 @@ class _HomeDashoardInventoryWidgetState
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 12.0, 0.0, 14.0),
                               child: Column(
-                                mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Icon(
                                     Icons.add,
@@ -458,7 +450,6 @@ class _HomeDashoardInventoryWidgetState
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 12.0, 0.0, 14.0),
                               child: Column(
-                                mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Icon(
                                     Icons.playlist_add_sharp,

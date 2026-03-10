@@ -56,13 +56,11 @@ class _SettingsReferralWidgetState
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
             child: Column(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
                   child: SingleChildScrollView(
                     child: Column(
-                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Container(
                           width: double.infinity,
@@ -74,7 +72,6 @@ class _SettingsReferralWidgetState
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 20.0, 33.0, 20.0, 33.0),
                             child: Column(
-                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 BarcodeWidget(
                                   data: userData.referralCode,
@@ -102,7 +99,6 @@ class _SettingsReferralWidgetState
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           16.0, 25.0, 16.0, 25.0),
                                       child: Column(
-                                        mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Text(
                                             'Get Paid To Share CardSmart',
@@ -134,7 +130,6 @@ class _SettingsReferralWidgetState
                   ),
                 ),
                 Column(
-                  mainAxisSize: MainAxisSize.max,
                   children: [
                     AppGradientButton(
                       text: 'Print QR Code',

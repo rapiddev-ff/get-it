@@ -60,7 +60,6 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget>
               title: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 14.0),
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -68,7 +67,6 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget>
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
                       child: Row(
-                        mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
@@ -110,7 +108,6 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget>
         body: SafeArea(
           top: true,
           child: Column(
-            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
@@ -174,7 +171,6 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget>
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
                         child: Row(
-                          mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
@@ -197,7 +193,6 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget>
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   child: Column(
-                    mainAxisSize: MainAxisSize.max,
                     children: [
                       AppGradientButton(
                         text: 'Send',

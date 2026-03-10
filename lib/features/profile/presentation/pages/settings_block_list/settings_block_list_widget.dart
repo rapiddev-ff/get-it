@@ -228,7 +228,6 @@ class _SettingsBlockListWidgetState extends State<SettingsBlockListWidget> {
       padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
       child: SingleChildScrollView(
         child: Column(
-          mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
@@ -371,7 +370,6 @@ class _SettingsBlockListWidgetState extends State<SettingsBlockListWidget> {
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Row(
-            mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Icon(
@@ -381,7 +379,6 @@ class _SettingsBlockListWidgetState extends State<SettingsBlockListWidget> {
               ),
               Expanded(
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(

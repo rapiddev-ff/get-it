@@ -33,7 +33,6 @@ class SettingsBlockedUserItemWidget extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(16.0),
         child: Row(
-          mainAxisSize: MainAxisSize.max,
           children: [
             Container(
               width: 40.0,

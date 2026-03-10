@@ -403,7 +403,6 @@ class _HomeDashoardShortlistCreateStep2WidgetState
             backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             title: Row(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
@@ -447,12 +446,10 @@ class _HomeDashoardShortlistCreateStep2WidgetState
           ),
         ),
         body: Column(
-          mainAxisSize: MainAxisSize.max,
           children: [
             Flexible(
               child: SingleChildScrollView(
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
                   children: [
                     Container(
                       decoration: BoxDecoration(
@@ -471,7 +468,6 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 24.0, 20.0, 24.0, 20.0),
                             child: Row(
-                              mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Expanded(
@@ -518,11 +514,9 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                       padding:
                           EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                       child: Column(
-                        mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
-                            mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
@@ -623,7 +617,6 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                             color: Color(0xFF363636),
                           ),
                           Row(
-                            mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
@@ -678,7 +671,6 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 16.0, 0.0, 0.0),
                             child: Row(
-                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 Container(
                                   decoration: BoxDecoration(
@@ -770,7 +762,6 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                 }
                               },
                               child: Row(
-                                mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Icon(
@@ -800,7 +791,6 @@ class _HomeDashoardShortlistCreateStep2WidgetState
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
               child: Column(
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   AppGradientButton(
                     text: _isSaving ? 'Creating...' : 'Create Shortlist',

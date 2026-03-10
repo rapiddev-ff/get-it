@@ -136,7 +136,6 @@ class _HomeDashoardShortlistCreateWidgetState
             backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             title: Row(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
@@ -185,11 +184,9 @@ class _HomeDashoardShortlistCreateWidgetState
         body: Padding(
           padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
           child: Column(
-            mainAxisSize: MainAxisSize.max,
             children: [
               Flexible(
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -264,11 +261,9 @@ class _HomeDashoardShortlistCreateWidgetState
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                       child: Row(
-                        mainAxisSize: MainAxisSize.max,
                         children: [
                           Expanded(
                             child: Column(
-                              mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
@@ -311,7 +306,6 @@ class _HomeDashoardShortlistCreateWidgetState
                           ),
                           Expanded(
                             child: Column(
-                              mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
@@ -374,7 +368,6 @@ class _HomeDashoardShortlistCreateWidgetState
                       child: GestureDetector(
                         onTap: () => setState(() => isPublic = !isPublic),
                         child: Row(
-                          mainAxisSize: MainAxisSize.max,
                           children: [
                             if (!isPublic)
                               Container(
@@ -424,7 +417,6 @@ class _HomeDashoardShortlistCreateWidgetState
                 ),
               ),
               Column(
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   AppGradientButton(
                     text: 'Create Shortlist',

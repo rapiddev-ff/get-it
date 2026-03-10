@@ -27,7 +27,6 @@ class CheckoutItemWidget extends StatelessWidget {
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
       child: Row(
-        mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
@@ -50,7 +49,6 @@ class CheckoutItemWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  mainAxisSize: MainAxisSize.max,
                   children: [
                     Expanded(
                       child: Text(
@@ -125,7 +123,6 @@ class CheckoutItemWidget extends StatelessWidget {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                   child: Row(
-                    mainAxisSize: MainAxisSize.max,
                     children: [
                       Expanded(
                         child: Text(

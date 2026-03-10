@@ -65,7 +65,6 @@ class HomeSellerProductWidget extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.all(12.0),
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

@@ -116,7 +116,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
             backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             title: Row(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
@@ -163,7 +162,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
           ),
         ),
         body: Column(
-          mainAxisSize: MainAxisSize.max,
           children: [
             Container(
               width: double.infinity,
@@ -174,7 +172,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
                 child: Row(
-                  mainAxisSize: MainAxisSize.max,
                   children: [
                     Expanded(
                       child: InkWell(
@@ -183,7 +180,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                           setState(() {});
                         },
                         child: Column(
-                          mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Padding(
@@ -238,7 +234,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                           }
                         },
                         child: Column(
-                          mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Padding(
@@ -439,7 +434,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
       padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
       child: SingleChildScrollView(
         child: Column(
-          mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
@@ -468,7 +462,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                   padding:
                       EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 12.0),
                   child: Column(
-                    mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -505,7 +498,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
               child: Row(
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   _buildStatCard('active_listings', 'Active'),
                   _buildStatCard('total_views', 'Views'),
@@ -574,7 +566,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
               child: Row(
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   _buildCatalogActionCard(
                     icon: FontAwesomeIcons.solidPenToSquare,
@@ -629,7 +620,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
               child: Row(
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   _buildQuickActionCard(
                     icon: FontAwesomeIcons.boxesStacked,
@@ -654,7 +644,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
               child: Row(
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   _buildQuickActionCard(
                     icon: FontAwesomeIcons.bullhorn,
@@ -763,7 +752,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
       child: Column(
-        mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
             child: Column(
@@ -894,7 +882,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
             ),
           ),
           Column(
-            mainAxisSize: MainAxisSize.max,
             children: [
               Container(
                 width: double.infinity,
@@ -912,7 +899,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                     ),
                     collapsed: Container(),
                     expanded: Column(
-                      mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
                           'Secure payments and payouts. Get It never stores your bank details.',

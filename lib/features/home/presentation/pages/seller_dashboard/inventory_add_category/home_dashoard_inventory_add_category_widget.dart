@@ -98,7 +98,6 @@ class _HomeDashoardInventoryAddCategoryWidgetState
                       final listViewCategoriesRow =
                           listViewCategoriesRowList[listViewIndex];
                       return Column(
-                        mainAxisSize: MainAxisSize.max,
                         children: [
                           InkWell(
                             onTap: () async {
@@ -106,7 +105,6 @@ class _HomeDashoardInventoryAddCategoryWidgetState
                               setState(() {});
                             },
                             child: Row(
-                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 Expanded(
                                   child: Padding(
@@ -151,7 +149,6 @@ class _HomeDashoardInventoryAddCategoryWidgetState
               ),
             ),
             Row(
-              mainAxisSize: MainAxisSize.max,
               children: [
                 Expanded(
                   child: OutlinedButton(
