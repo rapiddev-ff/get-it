@@ -1,3 +1,4 @@
+import '/core/widgets/app_loading_indicator.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
@@ -100,9 +101,7 @@ class _HomeDashoardShortlistWidgetState
         body: SafeArea(
           child: _isLoading
               ? Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.secondary,
-                  ),
+                  child: AppLoadingIndicator(),
                 )
               : shortlists.isEmpty
                   ? Padding(

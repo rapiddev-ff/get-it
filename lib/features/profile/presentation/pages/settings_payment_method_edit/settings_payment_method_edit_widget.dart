@@ -113,8 +113,8 @@ class _SettingsPaymentMethodEditWidgetState
     return InputDecoration(
       isDense: false,
       hintText: hintText,
-      hintStyle: GoogleFonts.inter(
-          fontSize: 16.0, color: AppColors.textSecondary),
+      hintStyle:
+          GoogleFonts.inter(fontSize: 16.0, color: AppColors.textSecondary),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.neutral700, width: 1.0),
         borderRadius: BorderRadius.circular(4.0),
@@ -142,8 +142,8 @@ class _SettingsPaymentMethodEditWidgetState
     return InputDecoration(
       isDense: true,
       hintText: hintText,
-      hintStyle: GoogleFonts.inter(
-          fontSize: 14.0, color: AppColors.textSecondary),
+      hintStyle:
+          GoogleFonts.inter(fontSize: 14.0, color: AppColors.textSecondary),
       contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 16.0),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.neutral700, width: 1.0),

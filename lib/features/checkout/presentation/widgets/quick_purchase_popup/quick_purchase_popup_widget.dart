@@ -1,3 +1,4 @@
+import '/core/widgets/app_loading_indicator.dart';
 import '/features/home/domain/models/feed_product_model.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import '/features/auth/domain/models/user_settings_model.dart';
@@ -382,10 +383,8 @@ class _QuickPurchasePopupWidgetState
                         ? SizedBox(
                             width: 20,
                             height: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2.0,
-                              color: Colors.white,
-                            ),
+                            child: AppLoadingIndicator(
+                                strokeWidth: 2.0, color: Colors.white),
                           )
                         : Text(
                             'Confirm - ${_currencyFormat.format(_total)}',

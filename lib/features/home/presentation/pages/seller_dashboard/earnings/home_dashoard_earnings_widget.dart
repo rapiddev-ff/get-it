@@ -1,3 +1,4 @@
+import '/core/widgets/app_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/core/providers/current_user_provider.dart';
@@ -213,8 +214,7 @@ class _HomeDashoardEarningsWidgetState
           ),
         ),
         body: _isLoading
-            ? Center(
-                child: CircularProgressIndicator(color: AppColors.secondary))
+            ? Center(child: AppLoadingIndicator())
             : Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
                 child: SingleChildScrollView(

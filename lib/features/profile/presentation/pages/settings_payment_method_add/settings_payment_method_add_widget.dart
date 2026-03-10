@@ -100,8 +100,8 @@ class _SettingsPaymentMethodAddWidgetState
     return InputDecoration(
       isDense: true,
       hintText: hintText,
-      hintStyle: GoogleFonts.inter(
-          fontSize: 14.0, color: AppColors.textSecondary),
+      hintStyle:
+          GoogleFonts.inter(fontSize: 14.0, color: AppColors.textSecondary),
       contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.neutral700, width: 1.0),

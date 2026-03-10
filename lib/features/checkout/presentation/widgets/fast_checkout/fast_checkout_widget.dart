@@ -1,3 +1,4 @@
+import '/core/widgets/app_loading_indicator.dart';
 import '/features/home/domain/models/feed_product_model.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import '/core/theme/app_colors.dart';
@@ -189,10 +190,7 @@ class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
                         ? SizedBox(
                             width: 16,
                             height: 16,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2.0,
-                              color: AppColors.primary,
-                            ),
+                            child: AppLoadingIndicator(strokeWidth: 2.0),
                           )
                         : Text(
                             'Cancel',

@@ -1,3 +1,4 @@
+import '/core/widgets/app_loading_indicator.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
@@ -298,9 +299,7 @@ class _HomeDashoardShortlistAddWidgetState
                       Expanded(
                         child: _isLoading
                             ? Center(
-                                child: CircularProgressIndicator(
-                                  color: AppColors.secondary,
-                                ),
+                                child: AppLoadingIndicator(),
                               )
                             : filtered.isEmpty
                                 ? Center(

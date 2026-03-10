@@ -1,3 +1,4 @@
+import '/core/widgets/app_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 
@@ -85,11 +86,7 @@ class _HomeDashoardInventoryAddTagsWidgetState
               child: SizedBox(
                 width: 50.0,
                 height: 50.0,
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    AppColors.primary,
-                  ),
-                ),
+                child: AppLoadingIndicator(),
               ),
             ),
           );

@@ -1,3 +1,4 @@
+import '/core/widgets/app_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -73,11 +74,7 @@ class _HomeDashoardInventoryAddCategoryWidgetState
                       child: SizedBox(
                         width: 50.0,
                         height: 50.0,
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            AppColors.primary,
-                          ),
-                        ),
+                        child: AppLoadingIndicator(),
                       ),
                     );
                   }

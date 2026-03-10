@@ -1,3 +1,4 @@
+import '/core/widgets/app_loading_indicator.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -374,7 +375,7 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Center(
-                  child: CircularProgressIndicator(color: AppColors.primary),
+                  child: AppLoadingIndicator(),
                 ),
               ),
             ),

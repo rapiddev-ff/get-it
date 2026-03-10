@@ -1,3 +1,4 @@
+import '/core/widgets/app_loading_indicator.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -313,8 +314,7 @@ class _HomeDashoardShippingDetailedWidgetState
           ),
         ),
         body: _isLoading
-            ? Center(
-                child: CircularProgressIndicator(color: AppColors.secondary))
+            ? Center(child: AppLoadingIndicator())
             : _order == null
                 ? Center(
                     child: Text('Order not found',

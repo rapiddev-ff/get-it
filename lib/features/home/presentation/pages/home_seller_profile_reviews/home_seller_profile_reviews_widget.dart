@@ -1,3 +1,4 @@
+import '/core/widgets/app_loading_indicator.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/features/home/domain/models/seller_model.dart';
 import '/core/theme/app_colors.dart';
@@ -507,22 +508,14 @@ class _HomeSellerProfileReviewsWidgetState
                                   child: SizedBox(
                                     width: 50.0,
                                     height: 50.0,
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        AppColors.primary,
-                                      ),
-                                    ),
+                                    child: AppLoadingIndicator(),
                                   ),
                                 ),
                                 newPageProgressIndicatorBuilder: (_) => Center(
                                   child: SizedBox(
                                     width: 50.0,
                                     height: 50.0,
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        AppColors.primary,
-                                      ),
-                                    ),
+                                    child: AppLoadingIndicator(),
                                   ),
                                 ),
                                 itemBuilder:
@@ -559,22 +552,14 @@ class _HomeSellerProfileReviewsWidgetState
                                   child: SizedBox(
                                     width: 50.0,
                                     height: 50.0,
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        AppColors.primary,
-                                      ),
-                                    ),
+                                    child: AppLoadingIndicator(),
                                   ),
                                 ),
                                 newPageProgressIndicatorBuilder: (_) => Center(
                                   child: SizedBox(
                                     width: 50.0,
                                     height: 50.0,
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        AppColors.primary,
-                                      ),
-                                    ),
+                                    child: AppLoadingIndicator(),
                                   ),
                                 ),
                                 itemBuilder:

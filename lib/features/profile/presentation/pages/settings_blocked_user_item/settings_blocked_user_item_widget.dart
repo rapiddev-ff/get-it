@@ -1,3 +1,4 @@
+import '/core/widgets/app_loading_indicator.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/utils/date_utils.dart';
@@ -103,10 +104,8 @@ class SettingsBlockedUserItemWidget extends StatelessWidget {
                       ? SizedBox(
                           width: 16.0,
                           height: 16.0,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2.0,
-                            color: Colors.white,
-                          ),
+                          child: AppLoadingIndicator(
+                              strokeWidth: 2.0, color: Colors.white),
                         )
                       : Row(
                           mainAxisSize: MainAxisSize.min,

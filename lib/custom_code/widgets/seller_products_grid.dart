@@ -1,3 +1,4 @@
+import '/core/widgets/app_loading_indicator.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -340,7 +341,7 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: _isLoading
-                  ? CircularProgressIndicator(color: AppColors.primary)
+                  ? AppLoadingIndicator()
                   : const SizedBox(height: 1),
             ),
           )

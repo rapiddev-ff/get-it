@@ -1,3 +1,4 @@
+import '/core/widgets/app_loading_indicator.dart';
 import '/features/home/domain/models/feed_product_model.dart';
 import '/features/checkout/domain/models/checkout_totals_model.dart';
 import '/features/checkout/domain/models/checkout_order_result_model.dart';
@@ -731,10 +732,8 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                           ? SizedBox(
                               width: 24,
                               height: 24,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2.0,
-                                color: Colors.white,
-                              ),
+                              child: AppLoadingIndicator(
+                                  strokeWidth: 2.0, color: Colors.white),
                             )
                           : Text(
                               'Complete Purchase - ${_currencyFormat.format(_total)}',

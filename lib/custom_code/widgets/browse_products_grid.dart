@@ -1,3 +1,4 @@
+import '/core/widgets/app_loading_indicator.dart';
 import '/features/browse/domain/models/browse_product_model.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/theme/app_colors.dart';
@@ -296,12 +297,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
         child: SizedBox(
           width: 24,
           height: 24,
-          child: CircularProgressIndicator(
-            strokeWidth: 2,
-            valueColor: AlwaysStoppedAnimation<Color>(
-              AppColors.primary,
-            ),
-          ),
+          child: AppLoadingIndicator(strokeWidth: 2),
         ),
       ),
     );

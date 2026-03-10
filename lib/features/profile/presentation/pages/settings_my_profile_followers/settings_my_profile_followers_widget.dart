@@ -1,3 +1,4 @@
+import '/core/widgets/app_loading_indicator.dart';
 import '/features/home/presentation/widgets/components/follower_item_widget.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
@@ -391,7 +392,7 @@ class _SettingsMyProfileFollowersWidgetState
     // Initial loading
     if (!_initialLoadDone && _model.isLoadingFollowers) {
       return Center(
-        child: CircularProgressIndicator(color: AppColors.secondary),
+        child: AppLoadingIndicator(),
       );
     }
 
@@ -441,7 +442,7 @@ class _SettingsMyProfileFollowersWidgetState
   Widget _buildFollowersList() {
     if (_model.isLoadingFollowers && _model.followers.isEmpty) {
       return Center(
-        child: CircularProgressIndicator(color: AppColors.secondary),
+        child: AppLoadingIndicator(),
       );
     }
 
@@ -464,7 +465,7 @@ class _SettingsMyProfileFollowersWidgetState
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0),
             child: Center(
-              child: CircularProgressIndicator(color: AppColors.secondary),
+              child: AppLoadingIndicator(),
             ),
           );
         }
@@ -491,7 +492,7 @@ class _SettingsMyProfileFollowersWidgetState
     // Initial loading
     if (!_initialLoadDone && _model.isLoadingFollowing) {
       return Center(
-        child: CircularProgressIndicator(color: AppColors.secondary),
+        child: AppLoadingIndicator(),
       );
     }
 
@@ -541,7 +542,7 @@ class _SettingsMyProfileFollowersWidgetState
   Widget _buildFollowingList() {
     if (_model.isLoadingFollowing && _model.following.isEmpty) {
       return Center(
-        child: CircularProgressIndicator(color: AppColors.secondary),
+        child: AppLoadingIndicator(),
       );
     }
 
@@ -564,7 +565,7 @@ class _SettingsMyProfileFollowersWidgetState
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0),
             child: Center(
-              child: CircularProgressIndicator(color: AppColors.secondary),
+              child: AppLoadingIndicator(),
             ),
           );
         }

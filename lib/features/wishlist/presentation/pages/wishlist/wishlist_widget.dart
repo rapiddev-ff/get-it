@@ -1,3 +1,4 @@
+import '/core/widgets/app_loading_indicator.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import '/core/providers/current_user_provider.dart';
@@ -141,9 +142,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                 builder: (context) {
                   if (isLoading) {
                     return const Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.secondary,
-                      ),
+                      child: AppLoadingIndicator(),
                     );
                   }
                   if (wishlistProducts.isNotEmpty) {

@@ -1,3 +1,4 @@
+import '/core/widgets/app_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import '/core/theme/app_colors.dart';
 
@@ -58,10 +59,8 @@ class AppGradientButton extends StatelessWidget {
             ? const SizedBox(
                 width: 24,
                 height: 24,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2.5,
-                  color: Colors.white,
-                ),
+                child:
+                    AppLoadingIndicator(strokeWidth: 2.5, color: Colors.white),
               )
             : Text(
                 text,

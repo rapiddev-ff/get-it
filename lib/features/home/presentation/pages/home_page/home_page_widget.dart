@@ -1,3 +1,4 @@
+import '/core/widgets/app_loading_indicator.dart';
 import '/features/home/domain/models/feed_product_model.dart';
 import '/features/home/presentation/providers/feed_provider.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
@@ -841,10 +842,8 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                             ? SizedBox(
                                 width: 22.0,
                                 height: 22.0,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2.0,
-                                  color: Colors.white,
-                                ),
+                                child: AppLoadingIndicator(
+                                    strokeWidth: 2.0, color: Colors.white),
                               )
                             : Text(
                                 'Connect Stripe',

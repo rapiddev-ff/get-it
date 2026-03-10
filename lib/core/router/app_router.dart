@@ -1,3 +1,4 @@
+import '/core/widgets/app_loading_indicator.dart';
 import 'dart:async';
 import 'dart:io';
 
@@ -11,7 +12,6 @@ import '/backend/schema/util/schema_util.dart';
 import '/core/router/serialization_util.dart';
 import '/core/router/app_state_notifier.dart';
 import '/core/router/route_definitions.dart';
-import '/core/theme/app_colors.dart';
 import '/features/home/presentation/pages/check_data/check_data_widget.dart';
 import '/features/auth/presentation/pages/welcome/welcome_widget.dart';
 import '/features/home/presentation/pages/home_page/home_page_widget.dart';
@@ -240,11 +240,7 @@ class AppRoute {
                   child: SizedBox(
                     width: 50.0,
                     height: 50.0,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        AppColors.primary,
-                      ),
-                    ),
+                    child: AppLoadingIndicator(),
                   ),
                 )
               : page;

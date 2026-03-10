@@ -1,3 +1,4 @@
+import '/core/widgets/app_loading_indicator.dart';
 import '/features/home/domain/models/seller_model.dart';
 import '/features/home/domain/models/seller_product_model.dart';
 import '/core/theme/app_colors.dart';
@@ -281,10 +282,7 @@ class _HomeSellerProfileReviewsStep1WidgetState
                       ? Center(
                           child: Padding(
                             padding: EdgeInsets.all(32.0),
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                  AppColors.primary),
-                            ),
+                            child: AppLoadingIndicator(),
                           ),
                         )
                       : _reviewableProducts.isEmpty
