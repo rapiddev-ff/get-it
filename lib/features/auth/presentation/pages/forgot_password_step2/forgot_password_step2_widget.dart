@@ -8,9 +8,6 @@ import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/dismiss_keyboard.dart';
-import 'forgot_password_step2_model.dart';
-export 'forgot_password_step2_model.dart';
-
 class ForgotPasswordStep2Widget extends StatefulWidget {
   const ForgotPasswordStep2Widget({
     super.key,
@@ -29,17 +26,13 @@ class ForgotPasswordStep2Widget extends StatefulWidget {
 
 class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget>
     with KeyboardVisibilityMixin {
-  late ForgotPasswordStep2Model _model;
-
   @override
   void initState() {
     super.initState();
-    _model = ForgotPasswordStep2Model();
   }
 
   @override
   void dispose() {
-    _model.dispose();
     super.dispose();
   }
 

@@ -11,10 +11,6 @@ import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import '/features/auth/presentation/pages/additional_info/additional_info_widget.dart';
-import 'permissions_model.dart';
-
-export 'permissions_model.dart';
-
 class PermissionsWidget extends StatefulWidget {
   const PermissionsWidget({super.key});
 
@@ -27,17 +23,13 @@ class PermissionsWidget extends StatefulWidget {
 
 class _PermissionsWidgetState extends State<PermissionsWidget>
     with KeyboardVisibilityMixin {
-  late PermissionsModel _model;
-
   @override
   void initState() {
     super.initState();
-    _model = PermissionsModel();
   }
 
   @override
   void dispose() {
-    _model.dispose();
     super.dispose();
   }
 

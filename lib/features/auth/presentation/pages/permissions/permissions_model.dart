@@ -1,3 +1,0 @@
-class PermissionsModel {
-  void dispose() {}
-}

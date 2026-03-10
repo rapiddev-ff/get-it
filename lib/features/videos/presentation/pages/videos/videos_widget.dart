@@ -2,9 +2,6 @@ import '/features/home/presentation/widgets/nav_bar/nav_bar_widget.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import 'package:flutter/material.dart';
-import 'videos_model.dart';
-export 'videos_model.dart';
-
 class VideosWidget extends StatefulWidget {
   const VideosWidget({super.key});
 
@@ -16,17 +13,13 @@ class VideosWidget extends StatefulWidget {
 }
 
 class _VideosWidgetState extends State<VideosWidget> {
-  late VideosModel _model;
-
   @override
   void initState() {
     super.initState();
-    _model = VideosModel();
   }
 
   @override
   void dispose() {
-    _model.dispose();
     super.dispose();
   }
 

@@ -10,9 +10,6 @@ import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import '/features/auth/presentation/pages/sign_in/sign_in_widget.dart';
 import '/features/auth/presentation/pages/sign_up/sign_up_widget.dart';
-import 'welcome_model.dart';
-export 'welcome_model.dart';
-
 class WelcomeWidget extends StatefulWidget {
   const WelcomeWidget({super.key});
 
@@ -24,12 +21,9 @@ class WelcomeWidget extends StatefulWidget {
 }
 
 class _WelcomeWidgetState extends State<WelcomeWidget> {
-  late WelcomeModel _model;
-
   @override
   void initState() {
     super.initState();
-    _model = WelcomeModel();
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -41,7 +35,6 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
 
   @override
   void dispose() {
-    _model.dispose();
     super.dispose();
   }
 

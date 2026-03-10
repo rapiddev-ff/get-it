@@ -1,3 +1,0 @@
-class WelcomeModel {
-  void dispose() {}
-}

@@ -3,9 +3,6 @@ import '/core/theme/app_colors.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '/core/utils/list_extensions.dart';
-import 'password_component_model.dart';
-export 'password_component_model.dart';
-
 class PasswordComponentWidget extends StatefulWidget {
   const PasswordComponentWidget({
     super.key,
@@ -22,17 +19,13 @@ class PasswordComponentWidget extends StatefulWidget {
 }
 
 class _PasswordComponentWidgetState extends State<PasswordComponentWidget> {
-  late PasswordComponentModel _model;
-
   @override
   void initState() {
     super.initState();
-    _model = PasswordComponentModel();
   }
 
   @override
   void dispose() {
-    _model.dispose();
     super.dispose();
   }
 
