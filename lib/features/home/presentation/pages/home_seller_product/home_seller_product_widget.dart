@@ -74,9 +74,9 @@ class HomeSellerProductWidget extends StatelessWidget {
                         'N/A',
                       ),
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        fontWeight: FontWeight.w500,
-                        height: 1.5,
-                      ),
+                            fontWeight: FontWeight.w500,
+                            height: 1.5,
+                          ),
                     ),
                     Text(
                       valueOrDefault<String>(
@@ -86,7 +86,10 @@ class HomeSellerProductWidget extends StatelessWidget {
                             : null,
                         '0',
                       ),
-                      style: Theme.of(context).textTheme.titleSmall!.copyWith(fontWeight: FontWeight.bold, color: AppColors.secondary, height: 1.5),
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.secondary,
+                          height: 1.5),
                     ),
                   ],
                 ),

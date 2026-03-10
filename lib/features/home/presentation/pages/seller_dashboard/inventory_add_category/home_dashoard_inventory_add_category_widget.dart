@@ -107,7 +107,10 @@ class _HomeDashoardInventoryAddCategoryWidgetState
                                         EdgeInsets.symmetric(vertical: 14.0),
                                     child: Text(
                                       listViewCategoriesRow.name,
-                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(fontSize: 15.0),
                                     ),
                                   ),
                                 ),
@@ -157,7 +160,10 @@ class _HomeDashoardInventoryAddCategoryWidgetState
                     ),
                     child: Text(
                       'Cancel',
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 17.0,
+                          color: Colors.white),
                     ),
                   ),
                 ),

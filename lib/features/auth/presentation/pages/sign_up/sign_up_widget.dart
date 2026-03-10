@@ -112,7 +112,10 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: Text(
                             'Create Your Account ',
-                            style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall!
+                                .copyWith(fontWeight: FontWeight.bold),
                           ),
                         ),
                         Padding(
@@ -136,7 +139,12 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                 padding: const EdgeInsets.only(bottom: 8.0),
                                 child: Text(
                                   'Email',
-                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.4),
                                 ),
                               ),
                               SizedBox(
@@ -167,7 +175,10 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                   padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Please enter your email.',
-                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               if (_model.errorEmailFormat)
@@ -175,7 +186,10 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                   padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Check your email format.',
-                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               if (_model.emailAlreadyInUse)
@@ -183,7 +197,10 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                   padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Email already in use - try signing in instead.',
-                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                             ],
@@ -203,7 +220,12 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                 padding: const EdgeInsets.only(bottom: 8.0),
                                 child: Text(
                                   'Password',
-                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.4),
                                 ),
                               ),
                               SizedBox(
@@ -250,7 +272,10 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                   padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Password is required.',
-                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                             ],
@@ -270,7 +295,12 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                 padding: const EdgeInsets.only(bottom: 8.0),
                                 child: Text(
                                   'Confirm Password',
-                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.4),
                                 ),
                               ),
                               SizedBox(
@@ -315,7 +345,10 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                   padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Confirm Password is required.',
-                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               if (_model.errorPaswordsDontMatch)
@@ -323,7 +356,10 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                   padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Passwords don\'t match',
-                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               Padding(
@@ -449,7 +485,9 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                 children: [
                                   TextSpan(
                                     text: 'I accept the ',
-                                    style: Theme.of(context).textTheme.labelMedium!,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!,
                                   ),
                                   TextSpan(
                                     text: 'Terms & Conditions',
@@ -466,7 +504,9 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                   ),
                                   TextSpan(
                                     text: ' and ',
-                                    style: Theme.of(context).textTheme.labelMedium!,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!,
                                   ),
                                   TextSpan(
                                     text: 'Privacy Policy',
@@ -494,7 +534,10 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                           padding: const EdgeInsets.only(top: 4.0),
                           child: Text(
                             'Terms not accepted',
-                            style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(color: AppColors.error),
                           ).animate().fade(duration: 600.ms),
                         ),
                       Padding(

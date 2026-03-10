@@ -70,15 +70,18 @@ class InventoryItemWidget extends StatelessWidget {
                     sellerProduct?.title,
                     'N/A',
                   ),
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(fontWeight: FontWeight.w500, height: 1.5),
                 ),
                 Text(
                   NumberFormat('#,##0.##', 'en_US')
                       .format(sellerProduct!.price),
                   style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    fontWeight: FontWeight.bold,
-                    height: 1.5,
-                  ),
+                        fontWeight: FontWeight.bold,
+                        height: 1.5,
+                      ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 8.0),

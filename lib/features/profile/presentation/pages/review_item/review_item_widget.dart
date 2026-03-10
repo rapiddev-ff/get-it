@@ -67,7 +67,10 @@ class ReviewItemWidget extends StatelessWidget {
                           review.reviewer?.username,
                           'N/A',
                         ),
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(fontWeight: FontWeight.w500),
                       ),
                       Text(
                         dateTimeFormat(

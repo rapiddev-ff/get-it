@@ -141,12 +141,16 @@ class _HomeDashoardPromoteStep2WidgetState
                                   children: [
                                     Text(
                                       '1998 Pokemon Base Set Charizard',
-                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(
+                                              fontWeight: FontWeight.w500),
                                     ),
                                     Text(
                                       'PSA 9 Mint Condition',
                                       maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                                      overflow: TextOverflow.ellipsis,
                                       style: Theme.of(context)
                                           .textTheme
                                           .labelSmall!,
@@ -156,7 +160,11 @@ class _HomeDashoardPromoteStep2WidgetState
                                         padding: EdgeInsets.only(top: 4.0),
                                         child: Text(
                                           '\$2,450.00',
-                                          style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w500),
                                         ),
                                       ),
                                     ),
@@ -179,7 +187,10 @@ class _HomeDashoardPromoteStep2WidgetState
                         EdgeInsets.only(left: 16.0, top: 24.0, right: 16.0),
                     child: Text(
                       'Choose Promotion Type',
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(fontWeight: FontWeight.w500),
                     ),
                   ),
                   Padding(
@@ -224,7 +235,11 @@ class _HomeDashoardPromoteStep2WidgetState
                                         ),
                                         Text(
                                           'Boost',
-                                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w500),
                                         ),
                                         Container(
                                           decoration: BoxDecoration(
@@ -247,7 +262,10 @@ class _HomeDashoardPromoteStep2WidgetState
                                     ),
                                     Text(
                                       'Increase visibility across the entire platform. Your product will appear more frequently in swipe feeds and search results.',
-                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(height: 1.5),
                                     ),
                                     Row(
                                       children: [
@@ -317,7 +335,11 @@ class _HomeDashoardPromoteStep2WidgetState
                                       ),
                                       Text(
                                         'Sponsored Placement',
-                                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w500),
                                       ),
                                       Container(
                                         decoration: BoxDecoration(
@@ -340,7 +362,10 @@ class _HomeDashoardPromoteStep2WidgetState
                                   ),
                                   Text(
                                     'Target specific collectors interested in your product tags. Higher conversion rate for niche items.',
-                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(height: 1.5),
                                   ),
                                   Row(
                                     children: [
@@ -383,7 +408,10 @@ class _HomeDashoardPromoteStep2WidgetState
                             children: [
                               Text(
                                 'Select Duration',
-                                style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(fontWeight: FontWeight.w500),
                               ),
                               Padding(
                                 padding: EdgeInsets.only(top: 16.0),
@@ -404,7 +432,13 @@ class _HomeDashoardPromoteStep2WidgetState
                                             children: [
                                               Text(
                                                 '3',
-                                                style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headlineMedium!
+                                                    .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        height: 1.5),
                                               ),
                                               Text(
                                                 'Days',
@@ -416,10 +450,17 @@ class _HomeDashoardPromoteStep2WidgetState
                                                 ),
                                               ),
                                               Padding(
-                                                padding: EdgeInsets.only(top: 8.0),
+                                                padding:
+                                                    EdgeInsets.only(top: 8.0),
                                                 child: Text(
                                                   '\$9.99',
-                                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleMedium!
+                                                      .copyWith(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          height: 1.5),
                                                 ),
                                               ),
                                             ],
@@ -442,17 +483,36 @@ class _HomeDashoardPromoteStep2WidgetState
                                             children: [
                                               Text(
                                                 '7',
-                                                style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headlineMedium!
+                                                    .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        height: 1.5),
                                               ),
                                               Text(
                                                 'Days',
-                                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        height: 1.5),
                                               ),
                                               Padding(
-                                                padding: EdgeInsets.only(top: 8.0),
+                                                padding:
+                                                    EdgeInsets.only(top: 8.0),
                                                 child: Text(
                                                   '\$19.99',
-                                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleMedium!
+                                                      .copyWith(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          height: 1.5),
                                                 ),
                                               ),
                                             ],
@@ -471,20 +531,33 @@ class _HomeDashoardPromoteStep2WidgetState
                                                   BorderRadius.circular(8.0),
                                             ),
                                             child: Padding(
-                                              padding: EdgeInsets.only(top: 12.0, bottom: 16.0),
+                                              padding: EdgeInsets.only(
+                                                  top: 12.0, bottom: 16.0),
                                               child: Column(
                                                 children: [
                                                   Text(
                                                     '14',
-                                                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headlineMedium!
+                                                        .copyWith(
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            height: 1.5),
                                                   ),
                                                   Text(
                                                     'Days',
-                                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .copyWith(
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            height: 1.5),
                                                   ),
                                                   Padding(
-                                                    padding:
-                                                        EdgeInsets.only(top: 8.0),
+                                                    padding: EdgeInsets.only(
+                                                        top: 8.0),
                                                     child: Text(
                                                       '\$34.99',
                                                       style: GoogleFonts.inter(
@@ -524,7 +597,9 @@ class _HomeDashoardPromoteStep2WidgetState
                                                           4.0),
                                                 ),
                                                 child: Padding(
-                                                  padding: EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0),
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 6.0,
+                                                      vertical: 2.0),
                                                   child: Text(
                                                     'Best Value',
                                                     style: GoogleFonts.inter(
@@ -577,11 +652,19 @@ class _HomeDashoardPromoteStep2WidgetState
                                           children: [
                                             Text(
                                               'Product Update',
-                                              style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge!
+                                                  .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w500),
                                             ),
                                             Text(
                                               'Send updates about specific.\$0.25/recipient products',
-                                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(height: 1.5),
                                             ),
                                           ].divide(SizedBox(height: 8.0)),
                                         ),
@@ -620,11 +703,19 @@ class _HomeDashoardPromoteStep2WidgetState
                                             children: [
                                               Text(
                                                 'New Arrival Alert',
-                                                style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge!
+                                                    .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w500),
                                               ),
                                               Text(
                                                 'Notify about new inventory',
-                                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(height: 1.5),
                                               ),
                                             ].divide(SizedBox(height: 8.0)),
                                           ),
@@ -638,7 +729,10 @@ class _HomeDashoardPromoteStep2WidgetState
                                 padding: EdgeInsets.only(top: 28.0),
                                 child: Text(
                                   'Target Previous Buyers',
-                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .copyWith(fontWeight: FontWeight.w500),
                                 ),
                               ),
                               Padding(
@@ -674,13 +768,20 @@ class _HomeDashoardPromoteStep2WidgetState
                                             ),
                                             Text(
                                               '247 buyers found',
-                                              style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelMedium!
+                                                  .copyWith(height: 1.5),
                                             ),
                                           ].divide(SizedBox(width: 8.0)),
                                         ),
                                         Text(
                                           'Product Category',
-                                          style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                  fontSize: 15.0, height: 1.5),
                                         ),
                                         DropdownButtonFormField<String>(
                                           initialValue: dropDownValue,
@@ -737,7 +838,12 @@ class _HomeDashoardPromoteStep2WidgetState
                                           padding: EdgeInsets.only(top: 8.0),
                                           child: Text(
                                             'Character/Franchise',
-                                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .copyWith(
+                                                    fontSize: 15.0,
+                                                    height: 1.5),
                                           ),
                                         ),
                                         Container(
@@ -766,7 +872,12 @@ class _HomeDashoardPromoteStep2WidgetState
                                           padding: EdgeInsets.only(top: 8.0),
                                           child: Text(
                                             'Purchase Date Range',
-                                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .copyWith(
+                                                    fontSize: 15.0,
+                                                    height: 1.5),
                                           ),
                                         ),
                                         Row(
@@ -845,7 +956,10 @@ class _HomeDashoardPromoteStep2WidgetState
                         EdgeInsets.only(left: 16.0, top: 32.0, right: 16.0),
                     child: Text(
                       'Promotion Summary',
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium!
+                          .copyWith(fontWeight: FontWeight.w500),
                     ),
                   ),
                   Padding(
@@ -869,12 +983,21 @@ class _HomeDashoardPromoteStep2WidgetState
                                 Expanded(
                                   child: Text(
                                     'Promotion Type',
-                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(fontSize: 15.0, height: 1.5),
                                   ),
                                 ),
                                 Text(
                                   'Promotion Type',
-                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0, height: 1.5),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 15.0,
+                                          height: 1.5),
                                 ),
                               ].divide(SizedBox(width: 8.0)),
                             ),
@@ -883,12 +1006,21 @@ class _HomeDashoardPromoteStep2WidgetState
                                 Expanded(
                                   child: Text(
                                     'Duration',
-                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(fontSize: 15.0, height: 1.5),
                                   ),
                                 ),
                                 Text(
                                   '3 Days',
-                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0, height: 1.5),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 15.0,
+                                          height: 1.5),
                                 ),
                               ].divide(SizedBox(width: 8.0)),
                             ),
@@ -897,12 +1029,21 @@ class _HomeDashoardPromoteStep2WidgetState
                                 Expanded(
                                   child: Text(
                                     'Estimated Reach',
-                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(fontSize: 15.0, height: 1.5),
                                   ),
                                 ),
                                 Text(
                                   '2,500+ views',
-                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0, height: 1.5),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 15.0,
+                                          height: 1.5),
                                 ),
                               ].divide(SizedBox(width: 8.0)),
                             ),
@@ -916,12 +1057,22 @@ class _HomeDashoardPromoteStep2WidgetState
                                 Expanded(
                                   child: Text(
                                     'Total Cost',
-                                    style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            height: 1.5),
                                   ),
                                 ),
                                 Text(
                                   '\$9.99',
-                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.5),
                                 ),
                               ].divide(SizedBox(width: 8.0)),
                             ),
@@ -946,7 +1097,10 @@ class _HomeDashoardPromoteStep2WidgetState
                       padding: EdgeInsets.only(top: 12.0),
                       child: Text(
                         'In-App Purchase',
-                        style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelMedium!
+                            .copyWith(height: 1.5),
                       ),
                     ),
                   ),

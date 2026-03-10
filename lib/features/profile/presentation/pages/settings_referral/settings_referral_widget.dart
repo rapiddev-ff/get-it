@@ -43,8 +43,8 @@ class _SettingsReferralWidgetState
           title: Text(
             'Referral Code',
             style: Theme.of(context).textTheme.titleMedium!.copyWith(
-              color: Colors.white,
-            ),
+                  color: Colors.white,
+                ),
           ),
         ),
         body: SafeArea(
@@ -96,7 +96,12 @@ class _SettingsReferralWidgetState
                                         children: [
                                           Text(
                                             'Get Paid To Share CardSmart',
-                                            style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge!
+                                                .copyWith(
+                                                    fontWeight:
+                                                        FontWeight.w500),
                                           ),
                                           Text(
                                             'Share CardSmart with other vendors and earn commission every time they make a sale. ',

@@ -145,9 +145,12 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                                   widget.conversation?.otherUserUsername,
                                   'N/A',
                                 ),
-                                style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                  height: 1.5,
-                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                      height: 1.5,
+                                    ),
                               ),
                             ),
                           ),
@@ -231,7 +234,11 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                                 widget.conversation?.productTitle,
                                 'N/A ',
                               ),
-                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                      fontWeight: FontWeight.w500, height: 1.5),
                             ),
                             Text(
                               valueOrDefault<String>(
@@ -239,13 +246,20 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                                 'n/a',
                               ),
                               maxLines: 1,
-                              style: Theme.of(context).textTheme.labelSmall!.copyWith(height: 1.5),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelSmall!
+                                  .copyWith(height: 1.5),
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
                               NumberFormat('#,##0.##', 'en_US')
                                   .format(widget.conversation!.productPrice),
-                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                      fontWeight: FontWeight.w500, height: 1.5),
                             ),
                           ].divide(SizedBox(height: 2.0)),
                         ),
@@ -262,7 +276,10 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                         child: Container(
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              colors: [AppColors.brandPurple, AppColors.brandBlue],
+                              colors: [
+                                AppColors.brandPurple,
+                                AppColors.brandBlue
+                              ],
                               stops: [0.0, 1.0],
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
@@ -274,7 +291,10 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                                 horizontal: 12.0, vertical: 10.0),
                             child: Text(
                               'View Item',
-                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(height: 1.5),
                             ),
                           ),
                         ),

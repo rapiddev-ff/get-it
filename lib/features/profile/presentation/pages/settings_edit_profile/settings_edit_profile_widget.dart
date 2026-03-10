@@ -142,7 +142,10 @@ class _SettingsEditProfileWidgetState
           ),
           title: Text(
             'Edit Profile',
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, color: Colors.white),
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(fontWeight: FontWeight.w500, color: Colors.white),
           ),
         ),
         body: SafeArea(
@@ -154,13 +157,19 @@ class _SettingsEditProfileWidgetState
                 children: [
                   Text(
                     'Public Profile',
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(fontWeight: FontWeight.w500, height: 1.5),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 4.0, bottom: 20.0),
                     child: Text(
                       'This info is visible to other users.',
-                      style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelMedium!
+                          .copyWith(height: 1.5),
                     ),
                   ),
                   Align(
@@ -234,7 +243,10 @@ class _SettingsEditProfileWidgetState
                     padding: EdgeInsets.only(top: 20.0),
                     child: Text(
                       'Username',
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(fontWeight: FontWeight.w500, height: 1.4),
                     ),
                   ),
                   Padding(
@@ -286,7 +298,10 @@ class _SettingsEditProfileWidgetState
                       padding: EdgeInsets.only(top: 4.0),
                       child: Text(
                         'This username cannot be used.',
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .copyWith(color: AppColors.error),
                       ).animate().fade(duration: 600.ms),
                     ),
                   if ((FormValidators.usernameValidationResult(
@@ -298,7 +313,10 @@ class _SettingsEditProfileWidgetState
                       child: Text(
                         FormValidators.usernameValidationResult(
                             _model.usernameTextController!.text),
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .copyWith(color: AppColors.error),
                       ).animate().fade(duration: 600.ms),
                     ),
                   if ((_model.usernameTextController!.text != '') &&
@@ -315,11 +333,12 @@ class _SettingsEditProfileWidgetState
                             _model.usernameAvailable
                                 ? 'Available '
                                 : 'Unavailable',
-                            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              color: _model.usernameAvailable
-                                  ? AppColors.statusSuccess
-                                  : AppColors.destructive500,
-                            ),
+                            style:
+                                Theme.of(context).textTheme.bodySmall!.copyWith(
+                                      color: _model.usernameAvailable
+                                          ? AppColors.statusSuccess
+                                          : AppColors.destructive500,
+                                    ),
                           ).animate().fade(duration: 600.ms),
                           if (_model.usernameAvailable)
                             Icon(
@@ -340,7 +359,10 @@ class _SettingsEditProfileWidgetState
                     padding: EdgeInsets.only(top: 16.0),
                     child: Text(
                       'Bio',
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(fontWeight: FontWeight.w500, height: 1.4),
                     ),
                   ),
                   Padding(
@@ -386,18 +408,27 @@ class _SettingsEditProfileWidgetState
                   ),
                   Text(
                     'Private Account Details',
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(fontWeight: FontWeight.w500, height: 1.5),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 4.0, bottom: 20.0),
                     child: Text(
                       'For verification and security',
-                      style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelMedium!
+                          .copyWith(height: 1.5),
                     ),
                   ),
                   Text(
                     'First Name',
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(fontWeight: FontWeight.w500, height: 1.4),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 8.0),
@@ -436,14 +467,20 @@ class _SettingsEditProfileWidgetState
                       padding: EdgeInsets.only(top: 4.0),
                       child: Text(
                         'First name cannot be used.',
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .copyWith(color: AppColors.error),
                       ).animate().fade(duration: 600.ms),
                     ),
                   Padding(
                     padding: EdgeInsets.only(top: 20.0),
                     child: Text(
                       'Last Name',
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(fontWeight: FontWeight.w500, height: 1.4),
                     ),
                   ),
                   Padding(
@@ -483,7 +520,10 @@ class _SettingsEditProfileWidgetState
                       padding: EdgeInsets.only(top: 4.0),
                       child: Text(
                         'Last name cannot be used.',
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .copyWith(color: AppColors.error),
                       ).animate().fade(duration: 600.ms),
                     ),
                   Divider(
@@ -573,10 +613,13 @@ class _SettingsEditProfileWidgetState
                           ),
                           child: Text(
                             'Save Changes',
-                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                ),
                           ),
                         ),
                       );
@@ -598,7 +641,10 @@ class _SettingsEditProfileWidgetState
                       ),
                       child: Text(
                         'Cancel',
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 17.0,
+                            color: Colors.white),
                       ),
                     ),
                   ),

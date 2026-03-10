@@ -50,7 +50,10 @@ class FollowerItemWidget extends StatelessWidget {
               Expanded(
                 child: Text(
                   '@$username',
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(fontWeight: FontWeight.w500),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),

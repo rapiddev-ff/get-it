@@ -266,14 +266,16 @@ class _HomeDashoardInventoryAddTagsWidgetState
                                                 slug: tagsListItem.slug,
                                               ))
                                                   ? AppColors.brandPurple
-                                                  : AppColors.backgroundSecondary,
+                                                  : AppColors
+                                                      .backgroundSecondary,
                                               tags.contains(Tag(
                                                 id: tagsListItem.id,
                                                 name: tagsListItem.name,
                                                 slug: tagsListItem.slug,
                                               ))
                                                   ? AppColors.brandBlue
-                                                  : AppColors.backgroundSecondary,
+                                                  : AppColors
+                                                      .backgroundSecondary,
                                             ],
                                             stops: [0.0, 1.0],
                                             begin: Alignment.topCenter,
@@ -293,7 +295,10 @@ class _HomeDashoardInventoryAddTagsWidgetState
                                             children: [
                                               Text(
                                                 tagsListItem.name,
-                                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(height: 1.5),
                                               ),
                                               if (tags.contains(Tag(
                                                 id: tagsListItem.id,
@@ -338,7 +343,13 @@ class _HomeDashoardInventoryAddTagsWidgetState
                             ),
                             child: Text(
                               'Cancel',
-                              style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 17.0,
+                                      color: Colors.white),
                             ),
                           ),
                         ),

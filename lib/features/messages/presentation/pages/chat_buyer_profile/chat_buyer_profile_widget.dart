@@ -131,7 +131,10 @@ class _ChatBuyerProfileWidgetState
                           children: [
                             Text(
                               '@${userData.username}',
-                              style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(fontWeight: FontWeight.w500),
                             ),
                             Text(
                               'Member since March 2025',
@@ -256,7 +259,8 @@ class _ChatBuyerProfileWidgetState
                                           : null,
                                       '0',
                                     )} reviews)',
-                                  style: Theme.of(context).textTheme.labelMedium!,
+                                  style:
+                                      Theme.of(context).textTheme.labelMedium!,
                                 ),
                               ].divide(SizedBox(width: 8.0)),
                             ),
@@ -364,7 +368,11 @@ class _ChatBuyerProfileWidgetState
                                     Expanded(
                                       child: Text(
                                         'Seller Reviews',
-                                        style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w500),
                                       ),
                                     ),
                                     Padding(
@@ -399,7 +407,9 @@ class _ChatBuyerProfileWidgetState
                                   padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Reviews from sellers about your purchases',
-                                    style: Theme.of(context).textTheme.labelMedium!,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!,
                                   ),
                                 ),
                                 if (_jsonField(

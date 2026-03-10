@@ -148,7 +148,10 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                             Expanded(
                               child: Text(
                                 'View Profile',
-                                style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(fontWeight: FontWeight.w500),
                               ),
                             ),
                             Icon(
@@ -275,7 +278,10 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                 children: [
                                   Text(
                                     'Enable Swipe Payment',
-                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(fontWeight: FontWeight.w500),
                                   ),
                                   Row(
                                     children: [
@@ -293,7 +299,9 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                                 false))
                                               Text(
                                                 'Off',
-                                                style: Theme.of(context).textTheme.labelMedium!,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .labelMedium!,
                                               ),
                                             if ((authState.userSettings
                                                     ?.swipePaymentEnabled ??
@@ -320,8 +328,11 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                                     ),
                                                   ),
                                                   child: Padding(
-                                                    padding:
-                                                        EdgeInsets.only(left: 12.0, top: 8.0, right: 20.0, bottom: 8.0),
+                                                    padding: EdgeInsets.only(
+                                                        left: 12.0,
+                                                        top: 8.0,
+                                                        right: 20.0,
+                                                        bottom: 8.0),
                                                     child: Text(
                                                       '\$ ${valueOrDefault<String>(
                                                         NumberFormat('#,##0.##',
@@ -446,7 +457,10 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                         ),
                         Text(
                           'Business',
-                          style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(fontWeight: FontWeight.w500),
                         ),
                       ].divide(SizedBox(width: 12.0)),
                     ),
@@ -596,7 +610,11 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                       !(authState.stripe?.hasAccount ?? false)
                                           ? 'Connect Stripe'
                                           : 'Seller Dashboard',
-                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(
+                                              fontWeight: FontWeight.w500),
                                     ),
                                     Text(
                                       () {
@@ -709,7 +727,10 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                 children: [
                                   Text(
                                     'Connect Shopify',
-                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(fontWeight: FontWeight.w500),
                                   ),
                                   Text(
                                     'Not Connected',
@@ -927,7 +948,13 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                         ),
                         label: Text(
                           'Logout',
-                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 17.0,
+                                  color: Colors.white),
                         ),
                         style: TextButton.styleFrom(
                           padding: EdgeInsets.symmetric(horizontal: 16.0),

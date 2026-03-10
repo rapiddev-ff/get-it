@@ -308,7 +308,10 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 _error ?? '',
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall!
+                    .copyWith(color: AppColors.error),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -334,8 +337,7 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
               widget.searchText?.isNotEmpty == true
                   ? 'No products found for "${widget.searchText}"'
                   : 'No products found',
-              style:
-                  Theme.of(context).textTheme.bodyLarge!,
+              style: Theme.of(context).textTheme.bodyLarge!,
               textAlign: TextAlign.center,
             ),
           ],

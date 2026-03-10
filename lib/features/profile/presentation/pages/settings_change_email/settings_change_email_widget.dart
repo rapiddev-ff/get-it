@@ -29,7 +29,8 @@ class SettingsChangeEmailWidget extends ConsumerStatefulWidget {
       _SettingsChangeEmailWidgetState();
 }
 
-class _SettingsChangeEmailWidgetState extends ConsumerState<SettingsChangeEmailWidget>
+class _SettingsChangeEmailWidgetState
+    extends ConsumerState<SettingsChangeEmailWidget>
     with KeyboardVisibilityMixin {
   late SettingsChangeEmailModel _model;
 
@@ -71,7 +72,8 @@ class _SettingsChangeEmailWidgetState extends ConsumerState<SettingsChangeEmailW
           ),
           title: Text(
             'Edit Email',
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, color: Colors.white, height: 1.5),
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                fontWeight: FontWeight.w500, color: Colors.white, height: 1.5),
           ),
         ),
         body: SafeArea(
@@ -94,7 +96,10 @@ class _SettingsChangeEmailWidgetState extends ConsumerState<SettingsChangeEmailW
                                 padding: EdgeInsets.only(bottom: 4.0),
                                 child: Text(
                                   'Current Password',
-                                  style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.4),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .copyWith(height: 1.4),
                                 ),
                               ),
                               Container(
@@ -140,7 +145,10 @@ class _SettingsChangeEmailWidgetState extends ConsumerState<SettingsChangeEmailW
                                       EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'Password is required.',
-                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               if (_model.errorPassword)
@@ -149,7 +157,10 @@ class _SettingsChangeEmailWidgetState extends ConsumerState<SettingsChangeEmailW
                                       EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'Incorrect password. Try again.',
-                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                             ],
@@ -164,7 +175,10 @@ class _SettingsChangeEmailWidgetState extends ConsumerState<SettingsChangeEmailW
                                 padding: EdgeInsets.only(bottom: 4.0),
                                 child: Text(
                                   'New Email',
-                                  style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.4),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .copyWith(height: 1.4),
                                 ),
                               ),
                               Container(
@@ -194,7 +208,10 @@ class _SettingsChangeEmailWidgetState extends ConsumerState<SettingsChangeEmailW
                                       EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'Please enter your email.',
-                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               if (_model.errorEmailFormat)
@@ -203,7 +220,10 @@ class _SettingsChangeEmailWidgetState extends ConsumerState<SettingsChangeEmailW
                                       EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'Check your email format.',
-                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               if (_model.emailAlreadyInUse)
@@ -212,7 +232,10 @@ class _SettingsChangeEmailWidgetState extends ConsumerState<SettingsChangeEmailW
                                       EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'Email already in use.',
-                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                             ],

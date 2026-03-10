@@ -443,7 +443,10 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
           children: [
             Text(
               'Welcome back, ${authData.firstName}',
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineSmall!
+                  .copyWith(fontWeight: FontWeight.bold),
             ),
             Text(
               'Here\'s your business overview',
@@ -472,7 +475,10 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                           _jsonStr(getSellerDashboard, 'revenue'),
                           '-',
                         ),
-                        style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall!
+                            .copyWith(fontWeight: FontWeight.bold),
                       ),
                       if (_jsonStr(getSellerDashboard, 'revenue_change_pct') !=
                           null)
@@ -578,7 +584,10 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                             ),
                             Text(
                               'Shopify Sync',
-                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(fontWeight: FontWeight.w500),
                             ),
                           ].divide(SizedBox(height: 8.0)),
                         ),
@@ -704,7 +713,9 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                     child: Center(
                       child: Text(
                         'View All Orders',
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, color: AppColors.secondary),
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.secondary),
                       ),
                     ),
                   ),
@@ -737,7 +748,10 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                 ),
                 Text(
                   'Connect Stripe to get paid and enable payouts',
-                  style: Theme.of(context).textTheme.labelLarge!.copyWith(height: 1.5),
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelLarge!
+                      .copyWith(height: 1.5),
                 ),
                 if (authData.stripe?.detailsSubmitted ?? false) ...[
                   Padding(
@@ -755,7 +769,10 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                         children: [
                           Text(
                             'Stripe Status',
-                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(fontWeight: FontWeight.w500),
                           ),
                           Container(
                             padding: const EdgeInsets.symmetric(
@@ -829,7 +846,10 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                               )
                             : Text(
                                 'Connect Stripe',
-                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(color: Colors.white),
                               ),
                       ),
                     ),
@@ -859,7 +879,10 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                       children: [
                         Text(
                           'Secure payments and payouts. Get It never stores your bank details.',
-                          style: Theme.of(context).textTheme.labelLarge!.copyWith(height: 1.5),
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelLarge!
+                              .copyWith(height: 1.5),
                         ),
                       ],
                     ),
@@ -901,7 +924,10 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                   _jsonStr(getSellerDashboard, key),
                   '-',
                 ),
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall!
+                    .copyWith(fontWeight: FontWeight.bold),
               ),
               Text(
                 label,
@@ -941,7 +967,10 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                 ),
                 Text(
                   label,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(fontWeight: FontWeight.w500),
                 ),
               ].divide(SizedBox(height: 8.0)),
             ),
@@ -982,7 +1011,10 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                   padding: EdgeInsets.only(top: 8.0),
                   child: Text(
                     label,
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(fontWeight: FontWeight.w500),
                   ),
                 ),
                 if (subtitle != null)

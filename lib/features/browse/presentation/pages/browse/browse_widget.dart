@@ -117,7 +117,10 @@ class _BrowseWidgetState extends ConsumerState<BrowseWidget> {
                         autofocus: false,
                         decoration: InputDecoration(
                           hintText: 'Search products, characters, years...',
-                          hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 15.0),
+                          hintStyle: Theme.of(context)
+                              .textTheme
+                              .labelMedium!
+                              .copyWith(fontSize: 15.0),
                           enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
                               color: AppColors.neutral700,

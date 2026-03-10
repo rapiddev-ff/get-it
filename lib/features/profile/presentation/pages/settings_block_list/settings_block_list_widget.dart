@@ -172,7 +172,8 @@ class _SettingsBlockListWidgetState
           ),
           title: Text(
             'Block List',
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, color: Colors.white, height: 1.5),
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                fontWeight: FontWeight.w500, color: Colors.white, height: 1.5),
           ),
         ),
         body: SafeArea(
@@ -222,11 +223,17 @@ class _SettingsBlockListWidgetState
           children: [
             Text(
               'Blocked Users',
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge!
+                  .copyWith(fontWeight: FontWeight.w500, height: 1.5),
             ),
             Text(
               'Manage who can contact and buy from you',
-              style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
+              style: Theme.of(context)
+                  .textTheme
+                  .labelMedium!
+                  .copyWith(height: 1.5),
             ),
             Padding(
               padding: EdgeInsets.only(top: 24.0),
@@ -245,7 +252,10 @@ class _SettingsBlockListWidgetState
                   decoration: InputDecoration(
                     isDense: false,
                     hintText: 'Search blocked users...',
-                    hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 15.0),
+                    hintStyle: Theme.of(context)
+                        .textTheme
+                        .labelMedium!
+                        .copyWith(fontSize: 15.0),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: AppColors.neutral700,
@@ -354,13 +364,19 @@ class _SettingsBlockListWidgetState
                   children: [
                     Text(
                       'About Blocking',
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(fontWeight: FontWeight.w500, height: 1.5),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 8.0),
                       child: Text(
                         'Blocked users cannot send you messages, view your full profile, or purchase items from you. They won\'t be notified that they\'ve been blocked.',
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(height: 1.5),
                       ),
                     ),
                   ],

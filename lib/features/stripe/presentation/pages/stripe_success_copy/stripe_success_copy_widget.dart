@@ -62,7 +62,10 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
                   child: Text(
                     'Your payment has been processed successfully. Thank you for your purchase!',
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.labelLarge!.copyWith(height: 1.5),
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelLarge!
+                        .copyWith(height: 1.5),
                   ),
                 ),
                 Padding(
@@ -86,13 +89,16 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
                             children: [
                               Text(
                                 'Transaction ID:',
-                                style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14.0),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(fontSize: 14.0),
                               ),
                               Flexible(
                                 child: Text(
                                   'pi_3N8K2xLkdIwHu7ix0B4hoYpi',
                                   maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                                  overflow: TextOverflow.ellipsis,
                                   style: GoogleFonts.inter(
                                     fontWeight: FontWeight.w500,
                                     color: AppColors.primary,
@@ -106,7 +112,10 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
                             children: [
                               Text(
                                 'Amount:',
-                                style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14.0),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(fontSize: 14.0),
                               ),
                               Text(
                                 'AED 100',
@@ -122,11 +131,17 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
                             children: [
                               Text(
                                 'Payment Method:',
-                                style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14.0),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(fontSize: 14.0),
                               ),
                               Text(
                                 'Stripe',
-                                style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14.0),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(fontSize: 14.0),
                               ),
                             ],
                           ),
@@ -135,7 +150,10 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
                             children: [
                               Text(
                                 'Date:',
-                                style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14.0),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(fontSize: 14.0),
                               ),
                               Text(
                                 DateFormat.yMMMd().format(DateTime.now()),

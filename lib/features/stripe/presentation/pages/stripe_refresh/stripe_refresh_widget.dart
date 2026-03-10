@@ -50,7 +50,10 @@ class _StripeRefreshWidgetState extends State<StripeRefreshWidget> {
                   child: Text(
                     'Stripe Connection Failed',
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall!
+                        .copyWith(fontWeight: FontWeight.bold),
                   ),
                 ),
                 Padding(
@@ -58,7 +61,10 @@ class _StripeRefreshWidgetState extends State<StripeRefreshWidget> {
                   child: Text(
                     'We\'re sorry, but we couldn\'t connect your Stripe account at this time.',
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.labelLarge!.copyWith(height: 1.5),
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelLarge!
+                        .copyWith(height: 1.5),
                   ),
                 ),
                 AppGradientButton(

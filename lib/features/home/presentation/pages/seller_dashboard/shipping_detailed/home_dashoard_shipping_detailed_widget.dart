@@ -237,8 +237,7 @@ class _HomeDashoardShippingDetailedWidgetState
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: Text('No',
-                style: Theme.of(context).textTheme.labelMedium!),
+            child: Text('No', style: Theme.of(context).textTheme.labelMedium!),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
@@ -319,8 +318,7 @@ class _HomeDashoardShippingDetailedWidgetState
             : _order == null
                 ? Center(
                     child: Text('Order not found',
-                        style:
-                            Theme.of(context).textTheme.labelMedium!))
+                        style: Theme.of(context).textTheme.labelMedium!))
                 : SafeArea(
                     child: SingleChildScrollView(
                       child: Column(
@@ -329,7 +327,8 @@ class _HomeDashoardShippingDetailedWidgetState
                         children: [
                           // Product card
                           Container(
-                            decoration: BoxDecoration(color: AppColors.backgroundPrimary),
+                            decoration: BoxDecoration(
+                                color: AppColors.backgroundPrimary),
                             child: Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 16.0, vertical: 24.0),
@@ -377,7 +376,12 @@ class _HomeDashoardShippingDetailedWidgetState
                                             ),
                                             Text(
                                               _getProductTitle(),
-                                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.w500),
                                             ),
                                             Text(
                                               'Qty: ${_getQuantity()}',
@@ -397,16 +401,22 @@ class _HomeDashoardShippingDetailedWidgetState
                                             Text(
                                               'Order #${_order!['order_number'] ?? ''}',
                                               maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                                              overflow: TextOverflow.ellipsis,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .labelSmall!,
                                             ),
                                             Padding(
-                                              padding: EdgeInsets.only(top: 4.0),
+                                              padding:
+                                                  EdgeInsets.only(top: 4.0),
                                               child: Text(
                                                 '\$${_formatPrice(_order!['total_amount'])}',
-                                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w500),
                                               ),
                                             ),
                                           ].divide(SizedBox(height: 4.0)),
@@ -429,7 +439,10 @@ class _HomeDashoardShippingDetailedWidgetState
                                 left: 16.0, top: 24.0, right: 16.0),
                             child: Text(
                               'Shipping Address',
-                              style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(fontWeight: FontWeight.w500),
                             ),
                           ),
                           Padding(
@@ -450,7 +463,11 @@ class _HomeDashoardShippingDetailedWidgetState
                                     if (address != null) ...[
                                       Text(
                                         address['full_name']?.toString() ?? '',
-                                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w500),
                                       ),
                                       Text(
                                         [
@@ -470,7 +487,7 @@ class _HomeDashoardShippingDetailedWidgetState
                                       Text(
                                         '${address['city'] ?? ''}, ${address['state'] ?? ''} ${address['zip_code'] ?? ''}',
                                         maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                                        overflow: TextOverflow.ellipsis,
                                         style: Theme.of(context)
                                             .textTheme
                                             .labelSmall!,
@@ -615,7 +632,12 @@ class _HomeDashoardShippingDetailedWidgetState
                                   ),
                                   child: Text(
                                     'Update Tracking',
-                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 15.0),
                                   ),
                                 ),
                               ),
@@ -651,7 +673,12 @@ class _HomeDashoardShippingDetailedWidgetState
                                     ),
                                     child: Text(
                                       'Mark as Delivered',
-                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 15.0),
                                     ),
                                   ),
                                 ),
@@ -700,7 +727,8 @@ class _HomeDashoardShippingDetailedWidgetState
                                   color:
                                       Color(0xFF78350F).withValues(alpha: 0.3),
                                   borderRadius: BorderRadius.circular(8.0),
-                                  border: Border.all(color: AppColors.statusWarning),
+                                  border: Border.all(
+                                      color: AppColors.statusWarning),
                                 ),
                                 child: Padding(
                                   padding: EdgeInsets.all(12.0),
@@ -737,7 +765,12 @@ class _HomeDashoardShippingDetailedWidgetState
                                       ),
                                       child: Text(
                                         'Cancel',
-                                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 15.0),
                                       ),
                                     ),
                                   ),
@@ -780,7 +813,13 @@ class _HomeDashoardShippingDetailedWidgetState
                                               )
                                             : Text(
                                                 'Mark as Shipped',
-                                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 15.0),
                                               ),
                                       ),
                                     ),
@@ -900,8 +939,7 @@ class _SellerCancelDialogState extends State<_SellerCancelDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text('Back',
-              style: Theme.of(context).textTheme.labelMedium!),
+          child: Text('Back', style: Theme.of(context).textTheme.labelMedium!),
         ),
         TextButton(
           onPressed: _selectedReason == null

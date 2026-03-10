@@ -124,7 +124,12 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                                 padding: EdgeInsets.only(bottom: 8.0),
                                 child: Text(
                                   'Email',
-                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.4),
                                 ),
                               ),
                               Container(
@@ -156,7 +161,10 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                                   padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Please enter your email.',
-                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               if (_model.errorEmailFormat)
@@ -164,7 +172,10 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                                   padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Check your email format.',
-                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                             ],
@@ -179,7 +190,12 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                                 padding: EdgeInsets.only(bottom: 8.0),
                                 child: Text(
                                   'Password',
-                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.4),
                                 ),
                               ),
                               Container(
@@ -224,7 +240,10 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                                   padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Password is required.',
-                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               if (_model.errorSignIn != null &&
@@ -233,7 +252,10 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                                   padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     _model.errorSignIn ?? 'n/A',
-                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               Padding(

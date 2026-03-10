@@ -69,7 +69,10 @@ class BrowseProductsItemWidget extends StatelessWidget {
                         'n/a',
                       ),
                       maxLines: 2,
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0, height: 1.5),
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15.0,
+                          height: 1.5),
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 8.0),
@@ -79,15 +82,22 @@ class BrowseProductsItemWidget extends StatelessWidget {
                       children: [
                         Text(
                           '- \u2022 ${browseDataType?.categoryName}',
-                          style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                            fontWeight: FontWeight.w500,
-                            height: 1.5,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.labelMedium!.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    height: 1.5,
+                                  ),
                         ),
                         const SizedBox(height: 8.0),
                         Text(
                           _formatPrice(browseDataType?.price),
-                          style: Theme.of(context).textTheme.titleSmall!.copyWith(fontWeight: FontWeight.bold, color: AppColors.secondary, height: 1.5),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall!
+                              .copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.secondary,
+                                  height: 1.5),
                         ),
                       ],
                     ),

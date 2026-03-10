@@ -293,7 +293,8 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
             child: Text(
               label,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0, height: 1.5),
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.w500, fontSize: 15.0, height: 1.5),
             ),
           ),
         ),
@@ -357,7 +358,7 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
     return Text(
       '${widget.totalItems} items${createdStr.isNotEmpty ? ' \u2022 Created $createdStr' : ''}',
       maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+      overflow: TextOverflow.ellipsis,
       style: GoogleFonts.inter(
         fontSize: 12.0,
         color: AppColors.textSecondary,

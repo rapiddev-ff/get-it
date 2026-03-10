@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
-
 class SettingsDeactivateAccountWidget extends StatefulWidget {
   const SettingsDeactivateAccountWidget({super.key});
 
@@ -66,7 +65,8 @@ class _SettingsDeactivateAccountWidgetState
           ),
           title: Text(
             'Deactivate Account',
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, color: Colors.white, height: 1.5),
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                fontWeight: FontWeight.w500, color: Colors.white, height: 1.5),
           ),
         ),
         body: SafeArea(
@@ -94,7 +94,10 @@ class _SettingsDeactivateAccountWidgetState
                   child: Text(
                     'Are you sure you want to deactivate your account?',
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall!
+                        .copyWith(fontWeight: FontWeight.w500, height: 1.5),
                   ),
                 ),
                 Padding(
@@ -102,7 +105,10 @@ class _SettingsDeactivateAccountWidgetState
                   child: Text(
                     'If you choose to deactivate your account, you will need to reactivate your account by signing in the future. ',
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(height: 1.5),
                   ),
                 ),
                 Spacer(),
@@ -129,11 +135,12 @@ class _SettingsDeactivateAccountWidgetState
                               ),
                         label: Text(
                           'Deactivate Account',
-                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 17.0,
-                            color: AppColors.destructive500,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 17.0,
+                                    color: AppColors.destructive500,
+                                  ),
                         ),
                         style: OutlinedButton.styleFrom(
                           side: BorderSide(
@@ -157,7 +164,13 @@ class _SettingsDeactivateAccountWidgetState
                           },
                           child: Text(
                             'Back',
-                            style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 17.0,
+                                    color: Colors.white),
                           ),
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(

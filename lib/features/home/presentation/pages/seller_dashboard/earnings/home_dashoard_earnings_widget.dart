@@ -249,7 +249,10 @@ class _HomeDashoardEarningsWidgetState
                               children: [
                                 Text(
                                   'Earnings Breakdown',
-                                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(fontWeight: FontWeight.w500),
                                 ),
                                 SizedBox(height: 16.0),
                                 Row(
@@ -392,7 +395,10 @@ class _HomeDashoardEarningsWidgetState
             SizedBox(height: 4.0),
             Text(
               amount,
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -406,7 +412,10 @@ class _HomeDashoardEarningsWidgetState
       children: [
         Text(
           value,
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge!
+              .copyWith(fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 4.0),
         Text(
@@ -501,7 +510,10 @@ class _HomeDashoardEarningsWidgetState
                   Text(
                     _getProductTitle(order),
                     maxLines: 1,
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(fontWeight: FontWeight.w500),
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
@@ -518,7 +530,7 @@ class _HomeDashoardEarningsWidgetState
                   Text(
                     'Order #${order['order_number'] ?? ''}',
                     maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                    overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.labelSmall!,
                   ),
                 ].divide(SizedBox(height: 4.0)),

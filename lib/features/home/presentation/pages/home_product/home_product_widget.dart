@@ -314,7 +314,8 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                           return Align(
                                             alignment: Alignment.topCenter,
                                             child: Padding(
-                                              padding: EdgeInsets.only(top: 32.0),
+                                              padding:
+                                                  EdgeInsets.only(top: 32.0),
                                               child: ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(8.0),
@@ -339,7 +340,8 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                                       (context, url, error) =>
                                                           Icon(
                                                     Icons.broken_image,
-                                                    color: AppColors.textSecondary,
+                                                    color:
+                                                        AppColors.textSecondary,
                                                     size: 48.0,
                                                   ),
                                                 ),
@@ -515,10 +517,16 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                                   product.seller?.username))
                                                 Text(
                                                   product.seller!.username,
-                                                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge!
+                                                      .copyWith(
+                                                          fontWeight:
+                                                              FontWeight.w500),
                                                 ),
                                               Padding(
-                                                padding: EdgeInsets.only(top: 8.0),
+                                                padding:
+                                                    EdgeInsets.only(top: 8.0),
                                                 child: Row(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
@@ -531,8 +539,8 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                                     Text(
                                                       '${product.seller?.ratingAsSeller ?? 0} (${product.seller?.totalReviewsAsSeller ?? 0} reviews)',
                                                       style: GoogleFonts.inter(
-                                                        color:
-                                                            AppColors.textSecondary,
+                                                        color: AppColors
+                                                            .textSecondary,
                                                         fontSize: 12.0,
                                                       ),
                                                     ),
@@ -621,7 +629,11 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                         ),
                                         Text(
                                           'Shipping Information',
-                                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w500),
                                         ),
                                       ].divide(SizedBox(width: 12.0)),
                                     ),
@@ -630,12 +642,18 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                       product.freeShipping
                                           ? 'Free shipping'
                                           : 'Shipping cost: ${_formatCurrency(_getShippingCost(product), prefix: '\$')}',
-                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(
+                                              fontWeight: FontWeight.w500),
                                     ),
                                     SizedBox(height: 4.0),
                                     Text(
                                       'Carefully packaged with tracking included.',
-                                      style: Theme.of(context).textTheme.labelMedium!,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!,
                                     ),
                                   ],
                                 ),
@@ -688,7 +706,13 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                       ),
                                       child: Text(
                                         'Ask Question',
-                                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 17.0,
+                                                color: Colors.white),
                                       ),
                                     ),
                                   ),
@@ -785,7 +809,13 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                           SizedBox(width: 8.0),
                                           Text(
                                             'Buy Now',
-                                            style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge!
+                                                .copyWith(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 17.0,
+                                                    color: Colors.white),
                                           ),
                                         ],
                                       ),
@@ -815,7 +845,10 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
     if (!hasFlashSale && !hasDiscount) {
       return Text(
         _formatCurrency(product.price, prefix: '\$'),
-        style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
+        style: Theme.of(context)
+            .textTheme
+            .headlineSmall!
+            .copyWith(fontWeight: FontWeight.bold),
       );
     }
 
@@ -843,7 +876,10 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
       children: [
         Text(
           _formatCurrency(currentPrice, prefix: '\$'),
-          style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
+          style: Theme.of(context)
+              .textTheme
+              .headlineSmall!
+              .copyWith(fontWeight: FontWeight.bold),
         ),
         if (originalPrice != null) ...[
           SizedBox(width: 8.0),
@@ -994,7 +1030,10 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
               children: [
                 Text(
                   'Tags',
-                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineSmall!
+                      .copyWith(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 24.0),
                 Flexible(

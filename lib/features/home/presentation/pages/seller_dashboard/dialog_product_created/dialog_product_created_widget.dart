@@ -51,7 +51,10 @@ class DialogProductCreatedWidget extends StatelessWidget {
                 child: Text(
                   'Product published',
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineSmall!
+                      .copyWith(fontWeight: FontWeight.w500, height: 1.5),
                 ),
               ),
               Padding(
@@ -59,7 +62,10 @@ class DialogProductCreatedWidget extends StatelessWidget {
                 child: Text(
                   'Your product is live.',
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(height: 1.5),
                 ),
               ),
               Padding(
@@ -98,7 +104,10 @@ class DialogProductCreatedWidget extends StatelessWidget {
                   ),
                   child: Text(
                     'View Product',
-                    style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(color: Colors.white),
                   ),
                 ),
               ),
@@ -121,7 +130,10 @@ class DialogProductCreatedWidget extends StatelessWidget {
                   ),
                   child: Text(
                     'Go to Inventory',
-                    style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(color: Colors.white),
                   ),
                 ),
               ),

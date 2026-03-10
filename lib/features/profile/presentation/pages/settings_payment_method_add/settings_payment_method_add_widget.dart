@@ -136,7 +136,10 @@ class _SettingsPaymentMethodAddWidgetState
           ),
           title: Text(
             'Payment Method',
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, color: Colors.white),
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(fontWeight: FontWeight.w500, color: Colors.white),
           ),
         ),
         body: SafeArea(
@@ -148,7 +151,10 @@ class _SettingsPaymentMethodAddWidgetState
                 children: [
                   Text(
                     'Card Information',
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(fontWeight: FontWeight.w500),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 16.0),
@@ -273,7 +279,10 @@ class _SettingsPaymentMethodAddWidgetState
                   ),
                   Text(
                     'Billing Address',
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(fontWeight: FontWeight.w500),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 20.0),
@@ -590,7 +599,8 @@ class _SettingsPaymentMethodAddWidgetState
                                 ).animate().fade(duration: 600.ms),
                                 Text(
                                   'This card will  be used for future purchases',
-                                  style: Theme.of(context).textTheme.labelMedium!,
+                                  style:
+                                      Theme.of(context).textTheme.labelMedium!,
                                 ).animate().fade(duration: 600.ms),
                               ],
                             ),
@@ -626,13 +636,17 @@ class _SettingsPaymentMethodAddWidgetState
                               children: [
                                 Text(
                                   'Secure Payments',
-                                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(fontWeight: FontWeight.w500),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(top: 8.0),
                                   child: Text(
                                     'Your payment information is encrypted and securely processed by Stripe. We never store your card details on our servers.',
-                                    style: Theme.of(context).textTheme.bodyMedium!,
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium!,
                                   ),
                                 ),
                               ],
@@ -661,7 +675,13 @@ class _SettingsPaymentMethodAddWidgetState
                             ),
                             child: Text(
                               'Cancel',
-                              style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 17.0,
+                                      color: Colors.white),
                             ),
                           ),
                         ),
@@ -671,7 +691,10 @@ class _SettingsPaymentMethodAddWidgetState
                             height: 56.0,
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
-                                colors: [AppColors.brandPurple, AppColors.brandBlue],
+                                colors: [
+                                  AppColors.brandPurple,
+                                  AppColors.brandBlue
+                                ],
                                 stops: [0.0, 1.0],
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,

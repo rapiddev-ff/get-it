@@ -5,7 +5,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-
 class SettingsBlockedUserItemWidget extends StatelessWidget {
   const SettingsBlockedUserItemWidget({
     super.key,
@@ -70,7 +69,10 @@ class SettingsBlockedUserItemWidget extends StatelessWidget {
                 children: [
                   Text(
                     '@$username',
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(fontWeight: FontWeight.w500),
                   ),
                   if (blockedAt != null)
                     Padding(

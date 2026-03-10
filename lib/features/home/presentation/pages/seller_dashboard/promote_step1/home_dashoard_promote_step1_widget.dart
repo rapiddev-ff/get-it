@@ -110,7 +110,10 @@ class _HomeDashoardPromoteStep1WidgetState
                           decoration: InputDecoration(
                             isDense: false,
                             hintText: 'Search inventory...',
-                            hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 15.0),
+                            hintStyle: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .copyWith(fontSize: 15.0),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: AppColors.neutral700,
@@ -177,7 +180,12 @@ class _HomeDashoardPromoteStep1WidgetState
                                   horizontal: 16.0, vertical: 8.0),
                               child: Text(
                                 'Requested',
-                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 15.0),
                               ),
                             ),
                           ),

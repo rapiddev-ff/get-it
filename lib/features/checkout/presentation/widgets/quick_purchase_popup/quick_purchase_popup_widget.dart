@@ -131,8 +131,7 @@ class _QuickPurchasePopupWidgetState
           _showSuccessConfirmation(orderResult);
         }
       } else {
-        final errorMsg =
-            (payResult['error'] ?? 'Payment failed').toString();
+        final errorMsg = (payResult['error'] ?? 'Payment failed').toString();
         if (mounted) {
           actions.toastificationshow(
               context, 'Payment Error', errorMsg, 'error');
@@ -234,7 +233,10 @@ class _QuickPurchasePopupWidgetState
                         widget.feedProduct.title,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(fontWeight: FontWeight.w500, height: 1.5),
                       ),
                       SizedBox(height: 4.0),
                       Text(
@@ -272,7 +274,10 @@ class _QuickPurchasePopupWidgetState
                             padding: EdgeInsets.symmetric(horizontal: 12.0),
                             child: Text(
                               '$_quantity',
-                              style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(fontWeight: FontWeight.w500),
                             ),
                           ),
                           InkWell(

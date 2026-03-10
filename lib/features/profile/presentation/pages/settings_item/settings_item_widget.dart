@@ -41,7 +41,10 @@ class SettingsItemWidget extends StatelessWidget {
                   children: [
                     Text(
                       tittle,
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(fontWeight: FontWeight.w500),
                     ),
                     Text(
                       value,

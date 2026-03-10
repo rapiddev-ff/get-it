@@ -164,7 +164,10 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                 widget.sellerDataType?.username,
                                 'N/A',
                               ),
-                              style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge!
+                                  .copyWith(fontWeight: FontWeight.bold),
                             ),
                             Padding(
                               padding: EdgeInsets.only(top: 8.0),
@@ -195,7 +198,10 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                           ?.toString(),
                                       '0',
                                     ),
-                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(fontWeight: FontWeight.w500),
                                   ),
                                   Text(
                                     '${valueOrDefault<String>(
@@ -204,7 +210,9 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                           ?.toString(),
                                       '0',
                                     )} reviews',
-                                    style: Theme.of(context).textTheme.labelMedium!,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!,
                                   ),
                                 ].divide(SizedBox(width: 8.0)),
                               ),
@@ -261,7 +269,10 @@ class _HomeSellerProfileReviewsStep1WidgetState
                     widget.reviewRole == 'as_seller'
                         ? 'Your purchases from this seller'
                         : 'Products you sold to this buyer',
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(fontWeight: FontWeight.w500, height: 1.5),
                   ),
                 ),
                 Padding(
@@ -282,7 +293,8 @@ class _HomeSellerProfileReviewsStep1WidgetState
                               child: Center(
                                 child: Text(
                                   'No products available for review.',
-                                  style: Theme.of(context).textTheme.labelMedium!,
+                                  style:
+                                      Theme.of(context).textTheme.labelMedium!,
                                 ),
                               ),
                             )
@@ -385,7 +397,13 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                                 children: [
                                                   Text(
                                                     productTitle,
-                                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .copyWith(
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            height: 1.5),
                                                   ),
                                                   if (conditionName.isNotEmpty)
                                                     Text(
@@ -401,8 +419,8 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                                           TextOverflow.ellipsis,
                                                     ),
                                                   Padding(
-                                                    padding:
-                                                        EdgeInsets.only(top: 8.0),
+                                                    padding: EdgeInsets.only(
+                                                        top: 8.0),
                                                     child: Row(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
@@ -441,8 +459,8 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                                   ),
                                                   if (alreadyReviewed)
                                                     Padding(
-                                                      padding:
-                                                          EdgeInsets.only(top: 4.0),
+                                                      padding: EdgeInsets.only(
+                                                          top: 4.0),
                                                       child: Text(
                                                         'Already reviewed',
                                                         style:

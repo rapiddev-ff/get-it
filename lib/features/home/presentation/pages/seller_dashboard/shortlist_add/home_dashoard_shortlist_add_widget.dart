@@ -160,7 +160,10 @@ class _HomeDashoardShortlistAddWidgetState
                           decoration: InputDecoration(
                             isDense: false,
                             hintText: 'Search products, characters, years...',
-                            hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 15.0),
+                            hintStyle: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .copyWith(fontSize: 15.0),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: AppColors.neutral700,
@@ -227,7 +230,12 @@ class _HomeDashoardShortlistAddWidgetState
                                     horizontal: 16.0, vertical: 8.0),
                                 child: Text(
                                   '${selectedIds.length} selected',
-                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 15.0),
                                 ),
                               ),
                             ),
@@ -273,7 +281,12 @@ class _HomeDashoardShortlistAddWidgetState
                                   ),
                                   Text(
                                     'Select All',
-                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 15.0),
                                   ),
                                 ].divide(SizedBox(width: 8.0)),
                               ),
@@ -364,7 +377,8 @@ class _HomeDashoardShortlistAddWidgetState
                   color: isSelected ? AppColors.secondary : Colors.transparent,
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: isSelected ? AppColors.secondary : AppColors.neutral700,
+                    color:
+                        isSelected ? AppColors.secondary : AppColors.neutral700,
                   ),
                 ),
                 child: isSelected
@@ -379,7 +393,10 @@ class _HomeDashoardShortlistAddWidgetState
                   children: [
                     Text(
                       product.title,
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 4.0),
                     Row(

@@ -77,7 +77,10 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
                 ),
                 Text(
                   AppConstants.appName,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(height: 1.5),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(height: 1.5),
                 ),
                 IconButton(
                   icon: Icon(
@@ -162,11 +165,11 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
               child: Text(
                 label,
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: _state == label
-                      ? AppColors.textPrimary
-                      : AppColors.textSecondary,
-                  height: 1.5,
-                ),
+                      color: _state == label
+                          ? AppColors.textPrimary
+                          : AppColors.textSecondary,
+                      height: 1.5,
+                    ),
               ),
             ),
             Opacity(

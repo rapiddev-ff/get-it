@@ -89,10 +89,11 @@ class _SettingsReportWidgetState extends ConsumerState<SettingsReportWidget>
                       padding: EdgeInsets.only(left: 16.0),
                       child: Text(
                         'How Can We Help You?',
-                        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          fontSize: 28.0,
-                          color: Colors.white,
-                        ),
+                        style:
+                            Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                  fontSize: 28.0,
+                                  color: Colors.white,
+                                ),
                       ),
                     ),
                   ],
@@ -117,9 +118,10 @@ class _SettingsReportWidgetState extends ConsumerState<SettingsReportWidget>
                         padding: EdgeInsets.only(top: 8.0),
                         child: Text(
                           'Please tell us about the issue you are having and we will respond within 3-5 business days.',
-                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            height: 1.5,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                    height: 1.5,
+                                  ),
                         ),
                       ),
                       Padding(
@@ -162,7 +164,10 @@ class _SettingsReportWidgetState extends ConsumerState<SettingsReportWidget>
                           children: [
                             Text(
                               '${_model.textController?.text.length ?? 0}/1000',
-                              style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .copyWith(height: 1.5),
                             ),
                           ],
                         ),

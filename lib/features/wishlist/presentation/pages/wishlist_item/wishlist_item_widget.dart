@@ -95,7 +95,10 @@ class WishlistItemWidget extends StatelessWidget {
                 children: [
                   Text(
                     productDataType?.title ?? 'N/A',
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(fontWeight: FontWeight.w500, height: 1.5),
                   ),
                   const SizedBox(height: 4.0),
                   Row(
@@ -103,7 +106,11 @@ class WishlistItemWidget extends StatelessWidget {
                       Expanded(
                         child: Text(
                           '\$${NumberFormat('#,##0.##', 'en_US').format(productDataType?.price ?? 0)}',
-                          style: Theme.of(context).textTheme.titleSmall!.copyWith(fontWeight: FontWeight.bold, height: 1.5),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall!
+                              .copyWith(
+                                  fontWeight: FontWeight.bold, height: 1.5),
                         ),
                       ),
                       Container(
@@ -118,12 +125,13 @@ class WishlistItemWidget extends StatelessWidget {
                               horizontal: 8.0, vertical: 4.0),
                           child: Text(
                             _isSold ? 'Sold' : 'Buy Now',
-                            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                              fontWeight: FontWeight.w500,
-                              color: _isSold
-                                  ? AppColors.textSecondary
-                                  : AppColors.textPrimary,
-                            ),
+                            style:
+                                Theme.of(context).textTheme.bodySmall!.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      color: _isSold
+                                          ? AppColors.textSecondary
+                                          : AppColors.textPrimary,
+                                    ),
                           ),
                         ),
                       ),

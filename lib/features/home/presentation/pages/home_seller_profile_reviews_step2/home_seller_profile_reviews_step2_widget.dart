@@ -154,14 +154,22 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                     widget.product?.title,
                                     'n/a',
                                   ),
-                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.5),
                                 ),
                                 if (widget.product?.conditionName.isNotEmpty ==
                                     true)
                                   Text(
                                     widget.product!.conditionName,
                                     maxLines: 1,
-                                    style: Theme.of(context).textTheme.labelSmall!.copyWith(height: 1.5),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelSmall!
+                                        .copyWith(height: 1.5),
                                   ),
                                 Padding(
                                   padding: EdgeInsets.only(top: 8.0),
@@ -170,7 +178,12 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                       Expanded(
                                         child: Text(
                                           '\$${NumberFormat('#,##0.00', 'en_US').format(widget.product?.price ?? 0)}',
-                                          style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w500,
+                                                  height: 1.5),
                                         ),
                                       ),
                                       Text(
@@ -178,7 +191,10 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                             ? 'Purchased ${DateFormat('MMM dd, yyyy').format(widget.product!.createdAt!)}'
                                             : '',
                                         maxLines: 1,
-                                        style: Theme.of(context).textTheme.labelSmall!.copyWith(height: 1.5),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!
+                                            .copyWith(height: 1.5),
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ],
@@ -224,7 +240,10 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                 widget.sellerDataType?.username,
                                 'n/a',
                               ),
-                              style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge!
+                                  .copyWith(fontWeight: FontWeight.bold),
                             ),
                             Padding(
                               padding: EdgeInsets.only(top: 8.0),
@@ -257,11 +276,16 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                           ?.toString(),
                                       '0',
                                     ),
-                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(fontWeight: FontWeight.w500),
                                   ),
                                   Text(
                                     '${(widget.reviewRole == 'as_buyer' ? widget.sellerDataType?.totalReviewsAsBuyer : widget.sellerDataType?.totalReviewsAsSeller)?.toString() ?? '0'} reviews',
-                                    style: Theme.of(context).textTheme.labelMedium!,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!,
                                   ),
                                 ].divide(SizedBox(width: 8.0)),
                               ),
@@ -293,7 +317,10 @@ class _HomeSellerProfileReviewsStep2WidgetState
                             alignment: Alignment.topLeft,
                             child: Text(
                               'Rate Your Experience',
-                              style: Theme.of(context).textTheme.titleSmall!.copyWith(height: 1.5),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .copyWith(height: 1.5),
                             ),
                           ),
                           Padding(
@@ -332,7 +359,10 @@ class _HomeSellerProfileReviewsStep2WidgetState
                         children: [
                           Text(
                             'Write Your Review',
-                            style: Theme.of(context).textTheme.titleSmall!.copyWith(height: 1.5),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .copyWith(height: 1.5),
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: 16.0),
@@ -413,13 +443,19 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                   child: Text(
                                     'Minimum 20 characters',
                                     maxLines: 1,
-                                    style: Theme.of(context).textTheme.labelSmall!.copyWith(height: 1.5),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelSmall!
+                                        .copyWith(height: 1.5),
                                   ),
                                 ),
                                 Text(
                                   '${textController?.text.length ?? 0}/500',
                                   maxLines: 1,
-                                  style: Theme.of(context).textTheme.labelSmall!.copyWith(height: 1.5),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelSmall!
+                                      .copyWith(height: 1.5),
                                 ),
                               ],
                             ),
@@ -444,7 +480,10 @@ class _HomeSellerProfileReviewsStep2WidgetState
                         children: [
                           Text(
                             'Add Photos (Optional)',
-                            style: Theme.of(context).textTheme.titleSmall!.copyWith(height: 1.5),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .copyWith(height: 1.5),
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: 16.0),
@@ -492,7 +531,10 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                         child: Text(
                                           'Upload photos of the item you received 3 LIMIT\n',
                                           maxLines: 1,
-                                          style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelMedium!
+                                              .copyWith(height: 1.5),
                                         ),
                                       ),
                                       Padding(
@@ -500,11 +542,14 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                         child: Text(
                                           'Choose Photos',
                                           maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                            color: AppColors.primary,
-                                            height: 1.5,
-                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .copyWith(
+                                                color: AppColors.primary,
+                                                height: 1.5,
+                                              ),
                                         ),
                                       ),
                                     ],

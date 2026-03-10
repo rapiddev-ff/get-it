@@ -3,7 +3,6 @@ import '/core/widgets/dismiss_keyboard.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-
 class SettingsTermsWidget extends StatelessWidget {
   const SettingsTermsWidget({super.key});
 
@@ -52,11 +51,12 @@ class SettingsTermsWidget extends StatelessWidget {
                       padding: EdgeInsets.only(left: 16.0),
                       child: Text(
                         'Terms & Conditions',
-                        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          fontSize: 28.0,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.white,
-                        ),
+                        style:
+                            Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                  fontSize: 28.0,
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.white,
+                                ),
                       ),
                     ),
                   ],
@@ -74,7 +74,10 @@ class SettingsTermsWidget extends StatelessWidget {
               children: [
                 Text(
                   'Accepting The Terms',
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(fontWeight: FontWeight.w500),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 8.0),
@@ -87,7 +90,10 @@ class SettingsTermsWidget extends StatelessWidget {
                   padding: EdgeInsets.only(top: 24.0),
                   child: Text(
                     'Using CardSmart App',
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(fontWeight: FontWeight.w500),
                   ),
                 ),
                 Padding(

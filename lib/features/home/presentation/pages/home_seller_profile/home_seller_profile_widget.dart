@@ -397,7 +397,10 @@ class _HomeSellerProfileWidgetState
                                     getSellerData?.username,
                                     'N/A',
                                   ),
-                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .copyWith(fontWeight: FontWeight.w500),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(top: 8.0),
@@ -428,11 +431,17 @@ class _HomeSellerProfileWidgetState
                                               ?.toString(),
                                           '0',
                                         ),
-                                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w500),
                                       ),
                                       Text(
                                         '(${(roleState == 'As Buyer' ? getSellerData?.totalReviewsAsBuyer : getSellerData?.totalReviewsAsSeller)?.toString()}) reviews',
-                                        style: Theme.of(context).textTheme.labelMedium!,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!,
                                       ),
                                     ].divide(SizedBox(width: 8.0)),
                                   ),
@@ -453,11 +462,15 @@ class _HomeSellerProfileWidgetState
                                                   .toString(),
                                               '0',
                                             ),
-                                            style: Theme.of(context).textTheme.titleSmall!,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!,
                                           ),
                                           Text(
                                             'Items',
-                                            style: Theme.of(context).textTheme.labelSmall!,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelSmall!,
                                           ),
                                         ],
                                       ),
@@ -473,11 +486,15 @@ class _HomeSellerProfileWidgetState
                                                   .toString(),
                                               '0 ',
                                             ),
-                                            style: Theme.of(context).textTheme.titleSmall!,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!,
                                           ),
                                           Text(
                                             'Sold',
-                                            style: Theme.of(context).textTheme.labelSmall!,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelSmall!,
                                           ),
                                         ],
                                       ),
@@ -493,11 +510,15 @@ class _HomeSellerProfileWidgetState
                                                   .toString(),
                                               '0',
                                             ),
-                                            style: Theme.of(context).textTheme.titleSmall!,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!,
                                           ),
                                           Text(
                                             'Followers',
-                                            style: Theme.of(context).textTheme.labelSmall!,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelSmall!,
                                           ),
                                         ],
                                       ),
@@ -531,7 +552,10 @@ class _HomeSellerProfileWidgetState
                           height: 56.0,
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              colors: [AppColors.brandPurple, AppColors.brandBlue],
+                              colors: [
+                                AppColors.brandPurple,
+                                AppColors.brandBlue
+                              ],
                               stops: [0.0, 1.0],
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
@@ -566,7 +590,10 @@ class _HomeSellerProfileWidgetState
                             ),
                             label: Text(
                               'Message',
-                              style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(color: Colors.white),
                             ),
                             style: TextButton.styleFrom(
                               padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -797,7 +824,10 @@ class _HomeSellerProfileWidgetState
                                       isDense: false,
                                       hintText:
                                           'Search products, characters, years...',
-                                      hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 15.0),
+                                      hintStyle: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
+                                          .copyWith(fontSize: 15.0),
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: AppColors.neutral700,
@@ -836,7 +866,8 @@ class _HomeSellerProfileWidgetState
                                         size: 24.0,
                                       ),
                                     ),
-                                    style: Theme.of(context).textTheme.bodyMedium!,
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium!,
                                     cursorColor: AppColors.textPrimary,
                                     enableInteractiveSelection: true,
                                   ),
@@ -877,7 +908,9 @@ class _HomeSellerProfileWidgetState
                                                 vertical: 8.0),
                                             child: Text(
                                               'All (24)',
-                                              style: Theme.of(context).textTheme.bodyMedium!,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!,
                                             ),
                                           ),
                                         ),
@@ -1088,7 +1121,10 @@ class _HomeSellerProfileWidgetState
                     children: [
                       Text(
                         reviewsItem.reviewer?.username ?? '',
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(fontWeight: FontWeight.w500),
                       ),
                       RatingBarIndicator(
                         itemBuilder: (context, index) => Icon(

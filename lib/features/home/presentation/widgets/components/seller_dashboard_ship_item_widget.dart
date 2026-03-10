@@ -108,7 +108,10 @@ class SellerDashboardShipItemWidget extends StatelessWidget {
                     Text(
                       _getProductTitle(),
                       maxLines: 1,
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(fontWeight: FontWeight.w500),
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
@@ -145,8 +148,9 @@ class SellerDashboardShipItemWidget extends StatelessWidget {
               ),
               Container(
                 decoration: BoxDecoration(
-                  color:
-                      _isSalePending ? AppColors.statusWarning : AppColors.secondary,
+                  color: _isSalePending
+                      ? AppColors.statusWarning
+                      : AppColors.secondary,
                   borderRadius: BorderRadius.circular(6.0),
                 ),
                 child: Padding(

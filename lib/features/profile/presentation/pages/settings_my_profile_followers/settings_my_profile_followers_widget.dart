@@ -222,7 +222,8 @@ class _SettingsMyProfileFollowersWidgetState
     return InputDecoration(
       isDense: false,
       hintText: hintText,
-      hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 15.0),
+      hintStyle:
+          Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 15.0),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.neutral700, width: 1.0),
         borderRadius: BorderRadius.circular(4.0),
@@ -266,7 +267,10 @@ class _SettingsMyProfileFollowersWidgetState
           ),
           title: Text(
             'My Profile',
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, color: Colors.white),
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(fontWeight: FontWeight.w500, color: Colors.white),
           ),
         ),
         body: SafeArea(

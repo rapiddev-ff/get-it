@@ -121,7 +121,10 @@ class MessageItemWidget extends ConsumerWidget {
                               conversationDataType?.otherUserUsername,
                               'N/A',
                             ),
-                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(height: 1.5),
                           ),
                         ),
                         if (valueOrDefault<String>(
@@ -142,7 +145,10 @@ class MessageItemWidget extends ConsumerWidget {
                               ),
                               '0 min',
                             ),
-                            style: Theme.of(context).textTheme.labelSmall!.copyWith(height: 1.5),
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .copyWith(height: 1.5),
                           ),
                       ].divide(SizedBox(width: 4.0)),
                     ),
@@ -156,7 +162,10 @@ class MessageItemWidget extends ConsumerWidget {
                           conversationDataType?.productTitle,
                           'N/A',
                         ),
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(fontWeight: FontWeight.w500, height: 1.5),
                       ),
                     if (valueOrDefault<String>(
                           conversationDataType?.lastMessageText,
@@ -166,7 +175,10 @@ class MessageItemWidget extends ConsumerWidget {
                       Text(
                         conversationDataType!.lastMessageText ?? '',
                         maxLines: 1,
-                        style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelMedium!
+                            .copyWith(height: 1.5),
                       ),
                   ].divide(SizedBox(height: 4.0)),
                 ),
@@ -248,7 +260,10 @@ class MessageItemWidget extends ConsumerWidget {
                               conversationDataType?.otherUserUsername,
                               'N/A',
                             ),
-                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(height: 1.5),
                           ),
                         ),
                         Text(
@@ -260,7 +275,10 @@ class MessageItemWidget extends ConsumerWidget {
                             ),
                             '0 min',
                           ),
-                          style: Theme.of(context).textTheme.labelSmall!.copyWith(height: 1.5),
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelSmall!
+                              .copyWith(height: 1.5),
                         ),
                       ].divide(SizedBox(width: 4.0)),
                     ),
@@ -270,7 +288,10 @@ class MessageItemWidget extends ConsumerWidget {
                         'n/a ',
                       ),
                       maxLines: 1,
-                      style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelMedium!
+                          .copyWith(height: 1.5),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ].divide(SizedBox(height: 4.0)),

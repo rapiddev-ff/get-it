@@ -121,7 +121,10 @@ class _HomeDashoardInventoryWidgetState
                               decoration: InputDecoration(
                                 isDense: false,
                                 hintText: 'Search inventory...',
-                                hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 15.0),
+                                hintStyle: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .copyWith(fontSize: 15.0),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: AppColors.neutral700,
@@ -291,7 +294,10 @@ class _HomeDashoardInventoryWidgetState
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: Text(
                       '${itemsCount?.toString()} Items',
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .copyWith(fontWeight: FontWeight.w500),
                     ),
                   ),
                   Expanded(

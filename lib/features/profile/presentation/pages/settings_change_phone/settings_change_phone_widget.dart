@@ -71,7 +71,8 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
           ),
           title: Text(
             'Edit Phone Number',
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, color: Colors.white, height: 1.5),
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                fontWeight: FontWeight.w500, color: Colors.white, height: 1.5),
           ),
         ),
         body: SafeArea(
@@ -88,7 +89,11 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
                         padding: EdgeInsets.only(bottom: 4.0),
                         child: Text(
                           'Phone Number',
-                          style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!
+                              .copyWith(
+                                  fontWeight: FontWeight.w500, height: 1.4),
                         ),
                       ),
                       Container(
@@ -125,7 +130,10 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
                             FormValidators.phoneValidationResult(
                                     _model.textController!.text) ??
                                 'N/A',
-                            style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(color: AppColors.error),
                           ).animate().fade(duration: 600.ms),
                         ),
                     ].addToStart(SizedBox(height: 24.0)),

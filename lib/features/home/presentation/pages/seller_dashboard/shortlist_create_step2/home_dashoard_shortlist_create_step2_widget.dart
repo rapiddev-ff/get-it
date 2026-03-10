@@ -327,7 +327,10 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                   product?.title ?? 'Loading...',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(fontWeight: FontWeight.w500),
                 ),
                 SizedBox(height: 6.0),
                 Row(
@@ -478,7 +481,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                       Text(
                                         '${selectedProductIds.length} items',
                                         maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                                        overflow: TextOverflow.ellipsis,
                                         style: Theme.of(context)
                                             .textTheme
                                             .labelSmall!,
@@ -507,7 +510,10 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                             children: [
                               Text(
                                 'Discount',
-                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(fontSize: 15.0, height: 1.5),
                               ),
                               Switch.adaptive(
                                 value: switchValue!,
@@ -527,7 +533,10 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                               padding: EdgeInsets.only(top: 20.0),
                               child: Text(
                                 'Discount Percentage',
-                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(fontSize: 15.0, height: 1.5),
                               ),
                             ),
                             Padding(
@@ -595,11 +604,17 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                             children: [
                               Text(
                                 'Search Shortlist',
-                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(fontSize: 15.0, height: 1.5),
                               ),
                               Text(
                                 '${selectedProductIds.length} Items',
-                                style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .copyWith(height: 1.5),
                               ),
                             ],
                           ),
@@ -654,7 +669,12 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                         horizontal: 16.0, vertical: 8.0),
                                     child: Text(
                                       'Requested',
-                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, fontSize: 15.0),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 15.0),
                                     ),
                                   ),
                                 ),
@@ -826,7 +846,10 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                       ),
                       child: Text(
                         _isSaving ? 'Saving...' : 'Save as Draft',
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 17.0,
+                            color: Colors.white),
                       ),
                     ),
                   ),

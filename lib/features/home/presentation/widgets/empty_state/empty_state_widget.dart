@@ -2,7 +2,6 @@ import '/core/utils/value_utils.dart';
 import '/core/widgets/app_gradient_button.dart';
 import 'package:flutter/material.dart';
 
-
 class EmptyStateWidget extends StatelessWidget {
   const EmptyStateWidget({
     super.key,
@@ -45,9 +44,9 @@ class EmptyStateWidget extends StatelessWidget {
             child: Text(
               title,
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                fontWeight: FontWeight.w500,
-                height: 1.5,
-              ),
+                    fontWeight: FontWeight.w500,
+                    height: 1.5,
+                  ),
             ),
           ),
           Padding(
@@ -55,7 +54,10 @@ class EmptyStateWidget extends StatelessWidget {
             child: Text(
               description,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
+              style: Theme.of(context)
+                  .textTheme
+                  .labelMedium!
+                  .copyWith(height: 1.5),
             ),
           ),
           if (hasButton)

@@ -4,7 +4,6 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
-
 import '/backend/api_requests/api_calls.dart';
 import '/core/constants/app_constants.dart';
 import '/features/home/presentation/widgets/dialog/dialog_widget.dart';
@@ -69,10 +68,10 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
           title: Text(
             AppConstants.appName,
             style: Theme.of(context).textTheme.titleLarge!.copyWith(
-              color: Colors.white,
-              fontSize: 22.0,
-              fontWeight: FontWeight.w500,
-            ),
+                  color: Colors.white,
+                  fontSize: 22.0,
+                  fontWeight: FontWeight.w500,
+                ),
           ),
         ),
         body: SafeArea(
@@ -99,7 +98,12 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                 padding: EdgeInsets.only(bottom: 8.0),
                                 child: Text(
                                   'Password',
-                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.4),
                                 ),
                               ),
                               Container(
@@ -144,7 +148,10 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                   padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Password is required.',
-                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                             ],
@@ -162,7 +169,12 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                 padding: EdgeInsets.only(bottom: 8.0),
                                 child: Text(
                                   'Confirm Password',
-                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.4),
                                 ),
                               ),
                               Container(
@@ -207,7 +219,10 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                   padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Confirm Password is required.',
-                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               if (_model.errorPaswordsDontMatch)
@@ -215,7 +230,10 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                   padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Passwords don\'t match',
-                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                               Padding(

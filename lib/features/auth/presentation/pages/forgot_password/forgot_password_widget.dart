@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 
-
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/keyboard_visibility_mixin.dart';
@@ -69,10 +68,10 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
           title: Text(
             AppConstants.appName,
             style: Theme.of(context).textTheme.titleLarge!.copyWith(
-              color: Colors.white,
-              fontSize: 22.0,
-              fontWeight: FontWeight.normal,
-            ),
+                  color: Colors.white,
+                  fontSize: 22.0,
+                  fontWeight: FontWeight.normal,
+                ),
           ),
         ),
         body: SafeArea(
@@ -90,7 +89,10 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
                           padding: EdgeInsets.only(bottom: 8.0),
                           child: Text(
                             'Reset Your Password',
-                            style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall!
+                                .copyWith(fontWeight: FontWeight.bold),
                           ),
                         ),
                         Padding(
@@ -107,7 +109,12 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
                               padding: EdgeInsets.only(bottom: 4.0),
                               child: Text(
                                 'Email',
-                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        height: 1.4),
                               ),
                             ),
                             Container(

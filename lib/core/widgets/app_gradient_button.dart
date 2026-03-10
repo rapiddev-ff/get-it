@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '/core/theme/app_colors.dart';
 
-
 /// Primary action button with the app's standard purple gradient.
 ///
 /// When [enabled] is false, the gradient is replaced with a flat grey.
@@ -67,9 +66,9 @@ class AppGradientButton extends StatelessWidget {
             : Text(
                 text,
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                ),
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                    ),
               ),
       ),
     );
@@ -108,7 +107,8 @@ class AppOutlineButton extends StatelessWidget {
         ),
         child: Text(
           text,
-          style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+              fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
         ),
       ),
     );

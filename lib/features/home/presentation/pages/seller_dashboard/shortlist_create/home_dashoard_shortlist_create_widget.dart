@@ -183,7 +183,10 @@ class _HomeDashoardShortlistCreateWidgetState
                   children: [
                     Text(
                       'Shortlist Name',
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(fontSize: 15.0, height: 1.5),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 8.0),
@@ -212,7 +215,10 @@ class _HomeDashoardShortlistCreateWidgetState
                       padding: EdgeInsets.only(top: 24.0),
                       child: Text(
                         'Event/Convention',
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(fontSize: 15.0, height: 1.5),
                       ),
                     ),
                     Padding(
@@ -248,7 +254,10 @@ class _HomeDashoardShortlistCreateWidgetState
                               children: [
                                 Text(
                                   'Start Date',
-                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(fontSize: 15.0, height: 1.5),
                                 ),
                                 GestureDetector(
                                   onTap: () =>
@@ -286,7 +295,10 @@ class _HomeDashoardShortlistCreateWidgetState
                               children: [
                                 Text(
                                   'End Date',
-                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(fontSize: 15.0, height: 1.5),
                                 ),
                                 GestureDetector(
                                   onTap: () =>
@@ -328,7 +340,10 @@ class _HomeDashoardShortlistCreateWidgetState
                     ),
                     Text(
                       'Privacy Settings',
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0, height: 1.5),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(fontSize: 15.0, height: 1.5),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 12.0),
@@ -450,7 +465,10 @@ class _HomeDashoardShortlistCreateWidgetState
                       ),
                       child: Text(
                         _isSaving ? 'Saving...' : 'Save as Draft',
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
+                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 17.0,
+                            color: Colors.white),
                       ),
                     ),
                   ),

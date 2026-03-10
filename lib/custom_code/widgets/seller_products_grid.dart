@@ -261,7 +261,10 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(
               _error ?? '',
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall!
+                  .copyWith(color: AppColors.error),
               textAlign: TextAlign.center,
             ),
           ),

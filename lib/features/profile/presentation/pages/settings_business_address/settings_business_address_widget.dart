@@ -87,8 +87,8 @@ class _SettingsBusinessAddressWidgetState
           title: Text(
             'Business Address',
             style: Theme.of(context).textTheme.titleMedium!.copyWith(
-              color: Colors.white,
-            ),
+                  color: Colors.white,
+                ),
           ),
         ),
         body: SafeArea(
@@ -104,13 +104,19 @@ class _SettingsBusinessAddressWidgetState
                       children: [
                         Text(
                           'Business Address',
-                          style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(fontWeight: FontWeight.w500),
                         ),
                         Padding(
                           padding: EdgeInsets.only(top: 20.0),
                           child: Text(
                             'Address',
-                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(fontSize: 15.0),
                           ),
                         ),
                         Padding(
@@ -155,7 +161,10 @@ class _SettingsBusinessAddressWidgetState
                                   children: [
                                     Text(
                                       'Country',
-                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(fontSize: 15.0),
                                     ),
                                     DropdownButtonFormField<String>(
                                       initialValue: () {
@@ -190,7 +199,9 @@ class _SettingsBusinessAddressWidgetState
                                           .map((c) => DropdownMenuItem(
                                                 value: c['code'],
                                                 child: Text(c['name']!,
-                                                    style: Theme.of(context).textTheme.bodyMedium!),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!),
                                               ))
                                           .toList(),
                                       onChanged: (val) => setState(() =>
@@ -225,7 +236,9 @@ class _SettingsBusinessAddressWidgetState
                                         color: AppColors.textSecondary,
                                         size: 24.0,
                                       ),
-                                      style: Theme.of(context).textTheme.bodyMedium!,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!,
                                       isExpanded: true,
                                     ),
                                   ].divide(SizedBox(height: 8.0)),
@@ -238,7 +251,10 @@ class _SettingsBusinessAddressWidgetState
                                   children: [
                                     Text(
                                       'State',
-                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(fontSize: 15.0),
                                     ),
                                     Builder(
                                       builder: (context) {
@@ -271,7 +287,9 @@ class _SettingsBusinessAddressWidgetState
                                                       value: name,
                                                       child: Text(name,
                                                           style:
-                                                              Theme.of(context).textTheme.bodyMedium!),
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .bodyMedium!),
                                                     ))
                                                 .toList(),
                                             onChanged: (val) => setState(() =>
@@ -284,7 +302,9 @@ class _SettingsBusinessAddressWidgetState
                                                   .textTheme
                                                   .labelMedium!,
                                               contentPadding:
-                                                  EdgeInsets.symmetric(horizontal: 12.0, vertical: 16.0),
+                                                  EdgeInsets.symmetric(
+                                                      horizontal: 12.0,
+                                                      vertical: 16.0),
                                               enabledBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
                                                     color: AppColors.neutral700,
@@ -307,7 +327,9 @@ class _SettingsBusinessAddressWidgetState
                                               color: AppColors.textSecondary,
                                               size: 24.0,
                                             ),
-                                            style: Theme.of(context).textTheme.bodyMedium!,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!,
                                             isExpanded: true,
                                           );
                                         } else {
@@ -346,7 +368,10 @@ class _SettingsBusinessAddressWidgetState
                                   children: [
                                     Text(
                                       'City',
-                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(fontSize: 15.0),
                                     ),
                                     Container(
                                       width: double.infinity,
@@ -371,7 +396,10 @@ class _SettingsBusinessAddressWidgetState
                                   children: [
                                     Text(
                                       'Zip Code',
-                                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(fontSize: 15.0),
                                     ),
                                     Container(
                                       width: double.infinity,

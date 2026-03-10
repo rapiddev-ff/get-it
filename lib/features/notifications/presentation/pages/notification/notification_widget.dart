@@ -81,7 +81,12 @@ class NotificationWidget extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 16.0),
                           child: Text(
                             'Notifications',
-                            style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.w600, color: Colors.white),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium!
+                                .copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white),
                           ),
                         ),
                         Padding(

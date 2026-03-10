@@ -203,7 +203,10 @@ class _CheckoutEditShippingAddressWidgetState
                         children: [
                           Text(
                             'Full Name',
-                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(fontSize: 15.0),
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: 8.0),
@@ -225,7 +228,10 @@ class _CheckoutEditShippingAddressWidgetState
                             padding: EdgeInsets.only(top: 20.0),
                             child: Text(
                               'Street address',
-                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(fontSize: 15.0),
                             ),
                           ),
                           Padding(
@@ -423,7 +429,10 @@ class _CheckoutEditShippingAddressWidgetState
                             padding: EdgeInsets.only(top: 20.0),
                             child: Text(
                               'Apt, suite, unit',
-                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(fontSize: 15.0),
                             ),
                           ),
                           Padding(
@@ -446,7 +455,10 @@ class _CheckoutEditShippingAddressWidgetState
                             padding: EdgeInsets.only(top: 20.0),
                             child: Text(
                               'City',
-                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(fontSize: 15.0),
                             ),
                           ),
                           Padding(
@@ -472,7 +484,10 @@ class _CheckoutEditShippingAddressWidgetState
                               children: [
                                 Text(
                                   'Country',
-                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(fontSize: 15.0),
                                 ),
                                 AppDropDown<String>(
                                   controller: countryDropdownValueController ??=
@@ -490,7 +505,8 @@ class _CheckoutEditShippingAddressWidgetState
                                       () => countryDropdownValue = val),
                                   width: double.infinity,
                                   height: 52.0,
-                                  textStyle: Theme.of(context).textTheme.bodyMedium!,
+                                  textStyle:
+                                      Theme.of(context).textTheme.bodyMedium!,
                                   hintText: 'Country',
                                   icon: Icon(
                                     Icons.keyboard_arrow_down_rounded,
@@ -524,7 +540,10 @@ class _CheckoutEditShippingAddressWidgetState
                                     children: [
                                       Text(
                                         'State',
-                                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(fontSize: 15.0),
                                       ),
                                       Builder(
                                         builder: (context) {
@@ -549,7 +568,9 @@ class _CheckoutEditShippingAddressWidgetState
                                                   stateDropdownValue = val),
                                               width: double.infinity,
                                               height: 52.0,
-                                              textStyle: Theme.of(context).textTheme.bodyMedium!,
+                                              textStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!,
                                               hintText: 'State',
                                               icon: Icon(
                                                 Icons
@@ -563,7 +584,8 @@ class _CheckoutEditShippingAddressWidgetState
                                               borderColor: AppColors.neutral700,
                                               borderWidth: 1.0,
                                               borderRadius: 4.0,
-                                              margin: EdgeInsets.symmetric(horizontal: 12.0),
+                                              margin: EdgeInsets.symmetric(
+                                                  horizontal: 12.0),
                                               hidesUnderline: true,
                                               isOverButton: true,
                                               isSearchable: false,
@@ -598,7 +620,10 @@ class _CheckoutEditShippingAddressWidgetState
                                     children: [
                                       Text(
                                         'Zip Code',
-                                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(fontSize: 15.0),
                                       ),
                                       Container(
                                         width: double.infinity,

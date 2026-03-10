@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
-
 class SettingsDeleteAccountWidget extends StatelessWidget {
   const SettingsDeleteAccountWidget({super.key});
 
@@ -34,7 +33,8 @@ class SettingsDeleteAccountWidget extends StatelessWidget {
           ),
           title: Text(
             'Delete Account',
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, color: Colors.white, height: 1.5),
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                fontWeight: FontWeight.w500, color: Colors.white, height: 1.5),
           ),
         ),
         body: SafeArea(
@@ -62,7 +62,10 @@ class SettingsDeleteAccountWidget extends StatelessWidget {
                   child: Text(
                     'Are you sure you want to delete your account?',
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall!
+                        .copyWith(fontWeight: FontWeight.w500, height: 1.5),
                   ),
                 ),
                 Padding(
@@ -70,7 +73,10 @@ class SettingsDeleteAccountWidget extends StatelessWidget {
                   child: Text(
                     'If you confirm for your account to be deleted, ALL of your saved information including names, emails and app data will be deleted. This data is not recoverable.',
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(height: 1.5),
                   ),
                 ),
                 Spacer(),
@@ -132,11 +138,12 @@ class SettingsDeleteAccountWidget extends StatelessWidget {
                           ),
                           label: Text(
                             'Delete Account',
-                            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 17.0,
-                              color: AppColors.destructive500,
-                            ),
+                            style:
+                                Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 17.0,
+                                      color: AppColors.destructive500,
+                                    ),
                           ),
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(
@@ -161,7 +168,13 @@ class SettingsDeleteAccountWidget extends StatelessWidget {
                           },
                           child: Text(
                             'Back',
-                            style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500, fontSize: 17.0, color: Colors.white),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 17.0,
+                                    color: Colors.white),
                           ),
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(

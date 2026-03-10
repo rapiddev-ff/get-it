@@ -170,7 +170,10 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                 isDense: false,
                                 hintText:
                                     'Search products, characters, years...',
-                                hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontSize: 15.0),
+                                hintStyle: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .copyWith(fontSize: 15.0),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: const BorderSide(
                                     color: AppColors.neutral700,
@@ -250,7 +253,12 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                           horizontal: 16.0, vertical: 8.0),
                                       child: Text(
                                         'All (${wishlistProducts.length})',
-                                        style: Theme.of(context).textTheme.bodySmall!.copyWith(fontWeight: FontWeight.w500, fontSize: 13.0),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 13.0),
                                       ),
                                     ),
                                   ),
@@ -286,10 +294,16 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                             BorderRadius.circular(100.0),
                                       ),
                                       child: Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 16.0, vertical: 8.0),
                                         child: Text(
                                           categoriesItem.name,
-                                          style: Theme.of(context).textTheme.bodySmall!.copyWith(fontWeight: FontWeight.w500, fontSize: 13.0),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 13.0),
                                         ),
                                       ),
                                     ),

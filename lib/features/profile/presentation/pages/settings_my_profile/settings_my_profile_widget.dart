@@ -160,7 +160,10 @@ class _SettingsMyProfileWidgetState
                           children: [
                             Text(
                               '@${authState.username}',
-                              style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(fontWeight: FontWeight.w500),
                             ),
                             Padding(
                               padding: EdgeInsets.only(top: 8.0),
@@ -203,7 +206,10 @@ class _SettingsMyProfileWidgetState
                                           .toString(),
                                       '0',
                                     ),
-                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(fontWeight: FontWeight.w500),
                                   ),
                                   Text(
                                     '(${authState.isSeller ? valueOrDefault<String>(
@@ -215,7 +221,9 @@ class _SettingsMyProfileWidgetState
                                             ?.toString(),
                                         '0',
                                       )} reviews)',
-                                    style: Theme.of(context).textTheme.labelMedium!,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!,
                                   ),
                                 ].divide(SizedBox(width: 8.0)),
                               ),
@@ -250,7 +258,9 @@ class _SettingsMyProfileWidgetState
                                           ),
                                           Text(
                                             'Items',
-                                            style: Theme.of(context).textTheme.labelSmall!,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelSmall!,
                                           ),
                                         ],
                                       ),
@@ -274,7 +284,9 @@ class _SettingsMyProfileWidgetState
                                           ),
                                           Text(
                                             'Sold',
-                                            style: Theme.of(context).textTheme.labelSmall!,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelSmall!,
                                           ),
                                         ],
                                       ),
@@ -297,7 +309,9 @@ class _SettingsMyProfileWidgetState
                                         ),
                                         Text(
                                           'Followers',
-                                          style: Theme.of(context).textTheme.labelSmall!,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall!,
                                         ),
                                       ],
                                     ),
@@ -320,7 +334,9 @@ class _SettingsMyProfileWidgetState
                                         ),
                                         Text(
                                           'Followers',
-                                          style: Theme.of(context).textTheme.labelSmall!,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall!,
                                         ),
                                       ],
                                     ),
@@ -558,7 +574,10 @@ class _SettingsMyProfileWidgetState
             Expanded(
               child: Text(
                 'My Ratings from Sellers',
-                style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(fontWeight: FontWeight.w500),
               ),
             ),
             Padding(
@@ -568,7 +587,8 @@ class _SettingsMyProfileWidgetState
                   _jsonGet(json, 'as_buyer.total')?.toString(),
                   '0',
                 )} reviews',
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, color: AppColors.secondary),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontWeight: FontWeight.w500, color: AppColors.secondary),
               ),
             ),
           ].divide(SizedBox(width: 12.0)),
@@ -595,7 +615,10 @@ class _SettingsMyProfileWidgetState
             Expanded(
               child: Text(
                 'My Ratings from Sellers',
-                style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(fontWeight: FontWeight.w500),
               ),
             ),
             Padding(
@@ -605,7 +628,8 @@ class _SettingsMyProfileWidgetState
                   _jsonGet(json, 'as_buyer.total')?.toString(),
                   '0',
                 )} reviews',
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, color: AppColors.secondary),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontWeight: FontWeight.w500, color: AppColors.secondary),
               ),
             ),
           ].divide(SizedBox(width: 12.0)),
@@ -632,7 +656,10 @@ class _SettingsMyProfileWidgetState
             Expanded(
               child: Text(
                 'My Ratings from Buyers',
-                style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(fontWeight: FontWeight.w500),
               ),
             ),
             Padding(
@@ -642,7 +669,8 @@ class _SettingsMyProfileWidgetState
                   _jsonGet(json, 'as_seller.total')?.toString(),
                   '0',
                 )} reviews',
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, color: AppColors.secondary),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontWeight: FontWeight.w500, color: AppColors.secondary),
               ),
             ),
           ].divide(SizedBox(width: 12.0)),

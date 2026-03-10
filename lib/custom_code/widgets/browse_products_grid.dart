@@ -261,7 +261,10 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
             const SizedBox(height: 16),
             Text(
               hasFilters ? 'No products found' : 'No products available',
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(fontWeight: FontWeight.w500),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleSmall!
+                  .copyWith(fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 8),
             Text(
@@ -269,8 +272,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
                   ? 'Try adjusting your search or filters'
                   : 'Check back later for new listings',
               textAlign: TextAlign.center,
-              style:
-                  Theme.of(context).textTheme.bodyMedium!,
+              style: Theme.of(context).textTheme.bodyMedium!,
             ),
           ],
         ),
@@ -437,8 +439,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
             const SizedBox(height: 16),
             Text(
               'Failed to load products',
-              style:
-                  Theme.of(context).textTheme.bodyMedium!,
+              style: Theme.of(context).textTheme.bodyMedium!,
             ),
             const SizedBox(height: 8),
             Text(

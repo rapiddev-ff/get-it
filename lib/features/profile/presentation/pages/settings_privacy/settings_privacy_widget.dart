@@ -51,10 +51,11 @@ class SettingsPrivacyWidget extends StatelessWidget {
                       padding: EdgeInsets.only(left: 16.0),
                       child: Text(
                         'Privacy Policy',
-                        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          fontSize: 28.0,
-                          color: Colors.white,
-                        ),
+                        style:
+                            Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                  fontSize: 28.0,
+                                  color: Colors.white,
+                                ),
                       ),
                     ),
                   ],
@@ -72,7 +73,10 @@ class SettingsPrivacyWidget extends StatelessWidget {
               children: [
                 Text(
                   'Accepting The Terms',
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(fontWeight: FontWeight.w500),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 8.0),
@@ -85,7 +89,10 @@ class SettingsPrivacyWidget extends StatelessWidget {
                   padding: EdgeInsets.only(top: 24.0),
                   child: Text(
                     'Using CardSmart App',
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(fontWeight: FontWeight.w500),
                   ),
                 ),
                 Padding(

@@ -73,7 +73,8 @@ class _SettingsDailyBudgetWidgetState
           ),
           title: Text(
             'Edit Daily Budget',
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, color: Colors.white, height: 1.5),
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                fontWeight: FontWeight.w500, color: Colors.white, height: 1.5),
           ),
         ),
         body: SafeArea(
@@ -90,17 +91,23 @@ class _SettingsDailyBudgetWidgetState
                         padding: EdgeInsets.only(bottom: 4.0),
                         child: Text(
                           'Daily Budget',
-                          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                            fontWeight: FontWeight.w500,
-                            height: 1.4,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(
+                                fontWeight: FontWeight.w500,
+                                height: 1.4,
+                              ),
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(bottom: 4.0),
                         child: Text(
                           'Swipe Payment will stop when you reach this amount in a day.',
-                          style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.4),
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelMedium!
+                              .copyWith(height: 1.4),
                         ),
                       ),
                       Padding(

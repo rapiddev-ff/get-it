@@ -321,8 +321,7 @@ class _HomeDashoardInventoryAddWidgetState
       isDense: false,
       prefix: prefix,
       hintText: hint,
-      hintStyle:
-          Theme.of(context).textTheme.labelLarge!,
+      hintStyle: Theme.of(context).textTheme.labelLarge!,
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.neutral700, width: 1.0),
         borderRadius: _borderRadius,
@@ -363,7 +362,10 @@ class _HomeDashoardInventoryAddWidgetState
 
   Widget _sectionTitle(String text) => Text(
         text,
-        style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
+        style: Theme.of(context)
+            .textTheme
+            .titleMedium!
+            .copyWith(fontWeight: FontWeight.w500),
       );
 
   Widget _fieldLabel(String text) => Padding(
@@ -437,7 +439,10 @@ class _HomeDashoardInventoryAddWidgetState
               padding: EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
                 label,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(fontSize: 15.0),
               ),
             ),
           ),
@@ -550,7 +555,10 @@ class _HomeDashoardInventoryAddWidgetState
           padding: EdgeInsets.symmetric(horizontal: 16.0),
           child: Text(
             'Product Photos',
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .copyWith(fontWeight: FontWeight.w500),
           ),
         ),
         Padding(
@@ -981,7 +989,10 @@ class _HomeDashoardInventoryAddWidgetState
                   children: [
                     Text(
                       'Year (Optional)',
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(fontSize: 15.0),
                     ),
                     Container(
                       width: double.infinity,
@@ -1012,7 +1023,10 @@ class _HomeDashoardInventoryAddWidgetState
                   children: [
                     Text(
                       'Issue # (Optional)',
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(fontSize: 15.0),
                     ),
                     Container(
                       width: double.infinity,
@@ -1086,7 +1100,10 @@ class _HomeDashoardInventoryAddWidgetState
                   children: [
                     Text(
                       'Flash Sale',
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(fontSize: 15.0),
                     ),
                     if (switchFlashSaleValue ?? true)
                       AppDropDown<int>(
@@ -1153,7 +1170,10 @@ class _HomeDashoardInventoryAddWidgetState
               children: [
                 Text(
                   'Amount',
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(fontSize: 15.0),
                 ),
                 discount == 'percentage'
                     ? Container(
@@ -1267,7 +1287,10 @@ class _HomeDashoardInventoryAddWidgetState
               children: [
                 Text(
                   'Flat Shipping Cost',
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(fontSize: 15.0),
                 ),
                 Container(
                   width: double.infinity,
@@ -1293,7 +1316,10 @@ class _HomeDashoardInventoryAddWidgetState
                   padding: EdgeInsets.only(top: 4.0),
                   child: Text(
                     'Additional Item Fee',
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(fontSize: 15.0),
                   ),
                 ),
                 Container(
@@ -1500,7 +1526,10 @@ class _HomeDashoardInventoryAddWidgetState
             SizedBox(width: 8.0),
             Text(
               'AI Scan',
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleSmall!
+                  .copyWith(color: Colors.white),
             ),
           ],
         ),
@@ -1518,7 +1547,10 @@ class _HomeDashoardInventoryAddWidgetState
             Expanded(
               child: Text(
                 'Add to Convention Shortlist',
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(fontSize: 15.0),
               ),
             ),
             Switch.adaptive(
@@ -1544,7 +1576,10 @@ class _HomeDashoardInventoryAddWidgetState
             padding: EdgeInsets.only(top: 8.0),
             child: Text(
               'Select Convention',
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 15.0),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(fontSize: 15.0),
             ),
           ),
         if (switchConventionSettingsValue ?? true)

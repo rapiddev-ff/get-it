@@ -68,7 +68,8 @@ class _SettingsChangePasswordWidgetState
           ),
           title: Text(
             'Change Password',
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, color: Colors.white, height: 1.5),
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                fontWeight: FontWeight.w500, color: Colors.white, height: 1.5),
           ),
         ),
         body: SafeArea(
@@ -91,7 +92,10 @@ class _SettingsChangePasswordWidgetState
                                 padding: EdgeInsets.only(bottom: 4.0),
                                 child: Text(
                                   'Current Password',
-                                  style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.4),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .copyWith(height: 1.4),
                                 ),
                               ),
                               Container(
@@ -140,7 +144,10 @@ class _SettingsChangePasswordWidgetState
                                       EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'Current Password is required.',
-                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                             ],
@@ -155,7 +162,10 @@ class _SettingsChangePasswordWidgetState
                                 padding: EdgeInsets.only(bottom: 4.0),
                                 child: Text(
                                   'New Password',
-                                  style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.4),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .copyWith(height: 1.4),
                                 ),
                               ),
                               Container(
@@ -204,7 +214,10 @@ class _SettingsChangePasswordWidgetState
                                       EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'New Password is required.',
-                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                             ],
@@ -219,7 +232,10 @@ class _SettingsChangePasswordWidgetState
                                 padding: EdgeInsets.only(bottom: 4.0),
                                 child: Text(
                                   'Confirm Password',
-                                  style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.4),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .copyWith(height: 1.4),
                                 ),
                               ),
                               Container(
@@ -265,7 +281,10 @@ class _SettingsChangePasswordWidgetState
                                       EdgeInsets.only(left: 16.0, top: 4.0),
                                   child: Text(
                                     'Confirm Password is required.',
-                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
                             ],

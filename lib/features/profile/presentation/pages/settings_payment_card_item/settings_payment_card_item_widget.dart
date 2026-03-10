@@ -126,7 +126,10 @@ class _SettingsPaymentCardItemWidgetState
                 widget.paymentMethod?.billingDetails?.name,
                 'N/A',
               ),
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge!
+                  .copyWith(fontWeight: FontWeight.w500),
             ),
             Text(
               '${valueOrDefault<String>(

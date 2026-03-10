@@ -186,8 +186,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
           _showConfirmationPopup();
         }
       } else {
-        final errorMsg =
-            (payResult['error'] ?? 'Payment failed').toString();
+        final errorMsg = (payResult['error'] ?? 'Payment failed').toString();
         if (mounted) {
           actions.toastificationshow(
               context, 'Payment Error', errorMsg, 'error');
@@ -315,7 +314,10 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                         Expanded(
                           child: Text(
                             'Shipping Address',
-                            style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(fontWeight: FontWeight.w500),
                           ),
                         ),
                         FaIcon(
@@ -415,7 +417,10 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                   padding: EdgeInsets.only(left: 16.0),
                   child: Text(
                     'Payment Method',
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(fontWeight: FontWeight.w500),
                   ),
                 ),
                 if (user.paymentMethod.isEmpty)
@@ -573,7 +578,10 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                   padding: EdgeInsets.only(left: 16.0),
                   child: Text(
                     'Order Summary',
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(fontWeight: FontWeight.w500),
                   ),
                 ),
                 Padding(
@@ -615,12 +623,22 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                               Expanded(
                                 child: Text(
                                   'Total',
-                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.5),
                                 ),
                               ),
                               Text(
                                 _currencyFormat.format(_total),
-                                style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        height: 1.5),
                               ),
                             ].divide(SizedBox(width: 8.0)),
                           ),
@@ -660,7 +678,10 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                               children: [
                                 Text(
                                   'Buyer Protection',
-                                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(fontWeight: FontWeight.w500),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(top: 8.0),
@@ -717,7 +738,10 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                             )
                           : Text(
                               'Complete Purchase - ${_currencyFormat.format(_total)}',
-                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(color: Colors.white),
                             ),
                     ),
                   ),
@@ -753,12 +777,16 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
         Expanded(
           child: Text(
             label,
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
+            style:
+                Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
           ),
         ),
         Text(
           value,
-          style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+          style: Theme.of(context)
+              .textTheme
+              .bodyMedium!
+              .copyWith(fontWeight: FontWeight.w500, height: 1.5),
         ),
       ].divide(SizedBox(width: 8.0)),
     );

@@ -10,7 +10,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
-
 class HomeDashoardShortlistWidget extends ConsumerStatefulWidget {
   const HomeDashoardShortlistWidget({super.key});
 
@@ -164,7 +163,10 @@ class _HomeDashoardShortlistWidgetState
                                             horizontal: 16.0),
                                         child: Text(
                                           'Create New Shortlist',
-                                          style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .copyWith(color: Colors.white),
                                         ),
                                       ),
                                     ),
@@ -227,7 +229,10 @@ class _HomeDashoardShortlistWidgetState
                                     SizedBox(width: 8.0),
                                     Text(
                                       'Create New Shortlist',
-                                      style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall!
+                                          .copyWith(color: Colors.white),
                                     ),
                                   ],
                                 ),
@@ -250,9 +255,12 @@ class _HomeDashoardShortlistWidgetState
                                   children: [
                                     Text(
                                       'How QR Codes Work',
-                                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                        height: 1.5,
-                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium!
+                                          .copyWith(
+                                            height: 1.5,
+                                          ),
                                     ),
                                     Row(
                                       crossAxisAlignment:
@@ -267,7 +275,7 @@ class _HomeDashoardShortlistWidgetState
                                           child: Text(
                                             'Print QR codes for your booth',
                                             maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                                            overflow: TextOverflow.ellipsis,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium!,
@@ -288,7 +296,7 @@ class _HomeDashoardShortlistWidgetState
                                           child: Text(
                                             'Share digitally on social media',
                                             maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                                            overflow: TextOverflow.ellipsis,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium!,
@@ -309,7 +317,7 @@ class _HomeDashoardShortlistWidgetState
                                           child: Text(
                                             'Track scans and purchases',
                                             maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                                            overflow: TextOverflow.ellipsis,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium!,

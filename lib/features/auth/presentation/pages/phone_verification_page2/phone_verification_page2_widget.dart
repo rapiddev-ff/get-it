@@ -115,7 +115,10 @@ class _PhoneVerificationPage2WidgetState
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: Text(
                             'Enter Verification Code',
-                            style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall!
+                                .copyWith(fontWeight: FontWeight.bold),
                           ),
                         ),
                         Padding(
@@ -183,7 +186,10 @@ class _PhoneVerificationPage2WidgetState
                             padding: const EdgeInsets.only(left: 16.0),
                             child: Text(
                               'Incorrect code. Try again.',
-                              style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(color: AppColors.error),
                             ).animate().fade(duration: 600.ms),
                           ),
                         if (_model.errorOther)
@@ -191,7 +197,10 @@ class _PhoneVerificationPage2WidgetState
                             padding: const EdgeInsets.only(left: 16.0),
                             child: Text(
                               'Error. Try again later.',
-                              style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(color: AppColors.error),
                             ).animate().fade(duration: 600.ms),
                           ),
                         if (_model.errorMaxAttemptsReached)
@@ -199,7 +208,10 @@ class _PhoneVerificationPage2WidgetState
                             padding: const EdgeInsets.only(left: 16.0),
                             child: Text(
                               'Too many attempts. Try again later.',
-                              style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .copyWith(color: AppColors.error),
                             ).animate().fade(duration: 600.ms),
                           ),
                         if (_model.timerMilliseconds > 0)

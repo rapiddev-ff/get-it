@@ -47,7 +47,10 @@ class DialogProductDraftWidget extends StatelessWidget {
                 child: Text(
                   'Draft saved',
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineSmall!
+                      .copyWith(fontWeight: FontWeight.w500, height: 1.5),
                 ),
               ),
               Padding(
@@ -55,7 +58,10 @@ class DialogProductDraftWidget extends StatelessWidget {
                 child: Text(
                   'You can come back and finish this product anytime from your drafts.',
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(height: 1.5),
                 ),
               ),
               Padding(
@@ -86,7 +92,10 @@ class DialogProductDraftWidget extends StatelessWidget {
                   ),
                   child: Text(
                     'Keep editing',
-                    style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(color: Colors.white),
                   ),
                 ),
               ),
@@ -106,7 +115,10 @@ class DialogProductDraftWidget extends StatelessWidget {
                   ),
                   child: Text(
                     'Go to Inventory',
-                    style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Colors.white),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(color: Colors.white),
                   ),
                 ),
               ),

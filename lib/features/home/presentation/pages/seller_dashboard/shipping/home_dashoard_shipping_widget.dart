@@ -177,7 +177,11 @@ class _HomeDashoardShippingWidgetState
                                       children: [
                                         Text(
                                           '${_counts['to_ship'] ?? 0}',
-                                          style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineSmall!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.bold),
                                         ),
                                         Text(
                                           'To Ship',
@@ -207,7 +211,11 @@ class _HomeDashoardShippingWidgetState
                                       children: [
                                         Text(
                                           '${_counts['shipped'] ?? 0}',
-                                          style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineSmall!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.bold),
                                         ),
                                         Text(
                                           'Shipped',
@@ -330,7 +338,10 @@ class _HomeDashoardShippingWidgetState
                     Text(
                       _getProductTitle(order),
                       maxLines: 1,
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(fontWeight: FontWeight.w500),
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
@@ -357,7 +368,8 @@ class _HomeDashoardShippingWidgetState
                                 ),
                                 TextSpan(
                                   text: ' • ',
-                                  style: Theme.of(context).textTheme.labelMedium!,
+                                  style:
+                                      Theme.of(context).textTheme.labelMedium!,
                                 ),
                                 TextSpan(
                                   text:
@@ -383,7 +395,10 @@ class _HomeDashoardShippingWidgetState
                                   horizontal: 12.0, vertical: 6.0),
                               child: Text(
                                 'Pending',
-                                style: Theme.of(context).textTheme.bodySmall!.copyWith(fontWeight: FontWeight.w500),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall!
+                                    .copyWith(fontWeight: FontWeight.w500),
                               ),
                             ),
                           ),
@@ -398,7 +413,10 @@ class _HomeDashoardShippingWidgetState
                                   horizontal: 12.0, vertical: 6.0),
                               child: Text(
                                 'Ship',
-                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(fontWeight: FontWeight.w500),
                               ),
                             ),
                           ),
@@ -413,7 +431,10 @@ class _HomeDashoardShippingWidgetState
                                   horizontal: 12.0, vertical: 6.0),
                               child: Text(
                                 'Shipped',
-                                style: Theme.of(context).textTheme.bodySmall!.copyWith(fontWeight: FontWeight.w500),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall!
+                                    .copyWith(fontWeight: FontWeight.w500),
                               ),
                             ),
                           ),
@@ -428,7 +449,10 @@ class _HomeDashoardShippingWidgetState
                                   horizontal: 12.0, vertical: 6.0),
                               child: Text(
                                 'Delivered',
-                                style: Theme.of(context).textTheme.bodySmall!.copyWith(fontWeight: FontWeight.w500),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall!
+                                    .copyWith(fontWeight: FontWeight.w500),
                               ),
                             ),
                           ),

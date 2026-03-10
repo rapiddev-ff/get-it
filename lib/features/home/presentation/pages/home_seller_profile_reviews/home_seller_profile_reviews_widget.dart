@@ -209,7 +209,10 @@ class _HomeSellerProfileReviewsWidgetState
                                     widget.sellerDataType?.username,
                                     'N/A',
                                   ),
-                                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .copyWith(fontWeight: FontWeight.w500),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(top: 8.0),
@@ -233,11 +236,17 @@ class _HomeSellerProfileReviewsWidgetState
                                                 ? _currentRatingAsBuyer
                                                 : _currentRatingAsSeller)
                                             .toString(),
-                                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                                fontWeight: FontWeight.w500),
                                       ),
                                       Text(
                                         '(${_model.state == 'As Buyer' ? _currentTotalReviewsAsBuyer : _currentTotalReviewsAsSeller}) reviews',
-                                        style: Theme.of(context).textTheme.labelMedium!,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!,
                                       ),
                                     ].divide(SizedBox(width: 8.0)),
                                   ),
@@ -265,7 +274,9 @@ class _HomeSellerProfileReviewsWidgetState
                                           ),
                                           Text(
                                             'Items',
-                                            style: Theme.of(context).textTheme.labelSmall!,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelSmall!,
                                           ),
                                         ],
                                       ),
@@ -287,7 +298,9 @@ class _HomeSellerProfileReviewsWidgetState
                                           ),
                                           Text(
                                             'Sold',
-                                            style: Theme.of(context).textTheme.labelSmall!,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelSmall!,
                                           ),
                                         ],
                                       ),
@@ -310,7 +323,9 @@ class _HomeSellerProfileReviewsWidgetState
                                           ),
                                           Text(
                                             'Followers',
-                                            style: Theme.of(context).textTheme.labelSmall!,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelSmall!,
                                           ),
                                         ],
                                       ),
@@ -417,7 +432,10 @@ class _HomeSellerProfileReviewsWidgetState
                           height: 56.0,
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              colors: [AppColors.brandPurple, AppColors.brandBlue],
+                              colors: [
+                                AppColors.brandPurple,
+                                AppColors.brandBlue
+                              ],
                               stops: [0.0, 1.0],
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
@@ -448,7 +466,10 @@ class _HomeSellerProfileReviewsWidgetState
                             ),
                             label: Text(
                               'Write a Review',
-                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.white),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(color: Colors.white),
                             ),
                             style: TextButton.styleFrom(
                               padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -647,7 +668,10 @@ class _HomeSellerProfileReviewsWidgetState
                         reviewerUsername.isNotEmpty
                             ? '@$reviewerUsername'
                             : 'Anonymous',
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(fontWeight: FontWeight.w500, height: 1.5),
                       ),
                       RatingBarIndicator(
                         itemBuilder: (context, index) => Icon(
@@ -723,7 +747,10 @@ class _HomeSellerProfileReviewsWidgetState
                             if (productTitle.isNotEmpty)
                               Text(
                                 productTitle,
-                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(height: 1.5),
                               ),
                             if (productPrice > 0)
                               Text(
@@ -745,7 +772,10 @@ class _HomeSellerProfileReviewsWidgetState
             if (content.isNotEmpty)
               Text(
                 content,
-                style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
+                style: Theme.of(context)
+                    .textTheme
+                    .labelMedium!
+                    .copyWith(height: 1.5),
               ),
             if (orderDate != null)
               Text(

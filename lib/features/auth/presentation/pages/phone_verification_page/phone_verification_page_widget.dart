@@ -113,7 +113,10 @@ class _PhoneVerificationPageWidgetState
           ),
           title: Text(
             AppConstants.appName,
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.white, fontSize: 22.0, fontWeight: FontWeight.w500),
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: Colors.white,
+                fontSize: 22.0,
+                fontWeight: FontWeight.w500),
           ),
           actions: const [],
         ),
@@ -132,7 +135,10 @@ class _PhoneVerificationPageWidgetState
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: Text(
                             'Verify Your Account',
-                            style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.bold),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall!
+                                .copyWith(fontWeight: FontWeight.bold),
                           ),
                         ),
                         Padding(
@@ -149,7 +155,12 @@ class _PhoneVerificationPageWidgetState
                               padding: const EdgeInsets.only(bottom: 4.0),
                               child: Text(
                                 'Phone Number',
-                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        height: 1.4),
                               ),
                             ),
                             SizedBox(
@@ -167,7 +178,8 @@ class _PhoneVerificationPageWidgetState
                                 decoration: InputDecoration(
                                   isDense: false,
                                   hintText: 'Your phone number',
-                                  hintStyle: Theme.of(context).textTheme.bodyLarge!,
+                                  hintStyle:
+                                      Theme.of(context).textTheme.bodyLarge!,
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: AppColors.neutral700,
@@ -224,7 +236,10 @@ class _PhoneVerificationPageWidgetState
                                   _phoneValidationResult(
                                           _model.textController!.text) ??
                                       'N/A',
-                                  style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall!
+                                      .copyWith(color: AppColors.error),
                                 ).animate().fade(duration: 600.ms),
                               ),
                           ],

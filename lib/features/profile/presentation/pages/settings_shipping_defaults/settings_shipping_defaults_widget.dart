@@ -102,13 +102,20 @@ class _SettingsShippingDefaultsWidgetState
                         children: [
                           Text(
                             'Shipping Cost',
-                            style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall!
+                                .copyWith(
+                                    fontWeight: FontWeight.w500, height: 1.5),
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: 8.0),
                             child: Text(
                               'Applies to all your items by default. Products can override this.',
-                              style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .copyWith(height: 1.5),
                             ),
                           ),
                           Padding(
@@ -143,7 +150,10 @@ class _SettingsShippingDefaultsWidgetState
                                     padding: EdgeInsets.only(right: 4.0),
                                     child: Text(
                                       '\$',
-                                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
+                                          .copyWith(color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -164,7 +174,10 @@ class _SettingsShippingDefaultsWidgetState
                             padding: EdgeInsets.only(top: 8.0),
                             child: Text(
                               'Charged once per order (first item).',
-                              style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .copyWith(height: 1.5),
                             ),
                           ),
                           Padding(
@@ -199,7 +212,10 @@ class _SettingsShippingDefaultsWidgetState
                                     padding: EdgeInsets.only(right: 4.0),
                                     child: Text(
                                       '\$',
-                                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge!
+                                          .copyWith(color: Colors.white),
                                     ),
                                   ),
                                 ),
@@ -220,7 +236,10 @@ class _SettingsShippingDefaultsWidgetState
                             padding: EdgeInsets.only(top: 8.0),
                             child: Text(
                               'Added for each additional item.',
-                              style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .copyWith(height: 1.5),
                             ),
                           ),
                         ],
