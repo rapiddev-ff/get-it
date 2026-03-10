@@ -93,9 +93,6 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
               color: Colors.white,
             ),
           ),
-          actions: [],
-          centerTitle: true,
-          elevation: 0.0,
         ),
         body: SafeArea(
           top: true,

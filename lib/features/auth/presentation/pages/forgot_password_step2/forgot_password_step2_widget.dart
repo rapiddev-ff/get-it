@@ -69,9 +69,6 @@ class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget>
               fontWeight: FontWeight.w600,
             ),
           ),
-          actions: [],
-          centerTitle: true,
-          elevation: 0.0,
         ),
         body: SafeArea(
           top: true,

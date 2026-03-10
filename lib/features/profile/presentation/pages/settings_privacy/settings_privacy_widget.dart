@@ -20,7 +20,6 @@ class SettingsPrivacyWidget extends StatelessWidget {
           child: AppBar(
             backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
-            actions: [],
             flexibleSpace: FlexibleSpaceBar(
               title: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 14.0),
@@ -68,10 +67,8 @@ class SettingsPrivacyWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              centerTitle: true,
               expandedTitleScale: 1.0,
             ),
-            elevation: 0.0,
           ),
         ),
         body: SafeArea(

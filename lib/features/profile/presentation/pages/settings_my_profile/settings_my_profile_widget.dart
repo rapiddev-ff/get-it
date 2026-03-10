@@ -123,9 +123,6 @@ class _SettingsMyProfileWidgetState
               color: Colors.white,
             ),
           ),
-          actions: [],
-          centerTitle: true,
-          elevation: 0.0,
         ),
         body: SafeArea(
           top: true,

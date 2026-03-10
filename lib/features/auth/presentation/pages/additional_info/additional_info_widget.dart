@@ -169,8 +169,6 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
             ),
           ),
           actions: const [],
-          centerTitle: true,
-          elevation: 0.0,
         ),
         body: SafeArea(
           top: true,

@@ -143,9 +143,6 @@ class _HomeDashoardShippingWidgetState
                 ),
               ],
             ),
-            actions: [],
-            centerTitle: true,
-            elevation: 0.0,
           ),
         ),
         body: SafeArea(

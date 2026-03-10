@@ -98,9 +98,6 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
                 ),
               ],
             ),
-            actions: [],
-            centerTitle: true,
-            elevation: 0.0,
           ),
         ),
         body: Column(

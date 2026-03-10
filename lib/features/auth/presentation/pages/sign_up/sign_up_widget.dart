@@ -96,8 +96,6 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
             ),
           ),
           actions: const [],
-          centerTitle: true,
-          elevation: 0.0,
         ),
         body: SafeArea(
           top: true,

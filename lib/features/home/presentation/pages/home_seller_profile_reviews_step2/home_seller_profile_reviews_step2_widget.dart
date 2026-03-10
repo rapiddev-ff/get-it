@@ -120,9 +120,6 @@ class _HomeSellerProfileReviewsStep2WidgetState
               ),
             ],
           ),
-          actions: [],
-          centerTitle: true,
-          elevation: 0.0,
         ),
         body: SafeArea(
           top: true,

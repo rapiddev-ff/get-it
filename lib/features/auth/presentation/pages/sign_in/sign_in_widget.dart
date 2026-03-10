@@ -95,9 +95,6 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
               fontWeight: FontWeight.w600,
             ),
           ),
-          actions: [],
-          centerTitle: true,
-          elevation: 0.0,
         ),
         body: SafeArea(
           top: true,

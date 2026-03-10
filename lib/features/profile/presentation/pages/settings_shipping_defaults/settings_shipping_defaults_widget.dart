@@ -86,9 +86,6 @@ class _SettingsShippingDefaultsWidgetState
               height: 1.5,
             ),
           ),
-          actions: [],
-          centerTitle: true,
-          elevation: 0.0,
         ),
         body: SafeArea(
           top: true,

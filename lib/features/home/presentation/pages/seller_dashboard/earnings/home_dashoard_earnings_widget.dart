@@ -214,9 +214,6 @@ class _HomeDashoardEarningsWidgetState
                 ),
               ],
             ),
-            actions: [],
-            centerTitle: true,
-            elevation: 0.0,
           ),
         ),
         body: _isLoading

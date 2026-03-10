@@ -75,9 +75,6 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
               fontSize: 22.0,
             ),
           ),
-          actions: [],
-          centerTitle: true,
-          elevation: 0.0,
         ),
         body: SafeArea(
           top: true,

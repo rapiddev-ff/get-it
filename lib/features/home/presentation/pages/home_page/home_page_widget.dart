@@ -160,9 +160,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                 ),
               ],
             ),
-            actions: [],
-            centerTitle: true,
-            elevation: 0.0,
           ),
         ),
         body: Column(

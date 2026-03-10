@@ -360,9 +360,6 @@ class _HomeSellerProfileWidgetState
                 ),
               ],
             ),
-            actions: [],
-            centerTitle: true,
-            elevation: 0.0,
           ),
         ),
         body: getSellerData == null

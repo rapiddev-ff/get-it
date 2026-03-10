@@ -278,9 +278,6 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                 ),
               ],
             ),
-            actions: [],
-            centerTitle: true,
-            elevation: 0.0,
           ),
         ),
         body: SafeArea(

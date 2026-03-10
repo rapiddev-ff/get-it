@@ -82,10 +82,8 @@ class _NotificationSettingsWidgetState
                   ],
                 ),
               ),
-              centerTitle: true,
               expandedTitleScale: 1.0,
             ),
-            elevation: 0.0,
           ),
         ),
         body: SafeArea(

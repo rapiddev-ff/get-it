@@ -275,9 +275,6 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                 ),
               ],
             ),
-            actions: [],
-            centerTitle: true,
-            elevation: 0.0,
           ),
         ),
         body: product == null
@@ -732,7 +729,6 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                             AppColors.backgroundSecondary,
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             16.0, 0.0, 16.0, 0.0),
-                                        elevation: 0.0,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(4.0),
@@ -824,7 +820,6 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                         backgroundColor: Color(0x008E6CFF),
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             16.0, 0.0, 16.0, 0.0),
-                                        elevation: 0.0,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(8.0),

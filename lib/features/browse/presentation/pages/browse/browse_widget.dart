@@ -104,8 +104,6 @@ class _BrowseWidgetState extends State<BrowseWidget> {
               ],
             ),
             actions: const [],
-            centerTitle: true,
-            elevation: 0.0,
           ),
         ),
         body: Column(

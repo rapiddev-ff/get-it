@@ -145,9 +145,6 @@ class _HomeDashoardInventoryAddTagsWidgetState
                     ),
                   ],
                 ),
-                actions: [],
-                centerTitle: true,
-                elevation: 0.0,
               ),
             ),
             body: SafeArea(

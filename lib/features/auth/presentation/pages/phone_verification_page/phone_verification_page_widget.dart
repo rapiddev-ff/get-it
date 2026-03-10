@@ -123,8 +123,6 @@ class _PhoneVerificationPageWidgetState
             ),
           ),
           actions: const [],
-          centerTitle: true,
-          elevation: 0.0,
         ),
         body: SafeArea(
           top: true,

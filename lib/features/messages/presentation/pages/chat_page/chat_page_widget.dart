@@ -199,9 +199,6 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                 ),
               ],
             ),
-            actions: [],
-            centerTitle: true,
-            elevation: 0.0,
           ),
         ),
         body: Column(

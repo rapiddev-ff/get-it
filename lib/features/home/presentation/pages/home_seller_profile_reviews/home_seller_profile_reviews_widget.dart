@@ -169,9 +169,6 @@ class _HomeSellerProfileReviewsWidgetState
               ),
             ],
           ),
-          actions: [],
-          centerTitle: true,
-          elevation: 0.0,
         ),
         body: SafeArea(
           top: true,

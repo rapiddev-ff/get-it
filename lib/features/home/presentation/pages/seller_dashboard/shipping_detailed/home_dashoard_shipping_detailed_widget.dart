@@ -317,9 +317,6 @@ class _HomeDashoardShippingDetailedWidgetState
                 ),
               ],
             ),
-            actions: [],
-            centerTitle: true,
-            elevation: 0.0,
           ),
         ),
         body: _isLoading

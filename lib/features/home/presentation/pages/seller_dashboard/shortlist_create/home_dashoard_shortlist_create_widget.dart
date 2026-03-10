@@ -180,9 +180,6 @@ class _HomeDashoardShortlistCreateWidgetState
                 ),
               ],
             ),
-            actions: [],
-            centerTitle: true,
-            elevation: 0.0,
           ),
         ),
         body: Padding(

@@ -134,8 +134,6 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
               ],
             ),
             actions: const [],
-            centerTitle: true,
-            elevation: 0.0,
           ),
         ),
         body: Column(

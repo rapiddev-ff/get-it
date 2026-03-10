@@ -94,8 +94,6 @@ class _ChatBuyerProfileWidgetState
               onPressed: () {},
             ),
           ],
-          centerTitle: true,
-          elevation: 0.0,
         ),
         body: SafeArea(
           top: true,

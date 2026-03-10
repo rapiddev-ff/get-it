@@ -68,8 +68,6 @@ class _PermissionsWidgetState extends State<PermissionsWidget>
             ),
           ),
           actions: const [],
-          centerTitle: true,
-          elevation: 0.0,
         ),
         body: SafeArea(
           top: true,

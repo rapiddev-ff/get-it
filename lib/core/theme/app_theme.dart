@@ -21,6 +21,10 @@ class AppTheme {
         highlightColor: Colors.transparent,
         hoverColor: Colors.transparent,
         focusColor: Colors.transparent,
+        appBarTheme: const AppBarTheme(
+          elevation: 0.0,
+          centerTitle: true,
+        ),
         textTheme: _buildTextTheme(),
       );
 
