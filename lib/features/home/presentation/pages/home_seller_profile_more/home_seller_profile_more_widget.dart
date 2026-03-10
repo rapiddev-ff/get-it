@@ -86,6 +86,7 @@ class _HomeSellerProfileMoreWidgetState
                   },
                 );
 
+                if (!mounted) return;
                 setState(() {});
               },
               child: Row(

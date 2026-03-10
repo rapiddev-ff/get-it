@@ -83,6 +83,7 @@ class _StripeSuccessWidgetState extends ConsumerState<StripeSuccessWidget> {
                         ref.read(currentUserIdProvider),
                       ),
                     );
+                    if (!mounted) return;
                     setState(() {});
 
                     context.goNamed(

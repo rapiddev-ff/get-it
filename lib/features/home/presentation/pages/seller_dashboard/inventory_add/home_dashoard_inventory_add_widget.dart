@@ -540,6 +540,7 @@ class _HomeDashoardInventoryAddWidgetState
       );
     }
 
+    if (!mounted) return;
     setState(() {});
   }
 
@@ -588,6 +589,7 @@ class _HomeDashoardInventoryAddWidgetState
                     if (selectedMedia != null &&
                         selectedMedia.every((m) =>
                             validateFileFormat(m.storagePath, context))) {
+                      if (!mounted) return;
                       setState(() => isDataUploading_uploadDataEdit = true);
                       try {
                         final selectedUploadedFiles = selectedMedia
@@ -616,6 +618,7 @@ class _HomeDashoardInventoryAddWidgetState
                           );
                         }
                       } finally {
+                        if (!mounted) return;
                         setState(() {
                           isDataUploading_uploadDataEdit = false;
                         });
@@ -841,6 +844,7 @@ class _HomeDashoardInventoryAddWidgetState
                           skuPrefixTextController?.text ?? '',
                           widget.productId,
                         );
+                        if (!mounted) return;
                         setState(() {
                           skuNumberTextController?.text =
                               (getNextSkuNumber is Map
@@ -1415,6 +1419,7 @@ class _HomeDashoardInventoryAddWidgetState
                 ),
               );
               if (result != null) {
+                if (!mounted) return;
                 setState(() {
                   choosenTags = result;
                 });

@@ -808,6 +808,7 @@ class _SettingsPaymentMethodAddWidgetState
                                   );
                                 }
 
+                                if (!mounted) return;
                                 setState(() {});
                               },
                               icon: Icon(

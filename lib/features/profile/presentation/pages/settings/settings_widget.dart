@@ -501,6 +501,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                           (e) => e.copyWith(
                                               businessName: val ?? ''),
                                         );
+                                    if (!mounted) return;
                                     setState(() {});
                                     Navigator.pop(context);
                                   },
@@ -563,6 +564,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                           (e) => e.copyWith(
                                               businessEmail: val ?? ''),
                                         );
+                                    if (!mounted) return;
                                     setState(() {});
                                     Navigator.pop(context);
                                   },
@@ -939,6 +941,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                         onPressed: () async {
                           await authManager.signOut();
 
+                          if (!mounted) return;
                           context.goNamed(WelcomeWidget.routeName);
                         },
                         icon: Icon(

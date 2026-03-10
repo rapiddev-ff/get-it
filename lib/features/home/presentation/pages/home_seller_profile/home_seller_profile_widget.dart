@@ -573,6 +573,7 @@ class _HomeSellerProfileWidgetState
                                   .read(messagesProvider.notifier)
                                   .setCurrentConversation(
                                       getOrCreateConversation!);
+                              if (!mounted) return;
                               setState(() {});
 
                               context.pushNamed(

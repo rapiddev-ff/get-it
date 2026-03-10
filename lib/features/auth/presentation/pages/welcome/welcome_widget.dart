@@ -10,6 +10,7 @@ import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import '/features/auth/presentation/pages/sign_in/sign_in_widget.dart';
 import '/features/auth/presentation/pages/sign_up/sign_up_widget.dart';
+
 class WelcomeWidget extends StatefulWidget {
   const WelcomeWidget({super.key});
 

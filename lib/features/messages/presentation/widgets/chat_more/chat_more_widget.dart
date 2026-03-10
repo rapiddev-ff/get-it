@@ -44,6 +44,7 @@ class _ChatMoreWidgetState extends ConsumerState<ChatMoreWidget> {
                   },
                 );
 
+                if (!mounted) return;
                 setState(() {});
               },
               child: Row(
@@ -91,6 +92,7 @@ class _ChatMoreWidgetState extends ConsumerState<ChatMoreWidget> {
                 await actions.refreshConversations(ref);
                 await actions.unsubscribeFromMessages();
                 Navigator.pop(context);
+                if (!mounted) return;
                 context.pop();
               },
               child: Row(

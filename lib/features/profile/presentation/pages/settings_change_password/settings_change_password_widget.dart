@@ -403,6 +403,7 @@ class _SettingsChangePasswordWidgetState
                           );
                           _shouldSetState = true;
                           if (_model.result == null || _model.result == '') {
+                            if (!mounted) return;
                             context.pop();
                             await actions.toastificationshow(
                               context,
@@ -419,6 +420,7 @@ class _SettingsChangePasswordWidgetState
                             );
                           }
 
+                          if (!mounted) return;
                           if (_shouldSetState) setState(() {});
                         },
                       ),

@@ -395,6 +395,7 @@ class _PhoneVerificationPage2WidgetState
                                     context
                                         .pushNamed(PermissionsWidget.routeName);
                                   } else {
+                                    if (!mounted) return;
                                     context.pop();
                                   }
                                   return;
@@ -430,6 +431,7 @@ class _PhoneVerificationPage2WidgetState
                                       }),
                                       Future(() async {
                                         // TODO: migrate to Riverpod
+                                        if (!mounted) return;
                                         setState(() {});
                                       }),
                                     ]);

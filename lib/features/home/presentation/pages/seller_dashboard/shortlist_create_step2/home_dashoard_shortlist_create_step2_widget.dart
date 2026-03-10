@@ -189,6 +189,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                   data: {'status': 'removed'},
                   matchingRows: (q) => q.eqOrNull('id', product.id),
                 );
+                if (!mounted) return;
                 setState(() {
                   selectedProductIds.remove(product.id);
                   _productDetails.remove(product.id);

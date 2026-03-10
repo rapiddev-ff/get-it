@@ -11,6 +11,7 @@ import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import '/features/auth/presentation/pages/additional_info/additional_info_widget.dart';
+
 class PermissionsWidget extends StatefulWidget {
   const PermissionsWidget({super.key});
 

@@ -85,6 +85,7 @@ class _SettingsMyProfileWidgetState
         pLimit: 10,
       );
 
+      if (!mounted) return;
       setState(() {});
     });
   }

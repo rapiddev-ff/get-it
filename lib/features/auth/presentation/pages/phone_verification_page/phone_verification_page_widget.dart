@@ -105,6 +105,7 @@ class _PhoneVerificationPageWidgetState
             onPressed: () async {
               if (widget.isOnboarding!) {
                 await authManager.signOut();
+                if (!mounted) return;
                 context.go('/');
               } else {
                 context.pop();
@@ -267,6 +268,7 @@ class _PhoneVerificationPageWidgetState
                                       _model.textController!.text),
                                 );
 
+                                if (!mounted) return;
                                 context.pushNamed(
                                   PhoneVerificationPage2Widget.routeName,
                                   queryParameters: {

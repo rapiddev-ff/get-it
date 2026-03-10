@@ -5,5 +5,7 @@ Future disposeFeedProductsStream() async {
     await Supabase.instance.client.removeChannel(
       Supabase.instance.client.channel('products_feed_channel'),
     );
-  } catch (e) {}
+  } catch (_) {
+    // Channel may already be removed
+  }
 }

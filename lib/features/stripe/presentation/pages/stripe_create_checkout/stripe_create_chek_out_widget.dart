@@ -62,6 +62,7 @@ class _StripeCreateChekOutWidgetState
           );
           if (chekoutRowExist!.length > 0) {
             if (chekoutRowExist?.firstOrNull?.status == 'paid') {
+              if (!mounted) return;
               context.goNamed(StripeSuccessWidget.routeName);
             } else {
               context.goNamed(StripeRefreshWidget.routeName);

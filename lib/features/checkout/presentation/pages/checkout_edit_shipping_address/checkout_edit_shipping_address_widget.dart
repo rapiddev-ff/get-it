@@ -354,6 +354,7 @@ class _CheckoutEditShippingAddressWidgetState
                                           }
                                         }
 
+                                        if (!mounted) return;
                                         setState(() {});
                                       },
                                     );

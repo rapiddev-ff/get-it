@@ -376,6 +376,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                                       milliseconds: 500),
                                                   curve: Curves.ease,
                                                 );
+                                                if (!mounted) return;
                                                 setState(() {});
                                               },
                                               effect: smooth_page_indicator

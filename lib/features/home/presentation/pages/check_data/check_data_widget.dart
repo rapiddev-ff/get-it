@@ -104,6 +104,7 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
                 .toList()
                 .cast<Condition>(),
           );
+      if (!mounted) return;
       setState(() {});
       AppStateNotifier.instance.initialDataLoaded = true;
 

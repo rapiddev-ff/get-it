@@ -75,6 +75,7 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
 
   void _reset() {
     _unsubscribeRealtime();
+    if (!mounted) return;
     setState(() {
       _messages = [];
       _isLoadingInitial = true;

@@ -100,9 +100,11 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
       imageQuality: 80,
     );
     if (pickedFile != null) {
+      if (!mounted) return;
       setState(() => _model.isDataUploading_uploadImage = true);
       try {
         final bytes = await pickedFile.readAsBytes();
+        if (!mounted) return;
         setState(() {
           _model.uploadedLocalFile_uploadImage = bytes;
           _model.image = bytes;
@@ -362,6 +364,7 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
                                         _model.usernameTextController!.text),
                                   );
 
+                                  if (!mounted) return;
                                   setState(() {});
                                 },
                               ),

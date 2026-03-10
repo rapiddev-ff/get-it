@@ -30,7 +30,9 @@ Future<void> initPasswordResetDeepLink(BuildContext context) async {
       if (initialUri != null) {
         await _handleDeepLink(initialUri, prefs);
       }
-    } catch (e) {}
+    } catch (e) {
+      debugPrint("Error in init_password_reset_deep_link: $e");
+    }
   });
 
   // Listen for new deep links — use appNavigatorKey to avoid stale context

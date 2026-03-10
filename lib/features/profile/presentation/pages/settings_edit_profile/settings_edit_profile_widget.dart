@@ -56,6 +56,7 @@ class _SettingsEditProfileWidgetState
         }
       }
       _model.username = userData.username;
+      if (!mounted) return;
       setState(() {});
     });
 
@@ -274,6 +275,7 @@ class _SettingsEditProfileWidgetState
                             );
                             _model.usernameAvailable =
                                 _model.checkIsUsernameAvailable!;
+                            if (!mounted) return;
                             setState(() {});
                           },
                         ),

@@ -53,6 +53,7 @@ class _ChatBuyerProfileWidgetState
         pLimit: 10,
       );
 
+      if (!mounted) return;
       setState(() {});
     });
   }

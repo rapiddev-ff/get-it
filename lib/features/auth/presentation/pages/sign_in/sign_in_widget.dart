@@ -56,6 +56,7 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
 
     _model.emailTextController ??= TextEditingController();
     _model.textFieldFocusNode1 ??= FocusNode();
+    if (!mounted) return;
     _model.textFieldFocusNode1!.addListener(() => setState(() {}));
     _model.passwordTextController ??= TextEditingController();
     _model.textFieldFocusNode2 ??= FocusNode();

@@ -407,6 +407,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                       index,
                       (e) => e.copyWith(isInWishlist: !e.isInWishlist),
                     );
+                if (!mounted) return;
                 setState(() {});
               }),
             ]);

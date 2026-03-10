@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/utils/uploaded_file.dart';
 
@@ -37,7 +38,9 @@ Future<List<String>> uploadReviewImages(
           SupaFlow.client.storage.from('review-images').getPublicUrl(path);
 
       uploadedUrls.add(publicUrl);
-    } catch (e) {}
+    } catch (e) {
+      debugPrint("Error in upload_review_images: $e");
+    }
   }
 
   return uploadedUrls;

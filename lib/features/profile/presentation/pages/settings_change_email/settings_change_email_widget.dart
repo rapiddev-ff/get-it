@@ -274,6 +274,7 @@ class _SettingsChangeEmailWidgetState
                               ? _model.isCorrect['success']
                               : false)) {
                             _model.errorPassword = false;
+                            if (!mounted) return;
                             setState(() {});
                           } else {
                             _model.errorPassword = true;
@@ -304,6 +305,7 @@ class _SettingsChangeEmailWidgetState
                           _shouldSetState = true;
                           if (!_model.isEmailRegistered!) {
                             _model.emailAlreadyInUse = false;
+                            if (!mounted) return;
                             setState(() {});
                           } else {
                             _model.emailAlreadyInUse = true;
@@ -323,6 +325,7 @@ class _SettingsChangeEmailWidgetState
                           if ((_model.result is Map)
                               ? _model.result['success']
                               : false) {
+                            if (!mounted) return;
                             context.pop();
                           } else {
                             await actions.toastificationshow(
@@ -336,6 +339,7 @@ class _SettingsChangeEmailWidgetState
                             );
                           }
 
+                          if (!mounted) return;
                           if (_shouldSetState) setState(() {});
                         },
                       ),

@@ -580,6 +580,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                             shouldSetState = true;
                             if (!_model.isUserExist!) {
                               _model.emailAlreadyInUse = false;
+                              if (!mounted) return;
                               setState(() {});
                             } else {
                               _model.emailAlreadyInUse = true;
@@ -665,6 +666,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                               'user_id': ref.read(currentUserIdProvider),
                             });
 
+                            if (!mounted) return;
                             context.goNamed(
                               PhoneVerificationPageWidget.routeName,
                               queryParameters: {

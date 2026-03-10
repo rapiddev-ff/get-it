@@ -1,4 +1,4 @@
-import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import '/core/utils/uploaded_file.dart';
 import 'package:http/http.dart' as http;
 
@@ -24,7 +24,9 @@ Future<List<UploadedFile>> convertUrlsToUploadedFileList(
         }
         results.add(UploadedFile(name: fileName, bytes: bytes));
       }
-    } catch (e) {}
+    } catch (e) {
+      debugPrint("Error in convert_urls_to_uploaded_file_list: $e");
+    }
   }));
 
   return results;

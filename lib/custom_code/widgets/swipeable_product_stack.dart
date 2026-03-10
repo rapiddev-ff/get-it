@@ -190,6 +190,7 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
         if (_currentIndex >= widget.products.length) {
           widget.onEmpty?.call();
         }
+        if (!mounted) return;
         setState(() {});
       });
     } else if (dx > _swipeThreshold) {
@@ -201,6 +202,7 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
           if (_currentIndex >= widget.products.length) {
             widget.onEmpty?.call();
           }
+          if (!mounted) return;
           setState(() {});
         });
       } else {

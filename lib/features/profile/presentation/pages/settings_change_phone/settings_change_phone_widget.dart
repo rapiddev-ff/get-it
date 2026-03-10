@@ -174,6 +174,7 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
                                   _model.textController!.text),
                             );
 
+                            if (!mounted) return;
                             if (Navigator.of(context).canPop()) {
                               context.pop();
                             }

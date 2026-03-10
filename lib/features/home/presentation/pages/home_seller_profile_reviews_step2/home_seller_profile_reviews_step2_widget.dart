@@ -504,6 +504,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                 );
                                 if (pickedFile != null) {
                                   final bytes = await pickedFile.readAsBytes();
+                                  if (!mounted) return;
                                   setState(() {
                                     images.add(bytes);
                                   });
