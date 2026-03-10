@@ -416,9 +416,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                                 ),
                                               ),
                                               Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 8.0, 0.0, 0.0),
+                                                padding: EdgeInsets.only(top: 8.0),
                                                 child: Text(
                                                   '\$9.99',
                                                   style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
@@ -451,9 +449,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                                               ),
                                               Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 8.0, 0.0, 0.0),
+                                                padding: EdgeInsets.only(top: 8.0),
                                                 child: Text(
                                                   '\$19.99',
                                                   style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
@@ -475,9 +471,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                                   BorderRadius.circular(8.0),
                                             ),
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0, 12.0, 0.0, 16.0),
+                                              padding: EdgeInsets.only(top: 12.0, bottom: 16.0),
                                               child: Column(
                                                 children: [
                                                   Text(
@@ -490,9 +484,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 8.0,
-                                                                0.0, 0.0),
+                                                        EdgeInsets.only(top: 8.0),
                                                     child: Text(
                                                       '\$34.99',
                                                       style: GoogleFonts.inter(
@@ -532,9 +524,7 @@ class _HomeDashoardPromoteStep2WidgetState
                                                           4.0),
                                                 ),
                                                 child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          6.0, 2.0, 6.0, 2.0),
+                                                  padding: EdgeInsets.symmetric(horizontal: 6.0, vertical: 2.0),
                                                   child: Text(
                                                     'Best Value',
                                                     style: GoogleFonts.inter(

@@ -321,9 +321,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                                   ),
                                                   child: Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(12.0, 8.0,
-                                                                20.0, 8.0),
+                                                        EdgeInsets.only(left: 12.0, top: 8.0, right: 20.0, bottom: 8.0),
                                                     child: Text(
                                                       '\$ ${valueOrDefault<String>(
                                                         NumberFormat('#,##0.##',

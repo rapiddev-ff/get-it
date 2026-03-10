@@ -402,9 +402,7 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                                     ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 8.0,
-                                                                0.0, 0.0),
+                                                        EdgeInsets.only(top: 8.0),
                                                     child: Row(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
@@ -444,12 +442,7 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                                   if (alreadyReviewed)
                                                     Padding(
                                                       padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  4.0,
-                                                                  0.0,
-                                                                  0.0),
+                                                          EdgeInsets.only(top: 4.0),
                                                       child: Text(
                                                         'Already reviewed',
                                                         style:

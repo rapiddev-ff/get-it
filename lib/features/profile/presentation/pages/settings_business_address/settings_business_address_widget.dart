@@ -286,9 +286,7 @@ class _SettingsBusinessAddressWidgetState
                                                   .textTheme
                                                   .labelMedium!,
                                               contentPadding:
-                                                  EdgeInsetsDirectional
-                                                      .fromSTEB(12.0, 16.0,
-                                                          12.0, 16.0),
+                                                  EdgeInsets.symmetric(horizontal: 12.0, vertical: 16.0),
                                               enabledBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
                                                     color: AppColors.neutral700,

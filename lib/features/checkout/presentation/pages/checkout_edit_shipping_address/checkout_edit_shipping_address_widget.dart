@@ -563,9 +563,7 @@ class _CheckoutEditShippingAddressWidgetState
                                               borderColor: AppColors.neutral700,
                                               borderWidth: 1.0,
                                               borderRadius: 4.0,
-                                              margin: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      12.0, 0.0, 12.0, 0.0),
+                                              margin: EdgeInsets.symmetric(horizontal: 12.0),
                                               hidesUnderline: true,
                                               isOverButton: true,
                                               isSearchable: false,

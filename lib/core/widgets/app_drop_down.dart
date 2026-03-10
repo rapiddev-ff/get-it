@@ -121,8 +121,8 @@ class _AppDropDownState<T> extends State<AppDropDown<T>> {
       );
 
   EdgeInsetsGeometry get horizontalMargin => widget.margin.clamp(
-        EdgeInsetsDirectional.zero,
-        const EdgeInsetsDirectional.symmetric(horizontal: double.infinity),
+        EdgeInsets.zero,
+        const EdgeInsets.symmetric(horizontal: double.infinity),
       );
 
   late void Function() _listener;

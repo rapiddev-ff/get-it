@@ -314,9 +314,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                           return Align(
                                             alignment: Alignment.topCenter,
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0, 32.0, 0.0, 0.0),
+                                              padding: EdgeInsets.only(top: 32.0),
                                               child: ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(8.0),
@@ -520,9 +518,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
                                                 ),
                                               Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 8.0, 0.0, 0.0),
+                                                padding: EdgeInsets.only(top: 8.0),
                                                 child: Row(
                                                   mainAxisSize:
                                                       MainAxisSize.max,

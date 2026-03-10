@@ -291,8 +291,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                             BorderRadius.circular(100.0),
                                       ),
                                       child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(16.0, 8.0, 16.0, 8.0),
+                                        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                                         child: Text(
                                           categoriesItem.name,
                                           style: GoogleFonts.inter(

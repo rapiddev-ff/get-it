@@ -402,8 +402,7 @@ class _HomeDashoardShippingDetailedWidgetState
                                                   .labelSmall!,
                                             ),
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                              padding: EdgeInsets.only(top: 4.0),
                                               child: Text(
                                                 '\$${_formatPrice(_order!['total_amount'])}',
                                                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500),
