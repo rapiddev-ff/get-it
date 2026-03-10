@@ -163,10 +163,6 @@ class _SettingsPaymentCardItemWidgetState
                 children: [
                   Expanded(
                     child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
                       onTap: () async {
                         context.pushNamed(
                           SettingsPaymentMethodEditWidget.routeName,
@@ -200,10 +196,6 @@ class _SettingsPaymentCardItemWidgetState
                   Expanded(
                     child: Builder(
                       builder: (context) => InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
                         onTap: () async {
                           await showDialog(
                             context: context,

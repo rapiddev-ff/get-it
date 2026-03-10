@@ -106,10 +106,6 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
                     onTap: () async {
                       context.pushNamed(SettingsMyProfileWidget.routeName);
                     },
@@ -593,10 +589,6 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                     child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
                       onTap: () async {
                         if ((authState.stripe?.hasAccount ?? false) == false) {
                           await actions.startStripeConnectOnboarding();
@@ -770,10 +762,6 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                               ),
                             ),
                             InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
                               onTap: () async {
                                 await actions.toastificationshow(
                                   context,
@@ -845,10 +833,6 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     color: Color(0xFF363636),
                   ),
                   InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
                     onTap: () async {
                       context.pushNamed(SettingsTermsWidget.routeName);
                     },
@@ -893,10 +877,6 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                     child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
                       onTap: () async {
                         context.pushNamed(SettingsPrivacyWidget.routeName);
                       },
@@ -942,10 +922,6 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                     child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
                       onTap: () async {
                         context.pushNamed(SettingsReportWidget.routeName);
                       },

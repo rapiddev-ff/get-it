@@ -456,10 +456,6 @@ class _HomeDashoardEarningsWidgetState
     final isActive = _activeTab == label;
     return Expanded(
       child: InkWell(
-        splashColor: Colors.transparent,
-        focusColor: Colors.transparent,
-        hoverColor: Colors.transparent,
-        highlightColor: Colors.transparent,
         onTap: () => setState(() => _activeTab = label),
         child: Column(
           mainAxisSize: MainAxisSize.max,

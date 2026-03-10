@@ -211,10 +211,6 @@ class _PermissionsWidgetState extends State<PermissionsWidget>
                         },
                       ),
                       InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
                         onTap: () {
                           context.pushNamed(AdditionalInfoWidget.routeName);
                         },

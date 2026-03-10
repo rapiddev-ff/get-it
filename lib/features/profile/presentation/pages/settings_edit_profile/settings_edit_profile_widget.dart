@@ -200,10 +200,6 @@ class _SettingsEditProfileWidgetState
                               shape: BoxShape.circle,
                             ),
                             child: InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
                               onTap: () async {
                                 await _pickImage();
                               },

@@ -361,10 +361,6 @@ class _HomeSellerProfileReviewsStep1WidgetState
                                 return Opacity(
                                   opacity: alreadyReviewed ? 0.5 : 1.0,
                                   child: InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
                                     onTap: alreadyReviewed
                                         ? null
                                         : () async {

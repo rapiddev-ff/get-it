@@ -140,10 +140,6 @@ class CheckoutItemWidget extends StatelessWidget {
                         ),
                       ),
                       InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
                         onTap: () async {
                           await minusQuantityAction?.call();
                         },
@@ -165,10 +161,6 @@ class CheckoutItemWidget extends StatelessWidget {
                         ),
                       ),
                       InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
                         onTap: () async {
                           await addQuantityAction?.call();
                         },

@@ -17,6 +17,10 @@ class AppTheme {
           onError: AppColors.white,
         ),
         scaffoldBackgroundColor: AppColors.backgroundPrimary,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        hoverColor: Colors.transparent,
+        focusColor: Colors.transparent,
         textTheme: _buildTextTheme(),
       );
 

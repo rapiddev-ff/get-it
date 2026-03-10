@@ -50,11 +50,6 @@ class _HomeDashoardInventoryAddConditionWidgetState
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
@@ -117,10 +112,6 @@ class _HomeDashoardInventoryAddConditionWidgetState
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
                             onTap: () async {
                               if (_checkConditionsContains(
                                   conditionsList.toList(),

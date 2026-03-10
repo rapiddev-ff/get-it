@@ -306,10 +306,6 @@ class _PhoneVerificationPage2WidgetState
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 4.0),
                           child: InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
                             onTap: () async {
                               var shouldSetState = false;
                               if (_model.timerMilliseconds > 0) {

@@ -214,10 +214,6 @@ class _HomeDashoardInventoryWidgetState
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
                             onTap: () async {
                               choosenCategory = null;
                               setState(() {});
@@ -263,10 +259,6 @@ class _HomeDashoardInventoryWidgetState
                                   final categoriesItem =
                                       categories[categoriesIndex];
                                   return InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
                                     onTap: () async {
                                       choosenCategory = categoriesItem;
                                       setState(() {});
@@ -417,10 +409,6 @@ class _HomeDashoardInventoryWidgetState
                       ),
                       Expanded(
                         child: InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
                           onTap: () async {
                             context.pushNamed(
                                 HomeDashoardInventoryAddWidget.routeName);
@@ -458,10 +446,6 @@ class _HomeDashoardInventoryWidgetState
                       ),
                       Expanded(
                         child: InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
                           onTap: () async {
                             context.pushNamed(
                                 HomeDashoardShortlistWidget.routeName);

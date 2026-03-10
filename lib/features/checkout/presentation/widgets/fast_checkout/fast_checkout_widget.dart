@@ -193,10 +193,6 @@ class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
                   ),
                   // Cancel Order button
                   InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
                     onTap: _isCancelling ? null : _onCancelOrder,
                     child: _isCancelling
                         ? SizedBox(

@@ -235,10 +235,6 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                             child: Row(
                               children: [
                                 InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
                                   onTap: () {
                                     setState(() {
                                       _choosenCategory = null;
@@ -283,10 +279,6 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                   final categoriesItem =
                                       categories[categoriesIndex];
                                   return InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
                                     onTap: () {
                                       setState(() {
                                         _choosenCategory = categoriesItem;
@@ -426,10 +418,6 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                     final wishlistItem =
                                         wishlist[wishlistIndex];
                                     return InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
                                       onTap: () {
                                         context.pushNamed(
                                           HomeProductWidget.routeName,

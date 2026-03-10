@@ -212,10 +212,6 @@ class _HomeDashoardPromoteStep2WidgetState
                     padding:
                         EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
                     child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
                       onTap: () async {
                         state = 'Boost';
                         setState(() {});

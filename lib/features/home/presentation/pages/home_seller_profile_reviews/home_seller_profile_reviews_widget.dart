@@ -378,10 +378,6 @@ class _HomeSellerProfileReviewsWidgetState
                             children: [
                               Expanded(
                                 child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
                                   onTap: () async {
                                     _model.state = 'As Buyer';
                                     setState(() {});
@@ -422,10 +418,6 @@ class _HomeSellerProfileReviewsWidgetState
                               ),
                               Expanded(
                                 child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
                                   onTap: () async {
                                     _model.state = 'As Seller';
                                     setState(() {});

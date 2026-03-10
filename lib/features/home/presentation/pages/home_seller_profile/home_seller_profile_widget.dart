@@ -645,10 +645,6 @@ class _HomeSellerProfileWidgetState
                                 children: [
                                   Expanded(
                                     child: InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         roleState = 'As Buyer';
                                         setState(() {});
@@ -693,10 +689,6 @@ class _HomeSellerProfileWidgetState
                                   ),
                                   Expanded(
                                     child: InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         roleState = 'As Seller';
                                         setState(() {});
@@ -768,10 +760,6 @@ class _HomeSellerProfileWidgetState
                           children: [
                             Flexible(
                               child: InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
                                 onTap: () async {
                                   state = 'Products';
                                   setState(() {});
@@ -812,10 +800,6 @@ class _HomeSellerProfileWidgetState
                             ),
                             Flexible(
                               child: InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
                                 onTap: () async {
                                   state = 'Short Lists';
                                   setState(() {});
@@ -935,10 +919,6 @@ class _HomeSellerProfileWidgetState
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
                                         onTap: () async {
                                           choosenFilter = 'All';
                                           setState(() {});

@@ -126,10 +126,6 @@ class ChatItemWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
                       onTap: () async {
                         await Navigator.push(
                           context,
@@ -253,10 +249,6 @@ class ChatItemWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               InkWell(
-                splashColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                highlightColor: Colors.transparent,
                 onTap: () async {
                   await Navigator.push(
                     context,

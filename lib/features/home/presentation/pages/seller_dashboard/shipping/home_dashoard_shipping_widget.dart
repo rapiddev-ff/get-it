@@ -292,10 +292,6 @@ class _HomeDashoardShippingWidgetState
     final imageUrl = _getProductImageUrl(order);
 
     return InkWell(
-      splashColor: Colors.transparent,
-      focusColor: Colors.transparent,
-      hoverColor: Colors.transparent,
-      highlightColor: Colors.transparent,
       onTap: () async {
         final result = await context.pushNamed<bool>(
           HomeDashoardShippingDetailedWidget.routeName,

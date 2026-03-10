@@ -477,10 +477,6 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                         children: [
                           if (!_model.checkBoxIsActive)
                             InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
                               onTap: () {
                                 _model.checkBoxIsActive =
                                     !_model.checkBoxIsActive;
@@ -499,10 +495,6 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                             ),
                           if (_model.checkBoxIsActive)
                             InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
                               onTap: () {
                                 _model.checkBoxIsActive =
                                     !_model.checkBoxIsActive;

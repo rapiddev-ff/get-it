@@ -129,10 +129,6 @@ class _HomeDashoardInventoryAddTagsWidgetState
                       ),
                     ),
                     InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
                       onTap: () async {
                         tags = [];
                         setState(() {});
@@ -259,10 +255,6 @@ class _HomeDashoardInventoryAddTagsWidgetState
                                     final tagsListItem =
                                         tagsList[tagsListIndex];
                                     return InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         if (tags.contains(Tag(
                                           id: tagsListItem.id,

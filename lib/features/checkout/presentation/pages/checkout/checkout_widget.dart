@@ -316,10 +316,6 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   child: InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
                     onTap: () async {
                       await context.pushNamed(
                           CheckoutEditShippingAddressWidget.routeName);
@@ -500,10 +496,6 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                             final isSelected =
                                 selectedPayment.id == paymentMethodsItem.id;
                             return InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
                               onTap: () async {
                                 ref
                                     .read(checkoutProvider.notifier)
@@ -577,10 +569,6 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                   padding:
                       EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
                   child: InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
                     onTap: () async {
                       await context
                           .pushNamed(SettingsPaymentMethodAddWidget.routeName);

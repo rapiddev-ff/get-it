@@ -105,10 +105,6 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                     padding:
                         EdgeInsetsDirectional.fromSTEB(18.0, 0.0, 0.0, 0.0),
                     child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
                       onTap: () async {
                         if (widget.conversation?.buyerId == currentUserUid) {
                           context.pushNamed(
@@ -278,10 +274,6 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                         ),
                       ),
                       InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
                         onTap: () async {
                           context.pushNamed(
                             HomeProductWidget.routeName,
@@ -446,10 +438,6 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 16.0, 0.0),
                         child: InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
                           onTap: () async {
                             final selectedMedia = await selectMedia(
                               mediaSource: MediaSource.photoGallery,
@@ -494,10 +482,6 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
               ),
             ),
             InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
               onTap: () async {
                 final text = _textController.text.trim();
                 if (text.isEmpty) return;

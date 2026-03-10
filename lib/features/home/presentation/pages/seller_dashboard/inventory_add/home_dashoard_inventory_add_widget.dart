@@ -385,10 +385,6 @@ class _HomeDashoardInventoryAddWidgetState
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
       child: InkWell(
-        splashColor: Colors.transparent,
-        focusColor: Colors.transparent,
-        hoverColor: Colors.transparent,
-        highlightColor: Colors.transparent,
         onTap: onTap,
         child: Container(
           width: double.infinity,
@@ -430,10 +426,6 @@ class _HomeDashoardInventoryAddWidgetState
   }) {
     final selected = groupValue == value;
     return InkWell(
-      splashColor: Colors.transparent,
-      focusColor: Colors.transparent,
-      hoverColor: Colors.transparent,
-      highlightColor: Colors.transparent,
       onTap: () => onSelected(value),
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -579,10 +571,6 @@ class _HomeDashoardInventoryAddWidgetState
               mainAxisSize: MainAxisSize.max,
               children: [
                 InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
                   onTap: () async {
                     final remaining = 10 - uploadedImages.length;
                     if (remaining <= 0) {
@@ -681,10 +669,6 @@ class _HomeDashoardInventoryAddWidgetState
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 8.0, 8.0, 0.0),
                                   child: InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
                                     onTap: () async {
                                       removeFromUploadedImages(imagesItem);
                                       setState(() {});
@@ -936,10 +920,6 @@ class _HomeDashoardInventoryAddWidgetState
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
           child: InkWell(
-            splashColor: Colors.transparent,
-            focusColor: Colors.transparent,
-            hoverColor: Colors.transparent,
-            highlightColor: Colors.transparent,
             onTap: () async {
               await showModalBottomSheet(
                 isScrollControlled: true,
@@ -1437,10 +1417,6 @@ class _HomeDashoardInventoryAddWidgetState
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
           child: InkWell(
-            splashColor: Colors.transparent,
-            focusColor: Colors.transparent,
-            hoverColor: Colors.transparent,
-            highlightColor: Colors.transparent,
             onTap: () async {
               final result = await Navigator.push<List<Tag>>(
                 context,
@@ -1496,10 +1472,6 @@ class _HomeDashoardInventoryAddWidgetState
                 children: List.generate(choosenTags.length, (tagsIndex) {
                   final tagsItem = choosenTags[tagsIndex];
                   return InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
                     onTap: () async {
                       choosenTags.remove(tagsItem);
                       setState(() {});

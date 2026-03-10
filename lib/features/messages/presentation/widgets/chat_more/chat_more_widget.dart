@@ -36,10 +36,6 @@ class _ChatMoreWidgetState extends ConsumerState<ChatMoreWidget> {
           mainAxisSize: MainAxisSize.min,
           children: [
             InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
               onTap: () async {
                 await actions.callRpc(
                   context,
@@ -88,10 +84,6 @@ class _ChatMoreWidgetState extends ConsumerState<ChatMoreWidget> {
               ].divide(SizedBox(width: 16.0)),
             ),
             InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
               onTap: () async {
                 await actions.callRpc(
                   context,

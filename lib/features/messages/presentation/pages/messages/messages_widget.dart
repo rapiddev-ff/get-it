@@ -162,10 +162,6 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
   Widget _buildTab(String label) {
     return Expanded(
       child: InkWell(
-        splashColor: Colors.transparent,
-        focusColor: Colors.transparent,
-        hoverColor: Colors.transparent,
-        highlightColor: Colors.transparent,
         onTap: () async {
           _state = label;
           setState(() {});
@@ -239,10 +235,6 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
       itemBuilder: (context, converstationsIndex) {
         final converstationsItem = converstations[converstationsIndex];
         return InkWell(
-          splashColor: Colors.transparent,
-          focusColor: Colors.transparent,
-          hoverColor: Colors.transparent,
-          highlightColor: Colors.transparent,
           onTap: () async {
             ref
                 .read(messagesProvider.notifier)

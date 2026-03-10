@@ -22,11 +22,6 @@ class _NavBarWidgetState extends State<NavBarWidget>
     super.initState();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   String _currentRoute(BuildContext context) =>
       GoRouterState.of(context).uri.toString();
 
@@ -50,10 +45,6 @@ class _NavBarWidgetState extends State<NavBarWidget>
             children: [
               Expanded(
                 child: InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
                   onTap: () async {
                     if (route != '/homePage') {
                       context.goNamed(
@@ -132,10 +123,6 @@ class _NavBarWidgetState extends State<NavBarWidget>
               ),
               Expanded(
                 child: InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
                   onTap: () async {
                     if (route != '/browse') {
                       context.goNamed(
@@ -222,10 +209,6 @@ class _NavBarWidgetState extends State<NavBarWidget>
               ),
               Expanded(
                 child: InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
                   onTap: () async {
                     if (route != '/messages') {
                       context.goNamed(
@@ -288,10 +271,6 @@ class _NavBarWidgetState extends State<NavBarWidget>
               ),
               Expanded(
                 child: InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
                   onTap: () async {
                     if (route != '/wishlist') {
                       context.goNamed(

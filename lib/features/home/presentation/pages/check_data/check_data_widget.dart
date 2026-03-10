@@ -242,11 +242,6 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(

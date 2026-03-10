@@ -181,10 +181,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                   children: [
                     Expanded(
                       child: InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
                         onTap: () async {
                           _state = 'Shop';
                           setState(() {});
@@ -223,10 +219,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                     ),
                     Expanded(
                       child: InkWell(
-                        splashColor: Colors.transparent,
-                        focusColor: Colors.transparent,
-                        hoverColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
                         onTap: () async {
                           _state = 'Seller Dashboard';
                           setState(() {});
@@ -999,10 +991,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
   }) {
     return Expanded(
       child: InkWell(
-        splashColor: Colors.transparent,
-        focusColor: Colors.transparent,
-        hoverColor: Colors.transparent,
-        highlightColor: Colors.transparent,
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
@@ -1045,10 +1033,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
   }) {
     return Expanded(
       child: InkWell(
-        splashColor: Colors.transparent,
-        focusColor: Colors.transparent,
-        hoverColor: Colors.transparent,
-        highlightColor: Colors.transparent,
         onTap: onTap,
         child: Container(
           height: height,

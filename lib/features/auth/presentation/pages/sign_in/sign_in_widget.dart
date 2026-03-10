@@ -286,10 +286,6 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                                   children: [
                                     if (!_model.keepSignedIn)
                                       InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
                                         onTap: () async {
                                           _model.keepSignedIn =
                                               !_model.keepSignedIn;
@@ -309,10 +305,6 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                                       ),
                                     if (_model.keepSignedIn)
                                       InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
                                         onTap: () async {
                                           _model.keepSignedIn =
                                               !_model.keepSignedIn;
@@ -350,10 +342,6 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                                       ).animate().fade(duration: 600.ms),
                                     ),
                                     InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         context.pushNamed(
                                             ForgotPasswordWidget.routeName);

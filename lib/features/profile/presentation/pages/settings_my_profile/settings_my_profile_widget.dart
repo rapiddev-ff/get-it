@@ -241,10 +241,6 @@ class _SettingsMyProfileWidgetState
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 8.0, 0.0, 0.0),
                               child: InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
                                 onTap: () async {
                                   context.pushNamed(
                                       SettingsMyProfileFollowersWidget
@@ -426,10 +422,6 @@ class _SettingsMyProfileWidgetState
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                     child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
                       onTap: () async {
                         context
                             .pushNamed(SettingsDeleteAccountWidget.routeName);
@@ -477,10 +469,6 @@ class _SettingsMyProfileWidgetState
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
                     child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
                       onTap: () async {
                         context.pushNamed(
                             SettingsDeactivateAccountWidget.routeName);
@@ -545,10 +533,6 @@ class _SettingsMyProfileWidgetState
           children: [
             Expanded(
               child: InkWell(
-                splashColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                highlightColor: Colors.transparent,
                 onTap: () async {
                   _model.state = 'As Buyer';
                   setState(() {});
@@ -587,10 +571,6 @@ class _SettingsMyProfileWidgetState
             ),
             Expanded(
               child: InkWell(
-                splashColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                highlightColor: Colors.transparent,
                 onTap: () async {
                   _model.state = 'As Seller';
                   setState(() {});

@@ -23,11 +23,6 @@ class _StripeSuccessWidgetState extends State<StripeSuccessWidget> {
   List<StripeAccountsRow>? getStripe;
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(

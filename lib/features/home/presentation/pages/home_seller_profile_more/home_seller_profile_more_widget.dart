@@ -80,10 +80,6 @@ class _HomeSellerProfileMoreWidgetState
               color: Color(0xFF545454),
             ),
             InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
               onTap: () async {
                 blockUser = await actions.callRpc(
                   context,

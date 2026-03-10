@@ -213,10 +213,6 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
                                     shape: BoxShape.circle,
                                   ),
                                   child: InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
                                     onTap: _pickAndUploadImage,
                                     child: Builder(
                                       builder: (context) {
