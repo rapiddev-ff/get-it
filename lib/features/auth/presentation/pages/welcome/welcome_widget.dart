@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '/core/constants/app_constants.dart';
-import '/core/theme/app_colors.dart';
 import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import '/features/auth/presentation/pages/sign_in/sign_in_widget.dart';
@@ -51,7 +50,6 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
       child: PopScope(
         canPop: false,
         child: Scaffold(
-          backgroundColor: AppColors.backgroundPrimary,
           body: SafeArea(
             child: Column(
               children: [

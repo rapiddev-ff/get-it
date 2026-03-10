@@ -73,9 +73,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
-          backgroundColor: AppColors.backgroundPrimary,
           automaticallyImplyLeading: false,
           leading: IconButton(
             icon: const Icon(

@@ -225,11 +225,9 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
 
     return DismissKeyboard(
       child: Scaffold(
-        backgroundColor: AppColors.backgroundPrimary,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(56.0),
           child: AppBar(
-            backgroundColor: AppColors.backgroundPrimary,
             automaticallyImplyLeading: false,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1033,7 +1031,6 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
   void _showAllTagsBottomSheet(BuildContext context, List tags) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: AppColors.backgroundPrimary,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
       ),

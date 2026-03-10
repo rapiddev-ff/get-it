@@ -26,7 +26,6 @@ class _StripeSuccessWidgetState extends State<StripeSuccessWidget> {
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        backgroundColor: AppColors.backgroundPrimary,
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.all(24.0),

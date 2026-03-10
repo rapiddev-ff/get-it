@@ -82,7 +82,6 @@ class _HomeDashoardInventoryAddTagsWidgetState
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Scaffold(
-            backgroundColor: AppColors.backgroundPrimary,
             body: Center(
               child: SizedBox(
                 width: 50.0,
@@ -100,7 +99,6 @@ class _HomeDashoardInventoryAddTagsWidgetState
 
         return DismissKeyboard(
           child: Scaffold(
-            backgroundColor: AppColors.backgroundPrimary,
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(56.0),
               child: AppBar(
@@ -346,7 +344,6 @@ class _HomeDashoardInventoryAddTagsWidgetState
                             style: OutlinedButton.styleFrom(
                               minimumSize: Size(double.infinity, 56.0),
                               padding: EdgeInsets.symmetric(horizontal: 16.0),
-                              backgroundColor: AppColors.backgroundPrimary,
                               side: BorderSide(color: Color(0xFF545454)),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(4.0),

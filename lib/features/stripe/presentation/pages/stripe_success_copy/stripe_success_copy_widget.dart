@@ -21,7 +21,6 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        backgroundColor: AppColors.backgroundPrimary,
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.all(24.0),

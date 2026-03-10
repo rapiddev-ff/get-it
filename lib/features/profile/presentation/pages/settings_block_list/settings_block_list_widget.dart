@@ -139,7 +139,6 @@ class _SettingsBlockListWidgetState extends State<SettingsBlockListWidget> {
   Widget build(BuildContext context) {
     if (_isLoading) {
       return Scaffold(
-        backgroundColor: AppColors.backgroundPrimary,
         body: Center(
           child: SizedBox(
             width: 50.0,
@@ -156,7 +155,6 @@ class _SettingsBlockListWidgetState extends State<SettingsBlockListWidget> {
 
     return DismissKeyboard(
       child: Scaffold(
-        backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundSecondary,
           automaticallyImplyLeading: false,

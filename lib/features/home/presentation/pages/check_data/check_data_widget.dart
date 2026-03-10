@@ -245,7 +245,6 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        backgroundColor: AppColors.backgroundPrimary,
         body: SafeArea(
           child: Center(
             child: Column(

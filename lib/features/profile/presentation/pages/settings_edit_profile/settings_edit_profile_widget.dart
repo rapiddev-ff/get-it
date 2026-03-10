@@ -129,9 +129,7 @@ class _SettingsEditProfileWidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
-          backgroundColor: AppColors.backgroundPrimary,
           automaticallyImplyLeading: false,
           leading: IconButton(
             icon: Icon(
@@ -652,7 +650,6 @@ class _SettingsEditProfileWidgetState
                       },
                       style: TextButton.styleFrom(
                         minimumSize: Size(double.infinity, 56.0),
-                        backgroundColor: AppColors.backgroundPrimary,
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4.0),

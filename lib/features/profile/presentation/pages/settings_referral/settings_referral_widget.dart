@@ -28,9 +28,7 @@ class _SettingsReferralWidgetState
 
     return DismissKeyboard(
       child: Scaffold(
-        backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
-          backgroundColor: AppColors.backgroundPrimary,
           automaticallyImplyLeading: false,
           leading: IconButton(
             icon: Icon(

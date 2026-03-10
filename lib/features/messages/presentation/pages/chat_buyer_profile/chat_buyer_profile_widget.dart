@@ -63,7 +63,6 @@ class _ChatBuyerProfileWidgetState
 
     return DismissKeyboard(
       child: Scaffold(
-        backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
           backgroundColor: AppColors.backgroundSecondary,
           automaticallyImplyLeading: false,

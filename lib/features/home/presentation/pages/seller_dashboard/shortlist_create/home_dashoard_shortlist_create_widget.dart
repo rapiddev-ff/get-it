@@ -129,7 +129,6 @@ class _HomeDashoardShortlistCreateWidgetState
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        backgroundColor: AppColors.backgroundPrimary,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(56.0),
           child: AppBar(
@@ -474,7 +473,6 @@ class _HomeDashoardShortlistCreateWidgetState
                             },
                       style: TextButton.styleFrom(
                         minimumSize: Size(double.infinity, 56.0),
-                        backgroundColor: AppColors.backgroundPrimary,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4.0),
                           side: BorderSide(color: Color(0xFF545454)),

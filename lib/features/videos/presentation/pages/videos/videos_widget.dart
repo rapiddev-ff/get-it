@@ -1,5 +1,4 @@
 import '/features/home/presentation/widgets/nav_bar/nav_bar_widget.dart';
-import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +34,6 @@ class _VideosWidgetState extends State<VideosWidget> {
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        backgroundColor: AppColors.backgroundPrimary,
         body: Column(
           children: [
             Expanded(

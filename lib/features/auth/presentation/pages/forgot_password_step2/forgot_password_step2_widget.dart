@@ -47,9 +47,7 @@ class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget>
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(
-          backgroundColor: AppColors.backgroundPrimary,
           automaticallyImplyLeading: false,
           leading: IconButton(
             icon: Icon(

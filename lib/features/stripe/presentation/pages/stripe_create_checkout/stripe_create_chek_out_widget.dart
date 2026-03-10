@@ -1,6 +1,5 @@
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
-import '/core/theme/app_colors.dart';
 import '/core/widgets/app_web_view.dart';
 import '/core/utils/instant_timer.dart';
 import '/core/router/app_router.dart';
@@ -83,7 +82,6 @@ class _StripeCreateChekOutWidgetState extends State<StripeCreateChekOutWidget> {
   Widget build(BuildContext context) {
     return DismissKeyboard(
       child: Scaffold(
-        backgroundColor: AppColors.backgroundPrimary,
         body: SafeArea(
           child: Column(
             children: [
