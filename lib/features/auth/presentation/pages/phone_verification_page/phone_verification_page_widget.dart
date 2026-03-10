@@ -147,11 +147,7 @@ class _PhoneVerificationPageWidgetState
                           padding: const EdgeInsets.only(bottom: 24.0),
                           child: Text(
                             'We\'ll send you a code to confirm it\'s you.',
-                            style: GoogleFonts.inter(
-                              color: AppColors.textSecondary,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.normal,
-                            ),
+                            style: Theme.of(context).textTheme.labelLarge!,
                           ),
                         ),
                         Column(

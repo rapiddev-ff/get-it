@@ -105,10 +105,7 @@ class InventoryItemWidget extends StatelessWidget {
                               sellerProduct?.status,
                               'N/A',
                             ),
-                            style: GoogleFonts.inter(
-                              fontSize: 14.0,
-                              color: AppColors.textPrimary,
-                            ),
+                            style: Theme.of(context).textTheme.bodyMedium!,
                           ),
                         ),
                       ),
@@ -120,10 +117,7 @@ class InventoryItemWidget extends StatelessWidget {
                             sellerProduct?.viewsCount.toString(),
                             '0',
                           )} Views',
-                          style: GoogleFonts.inter(
-                            fontSize: 14.0,
-                            color: AppColors.textPrimary,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium!,
                         ),
                       ),
                     ],

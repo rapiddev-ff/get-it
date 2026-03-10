@@ -114,8 +114,8 @@ class _SettingsPaymentMethodEditWidgetState
       isDense: false,
       hintText: hintText,
       hintStyle: GoogleFonts.inter(
-        fontWeight: FontWeight.normal,
         fontSize: 16.0,
+        fontWeight: FontWeight.normal,
         color: AppColors.textSecondary,
       ),
       enabledBorder: OutlineInputBorder(
@@ -146,8 +146,8 @@ class _SettingsPaymentMethodEditWidgetState
       isDense: true,
       hintText: hintText,
       hintStyle: GoogleFonts.inter(
-        fontWeight: FontWeight.normal,
         fontSize: 14.0,
+        fontWeight: FontWeight.normal,
         color: AppColors.textSecondary,
       ),
       contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 16.0),
@@ -645,10 +645,8 @@ class _SettingsPaymentMethodEditWidgetState
                               children: [
                                 Text(
                                   'Set as default payment method',
-                                  style: GoogleFonts.inter(
-                                    color: AppColors.textPrimary,
-                                    fontSize: 14.0,
-                                  ),
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium!,
                                 ).animate().fade(duration: 600.ms),
                                 Text(
                                   'This card will  be used for future purchases',

@@ -50,10 +50,7 @@ class SettingsItemWidget extends StatelessWidget {
                     ),
                     Text(
                       value,
-                      style: GoogleFonts.inter(
-                        fontSize: 12.0,
-                        color: AppColors.textPrimary,
-                      ),
+                      style: Theme.of(context).textTheme.bodySmall!,
                     ),
                   ].divide(SizedBox(height: 8.0)),
                 ),

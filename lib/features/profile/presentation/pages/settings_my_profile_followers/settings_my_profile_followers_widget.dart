@@ -3,7 +3,7 @@ import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import '/backend/supabase/supabase.dart';
-import '/features/auth/data/supabase_auth/auth_util.dart';
+import '/features/auth/presentation/providers/auth_provider.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import '/core/providers/current_user_provider.dart';
@@ -590,9 +590,9 @@ class _SettingsMyProfileFollowersWidgetState
   }
 
   void _shareProfile() {
-    final username = currentUserDisplayName.isNotEmpty
-        ? currentUserDisplayName
-        : ref.read(currentUserIdProvider);
+    final displayName = ref.read(authProvider).username;
+    final username =
+        displayName.isNotEmpty ? displayName : ref.read(currentUserIdProvider);
     final profileLink = 'Check out my profile on Get It: @$username';
     Clipboard.setData(ClipboardData(text: profileLink));
     toastification.show(
@@ -625,20 +625,13 @@ class _SettingsMyProfileFollowersWidgetState
             SizedBox(height: 24.0),
             Text(
               title,
-              style: GoogleFonts.inter(
-                color: AppColors.textPrimary,
-                fontSize: 18.0,
-                fontWeight: FontWeight.w600,
-              ),
+              style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 8.0),
             Text(
               subtitle,
-              style: GoogleFonts.inter(
-                color: AppColors.textSecondary,
-                fontSize: 14.0,
-              ),
+              style: Theme.of(context).textTheme.labelMedium!,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 24.0),
@@ -667,20 +660,13 @@ class _SettingsMyProfileFollowersWidgetState
             SizedBox(height: 24.0),
             Text(
               'No matches',
-              style: GoogleFonts.inter(
-                color: AppColors.textPrimary,
-                fontSize: 18.0,
-                fontWeight: FontWeight.w600,
-              ),
+              style: Theme.of(context).textTheme.titleMedium!,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 8.0),
             Text(
               'We couldn\'t find anyone matching "$query".',
-              style: GoogleFonts.inter(
-                color: AppColors.textSecondary,
-                fontSize: 14.0,
-              ),
+              style: Theme.of(context).textTheme.labelMedium!,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 24.0),

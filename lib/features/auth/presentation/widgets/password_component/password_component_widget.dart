@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import 'password_component_model.dart';
 export 'password_component_model.dart';
@@ -72,10 +70,7 @@ class _PasswordComponentWidgetState extends State<PasswordComponentWidget> {
           ),
         ),
         AnimatedDefaultTextStyle(
-          style: GoogleFonts.inter(
-            color: AppColors.textPrimary,
-            fontSize: 14.0,
-          ),
+          style: Theme.of(context).textTheme.bodyMedium!,
           duration: Duration(milliseconds: 600),
           curve: Curves.easeOut,
           child: Text(

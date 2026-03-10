@@ -203,11 +203,7 @@ class _QuickPurchasePopupWidgetState
             padding: EdgeInsets.all(16.0),
             child: Text(
               'Confirm Purchase',
-              style: GoogleFonts.inter(
-                fontWeight: FontWeight.w600,
-                fontSize: 18.0,
-                color: AppColors.textPrimary,
-              ),
+              style: Theme.of(context).textTheme.titleMedium!,
             ),
           ),
           Divider(height: 1.0, thickness: 1.0, color: Color(0xFF363636)),
@@ -249,11 +245,7 @@ class _QuickPurchasePopupWidgetState
                       SizedBox(height: 4.0),
                       Text(
                         _currencyFormat.format(widget.feedProduct.price),
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16.0,
-                          color: AppColors.textPrimary,
-                        ),
+                        style: Theme.of(context).textTheme.titleSmall!,
                       ),
                       SizedBox(height: 8.0),
                       // Quantity controls
@@ -261,10 +253,7 @@ class _QuickPurchasePopupWidgetState
                         children: [
                           Text(
                             'Qty:',
-                            style: GoogleFonts.inter(
-                              color: AppColors.textSecondary,
-                              fontSize: 14.0,
-                            ),
+                            style: Theme.of(context).textTheme.labelMedium!,
                           ),
                           SizedBox(width: 12.0),
                           InkWell(
@@ -355,20 +344,12 @@ class _QuickPurchasePopupWidgetState
                     Expanded(
                       child: Text(
                         'Total',
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16.0,
-                          color: AppColors.textPrimary,
-                        ),
+                        style: Theme.of(context).textTheme.titleSmall!,
                       ),
                     ),
                     Text(
                       _currencyFormat.format(_total),
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16.0,
-                        color: AppColors.textPrimary,
-                      ),
+                      style: Theme.of(context).textTheme.titleSmall!,
                     ),
                   ],
                 ),

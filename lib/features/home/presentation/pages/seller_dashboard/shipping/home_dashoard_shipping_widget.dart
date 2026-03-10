@@ -126,11 +126,7 @@ class _HomeDashoardShippingWidgetState
                 ),
                 Text(
                   'Shipping Management',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.0,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
                 Opacity(
                   opacity: 0.0,
@@ -189,11 +185,9 @@ class _HomeDashoardShippingWidgetState
                                         ),
                                         Text(
                                           'To Ship',
-                                          style: GoogleFonts.inter(
-                                            fontWeight: FontWeight.normal,
-                                            fontSize: 14.0,
-                                            color: AppColors.textSecondary,
-                                          ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelMedium!,
                                         ),
                                       ].divide(SizedBox(height: 4.0)),
                                     ),
@@ -225,11 +219,9 @@ class _HomeDashoardShippingWidgetState
                                         ),
                                         Text(
                                           'Shipped',
-                                          style: GoogleFonts.inter(
-                                            fontWeight: FontWeight.normal,
-                                            fontSize: 14.0,
-                                            color: AppColors.textSecondary,
-                                          ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelMedium!,
                                         ),
                                       ].divide(SizedBox(height: 4.0)),
                                     ),
@@ -245,10 +237,8 @@ class _HomeDashoardShippingWidgetState
                               child: Center(
                                 child: Text(
                                   'No orders yet',
-                                  style: GoogleFonts.inter(
-                                    color: AppColors.textSecondary,
-                                    fontSize: 16.0,
-                                  ),
+                                  style:
+                                      Theme.of(context).textTheme.labelLarge!,
                                 ),
                               ),
                             )
@@ -342,10 +332,7 @@ class _HomeDashoardShippingWidgetState
                     Text(
                       'Sold: ${_formatDate(order['created_at']?.toString())}',
                       maxLines: 1,
-                      style: GoogleFonts.inter(
-                        fontSize: 12.0,
-                        color: AppColors.textSecondary,
-                      ),
+                      style: Theme.of(context).textTheme.labelSmall!,
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
@@ -361,18 +348,12 @@ class _HomeDashoardShippingWidgetState
                     Text(
                       'Qty: ${_getQuantity(order)}',
                       maxLines: 1,
-                      style: GoogleFonts.inter(
-                        fontSize: 12.0,
-                        color: AppColors.textSecondary,
-                      ),
+                      style: Theme.of(context).textTheme.labelSmall!,
                     ),
                     Text(
                       'Sold to @${_getBuyerUsername(order)}',
                       maxLines: 1,
-                      style: GoogleFonts.inter(
-                        fontSize: 12.0,
-                        color: AppColors.textSecondary,
-                      ),
+                      style: Theme.of(context).textTheme.labelSmall!,
                       overflow: TextOverflow.ellipsis,
                     ),
                     Row(
@@ -383,10 +364,8 @@ class _HomeDashoardShippingWidgetState
                               children: [
                                 TextSpan(
                                   text: 'Order #${order['order_number'] ?? ''}',
-                                  style: GoogleFonts.inter(
-                                    fontSize: 12.0,
-                                    color: AppColors.textSecondary,
-                                  ),
+                                  style:
+                                      Theme.of(context).textTheme.labelSmall!,
                                 ),
                                 TextSpan(
                                   text: ' • ',

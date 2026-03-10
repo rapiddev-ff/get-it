@@ -119,11 +119,7 @@ class _HomeDashoardInventoryAddTagsWidgetState
                     ),
                     Text(
                       'Add a Product',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18.0,
-                        color: AppColors.textPrimary,
-                      ),
+                      style: Theme.of(context).textTheme.titleMedium!,
                     ),
                     InkWell(
                       onTap: () async {
@@ -169,10 +165,8 @@ class _HomeDashoardInventoryAddTagsWidgetState
                               decoration: InputDecoration(
                                 isDense: false,
                                 hintText: 'Search tags',
-                                hintStyle: GoogleFonts.inter(
-                                  fontSize: 16.0,
-                                  color: AppColors.textSecondary,
-                                ),
+                                hintStyle:
+                                    Theme.of(context).textTheme.labelLarge!,
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: AppColors.neutral700,
@@ -211,10 +205,7 @@ class _HomeDashoardInventoryAddTagsWidgetState
                                   size: 24.0,
                                 ),
                               ),
-                              style: GoogleFonts.inter(
-                                fontSize: 14.0,
-                                color: AppColors.textPrimary,
-                              ),
+                              style: Theme.of(context).textTheme.bodyMedium!,
                               cursorColor: AppColors.textPrimary,
                               enableInteractiveSelection: true,
                             ),

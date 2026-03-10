@@ -76,11 +76,7 @@ class _HomeDashoardShortlistWidgetState
                 ),
                 Text(
                   'Event Shortlists',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.0,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
                 Opacity(
                   opacity: 0.0,
@@ -127,11 +123,8 @@ class _HomeDashoardShortlistWidgetState
                                   SizedBox(height: 24.0),
                                   Text(
                                     'No shortlists yet',
-                                    style: GoogleFonts.inter(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 20.0,
-                                      color: AppColors.textPrimary,
-                                    ),
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge!,
                                   ),
                                   SizedBox(height: 8.0),
                                   Padding(
@@ -140,10 +133,9 @@ class _HomeDashoardShortlistWidgetState
                                     child: Text(
                                       'Create a shortlist for an event to share products with a QR code and track scans.',
                                       textAlign: TextAlign.center,
-                                      style: GoogleFonts.inter(
-                                        fontSize: 14.0,
-                                        color: AppColors.textSecondary,
-                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!,
                                     ),
                                   ),
                                   SizedBox(height: 24.0),
@@ -286,10 +278,9 @@ class _HomeDashoardShortlistWidgetState
                                           child: Text(
                                             'Print QR codes for your booth',
                                             maxLines: 1,
-                                            style: GoogleFonts.inter(
-                                              fontSize: 14.0,
-                                              color: AppColors.textPrimary,
-                                            ),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!,
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
@@ -308,10 +299,9 @@ class _HomeDashoardShortlistWidgetState
                                           child: Text(
                                             'Share digitally on social media',
                                             maxLines: 1,
-                                            style: GoogleFonts.inter(
-                                              fontSize: 14.0,
-                                              color: AppColors.textPrimary,
-                                            ),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!,
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
@@ -330,10 +320,9 @@ class _HomeDashoardShortlistWidgetState
                                           child: Text(
                                             'Track scans and purchases',
                                             maxLines: 1,
-                                            style: GoogleFonts.inter(
-                                              fontSize: 14.0,
-                                              color: AppColors.textPrimary,
-                                            ),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!,
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                         ),

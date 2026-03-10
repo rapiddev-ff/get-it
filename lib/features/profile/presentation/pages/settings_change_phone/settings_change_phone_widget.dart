@@ -191,8 +191,6 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
                               },
                             );
                           }
-
-                          setState(() {});
                         },
                       ),
                     ]

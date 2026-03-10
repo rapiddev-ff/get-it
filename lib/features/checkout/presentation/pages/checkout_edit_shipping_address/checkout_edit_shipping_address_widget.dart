@@ -168,11 +168,7 @@ class _CheckoutEditShippingAddressWidgetState
                 ),
                 Text(
                   'Edit Shipping Address',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.0,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
                 Opacity(
                   opacity: 0.0,
@@ -709,8 +705,6 @@ class _CheckoutEditShippingAddressWidgetState
                         }),
                       ]);
                       Navigator.pop(context);
-
-                      setState(() {});
                     },
                   ),
                 ),

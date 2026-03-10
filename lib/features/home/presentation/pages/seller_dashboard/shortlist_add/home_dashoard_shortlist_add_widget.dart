@@ -114,11 +114,7 @@ class _HomeDashoardShortlistAddWidgetState
                 ),
                 Text(
                   'Add to Shortlist',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.0,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
                 Opacity(
                   opacity: 0.0,
@@ -207,10 +203,7 @@ class _HomeDashoardShortlistAddWidgetState
                               size: 24.0,
                             ),
                           ),
-                          style: GoogleFonts.inter(
-                            fontSize: 14.0,
-                            color: AppColors.textPrimary,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium!,
                           cursorColor: AppColors.textPrimary,
                           enableInteractiveSelection: true,
                         ),
@@ -312,10 +305,9 @@ class _HomeDashoardShortlistAddWidgetState
                                 ? Center(
                                     child: Text(
                                       'No products found',
-                                      style: GoogleFonts.inter(
-                                        fontSize: 16.0,
-                                        color: AppColors.textSecondary,
-                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge!,
                                     ),
                                   )
                                 : ListView.separated(
@@ -410,18 +402,12 @@ class _HomeDashoardShortlistAddWidgetState
                       children: [
                         Text(
                           '\$$priceFormatted',
-                          style: GoogleFonts.inter(
-                            fontSize: 14.0,
-                            color: AppColors.textPrimary,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium!,
                         ),
                         SizedBox(width: 16.0),
                         Text(
                           'Qty ${product.quantity ?? 0}',
-                          style: GoogleFonts.inter(
-                            fontSize: 14.0,
-                            color: AppColors.textSecondary,
-                          ),
+                          style: Theme.of(context).textTheme.labelMedium!,
                         ),
                       ],
                     ),

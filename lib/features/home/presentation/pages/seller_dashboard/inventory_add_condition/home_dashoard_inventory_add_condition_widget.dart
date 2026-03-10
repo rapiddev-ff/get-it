@@ -71,11 +71,7 @@ class _HomeDashoardInventoryAddConditionWidgetState
           children: [
             Text(
               'Select Condition',
-              style: GoogleFonts.inter(
-                fontWeight: FontWeight.w600,
-                fontSize: 20.0,
-                color: AppColors.textPrimary,
-              ),
+              style: Theme.of(context).textTheme.titleLarge!,
             ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 24.0),

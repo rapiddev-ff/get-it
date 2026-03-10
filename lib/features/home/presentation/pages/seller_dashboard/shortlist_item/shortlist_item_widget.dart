@@ -390,10 +390,7 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
               SizedBox(height: 2.0),
               Text(
                 'Sales',
-                style: GoogleFonts.inter(
-                  fontSize: 12.0,
-                  color: AppColors.textSecondary,
-                ),
+                style: Theme.of(context).textTheme.labelSmall!,
               ),
             ],
           ),
@@ -412,10 +409,7 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
               SizedBox(height: 2.0),
               Text(
                 'Items sold',
-                style: GoogleFonts.inter(
-                  fontSize: 12.0,
-                  color: AppColors.textSecondary,
-                ),
+                style: Theme.of(context).textTheme.labelSmall!,
               ),
             ],
           ),

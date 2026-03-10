@@ -83,11 +83,7 @@ class SettingsTermsWidget extends StatelessWidget {
                   padding: EdgeInsets.only(top: 8.0),
                   child: Text(
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet ex mattis, lobortis ante vitae, bibendum ex. Vestibulum feugiat mi eu tincidunt congue. Nam viverra. Lorem ipsum dolor ',
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 16.0,
-                      color: AppColors.textSecondary,
-                    ),
+                    style: Theme.of(context).textTheme.labelLarge!,
                   ),
                 ),
                 Padding(
@@ -105,11 +101,7 @@ class SettingsTermsWidget extends StatelessWidget {
                   padding: EdgeInsets.only(top: 8.0),
                   child: Text(
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sit amet ex mattis, lobortis ante vitae, bibendum ex. Vestibulum feugiat mi eu tincidunt congue. Nam viverra. Lorem ipsum dolor ',
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 16.0,
-                      color: AppColors.textSecondary,
-                    ),
+                    style: Theme.of(context).textTheme.labelLarge!,
                   ),
                 ),
               ],

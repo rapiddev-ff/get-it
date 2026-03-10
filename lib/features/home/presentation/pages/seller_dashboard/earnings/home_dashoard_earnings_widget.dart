@@ -197,11 +197,7 @@ class _HomeDashoardEarningsWidgetState
                 ),
                 Text(
                   'Earnings',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.0,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
                 Opacity(
                   opacity: 0.0,
@@ -393,10 +389,7 @@ class _HomeDashoardEarningsWidgetState
                 SizedBox(width: 6.0),
                 Text(
                   label,
-                  style: GoogleFonts.inter(
-                    fontSize: 12.0,
-                    color: AppColors.textSecondary,
-                  ),
+                  style: Theme.of(context).textTheme.labelSmall!,
                 ),
               ],
             ),
@@ -430,10 +423,7 @@ class _HomeDashoardEarningsWidgetState
         SizedBox(height: 4.0),
         Text(
           label,
-          style: GoogleFonts.inter(
-            fontSize: 12.0,
-            color: AppColors.textSecondary,
-          ),
+          style: Theme.of(context).textTheme.labelSmall!,
         ),
       ],
     );
@@ -479,10 +469,7 @@ class _HomeDashoardEarningsWidgetState
         child: Center(
           child: Text(
             'No sales yet',
-            style: GoogleFonts.inter(
-              color: AppColors.textSecondary,
-              fontSize: 16.0,
-            ),
+            style: Theme.of(context).textTheme.labelLarge!,
           ),
         ),
       );
@@ -520,10 +507,7 @@ class _HomeDashoardEarningsWidgetState
                   Text(
                     _formatDate(order['created_at']?.toString()),
                     maxLines: 1,
-                    style: GoogleFonts.inter(
-                      fontSize: 12.0,
-                      color: AppColors.textSecondary,
-                    ),
+                    style: Theme.of(context).textTheme.labelSmall!,
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
@@ -539,27 +523,18 @@ class _HomeDashoardEarningsWidgetState
                   Text(
                     'Buyer: @${_getBuyerUsername(order)}',
                     maxLines: 1,
-                    style: GoogleFonts.inter(
-                      fontSize: 12.0,
-                      color: AppColors.textSecondary,
-                    ),
+                    style: Theme.of(context).textTheme.labelSmall!,
                     overflow: TextOverflow.ellipsis,
                   ),
                   if (quantity > 1)
                     Text(
                       'Qty: $quantity',
-                      style: GoogleFonts.inter(
-                        fontSize: 12.0,
-                        color: AppColors.textSecondary,
-                      ),
+                      style: Theme.of(context).textTheme.labelSmall!,
                     ),
                   Text(
                     'Order #${order['order_number'] ?? ''}',
                     maxLines: 1,
-                    style: GoogleFonts.inter(
-                      fontSize: 12.0,
-                      color: AppColors.textSecondary,
-                    ),
+                    style: Theme.of(context).textTheme.labelSmall!,
                   ),
                 ].divide(SizedBox(height: 4.0)),
               ),
@@ -609,10 +584,7 @@ class _HomeDashoardEarningsWidgetState
       child: Center(
         child: Text(
           'Referrals coming soon',
-          style: GoogleFonts.inter(
-            color: AppColors.textSecondary,
-            fontSize: 16.0,
-          ),
+          style: Theme.of(context).textTheme.labelLarge!,
         ),
       ),
     );

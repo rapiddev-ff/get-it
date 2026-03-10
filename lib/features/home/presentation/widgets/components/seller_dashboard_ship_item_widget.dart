@@ -116,10 +116,7 @@ class SellerDashboardShipItemWidget extends StatelessWidget {
                     Text(
                       'Sold to @${_getBuyerUsername()}',
                       maxLines: 1,
-                      style: GoogleFonts.inter(
-                        color: AppColors.textSecondary,
-                        fontSize: 12.0,
-                      ),
+                      style: Theme.of(context).textTheme.labelSmall!,
                       overflow: TextOverflow.ellipsis,
                     ),
                     RichText(

@@ -298,11 +298,7 @@ class _HomeDashoardShippingDetailedWidgetState
                 ),
                 Text(
                   'Shipping',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.0,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
                 Opacity(
                   opacity: 0.0,
@@ -374,10 +370,9 @@ class _HomeDashoardShippingDetailedWidgetState
                                             Text(
                                               'Sold: ${_formatDate(_order!['created_at']?.toString())}',
                                               maxLines: 1,
-                                              style: GoogleFonts.inter(
-                                                fontSize: 12.0,
-                                                color: AppColors.textSecondary,
-                                              ),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelSmall!,
                                               overflow: TextOverflow.ellipsis,
                                             ),
                                             Text(
@@ -391,27 +386,24 @@ class _HomeDashoardShippingDetailedWidgetState
                                             Text(
                                               'Qty: ${_getQuantity()}',
                                               maxLines: 1,
-                                              style: GoogleFonts.inter(
-                                                fontSize: 12.0,
-                                                color: AppColors.textSecondary,
-                                              ),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelSmall!,
                                             ),
                                             Text(
                                               'Sold to @${_getBuyerUsername()}',
                                               maxLines: 1,
-                                              style: GoogleFonts.inter(
-                                                fontSize: 12.0,
-                                                color: AppColors.textSecondary,
-                                              ),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelSmall!,
                                               overflow: TextOverflow.ellipsis,
                                             ),
                                             Text(
                                               'Order #${_order!['order_number'] ?? ''}',
                                               maxLines: 1,
-                                              style: GoogleFonts.inter(
-                                                fontSize: 12.0,
-                                                color: AppColors.textSecondary,
-                                              ),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelSmall!,
                                             ),
                                             Padding(
                                               padding: EdgeInsetsDirectional
@@ -486,28 +478,25 @@ class _HomeDashoardShippingDetailedWidgetState
                                                 e.toString().isNotEmpty)
                                             .join(', '),
                                         maxLines: 1,
-                                        style: GoogleFonts.inter(
-                                          fontSize: 12.0,
-                                          color: AppColors.textSecondary,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!,
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       Text(
                                         '${address['city'] ?? ''}, ${address['state'] ?? ''} ${address['zip_code'] ?? ''}',
                                         maxLines: 1,
-                                        style: GoogleFonts.inter(
-                                          fontSize: 12.0,
-                                          color: AppColors.textSecondary,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!,
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       Text(
                                         address['country']?.toString() ?? '',
                                         maxLines: 1,
-                                        style: GoogleFonts.inter(
-                                          fontSize: 12.0,
-                                          color: AppColors.textSecondary,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!,
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       if (address['phone'] != null &&
@@ -516,18 +505,16 @@ class _HomeDashoardShippingDetailedWidgetState
                                               .isNotEmpty)
                                         Text(
                                           address['phone'].toString(),
-                                          style: GoogleFonts.inter(
-                                            fontSize: 12.0,
-                                            color: AppColors.textSecondary,
-                                          ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall!,
                                         ),
                                     ] else
                                       Text(
                                         'No shipping address available',
-                                        style: GoogleFonts.inter(
-                                          fontSize: 12.0,
-                                          color: AppColors.textSecondary,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!,
                                       ),
                                   ].divide(SizedBox(height: 4.0)),
                                 ),
@@ -570,11 +557,8 @@ class _HomeDashoardShippingDetailedWidgetState
                                 decoration: InputDecoration(
                                   isDense: false,
                                   hintText: 'Tracking number',
-                                  hintStyle: GoogleFonts.inter(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16.0,
-                                    color: AppColors.textSecondary,
-                                  ),
+                                  hintStyle:
+                                      Theme.of(context).textTheme.labelLarge!,
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: AppColors.neutral700,

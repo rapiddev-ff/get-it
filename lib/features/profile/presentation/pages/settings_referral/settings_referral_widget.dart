@@ -106,11 +106,9 @@ class _SettingsReferralWidgetState
                                           Text(
                                             'Share CardSmart with other vendors and earn commission every time they make a sale. ',
                                             textAlign: TextAlign.center,
-                                            style: GoogleFonts.inter(
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 14.0,
-                                              color: AppColors.textSecondary,
-                                            ),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelMedium!,
                                           ),
                                         ].divide(SizedBox(height: 8.0)),
                                       ),

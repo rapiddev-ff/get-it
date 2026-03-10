@@ -377,10 +377,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                     Spacer(),
                     Text(
                       '$views Views',
-                      style: GoogleFonts.inter(
-                        fontSize: 12.0,
-                        color: AppColors.textSecondary,
-                      ),
+                      style: Theme.of(context).textTheme.labelSmall!,
                     ),
                   ],
                 ),
@@ -421,11 +418,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                 ),
                 Text(
                   'Shortlist',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.0,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
                 IconButton(
                   style: IconButton.styleFrom(
@@ -489,10 +482,9 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                       Text(
                                         '${selectedProductIds.length} items',
                                         maxLines: 1,
-                                        style: GoogleFonts.inter(
-                                          fontSize: 12.0,
-                                          color: AppColors.textSecondary,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!,
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ].divide(SizedBox(height: 4.0)),
@@ -568,9 +560,8 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                   decoration:
                                       appInputDecoration('0.00').copyWith(
                                     prefixText: '% ',
-                                    prefixStyle: GoogleFonts.inter(
-                                        fontSize: 16.0,
-                                        color: AppColors.textSecondary),
+                                    prefixStyle:
+                                        Theme.of(context).textTheme.labelLarge!,
                                   ),
                                   style: appTextFieldStyle,
                                   keyboardType: TextInputType.number,

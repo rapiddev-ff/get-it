@@ -79,11 +79,7 @@ class _BrowseWidgetState extends ConsumerState<BrowseWidget> {
                 ),
                 Text(
                   AppConstants.appName,
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.0,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
                 IconButton(
                   style: IconButton.styleFrom(
@@ -165,10 +161,7 @@ class _BrowseWidgetState extends ConsumerState<BrowseWidget> {
                             size: 24.0,
                           ),
                         ),
-                        style: GoogleFonts.inter(
-                          color: AppColors.textPrimary,
-                          fontSize: 14.0,
-                        ),
+                        style: Theme.of(context).textTheme.bodyMedium!,
                         cursorColor: AppColors.textPrimary,
                       ),
                     ),

@@ -312,10 +312,9 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                                     Expanded(
                                       child: Text(
                                         'Keep me signed in',
-                                        style: GoogleFonts.inter(
-                                          color: AppColors.textPrimary,
-                                          fontSize: 14.0,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!,
                                       ).animate().fade(duration: 600.ms),
                                     ),
                                     InkWell(

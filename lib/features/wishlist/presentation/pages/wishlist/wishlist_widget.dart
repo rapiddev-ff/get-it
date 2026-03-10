@@ -111,11 +111,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                 ),
                 Text(
                   'Wishlist',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.0,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
                 IconButton(
                   style: IconButton.styleFrom(
@@ -215,10 +211,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                   size: 24.0,
                                 ),
                               ),
-                              style: GoogleFonts.inter(
-                                fontSize: 14.0,
-                                color: AppColors.textPrimary,
-                              ),
+                              style: Theme.of(context).textTheme.bodyMedium!,
                               cursorColor: AppColors.textPrimary,
                             ),
                           ),

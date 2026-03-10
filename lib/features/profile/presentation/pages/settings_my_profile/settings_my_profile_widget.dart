@@ -253,11 +253,9 @@ class _SettingsMyProfileWidgetState
                                                   ?.toString(),
                                               '0',
                                             ),
-                                            style: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 16.0,
-                                              color: AppColors.textPrimary,
-                                            ),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!,
                                           ),
                                           Text(
                                             'Items',
@@ -282,11 +280,9 @@ class _SettingsMyProfileWidgetState
                                                   ?.toString(),
                                               '0',
                                             ),
-                                            style: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 16.0,
-                                              color: AppColors.textPrimary,
-                                            ),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!,
                                           ),
                                           Text(
                                             'Sold',
@@ -310,11 +306,9 @@ class _SettingsMyProfileWidgetState
                                                 ?.toString(),
                                             '0',
                                           ),
-                                          style: GoogleFonts.inter(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 16.0,
-                                            color: AppColors.textPrimary,
-                                          ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!,
                                         ),
                                         Text(
                                           'Followers',
@@ -338,11 +332,9 @@ class _SettingsMyProfileWidgetState
                                                 ?.toString(),
                                             '0',
                                           ),
-                                          style: GoogleFonts.inter(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 16.0,
-                                            color: AppColors.textPrimary,
-                                          ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!,
                                         ),
                                         Text(
                                           'Followers',
@@ -366,11 +358,7 @@ class _SettingsMyProfileWidgetState
                     padding: EdgeInsets.only(top: 20.0),
                     child: Text(
                       authState.bio,
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.normal,
-                        fontSize: 14.0,
-                        color: AppColors.textPrimary,
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium!,
                     ),
                   ),
                   Divider(
@@ -430,11 +418,7 @@ class _SettingsMyProfileWidgetState
                               Expanded(
                                 child: Text(
                                   'Delete Account',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16.0,
-                                    color: AppColors.textPrimary,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyLarge!,
                                 ),
                               ),
                               Icon(
@@ -475,11 +459,7 @@ class _SettingsMyProfileWidgetState
                               Expanded(
                                 child: Text(
                                   'Deactivate Account',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16.0,
-                                    color: AppColors.textPrimary,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyLarge!,
                                 ),
                               ),
                               Icon(
@@ -796,11 +776,7 @@ class _SettingsMyProfileWidgetState
         children: [
           Text(
             '$star\u2605',
-            style: GoogleFonts.inter(
-              fontWeight: FontWeight.normal,
-              fontSize: 12.0,
-              color: AppColors.textPrimary,
-            ),
+            style: Theme.of(context).textTheme.bodySmall!,
           ),
           Expanded(
             child: LinearPercentIndicator(
@@ -823,11 +799,7 @@ class _SettingsMyProfileWidgetState
               _jsonGet(json, '$role.stars[$index].count')?.toString(),
               '0',
             ),
-            style: GoogleFonts.inter(
-              fontWeight: FontWeight.normal,
-              fontSize: 12.0,
-              color: AppColors.textPrimary,
-            ),
+            style: Theme.of(context).textTheme.bodySmall!,
           ),
         ].divide(SizedBox(width: 12.0)),
       ),

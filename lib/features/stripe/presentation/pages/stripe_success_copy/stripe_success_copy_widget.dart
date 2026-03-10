@@ -192,10 +192,7 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
                   child: Text(
                     'A receipt has been sent to your email address',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
-                      fontSize: 12.0,
-                      color: AppColors.textSecondary,
-                    ),
+                    style: Theme.of(context).textTheme.labelSmall!,
                   ),
                 ),
               ],

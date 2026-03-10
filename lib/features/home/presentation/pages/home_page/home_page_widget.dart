@@ -679,11 +679,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                     if (_pendingShipCount > 0)
                       Text(
                         '$_pendingShipCount pending',
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.normal,
-                          fontSize: 14.0,
-                          color: AppColors.textSecondary,
-                        ),
+                        style: Theme.of(context).textTheme.labelMedium!,
                       ),
                   ],
                 ),

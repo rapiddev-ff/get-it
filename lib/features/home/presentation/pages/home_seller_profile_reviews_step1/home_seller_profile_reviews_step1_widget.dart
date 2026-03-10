@@ -104,11 +104,7 @@ class _HomeSellerProfileReviewsStep1WidgetState
               ),
               Text(
                 'Choose Product to Review',
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 18.0,
-                  color: AppColors.textPrimary,
-                ),
+                style: Theme.of(context).textTheme.titleMedium!,
               ),
               Opacity(
                 opacity: 0.0,

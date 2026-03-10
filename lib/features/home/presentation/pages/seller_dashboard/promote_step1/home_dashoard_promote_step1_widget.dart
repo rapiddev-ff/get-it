@@ -69,11 +69,7 @@ class _HomeDashoardPromoteStep1WidgetState
                 ),
                 Text(
                   'Choose Product to Promote',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.0,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
                 Opacity(
                   opacity: 0.0,
@@ -157,10 +153,7 @@ class _HomeDashoardPromoteStep1WidgetState
                               size: 24.0,
                             ),
                           ),
-                          style: GoogleFonts.inter(
-                            fontSize: 14.0,
-                            color: AppColors.textPrimary,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium!,
                           cursorColor: AppColors.textPrimary,
                           enableInteractiveSelection: true,
                         ),

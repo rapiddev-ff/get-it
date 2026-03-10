@@ -97,8 +97,6 @@ class _StripeSuccessWidgetState extends ConsumerState<StripeSuccessWidget> {
                         ),
                       },
                     );
-
-                    setState(() {});
                   },
                 ),
               ],

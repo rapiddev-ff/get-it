@@ -93,11 +93,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
               ),
               Text(
                 'Write Review',
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 18.0,
-                  color: AppColors.textPrimary,
-                ),
+                style: Theme.of(context).textTheme.titleMedium!,
               ),
               Opacity(
                 opacity: 0.0,
@@ -395,11 +391,8 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                   isDense: false,
                                   hintText:
                                       'Share your experience with this seller. How  was the item condition, packaging, and communication?',
-                                  hintStyle: GoogleFonts.inter(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16.0,
-                                    color: AppColors.textSecondary,
-                                  ),
+                                  hintStyle:
+                                      Theme.of(context).textTheme.labelLarge!,
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: AppColors.neutral700,

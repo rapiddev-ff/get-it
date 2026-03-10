@@ -83,11 +83,7 @@ class _HomeDashoardPromoteStep2WidgetState
                 ),
                 Text(
                   'Promote Product',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.0,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
                 Opacity(
                   opacity: 0.0,
@@ -154,10 +150,9 @@ class _HomeDashoardPromoteStep2WidgetState
                                     Text(
                                       'PSA 9 Mint Condition',
                                       maxLines: 1,
-                                      style: GoogleFonts.inter(
-                                        fontSize: 12.0,
-                                        color: AppColors.textSecondary,
-                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall!,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     Expanded(
@@ -258,10 +253,9 @@ class _HomeDashoardPromoteStep2WidgetState
                                                 horizontal: 8.0, vertical: 4.0),
                                             child: Text(
                                               'Popular',
-                                              style: GoogleFonts.inter(
-                                                fontSize: 12.0,
-                                                color: AppColors.textPrimary,
-                                              ),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodySmall!,
                                             ),
                                           ),
                                         ),
@@ -284,10 +278,9 @@ class _HomeDashoardPromoteStep2WidgetState
                                         ),
                                         Text(
                                           'General reach boost',
-                                          style: GoogleFonts.inter(
-                                            fontSize: 14.0,
-                                            color: AppColors.textSecondary,
-                                          ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelMedium!,
                                         ),
                                         Container(
                                           decoration: BoxDecoration(
@@ -361,10 +354,9 @@ class _HomeDashoardPromoteStep2WidgetState
                                               horizontal: 8.0, vertical: 4.0),
                                           child: Text(
                                             'Targeted',
-                                            style: GoogleFonts.inter(
-                                              fontSize: 12.0,
-                                              color: AppColors.textPrimary,
-                                            ),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall!,
                                           ),
                                         ),
                                       ),
@@ -387,10 +379,9 @@ class _HomeDashoardPromoteStep2WidgetState
                                       ),
                                       Text(
                                         'Tag-based targeting',
-                                        style: GoogleFonts.inter(
-                                          fontSize: 14.0,
-                                          color: AppColors.textSecondary,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!,
                                       ),
                                       Container(
                                         decoration: BoxDecoration(
@@ -818,10 +809,9 @@ class _HomeDashoardPromoteStep2WidgetState
                                               () => dropDownValue = val),
                                           decoration: InputDecoration(
                                             hintText: 'Select category',
-                                            hintStyle: GoogleFonts.inter(
-                                              fontSize: 14.0,
-                                              color: AppColors.textPrimary,
-                                            ),
+                                            hintStyle: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!,
                                             enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                 color: AppColors.neutral700,
@@ -842,10 +832,9 @@ class _HomeDashoardPromoteStep2WidgetState
                                                 EdgeInsets.symmetric(
                                                     horizontal: 12.0),
                                           ),
-                                          style: GoogleFonts.inter(
-                                            fontSize: 14.0,
-                                            color: AppColors.textPrimary,
-                                          ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!,
                                           icon: Icon(
                                             Icons.keyboard_arrow_down_rounded,
                                             color: AppColors.textSecondary,

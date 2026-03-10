@@ -590,8 +590,6 @@ class _HomeSellerProfileWidgetState
                                       getOrCreateConversation?.serialize(),
                                 },
                               );
-
-                              setState(() {});
                             },
                             icon: Icon(
                               Icons.chat_bubble_outline_rounded,

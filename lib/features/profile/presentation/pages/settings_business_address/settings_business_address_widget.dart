@@ -208,11 +208,9 @@ class _SettingsBusinessAddressWidgetState
                                       decoration: InputDecoration(
                                         isDense: true,
                                         hintText: 'Country',
-                                        hintStyle: GoogleFonts.inter(
-                                          fontWeight: FontWeight.normal,
-                                          fontSize: 14.0,
-                                          color: AppColors.textSecondary,
-                                        ),
+                                        hintStyle: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!,
                                         contentPadding: EdgeInsets.symmetric(
                                             horizontal: 12.0, vertical: 16.0),
                                         enabledBorder: OutlineInputBorder(
@@ -296,11 +294,9 @@ class _SettingsBusinessAddressWidgetState
                                             decoration: InputDecoration(
                                               isDense: true,
                                               hintText: 'State',
-                                              hintStyle: GoogleFonts.inter(
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 14.0,
-                                                color: AppColors.textSecondary,
-                                              ),
+                                              hintStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .labelMedium!,
                                               contentPadding:
                                                   EdgeInsetsDirectional
                                                       .fromSTEB(12.0, 16.0,

@@ -131,11 +131,8 @@ class _SettingsDailyBudgetWidgetState
                             decoration:
                                 appInputDecoration('Daily Budget').copyWith(
                               prefixText: '\$ ',
-                              prefixStyle: GoogleFonts.inter(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 16.0,
-                                color: AppColors.textPrimary,
-                              ),
+                              prefixStyle:
+                                  Theme.of(context).textTheme.bodyLarge!,
                             ),
                             style: GoogleFonts.inter(),
                             keyboardType: TextInputType.number,

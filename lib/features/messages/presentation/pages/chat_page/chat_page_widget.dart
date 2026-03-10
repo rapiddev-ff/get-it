@@ -381,11 +381,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                         decoration: InputDecoration(
                           isDense: false,
                           hintText: 'Type a message...',
-                          hintStyle: GoogleFonts.inter(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 16.0,
-                            color: AppColors.textSecondary,
-                          ),
+                          hintStyle: Theme.of(context).textTheme.labelLarge!,
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: AppColors.neutral700,

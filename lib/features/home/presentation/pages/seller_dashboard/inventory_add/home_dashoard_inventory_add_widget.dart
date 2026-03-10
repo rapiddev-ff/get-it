@@ -960,9 +960,7 @@ class _HomeDashoardInventoryAddWidgetState
                                     conditionsList[conditionsIndex];
                                 return Text(
                                   '${conditionsItem.name}${conditionsIndex == (conditionsList.length - 1) ? '' : ', '}',
-                                  style: GoogleFonts.inter(
-                                      fontSize: 16.0,
-                                      color: AppColors.textPrimary),
+                                  style: Theme.of(context).textTheme.bodyLarge!,
                                 );
                               }),
                             )
@@ -1669,10 +1667,7 @@ class _HomeDashoardInventoryAddWidgetState
                   widget.productId != null && widget.productId != ''
                       ? 'Edit Product'
                       : 'Add a Product',
-                  style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18.0,
-                      color: AppColors.textPrimary),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
                 IconButton(
                   icon: Icon(

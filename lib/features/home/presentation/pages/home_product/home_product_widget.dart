@@ -208,11 +208,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
           ),
           Text(
             value,
-            style: GoogleFonts.inter(
-              fontWeight: FontWeight.normal,
-              color: AppColors.textPrimary,
-              fontSize: 16.0,
-            ),
+            style: Theme.of(context).textTheme.bodyLarge!,
           ),
         ],
       ),

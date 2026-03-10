@@ -126,11 +126,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                           padding: const EdgeInsets.only(bottom: 24.0),
                           child: Text(
                             'Let\'s get you started.',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 16.0,
-                              color: AppColors.textSecondary,
-                            ),
+                            style: Theme.of(context).textTheme.labelLarge!,
                           ),
                         ),
                         // Email section

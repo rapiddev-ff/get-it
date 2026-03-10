@@ -207,11 +207,7 @@ class _SettingsBlockListWidgetState
                 SizedBox(height: 16.0),
                 Text(
                   'No blocked users',
-                  style: GoogleFonts.inter(
-                    color: AppColors.textPrimary,
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
               ],
             ),
@@ -319,10 +315,7 @@ class _SettingsBlockListWidgetState
                         padding: EdgeInsets.all(32.0),
                         child: Text(
                           'No matching blocked users',
-                          style: GoogleFonts.inter(
-                            color: AppColors.textSecondary,
-                            fontSize: 14.0,
-                          ),
+                          style: Theme.of(context).textTheme.labelMedium!,
                         ),
                       ),
                     )

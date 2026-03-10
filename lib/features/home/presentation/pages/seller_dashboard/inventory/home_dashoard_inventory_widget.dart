@@ -78,11 +78,7 @@ class _HomeDashoardInventoryWidgetState
                 ),
                 Text(
                   'Inventory',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.0,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
                 Opacity(
                   opacity: 0.0,
@@ -168,10 +164,7 @@ class _HomeDashoardInventoryWidgetState
                                   size: 24.0,
                                 ),
                               ),
-                              style: GoogleFonts.inter(
-                                fontSize: 14.0,
-                                color: AppColors.textPrimary,
-                              ),
+                              style: Theme.of(context).textTheme.bodyMedium!,
                               cursorColor: AppColors.textPrimary,
                               enableInteractiveSelection: true,
                             ),
@@ -231,10 +224,8 @@ class _HomeDashoardInventoryWidgetState
                                     horizontal: 16.0, vertical: 8.0),
                                 child: Text(
                                   'All ',
-                                  style: GoogleFonts.inter(
-                                    fontSize: 14.0,
-                                    color: AppColors.textPrimary,
-                                  ),
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium!,
                                 ),
                               ),
                             ),
@@ -277,10 +268,9 @@ class _HomeDashoardInventoryWidgetState
                                             horizontal: 16.0, vertical: 8.0),
                                         child: Text(
                                           categoriesItem.name,
-                                          style: GoogleFonts.inter(
-                                            fontSize: 14.0,
-                                            color: AppColors.textPrimary,
-                                          ),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!,
                                         ),
                                       ),
                                     ),
@@ -383,10 +373,8 @@ class _HomeDashoardInventoryWidgetState
                                 ),
                                 Text(
                                   'Scan Item',
-                                  style: GoogleFonts.inter(
-                                    fontSize: 14.0,
-                                    color: AppColors.textPrimary,
-                                  ),
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium!,
                                 ),
                               ].divide(SizedBox(height: 4.0)),
                             ),
@@ -417,10 +405,8 @@ class _HomeDashoardInventoryWidgetState
                                   ),
                                   Text(
                                     'Add Manual',
-                                    style: GoogleFonts.inter(
-                                      fontSize: 14.0,
-                                      color: AppColors.textPrimary,
-                                    ),
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium!,
                                   ),
                                 ].divide(SizedBox(height: 4.0)),
                               ),
@@ -452,10 +438,8 @@ class _HomeDashoardInventoryWidgetState
                                   ),
                                   Text(
                                     'Shortlists',
-                                    style: GoogleFonts.inter(
-                                      fontSize: 14.0,
-                                      color: AppColors.textPrimary,
-                                    ),
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium!,
                                   ),
                                 ].divide(SizedBox(height: 4.0)),
                               ),

@@ -105,11 +105,7 @@ class ReviewItemWidget extends StatelessWidget {
                 review.content,
                 'N/A',
               ),
-              style: GoogleFonts.inter(
-                fontWeight: FontWeight.normal,
-                fontSize: 14.0,
-                color: AppColors.textPrimary,
-              ),
+              style: Theme.of(context).textTheme.bodyMedium!,
             ),
           ].divide(SizedBox(height: 12.0)),
         ),

@@ -125,11 +125,7 @@ class SettingsBlockedUserItemWidget extends StatelessWidget {
                             ),
                             Text(
                               'Unblock',
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14.0,
-                                color: AppColors.textPrimary,
-                              ),
+                              style: Theme.of(context).textTheme.bodyMedium!,
                             ),
                           ].divide(SizedBox(width: 8.0)),
                         ),

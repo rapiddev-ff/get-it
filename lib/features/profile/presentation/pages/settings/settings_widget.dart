@@ -278,10 +278,9 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                           children: [
                                             Text(
                                               'Daily Budget',
-                                              style: GoogleFonts.inter(
-                                                fontSize: 14.0,
-                                                color: AppColors.textPrimary,
-                                              ),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!,
                                             ),
                                             if (!(authState.userSettings
                                                     ?.swipePaymentEnabled ??
@@ -630,10 +629,9 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                             return 'Connect Stripe to start selling';
                                         }
                                       }(),
-                                      style: GoogleFonts.inter(
-                                        fontSize: 12.0,
-                                        color: AppColors.textPrimary,
-                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall!,
                                     ),
                                   ].divide(SizedBox(height: 8.0)),
                                 ),
@@ -681,11 +679,9 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                         horizontal: 15.0, vertical: 8.0),
                                     child: Text(
                                       'Connect',
-                                      style: GoogleFonts.inter(
-                                        fontWeight: FontWeight.normal,
-                                        fontSize: 14.0,
-                                        color: AppColors.textPrimary,
-                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!,
                                     ),
                                   ),
                                 ),
@@ -729,10 +725,8 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                   ),
                                   Text(
                                     'Not Connected',
-                                    style: GoogleFonts.inter(
-                                      fontSize: 12.0,
-                                      color: AppColors.textPrimary,
-                                    ),
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall!,
                                   ),
                                 ].divide(SizedBox(height: 8.0)),
                               ),
@@ -764,11 +758,8 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                       horizontal: 15.0, vertical: 8.0),
                                   child: Text(
                                     'Connect',
-                                    style: GoogleFonts.inter(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 14.0,
-                                      color: AppColors.textPrimary,
-                                    ),
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium!,
                                   ),
                                 ),
                               ),
@@ -830,11 +821,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                             Expanded(
                               child: Text(
                                 'Terms & Conditions',
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 14.0,
-                                  color: AppColors.textPrimary,
-                                ),
+                                style: Theme.of(context).textTheme.bodyMedium!,
                               ),
                             ),
                             Icon(
@@ -872,11 +859,8 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                               Expanded(
                                 child: Text(
                                   'Privacy Policy',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 14.0,
-                                    color: AppColors.textPrimary,
-                                  ),
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium!,
                                 ),
                               ),
                               Icon(
@@ -915,11 +899,8 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                               Expanded(
                                 child: Text(
                                   'Support',
-                                  style: GoogleFonts.inter(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 14.0,
-                                    color: AppColors.textPrimary,
-                                  ),
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium!,
                                 ),
                               ),
                               Icon(

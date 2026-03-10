@@ -80,10 +80,7 @@ class _HomeDashoardShortlistCreateWidgetState
                   CupertinoButton(
                     child: Text(
                       'Cancel',
-                      style: GoogleFonts.inter(
-                        color: AppColors.textSecondary,
-                        fontSize: 16.0,
-                      ),
+                      style: Theme.of(context).textTheme.labelLarge!,
                     ),
                     onPressed: () => Navigator.pop(context),
                   ),
@@ -154,11 +151,7 @@ class _HomeDashoardShortlistCreateWidgetState
                 ),
                 Text(
                   'Create Shortlist',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.0,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
                 Opacity(
                   opacity: 0.0,
@@ -396,10 +389,7 @@ class _HomeDashoardShortlistCreateWidgetState
                             Expanded(
                               child: Text(
                                 'Allow public viewing',
-                                style: GoogleFonts.inter(
-                                  fontSize: 14.0,
-                                  color: AppColors.textPrimary,
-                                ),
+                                style: Theme.of(context).textTheme.bodyMedium!,
                               ),
                             ),
                           ].divide(SizedBox(width: 12.0)),

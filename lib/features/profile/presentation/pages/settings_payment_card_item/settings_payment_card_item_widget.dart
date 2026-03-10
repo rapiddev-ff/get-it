@@ -72,11 +72,7 @@ class _SettingsPaymentCardItemWidgetState
                       children: [
                         Text(
                           '\u2022\u2022\u2022\u2022 \u2022\u2022\u2022\u2022 \u2022\u2022\u2022\u2022 ${widget.paymentMethod?.card?.last4 ?? ''}',
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 14.0,
-                            color: AppColors.textPrimary,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium!,
                         ),
                         Text(
                           'Expires ${widget.paymentMethod?.card?.expMonth.toString() ?? ''}/${widget.paymentMethod?.card?.expYear.toString() ?? ''}',
@@ -102,11 +98,7 @@ class _SettingsPaymentCardItemWidgetState
                         padding: EdgeInsets.all(8.0),
                         child: Text(
                           'Default',
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 14.0,
-                            color: AppColors.textPrimary,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium!,
                         ),
                       ),
                     ),
@@ -180,11 +172,7 @@ class _SettingsPaymentCardItemWidgetState
                           child: Text(
                             'Edit',
                             textAlign: TextAlign.center,
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 14.0,
-                              color: AppColors.textPrimary,
-                            ),
+                            style: Theme.of(context).textTheme.bodyMedium!,
                           ),
                         ),
                       ),
@@ -243,11 +231,7 @@ class _SettingsPaymentCardItemWidgetState
                             child: Text(
                               'Remove',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14.0,
-                                color: AppColors.textPrimary,
-                              ),
+                              style: Theme.of(context).textTheme.bodyMedium!,
                             ),
                           ),
                         ),

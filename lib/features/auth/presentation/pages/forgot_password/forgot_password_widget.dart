@@ -99,11 +99,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
                           padding: EdgeInsets.only(bottom: 24.0),
                           child: Text(
                             'Enter your email address and we\'ll send you a secure link to create a new password.',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.normal,
-                              color: AppColors.textPrimary,
-                              fontSize: 16.0,
-                            ),
+                            style: Theme.of(context).textTheme.bodyLarge!,
                           ),
                         ),
                         Column(

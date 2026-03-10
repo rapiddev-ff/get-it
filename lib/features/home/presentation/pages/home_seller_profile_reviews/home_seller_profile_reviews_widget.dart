@@ -117,11 +117,7 @@ class _HomeSellerProfileReviewsWidgetState
               ),
               Text(
                 'Reviews',
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 18.0,
-                  color: AppColors.textPrimary,
-                ),
+                style: Theme.of(context).textTheme.titleMedium!,
               ),
               Builder(
                 builder: (context) => IconButton(
@@ -274,11 +270,9 @@ class _HomeSellerProfileReviewsWidgetState
                                                   .toString(),
                                               '0',
                                             ),
-                                            style: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 16.0,
-                                              color: AppColors.textPrimary,
-                                            ),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!,
                                           ),
                                           Text(
                                             'Items',
@@ -301,11 +295,9 @@ class _HomeSellerProfileReviewsWidgetState
                                                   .toString(),
                                               '0',
                                             ),
-                                            style: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 16.0,
-                                              color: AppColors.textPrimary,
-                                            ),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!,
                                           ),
                                           Text(
                                             'Sold',
@@ -329,11 +321,9 @@ class _HomeSellerProfileReviewsWidgetState
                                                   .toString(),
                                               '0',
                                             ),
-                                            style: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 16.0,
-                                              color: AppColors.textPrimary,
-                                            ),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!,
                                           ),
                                           Text(
                                             'Followers',

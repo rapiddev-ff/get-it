@@ -126,11 +126,7 @@ class _PhoneVerificationPage2WidgetState
                           padding: const EdgeInsets.only(bottom: 24.0),
                           child: Text(
                             'We\u2019ve sent a code to ${widget.phoneNumber}. Enter it below to continue.',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 16.0,
-                              color: AppColors.textPrimary,
-                            ),
+                            style: Theme.of(context).textTheme.bodyLarge!,
                           ),
                         ),
                         Padding(
@@ -358,10 +354,8 @@ class _PhoneVerificationPage2WidgetState
                                         ),
                                       ),
                                     ],
-                                    style: GoogleFonts.inter(
-                                      fontSize: 14.0,
-                                      color: AppColors.textPrimary,
-                                    ),
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium!,
                                   ),
                                 ),
                               ),

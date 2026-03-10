@@ -251,11 +251,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                 ),
                 Text(
                   'Checkout',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.0,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!,
                 ),
                 Opacity(
                   opacity: 0.0,
@@ -375,28 +371,19 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                                   user.shippingAddress!.addressLine2,
                               ].join(', '),
                               maxLines: 1,
-                              style: GoogleFonts.inter(
-                                color: AppColors.textSecondary,
-                                fontSize: 12.0,
-                              ),
+                              style: Theme.of(context).textTheme.labelSmall!,
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
                               '${user.shippingAddress?.city ?? ''}, ${user.shippingAddress?.state ?? ''}, ${user.shippingAddress?.zipCode ?? ''}',
                               maxLines: 1,
-                              style: GoogleFonts.inter(
-                                color: AppColors.textSecondary,
-                                fontSize: 12.0,
-                              ),
+                              style: Theme.of(context).textTheme.labelSmall!,
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
                               user.shippingAddress?.country ?? '',
                               maxLines: 1,
-                              style: GoogleFonts.inter(
-                                color: AppColors.textSecondary,
-                                fontSize: 12.0,
-                              ),
+                              style: Theme.of(context).textTheme.labelSmall!,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ].divide(SizedBox(height: 4.0)),
@@ -418,10 +405,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                         padding: EdgeInsets.all(12.0),
                         child: Text(
                           'No shipping address added',
-                          style: GoogleFonts.inter(
-                            color: AppColors.textSecondary,
-                            fontSize: 14.0,
-                          ),
+                          style: Theme.of(context).textTheme.labelMedium!,
                         ),
                       ),
                     ),
@@ -459,10 +443,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                         padding: EdgeInsets.all(12.0),
                         child: Text(
                           'No payment methods saved',
-                          style: GoogleFonts.inter(
-                            color: AppColors.textSecondary,
-                            fontSize: 14.0,
-                          ),
+                          style: Theme.of(context).textTheme.labelMedium!,
                         ),
                       ),
                     ),
@@ -537,10 +518,9 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                                           Text(
                                             'Expires ${paymentMethodsItem.card?.expMonth.toString() ?? ''}/${paymentMethodsItem.card?.expYear.toString() ?? ''}',
                                             maxLines: 1,
-                                            style: GoogleFonts.inter(
-                                              color: AppColors.textSecondary,
-                                              fontSize: 12.0,
-                                            ),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelSmall!,
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                         ].divide(SizedBox(height: 4.0)),
