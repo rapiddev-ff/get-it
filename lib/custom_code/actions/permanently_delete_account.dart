@@ -1,6 +1,6 @@
 import '/backend/supabase/supabase.dart';
 
-Future<dynamic> permanentlyDeleteAccount() async {
+Future<Map<String, dynamic>> permanentlyDeleteAccount() async {
   try {
     final userId = Supabase.instance.client.auth.currentUser?.id;
     if (userId == null) {

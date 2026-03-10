@@ -3,7 +3,7 @@ import '/core/config/app_config.dart';
 
 import 'package:flutter_stripe/flutter_stripe.dart';
 
-Future<dynamic> addPaymentCard(
+Future<Map<String, dynamic>> addPaymentCard(
   String cardNumber,
   String expMonth,
   String expYear,

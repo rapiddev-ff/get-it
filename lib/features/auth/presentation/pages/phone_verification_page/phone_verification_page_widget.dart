@@ -2,7 +2,6 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '/backend/api_requests/api_calls.dart';
@@ -114,11 +113,7 @@ class _PhoneVerificationPageWidgetState
           ),
           title: Text(
             AppConstants.appName,
-            style: GoogleFonts.inter(
-              color: Colors.white,
-              fontSize: 22.0,
-              fontWeight: FontWeight.w500,
-            ),
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.white, fontSize: 22.0, fontWeight: FontWeight.w500),
           ),
           actions: const [],
         ),
@@ -172,10 +167,7 @@ class _PhoneVerificationPageWidgetState
                                 decoration: InputDecoration(
                                   isDense: false,
                                   hintText: 'Your phone number',
-                                  hintStyle: GoogleFonts.inter(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.normal,
-                                  ),
+                                  hintStyle: Theme.of(context).textTheme.bodyLarge!,
                                   enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: AppColors.neutral700,

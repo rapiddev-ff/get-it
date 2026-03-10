@@ -5,7 +5,6 @@ import '/core/utils/value_utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class CheckoutItemWidget extends StatelessWidget {
@@ -81,10 +80,7 @@ class CheckoutItemWidget extends StatelessWidget {
                     children: [
                       TextSpan(
                         text: 'Seller: ',
-                        style: GoogleFonts.inter(
-                          fontSize: 12.0,
-                          height: 1.5,
-                        ),
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(height: 1.5),
                       ),
                       TextSpan(
                         text: '@',
@@ -101,10 +97,7 @@ class CheckoutItemWidget extends StatelessWidget {
                         ),
                       )
                     ],
-                    style: GoogleFonts.inter(
-                      fontSize: 12.0,
-                      height: 1.5,
-                    ),
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(height: 1.5),
                   ),
                 ),
                 Padding(

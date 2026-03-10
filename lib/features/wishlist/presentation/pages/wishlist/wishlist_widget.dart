@@ -5,7 +5,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '/features/browse/domain/models/category_model.dart';
@@ -251,11 +250,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                           horizontal: 16.0, vertical: 8.0),
                                       child: Text(
                                         'All (${wishlistProducts.length})',
-                                        style: GoogleFonts.inter(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 13.0,
-                                          color: AppColors.textPrimary,
-                                        ),
+                                        style: Theme.of(context).textTheme.bodySmall!.copyWith(fontWeight: FontWeight.w500, fontSize: 13.0),
                                       ),
                                     ),
                                   ),
@@ -294,11 +289,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                         padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                                         child: Text(
                                           categoriesItem.name,
-                                          style: GoogleFonts.inter(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 13.0,
-                                            color: AppColors.textPrimary,
-                                          ),
+                                          style: Theme.of(context).textTheme.bodySmall!.copyWith(fontWeight: FontWeight.w500, fontSize: 13.0),
                                         ),
                                       ),
                                     ),

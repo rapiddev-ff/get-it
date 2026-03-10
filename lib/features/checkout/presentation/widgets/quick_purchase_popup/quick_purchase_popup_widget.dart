@@ -119,7 +119,7 @@ class _QuickPurchasePopupWidgetState
         7,
       );
 
-      if (payResult is Map && payResult['success'] == true) {
+      if (payResult['success'] == true) {
         // Update daily budget used
         await _updateDailyBudgetUsed(_total);
 
@@ -131,9 +131,8 @@ class _QuickPurchasePopupWidgetState
           _showSuccessConfirmation(orderResult);
         }
       } else {
-        final errorMsg = payResult is Map
-            ? (payResult['error'] ?? 'Payment failed').toString()
-            : 'Payment failed';
+        final errorMsg =
+            (payResult['error'] ?? 'Payment failed').toString();
         if (mounted) {
           actions.toastificationshow(
               context, 'Payment Error', errorMsg, 'error');

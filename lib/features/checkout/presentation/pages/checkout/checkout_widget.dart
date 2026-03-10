@@ -180,15 +180,14 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
         7,
       );
 
-      if (payResult is Map && payResult['success'] == true) {
+      if (payResult['success'] == true) {
         if (mounted) {
           Navigator.pop(context);
           _showConfirmationPopup();
         }
       } else {
-        final errorMsg = payResult is Map
-            ? (payResult['error'] ?? 'Payment failed').toString()
-            : 'Payment failed';
+        final errorMsg =
+            (payResult['error'] ?? 'Payment failed').toString();
         if (mounted) {
           actions.toastificationshow(
               context, 'Payment Error', errorMsg, 'error');
@@ -374,13 +373,11 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                               '${user.shippingAddress?.city ?? ''}, ${user.shippingAddress?.state ?? ''}, ${user.shippingAddress?.zipCode ?? ''}',
                               maxLines: 1,
                               style: Theme.of(context).textTheme.labelSmall!,
-                              overflow: TextOverflow.ellipsis,
                             ),
                             Text(
                               user.shippingAddress?.country ?? '',
                               maxLines: 1,
                               style: Theme.of(context).textTheme.labelSmall!,
-                              overflow: TextOverflow.ellipsis,
                             ),
                           ].divide(SizedBox(height: 4.0)),
                         ),

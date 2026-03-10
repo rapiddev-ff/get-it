@@ -8,7 +8,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 ///   nextNumber: String  ('001', '042' ...)
 ///   fullSku:   String  ('A1-001')
 ///   message:   String  (для показа пользователю)
-Future<dynamic> getNextSkuNumber(
+Future<Map<String, dynamic>> getNextSkuNumber(
   String skuPrefix,
   String? excludeProductId,
 ) async {

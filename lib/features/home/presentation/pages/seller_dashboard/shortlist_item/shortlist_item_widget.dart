@@ -357,12 +357,12 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
     return Text(
       '${widget.totalItems} items${createdStr.isNotEmpty ? ' \u2022 Created $createdStr' : ''}',
       maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
       style: GoogleFonts.inter(
         fontSize: 12.0,
         color: AppColors.textSecondary,
         height: 1.5,
       ),
-      overflow: TextOverflow.ellipsis,
     );
   }
 

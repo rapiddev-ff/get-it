@@ -518,6 +518,7 @@ class _HomeDashoardEarningsWidgetState
                   Text(
                     'Order #${order['order_number'] ?? ''}',
                     maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.labelSmall!,
                   ),
                 ].divide(SizedBox(height: 4.0)),

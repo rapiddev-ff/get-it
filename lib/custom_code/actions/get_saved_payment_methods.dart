@@ -1,6 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-Future<dynamic> getSavedPaymentMethods() async {
+Future<Map<String, dynamic>> getSavedPaymentMethods() async {
   try {
     final supabase = Supabase.instance.client;
 

@@ -3,7 +3,7 @@ import '/core/config/app_config.dart';
 
 import 'package:flutter_stripe/flutter_stripe.dart';
 
-Future<dynamic> payWithSavedCard(
+Future<Map<String, dynamic>> payWithSavedCard(
   String orderId,
   String paymentMethodId,
   int? holdDays,

@@ -84,7 +84,7 @@ class SettingsDeleteAccountWidget extends StatelessWidget {
                           onPressed: () async {
                             final result =
                                 await actions.permanentlyDeleteAccount();
-                            if ((result is Map) ? result['success'] : false) {
+                            if (result['success'] == true) {
                               await showDialog(
                                 context: context,
                                 builder: (dialogContext) {
@@ -120,8 +120,7 @@ class SettingsDeleteAccountWidget extends StatelessWidget {
                               await actions.toastificationshow(
                                 context,
                                 'Error!',
-                                ((result is Map) ? result['error'] : '')
-                                    .toString(),
+                                (result['error'] ?? '').toString(),
                                 'error',
                               );
                             }

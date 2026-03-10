@@ -12,7 +12,7 @@ bool _isValidUuid(String? value) {
   return uuidRegex.hasMatch(value.trim());
 }
 
-Future<dynamic> createProduct(
+Future<Map<String, dynamic>> createProduct(
   String? productId,
   String title,
   String description,

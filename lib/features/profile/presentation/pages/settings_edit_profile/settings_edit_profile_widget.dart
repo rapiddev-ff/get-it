@@ -15,7 +15,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:go_router/go_router.dart';
 import 'settings_edit_profile_model.dart';
@@ -316,11 +315,10 @@ class _SettingsEditProfileWidgetState
                             _model.usernameAvailable
                                 ? 'Available '
                                 : 'Unavailable',
-                            style: GoogleFonts.inter(
+                            style: Theme.of(context).textTheme.bodySmall!.copyWith(
                               color: _model.usernameAvailable
                                   ? AppColors.statusSuccess
                                   : AppColors.destructive500,
-                              fontSize: 12.0,
                             ),
                           ).animate().fade(duration: 600.ms),
                           if (_model.usernameAvailable)
@@ -575,7 +573,7 @@ class _SettingsEditProfileWidgetState
                           ),
                           child: Text(
                             'Save Changes',
-                            style: GoogleFonts.inter(
+                            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w500,
                             ),

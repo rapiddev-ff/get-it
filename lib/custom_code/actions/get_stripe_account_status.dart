@@ -1,6 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-Future<dynamic> getStripeAccountStatus() async {
+Future<Map<String, dynamic>> getStripeAccountStatus() async {
   try {
     final supabase = Supabase.instance.client;
     final user = supabase.auth.currentUser;

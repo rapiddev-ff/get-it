@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:octo_image/octo_image.dart';
 
@@ -104,12 +103,7 @@ class WishlistItemWidget extends StatelessWidget {
                       Expanded(
                         child: Text(
                           '\$${NumberFormat('#,##0.##', 'en_US').format(productDataType?.price ?? 0)}',
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.0,
-                            color: AppColors.textPrimary,
-                            height: 1.5,
-                          ),
+                          style: Theme.of(context).textTheme.titleSmall!.copyWith(fontWeight: FontWeight.bold, height: 1.5),
                         ),
                       ),
                       Container(
@@ -124,9 +118,8 @@ class WishlistItemWidget extends StatelessWidget {
                               horizontal: 8.0, vertical: 4.0),
                           child: Text(
                             _isSold ? 'Sold' : 'Buy Now',
-                            style: GoogleFonts.inter(
+                            style: Theme.of(context).textTheme.bodySmall!.copyWith(
                               fontWeight: FontWeight.w500,
-                              fontSize: 12.0,
                               color: _isSold
                                   ? AppColors.textSecondary
                                   : AppColors.textPrimary,

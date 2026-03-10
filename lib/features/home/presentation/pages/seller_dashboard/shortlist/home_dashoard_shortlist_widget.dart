@@ -267,10 +267,10 @@ class _HomeDashoardShortlistWidgetState
                                           child: Text(
                                             'Print QR codes for your booth',
                                             maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium!,
-                                            overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
                                       ].divide(SizedBox(width: 12.0)),
@@ -288,10 +288,10 @@ class _HomeDashoardShortlistWidgetState
                                           child: Text(
                                             'Share digitally on social media',
                                             maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium!,
-                                            overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
                                       ].divide(SizedBox(width: 12.0)),
@@ -309,10 +309,10 @@ class _HomeDashoardShortlistWidgetState
                                           child: Text(
                                             'Track scans and purchases',
                                             maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium!,
-                                            overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
                                       ].divide(SizedBox(width: 12.0)),

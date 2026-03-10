@@ -478,10 +478,10 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                       Text(
                                         '${selectedProductIds.length} items',
                                         maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                         style: Theme.of(context)
                                             .textTheme
                                             .labelSmall!,
-                                        overflow: TextOverflow.ellipsis,
                                       ),
                                     ].divide(SizedBox(height: 4.0)),
                                   ),

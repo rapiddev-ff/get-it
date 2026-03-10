@@ -15,7 +15,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 
 class MessagesWidget extends ConsumerStatefulWidget {
@@ -78,11 +77,7 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
                 ),
                 Text(
                   AppConstants.appName,
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.0,
-                    height: 1.5,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(height: 1.5),
                 ),
                 IconButton(
                   icon: Icon(
@@ -166,9 +161,7 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
               padding: EdgeInsets.only(bottom: 10.0),
               child: Text(
                 label,
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 14.0,
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: _state == label
                       ? AppColors.textPrimary
                       : AppColors.textSecondary,

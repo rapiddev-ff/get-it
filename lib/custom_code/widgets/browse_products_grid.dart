@@ -2,7 +2,6 @@ import '/features/browse/domain/models/browse_product_model.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'dart:async';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -262,10 +261,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
             const SizedBox(height: 16),
             Text(
               hasFilters ? 'No products found' : 'No products available',
-              style: GoogleFonts.inter(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.textPrimary),
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 8),
             Text(
@@ -448,8 +444,7 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
             Text(
               _error ?? 'Unknown error',
               textAlign: TextAlign.center,
-              style: GoogleFonts.inter(
-                  fontSize: 12, color: AppColors.textSecondary),
+              style: Theme.of(context).textTheme.labelSmall!,
             ),
             const SizedBox(height: 16),
             ElevatedButton(

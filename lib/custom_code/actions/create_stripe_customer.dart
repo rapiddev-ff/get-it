@@ -1,6 +1,6 @@
 import '/backend/supabase/supabase.dart';
 
-Future<dynamic> createStripeCustomer(
+Future<Map<String, dynamic>> createStripeCustomer(
   String? email,
   String? name,
   String? phone,

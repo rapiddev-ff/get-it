@@ -92,11 +92,11 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
                                 child: Text(
                                   'pi_3N8K2xLkdIwHu7ix0B4hoYpi',
                                   maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                   style: GoogleFonts.inter(
                                     fontWeight: FontWeight.w500,
                                     color: AppColors.primary,
                                   ),
-                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                             ].divide(SizedBox(width: 20.0)),

@@ -1,6 +1,6 @@
 import '/backend/supabase/supabase.dart';
 
-Future<dynamic> getSellerEarnings(
+Future<Map<String, dynamic>> getSellerEarnings(
   DateTime? startDate,
   DateTime? endDate,
 ) async {

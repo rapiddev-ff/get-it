@@ -3,7 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-Future<dynamic> startStripeConnectOnboarding() async {
+Future<Map<String, dynamic>> startStripeConnectOnboarding() async {
   try {
     final supabase = Supabase.instance.client;
     final session = supabase.auth.currentSession;

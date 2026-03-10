@@ -146,10 +146,10 @@ class _HomeDashoardPromoteStep2WidgetState
                                     Text(
                                       'PSA 9 Mint Condition',
                                       maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                       style: Theme.of(context)
                                           .textTheme
                                           .labelSmall!,
-                                      overflow: TextOverflow.ellipsis,
                                     ),
                                     Expanded(
                                       child: Padding(

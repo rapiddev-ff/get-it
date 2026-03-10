@@ -479,7 +479,7 @@ class _HomeDashoardInventoryAddWidgetState
       uploadedImages.toList(),
     );
 
-    if (result is Map && result['success'] == true) {
+    if (result['success'] == true) {
       if (status == 'active') {
         createProduct = result;
       } else {
@@ -529,8 +529,8 @@ class _HomeDashoardInventoryAddWidgetState
     } else {
       await actions.toastificationshow(
         context,
-        (result is Map ? result['title'] : null).toString(),
-        (result is Map ? result['message'] : null).toString(),
+        result['title'].toString(),
+        result['message'].toString(),
         'error',
       );
     }

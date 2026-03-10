@@ -1,7 +1,7 @@
 import '/backend/supabase/supabase.dart';
 import 'package:flutter/material.dart';
 
-Future<dynamic> changeUserEmailWithPasswordCheck(
+Future<Map<String, dynamic>> changeUserEmailWithPasswordCheck(
   BuildContext context,
   String currentEmail,
   String newEmail,

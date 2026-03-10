@@ -167,7 +167,6 @@ class MessageItemWidget extends ConsumerWidget {
                         conversationDataType!.lastMessageText ?? '',
                         maxLines: 1,
                         style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
-                        overflow: TextOverflow.ellipsis,
                       ),
                   ].divide(SizedBox(height: 4.0)),
                 ),

@@ -162,7 +162,6 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                     widget.product!.conditionName,
                                     maxLines: 1,
                                     style: Theme.of(context).textTheme.labelSmall!.copyWith(height: 1.5),
-                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 Padding(
                                   padding: EdgeInsets.only(top: 8.0),
@@ -415,14 +414,12 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                     'Minimum 20 characters',
                                     maxLines: 1,
                                     style: Theme.of(context).textTheme.labelSmall!.copyWith(height: 1.5),
-                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                                 Text(
                                   '${textController?.text.length ?? 0}/500',
                                   maxLines: 1,
                                   style: Theme.of(context).textTheme.labelSmall!.copyWith(height: 1.5),
-                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ],
                             ),
@@ -496,7 +493,6 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                           'Upload photos of the item you received 3 LIMIT\n',
                                           maxLines: 1,
                                           style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
-                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
                                       Padding(
@@ -504,11 +500,11 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                         child: Text(
                                           'Choose Photos',
                                           maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                           style: Theme.of(context).textTheme.titleSmall!.copyWith(
                                             color: AppColors.primary,
                                             height: 1.5,
                                           ),
-                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
                                     ],

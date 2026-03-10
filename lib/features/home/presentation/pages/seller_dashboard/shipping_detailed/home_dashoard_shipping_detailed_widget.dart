@@ -397,6 +397,7 @@ class _HomeDashoardShippingDetailedWidgetState
                                             Text(
                                               'Order #${_order!['order_number'] ?? ''}',
                                               maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .labelSmall!,
@@ -469,10 +470,10 @@ class _HomeDashoardShippingDetailedWidgetState
                                       Text(
                                         '${address['city'] ?? ''}, ${address['state'] ?? ''} ${address['zip_code'] ?? ''}',
                                         maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                         style: Theme.of(context)
                                             .textTheme
                                             .labelSmall!,
-                                        overflow: TextOverflow.ellipsis,
                                       ),
                                       Text(
                                         address['country']?.toString() ?? '',

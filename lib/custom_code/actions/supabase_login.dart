@@ -1,6 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-Future<dynamic> supabaseLogin(
+Future<Map<String, dynamic>> supabaseLogin(
   String email,
   String password,
 ) async {

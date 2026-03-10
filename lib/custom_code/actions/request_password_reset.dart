@@ -1,6 +1,6 @@
 import '/backend/supabase/supabase.dart';
 
-Future<dynamic> requestPasswordReset(String email) async {
+Future<Map<String, dynamic>> requestPasswordReset(String email) async {
   final supabase = SupaFlow.client;
 
   try {

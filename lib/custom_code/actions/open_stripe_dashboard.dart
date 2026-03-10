@@ -1,7 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-Future<dynamic> openStripeDashboard() async {
+Future<Map<String, dynamic>> openStripeDashboard() async {
   try {
     final supabase = Supabase.instance.client;
 
