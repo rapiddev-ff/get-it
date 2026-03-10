@@ -12,8 +12,6 @@ import '/core/widgets/app_text_field.dart';
 import '/core/widgets/app_gradient_button.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/dismiss_keyboard.dart';
-import 'settings_report_model.dart';
-export 'settings_report_model.dart';
 
 class SettingsReportWidget extends ConsumerStatefulWidget {
   const SettingsReportWidget({super.key});
@@ -28,23 +26,23 @@ class SettingsReportWidget extends ConsumerStatefulWidget {
 
 class _SettingsReportWidgetState extends ConsumerState<SettingsReportWidget>
     with KeyboardVisibilityMixin {
-  late SettingsReportModel _model;
-
+  late final TextEditingController textController;
+  late final FocusNode textFieldFocusNode;
   bool _isSending = false;
 
   @override
   void initState() {
     super.initState();
-    _model = SettingsReportModel();
 
-    _model.textController ??= TextEditingController();
-    _model.textFieldFocusNode ??= FocusNode();
-    _model.textFieldFocusNode!.addListener(() => setState(() {}));
+    textController = TextEditingController();
+    textFieldFocusNode = FocusNode();
+    textFieldFocusNode.addListener(() => setState(() {}));
   }
 
   @override
   void dispose() {
-    _model.dispose();
+    textFieldFocusNode.dispose();
+    textController.dispose();
     super.dispose();
   }
 
@@ -129,10 +127,10 @@ class _SettingsReportWidgetState extends ConsumerState<SettingsReportWidget>
                         child: Container(
                           width: double.infinity,
                           child: TextFormField(
-                            controller: _model.textController,
-                            focusNode: _model.textFieldFocusNode,
+                            controller: textController,
+                            focusNode: textFieldFocusNode,
                             onChanged: (_) => EasyDebounce.debounce(
-                              '_model.textController',
+                              'textController',
                               Duration(milliseconds: 100),
                               () => setState(() {}),
                             ),
@@ -163,7 +161,7 @@ class _SettingsReportWidgetState extends ConsumerState<SettingsReportWidget>
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              '${_model.textController?.text.length ?? 0}/1000',
+                              '${textController.text.length}/1000',
                               style: Theme.of(context)
                                   .textTheme
                                   .labelMedium!
@@ -184,7 +182,7 @@ class _SettingsReportWidgetState extends ConsumerState<SettingsReportWidget>
                       AppGradientButton(
                         text: 'Send',
                         enabled:
-                            _model.textController!.text.trim().isNotEmpty &&
+                            textController.text.trim().isNotEmpty &&
                                 !_isSending,
                         isLoading: _isSending,
                         onPressed: () async {
@@ -192,7 +190,7 @@ class _SettingsReportWidgetState extends ConsumerState<SettingsReportWidget>
                           try {
                             await SupportReportsTable().insert({
                               'user_id': ref.read(currentUserIdProvider),
-                              'message': _model.textController!.text.trim(),
+                              'message': textController.text.trim(),
                             });
                             if (!mounted) return;
                             context.pop();

@@ -15,7 +15,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:intl/intl.dart';
-import 'settings_daily_budget_model.dart';
 
 class SettingsDailyBudgetWidget extends ConsumerStatefulWidget {
   const SettingsDailyBudgetWidget({super.key});
@@ -31,26 +30,27 @@ class SettingsDailyBudgetWidget extends ConsumerStatefulWidget {
 class _SettingsDailyBudgetWidgetState
     extends ConsumerState<SettingsDailyBudgetWidget>
     with KeyboardVisibilityMixin {
-  late SettingsDailyBudgetModel _model;
+  late final TextEditingController textController;
+  late final FocusNode textFieldFocusNode;
 
   @override
   void initState() {
     super.initState();
-    _model = SettingsDailyBudgetModel();
 
     final dailyBudget = ref.read(authProvider).userSettings?.dailyBudget;
     final formattedBudget = dailyBudget != null
         ? NumberFormat('#,##0.##', 'en_US').format(dailyBudget)
         : '0';
 
-    _model.textController ??= TextEditingController(text: formattedBudget);
-    _model.textFieldFocusNode ??= FocusNode();
-    _model.textFieldFocusNode!.addListener(() => setState(() {}));
+    textController = TextEditingController(text: formattedBudget);
+    textFieldFocusNode = FocusNode();
+    textFieldFocusNode.addListener(() => setState(() {}));
   }
 
   @override
   void dispose() {
-    _model.dispose();
+    textFieldFocusNode.dispose();
+    textController.dispose();
     super.dispose();
   }
 
@@ -115,10 +115,10 @@ class _SettingsDailyBudgetWidgetState
                         child: Container(
                           width: double.infinity,
                           child: TextFormField(
-                            controller: _model.textController,
-                            focusNode: _model.textFieldFocusNode,
+                            controller: textController,
+                            focusNode: textFieldFocusNode,
                             onChanged: (_) => EasyDebounce.debounce(
-                              '_model.textController',
+                              'textController',
                               Duration(milliseconds: 100),
                               () => setState(() {}),
                             ),
@@ -159,7 +159,7 @@ class _SettingsDailyBudgetWidgetState
                                               const UserSettings())
                                           .copyWith(
                                         dailyBudget: double.tryParse(
-                                                _model.textController!.text) ??
+                                                textController.text) ??
                                             0.0,
                                       ),
                                     ),
@@ -170,7 +170,7 @@ class _SettingsDailyBudgetWidgetState
                               await UserSettingsTable().update(
                                 data: {
                                   'daily_budget': double.tryParse(
-                                      _model.textController!.text),
+                                      textController.text),
                                 },
                                 matchingRows: (rows) => rows.eqOrNull(
                                   'user_id',

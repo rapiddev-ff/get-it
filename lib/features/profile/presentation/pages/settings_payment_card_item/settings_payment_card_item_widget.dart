@@ -9,8 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'settings_payment_card_item_model.dart';
-export 'settings_payment_card_item_model.dart';
 
 class SettingsPaymentCardItemWidget extends StatefulWidget {
   const SettingsPaymentCardItemWidget({
@@ -29,17 +27,10 @@ class SettingsPaymentCardItemWidget extends StatefulWidget {
 
 class _SettingsPaymentCardItemWidgetState
     extends State<SettingsPaymentCardItemWidget> {
-  late SettingsPaymentCardItemModel _model;
-
-  @override
-  void initState() {
-    super.initState();
-    _model = SettingsPaymentCardItemModel();
-  }
+  bool? _deletePayment;
 
   @override
   void dispose() {
-    _model.dispose();
     super.dispose();
   }
 
@@ -201,11 +192,11 @@ class _SettingsPaymentCardItemWidgetState
                                   ),
                                   actionText: 'Remove Card',
                                   action: () async {
-                                    _model.deletePayment =
+                                    _deletePayment =
                                         await actions.deletePaymentMethod(
                                       widget.paymentMethod!.id,
                                     );
-                                    if (_model.deletePayment!) {
+                                    if (_deletePayment!) {
                                       Navigator.pop(context);
                                     }
                                   },

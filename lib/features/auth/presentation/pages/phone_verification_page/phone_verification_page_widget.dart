@@ -13,9 +13,6 @@ import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/auth/presentation/pages/phone_verification_page2/phone_verification_page2_widget.dart';
-import 'phone_verification_page_model.dart';
-
-export 'phone_verification_page_model.dart';
 
 class PhoneVerificationPageWidget extends StatefulWidget {
   const PhoneVerificationPageWidget({
@@ -35,7 +32,9 @@ class PhoneVerificationPageWidget extends StatefulWidget {
 
 class _PhoneVerificationPageWidgetState
     extends State<PhoneVerificationPageWidget> with KeyboardVisibilityMixin {
-  late PhoneVerificationPageModel _model;
+  late final TextEditingController textController;
+  late final FocusNode textFieldFocusNode;
+  late final MaskTextInputFormatter textFieldMask;
 
   /// Returns null if the phone number is valid, or an error string if invalid.
   static String? _phoneValidationResult(String? phoneNumber) {
@@ -70,22 +69,22 @@ class _PhoneVerificationPageWidgetState
   @override
   void initState() {
     super.initState();
-    _model = PhoneVerificationPageModel();
 
-    _model.textController ??= TextEditingController();
-    _model.textFieldFocusNode ??= FocusNode();
-    _model.textFieldFocusNode!.addListener(() => setState(() {}));
-    _model.textFieldMask = MaskTextInputFormatter(mask: '+# (###) ###-##-##');
+    textController = TextEditingController();
+    textFieldFocusNode = FocusNode();
+    textFieldFocusNode.addListener(() => setState(() {}));
+    textFieldMask = MaskTextInputFormatter(mask: '+# (###) ###-##-##');
   }
 
   @override
   void dispose() {
-    _model.dispose();
+    textFieldFocusNode.dispose();
+    textController.dispose();
     super.dispose();
   }
 
   bool get _isPhoneValid {
-    final text = _model.textController!.text;
+    final text = textController.text;
     final result = _phoneValidationResult(text);
     return (result == null || result.isEmpty) && text.isNotEmpty;
   }
@@ -167,10 +166,10 @@ class _PhoneVerificationPageWidgetState
                             SizedBox(
                               width: double.infinity,
                               child: TextFormField(
-                                controller: _model.textController,
-                                focusNode: _model.textFieldFocusNode,
+                                controller: textController,
+                                focusNode: textFieldFocusNode,
                                 onChanged: (_) => EasyDebounce.debounce(
-                                  '_model.textController',
+                                  'textController',
                                   const Duration(milliseconds: 100),
                                   () => setState(() {}),
                                 ),
@@ -218,24 +217,23 @@ class _PhoneVerificationPageWidgetState
                                 keyboardType: TextInputType.number,
                                 cursorColor: AppColors.textPrimary,
                                 enableInteractiveSelection: true,
-                                validator: (value) => _model
-                                    .textControllerValidator
-                                    ?.call(context, value),
-                                inputFormatters: [_model.textFieldMask],
+                                validator: (value) =>
+                                    _phoneValidationResult(value),
+                                inputFormatters: [textFieldMask],
                               ),
                             ),
                             if (_phoneValidationResult(
-                                        _model.textController!.text) !=
+                                        textController.text) !=
                                     null &&
                                 _phoneValidationResult(
-                                        _model.textController!.text) !=
+                                        textController.text) !=
                                     '' &&
-                                _model.textController!.text != '')
+                                textController.text != '')
                               Padding(
                                 padding: const EdgeInsets.only(top: 4.0),
                                 child: Text(
                                   _phoneValidationResult(
-                                          _model.textController!.text) ??
+                                          textController.text) ??
                                       'N/A',
                                   style: Theme.of(context)
                                       .textTheme
@@ -265,14 +263,14 @@ class _PhoneVerificationPageWidgetState
                             : () async {
                                 await TwillioGroup.sendVerificationCall.call(
                                   to: _formatPhoneNumber(
-                                      _model.textController!.text),
+                                      textController.text),
                                 );
 
                                 if (!mounted) return;
                                 context.pushNamed(
                                   PhoneVerificationPage2Widget.routeName,
                                   queryParameters: {
-                                    'phoneNumber': _model.textController!.text,
+                                    'phoneNumber': textController.text,
                                     'isOnborading':
                                         widget.isOnboarding.toString(),
                                   },

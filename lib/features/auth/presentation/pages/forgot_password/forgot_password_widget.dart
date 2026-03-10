@@ -12,9 +12,6 @@ import '/core/widgets/app_text_field.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/auth/presentation/pages/forgot_password_step2/forgot_password_step2_widget.dart';
-import 'forgot_password_model.dart';
-
-export 'forgot_password_model.dart';
 
 class ForgotPasswordWidget extends StatefulWidget {
   const ForgotPasswordWidget({super.key});
@@ -28,7 +25,10 @@ class ForgotPasswordWidget extends StatefulWidget {
 
 class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
     with KeyboardVisibilityMixin {
-  late ForgotPasswordModel _model;
+  late final TextEditingController textController;
+  late final FocusNode textFieldFocusNode;
+  dynamic _requestPasswordReset;
+  bool _isLoading = false;
 
   static final _emailRegExp =
       RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
@@ -36,16 +36,16 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
   @override
   void initState() {
     super.initState();
-    _model = ForgotPasswordModel();
 
-    _model.textController ??= TextEditingController();
-    _model.textFieldFocusNode ??= FocusNode();
-    _model.textFieldFocusNode!.addListener(() => setState(() {}));
+    textController = TextEditingController();
+    textFieldFocusNode = FocusNode();
+    textFieldFocusNode.addListener(() => setState(() {}));
   }
 
   @override
   void dispose() {
-    _model.dispose();
+    textFieldFocusNode.dispose();
+    textController.dispose();
     super.dispose();
   }
 
@@ -120,10 +120,10 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
                             Container(
                               width: double.infinity,
                               child: TextFormField(
-                                controller: _model.textController,
-                                focusNode: _model.textFieldFocusNode,
+                                controller: textController,
+                                focusNode: textFieldFocusNode,
                                 onChanged: (_) => EasyDebounce.debounce(
-                                  '_model.textController',
+                                  'textController',
                                   Duration(milliseconds: 100),
                                   () => setState(() {}),
                                 ),
@@ -136,9 +136,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
                                 keyboardType: TextInputType.emailAddress,
                                 cursorColor: AppColors.textPrimary,
                                 enableInteractiveSelection: true,
-                                validator: (value) => _model
-                                    .textControllerValidator
-                                    ?.call(context, value),
+                                validator: null,
                               ),
                             ),
                           ],
@@ -157,12 +155,12 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
                       AppGradientButton(
                         text: 'Next',
                         borderRadius: 8.0,
-                        isLoading: _model.isLoading,
-                        onPressed: _model.isLoading
+                        isLoading: _isLoading,
+                        onPressed: _isLoading
                             ? null
                             : () async {
                                 final email =
-                                    _model.textController!.text.trim();
+                                    textController.text.trim();
                                 if (email.isEmpty ||
                                     !_emailRegExp.hasMatch(email)) {
                                   await actions.toastificationshow(
@@ -173,28 +171,28 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
                                   );
                                   return;
                                 }
-                                setState(() => _model.isLoading = true);
+                                setState(() => _isLoading = true);
                                 try {
-                                  _model.requestPasswordReset =
+                                  _requestPasswordReset =
                                       await actions.requestPasswordReset(
                                     email,
                                   );
                                   if (!mounted) return;
-                                  if ((_model.requestPasswordReset is Map)
-                                      ? _model.requestPasswordReset['success']
+                                  if ((_requestPasswordReset is Map)
+                                      ? _requestPasswordReset['success']
                                       : null) {
                                     context.pushNamed(
                                       ForgotPasswordStep2Widget.routeName,
                                       queryParameters: {
-                                        'email': _model.textController!.text,
+                                        'email': textController.text,
                                       },
                                     );
                                   } else {
                                     await actions.toastificationshow(
                                       context,
                                       'Error!',
-                                      ((_model.requestPasswordReset is Map)
-                                              ? _model.requestPasswordReset[
+                                      ((_requestPasswordReset is Map)
+                                              ? _requestPasswordReset[
                                                   'message']
                                               : null)
                                           .toString(),
@@ -203,7 +201,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
                                   }
                                 } finally {
                                   if (mounted) {
-                                    setState(() => _model.isLoading = false);
+                                    setState(() => _isLoading = false);
                                   }
                                 }
                               },

@@ -10,8 +10,6 @@ import 'package:flutter/material.dart';
 import '/core/providers/current_user_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'settings_block_list_model.dart';
-export 'settings_block_list_model.dart';
 
 class SettingsBlockListWidget extends ConsumerStatefulWidget {
   const SettingsBlockListWidget({super.key});
@@ -26,7 +24,8 @@ class SettingsBlockListWidget extends ConsumerStatefulWidget {
 
 class _SettingsBlockListWidgetState
     extends ConsumerState<SettingsBlockListWidget> {
-  late SettingsBlockListModel _model;
+  late final TextEditingController textController;
+  late final FocusNode textFieldFocusNode;
 
   /// Combined blocked user data: blocked_users row + user_profiles data.
   List<_BlockedUserInfo>? _blockedUsers;
@@ -36,18 +35,18 @@ class _SettingsBlockListWidgetState
   @override
   void initState() {
     super.initState();
-    _model = SettingsBlockListModel();
 
-    _model.textController ??= TextEditingController();
-    _model.textFieldFocusNode ??= FocusNode();
-    _model.textFieldFocusNode!.addListener(() => setState(() {}));
+    textController = TextEditingController();
+    textFieldFocusNode = FocusNode();
+    textFieldFocusNode.addListener(() => setState(() {}));
 
     _loadBlockedUsers();
   }
 
   @override
   void dispose() {
-    _model.dispose();
+    textFieldFocusNode.dispose();
+    textController.dispose();
     super.dispose();
   }
 
@@ -133,7 +132,7 @@ class _SettingsBlockListWidgetState
 
   List<_BlockedUserInfo> get _filteredUsers {
     final all = _blockedUsers ?? [];
-    final query = _model.textController?.text.toLowerCase() ?? '';
+    final query = textController.text.toLowerCase();
     if (query.isEmpty) return all;
     return all.where((u) => u.username.toLowerCase().contains(query)).toList();
   }
@@ -177,7 +176,7 @@ class _SettingsBlockListWidgetState
         ),
         body: SafeArea(
           child: (_blockedUsers?.isEmpty ?? true) &&
-                  (_model.textController?.text.isEmpty ?? true)
+                  textController.text.isEmpty
               ? _buildEmptyState()
               : _buildBlockedList(blockedUsers),
         ),
@@ -239,10 +238,10 @@ class _SettingsBlockListWidgetState
               child: Container(
                 width: double.infinity,
                 child: TextFormField(
-                  controller: _model.textController,
-                  focusNode: _model.textFieldFocusNode,
+                  controller: textController,
+                  focusNode: textFieldFocusNode,
                   onChanged: (_) => EasyDebounce.debounce(
-                    '_model.textController',
+                    'textController',
                     Duration(milliseconds: 100),
                     () => setState(() {}),
                   ),

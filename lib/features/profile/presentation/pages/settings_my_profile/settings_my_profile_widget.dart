@@ -20,8 +20,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'settings_my_profile_model.dart';
-export 'settings_my_profile_model.dart';
 
 class SettingsMyProfileWidget extends ConsumerStatefulWidget {
   const SettingsMyProfileWidget({super.key});
@@ -36,7 +34,8 @@ class SettingsMyProfileWidget extends ConsumerStatefulWidget {
 
 class _SettingsMyProfileWidgetState
     extends ConsumerState<SettingsMyProfileWidget> {
-  late SettingsMyProfileModel _model;
+  String? _tabState = 'As Buyer';
+  ApiCallResponse? _getReviews;
 
   /// Helper to extract a value from JSON by key path like `$.as_buyer.avg_rating`.
   static dynamic _jsonGet(dynamic json, String key) {
@@ -74,11 +73,10 @@ class _SettingsMyProfileWidgetState
   @override
   void initState() {
     super.initState();
-    _model = SettingsMyProfileModel();
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.getReviews =
+      _getReviews =
           await SupabaseRPCGroup.getuserprofilewithreviewsCall.call(
         pUserId: ref.read(currentUserIdProvider),
         pOffset: 0,
@@ -92,15 +90,13 @@ class _SettingsMyProfileWidgetState
 
   @override
   void dispose() {
-    _model.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authProvider);
-    final json = _model.getReviews?.jsonBody ?? '';
+    final json = _getReviews?.jsonBody ?? '';
 
     return DismissKeyboard(
       child: Scaffold(
@@ -372,7 +368,7 @@ class _SettingsMyProfileWidgetState
                             _buildTabBar(),
                             Builder(
                               builder: (context) {
-                                if (_model.state == 'As Buyer') {
+                                if (_tabState == 'As Buyer') {
                                   return _buildBuyerRatingsSection(
                                       json, 'listView2');
                                 } else {
@@ -489,7 +485,7 @@ class _SettingsMyProfileWidgetState
             Expanded(
               child: InkWell(
                 onTap: () async {
-                  _model.state = 'As Buyer';
+                  _tabState = 'As Buyer';
                   setState(() {});
                 },
                 child: Column(
@@ -501,7 +497,7 @@ class _SettingsMyProfileWidgetState
                         'As Buyer',
                         style: GoogleFonts.inter(
                           fontWeight: FontWeight.normal,
-                          color: _model.state == 'As Buyer'
+                          color: _tabState == 'As Buyer'
                               ? AppColors.textPrimary
                               : AppColors.textSecondary,
                           height: 2.0,
@@ -509,7 +505,7 @@ class _SettingsMyProfileWidgetState
                       ),
                     ),
                     Opacity(
-                      opacity: (_model.state == 'As Buyer' ? 1 : 0).toDouble(),
+                      opacity: (_tabState == 'As Buyer' ? 1 : 0).toDouble(),
                       child: Container(
                         width: double.infinity,
                         height: 2.0,
@@ -525,7 +521,7 @@ class _SettingsMyProfileWidgetState
             Expanded(
               child: InkWell(
                 onTap: () async {
-                  _model.state = 'As Seller';
+                  _tabState = 'As Seller';
                   setState(() {});
                 },
                 child: Column(
@@ -537,7 +533,7 @@ class _SettingsMyProfileWidgetState
                         'As Seller',
                         style: GoogleFonts.inter(
                           fontWeight: FontWeight.normal,
-                          color: _model.state == 'As Seller'
+                          color: _tabState == 'As Seller'
                               ? AppColors.textPrimary
                               : AppColors.textSecondary,
                           height: 2.0,
@@ -545,7 +541,7 @@ class _SettingsMyProfileWidgetState
                       ),
                     ),
                     Opacity(
-                      opacity: (_model.state == 'As Seller' ? 1 : 0).toDouble(),
+                      opacity: (_tabState == 'As Seller' ? 1 : 0).toDouble(),
                       child: Container(
                         width: double.infinity,
                         height: 2.0,

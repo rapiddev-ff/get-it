@@ -33,8 +33,6 @@ import 'package:go_router/go_router.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'settings_model.dart';
-export 'settings_model.dart';
 
 class SettingsWidget extends ConsumerStatefulWidget {
   const SettingsWidget({super.key});
@@ -47,14 +45,13 @@ class SettingsWidget extends ConsumerStatefulWidget {
 }
 
 class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
-  late SettingsModel _model;
+  bool _switchValue = false;
 
   @override
   void initState() {
     super.initState();
-    _model = SettingsModel();
 
-    _model.switchValue =
+    _switchValue =
         ref.read(authProvider).userSettings?.swipePaymentEnabled ?? false;
 
     // Fetch latest stripe status
@@ -75,8 +72,6 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
 
   @override
   void dispose() {
-    _model.dispose();
-
     super.dispose();
   }
 
@@ -355,10 +350,10 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                         ),
                                       ),
                                       Switch.adaptive(
-                                        value: _model.switchValue,
+                                        value: _switchValue,
                                         onChanged: (newValue) async {
                                           setState(() =>
-                                              _model.switchValue = newValue);
+                                              _switchValue = newValue);
                                           if (newValue) {
                                             await Future.wait([
                                               Future(() async {

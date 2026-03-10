@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import '/core/theme/app_colors.dart';
 import '/core/constants/app_constants.dart';
 import '/core/widgets/app_gradient_button.dart';
-import 'settings_business_model.dart';
-export 'settings_business_model.dart';
 
 class SettingsBusinessWidget extends StatefulWidget {
   const SettingsBusinessWidget({
@@ -27,22 +25,22 @@ class SettingsBusinessWidget extends StatefulWidget {
 }
 
 class _SettingsBusinessWidgetState extends State<SettingsBusinessWidget> {
-  late SettingsBusinessModel _model;
+  late final TextEditingController textController;
+  late final FocusNode textFieldFocusNode;
 
   @override
   void initState() {
     super.initState();
-    _model = SettingsBusinessModel();
 
-    _model.textController ??= TextEditingController(text: widget.initialVal);
-    _model.textFieldFocusNode ??= FocusNode();
-    _model.textFieldFocusNode!.addListener(() => setState(() {}));
+    textController = TextEditingController(text: widget.initialVal);
+    textFieldFocusNode = FocusNode();
+    textFieldFocusNode.addListener(() => setState(() {}));
   }
 
   @override
   void dispose() {
-    _model.dispose();
-
+    textFieldFocusNode.dispose();
+    textController.dispose();
     super.dispose();
   }
 
@@ -75,10 +73,10 @@ class _SettingsBusinessWidgetState extends State<SettingsBusinessWidget> {
               child: Container(
                 width: double.infinity,
                 child: TextFormField(
-                  controller: _model.textController,
-                  focusNode: _model.textFieldFocusNode,
+                  controller: textController,
+                  focusNode: textFieldFocusNode,
                   onChanged: (_) => EasyDebounce.debounce(
-                    '_model.textController',
+                    'textController',
                     Duration(milliseconds: 100),
                     () => setState(() {}),
                   ),
@@ -134,7 +132,7 @@ class _SettingsBusinessWidgetState extends State<SettingsBusinessWidget> {
                 text: 'Save',
                 onPressed: () async {
                   await widget.action?.call(
-                    _model.textController!.text,
+                    textController.text,
                   );
                 },
               ),
