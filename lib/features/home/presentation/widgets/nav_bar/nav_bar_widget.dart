@@ -173,8 +173,7 @@ class _NavBarWidgetState extends State<NavBarWidget>
                           ),
                           shape: BoxShape.circle,
                         ),
-                        child: Align(
-                          alignment: Alignment.center,
+                        child: Center(
                           child: Icon(
                             Icons.search,
                             color: () {
@@ -242,8 +241,7 @@ class _NavBarWidgetState extends State<NavBarWidget>
                           ),
                           shape: BoxShape.circle,
                         ),
-                        child: Align(
-                          alignment: Alignment.center,
+                        child: Center(
                           child: FaIcon(
                             FontAwesomeIcons.solidMessage,
                             color: route == '/messages'
@@ -303,8 +301,7 @@ class _NavBarWidgetState extends State<NavBarWidget>
                           ),
                           shape: BoxShape.circle,
                         ),
-                        child: Align(
-                          alignment: Alignment.center,
+                        child: Center(
                           child: Icon(
                             Icons.favorite_outlined,
                             color: route == '/wishlist'

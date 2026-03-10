@@ -479,8 +479,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                     color: AppColors.neutral700,
                                   ),
                                 ),
-                                child: const Align(
-                                  alignment: Alignment.center,
+                                child: const Center(
                                   child: Icon(
                                     Icons.check_sharp,
                                     color: Colors.white,

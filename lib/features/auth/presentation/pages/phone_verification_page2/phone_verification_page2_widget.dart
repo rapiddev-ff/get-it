@@ -224,8 +224,7 @@ class _PhoneVerificationPage2WidgetState
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Align(
-                                alignment: Alignment.center,
+                              Center(
                                 child: Text(
                                   'You can resend a code after ',
                                   style: GoogleFonts.inter(
@@ -263,8 +262,7 @@ class _PhoneVerificationPage2WidgetState
                                   );
                                 },
                               ),
-                              Align(
-                                alignment: Alignment.center,
+                              Center(
                                 child: Text(
                                   ' seconds',
                                   style: GoogleFonts.inter(
@@ -287,8 +285,7 @@ class _PhoneVerificationPage2WidgetState
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Align(
-                        alignment: Alignment.center,
+                      Center(
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 4.0),
                           child: InkWell(

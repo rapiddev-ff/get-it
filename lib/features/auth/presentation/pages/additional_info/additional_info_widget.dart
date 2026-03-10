@@ -224,8 +224,7 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
                                             ),
                                           );
                                         } else {
-                                          return const Align(
-                                            alignment: Alignment.center,
+                                          return const Center(
                                             child: FaIcon(
                                               FontAwesomeIcons.userLarge,
                                               color: Color(0xFF797A79),
@@ -246,8 +245,7 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
                                       color: AppColors.secondary,
                                       shape: BoxShape.circle,
                                     ),
-                                    child: const Align(
-                                      alignment: Alignment.center,
+                                    child: const Center(
                                       child: FaIcon(
                                         FontAwesomeIcons.camera,
                                         color: Colors.white,

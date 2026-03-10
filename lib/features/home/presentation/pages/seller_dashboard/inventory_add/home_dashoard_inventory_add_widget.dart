@@ -628,8 +628,7 @@ class _HomeDashoardInventoryAddWidgetState
                       color: AppColors.backgroundSecondary,
                       borderRadius: BorderRadius.circular(4.0),
                     ),
-                    child: Align(
-                      alignment: Alignment.center,
+                    child: Center(
                       child: FaIcon(
                         FontAwesomeIcons.camera,
                         color: AppColors.textPrimary,
@@ -676,8 +675,7 @@ class _HomeDashoardInventoryAddWidgetState
                                         color: Color(0x4C252525),
                                         shape: BoxShape.circle,
                                       ),
-                                      child: Align(
-                                        alignment: Alignment.center,
+                                      child: Center(
                                         child: Icon(
                                           Icons.close,
                                           color: AppColors.textPrimary,

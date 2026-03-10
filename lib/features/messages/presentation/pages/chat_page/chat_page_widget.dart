@@ -494,8 +494,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                   ),
                   shape: BoxShape.circle,
                 ),
-                child: Align(
-                  alignment: Alignment.center,
+                child: Center(
                   child: Icon(
                     Icons.send,
                     color: AppColors.textPrimary,

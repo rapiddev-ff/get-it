@@ -94,8 +94,7 @@ class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget>
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Align(
-                        alignment: Alignment.center,
+                      Center(
                         child: Container(
                           width: 140.0,
                           height: 140.0,

@@ -59,8 +59,7 @@ class MessageItemWidget extends StatelessWidget {
                 height: 65.0,
                 child: Stack(
                   children: [
-                    Align(
-                      alignment: Alignment.center,
+                    Center(
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(4.0),
                         child: Image.network(
@@ -81,8 +80,7 @@ class MessageItemWidget extends StatelessWidget {
                             color: Color(0xFFEF4444),
                             shape: BoxShape.circle,
                           ),
-                          child: Align(
-                            alignment: Alignment.center,
+                          child: Center(
                             child: Text(
                               _unreadCount(),
                               style: GoogleFonts.inter(
@@ -215,8 +213,7 @@ class MessageItemWidget extends StatelessWidget {
                 height: 65.0,
                 child: Stack(
                   children: [
-                    Align(
-                      alignment: Alignment.center,
+                    Center(
                       child: Container(
                         width: 56.0,
                         height: 56.0,
@@ -243,8 +240,7 @@ class MessageItemWidget extends StatelessWidget {
                             color: Color(0xFFEF4444),
                             shape: BoxShape.circle,
                           ),
-                          child: Align(
-                            alignment: Alignment.center,
+                          child: Center(
                             child: Text(
                               _unreadCount(),
                               style: GoogleFonts.inter(

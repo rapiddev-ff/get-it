@@ -203,8 +203,7 @@ class _CheckoutEditShippingAddressWidgetState
             child: Column(
               children: [
                 Expanded(
-                  child: Align(
-                    alignment: Alignment.center,
+                  child: Center(
                     child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

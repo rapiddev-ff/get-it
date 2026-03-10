@@ -44,8 +44,7 @@ class _StripeSuccessWidgetState extends State<StripeSuccessWidget> {
                       color: Colors.green,
                       shape: BoxShape.circle,
                     ),
-                    child: Align(
-                      alignment: Alignment.center,
+                    child: Center(
                       child: Icon(
                         Icons.check_rounded,
                         color: Colors.white,

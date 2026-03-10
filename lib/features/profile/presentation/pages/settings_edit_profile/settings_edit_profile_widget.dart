@@ -213,8 +213,7 @@ class _SettingsEditProfileWidgetState
                                       ),
                                     );
                                   } else {
-                                    return Align(
-                                      alignment: Alignment.center,
+                                    return Center(
                                       child: FaIcon(
                                         FontAwesomeIcons.userLarge,
                                         color: Color(0xFF797A79),
@@ -235,8 +234,7 @@ class _SettingsEditProfileWidgetState
                                 color: AppColors.secondary,
                                 shape: BoxShape.circle,
                               ),
-                              child: Align(
-                                alignment: Alignment.center,
+                              child: Center(
                                 child: FaIcon(
                                   FontAwesomeIcons.camera,
                                   color: Colors.white,

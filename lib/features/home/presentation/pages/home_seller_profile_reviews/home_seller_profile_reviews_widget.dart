@@ -723,8 +723,7 @@ class _HomeSellerProfileReviewsWidgetState
                         color: Color(0xFF111111),
                         shape: BoxShape.circle,
                       ),
-                      child: Align(
-                        alignment: Alignment.center,
+                      child: Center(
                         child: FaIcon(
                           FontAwesomeIcons.flag,
                           color: AppColors.textPrimary,

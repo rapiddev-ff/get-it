@@ -248,8 +248,7 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
         backgroundColor: AppColors.backgroundPrimary,
         body: SafeArea(
           top: true,
-          child: Align(
-            alignment: Alignment.center,
+          child: Center(
             child: Column(
               children: [
                 Spacer(),

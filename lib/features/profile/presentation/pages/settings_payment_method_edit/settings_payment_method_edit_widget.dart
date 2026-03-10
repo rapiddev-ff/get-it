@@ -633,8 +633,7 @@ class _SettingsPaymentMethodEditWidgetState
                                   color: AppColors.neutral700,
                                 ),
                               ),
-                              child: Align(
-                                alignment: Alignment.center,
+                              child: Center(
                                 child: Icon(
                                   Icons.check_sharp,
                                   color: Colors.white,
