@@ -350,7 +350,6 @@ class _SettingsChangePasswordWidgetState
                       AppGradientButton(
                         text: 'Change Password',
                         onPressed: () async {
-                          var _shouldSetState = false;
                           _model.errorConfirmPasswordRequired = false;
                           _model.errorCurrentPasswordRequired = false;
                           _model.errorPasswordRequired = false;
@@ -401,7 +400,6 @@ class _SettingsChangePasswordWidgetState
                             _model.textController1!.text,
                             _model.textController3!.text,
                           );
-                          _shouldSetState = true;
                           if (_model.result == null || _model.result == '') {
                             if (!mounted) return;
                             context.pop();
@@ -421,7 +419,7 @@ class _SettingsChangePasswordWidgetState
                           }
 
                           if (!mounted) return;
-                          if (_shouldSetState) setState(() {});
+                          setState(() {});
                         },
                       ),
                       AppOutlineButton(

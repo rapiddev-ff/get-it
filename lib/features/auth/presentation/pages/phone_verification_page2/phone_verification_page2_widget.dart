@@ -283,7 +283,6 @@ class _PhoneVerificationPage2WidgetState
                           padding: const EdgeInsets.only(bottom: 4.0),
                           child: InkWell(
                             onTap: () async {
-                              var shouldSetState = false;
                               if (_model.timerMilliseconds > 0) {
                                 return;
                               }
@@ -303,8 +302,6 @@ class _PhoneVerificationPage2WidgetState
                                 to: widget.phoneNumber!
                                     .replaceAll(RegExp(r'[^\d+]'), ''),
                               );
-
-                              shouldSetState = true;
                               if ((_model.sendVerificationRes?.succeeded ??
                                   true)) {
                                 _model.timerController.onStartTimer();
@@ -319,11 +316,11 @@ class _PhoneVerificationPage2WidgetState
                                   setState(() {});
                                 }
 
-                                if (shouldSetState) setState(() {});
+                                setState(() {});
                                 return;
                               }
 
-                              if (shouldSetState) setState(() {});
+                              setState(() {});
                             },
                             child: Container(
                               decoration: const BoxDecoration(),
@@ -371,7 +368,6 @@ class _PhoneVerificationPage2WidgetState
                                 4)
                             ? null
                             : () async {
-                                var shouldSetState = false;
                                 _model.errorCodeIncorrect = false;
                                 _model.errorCodeExpired = false;
                                 _model.errorMaxAttemptsReached = false;
@@ -408,8 +404,6 @@ class _PhoneVerificationPage2WidgetState
                                       .replaceAll(RegExp(r'[^\d+]'), ''),
                                   code: _model.pinCodeController!.text,
                                 );
-
-                                shouldSetState = true;
                                 if ((_model.verifyCodeRes?.succeeded ?? true)) {
                                   if (TwillioGroup.verifyCodeCall.isValid(
                                         (_model.verifyCodeRes?.jsonBody ?? ''),
@@ -465,11 +459,11 @@ class _PhoneVerificationPage2WidgetState
                                   }
 
                                   _triggerShake();
-                                  if (shouldSetState) setState(() {});
+                                  setState(() {});
                                   return;
                                 }
 
-                                if (shouldSetState) setState(() {});
+                                setState(() {});
                               },
                       ),
                     ].addToEnd(const SizedBox(height: 32.0)),

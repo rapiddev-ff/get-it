@@ -545,7 +545,6 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                         child: AppGradientButton(
                           text: 'Create Account',
                           onPressed: () async {
-                            var shouldSetState = false;
                             _model.errorEmailRequired = false;
                             _model.errorEmailFormat = false;
                             _model.errorPasswordRequired = false;
@@ -577,7 +576,6 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                 await actions.checkIsEmailRegistered(
                               _model.emailTextController!.text,
                             );
-                            shouldSetState = true;
                             if (!_model.isUserExist!) {
                               _model.emailAlreadyInUse = false;
                               if (!mounted) return;
@@ -585,7 +583,6 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                             } else {
                               _model.emailAlreadyInUse = true;
                               setState(() {});
-                              if (shouldSetState) setState(() {});
                               return;
                             }
 
@@ -595,7 +592,6 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                             } else {
                               _model.errorPasswordRequired = true;
                               setState(() {});
-                              if (shouldSetState) setState(() {});
                               return;
                             }
 
@@ -606,7 +602,6 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                             } else {
                               _model.errorConfirmPasswordRequired = true;
                               setState(() {});
-                              if (shouldSetState) setState(() {});
                               return;
                             }
 
@@ -617,7 +612,6 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                             } else {
                               _model.errorPaswordsDontMatch = true;
                               setState(() {});
-                              if (shouldSetState) setState(() {});
                               return;
                             }
 
@@ -629,12 +623,10 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                     .contains(RegExp(r'\d')) &&
                                 _model.passwordTextController!.text.contains(
                                     RegExp(r'[!@#\$%^&*(),.?":{}|<>_\-]')))) {
-                              if (shouldSetState) setState(() {});
                               return;
                             }
                             if (!_model.checkBoxIsActive) {
                               HapticFeedback.lightImpact();
-                              if (shouldSetState) setState(() {});
                               return;
                             }
 
@@ -674,7 +666,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                               },
                             );
 
-                            if (shouldSetState) setState(() {});
+                            setState(() {});
                           },
                         ),
                       ),

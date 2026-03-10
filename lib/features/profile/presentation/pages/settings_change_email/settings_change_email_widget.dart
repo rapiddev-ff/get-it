@@ -255,7 +255,6 @@ class _SettingsChangeEmailWidgetState
                       AppGradientButton(
                         text: 'Save Changes',
                         onPressed: () async {
-                          var _shouldSetState = false;
                           if (_model.textController1!.text != '') {
                             _model.errorPasswordRequired = false;
                             setState(() {});
@@ -269,7 +268,6 @@ class _SettingsChangeEmailWidgetState
                             ref.read(currentUserEmailProvider),
                             _model.textController1!.text,
                           );
-                          _shouldSetState = true;
                           if (((_model.isCorrect is Map)
                               ? _model.isCorrect['success']
                               : false)) {
@@ -279,7 +277,6 @@ class _SettingsChangeEmailWidgetState
                           } else {
                             _model.errorPassword = true;
                             setState(() {});
-                            if (_shouldSetState) setState(() {});
                             return;
                           }
 
@@ -294,7 +291,6 @@ class _SettingsChangeEmailWidgetState
                           } else {
                             _model.errorEmailFormat = true;
                             setState(() {});
-                            if (_shouldSetState) setState(() {});
                             return;
                           }
 
@@ -302,7 +298,6 @@ class _SettingsChangeEmailWidgetState
                               await actions.checkIsEmailRegistered(
                             _model.textController2!.text,
                           );
-                          _shouldSetState = true;
                           if (!_model.isEmailRegistered!) {
                             _model.emailAlreadyInUse = false;
                             if (!mounted) return;
@@ -310,7 +305,6 @@ class _SettingsChangeEmailWidgetState
                           } else {
                             _model.emailAlreadyInUse = true;
                             setState(() {});
-                            if (_shouldSetState) setState(() {});
                             return;
                           }
 
@@ -321,7 +315,6 @@ class _SettingsChangeEmailWidgetState
                             _model.textController2!.text,
                             _model.textController1!.text,
                           );
-                          _shouldSetState = true;
                           if ((_model.result is Map)
                               ? _model.result['success']
                               : false) {
@@ -340,7 +333,7 @@ class _SettingsChangeEmailWidgetState
                           }
 
                           if (!mounted) return;
-                          if (_shouldSetState) setState(() {});
+                          setState(() {});
                         },
                       ),
                       AppOutlineButton(
