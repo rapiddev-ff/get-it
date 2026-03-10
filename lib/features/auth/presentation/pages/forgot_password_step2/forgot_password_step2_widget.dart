@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '/core/theme/app_colors.dart';
 import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_gradient_button.dart';
 import 'forgot_password_step2_model.dart';
 export 'forgot_password_step2_model.dart';
 
@@ -164,35 +165,11 @@ class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget> {
                           height: 1.5,
                         ),
                       ),
-                      Container(
-                        width: double.infinity,
-                        height: 56.0,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                            stops: [0.0, 1.0],
-                            begin: AlignmentDirectional(0.0, -1.0),
-                            end: AlignmentDirectional(0, 1.0),
-                          ),
-                          borderRadius: BorderRadius.circular(4.0),
-                        ),
-                        child: TextButton(
-                          onPressed: () {
-                            context.pop();
-                          },
-                          style: TextButton.styleFrom(
-                            elevation: 0,
-                            backgroundColor: Colors.transparent,
-                          ),
-                          child: Text(
-                            'Back to Sign In',
-                            style: GoogleFonts.inter(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16.0,
-                            ),
-                          ),
-                        ),
+                      AppGradientButton(
+                        text: 'Back to Sign In',
+                        onPressed: () {
+                          context.pop();
+                        },
                       ),
                     ]
                         .divide(SizedBox(height: 24.0))

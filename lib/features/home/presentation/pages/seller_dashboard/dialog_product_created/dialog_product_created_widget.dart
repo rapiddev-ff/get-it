@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '/core/theme/app_colors.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/features/home/presentation/pages/home_product/home_product_widget.dart';
 import '/features/home/presentation/pages/seller_dashboard/inventory/home_dashoard_inventory_widget.dart';
 
@@ -74,38 +75,11 @@ class DialogProductCreatedWidget extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-                child: Container(
-                  width: double.infinity,
-                  height: 56.0,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                      stops: [0.0, 1.0],
-                      begin: AlignmentDirectional(0.0, -1.0),
-                      end: AlignmentDirectional(0, 1.0),
-                    ),
-                    borderRadius: BorderRadius.circular(4.0),
-                  ),
-                  child: TextButton(
-                    onPressed: () async {
-                      await action?.call();
-                    },
-                    style: TextButton.styleFrom(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                    child: Text(
-                      'Add another product',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16.0,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+                child: AppGradientButton(
+                  text: 'Add another product',
+                  onPressed: () async {
+                    await action?.call();
+                  },
                 ),
               ),
               Padding(

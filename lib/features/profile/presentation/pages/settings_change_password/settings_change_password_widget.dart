@@ -2,6 +2,7 @@ import '/features/auth/presentation/widgets/password_component/password_componen
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_text_field.dart';
+import '/core/widgets/app_gradient_button.dart';
 import 'dart:async';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:easy_debounce/easy_debounce.dart';
@@ -397,127 +398,85 @@ class _SettingsChangePasswordWidgetState
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Container(
-                        width: double.infinity,
-                        height: 56.0,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                            stops: [0.0, 1.0],
-                            begin: AlignmentDirectional(0.0, -1.0),
-                            end: AlignmentDirectional(0, 1.0),
-                          ),
-                          borderRadius: BorderRadius.circular(4.0),
-                        ),
-                        child: TextButton(
-                          onPressed: () async {
-                            var _shouldSetState = false;
-                            _model.errorConfirmPasswordRequired = false;
+                      AppGradientButton(
+                        text: 'Change Password',
+                        onPressed: () async {
+                          var _shouldSetState = false;
+                          _model.errorConfirmPasswordRequired = false;
+                          _model.errorCurrentPasswordRequired = false;
+                          _model.errorPasswordRequired = false;
+                          setState(() {});
+                          if (_model.textController1!.text != '') {
                             _model.errorCurrentPasswordRequired = false;
-                            _model.errorPasswordRequired = false;
+                          } else {
+                            _model.errorCurrentPasswordRequired = true;
                             setState(() {});
-                            if (_model.textController1!.text != '') {
-                              _model.errorCurrentPasswordRequired = false;
-                            } else {
-                              _model.errorCurrentPasswordRequired = true;
-                              setState(() {});
-                              return;
-                            }
+                            return;
+                          }
 
-                            if (_model.textController2!.text != '') {
-                              _model.errorPasswordRequired = false;
-                            } else {
-                              _model.errorPasswordRequired = true;
-                              setState(() {});
-                              return;
-                            }
+                          if (_model.textController2!.text != '') {
+                            _model.errorPasswordRequired = false;
+                          } else {
+                            _model.errorPasswordRequired = true;
+                            setState(() {});
+                            return;
+                          }
 
-                            if (_model.textController3!.text != '') {
-                              _model.errorConfirmPasswordRequired = false;
-                            } else {
-                              _model.errorConfirmPasswordRequired = true;
-                              setState(() {});
-                              return;
-                            }
+                          if (_model.textController3!.text != '') {
+                            _model.errorConfirmPasswordRequired = false;
+                          } else {
+                            _model.errorConfirmPasswordRequired = true;
+                            setState(() {});
+                            return;
+                          }
 
-                            // Client-side password strength validation
-                            final newPw = _model.textController2!.text;
-                            final confirmPw = _model.textController3!.text;
-                            if (newPw.length < 8 ||
-                                !newPw.contains(RegExp(r'[A-Z]')) ||
-                                !newPw.contains(RegExp(r'\d')) ||
-                                !newPw.contains(RegExp(r'[!@#\$%^&*(),.?":{}|<>_\-]')) ||
-                                newPw != confirmPw) {
-                              await actions.toastificationshow(
-                                context,
-                                'Error!',
-                                'Please meet all password requirements.',
-                                'error',
-                              );
-                              return;
-                            }
-
-                            _model.result = await actions.changePassword(
-                              _model.textController1!.text,
-                              _model.textController3!.text,
+                          // Client-side password strength validation
+                          final newPw = _model.textController2!.text;
+                          final confirmPw = _model.textController3!.text;
+                          if (newPw.length < 8 ||
+                              !newPw.contains(RegExp(r'[A-Z]')) ||
+                              !newPw.contains(RegExp(r'\d')) ||
+                              !newPw.contains(RegExp(r'[!@#\$%^&*(),.?":{}|<>_\-]')) ||
+                              newPw != confirmPw) {
+                            await actions.toastificationshow(
+                              context,
+                              'Error!',
+                              'Please meet all password requirements.',
+                              'error',
                             );
-                            _shouldSetState = true;
-                            if (_model.result == null || _model.result == '') {
-                              context.pop();
-                              await actions.toastificationshow(
-                                context,
-                                'Success!',
-                                'Password has been updated!',
-                                'success',
-                              );
-                            } else {
-                              await actions.toastificationshow(
-                                context,
-                                'Error!',
-                                _model.result!,
-                                'error',
-                              );
-                            }
+                            return;
+                          }
 
-                            if (_shouldSetState) setState(() {});
-                          },
-                          style: TextButton.styleFrom(
-                            minimumSize: Size(double.infinity, 56.0),
-                            padding: EdgeInsets.symmetric(horizontal: 16.0),
-                          ),
-                          child: Text(
-                            'Change Password',
-                            style: GoogleFonts.inter(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 56.0,
-                        child: OutlinedButton(
-                          onPressed: () {
+                          _model.result = await actions.changePassword(
+                            _model.textController1!.text,
+                            _model.textController3!.text,
+                          );
+                          _shouldSetState = true;
+                          if (_model.result == null || _model.result == '') {
                             context.pop();
-                          },
-                          child: Text(
-                            'Cancel',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                              fontSize: 17.0,
-                            ),
-                          ),
-                          style: OutlinedButton.styleFrom(
-                            side: BorderSide(
-                              color: Color(0xFF545454),
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
-                          ),
-                        ),
+                            await actions.toastificationshow(
+                              context,
+                              'Success!',
+                              'Password has been updated!',
+                              'success',
+                            );
+                          } else {
+                            await actions.toastificationshow(
+                              context,
+                              'Error!',
+                              _model.result!,
+                              'error',
+                            );
+                          }
+
+                          if (_shouldSetState) setState(() {});
+                        },
+                      ),
+                      AppOutlineButton(
+                        text: 'Cancel',
+                        onPressed: () {
+                          context.pop();
+                        },
                       ),
                     ]
                         .divide(SizedBox(height: 16.0))

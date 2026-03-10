@@ -1,5 +1,6 @@
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/app_text_field.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/home/presentation/pages/seller_dashboard/shortlist_create_step2/home_dashoard_shortlist_create_step2_widget.dart';
@@ -435,49 +436,29 @@ class _HomeDashoardShortlistCreateWidgetState
               Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Container(
-                    width: double.infinity,
-                    height: 56.0,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                        stops: [0.0, 1.0],
-                        begin: AlignmentDirectional(0.0, -1.0),
-                        end: AlignmentDirectional(0, 1.0),
-                      ),
-                      borderRadius: BorderRadius.circular(4.0),
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        if (textController1!.text.trim().isEmpty) {
-                          actions.toastificationshow(
-                            context,
-                            'Missing Name',
-                            'Please enter a shortlist name.',
-                            'error',
-                          );
-                          return;
-                        }
-                        context.pushNamed(
-                          HomeDashoardShortlistCreateStep2Widget.routeName,
-                          queryParameters: {
-                            'name': textController1!.text,
-                            'eventName': textController2!.text,
-                            'startDate': _formatDate(_startDate),
-                            'endDate': _formatDate(_endDate),
-                            'isPublic': isPublic.toString(),
-                          },
+                  AppGradientButton(
+                    text: 'Create Shortlist',
+                    onPressed: () {
+                      if (textController1!.text.trim().isEmpty) {
+                        actions.toastificationshow(
+                          context,
+                          'Missing Name',
+                          'Please enter a shortlist name.',
+                          'error',
                         );
-                      },
-                      child: Text(
-                        'Create Shortlist',
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
+                        return;
+                      }
+                      context.pushNamed(
+                        HomeDashoardShortlistCreateStep2Widget.routeName,
+                        queryParameters: {
+                          'name': textController1!.text,
+                          'eventName': textController2!.text,
+                          'startDate': _formatDate(_startDate),
+                          'endDate': _formatDate(_endDate),
+                          'isPublic': isPublic.toString(),
+                        },
+                      );
+                    },
                   ),
                   Padding(
                     padding:

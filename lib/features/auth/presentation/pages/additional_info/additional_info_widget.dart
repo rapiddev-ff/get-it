@@ -15,6 +15,7 @@ import 'package:image_picker/image_picker.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/app_text_field.dart';
 import '/core/utils/list_extensions.dart';
 import '/custom_code/actions/index.dart' as actions;
@@ -487,78 +488,47 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget> {
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Container(
-                        width: double.infinity,
-                        height: 56.0,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              _isFormValid
-                                  ? const Color(0xFF7D56FF)
-                                  : const Color(0xFF363636),
-                              _isFormValid
-                                  ? const Color(0xFF6187F1)
-                                  : const Color(0xFF363636),
-                            ],
-                            stops: const [0.0, 1.0],
-                            begin: const AlignmentDirectional(0.0, -1.0),
-                            end: const AlignmentDirectional(0, 1.0),
-                          ),
-                          borderRadius: BorderRadius.circular(4.0),
-                        ),
-                        child: TextButton(
-                          onPressed: !_isFormValid
-                              ? null
-                              : () async {
-                                  await UserProfilesTable().update(
-                                    data: {
-                                      'first_name':
-                                          _model.firstnameTextController!.text,
-                                      'last_name':
-                                          _model.lastnameTextController!.text,
-                                      'username': _normalizeUsername(
-                                          _model.usernameTextController!.text),
-                                      'avatar_url': _model.uploadToBucket,
-                                    },
-                                    matchingRows: (rows) => rows.eqOrNull(
-                                      'user_id',
-                                      currentUserUid,
-                                    ),
-                                  );
-                                  _model.createStripeCustomer =
-                                      await actions.createStripeCustomer(
-                                    currentUserEmail,
-                                    '${_model.firstnameTextController!.text} ${_model.lastnameTextController!.text}',
-                                    '',
-                                  );
+                      AppGradientButton(
+                        text: 'Next',
+                        enabled: _isFormValid,
+                        borderRadius: 8.0,
+                        onPressed: !_isFormValid
+                            ? null
+                            : () async {
+                                await UserProfilesTable().update(
+                                  data: {
+                                    'first_name':
+                                        _model.firstnameTextController!.text,
+                                    'last_name':
+                                        _model.lastnameTextController!.text,
+                                    'username': _normalizeUsername(
+                                        _model.usernameTextController!.text),
+                                    'avatar_url': _model.uploadToBucket,
+                                  },
+                                  matchingRows: (rows) => rows.eqOrNull(
+                                    'user_id',
+                                    currentUserUid,
+                                  ),
+                                );
+                                _model.createStripeCustomer =
+                                    await actions.createStripeCustomer(
+                                  currentUserEmail,
+                                  '${_model.firstnameTextController!.text} ${_model.lastnameTextController!.text}',
+                                  '',
+                                );
 
-                                  // Update authProvider with new profile data
-                                  ref.read(authProvider.notifier).updateUser((e) => e.copyWith(
-                                    firstName: _model.firstnameTextController!.text,
-                                    lastName: _model.lastnameTextController!.text,
-                                    username: _normalizeUsername(_model.usernameTextController!.text),
-                                    avatarUrl: _model.uploadToBucket ?? '',
-                                  ));
+                                // Update authProvider with new profile data
+                                ref.read(authProvider.notifier).updateUser((e) => e.copyWith(
+                                  firstName: _model.firstnameTextController!.text,
+                                  lastName: _model.lastnameTextController!.text,
+                                  username: _normalizeUsername(_model.usernameTextController!.text),
+                                  avatarUrl: _model.uploadToBucket ?? '',
+                                ));
 
-                                  if (context.mounted) {
-                                    context.goNamed(HomePageWidget.routeName);
-                                  }
-                                },
-                          style: TextButton.styleFrom(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                          child: Text(
-                            'Next',
-                            style: GoogleFonts.inter(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                            ),
-                          ),
-                        ),
+                                if (context.mounted) {
+                                  context.goNamed(HomePageWidget.routeName);
+                                }
+                              },
                       ),
                     ]
                         .divide(const SizedBox(height: 40.0))

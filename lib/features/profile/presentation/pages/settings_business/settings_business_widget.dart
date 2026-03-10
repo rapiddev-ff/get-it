@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '/core/theme/app_colors.dart';
 import '/core/constants/app_constants.dart';
+import '/core/widgets/app_gradient_button.dart';
 import 'settings_business_model.dart';
 export 'settings_business_model.dart';
 
@@ -136,36 +137,13 @@ class _SettingsBusinessWidgetState extends State<SettingsBusinessWidget> {
             ),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-              child: Container(
-                width: double.infinity,
-                height: 56.0,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                    stops: [0.0, 1.0],
-                    begin: AlignmentDirectional(0.0, -1.0),
-                    end: AlignmentDirectional(0, 1.0),
-                  ),
-                  borderRadius: BorderRadius.circular(4.0),
-                ),
-                child: TextButton(
-                  onPressed: () async {
-                    await widget.action?.call(
-                      _model.textController!.text,
-                    );
-                  },
-                  style: TextButton.styleFrom(
-                    minimumSize: Size(double.infinity, 56.0),
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  ),
-                  child: Text(
-                    'Save',
-                    style: GoogleFonts.inter(
-                      fontSize: 16.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
+              child: AppGradientButton(
+                text: 'Save',
+                onPressed: () async {
+                  await widget.action?.call(
+                    _model.textController!.text,
+                  );
+                },
               ),
             ),
           ],

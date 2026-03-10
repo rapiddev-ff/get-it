@@ -2,6 +2,7 @@ import '/backend/supabase/supabase.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -352,33 +353,12 @@ class _HomeDashoardShortlistAddWidgetState
               Padding(
                 padding:
                     EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                child: Container(
-                  width: double.infinity,
-                  height: 56.0,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                      stops: [0.0, 1.0],
-                      begin: AlignmentDirectional(0.0, -1.0),
-                      end: AlignmentDirectional(0, 1.0),
-                    ),
-                    borderRadius: BorderRadius.circular(4.0),
-                  ),
-                  child: TextButton(
-                    onPressed: selectedIds.isEmpty
-                        ? null
-                        : () {
-                            Navigator.pop(context, selectedIds.toList());
-                          },
-                    child: Text(
-                      'Add ${selectedIds.length} Product${selectedIds.length == 1 ? '' : 's'}',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16.0,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+                child: AppGradientButton(
+                  text: 'Add ${selectedIds.length} Product${selectedIds.length == 1 ? '' : 's'}',
+                  enabled: selectedIds.isNotEmpty,
+                  onPressed: () {
+                    Navigator.pop(context, selectedIds.toList());
+                  },
                 ),
               ),
             ].addToEnd(SizedBox(height: 32.0)),

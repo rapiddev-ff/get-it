@@ -4,6 +4,7 @@ import '/custom_code/actions/index.dart' as actions;
 import '/core/theme/app_colors.dart';
 import '/core/utils/form_validators.dart';
 import '/core/widgets/app_text_field.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/core/utils/geo_data.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/router/app_router.dart';
@@ -750,125 +751,81 @@ class _SettingsPaymentMethodEditWidgetState
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
-                          child: TextButton(
+                          child: AppOutlineButton(
+                            text: 'Cancel',
                             onPressed: () async {
                               context.safePop();
                             },
-                            style: TextButton.styleFrom(
-                              minimumSize: Size(double.infinity, 56.0),
-                              backgroundColor: AppColors.backgroundPrimary,
-                              padding: EdgeInsets.symmetric(horizontal: 16.0),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4.0),
-                                side: BorderSide(color: Color(0xFF545454)),
-                              ),
-                            ),
-                            child: Text(
-                              'Cancel',
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
-                                fontSize: 17.0,
-                              ),
-                            ),
                           ),
                         ),
                         Expanded(
-                          child: Container(
-                            width: double.infinity,
-                            height: 56.0,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                                stops: [0.0, 1.0],
-                                begin: AlignmentDirectional(0.0, -1.0),
-                                end: AlignmentDirectional(0, 1.0),
-                              ),
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
-                            child: TextButton.icon(
-                              onPressed: () async {
-                                final validationResult =
-                                    FormValidators.paymentValidator(
-                                        _model.cardNumberTextController!.text,
-                                        _model.expireDateTextController!.text,
-                                        _model
-                                            .textFieldaCVCTextController!.text,
-                                        _model
-                                            .cardholderNameTextController!.text,
-                                        _model.emailAddressTextController!.text,
-                                        _model.fullNameTextController!.text,
-                                        _model.addressLine1TextController!.text,
-                                        _model.addressLine2TextController!.text,
-                                        _model.countryDropdownValue ?? '',
-                                        (_model.countryDropdownValue == 'US') ||
-                                                (_model.countryDropdownValue ==
-                                                    'CA')
-                                            ? (_model.stateDropdownValue ?? '')
-                                            : _model.stateTextController!.text,
-                                        _model.cityTextController!.text,
-                                        _model.zipCodeTextController!.text);
-                                if (validationResult['success'] == true) {
-                                  ref
-                                      .read(authProvider.notifier)
-                                      .updateUser((e) {
-                                    final methods = [...e.paymentMethod];
-                                    final pm = methods[widget.index!];
-                                    methods[widget.index!] = pm.copyWith(
-                                      billingDetails: (pm.billingDetails ??
-                                              const BillingDetails())
-                                          .copyWith(
-                                        name:
-                                            _model.fullNameTextController!.text,
-                                        email: _model
-                                            .emailAddressTextController!.text,
-                                        addressLine1: _model
-                                            .addressLine1TextController!.text,
-                                        addressLine2: _model
-                                            .addressLine2TextController!.text,
-                                        city: _model.cityTextController!.text,
-                                        state: (_model.countryDropdownValue ==
-                                                    'US') ||
-                                                (_model.countryDropdownValue ==
-                                                    'CA')
-                                            ? _model.stateDropdownValue ?? ''
-                                            : _model.stateTextController!.text,
-                                        postalCode:
-                                            _model.zipCodeTextController!.text,
-                                        country:
-                                            _model.countryDropdownValue ?? '',
-                                      ),
-                                    );
-                                    return e.copyWith(paymentMethod: methods);
-                                  });
-                                  setState(() {});
-                                } else {
-                                  await actions.toastificationshow(
-                                    context,
-                                    'Error!',
-                                    (validationResult['message'] ?? '')
-                                        .toString(),
-                                    'error',
+                          child: AppGradientButton(
+                            text: 'Add Card',
+                            onPressed: () async {
+                              final validationResult =
+                                  FormValidators.paymentValidator(
+                                      _model.cardNumberTextController!.text,
+                                      _model.expireDateTextController!.text,
+                                      _model
+                                          .textFieldaCVCTextController!.text,
+                                      _model
+                                          .cardholderNameTextController!.text,
+                                      _model.emailAddressTextController!.text,
+                                      _model.fullNameTextController!.text,
+                                      _model.addressLine1TextController!.text,
+                                      _model.addressLine2TextController!.text,
+                                      _model.countryDropdownValue ?? '',
+                                      (_model.countryDropdownValue == 'US') ||
+                                              (_model.countryDropdownValue ==
+                                                  'CA')
+                                          ? (_model.stateDropdownValue ?? '')
+                                          : _model.stateTextController!.text,
+                                      _model.cityTextController!.text,
+                                      _model.zipCodeTextController!.text);
+                              if (validationResult['success'] == true) {
+                                ref
+                                    .read(authProvider.notifier)
+                                    .updateUser((e) {
+                                  final methods = [...e.paymentMethod];
+                                  final pm = methods[widget.index!];
+                                  methods[widget.index!] = pm.copyWith(
+                                    billingDetails: (pm.billingDetails ??
+                                            const BillingDetails())
+                                        .copyWith(
+                                      name:
+                                          _model.fullNameTextController!.text,
+                                      email: _model
+                                          .emailAddressTextController!.text,
+                                      addressLine1: _model
+                                          .addressLine1TextController!.text,
+                                      addressLine2: _model
+                                          .addressLine2TextController!.text,
+                                      city: _model.cityTextController!.text,
+                                      state: (_model.countryDropdownValue ==
+                                                  'US') ||
+                                              (_model.countryDropdownValue ==
+                                                  'CA')
+                                          ? _model.stateDropdownValue ?? ''
+                                          : _model.stateTextController!.text,
+                                      postalCode:
+                                          _model.zipCodeTextController!.text,
+                                      country:
+                                          _model.countryDropdownValue ?? '',
+                                    ),
                                   );
-                                }
-                              },
-                              icon: Icon(
-                                Icons.add,
-                                size: 28.0,
-                                color: Colors.white,
-                              ),
-                              label: Text(
-                                'Add Card',
-                                style: GoogleFonts.inter(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              style: TextButton.styleFrom(
-                                minimumSize: Size(double.infinity, 56.0),
-                                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                              ),
-                            ),
+                                  return e.copyWith(paymentMethod: methods);
+                                });
+                                setState(() {});
+                              } else {
+                                await actions.toastificationshow(
+                                  context,
+                                  'Error!',
+                                  (validationResult['message'] ?? '')
+                                      .toString(),
+                                  'error',
+                                );
+                              }
+                            },
                           ),
                         ),
                       ].divide(SizedBox(width: 20.0)),

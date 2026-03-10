@@ -2,6 +2,7 @@ import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_text_field.dart';
+import '/core/widgets/app_gradient_button.dart';
 import 'dart:async';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:easy_debounce/easy_debounce.dart';
@@ -290,141 +291,99 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Container(
-                        width: double.infinity,
-                        height: 56.0,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                            stops: [0.0, 1.0],
-                            begin: AlignmentDirectional(0.0, -1.0),
-                            end: AlignmentDirectional(0, 1.0),
-                          ),
-                          borderRadius: BorderRadius.circular(4.0),
-                        ),
-                        child: TextButton(
-                          onPressed: () async {
-                            var _shouldSetState = false;
-                            if (_model.textController1!.text != '') {
-                              _model.errorPasswordRequired = false;
-                              setState(() {});
-                            } else {
-                              _model.errorPasswordRequired = true;
-                              setState(() {});
-                              return;
-                            }
+                      AppGradientButton(
+                        text: 'Save Changes',
+                        onPressed: () async {
+                          var _shouldSetState = false;
+                          if (_model.textController1!.text != '') {
+                            _model.errorPasswordRequired = false;
+                            setState(() {});
+                          } else {
+                            _model.errorPasswordRequired = true;
+                            setState(() {});
+                            return;
+                          }
 
-                            _model.isCorrect = await actions.supabaseLogin(
-                              currentUserEmail,
-                              _model.textController1!.text,
-                            );
-                            _shouldSetState = true;
-                            if (((_model.isCorrect is Map)
-                                ? _model.isCorrect['success']
-                                : false)) {
-                              _model.errorPassword = false;
-                              setState(() {});
-                            } else {
-                              _model.errorPassword = true;
-                              setState(() {});
-                              if (_shouldSetState) setState(() {});
-                              return;
-                            }
+                          _model.isCorrect = await actions.supabaseLogin(
+                            currentUserEmail,
+                            _model.textController1!.text,
+                          );
+                          _shouldSetState = true;
+                          if (((_model.isCorrect is Map)
+                              ? _model.isCorrect['success']
+                              : false)) {
+                            _model.errorPassword = false;
+                            setState(() {});
+                          } else {
+                            _model.errorPassword = true;
+                            setState(() {});
+                            if (_shouldSetState) setState(() {});
+                            return;
+                          }
 
-                            _model.errorEmailRequired = false;
+                          _model.errorEmailRequired = false;
+                          _model.errorEmailFormat = false;
+                          _model.emailAlreadyInUse = false;
+                          setState(() {});
+                          if (RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                              .hasMatch(
+                                  _model.textController2!.text.trim())) {
                             _model.errorEmailFormat = false;
+                            setState(() {});
+                          } else {
+                            _model.errorEmailFormat = true;
+                            setState(() {});
+                            if (_shouldSetState) setState(() {});
+                            return;
+                          }
+
+                          _model.isEmailRegistered =
+                              await actions.checkIsEmailRegistered(
+                            _model.textController2!.text,
+                          );
+                          _shouldSetState = true;
+                          if (!_model.isEmailRegistered!) {
                             _model.emailAlreadyInUse = false;
                             setState(() {});
-                            if (RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                                .hasMatch(
-                                    _model.textController2!.text.trim())) {
-                              _model.errorEmailFormat = false;
-                              setState(() {});
-                            } else {
-                              _model.errorEmailFormat = true;
-                              setState(() {});
-                              if (_shouldSetState) setState(() {});
-                              return;
-                            }
-
-                            _model.isEmailRegistered =
-                                await actions.checkIsEmailRegistered(
-                              _model.textController2!.text,
-                            );
-                            _shouldSetState = true;
-                            if (!_model.isEmailRegistered!) {
-                              _model.emailAlreadyInUse = false;
-                              setState(() {});
-                            } else {
-                              _model.emailAlreadyInUse = true;
-                              setState(() {});
-                              if (_shouldSetState) setState(() {});
-                              return;
-                            }
-
-                            _model.result =
-                                await actions.changeUserEmailWithPasswordCheck(
-                              context,
-                              currentUserEmail,
-                              _model.textController2!.text,
-                              _model.textController1!.text,
-                            );
-                            _shouldSetState = true;
-                            if ((_model.result is Map)
-                                ? _model.result['success']
-                                : false) {
-                              context.pop();
-                            } else {
-                              await actions.toastificationshow(
-                                context,
-                                'Error!',
-                                ((_model.result is Map)
-                                        ? _model.result['error']
-                                        : '')
-                                    .toString(),
-                                'error',
-                              );
-                            }
-
+                          } else {
+                            _model.emailAlreadyInUse = true;
+                            setState(() {});
                             if (_shouldSetState) setState(() {});
-                          },
-                          style: TextButton.styleFrom(
-                            minimumSize: Size(double.infinity, 56.0),
-                            padding: EdgeInsets.symmetric(horizontal: 16.0),
-                          ),
-                          child: Text(
-                            'Save Changes',
-                            style: GoogleFonts.inter(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 56.0,
-                        child: OutlinedButton(
-                          onPressed: () {
+                            return;
+                          }
+
+                          _model.result =
+                              await actions.changeUserEmailWithPasswordCheck(
+                            context,
+                            currentUserEmail,
+                            _model.textController2!.text,
+                            _model.textController1!.text,
+                          );
+                          _shouldSetState = true;
+                          if ((_model.result is Map)
+                              ? _model.result['success']
+                              : false) {
                             context.pop();
-                          },
-                          child: Text(
-                            'Cancel',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                              fontSize: 17.0,
-                            ),
-                          ),
-                          style: OutlinedButton.styleFrom(
-                            side: BorderSide(
-                              color: Color(0xFF545454),
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
-                          ),
-                        ),
+                          } else {
+                            await actions.toastificationshow(
+                              context,
+                              'Error!',
+                              ((_model.result is Map)
+                                      ? _model.result['error']
+                                      : '')
+                                  .toString(),
+                              'error',
+                            );
+                          }
+
+                          if (_shouldSetState) setState(() {});
+                        },
+                      ),
+                      AppOutlineButton(
+                        text: 'Cancel',
+                        onPressed: () {
+                          context.pop();
+                        },
                       ),
                     ]
                         .divide(SizedBox(height: 16.0))

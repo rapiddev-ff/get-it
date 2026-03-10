@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_gradient_button.dart';
 
 class HomeDashoardInventoryAddCategoryWidget extends StatefulWidget {
   const HomeDashoardInventoryAddCategoryWidget({
@@ -186,40 +187,11 @@ class _HomeDashoardInventoryAddCategoryWidgetState
                   ),
                 ),
                 Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    height: 56.0,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                        stops: [0.0, 1.0],
-                        begin: AlignmentDirectional(0.0, -1.0),
-                        end: AlignmentDirectional(0, 1.0),
-                      ),
-                      borderRadius: BorderRadius.circular(4.0),
-                    ),
-                    child: TextButton(
-                      onPressed: () async {
-                        Navigator.pop(context, choosenCategory);
-                      },
-                      style: TextButton.styleFrom(
-                        minimumSize: Size(double.infinity, 40.0),
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 0.0, 16.0, 0.0),
-                        backgroundColor: Color(0x008E6CFF),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                      child: Text(
-                        'Save',
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
+                  child: AppGradientButton(
+                    text: 'Save',
+                    onPressed: () async {
+                      Navigator.pop(context, choosenCategory);
+                    },
                   ),
                 ),
               ].divide(SizedBox(width: 16.0)),

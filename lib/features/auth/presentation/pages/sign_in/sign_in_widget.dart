@@ -13,6 +13,7 @@ import '/features/home/presentation/pages/check_data/check_data_widget.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/app_text_field.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -406,95 +407,68 @@ class _SignInWidgetState extends ConsumerState<SignInWidget> {
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Container(
-                        width: double.infinity,
-                        height: 56.0,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                            stops: [0.0, 1.0],
-                            begin: AlignmentDirectional(0.0, -1.0),
-                            end: AlignmentDirectional(0, 1.0),
-                          ),
-                          borderRadius: BorderRadius.circular(4.0),
-                        ),
-                        child: TextButton(
-                          onPressed: () async {
+                      AppGradientButton(
+                        text: 'Sign In',
+                        onPressed: () async {
+                          _model.errorEmailRequired = false;
+                          _model.errorEmailFormat = false;
+                          _model.errorPasswordRequired = false;
+                          setState(() {});
+                          if (_model.emailTextController!.text != '') {
                             _model.errorEmailRequired = false;
+                            setState(() {});
+                          } else {
+                            _model.errorEmailRequired = true;
+                            setState(() {});
+                          }
+
+                          if (_emailRegExp
+                              .hasMatch(_model.emailTextController!.text)) {
                             _model.errorEmailFormat = false;
+                            setState(() {});
+                          } else {
+                            _model.errorEmailFormat = true;
+                            setState(() {});
+                            return;
+                          }
+
+                          if (_model.passwordTextController!.text != '') {
                             _model.errorPasswordRequired = false;
                             setState(() {});
-                            if (_model.emailTextController!.text != '') {
-                              _model.errorEmailRequired = false;
-                              setState(() {});
-                            } else {
-                              _model.errorEmailRequired = true;
-                              setState(() {});
-                            }
-
-                            if (_emailRegExp
-                                .hasMatch(_model.emailTextController!.text)) {
-                              _model.errorEmailFormat = false;
-                              setState(() {});
-                            } else {
-                              _model.errorEmailFormat = true;
-                              setState(() {});
-                              return;
-                            }
-
-                            if (_model.passwordTextController!.text != '') {
-                              _model.errorPasswordRequired = false;
-                              setState(() {});
-                            } else {
-                              _model.errorPasswordRequired = true;
-                              setState(() {});
-                              return;
-                            }
-
+                          } else {
+                            _model.errorPasswordRequired = true;
                             setState(() {});
+                            return;
+                          }
 
-                            // Persist keepSignedIn preference via provider
-                            await ref.read(keepSignedInProvider.notifier).set(
-                              _model.keepSignedIn,
+                          setState(() {});
+
+                          // Persist keepSignedIn preference via provider
+                          await ref.read(keepSignedInProvider.notifier).set(
+                            _model.keepSignedIn,
+                          );
+
+                          final user = await authManager.signInWithEmail(
+                            context,
+                            _model.emailTextController!.text,
+                            _model.passwordTextController!.text,
+                          );
+
+                          if (!mounted) return;
+
+                          if (user != null) {
+                            context.goNamed(
+                              CheckDataWidget.routeName,
+                              queryParameters: {
+                                'fromSignIn': true.toString(),
+                              },
                             );
-
-                            final user = await authManager.signInWithEmail(
-                              context,
-                              _model.emailTextController!.text,
-                              _model.passwordTextController!.text,
-                            );
-
-                            if (!mounted) return;
-
-                            if (user != null) {
-                              context.goNamed(
-                                CheckDataWidget.routeName,
-                                queryParameters: {
-                                  'fromSignIn': true.toString(),
-                                },
-                              );
-                            } else {
-                              _model.errorSignIn =
-                                  'Email or password is incorrect. Please try again';
-                              setState(() {});
-                            }
-                          },
-                          style: TextButton.styleFrom(
-                            elevation: 0,
-                            backgroundColor: Colors.transparent,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
-                          ),
-                          child: Text(
-                            'Sign In',
-                            style: GoogleFonts.inter(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16.0,
-                            ),
-                          ),
-                        ),
+                          } else {
+                            _model.errorSignIn =
+                                'Email or password is incorrect. Please try again';
+                            setState(() {});
+                          }
+                        },
                       ),
                     ]
                         .divide(SizedBox(height: 24.0))

@@ -15,6 +15,7 @@ import '/backend/supabase/supabase.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/auth/presentation/pages/permissions/permissions_widget.dart';
 import 'phone_verification_page2_model.dart';
@@ -415,145 +416,112 @@ class _PhoneVerificationPage2WidgetState
                           ),
                         ),
                       ),
-                      Container(
-                        width: double.infinity,
-                        height: 56.0,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              (_model.pinCodeController!.text.length) == 4
-                                  ? const Color(0xFF7D56FF)
-                                  : const Color(0xFF363636),
-                              (_model.pinCodeController!.text.length) == 4
-                                  ? const Color(0xFF6187F1)
-                                  : const Color(0xFF363636),
-                            ],
-                            stops: const [0.0, 1.0],
-                            begin: const AlignmentDirectional(0.0, -1.0),
-                            end: const AlignmentDirectional(0, 1.0),
-                          ),
-                          borderRadius: BorderRadius.circular(4.0),
-                        ),
-                        child: TextButton(
-                          onPressed: ((_model.pinCodeController!.text.length) !=
-                                  4)
-                              ? null
-                              : () async {
-                                  var shouldSetState = false;
-                                  _model.errorCodeIncorrect = false;
-                                  _model.errorCodeExpired = false;
-                                  _model.errorMaxAttemptsReached = false;
-                                  _model.errorOther = false;
-                                  setState(() {});
+                      AppGradientButton(
+                        text: 'Verify',
+                        enabled: (_model.pinCodeController!.text.length) == 4,
+                        borderRadius: 8.0,
+                        onPressed: ((_model.pinCodeController!.text.length) !=
+                                4)
+                            ? null
+                            : () async {
+                                var shouldSetState = false;
+                                _model.errorCodeIncorrect = false;
+                                _model.errorCodeExpired = false;
+                                _model.errorMaxAttemptsReached = false;
+                                _model.errorOther = false;
+                                setState(() {});
 
-                                  // Bypass code for testing
-                                  if (_model.pinCodeController!.text == '0000') {
-                                    final cleanPhone = widget.phoneNumber!
-                                        .replaceAll(RegExp(r'[^\d+]'), '');
-                                    await UserProfilesTable().update(
-                                      data: {
-                                        'phone': cleanPhone,
-                                        'phone_verified': true,
-                                      },
-                                      matchingRows: (rows) => rows.eqOrNull(
-                                        'user_id',
-                                        currentUserUid,
-                                      ),
-                                    );
+                                // Bypass code for testing
+                                if (_model.pinCodeController!.text == '0000') {
+                                  final cleanPhone = widget.phoneNumber!
+                                      .replaceAll(RegExp(r'[^\d+]'), '');
+                                  await UserProfilesTable().update(
+                                    data: {
+                                      'phone': cleanPhone,
+                                      'phone_verified': true,
+                                    },
+                                    matchingRows: (rows) => rows.eqOrNull(
+                                      'user_id',
+                                      currentUserUid,
+                                    ),
+                                  );
+                                  if (widget.isOnborading!) {
+                                    context.pushNamed(PermissionsWidget.routeName);
+                                  } else {
+                                    context.pop();
+                                  }
+                                  return;
+                                }
+
+                                _model.verifyCodeRes =
+                                    await TwillioGroup.verifyCodeCall.call(
+                                  to: widget.phoneNumber!
+                                      .replaceAll(RegExp(r'[^\d+]'), ''),
+                                  code: _model.pinCodeController!.text,
+                                );
+
+                                shouldSetState = true;
+                                if ((_model.verifyCodeRes?.succeeded ??
+                                    true)) {
+                                  if (TwillioGroup.verifyCodeCall.isValid(
+                                        (_model.verifyCodeRes?.jsonBody ??
+                                            ''),
+                                      ) ==
+                                      true) {
+                                    await Future.wait([
+                                      Future(() async {
+                                        await UserProfilesTable().update(
+                                          data: {
+                                            'phone': widget.phoneNumber!.replaceAll(RegExp(r'[^\d+]'), ''),
+                                            'phone_verified': true,
+                                          },
+                                          matchingRows: (rows) =>
+                                              rows.eqOrNull(
+                                            'user_id',
+                                            currentUserUid,
+                                          ),
+                                        );
+                                      }),
+                                      Future(() async {
+                                        // TODO: migrate to Riverpod
+                                        setState(() {});
+                                      }),
+                                    ]);
                                     if (widget.isOnborading!) {
-                                      context.pushNamed(PermissionsWidget.routeName);
+                                      context.pushNamed(
+                                          PermissionsWidget.routeName);
                                     } else {
                                       context.pop();
                                     }
-                                    return;
-                                  }
-
-                                  _model.verifyCodeRes =
-                                      await TwillioGroup.verifyCodeCall.call(
-                                    to: widget.phoneNumber!
-                                        .replaceAll(RegExp(r'[^\d+]'), ''),
-                                    code: _model.pinCodeController!.text,
-                                  );
-
-                                  shouldSetState = true;
-                                  if ((_model.verifyCodeRes?.succeeded ??
-                                      true)) {
-                                    if (TwillioGroup.verifyCodeCall.isValid(
-                                          (_model.verifyCodeRes?.jsonBody ??
-                                              ''),
-                                        ) ==
-                                        true) {
-                                      await Future.wait([
-                                        Future(() async {
-                                          await UserProfilesTable().update(
-                                            data: {
-                                              'phone': widget.phoneNumber!.replaceAll(RegExp(r'[^\d+]'), ''),
-                                              'phone_verified': true,
-                                            },
-                                            matchingRows: (rows) =>
-                                                rows.eqOrNull(
-                                              'user_id',
-                                              currentUserUid,
-                                            ),
-                                          );
-                                        }),
-                                        Future(() async {
-                                          // TODO: migrate to Riverpod
-                                          setState(() {});
-                                        }),
-                                      ]);
-                                      if (widget.isOnborading!) {
-                                        context.pushNamed(
-                                            PermissionsWidget.routeName);
-                                      } else {
-                                        context.pop();
-                                      }
-                                    } else {
-                                      _model.errorCodeIncorrect = true;
-                                      setState(() {});
-                                      _triggerShake();
-                                    }
                                   } else {
-                                    if ((_model.verifyCodeRes?.statusCode ??
-                                            200) ==
-                                        404) {
-                                      _model.errorCodeExpired = true;
-                                      setState(() {});
-                                    } else if ((_model
-                                                .verifyCodeRes?.statusCode ??
-                                            200) ==
-                                        429) {
-                                      _model.errorMaxAttemptsReached = true;
-                                      setState(() {});
-                                    } else {
-                                      _model.errorOther = true;
-                                      setState(() {});
-                                    }
-
+                                    _model.errorCodeIncorrect = true;
+                                    setState(() {});
                                     _triggerShake();
-                                    if (shouldSetState) setState(() {});
-                                    return;
+                                  }
+                                } else {
+                                  if ((_model.verifyCodeRes?.statusCode ??
+                                          200) ==
+                                      404) {
+                                    _model.errorCodeExpired = true;
+                                    setState(() {});
+                                  } else if ((_model
+                                              .verifyCodeRes?.statusCode ??
+                                          200) ==
+                                      429) {
+                                    _model.errorMaxAttemptsReached = true;
+                                    setState(() {});
+                                  } else {
+                                    _model.errorOther = true;
+                                    setState(() {});
                                   }
 
+                                  _triggerShake();
                                   if (shouldSetState) setState(() {});
-                                },
-                          style: TextButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                          child: Text(
-                            'Verify',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16.0,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                                  return;
+                                }
+
+                                if (shouldSetState) setState(() {});
+                              },
                       ),
                     ].addToEnd(const SizedBox(height: 32.0)),
                   ).animate().move(

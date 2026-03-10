@@ -7,6 +7,7 @@ import '/core/theme/app_colors.dart';
 import '/core/utils/geo_data.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_text_field.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/autocomplete_options_list.dart';
 import '/core/widgets/app_drop_down.dart';
 import '/core/widgets/form_field_controller.dart';
@@ -685,111 +686,66 @@ class _CheckoutEditShippingAddressWidgetState
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-                  child: Container(
-                    width: double.infinity,
-                    height: 56.0,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                        stops: [0.0, 1.0],
-                        begin: AlignmentDirectional(0.0, -1.0),
-                        end: AlignmentDirectional(0, 1.0),
-                      ),
-                      borderRadius: BorderRadius.circular(4.0),
-                    ),
-                    child: TextButton(
-                      onPressed: () async {
-                        await Future.wait([
-                          Future(() async {
-                            createShippingAddress =
-                                await ShippingAddressesTable().insert({
-                              'user_id': currentUserUid,
-                              'full_name': fullNameTextController!.text,
-                              'address_line1':
-                                  streetaddressTextController!.text,
-                              'address_line2': aptsuiteunitTextController!.text,
-                              'city': cityTextController!.text,
-                              'country': countryDropdownValue,
-                              'state': (countryDropdownValue == 'US') ||
-                                      (countryDropdownValue == 'CA')
-                                  ? stateDropdownValue
-                                  : stateTextController!.text,
-                              'zip_code': zipCodeTextController!.text,
-                              'is_default': true,
-                              'created_at': DateTime.now().toIso8601String(),
-                            });
-                          }),
-                          Future(() async {
-                            ref.read(authProvider.notifier).updateUser(
-                                  (e) => e.copyWith(
-                                    shippingAddress: (e.shippingAddress ??
-                                            const ShippingAddress())
-                                        .copyWith(
-                                      fullName: fullNameTextController!.text,
-                                      addressLine1:
-                                          streetaddressTextController!.text,
-                                      addressLine2:
-                                          aptsuiteunitTextController!.text,
-                                      city: cityTextController!.text,
-                                      state: (countryDropdownValue == 'US') ||
-                                              (countryDropdownValue == 'CA')
-                                          ? stateDropdownValue ?? ''
-                                          : stateTextController!.text,
-                                      country: countryDropdownValue ?? '',
-                                      zipCode: zipCodeTextController!.text,
-                                    ),
+                  child: AppGradientButton(
+                    text: 'Save Changes',
+                    onPressed: () async {
+                      await Future.wait([
+                        Future(() async {
+                          createShippingAddress =
+                              await ShippingAddressesTable().insert({
+                            'user_id': currentUserUid,
+                            'full_name': fullNameTextController!.text,
+                            'address_line1':
+                                streetaddressTextController!.text,
+                            'address_line2': aptsuiteunitTextController!.text,
+                            'city': cityTextController!.text,
+                            'country': countryDropdownValue,
+                            'state': (countryDropdownValue == 'US') ||
+                                    (countryDropdownValue == 'CA')
+                                ? stateDropdownValue
+                                : stateTextController!.text,
+                            'zip_code': zipCodeTextController!.text,
+                            'is_default': true,
+                            'created_at': DateTime.now().toIso8601String(),
+                          });
+                        }),
+                        Future(() async {
+                          ref.read(authProvider.notifier).updateUser(
+                                (e) => e.copyWith(
+                                  shippingAddress: (e.shippingAddress ??
+                                          const ShippingAddress())
+                                      .copyWith(
+                                    fullName: fullNameTextController!.text,
+                                    addressLine1:
+                                        streetaddressTextController!.text,
+                                    addressLine2:
+                                        aptsuiteunitTextController!.text,
+                                    city: cityTextController!.text,
+                                    state: (countryDropdownValue == 'US') ||
+                                            (countryDropdownValue == 'CA')
+                                        ? stateDropdownValue ?? ''
+                                        : stateTextController!.text,
+                                    country: countryDropdownValue ?? '',
+                                    zipCode: zipCodeTextController!.text,
                                   ),
-                                );
-                            setState(() {});
-                          }),
-                        ]);
-                        Navigator.pop(context);
+                                ),
+                              );
+                          setState(() {});
+                        }),
+                      ]);
+                      Navigator.pop(context);
 
-                        setState(() {});
-                      },
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 0.0, 16.0, 0.0),
-                        backgroundColor: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                      child: Text(
-                        'Save Changes',
-                        style: GoogleFonts.inter(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
+                      setState(() {});
+                    },
                   ),
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-                  child: TextButton(
+                  child: AppOutlineButton(
+                    text: 'Cancel',
                     onPressed: () async {
                       Navigator.pop(context);
                     },
-                    style: TextButton.styleFrom(
-                      minimumSize: Size(double.infinity, 56.0),
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                      backgroundColor: AppColors.backgroundPrimary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        side: BorderSide(
-                          color: Color(0xFF545454),
-                        ),
-                      ),
-                    ),
-                    child: Text(
-                      'Cancel',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                        fontSize: 17.0,
-                      ),
-                    ),
                   ),
                 ),
               ].addToEnd(SizedBox(height: 32.0)),

@@ -2,6 +2,7 @@ import '/backend/api_requests/api_calls.dart';
 import '/features/auth/presentation/pages/phone_verification_page2/phone_verification_page2_widget.dart';
 import '/core/theme/app_colors.dart';
 import '/core/widgets/app_text_field.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/core/utils/list_extensions.dart';
 import 'dart:async';
 import '/custom_code/actions/index.dart' as actions;
@@ -183,98 +184,53 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Container(
-                        width: double.infinity,
-                        height: 56.0,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              (FormValidators.phoneValidationResult(_model
-                                                  .textController!.text) ==
-                                              null ||
-                                          FormValidators.phoneValidationResult(
-                                                  _model
-                                                      .textController!.text) ==
-                                              '') &&
-                                      (_model.textController!.text != '')
-                                  ? Color(0xFF7D56FF)
-                                  : Color(0xFF363636),
-                              (FormValidators.phoneValidationResult(_model
-                                                  .textController!.text) ==
-                                              null ||
-                                          FormValidators.phoneValidationResult(
-                                                  _model
-                                                      .textController!.text) ==
-                                              '') &&
-                                      (_model.textController!.text != '')
-                                  ? Color(0xFF6187F1)
-                                  : Color(0xFF363636)
-                            ],
-                            stops: [0.0, 1.0],
-                            begin: AlignmentDirectional(0.0, -1.0),
-                            end: AlignmentDirectional(0, 1.0),
-                          ),
-                          borderRadius: BorderRadius.circular(4.0),
-                        ),
-                        child: TextButton(
-                          onPressed: ((_model.textController!.text == '') ||
-                                  (FormValidators.phoneValidationResult(
-                                              _model.textController!.text) !=
-                                          null &&
-                                      FormValidators.phoneValidationResult(
-                                              _model.textController!.text) !=
-                                          ''))
-                              ? null
-                              : () async {
-                                  _model.apiResultzpe = await SupabaseRPCGroup
-                                      .checkphoneexistsCall
-                                      .call(
-                                    userId: _model.textController!.text,
-                                  );
+                      AppGradientButton(
+                        text: 'Send',
+                        enabled: (_model.textController!.text != '') &&
+                            (FormValidators.phoneValidationResult(
+                                    _model.textController!.text) ==
+                                null ||
+                                FormValidators.phoneValidationResult(
+                                        _model.textController!.text) ==
+                                    ''),
+                        onPressed: () async {
+                          _model.apiResultzpe = await SupabaseRPCGroup
+                              .checkphoneexistsCall
+                              .call(
+                            userId: _model.textController!.text,
+                          );
 
-                                  if (_model.apiResultzpe?.jsonBody == true) {
-                                    await actions.toastificationshow(
-                                      context,
-                                      'Error',
-                                      'This number already registered',
-                                      'error',
-                                    );
-                                  } else {
-                                    await TwillioGroup.sendVerificationCall
-                                        .call(
-                                      to: FormValidators.formatPhoneNumber(
-                                          _model.textController!.text),
-                                    );
+                          if (_model.apiResultzpe?.jsonBody == true) {
+                            await actions.toastificationshow(
+                              context,
+                              'Error',
+                              'This number already registered',
+                              'error',
+                            );
+                          } else {
+                            await TwillioGroup.sendVerificationCall
+                                .call(
+                              to: FormValidators.formatPhoneNumber(
+                                  _model.textController!.text),
+                            );
 
-                                    if (Navigator.of(context).canPop()) {
-                                      context.pop();
-                                    }
-                                    context.pushNamed(
-                                      PhoneVerificationPage2Widget.routeName,
-                                      queryParameters: {
-                                        'phoneNumber':
-                                            FormValidators.formatPhoneNumber(
-                                                _model.textController!.text),
-                                        'isOnborading':
-                                            widget.isOnboarding.toString(),
-                                      },
-                                    );
-                                  }
+                            if (Navigator.of(context).canPop()) {
+                              context.pop();
+                            }
+                            context.pushNamed(
+                              PhoneVerificationPage2Widget.routeName,
+                              queryParameters: {
+                                'phoneNumber':
+                                    FormValidators.formatPhoneNumber(
+                                        _model.textController!.text),
+                                'isOnborading':
+                                    widget.isOnboarding.toString(),
+                              },
+                            );
+                          }
 
-                                  setState(() {});
-                                },
-                          style: TextButton.styleFrom(
-                            minimumSize: Size(double.infinity, 56.0),
-                            padding: EdgeInsets.symmetric(horizontal: 16.0),
-                          ),
-                          child: Text(
-                            'Send',
-                            style: GoogleFonts.inter(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                            ),
-                          ),
-                        ),
+                          setState(() {});
+                        },
                       ),
                     ]
                         .divide(SizedBox(height: 40.0))

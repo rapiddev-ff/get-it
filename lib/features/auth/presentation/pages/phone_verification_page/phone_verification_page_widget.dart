@@ -13,6 +13,7 @@ import '/backend/api_requests/api_calls.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/auth/presentation/pages/phone_verification_page2/phone_verification_page2_widget.dart';
 import 'phone_verification_page_model.dart';
@@ -301,59 +302,28 @@ class _PhoneVerificationPageWidgetState
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Container(
-                        width: double.infinity,
-                        height: 56.0,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              _isPhoneValid
-                                  ? const Color(0xFF7D56FF)
-                                  : const Color(0xFF363636),
-                              _isPhoneValid
-                                  ? const Color(0xFF6187F1)
-                                  : const Color(0xFF363636),
-                            ],
-                            stops: const [0.0, 1.0],
-                            begin: const AlignmentDirectional(0.0, -1.0),
-                            end: const AlignmentDirectional(0, 1.0),
-                          ),
-                          borderRadius: BorderRadius.circular(4.0),
-                        ),
-                        child: TextButton(
-                          onPressed: !_isPhoneValid
-                              ? null
-                              : () async {
-                                  await TwillioGroup.sendVerificationCall.call(
-                                    to: _formatPhoneNumber(
-                                        _model.textController!.text),
-                                  );
+                      AppGradientButton(
+                        text: 'Send',
+                        enabled: _isPhoneValid,
+                        borderRadius: 8.0,
+                        onPressed: !_isPhoneValid
+                            ? null
+                            : () async {
+                                await TwillioGroup.sendVerificationCall.call(
+                                  to: _formatPhoneNumber(
+                                      _model.textController!.text),
+                                );
 
-                                  context.pushNamed(
-                                    PhoneVerificationPage2Widget.routeName,
-                                    queryParameters: {
-                                      'phoneNumber':
-                                          _model.textController!.text,
-                                      'isOnborading':
-                                          widget.isOnboarding.toString(),
-                                    },
-                                  );
-                                },
-                          style: TextButton.styleFrom(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 16.0, 0.0),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                          child: Text(
-                            'Send',
-                            style: GoogleFonts.inter(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
+                                context.pushNamed(
+                                  PhoneVerificationPage2Widget.routeName,
+                                  queryParameters: {
+                                    'phoneNumber':
+                                        _model.textController!.text,
+                                    'isOnborading':
+                                        widget.isOnboarding.toString(),
+                                  },
+                                );
+                              },
                       ),
                     ]
                         .divide(const SizedBox(height: 40.0))

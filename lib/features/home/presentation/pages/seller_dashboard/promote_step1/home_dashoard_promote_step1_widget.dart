@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '/core/theme/app_colors.dart';
 import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/features/home/presentation/pages/seller_dashboard/promote_step2/home_dashoard_promote_step2_widget.dart';
 
 class HomeDashoardPromoteStep1Widget extends StatefulWidget {
@@ -242,41 +243,11 @@ class _HomeDashoardPromoteStep1WidgetState
               ),
               Padding(
                 padding: EdgeInsets.all(16.0),
-                child: Container(
-                  width: double.infinity,
-                  height: 56.0,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                      stops: [0.0, 1.0],
-                      begin: AlignmentDirectional(0.0, -1.0),
-                      end: AlignmentDirectional(0, 1.0),
-                    ),
-                    borderRadius: BorderRadius.circular(4.0),
-                  ),
-                  child: TextButton(
-                    onPressed: () async {
-                      context
-                          .pushNamed(HomeDashoardPromoteStep2Widget.routeName);
-                    },
-                    style: TextButton.styleFrom(
-                      minimumSize: Size(double.infinity, 40.0),
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                      backgroundColor: Color(0x008E6CFF),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                    child: Text(
-                      'Promote',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16.0,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+                child: AppGradientButton(
+                  text: 'Promote',
+                  onPressed: () async {
+                    context.pushNamed(HomeDashoardPromoteStep2Widget.routeName);
+                  },
                 ),
               ),
             ],

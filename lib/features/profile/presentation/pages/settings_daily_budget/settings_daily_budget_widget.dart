@@ -4,6 +4,7 @@ import '/features/auth/domain/models/user_settings_model.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import '/core/theme/app_colors.dart';
 import '/core/widgets/app_text_field.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/core/utils/list_extensions.dart';
 import 'dart:async';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -186,88 +187,46 @@ class _SettingsDailyBudgetWidgetState
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Container(
-                        width: double.infinity,
-                        height: 56.0,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                            stops: [0.0, 1.0],
-                            begin: AlignmentDirectional(0.0, -1.0),
-                            end: AlignmentDirectional(0, 1.0),
-                          ),
-                          borderRadius: BorderRadius.circular(4.0),
-                        ),
-                        child: TextButton(
-                          onPressed: () async {
-                            await Future.wait([
-                              Future(() async {
-                                ref.read(authProvider.notifier).updateUser(
-                                      (e) => e.copyWith(
-                                        userSettings: (e.userSettings ??
-                                                const UserSettings())
-                                            .copyWith(
-                                          dailyBudget: double.tryParse(_model
-                                                  .textController!.text) ??
-                                              0.0,
-                                        ),
+                      AppGradientButton(
+                        text: 'Save Budget',
+                        onPressed: () async {
+                          await Future.wait([
+                            Future(() async {
+                              ref.read(authProvider.notifier).updateUser(
+                                    (e) => e.copyWith(
+                                      userSettings: (e.userSettings ??
+                                              const UserSettings())
+                                          .copyWith(
+                                        dailyBudget: double.tryParse(_model
+                                                .textController!.text) ??
+                                            0.0,
                                       ),
-                                    );
-                                if (mounted) setState(() {});
-                              }),
-                              Future(() async {
-                                await UserSettingsTable().update(
-                                  data: {
-                                    'daily_budget': double.tryParse(
-                                        _model.textController!.text),
-                                  },
-                                  matchingRows: (rows) => rows.eqOrNull(
-                                    'user_id',
-                                    currentUserUid,
-                                  ),
-                                );
-                              }),
-                            ]);
-                            if (!mounted) return;
-                            context.pop();
-                          },
-                          style: TextButton.styleFrom(
-                            minimumSize: Size(double.infinity, 56.0),
-                            padding: EdgeInsets.symmetric(horizontal: 16.0),
-                          ),
-                          child: Text(
-                            'Save Budget',
-                            style: GoogleFonts.inter(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                            ),
-                          ),
-                        ),
+                                    ),
+                                  );
+                              if (mounted) setState(() {});
+                            }),
+                            Future(() async {
+                              await UserSettingsTable().update(
+                                data: {
+                                  'daily_budget': double.tryParse(
+                                      _model.textController!.text),
+                                },
+                                matchingRows: (rows) => rows.eqOrNull(
+                                  'user_id',
+                                  currentUserUid,
+                                ),
+                              );
+                            }),
+                          ]);
+                          if (!mounted) return;
+                          context.pop();
+                        },
                       ),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 56.0,
-                        child: OutlinedButton(
-                          onPressed: () {
-                            context.pop();
-                          },
-                          child: Text(
-                            'Cancel',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                              fontSize: 17.0,
-                            ),
-                          ),
-                          style: OutlinedButton.styleFrom(
-                            side: BorderSide(
-                              color: Color(0xFF545454),
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
-                          ),
-                        ),
+                      AppOutlineButton(
+                        text: 'Cancel',
+                        onPressed: () {
+                          context.pop();
+                        },
                       ),
                     ]
                         .divide(SizedBox(height: 16.0))

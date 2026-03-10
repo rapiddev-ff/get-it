@@ -12,6 +12,7 @@ import 'package:go_router/go_router.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_text_field.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/features/auth/domain/models/business_address_model.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import 'settings_business_address_model.dart';
@@ -485,123 +486,82 @@ class _SettingsBusinessAddressWidgetState
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Expanded(
-                          child: OutlinedButton(
+                          child: AppOutlineButton(
+                            text: 'Cancel',
                             onPressed: () async {
                               context.pop();
                             },
-                            style: OutlinedButton.styleFrom(
-                              minimumSize: Size(double.infinity, 56.0),
-                              padding: EdgeInsets.symmetric(horizontal: 16.0),
-                              backgroundColor: AppColors.backgroundPrimary,
-                              side: BorderSide(
-                                color: Color(0xFF545454),
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4.0),
-                              ),
-                            ),
-                            child: Text(
-                              'Cancel',
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 17.0,
-                                color: Colors.white,
-                              ),
-                            ),
                           ),
                         ),
                         Expanded(
-                          child: Container(
-                            width: double.infinity,
-                            height: 56.0,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                                stops: [0.0, 1.0],
-                                begin: AlignmentDirectional(0.0, -1.0),
-                                end: AlignmentDirectional(0, 1.0),
-                              ),
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
-                            child: TextButton(
-                              onPressed: () async {
-                                await Future.wait([
-                                  Future(() async {
-                                    await UserProfilesTable().update(
-                                      data: {
-                                        'business_address_line1': _model
-                                            .addressLine1TextController!.text,
-                                        'business_address_line2': _model
-                                            .addressLine2TextController!.text,
-                                        'business_country':
-                                            _model.countryDropdownValue,
-                                        'business_state': (_model
-                                                        .countryDropdownValue ==
-                                                    'US') ||
-                                                (_model.countryDropdownValue ==
-                                                    'CA')
-                                            ? _model.stateDropdownValue
-                                            : _model.stateTextController!.text,
-                                        'business_city':
-                                            _model.cityTextController!.text,
-                                        'business_zip':
-                                            _model.zipCodeTextController!.text,
-                                      },
-                                      matchingRows: (rows) => rows.eqOrNull(
-                                        'user_id',
-                                        currentUserUid,
-                                      ),
-                                    );
-                                  }),
-                                  Future(() async {
-                                    ref.read(authProvider.notifier).updateUser(
-                                          (e) => e.copyWith(
-                                            businessAddress:
-                                                (e.businessAddress ??
-                                                        const BusinessAddress())
-                                                    .copyWith(
-                                              addressLine1: _model
-                                                  .addressLine1TextController!
-                                                  .text,
-                                              addressLine2: _model
-                                                  .addressLine2TextController!
-                                                  .text,
-                                              country:
-                                                  _model.countryDropdownValue ??
-                                                      '',
-                                              state: (_model.countryDropdownValue ==
-                                                          'US') ||
-                                                      (_model.countryDropdownValue ==
-                                                          'CA')
-                                                  ? _model.stateDropdownValue ??
-                                                      ''
-                                                  : _model.stateTextController!
-                                                      .text,
-                                              city: _model
-                                                  .cityTextController!.text,
-                                              zipCode: _model
-                                                  .zipCodeTextController!.text,
-                                            ),
+                          child: AppGradientButton(
+                            text: 'Save',
+                            onPressed: () async {
+                              await Future.wait([
+                                Future(() async {
+                                  await UserProfilesTable().update(
+                                    data: {
+                                      'business_address_line1': _model
+                                          .addressLine1TextController!.text,
+                                      'business_address_line2': _model
+                                          .addressLine2TextController!.text,
+                                      'business_country':
+                                          _model.countryDropdownValue,
+                                      'business_state': (_model
+                                                      .countryDropdownValue ==
+                                                  'US') ||
+                                              (_model.countryDropdownValue ==
+                                                  'CA')
+                                          ? _model.stateDropdownValue
+                                          : _model.stateTextController!.text,
+                                      'business_city':
+                                          _model.cityTextController!.text,
+                                      'business_zip':
+                                          _model.zipCodeTextController!.text,
+                                    },
+                                    matchingRows: (rows) => rows.eqOrNull(
+                                      'user_id',
+                                      currentUserUid,
+                                    ),
+                                  );
+                                }),
+                                Future(() async {
+                                  ref.read(authProvider.notifier).updateUser(
+                                        (e) => e.copyWith(
+                                          businessAddress:
+                                              (e.businessAddress ??
+                                                      const BusinessAddress())
+                                                  .copyWith(
+                                            addressLine1: _model
+                                                .addressLine1TextController!
+                                                .text,
+                                            addressLine2: _model
+                                                .addressLine2TextController!
+                                                .text,
+                                            country:
+                                                _model.countryDropdownValue ??
+                                                    '',
+                                            state: (_model.countryDropdownValue ==
+                                                        'US') ||
+                                                    (_model.countryDropdownValue ==
+                                                        'CA')
+                                                ? _model.stateDropdownValue ??
+                                                    ''
+                                                : _model.stateTextController!
+                                                    .text,
+                                            city: _model
+                                                .cityTextController!.text,
+                                            zipCode: _model
+                                                .zipCodeTextController!.text,
                                           ),
-                                        );
-                                    if (mounted) setState(() {});
-                                  }),
-                                ]);
-                                if (!mounted) return;
-                                context.pop();
-                              },
-                              style: TextButton.styleFrom(
-                                minimumSize: Size(double.infinity, 56.0),
-                                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                              ),
-                              child: Text(
-                                'Save',
-                                style: GoogleFonts.inter(
-                                  fontSize: 16.0,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
+                                        ),
+                                      );
+                                  if (mounted) setState(() {});
+                                }),
+                              ]);
+                              if (!mounted) return;
+                              context.pop();
+                            },
                           ),
                         ),
                       ].divide(SizedBox(width: 20.0)),

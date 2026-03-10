@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/features/auth/presentation/pages/sign_in/sign_in_widget.dart';
 import '/features/auth/presentation/pages/sign_up/sign_up_widget.dart';
 import 'welcome_model.dart';
@@ -83,37 +84,11 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                 Spacer(),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                  child: Container(
-                    width: double.infinity,
-                    height: 56.0,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                        stops: [0.0, 1.0],
-                        begin: AlignmentDirectional(0.0, -1.0),
-                        end: AlignmentDirectional(0, 1.0),
-                      ),
-                      borderRadius: BorderRadius.circular(4.0),
-                    ),
-                    child: TextButton(
-                      onPressed: () async {
-                        context.pushNamed(SignUpWidget.routeName);
-                      },
-                      style: TextButton.styleFrom(
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                        ),
-                      ),
-                      child: Text(
-                        'Create Account',
-                        style: GoogleFonts.inter(
-                          color: Colors.white,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
+                  child: AppGradientButton(
+                    text: 'Create Account',
+                    onPressed: () async {
+                      context.pushNamed(SignUpWidget.routeName);
+                    },
                   ),
                 ),
                 Padding(

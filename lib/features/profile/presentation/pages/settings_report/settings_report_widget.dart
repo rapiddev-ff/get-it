@@ -10,6 +10,7 @@ import '/backend/supabase/database/tables/support_reports.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/core/theme/app_colors.dart';
 import '/core/widgets/app_text_field.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/core/utils/list_extensions.dart';
 import 'settings_report_model.dart';
 export 'settings_report_model.dart';
@@ -224,87 +225,46 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget> {
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Container(
-                        width: double.infinity,
-                        height: 56.0,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                            stops: [0.0, 1.0],
-                            begin: AlignmentDirectional(0.0, -1.0),
-                            end: AlignmentDirectional(0, 1.0),
-                          ),
-                          borderRadius: BorderRadius.circular(4.0),
-                        ),
-                        child: TextButton(
-                          onPressed: (_model.textController!.text.trim().isEmpty || _isSending)
-                              ? null
-                              : () async {
-                                  setState(() => _isSending = true);
-                                  try {
-                                    await SupportReportsTable().insert({
-                                      'user_id': currentUserUid,
-                                      'message': _model.textController!.text.trim(),
-                                    });
-                                    if (!mounted) return;
-                                    context.pop();
-                                    await actions.toastificationshow(
-                                      context,
-                                      'Report Sent',
-                                      'We\'ll get back to you within 3-5 business days.',
-                                      'success',
-                                    );
-                                  } catch (e) {
-                                    if (!mounted) return;
-                                    await actions.toastificationshow(
-                                      context,
-                                      'Error',
-                                      'Failed to send report. Please try again.',
-                                      'error',
-                                    );
-                                  } finally {
-                                    if (mounted) setState(() => _isSending = false);
-                                  }
-                                },
-                          style: TextButton.styleFrom(
-                            minimumSize: Size(double.infinity, 56.0),
-                            padding: EdgeInsets.symmetric(horizontal: 16.0),
-                          ),
-                          child: Text(
-                            'Send',
-                            style: GoogleFonts.inter(
-                              fontSize: 16.0,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                      AppGradientButton(
+                        text: 'Send',
+                        enabled: _model.textController!.text.trim().isNotEmpty && !_isSending,
+                        isLoading: _isSending,
+                        onPressed: () async {
+                          setState(() => _isSending = true);
+                          try {
+                            await SupportReportsTable().insert({
+                              'user_id': currentUserUid,
+                              'message': _model.textController!.text.trim(),
+                            });
+                            if (!mounted) return;
+                            context.pop();
+                            await actions.toastificationshow(
+                              context,
+                              'Report Sent',
+                              'We\'ll get back to you within 3-5 business days.',
+                              'success',
+                            );
+                          } catch (e) {
+                            if (!mounted) return;
+                            await actions.toastificationshow(
+                              context,
+                              'Error',
+                              'Failed to send report. Please try again.',
+                              'error',
+                            );
+                          } finally {
+                            if (mounted) setState(() => _isSending = false);
+                          }
+                        },
                       ),
                       Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-                        child: OutlinedButton(
+                        child: AppOutlineButton(
+                          text: 'Cancel',
                           onPressed: () async {
                             context.pop();
                           },
-                          style: OutlinedButton.styleFrom(
-                            minimumSize: Size(double.infinity, 56.0),
-                            padding: EdgeInsets.symmetric(horizontal: 16.0),
-                            backgroundColor: AppColors.backgroundPrimary,
-                            side: BorderSide(
-                              color: Color(0xFF545454),
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
-                          ),
-                          child: Text(
-                            'Cancel',
-                            style: GoogleFonts.inter(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 17.0,
-                              color: Colors.white,
-                            ),
-                          ),
                         ),
                       ),
                     ].addToEnd(SizedBox(height: 32.0)),

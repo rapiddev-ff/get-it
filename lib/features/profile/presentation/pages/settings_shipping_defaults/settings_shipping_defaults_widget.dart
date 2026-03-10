@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_text_field.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/auth/domain/models/user_settings_model.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
@@ -272,99 +273,58 @@ class _SettingsShippingDefaultsWidgetState
                       Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Container(
-                            width: double.infinity,
-                            height: 56.0,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                                stops: [0.0, 1.0],
-                                begin: AlignmentDirectional(0.0, -1.0),
-                                end: AlignmentDirectional(0, 1.0),
-                              ),
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
-                            child: TextButton(
-                              onPressed: () async {
-                                await Future.wait([
-                                  Future(() async {
-                                    _model.saveShippingSettings =
-                                        await actions.callRpc(
-                                      context,
-                                      'save_seller_shipping_settings',
-                                      <String, double?>{
-                                        'p_flat_rate': double.tryParse(
-                                            _model.textController1!.text),
-                                        'p_additional_item_fee':
-                                            double.tryParse(
-                                                _model.textController2!.text),
-                                      },
-                                    );
-                                  }),
-                                  Future(() async {
-                                    ref.read(authProvider.notifier).updateUser(
-                                          (e) => e.copyWith(
-                                            userSettings: (e.userSettings ??
-                                                    const UserSettings())
-                                                .copyWith(
-                                              defaultFlatShippingRate:
-                                                  double.tryParse(_model
-                                                          .textController1!
-                                                          .text) ??
-                                                      0.0,
-                                              defaultAdditionalItemFee:
-                                                  double.tryParse(_model
-                                                          .textController2!
-                                                          .text) ??
-                                                      0.0,
-                                            ),
+                          AppGradientButton(
+                            text: 'Save Shipping Cost',
+                            onPressed: () async {
+                              await Future.wait([
+                                Future(() async {
+                                  _model.saveShippingSettings =
+                                      await actions.callRpc(
+                                    context,
+                                    'save_seller_shipping_settings',
+                                    <String, double?>{
+                                      'p_flat_rate': double.tryParse(
+                                          _model.textController1!.text),
+                                      'p_additional_item_fee':
+                                          double.tryParse(
+                                              _model.textController2!.text),
+                                    },
+                                  );
+                                }),
+                                Future(() async {
+                                  ref.read(authProvider.notifier).updateUser(
+                                        (e) => e.copyWith(
+                                          userSettings: (e.userSettings ??
+                                                  const UserSettings())
+                                              .copyWith(
+                                            defaultFlatShippingRate:
+                                                double.tryParse(_model
+                                                        .textController1!
+                                                        .text) ??
+                                                    0.0,
+                                            defaultAdditionalItemFee:
+                                                double.tryParse(_model
+                                                        .textController2!
+                                                        .text) ??
+                                                    0.0,
                                           ),
-                                        );
-                                    if (mounted) setState(() {});
-                                  }),
-                                ]);
-                                if (!mounted) return;
-                                context.pop();
-                              },
-                              style: TextButton.styleFrom(
-                                minimumSize: Size(double.infinity, 56.0),
-                                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                              ),
-                              child: Text(
-                                'Save Shipping Cost',
-                                style: GoogleFonts.inter(
-                                  fontSize: 16.0,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
+                                        ),
+                                      );
+                                  if (mounted) setState(() {});
+                                }),
+                              ]);
+                              if (!mounted) return;
+                              context.pop();
+                            },
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 16.0, 0.0, 0.0),
-                            child: OutlinedButton(
+                            child: AppOutlineButton(
+                              text: 'Cancel',
                               onPressed: () async {
                                 context.pop();
                               },
-                              style: OutlinedButton.styleFrom(
-                                minimumSize: Size(double.infinity, 56.0),
-                                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                                backgroundColor: AppColors.backgroundPrimary,
-                                side: BorderSide(
-                                  color: Color(0xFF545454),
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(4.0),
-                                ),
-                              ),
-                              child: Text(
-                                'Cancel',
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 17.0,
-                                  color: Colors.white,
-                                ),
-                              ),
                             ),
                           ),
                         ].addToEnd(SizedBox(height: 32.0)),

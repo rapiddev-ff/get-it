@@ -1,6 +1,7 @@
 import '/backend/supabase/supabase.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/app_text_field.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/home/presentation/pages/seller_dashboard/shortlist_add/home_dashoard_shortlist_add_widget.dart';
@@ -807,61 +808,40 @@ class _HomeDashoardShortlistCreateStep2WidgetState
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Container(
-                    width: double.infinity,
-                    height: 56.0,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                        stops: [0.0, 1.0],
-                        begin: AlignmentDirectional(0.0, -1.0),
-                        end: AlignmentDirectional(0, 1.0),
-                      ),
-                      borderRadius: BorderRadius.circular(4.0),
-                    ),
-                    child: TextButton(
-                      onPressed: _isSaving
-                          ? null
-                          : () async {
-                              setState(() => _isSaving = true);
-                              final discountPct = double.tryParse(
-                                  textController1!.text.trim());
-                              final result = await actions.createShortlist(
-                                name: widget.name,
-                                eventName: widget.eventName,
-                                startDate: widget.startDate,
-                                endDate: widget.endDate,
-                                isPublic: widget.isPublic,
-                                discountPercentage: discountPct,
-                                notes: textController2!.text,
-                                status: 'active',
-                                productIds: selectedProductIds,
-                              );
-                              if (!mounted) return;
-                              setState(() => _isSaving = false);
-                              actions.toastificationshow(
-                                context,
-                                result['title'] ?? '',
-                                result['message'] ?? '',
-                                result['success'] == true
-                                    ? 'success'
-                                    : 'error',
-                              );
-                              if (result['success'] == true) {
-                                // Pop back to shortlist list (Step2 → Step1 → list)
-                                context.pop();
-                                context.pop();
-                              }
-                            },
-                      child: Text(
-                        _isSaving ? 'Creating...' : 'Create Shortlist',
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 17.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
+                  AppGradientButton(
+                    text: _isSaving ? 'Creating...' : 'Create Shortlist',
+                    enabled: !_isSaving,
+                    onPressed: () async {
+                      setState(() => _isSaving = true);
+                      final discountPct = double.tryParse(
+                          textController1!.text.trim());
+                      final result = await actions.createShortlist(
+                        name: widget.name,
+                        eventName: widget.eventName,
+                        startDate: widget.startDate,
+                        endDate: widget.endDate,
+                        isPublic: widget.isPublic,
+                        discountPercentage: discountPct,
+                        notes: textController2!.text,
+                        status: 'active',
+                        productIds: selectedProductIds,
+                      );
+                      if (!mounted) return;
+                      setState(() => _isSaving = false);
+                      actions.toastificationshow(
+                        context,
+                        result['title'] ?? '',
+                        result['message'] ?? '',
+                        result['success'] == true
+                            ? 'success'
+                            : 'error',
+                      );
+                      if (result['success'] == true) {
+                        // Pop back to shortlist list (Step2 → Step1 → list)
+                        context.pop();
+                        context.pop();
+                      }
+                    },
                   ),
                   Padding(
                     padding:

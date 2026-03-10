@@ -13,6 +13,7 @@ import '/core/constants/app_constants.dart';
 import '/features/home/presentation/widgets/dialog/dialog_widget.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/app_text_field.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/auth/presentation/pages/sign_in/sign_in_widget.dart';
@@ -351,113 +352,88 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget> {
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Container(
-                        width: double.infinity,
-                        height: 56.0,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                            stops: [0.0, 1.0],
-                            begin: AlignmentDirectional(0.0, -1.0),
-                            end: AlignmentDirectional(0, 1.0),
-                          ),
-                          borderRadius: BorderRadius.circular(4.0),
-                        ),
-                        child: Builder(
-                          builder: (context) => TextButton(
-                            onPressed: () async {
-                              _model.errorPasswordRequired = false;
-                              _model.errorConfirmPasswordRequired = false;
-                              _model.errorPaswordsDontMatch = false;
-                              setState(() {});
-                              if (_model.textController1!.text != '') {
-                                _model.errorPasswordRequired = false;
-                                setState(() {});
-                              } else {
-                                _model.errorPasswordRequired = true;
-                                setState(() {});
-                              }
+                      AppGradientButton(
+                        text: 'Reset Password',
+                        onPressed: () async {
+                          _model.errorPasswordRequired = false;
+                          _model.errorConfirmPasswordRequired = false;
+                          _model.errorPaswordsDontMatch = false;
+                          setState(() {});
+                          if (_model.textController1!.text != '') {
+                            _model.errorPasswordRequired = false;
+                            setState(() {});
+                          } else {
+                            _model.errorPasswordRequired = true;
+                            setState(() {});
+                          }
 
-                              if (_model.textController2!.text != '') {
-                                _model.errorConfirmPasswordRequired = false;
-                                setState(() {});
-                              } else {
-                                _model.errorConfirmPasswordRequired = true;
-                                setState(() {});
-                                return;
-                              }
+                          if (_model.textController2!.text != '') {
+                            _model.errorConfirmPasswordRequired = false;
+                            setState(() {});
+                          } else {
+                            _model.errorConfirmPasswordRequired = true;
+                            setState(() {});
+                            return;
+                          }
 
-                              if (_model.textController1!.text ==
-                                  _model.textController2!.text) {
-                                _model.errorPaswordsDontMatch = false;
-                                setState(() {});
-                              } else {
-                                _model.errorPaswordsDontMatch = true;
-                                setState(() {});
-                                return;
-                              }
+                          if (_model.textController1!.text ==
+                              _model.textController2!.text) {
+                            _model.errorPaswordsDontMatch = false;
+                            setState(() {});
+                          } else {
+                            _model.errorPaswordsDontMatch = true;
+                            setState(() {});
+                            return;
+                          }
 
-                              if (_model.errorPasswordRequired) return;
+                          if (_model.errorPasswordRequired) return;
 
-                              await SupabaseEdgeGroup.resetPasswordCall.call(
-                                code: widget.code,
-                                newPassword: _model.textController2!.text,
-                              );
+                          await SupabaseEdgeGroup.resetPasswordCall.call(
+                            code: widget.code,
+                            newPassword: _model.textController2!.text,
+                          );
 
-                              await actions.resetPasswordRecoveryState();
-                              if (!mounted) return;
-                              await showDialog(
-                                context: context,
-                                builder: (dialogContext) {
-                                  return Dialog(
-                                    elevation: 0,
-                                    insetPadding: EdgeInsets.zero,
-                                    backgroundColor: Colors.transparent,
-                                    alignment: AlignmentDirectional(0.0, 0.0)
-                                        .resolve(Directionality.of(context)),
-                                    child: GestureDetector(
-                                        onTap: () {
-                                          FocusScope.of(dialogContext)
-                                              .unfocus();
-                                          FocusManager.instance.primaryFocus
-                                              ?.unfocus();
-                                        },
-                                        child: DialogWidget(
-                                          title: 'Password Reset Successful',
-                                          subtitle:
-                                              'Your password has been successfully updated.You can now log in using your new password.',
-                                          bgColor: Color(0x338E6CFF),
-                                          icon: FaIcon(
-                                            FontAwesomeIcons.circleCheck,
-                                            color: Color(0xFF8E6CFF),
-                                            size: 20.0,
-                                          ),
-                                          actionText: 'Go to Login',
-                                          action: () async {
-                                            Navigator.pop(context);
-
-                                            context.goNamed(
-                                                SignInWidget.routeName);
-                                          },
-                                        ),
+                          await actions.resetPasswordRecoveryState();
+                          if (!mounted) return;
+                          await showDialog(
+                            context: context,
+                            builder: (dialogContext) {
+                              return Dialog(
+                                elevation: 0,
+                                insetPadding: EdgeInsets.zero,
+                                backgroundColor: Colors.transparent,
+                                alignment: AlignmentDirectional(0.0, 0.0)
+                                    .resolve(Directionality.of(context)),
+                                child: GestureDetector(
+                                    onTap: () {
+                                      FocusScope.of(dialogContext)
+                                          .unfocus();
+                                      FocusManager.instance.primaryFocus
+                                          ?.unfocus();
+                                    },
+                                    child: DialogWidget(
+                                      title: 'Password Reset Successful',
+                                      subtitle:
+                                          'Your password has been successfully updated.You can now log in using your new password.',
+                                      bgColor: Color(0x338E6CFF),
+                                      icon: FaIcon(
+                                        FontAwesomeIcons.circleCheck,
+                                        color: Color(0xFF8E6CFF),
+                                        size: 20.0,
                                       ),
-                                  );
-                                },
+                                      actionText: 'Go to Login',
+                                      action: () async {
+                                        Navigator.pop(context);
+
+                                        context.goNamed(
+                                            SignInWidget.routeName);
+                                      },
+                                    ),
+                                  ),
                               );
                             },
-                            style: TextButton.styleFrom(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 0.0, 16.0, 0.0),
-                            ),
-                            child: Text(
-                              'Reset Password',
-                              style: GoogleFonts.inter(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        ),
+                          );
+                        },
                       ),
                     ]
                         .divide(SizedBox(height: 24.0))
