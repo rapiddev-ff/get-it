@@ -496,7 +496,6 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                               businessName: val ?? ''),
                                         );
                                     if (!mounted) return;
-                                    setState(() {});
                                     Navigator.pop(context);
                                   },
                                 ),
@@ -559,7 +558,6 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                               businessEmail: val ?? ''),
                                         );
                                     if (!mounted) return;
-                                    setState(() {});
                                     Navigator.pop(context);
                                   },
                                 ),

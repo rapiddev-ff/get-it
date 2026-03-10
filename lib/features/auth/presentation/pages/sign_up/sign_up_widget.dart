@@ -663,8 +663,6 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                 'isOnboarding': true.toString(),
                               },
                             );
-
-                            setState(() {});
                           },
                         ),
                       ),

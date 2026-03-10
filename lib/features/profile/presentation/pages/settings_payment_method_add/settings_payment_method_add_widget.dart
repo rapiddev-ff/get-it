@@ -804,7 +804,6 @@ class _SettingsPaymentMethodAddWidgetState
                                   ref
                                       .read(checkoutProvider.notifier)
                                       .setPaymentMethod(newPaymentMethod);
-                                  setState(() {});
                                   context.safePop();
                                 } else {
                                   await actions.toastificationshow(

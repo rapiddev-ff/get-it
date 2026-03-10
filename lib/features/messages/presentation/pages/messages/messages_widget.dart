@@ -226,7 +226,6 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
             ref
                 .read(messagesProvider.notifier)
                 .setCurrentConversation(converstationsItem);
-            setState(() {});
 
             context.pushNamed(
               ChatPageWidget.routeName,

@@ -573,7 +573,6 @@ class _HomeSellerProfileWidgetState
                                   .setCurrentConversation(
                                       getOrCreateConversation!);
                               if (!mounted) return;
-                              setState(() {});
 
                               context.pushNamed(
                                 ChatPageWidget.routeName,

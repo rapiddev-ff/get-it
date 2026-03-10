@@ -84,7 +84,6 @@ class _StripeSuccessWidgetState extends ConsumerState<StripeSuccessWidget> {
                       ),
                     );
                     if (!mounted) return;
-                    setState(() {});
 
                     context.goNamed(
                       HomePageWidget.routeName,

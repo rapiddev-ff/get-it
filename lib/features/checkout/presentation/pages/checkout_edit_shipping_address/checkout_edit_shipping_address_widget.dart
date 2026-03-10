@@ -694,7 +694,6 @@ class _CheckoutEditShippingAddressWidgetState
                                   ),
                                 ),
                               );
-                          setState(() {});
                         }),
                       ]);
                       Navigator.pop(context);

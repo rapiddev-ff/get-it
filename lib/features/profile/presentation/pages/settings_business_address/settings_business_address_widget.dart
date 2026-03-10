@@ -497,7 +497,6 @@ class _SettingsBusinessAddressWidgetState
                                           ),
                                         ),
                                       );
-                                  if (mounted) setState(() {});
                                 }),
                               ]);
                               if (!mounted) return;
