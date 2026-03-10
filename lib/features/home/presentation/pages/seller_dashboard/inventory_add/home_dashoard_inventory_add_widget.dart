@@ -9,6 +9,7 @@ import '/custom_code/actions/index.dart' as actions;
 import '/core/theme/app_colors.dart';
 import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/core/utils/value_utils.dart';
 import '/core/widgets/app_drop_down.dart';
 import '/core/widgets/form_field_controller.dart';
@@ -1662,39 +1663,11 @@ class _HomeDashoardInventoryAddWidgetState
   Widget _buildActionButtons() {
     return Column(
       children: [
-        Container(
-          width: double.infinity,
-          height: 56.0,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-              stops: [0.0, 1.0],
-              begin: AlignmentDirectional(0.0, -1.0),
-              end: AlignmentDirectional(0, 1.0),
-            ),
-            borderRadius: BorderRadius.circular(4.0),
-          ),
-          child: Builder(
-            builder: (context) => TextButton(
-              onPressed: () async {
-                await _submitProduct('active');
-              },
-              style: TextButton.styleFrom(
-                padding:
-                    EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-              child: Text(
-                'Save & Publish',
-                style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 17.0,
-                    color: Colors.white),
-              ),
-            ),
-          ),
+        AppGradientButton(
+          text: 'Save & Publish',
+          onPressed: () async {
+            await _submitProduct('active');
+          },
         ),
         if ((widget.productId != null && widget.productId != '') &&
             (getProduct?.status != 'active'))
@@ -1704,26 +1677,11 @@ class _HomeDashoardInventoryAddWidgetState
               child: SizedBox(
                 width: double.infinity,
                 height: 56.0,
-                child: OutlinedButton(
+                child: AppOutlineButton(
+                  text: 'Save as Draft',
                   onPressed: () async {
                     await _submitProduct('draft');
                   },
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: AppColors.backgroundPrimary,
-                    padding: EdgeInsetsDirectional.fromSTEB(
-                        16.0, 0.0, 16.0, 0.0),
-                    side: BorderSide(color: Color(0xFF545454)),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4.0),
-                    ),
-                  ),
-                  child: Text(
-                    'Save as Draft',
-                    style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 17.0,
-                        color: Colors.white),
-                  ),
                 ),
               ),
             ),

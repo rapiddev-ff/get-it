@@ -1,5 +1,6 @@
 import '/core/theme/app_colors.dart';
 import '/core/router/app_router.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/features/home/presentation/pages/home_page/home_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -80,41 +81,20 @@ class _StripeRefreshWidgetState extends State<StripeRefreshWidget> {
                     ),
                   ),
                 ),
-                Container(
-                  width: double.infinity,
-                  height: 56.0,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                      stops: [0.0, 1.0],
-                      begin: AlignmentDirectional(0.0, -1.0),
-                      end: AlignmentDirectional(0, 1.0),
-                    ),
-                    borderRadius: BorderRadius.circular(4.0),
-                  ),
-                  child: TextButton(
-                    onPressed: () async {
-                      context.goNamed(
-                        HomePageWidget.routeName,
-                        extra: <String, dynamic>{
-                          kTransitionInfoKey: TransitionInfo(
-                            hasTransition: true,
-                            transitionType: PageTransitionType.fade,
-                            duration: Duration(milliseconds: 0),
-                          ),
-                        },
-                      );
-                    },
-                    style: TextButton.styleFrom(
-                      minimumSize: Size(double.infinity, 44.0),
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                    ),
-                    child: Text(
-                      'Go Back',
-                      style: GoogleFonts.inter(color: Colors.white),
-                    ),
-                  ),
+                AppGradientButton(
+                  text: 'Go Back',
+                  onPressed: () async {
+                    context.goNamed(
+                      HomePageWidget.routeName,
+                      extra: <String, dynamic>{
+                        kTransitionInfoKey: TransitionInfo(
+                          hasTransition: true,
+                          transitionType: PageTransitionType.fade,
+                          duration: Duration(milliseconds: 0),
+                        ),
+                      },
+                    );
+                  },
                 ),
               ],
             ),

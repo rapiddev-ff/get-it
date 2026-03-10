@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 
 class SettingsReferralWidget extends ConsumerStatefulWidget {
@@ -144,57 +145,16 @@ class _SettingsReferralWidgetState
                 Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Container(
-                      width: double.infinity,
-                      height: 56.0,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                          stops: [0.0, 1.0],
-                          begin: AlignmentDirectional(0.0, -1.0),
-                          end: AlignmentDirectional(0, 1.0),
-                        ),
-                        borderRadius: BorderRadius.circular(4.0),
-                      ),
-                      child: TextButton(
-                        onPressed: () {},
-                        style: TextButton.styleFrom(
-                          minimumSize: Size(double.infinity, 56.0),
-                          padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        ),
-                        child: Text(
-                          'Print QR Code',
-                          style: GoogleFonts.inter(
-                            fontSize: 16.0,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
+                    AppGradientButton(
+                      text: 'Print QR Code',
+                      onPressed: () {},
                     ),
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-                      child: OutlinedButton(
+                      child: AppOutlineButton(
+                        text: 'Share Shortlist',
                         onPressed: () {},
-                        style: OutlinedButton.styleFrom(
-                          minimumSize: Size(double.infinity, 56.0),
-                          padding: EdgeInsets.symmetric(horizontal: 16.0),
-                          backgroundColor: AppColors.backgroundPrimary,
-                          side: BorderSide(
-                            color: Color(0xFF545454),
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4.0),
-                          ),
-                        ),
-                        child: Text(
-                          'Share Shortlist',
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 17.0,
-                            color: Colors.white,
-                          ),
-                        ),
                       ),
                     ),
                   ].addToEnd(SizedBox(height: 32.0)),

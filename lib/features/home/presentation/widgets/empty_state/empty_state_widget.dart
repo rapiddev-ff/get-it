@@ -1,5 +1,6 @@
 import '/core/theme/app_colors.dart';
 import '/core/utils/value_utils.dart';
+import '/core/widgets/app_gradient_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -76,37 +77,12 @@ class EmptyStateWidget extends StatelessWidget {
           if (hasButton)
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-              child: Container(
+              child: AppGradientButton(
+                text: buttonText,
                 height: 40.0,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                    stops: [0.0, 1.0],
-                    begin: AlignmentDirectional(0.0, -1.0),
-                    end: AlignmentDirectional(0, 1.0),
-                  ),
-                  borderRadius: BorderRadius.circular(4.0),
-                ),
-                child: TextButton(
-                  onPressed: () async {
-                    await buttonAction?.call();
-                  },
-                  style: TextButton.styleFrom(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                  child: Text(
-                    buttonText,
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
+                onPressed: () async {
+                  await buttonAction?.call();
+                },
               ),
             ),
         ],

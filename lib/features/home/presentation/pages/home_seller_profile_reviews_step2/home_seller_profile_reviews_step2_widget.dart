@@ -3,6 +3,7 @@ import '/features/home/domain/models/seller_product_model.dart';
 import '/core/theme/app_colors.dart';
 import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/core/utils/value_utils.dart';
 import 'dart:async';
 import '/custom_code/actions/index.dart' as actions;
@@ -674,20 +675,9 @@ class _HomeSellerProfileReviewsStep2WidgetState
                   Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(16.0, 32.0, 16.0, 0.0),
-                    child: Container(
-                      width: double.infinity,
-                      height: 56.0,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                          stops: [0.0, 1.0],
-                          begin: AlignmentDirectional(0.0, -1.0),
-                          end: AlignmentDirectional(0, 1.0),
-                        ),
-                        borderRadius: BorderRadius.circular(4.0),
-                      ),
-                      child: TextButton(
-                        onPressed: () async {
+                    child: AppGradientButton(
+                      text: 'Submit Review',
+                      onPressed: () async {
                           if (ratingBarValue2 == null || ratingBarValue2! < 1) {
                             await actions.toastificationshow(
                               context,
@@ -743,22 +733,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                           if (!mounted) return;
                           Navigator.of(context).pop(true);
                         },
-                        style: TextButton.styleFrom(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 0.0, 16.0, 0.0),
-                          elevation: 0.0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
-                        child: Text(
-                          'Submit Review',
-                          style: GoogleFonts.inter(
-                            color: Colors.white,
-                          ),
-                        ),
                       ),
-                    ),
                   ),
               ].addToEnd(SizedBox(height: 32.0)),
             ),

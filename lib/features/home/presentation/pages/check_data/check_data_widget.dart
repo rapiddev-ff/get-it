@@ -4,6 +4,7 @@ import '/features/browse/domain/models/condition_model.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/router/app_router.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/core/utils/json_utils.dart' show getJsonField;
 import '/custom_code/actions/index.dart' as actions;
 import '/core/utils/data_converters.dart' as functions;
@@ -167,28 +168,11 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
                     ),
                   ),
                   SizedBox(height: 24.0),
-                  Container(
-                    width: double.infinity,
+                  AppGradientButton(
+                    text: 'Reactivate My Account',
                     height: 52.0,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: TextButton(
-                      onPressed: () => Navigator.pop(dialogContext, true),
-                      child: Text(
-                        'Reactivate My Account',
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
+                    borderRadius: 8.0,
+                    onPressed: () => Navigator.pop(dialogContext, true),
                   ),
                 ],
               ),

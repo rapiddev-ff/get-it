@@ -13,6 +13,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_text_field.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -619,163 +620,136 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget> {
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             0.0, 24.0, 0.0, 0.0),
-                        child: Container(
-                          width: double.infinity,
-                          height: 56.0,
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [Color(0xFF7D56FF), Color(0xFF6187F1)],
-                              stops: [0.0, 1.0],
-                              begin: AlignmentDirectional(0.0, -1.0),
-                              end: AlignmentDirectional(0, 1.0),
-                            ),
-                            borderRadius: BorderRadius.circular(4.0),
-                          ),
-                          child: TextButton(
-                            onPressed: () async {
-                              var shouldSetState = false;
+                        child: AppGradientButton(
+                          text: 'Create Account',
+                          onPressed: () async {
+                            var shouldSetState = false;
+                            _model.errorEmailRequired = false;
+                            _model.errorEmailFormat = false;
+                            _model.errorPasswordRequired = false;
+                            _model.errorConfirmPasswordRequired = false;
+                            _model.emailAlreadyInUse = false;
+                            _model.errorPaswordsDontMatch = false;
+                            setState(() {});
+
+                            if (_model.emailTextController!.text != '') {
                               _model.errorEmailRequired = false;
+                              setState(() {});
+                            } else {
+                              _model.errorEmailRequired = true;
+                              setState(() {});
+                              return;
+                            }
+
+                            if (_checkEmailFormat(
+                                _model.emailTextController!.text)) {
                               _model.errorEmailFormat = false;
-                              _model.errorPasswordRequired = false;
-                              _model.errorConfirmPasswordRequired = false;
+                              setState(() {});
+                            } else {
+                              _model.errorEmailFormat = true;
+                              setState(() {});
+                              return;
+                            }
+
+                            _model.isUserExist =
+                                await actions.checkIsEmailRegistered(
+                              _model.emailTextController!.text,
+                            );
+                            shouldSetState = true;
+                            if (!_model.isUserExist!) {
                               _model.emailAlreadyInUse = false;
+                              setState(() {});
+                            } else {
+                              _model.emailAlreadyInUse = true;
+                              setState(() {});
+                              if (shouldSetState) setState(() {});
+                              return;
+                            }
+
+                            if (_model.passwordTextController!.text != '') {
+                              _model.errorPasswordRequired = false;
+                              setState(() {});
+                            } else {
+                              _model.errorPasswordRequired = true;
+                              setState(() {});
+                              if (shouldSetState) setState(() {});
+                              return;
+                            }
+
+                            if (_model.confirmPasswordTextController!.text !=
+                                '') {
+                              _model.errorConfirmPasswordRequired = false;
+                              setState(() {});
+                            } else {
+                              _model.errorConfirmPasswordRequired = true;
+                              setState(() {});
+                              if (shouldSetState) setState(() {});
+                              return;
+                            }
+
+                            if (_model.passwordTextController!.text ==
+                                _model.confirmPasswordTextController!.text) {
                               _model.errorPaswordsDontMatch = false;
                               setState(() {});
-
-                              if (_model.emailTextController!.text != '') {
-                                _model.errorEmailRequired = false;
-                                setState(() {});
-                              } else {
-                                _model.errorEmailRequired = true;
-                                setState(() {});
-                                return;
-                              }
-
-                              if (_checkEmailFormat(
-                                  _model.emailTextController!.text)) {
-                                _model.errorEmailFormat = false;
-                                setState(() {});
-                              } else {
-                                _model.errorEmailFormat = true;
-                                setState(() {});
-                                return;
-                              }
-
-                              _model.isUserExist =
-                                  await actions.checkIsEmailRegistered(
-                                _model.emailTextController!.text,
-                              );
-                              shouldSetState = true;
-                              if (!_model.isUserExist!) {
-                                _model.emailAlreadyInUse = false;
-                                setState(() {});
-                              } else {
-                                _model.emailAlreadyInUse = true;
-                                setState(() {});
-                                if (shouldSetState) setState(() {});
-                                return;
-                              }
-
-                              if (_model.passwordTextController!.text != '') {
-                                _model.errorPasswordRequired = false;
-                                setState(() {});
-                              } else {
-                                _model.errorPasswordRequired = true;
-                                setState(() {});
-                                if (shouldSetState) setState(() {});
-                                return;
-                              }
-
-                              if (_model.confirmPasswordTextController!.text !=
-                                  '') {
-                                _model.errorConfirmPasswordRequired = false;
-                                setState(() {});
-                              } else {
-                                _model.errorConfirmPasswordRequired = true;
-                                setState(() {});
-                                if (shouldSetState) setState(() {});
-                                return;
-                              }
-
-                              if (_model.passwordTextController!.text ==
-                                  _model.confirmPasswordTextController!.text) {
-                                _model.errorPaswordsDontMatch = false;
-                                setState(() {});
-                              } else {
-                                _model.errorPaswordsDontMatch = true;
-                                setState(() {});
-                                if (shouldSetState) setState(() {});
-                                return;
-                              }
-
-                              if (!((_model.passwordTextController!.text
-                                          .length >=
-                                      8) &&
-                                  _model.passwordTextController!.text
-                                      .contains(RegExp(r'[A-Z]')) &&
-                                  _model.passwordTextController!.text
-                                      .contains(RegExp(r'\d')) &&
-                                  _model.passwordTextController!.text.contains(
-                                      RegExp(r'[!@#\$%^&*(),.?":{}|<>_\-]')))) {
-                                if (shouldSetState) setState(() {});
-                                return;
-                              }
-                              if (!_model.checkBoxIsActive) {
-                                HapticFeedback.lightImpact();
-                                if (shouldSetState) setState(() {});
-                                return;
-                              }
-
-                              if (_model.passwordTextController!.text !=
-                                  _model.confirmPasswordTextController!.text) {
-                                actions.toastificationshow(context, 'Error', 'Passwords don\'t match!', 'error');
-                                return;
-                              }
-
-                              // Always keep signed in on registration
-                              await ref.read(keepSignedInProvider.notifier).set(true);
-
-                              final user =
-                                  await authManager.createAccountWithEmail(
-                                context,
-                                _model.emailTextController!.text,
-                                _model.passwordTextController!.text,
-                              );
-                              if (user == null) {
-                                return;
-                              }
-
-                              await UserProfilesTable().insert({
-                                'email': _model.emailTextController!.text,
-                                'created_at': DateTime.now().toIso8601String(),
-                                'user_id': currentUserUid,
-                              });
-
-                              context.goNamed(
-                                PhoneVerificationPageWidget.routeName,
-                                queryParameters: {
-                                  'isOnboarding': true.toString(),
-                                },
-                              );
-
+                            } else {
+                              _model.errorPaswordsDontMatch = true;
+                              setState(() {});
                               if (shouldSetState) setState(() {});
-                            },
-                            style: TextButton.styleFrom(
-                              backgroundColor: Colors.transparent,
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 0.0, 16.0, 0.0),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4.0),
-                              ),
-                            ),
-                            child: Text(
-                              'Create Account',
-                              style: GoogleFonts.inter(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
+                              return;
+                            }
+
+                            if (!((_model.passwordTextController!.text
+                                        .length >=
+                                    8) &&
+                                _model.passwordTextController!.text
+                                    .contains(RegExp(r'[A-Z]')) &&
+                                _model.passwordTextController!.text
+                                    .contains(RegExp(r'\d')) &&
+                                _model.passwordTextController!.text.contains(
+                                    RegExp(r'[!@#\$%^&*(),.?":{}|<>_\-]')))) {
+                              if (shouldSetState) setState(() {});
+                              return;
+                            }
+                            if (!_model.checkBoxIsActive) {
+                              HapticFeedback.lightImpact();
+                              if (shouldSetState) setState(() {});
+                              return;
+                            }
+
+                            if (_model.passwordTextController!.text !=
+                                _model.confirmPasswordTextController!.text) {
+                              actions.toastificationshow(context, 'Error', 'Passwords don\'t match!', 'error');
+                              return;
+                            }
+
+                            // Always keep signed in on registration
+                            await ref.read(keepSignedInProvider.notifier).set(true);
+
+                            final user =
+                                await authManager.createAccountWithEmail(
+                              context,
+                              _model.emailTextController!.text,
+                              _model.passwordTextController!.text,
+                            );
+                            if (user == null) {
+                              return;
+                            }
+
+                            await UserProfilesTable().insert({
+                              'email': _model.emailTextController!.text,
+                              'created_at': DateTime.now().toIso8601String(),
+                              'user_id': currentUserUid,
+                            });
+
+                            context.goNamed(
+                              PhoneVerificationPageWidget.routeName,
+                              queryParameters: {
+                                'isOnboarding': true.toString(),
+                              },
+                            );
+
+                            if (shouldSetState) setState(() {});
+                          },
                         ),
                       ),
                     ]
