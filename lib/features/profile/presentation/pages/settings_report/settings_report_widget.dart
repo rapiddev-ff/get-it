@@ -2,7 +2,7 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import '/core/providers/current_user_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:go_router/go_router.dart';
 import '/backend/supabase/database/tables/support_reports.dart';
 import '/custom_code/actions/index.dart' as actions;
@@ -89,8 +89,7 @@ class _SettingsReportWidgetState extends ConsumerState<SettingsReportWidget>
                       padding: EdgeInsets.only(left: 16.0),
                       child: Text(
                         'How Can We Help You?',
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w600,
+                        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                           fontSize: 28.0,
                           color: Colors.white,
                         ),
@@ -118,10 +117,7 @@ class _SettingsReportWidgetState extends ConsumerState<SettingsReportWidget>
                         padding: EdgeInsets.only(top: 8.0),
                         child: Text(
                           'Please tell us about the issue you are having and we will respond within 3-5 business days.',
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.normal,
-                            fontSize: 16.0,
-                            color: AppColors.textPrimary,
+                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             height: 1.5,
                           ),
                         ),

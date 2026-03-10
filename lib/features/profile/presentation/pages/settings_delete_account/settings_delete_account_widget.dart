@@ -7,7 +7,7 @@ import '/core/widgets/dismiss_keyboard.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 class SettingsDeleteAccountWidget extends StatelessWidget {
   const SettingsDeleteAccountWidget({super.key});
@@ -133,7 +133,7 @@ class SettingsDeleteAccountWidget extends StatelessWidget {
                           ),
                           label: Text(
                             'Delete Account',
-                            style: GoogleFonts.inter(
+                            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                               fontWeight: FontWeight.w500,
                               fontSize: 17.0,
                               color: AppColors.destructive500,

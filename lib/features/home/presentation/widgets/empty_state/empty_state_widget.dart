@@ -1,7 +1,7 @@
 import '/core/utils/value_utils.dart';
 import '/core/widgets/app_gradient_button.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 class EmptyStateWidget extends StatelessWidget {
   const EmptyStateWidget({
@@ -44,9 +44,8 @@ class EmptyStateWidget extends StatelessWidget {
             padding: EdgeInsets.only(top: 24.0),
             child: Text(
               title,
-              style: GoogleFonts.inter(
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
                 fontWeight: FontWeight.w500,
-                fontSize: 20.0,
                 height: 1.5,
               ),
             ),

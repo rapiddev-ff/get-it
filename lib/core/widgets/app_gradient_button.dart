@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '/core/theme/app_colors.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 /// Primary action button with the app's standard purple gradient.
 ///
@@ -66,9 +66,8 @@ class AppGradientButton extends StatelessWidget {
               )
             : Text(
                 text,
-                style: GoogleFonts.inter(
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   color: Colors.white,
-                  fontSize: 16.0,
                   fontWeight: FontWeight.w500,
                 ),
               ),

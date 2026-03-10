@@ -1,7 +1,7 @@
 import '/features/home/domain/models/seller_product_model.dart';
 import '/core/utils/value_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:intl/intl.dart';
 import '/core/theme/app_colors.dart';
 
@@ -73,7 +73,7 @@ class HomeSellerProductWidget extends StatelessWidget {
                         productDataType?.title,
                         'N/A',
                       ),
-                      style: GoogleFonts.inter(
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontWeight: FontWeight.w500,
                         height: 1.5,
                       ),

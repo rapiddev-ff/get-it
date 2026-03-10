@@ -4,7 +4,7 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import '/core/providers/current_user_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:go_router/go_router.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/keyboard_visibility_mixin.dart';
@@ -86,9 +86,7 @@ class _SettingsBusinessAddressWidgetState
           ),
           title: Text(
             'Business Address',
-            style: GoogleFonts.inter(
-              fontWeight: FontWeight.w600,
-              fontSize: 18.0,
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
               color: Colors.white,
             ),
           ),

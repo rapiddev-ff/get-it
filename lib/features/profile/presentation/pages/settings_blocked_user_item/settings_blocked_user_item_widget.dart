@@ -4,7 +4,7 @@ import '/core/utils/date_utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 class SettingsBlockedUserItemWidget extends StatelessWidget {
   const SettingsBlockedUserItemWidget({
@@ -77,11 +77,7 @@ class SettingsBlockedUserItemWidget extends StatelessWidget {
                       padding: EdgeInsets.only(top: 4.0),
                       child: Text(
                         'Blocked ${dateTimeFormat("yMMMd", blockedAt!)}',
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.normal,
-                          fontSize: 14.0,
-                          color: AppColors.textSecondary,
-                        ),
+                        style: Theme.of(context).textTheme.labelMedium!,
                       ),
                     ),
                 ],

@@ -2,7 +2,7 @@ import '/core/theme/app_colors.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 class SettingsTermsWidget extends StatelessWidget {
   const SettingsTermsWidget({super.key});
@@ -52,8 +52,9 @@ class SettingsTermsWidget extends StatelessWidget {
                       padding: EdgeInsets.only(left: 16.0),
                       child: Text(
                         'Terms & Conditions',
-                        style: GoogleFonts.inter(
+                        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                           fontSize: 28.0,
+                          fontWeight: FontWeight.normal,
                           color: Colors.white,
                         ),
                       ),

@@ -9,7 +9,7 @@ import '/core/providers/current_user_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 class HomeDashoardShortlistWidget extends ConsumerStatefulWidget {
   const HomeDashoardShortlistWidget({super.key});
@@ -250,10 +250,7 @@ class _HomeDashoardShortlistWidgetState
                                   children: [
                                     Text(
                                       'How QR Codes Work',
-                                      style: GoogleFonts.inter(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 18.0,
-                                        color: AppColors.textPrimary,
+                                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
                                         height: 1.5,
                                       ),
                                     ),

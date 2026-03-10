@@ -1,5 +1,5 @@
 import '/backend/supabase/supabase.dart';
-import '/core/theme/app_colors.dart';
+
 import '/core/router/app_router.dart';
 import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/dismiss_keyboard.dart';
@@ -7,7 +7,7 @@ import '/features/home/presentation/pages/home_page/home_page_widget.dart';
 import 'package:flutter/material.dart';
 import '/core/providers/current_user_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:page_transition/page_transition.dart';
 
 class StripeSuccessWidget extends ConsumerStatefulWidget {
@@ -57,10 +57,9 @@ class _StripeSuccessWidgetState extends ConsumerState<StripeSuccessWidget> {
                   child: Text(
                     'Stripe Connected Successfully!',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                       fontWeight: FontWeight.bold,
                       fontSize: 28.0,
-                      color: AppColors.textPrimary,
                     ),
                   ),
                 ),

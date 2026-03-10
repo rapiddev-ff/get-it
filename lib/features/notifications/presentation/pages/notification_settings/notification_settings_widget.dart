@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 import '/core/theme/app_colors.dart';
 import '/core/widgets/dismiss_keyboard.dart';
@@ -66,7 +66,7 @@ class _NotificationSettingsWidgetState
                       padding: const EdgeInsets.only(left: 16.0),
                       child: Text(
                         'Notification Settings',
-                        style: GoogleFonts.inter(
+                        style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                           fontWeight: FontWeight.bold,
                           fontSize: 28.0,
                           color: Colors.white,

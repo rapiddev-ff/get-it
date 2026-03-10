@@ -3,7 +3,7 @@ import '/core/theme/app_colors.dart';
 import '/core/utils/value_utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:intl/intl.dart';
 
 class BrowseProductsItemWidget extends StatelessWidget {
@@ -79,10 +79,8 @@ class BrowseProductsItemWidget extends StatelessWidget {
                       children: [
                         Text(
                           '- \u2022 ${browseDataType?.categoryName}',
-                          style: GoogleFonts.inter(
+                          style: Theme.of(context).textTheme.labelMedium!.copyWith(
                             fontWeight: FontWeight.w500,
-                            fontSize: 14.0,
-                            color: AppColors.textSecondary,
                             height: 1.5,
                           ),
                         ),

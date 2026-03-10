@@ -2,7 +2,7 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
@@ -68,9 +68,10 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
           ),
           title: Text(
             AppConstants.appName,
-            style: GoogleFonts.inter(
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
               color: Colors.white,
               fontSize: 22.0,
+              fontWeight: FontWeight.normal,
             ),
           ),
         ),

@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import '/core/utils/uploaded_file.dart' show UploadedFile;
@@ -504,10 +504,8 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                         child: Text(
                                           'Choose Photos',
                                           maxLines: 1,
-                                          style: GoogleFonts.inter(
-                                            fontWeight: FontWeight.w600,
+                                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
                                             color: AppColors.primary,
-                                            fontSize: 16.0,
                                             height: 1.5,
                                           ),
                                           overflow: TextOverflow.ellipsis,

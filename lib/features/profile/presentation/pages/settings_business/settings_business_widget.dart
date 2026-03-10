@@ -1,6 +1,6 @@
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import '/core/theme/app_colors.dart';
 import '/core/constants/app_constants.dart';
 import '/core/widgets/app_gradient_button.dart';
@@ -68,10 +68,7 @@ class _SettingsBusinessWidgetState extends State<SettingsBusinessWidget> {
           children: [
             Text(
               widget.title,
-              style: GoogleFonts.inter(
-                fontWeight: FontWeight.w600,
-                fontSize: 20.0,
-              ),
+              style: Theme.of(context).textTheme.titleLarge!,
             ),
             Padding(
               padding: EdgeInsets.only(top: 16.0),

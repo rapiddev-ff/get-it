@@ -13,7 +13,7 @@ import '/core/providers/current_user_provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:intl/intl.dart';
 import 'settings_daily_budget_model.dart';
 
@@ -90,10 +90,8 @@ class _SettingsDailyBudgetWidgetState
                         padding: EdgeInsets.only(bottom: 4.0),
                         child: Text(
                           'Daily Budget',
-                          style: GoogleFonts.inter(
+                          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                             fontWeight: FontWeight.w500,
-                            color: AppColors.textPrimary,
-                            fontSize: 24.0,
                             height: 1.4,
                           ),
                         ),

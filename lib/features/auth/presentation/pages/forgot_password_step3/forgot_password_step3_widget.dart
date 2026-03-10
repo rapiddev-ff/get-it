@@ -3,7 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 import '/backend/api_requests/api_calls.dart';
 import '/core/constants/app_constants.dart';
@@ -68,7 +68,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
           automaticallyImplyLeading: false,
           title: Text(
             AppConstants.appName,
-            style: GoogleFonts.inter(
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
               color: Colors.white,
               fontSize: 22.0,
               fontWeight: FontWeight.w500,

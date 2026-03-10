@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:intl/intl.dart';
 
 import '/features/home/domain/models/seller_product_model.dart';
@@ -75,10 +75,8 @@ class InventoryItemWidget extends StatelessWidget {
                 Text(
                   NumberFormat('#,##0.##', 'en_US')
                       .format(sellerProduct!.price),
-                  style: GoogleFonts.inter(
+                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     fontWeight: FontWeight.bold,
-                    fontSize: 16.0,
-                    color: AppColors.textPrimary,
                     height: 1.5,
                   ),
                 ),
