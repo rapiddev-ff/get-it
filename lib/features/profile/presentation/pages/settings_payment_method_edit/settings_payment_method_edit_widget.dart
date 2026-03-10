@@ -189,7 +189,6 @@ class _SettingsPaymentMethodEditWidgetState
     return DismissKeyboard(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: AppColors.backgroundSecondary,
           automaticallyImplyLeading: false,
           leading: IconButton(
             icon: Icon(

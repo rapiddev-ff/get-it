@@ -26,7 +26,6 @@ class _NotificationSettingsWidgetState
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(119.0),
           child: AppBar(
-            backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             actions: const [],
             flexibleSpace: FlexibleSpaceBar(

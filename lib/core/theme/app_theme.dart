@@ -22,6 +22,7 @@ class AppTheme {
         hoverColor: Colors.transparent,
         focusColor: Colors.transparent,
         appBarTheme: const AppBarTheme(
+          backgroundColor: AppColors.backgroundSecondary,
           elevation: 0.0,
           centerTitle: true,
         ),

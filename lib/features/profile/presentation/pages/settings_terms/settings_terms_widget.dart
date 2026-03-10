@@ -1,4 +1,3 @@
-import '/core/theme/app_colors.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -16,7 +15,6 @@ class SettingsTermsWidget extends StatelessWidget {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(119.0),
           child: AppBar(
-            backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             flexibleSpace: FlexibleSpaceBar(
               title: Padding(

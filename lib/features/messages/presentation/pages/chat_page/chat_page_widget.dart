@@ -84,7 +84,6 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(56.0),
           child: AppBar(
-            backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             title: Row(
               children: [

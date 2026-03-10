@@ -93,7 +93,6 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(56.0),
           child: AppBar(
-            backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

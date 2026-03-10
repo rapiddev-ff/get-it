@@ -139,7 +139,6 @@ class _CheckoutEditShippingAddressWidgetState
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(56.0),
           child: AppBar(
-            backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

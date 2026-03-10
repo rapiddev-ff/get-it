@@ -51,7 +51,6 @@ class _SettingsReportWidgetState extends ConsumerState<SettingsReportWidget>
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(119.0),
           child: AppBar(
-            backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             flexibleSpace: FlexibleSpaceBar(
               title: Padding(

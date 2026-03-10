@@ -227,7 +227,6 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(56.0),
           child: AppBar(
-            backgroundColor: AppColors.backgroundSecondary,
             automaticallyImplyLeading: false,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

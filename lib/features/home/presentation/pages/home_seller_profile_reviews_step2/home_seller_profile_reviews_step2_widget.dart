@@ -69,7 +69,6 @@ class _HomeSellerProfileReviewsStep2WidgetState
     return DismissKeyboard(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: AppColors.backgroundSecondary,
           automaticallyImplyLeading: false,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

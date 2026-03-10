@@ -57,7 +57,6 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
     return DismissKeyboard(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: AppColors.backgroundSecondary,
           automaticallyImplyLeading: false,
           leading: IconButton(
             icon: Icon(
