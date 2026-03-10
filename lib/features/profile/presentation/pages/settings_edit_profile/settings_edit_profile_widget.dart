@@ -17,8 +17,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:go_router/go_router.dart';
-import 'settings_edit_profile_model.dart';
-export 'settings_edit_profile_model.dart';
 
 class SettingsEditProfileWidget extends ConsumerStatefulWidget {
   const SettingsEditProfileWidget({super.key});
@@ -34,12 +32,29 @@ class SettingsEditProfileWidget extends ConsumerStatefulWidget {
 class _SettingsEditProfileWidgetState
     extends ConsumerState<SettingsEditProfileWidget>
     with TickerProviderStateMixin {
-  late SettingsEditProfileModel _model;
+  // Local state fields
+  Uint8List? image;
+  String? username;
+  bool usernameAvailable = true;
+  bool isUsernameEdited = false;
+
+  // Action output results
+  String? uploadToBucket;
+  bool? checkIsUsernameAvailable;
+
+  // Text controllers and focus nodes
+  late final TextEditingController usernameTextController;
+  late final FocusNode usernameFocusNode;
+  late final TextEditingController bioTextController;
+  late final FocusNode bioFocusNode;
+  late final TextEditingController firstnameTextController;
+  late final FocusNode firstnameFocusNode;
+  late final TextEditingController lastnameTextController;
+  late final FocusNode lastnameFocusNode;
 
   @override
   void initState() {
     super.initState();
-    _model = SettingsEditProfileModel();
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -50,38 +65,41 @@ class _SettingsEditProfileWidgetState
           final response =
               await NetworkAssetBundle(Uri.parse(userData.avatarUrl))
                   .load(userData.avatarUrl);
-          _model.image = response.buffer.asUint8List();
+          image = response.buffer.asUint8List();
         } catch (_) {
           // Failed to load image, leave as null
         }
       }
-      _model.username = userData.username;
+      username = userData.username;
       if (!mounted) return;
       setState(() {});
     });
 
     final userData = ref.read(authProvider);
-    _model.usernameTextController ??=
-        TextEditingController(text: userData.username);
-    _model.usernameFocusNode ??= FocusNode();
-    _model.usernameFocusNode!.addListener(() => setState(() {}));
-    _model.bioTextController ??= TextEditingController(text: userData.bio);
-    _model.bioFocusNode ??= FocusNode();
-    _model.bioFocusNode!.addListener(() => setState(() {}));
-    _model.firstnameTextController ??=
-        TextEditingController(text: userData.firstName);
-    _model.firstnameFocusNode ??= FocusNode();
-    _model.firstnameFocusNode!.addListener(() => setState(() {}));
-    _model.lastnameTextController ??=
-        TextEditingController(text: userData.lastName);
-    _model.lastnameFocusNode ??= FocusNode();
-    _model.lastnameFocusNode!.addListener(() => setState(() {}));
+    usernameTextController = TextEditingController(text: userData.username);
+    usernameFocusNode = FocusNode();
+    usernameFocusNode.addListener(() => setState(() {}));
+    bioTextController = TextEditingController(text: userData.bio);
+    bioFocusNode = FocusNode();
+    bioFocusNode.addListener(() => setState(() {}));
+    firstnameTextController = TextEditingController(text: userData.firstName);
+    firstnameFocusNode = FocusNode();
+    firstnameFocusNode.addListener(() => setState(() {}));
+    lastnameTextController = TextEditingController(text: userData.lastName);
+    lastnameFocusNode = FocusNode();
+    lastnameFocusNode.addListener(() => setState(() {}));
   }
 
   @override
   void dispose() {
-    _model.dispose();
-
+    usernameFocusNode.dispose();
+    usernameTextController.dispose();
+    bioFocusNode.dispose();
+    bioTextController.dispose();
+    firstnameFocusNode.dispose();
+    firstnameTextController.dispose();
+    lastnameFocusNode.dispose();
+    lastnameTextController.dispose();
     super.dispose();
   }
 
@@ -111,13 +129,13 @@ class _SettingsEditProfileWidgetState
     final picked = await picker.pickImage(source: source, imageQuality: 80);
     if (picked == null) return;
     final bytes = await picked.readAsBytes();
-    _model.image = bytes;
+    image = bytes;
     if (!mounted) return;
     setState(() {});
 
     // Upload to storage
-    _model.uploadToBucket = await actions.uploadImageToStorage(
-      UploadedFile(bytes: _model.image, name: 'avatar.jpg'),
+    uploadToBucket = await actions.uploadImageToStorage(
+      UploadedFile(bytes: image, name: 'avatar.jpg'),
       'avatars',
       ref.read(currentUserIdProvider),
     );
@@ -193,13 +211,12 @@ class _SettingsEditProfileWidgetState
                               },
                               child: Builder(
                                 builder: (context) {
-                                  if (_model.image != null &&
-                                      _model.image!.isNotEmpty) {
+                                  if (image != null && image!.isNotEmpty) {
                                     return ClipRRect(
                                       borderRadius:
                                           BorderRadius.circular(100.0),
                                       child: Image.memory(
-                                        _model.image!,
+                                        image!,
                                         width: double.infinity,
                                         height: double.infinity,
                                         fit: BoxFit.cover,
@@ -255,26 +272,23 @@ class _SettingsEditProfileWidgetState
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
-                        controller: _model.usernameTextController,
-                        focusNode: _model.usernameFocusNode,
+                        controller: usernameTextController,
+                        focusNode: usernameFocusNode,
                         onChanged: (_) => EasyDebounce.debounce(
-                          '_model.usernameTextController',
+                          'usernameTextController',
                           Duration(milliseconds: 100),
                           () async {
-                            _model.username =
-                                _model.usernameTextController!.text;
-                            _model.isUsernameEdited = true;
+                            username = usernameTextController.text;
+                            isUsernameEdited = true;
                             setState(() {});
-                            _model.checkIsUsernameAvailable =
+                            checkIsUsernameAvailable =
                                 await actions.checkIsUsernameAvailable(
-                              FormValidators.normalizeUsername(_model.username)
+                              FormValidators.normalizeUsername(username)
                                       .isNotEmpty
-                                  ? FormValidators.normalizeUsername(
-                                      _model.username)
+                                  ? FormValidators.normalizeUsername(username)
                                   : 'a',
                             );
-                            _model.usernameAvailable =
-                                _model.checkIsUsernameAvailable!;
+                            usernameAvailable = checkIsUsernameAvailable!;
                             if (!mounted) return;
                             setState(() {});
                           },
@@ -294,8 +308,8 @@ class _SettingsEditProfileWidgetState
                     ),
                   ),
                   if (FormValidators.containsProfanity(
-                          _model.usernameTextController!.text) &&
-                      (_model.usernameTextController!.text != ''))
+                          usernameTextController.text) &&
+                      (usernameTextController.text != ''))
                     Padding(
                       padding: EdgeInsets.only(top: 4.0),
                       child: Text(
@@ -307,48 +321,46 @@ class _SettingsEditProfileWidgetState
                       ).animate().fade(duration: 600.ms),
                     ),
                   if ((FormValidators.usernameValidationResult(
-                              _model.usernameTextController!.text) !=
+                              usernameTextController.text) !=
                           'valid') &&
-                      (_model.usernameTextController!.text != ''))
+                      (usernameTextController.text != ''))
                     Padding(
                       padding: EdgeInsets.only(top: 4.0),
                       child: Text(
                         FormValidators.usernameValidationResult(
-                            _model.usernameTextController!.text),
+                            usernameTextController.text),
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall!
                             .copyWith(color: AppColors.error),
                       ).animate().fade(duration: 600.ms),
                     ),
-                  if ((_model.usernameTextController!.text != '') &&
+                  if ((usernameTextController.text != '') &&
                       (FormValidators.usernameValidationResult(
-                              _model.usernameTextController!.text) ==
+                              usernameTextController.text) ==
                           'valid') &&
-                      _model.isUsernameEdited)
+                      isUsernameEdited)
                     Padding(
                       padding: EdgeInsets.only(top: 4.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            _model.usernameAvailable
-                                ? 'Available '
-                                : 'Unavailable',
+                            usernameAvailable ? 'Available ' : 'Unavailable',
                             style:
                                 Theme.of(context).textTheme.bodySmall!.copyWith(
-                                      color: _model.usernameAvailable
+                                      color: usernameAvailable
                                           ? AppColors.statusSuccess
                                           : AppColors.destructive500,
                                     ),
                           ).animate().fade(duration: 600.ms),
-                          if (_model.usernameAvailable)
+                          if (usernameAvailable)
                             Icon(
                               Icons.check,
                               color: AppColors.statusSuccess,
                               size: 20.0,
                             ),
-                          if (!_model.usernameAvailable)
+                          if (!usernameAvailable)
                             Icon(
                               Icons.error_outline,
                               color: AppColors.destructive500,
@@ -372,15 +384,15 @@ class _SettingsEditProfileWidgetState
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
-                        controller: _model.bioTextController,
-                        focusNode: _model.bioFocusNode,
+                        controller: bioTextController,
+                        focusNode: bioFocusNode,
                         onChanged: (_) => EasyDebounce.debounce(
-                          '_model.bioTextController',
+                          'bioTextController',
                           Duration(milliseconds: 100),
                           () => setState(() {}),
                         ),
                         onFieldSubmitted: (_) async {
-                          _model.lastnameFocusNode?.requestFocus();
+                          lastnameFocusNode.requestFocus();
                         },
                         autofocus: false,
                         textInputAction: TextInputAction.done,
@@ -437,15 +449,15 @@ class _SettingsEditProfileWidgetState
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
-                        controller: _model.firstnameTextController,
-                        focusNode: _model.firstnameFocusNode,
+                        controller: firstnameTextController,
+                        focusNode: firstnameFocusNode,
                         onChanged: (_) => EasyDebounce.debounce(
-                          '_model.firstnameTextController',
+                          'firstnameTextController',
                           Duration(milliseconds: 100),
                           () => setState(() {}),
                         ),
                         onFieldSubmitted: (_) async {
-                          _model.lastnameFocusNode?.requestFocus();
+                          lastnameFocusNode.requestFocus();
                         },
                         autofocus: false,
                         autofillHints: [AutofillHints.name],
@@ -463,8 +475,8 @@ class _SettingsEditProfileWidgetState
                     ),
                   ),
                   if (FormValidators.containsProfanity(
-                          _model.firstnameTextController!.text) &&
-                      (_model.firstnameTextController!.text != ''))
+                          firstnameTextController.text) &&
+                      (firstnameTextController.text != ''))
                     Padding(
                       padding: EdgeInsets.only(top: 4.0),
                       child: Text(
@@ -490,15 +502,15 @@ class _SettingsEditProfileWidgetState
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
-                        controller: _model.lastnameTextController,
-                        focusNode: _model.lastnameFocusNode,
+                        controller: lastnameTextController,
+                        focusNode: lastnameFocusNode,
                         onChanged: (_) => EasyDebounce.debounce(
-                          '_model.lastnameTextController',
+                          'lastnameTextController',
                           Duration(milliseconds: 100),
                           () => setState(() {}),
                         ),
                         onFieldSubmitted: (_) async {
-                          _model.usernameFocusNode?.requestFocus();
+                          usernameFocusNode.requestFocus();
                         },
                         autofocus: false,
                         autofillHints: [AutofillHints.familyName],
@@ -516,8 +528,8 @@ class _SettingsEditProfileWidgetState
                     ),
                   ),
                   if (FormValidators.containsProfanity(
-                          _model.lastnameTextController!.text) &&
-                      (_model.lastnameTextController!.text != ''))
+                          lastnameTextController.text) &&
+                      (lastnameTextController.text != ''))
                     Padding(
                       padding: EdgeInsets.only(top: 4.0),
                       child: Text(
@@ -536,12 +548,12 @@ class _SettingsEditProfileWidgetState
                   Builder(
                     builder: (context) {
                       final isFormValid =
-                          (_model.firstnameTextController!.text != '') &&
-                              (_model.lastnameTextController!.text != '') &&
+                          (firstnameTextController.text != '') &&
+                              (lastnameTextController.text != '') &&
                               (FormValidators.usernameValidationResult(
-                                      _model.usernameTextController!.text) ==
+                                      usernameTextController.text) ==
                                   'valid') &&
-                              _model.usernameAvailable;
+                              usernameAvailable;
                       return Container(
                         width: double.infinity,
                         height: 56.0,
@@ -569,16 +581,15 @@ class _SettingsEditProfileWidgetState
                                     Future(() async {
                                       await UserProfilesTable().update(
                                         data: {
-                                          'first_name': _model
-                                              .firstnameTextController!.text,
-                                          'last_name': _model
-                                              .lastnameTextController!.text,
+                                          'first_name':
+                                              firstnameTextController.text,
+                                          'last_name':
+                                              lastnameTextController.text,
                                           'username':
                                               FormValidators.normalizeUsername(
-                                                  _model.usernameTextController!
-                                                      .text),
-                                          'avatar_url': _model.uploadToBucket,
-                                          'bio': _model.bioTextController!.text,
+                                                  usernameTextController.text),
+                                          'avatar_url': uploadToBucket,
+                                          'bio': bioTextController.text,
                                         },
                                         matchingRows: (rows) => rows.eqOrNull(
                                           'user_id',
@@ -590,19 +601,15 @@ class _SettingsEditProfileWidgetState
                                       ref
                                           .read(authProvider.notifier)
                                           .updateUser((e) => e.copyWith(
-                                                firstName: _model
-                                                    .firstnameTextController!
-                                                    .text,
-                                                lastName: _model
-                                                    .lastnameTextController!
-                                                    .text,
-                                                username: _model
-                                                    .usernameTextController!
-                                                    .text,
-                                                bio: _model
-                                                    .bioTextController!.text,
-                                                avatarUrl:
-                                                    _model.uploadToBucket ?? '',
+                                                firstName:
+                                                    firstnameTextController
+                                                        .text,
+                                                lastName:
+                                                    lastnameTextController.text,
+                                                username:
+                                                    usernameTextController.text,
+                                                bio: bioTextController.text,
+                                                avatarUrl: uploadToBucket ?? '',
                                               ));
                                       setState(() {});
                                     }),

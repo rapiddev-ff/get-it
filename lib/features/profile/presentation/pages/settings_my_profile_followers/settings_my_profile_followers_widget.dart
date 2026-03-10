@@ -13,8 +13,37 @@ import 'package:flutter/services.dart';
 import 'package:toastification/toastification.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
-import 'settings_my_profile_followers_model.dart';
-export 'settings_my_profile_followers_model.dart';
+
+class FollowUser {
+  final String userId;
+  final String username;
+  final String? avatarUrl;
+  final String? firstName;
+  final String? lastName;
+  final DateTime? followedAt;
+
+  FollowUser({
+    required this.userId,
+    required this.username,
+    this.avatarUrl,
+    this.firstName,
+    this.lastName,
+    this.followedAt,
+  });
+
+  factory FollowUser.fromJson(Map<String, dynamic> json) {
+    return FollowUser(
+      userId: json['user_id']?.toString() ?? '',
+      username: json['username']?.toString() ?? '',
+      avatarUrl: json['avatar_url']?.toString(),
+      firstName: json['first_name']?.toString(),
+      lastName: json['last_name']?.toString(),
+      followedAt: json['followed_at'] != null
+          ? DateTime.tryParse(json['followed_at'].toString())
+          : null,
+    );
+  }
+}
 
 class SettingsMyProfileFollowersWidget extends ConsumerStatefulWidget {
   const SettingsMyProfileFollowersWidget({super.key});
@@ -29,7 +58,27 @@ class SettingsMyProfileFollowersWidget extends ConsumerStatefulWidget {
 
 class _SettingsMyProfileFollowersWidgetState
     extends ConsumerState<SettingsMyProfileFollowersWidget> {
-  late SettingsMyProfileFollowersModel _model;
+  // Local state fields
+  String _tabState = 'Followers';
+  static const int _pageSize = 20;
+
+  // Search controllers
+  late final TextEditingController textController1;
+  late final FocusNode textFieldFocusNode1;
+  late final TextEditingController textController2;
+  late final FocusNode textFieldFocusNode2;
+
+  // Followers state
+  List<FollowUser> followers = [];
+  int followersTotalCount = 0;
+  bool isLoadingFollowers = false;
+  bool hasMoreFollowers = true;
+
+  // Following state
+  List<FollowUser> following = [];
+  int followingTotalCount = 0;
+  bool isLoadingFollowing = false;
+  bool hasMoreFollowing = true;
 
   final ScrollController _followersScrollController = ScrollController();
   final ScrollController _followingScrollController = ScrollController();
@@ -38,14 +87,13 @@ class _SettingsMyProfileFollowersWidgetState
   @override
   void initState() {
     super.initState();
-    _model = SettingsMyProfileFollowersModel();
 
-    _model.textController1 ??= TextEditingController();
-    _model.textFieldFocusNode1 ??= FocusNode();
-    _model.textFieldFocusNode1!.addListener(() => setState(() {}));
-    _model.textController2 ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
-    _model.textFieldFocusNode2!.addListener(() => setState(() {}));
+    textController1 = TextEditingController();
+    textFieldFocusNode1 = FocusNode();
+    textFieldFocusNode1.addListener(() => setState(() {}));
+    textController2 = TextEditingController();
+    textFieldFocusNode2 = FocusNode();
+    textFieldFocusNode2.addListener(() => setState(() {}));
 
     _followersScrollController.addListener(_onFollowersScroll);
     _followingScrollController.addListener(_onFollowingScroll);
@@ -64,7 +112,10 @@ class _SettingsMyProfileFollowersWidgetState
 
   @override
   void dispose() {
-    _model.dispose();
+    textFieldFocusNode1.dispose();
+    textController1.dispose();
+    textFieldFocusNode2.dispose();
+    textController2.dispose();
     _followersScrollController.dispose();
     _followingScrollController.dispose();
     super.dispose();
@@ -73,8 +124,8 @@ class _SettingsMyProfileFollowersWidgetState
   void _onFollowersScroll() {
     if (_followersScrollController.position.pixels >=
             _followersScrollController.position.maxScrollExtent - 200 &&
-        !_model.isLoadingFollowers &&
-        _model.hasMoreFollowers) {
+        !isLoadingFollowers &&
+        hasMoreFollowers) {
       _loadFollowers(loadMore: true);
     }
   }
@@ -82,21 +133,21 @@ class _SettingsMyProfileFollowersWidgetState
   void _onFollowingScroll() {
     if (_followingScrollController.position.pixels >=
             _followingScrollController.position.maxScrollExtent - 200 &&
-        !_model.isLoadingFollowing &&
-        _model.hasMoreFollowing) {
+        !isLoadingFollowing &&
+        hasMoreFollowing) {
       _loadFollowing(loadMore: true);
     }
   }
 
   Future<void> _loadFollowers({bool loadMore = false}) async {
-    if (_model.isLoadingFollowers) return;
+    if (isLoadingFollowers) return;
 
     setState(() {
-      _model.isLoadingFollowers = true;
+      isLoadingFollowers = true;
     });
 
-    final offset = loadMore ? _model.followers.length : 0;
-    final search = _model.textController1?.text.trim() ?? '';
+    final offset = loadMore ? followers.length : 0;
+    final search = textController1.text.trim();
 
     try {
       final response = await SupaFlow.client.rpc(
@@ -104,7 +155,7 @@ class _SettingsMyProfileFollowersWidgetState
         params: {
           'p_user_id': ref.read(currentUserIdProvider),
           'p_search': search,
-          'p_limit': SettingsMyProfileFollowersModel.pageSize,
+          'p_limit': _pageSize,
           'p_offset': offset,
         },
       );
@@ -118,12 +169,12 @@ class _SettingsMyProfileFollowersWidgetState
 
         setState(() {
           if (loadMore) {
-            _model.followers.addAll(items);
+            followers.addAll(items);
           } else {
-            _model.followers = items;
+            followers = items;
           }
-          _model.followersTotalCount = totalCount;
-          _model.hasMoreFollowers = _model.followers.length < totalCount;
+          followersTotalCount = totalCount;
+          hasMoreFollowers = followers.length < totalCount;
         });
       }
     } catch (_) {
@@ -131,21 +182,21 @@ class _SettingsMyProfileFollowersWidgetState
     } finally {
       if (mounted) {
         setState(() {
-          _model.isLoadingFollowers = false;
+          isLoadingFollowers = false;
         });
       }
     }
   }
 
   Future<void> _loadFollowing({bool loadMore = false}) async {
-    if (_model.isLoadingFollowing) return;
+    if (isLoadingFollowing) return;
 
     setState(() {
-      _model.isLoadingFollowing = true;
+      isLoadingFollowing = true;
     });
 
-    final offset = loadMore ? _model.following.length : 0;
-    final search = _model.textController2?.text.trim() ?? '';
+    final offset = loadMore ? following.length : 0;
+    final search = textController2.text.trim();
 
     try {
       final response = await SupaFlow.client.rpc(
@@ -153,7 +204,7 @@ class _SettingsMyProfileFollowersWidgetState
         params: {
           'p_user_id': ref.read(currentUserIdProvider),
           'p_search': search,
-          'p_limit': SettingsMyProfileFollowersModel.pageSize,
+          'p_limit': _pageSize,
           'p_offset': offset,
         },
       );
@@ -167,12 +218,12 @@ class _SettingsMyProfileFollowersWidgetState
 
         setState(() {
           if (loadMore) {
-            _model.following.addAll(items);
+            following.addAll(items);
           } else {
-            _model.following = items;
+            following = items;
           }
-          _model.followingTotalCount = totalCount;
-          _model.hasMoreFollowing = _model.following.length < totalCount;
+          followingTotalCount = totalCount;
+          hasMoreFollowing = following.length < totalCount;
         });
       }
     } catch (_) {
@@ -180,7 +231,7 @@ class _SettingsMyProfileFollowersWidgetState
     } finally {
       if (mounted) {
         setState(() {
-          _model.isLoadingFollowing = false;
+          isLoadingFollowing = false;
         });
       }
     }
@@ -281,7 +332,7 @@ class _SettingsMyProfileFollowersWidgetState
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  child: _model.state == 'Followers'
+                  child: _tabState == 'Followers'
                       ? _buildFollowersTab()
                       : _buildFollowingTab(),
                 ),
@@ -294,10 +345,8 @@ class _SettingsMyProfileFollowersWidgetState
   }
 
   Widget _buildTabBar() {
-    final followersLabel =
-        '${_formatCount(_model.followersTotalCount)} Followers';
-    final followingLabel =
-        '${_formatCount(_model.followingTotalCount)} Following';
+    final followersLabel = '${_formatCount(followersTotalCount)} Followers';
+    final followingLabel = '${_formatCount(followingTotalCount)} Following';
 
     return Container(
       width: double.infinity,
@@ -312,7 +361,7 @@ class _SettingsMyProfileFollowersWidgetState
             Expanded(
               child: InkWell(
                 onTap: () {
-                  _model.state = 'Followers';
+                  _tabState = 'Followers';
                   setState(() {});
                 },
                 child: Column(
@@ -324,7 +373,7 @@ class _SettingsMyProfileFollowersWidgetState
                         followersLabel,
                         style: GoogleFonts.inter(
                           fontWeight: FontWeight.normal,
-                          color: _model.state == 'Followers'
+                          color: _tabState == 'Followers'
                               ? AppColors.textPrimary
                               : AppColors.textSecondary,
                           height: 2.0,
@@ -332,7 +381,7 @@ class _SettingsMyProfileFollowersWidgetState
                       ),
                     ),
                     Opacity(
-                      opacity: (_model.state == 'Followers' ? 1 : 0).toDouble(),
+                      opacity: (_tabState == 'Followers' ? 1 : 0).toDouble(),
                       child: Container(
                         width: double.infinity,
                         height: 2.0,
@@ -348,7 +397,7 @@ class _SettingsMyProfileFollowersWidgetState
             Expanded(
               child: InkWell(
                 onTap: () {
-                  _model.state = 'Following';
+                  _tabState = 'Following';
                   setState(() {});
                 },
                 child: Column(
@@ -359,7 +408,7 @@ class _SettingsMyProfileFollowersWidgetState
                       child: Text(
                         followingLabel,
                         style: GoogleFonts.inter(
-                          color: _model.state == 'Following'
+                          color: _tabState == 'Following'
                               ? AppColors.textPrimary
                               : AppColors.textSecondary,
                           height: 2.0,
@@ -367,7 +416,7 @@ class _SettingsMyProfileFollowersWidgetState
                       ),
                     ),
                     Opacity(
-                      opacity: (_model.state == 'Following' ? 1 : 0).toDouble(),
+                      opacity: (_tabState == 'Following' ? 1 : 0).toDouble(),
                       child: Container(
                         width: double.infinity,
                         height: 2.0,
@@ -390,15 +439,15 @@ class _SettingsMyProfileFollowersWidgetState
 
   Widget _buildFollowersTab() {
     // Initial loading
-    if (!_initialLoadDone && _model.isLoadingFollowers) {
+    if (!_initialLoadDone && isLoadingFollowers) {
       return Center(
         child: AppLoadingIndicator(),
       );
     }
 
     // True empty — no followers at all (no search active)
-    final searchText = _model.textController1?.text.trim() ?? '';
-    if (_model.followersTotalCount == 0 && searchText.isEmpty) {
+    final searchText = textController1.text.trim();
+    if (followersTotalCount == 0 && searchText.isEmpty) {
       return _buildEmptyState(
         icon: Icons.people_outline,
         title: 'No followers yet',
@@ -418,8 +467,8 @@ class _SettingsMyProfileFollowersWidgetState
         Container(
           width: double.infinity,
           child: TextFormField(
-            controller: _model.textController1,
-            focusNode: _model.textFieldFocusNode1,
+            controller: textController1,
+            focusNode: textFieldFocusNode1,
             onChanged: (_) => _onFollowersSearchChanged(),
             autofocus: false,
             obscureText: false,
@@ -440,17 +489,17 @@ class _SettingsMyProfileFollowersWidgetState
   }
 
   Widget _buildFollowersList() {
-    if (_model.isLoadingFollowers && _model.followers.isEmpty) {
+    if (isLoadingFollowers && followers.isEmpty) {
       return Center(
         child: AppLoadingIndicator(),
       );
     }
 
     // Search active but no results
-    final searchText = _model.textController1?.text.trim() ?? '';
-    if (_model.followers.isEmpty && searchText.isNotEmpty) {
+    final searchText = textController1.text.trim();
+    if (followers.isEmpty && searchText.isNotEmpty) {
       return _buildNoMatchesState(searchText, () {
-        _model.textController1?.clear();
+        textController1.clear();
         _loadFollowers();
       });
     }
@@ -458,10 +507,10 @@ class _SettingsMyProfileFollowersWidgetState
     return ListView.separated(
       controller: _followersScrollController,
       padding: EdgeInsets.zero,
-      itemCount: _model.followers.length + (_model.hasMoreFollowers ? 1 : 0),
+      itemCount: followers.length + (hasMoreFollowers ? 1 : 0),
       separatorBuilder: (_, __) => SizedBox(height: 16.0),
       itemBuilder: (context, index) {
-        if (index >= _model.followers.length) {
+        if (index >= followers.length) {
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0),
             child: Center(
@@ -470,7 +519,7 @@ class _SettingsMyProfileFollowersWidgetState
           );
         }
 
-        final user = _model.followers[index];
+        final user = followers[index];
         return FollowerItemWidget(
           userId: user.userId,
           username: user.username,
@@ -490,15 +539,15 @@ class _SettingsMyProfileFollowersWidgetState
 
   Widget _buildFollowingTab() {
     // Initial loading
-    if (!_initialLoadDone && _model.isLoadingFollowing) {
+    if (!_initialLoadDone && isLoadingFollowing) {
       return Center(
         child: AppLoadingIndicator(),
       );
     }
 
     // True empty — not following anyone (no search active)
-    final searchText = _model.textController2?.text.trim() ?? '';
-    if (_model.followingTotalCount == 0 && searchText.isEmpty) {
+    final searchText = textController2.text.trim();
+    if (followingTotalCount == 0 && searchText.isEmpty) {
       return _buildEmptyState(
         icon: Icons.people_outline,
         title: "You're not following anyone yet",
@@ -518,8 +567,8 @@ class _SettingsMyProfileFollowersWidgetState
         Container(
           width: double.infinity,
           child: TextFormField(
-            controller: _model.textController2,
-            focusNode: _model.textFieldFocusNode2,
+            controller: textController2,
+            focusNode: textFieldFocusNode2,
             onChanged: (_) => _onFollowingSearchChanged(),
             autofocus: false,
             obscureText: false,
@@ -540,17 +589,17 @@ class _SettingsMyProfileFollowersWidgetState
   }
 
   Widget _buildFollowingList() {
-    if (_model.isLoadingFollowing && _model.following.isEmpty) {
+    if (isLoadingFollowing && following.isEmpty) {
       return Center(
         child: AppLoadingIndicator(),
       );
     }
 
     // Search active but no results
-    final searchText = _model.textController2?.text.trim() ?? '';
-    if (_model.following.isEmpty && searchText.isNotEmpty) {
+    final searchText = textController2.text.trim();
+    if (following.isEmpty && searchText.isNotEmpty) {
       return _buildNoMatchesState(searchText, () {
-        _model.textController2?.clear();
+        textController2.clear();
         _loadFollowing();
       });
     }
@@ -558,10 +607,10 @@ class _SettingsMyProfileFollowersWidgetState
     return ListView.separated(
       controller: _followingScrollController,
       padding: EdgeInsets.zero,
-      itemCount: _model.following.length + (_model.hasMoreFollowing ? 1 : 0),
+      itemCount: following.length + (hasMoreFollowing ? 1 : 0),
       separatorBuilder: (_, __) => SizedBox(height: 16.0),
       itemBuilder: (context, index) {
-        if (index >= _model.following.length) {
+        if (index >= following.length) {
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0),
             child: Center(
@@ -570,7 +619,7 @@ class _SettingsMyProfileFollowersWidgetState
           );
         }
 
-        final user = _model.following[index];
+        final user = following[index];
         return FollowerItemWidget(
           userId: user.userId,
           username: user.username,

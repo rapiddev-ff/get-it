@@ -11,7 +11,6 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
-import 'settings_change_email_model.dart';
 
 class SettingsChangeEmailWidget extends ConsumerStatefulWidget {
   const SettingsChangeEmailWidget({
@@ -32,24 +31,43 @@ class SettingsChangeEmailWidget extends ConsumerStatefulWidget {
 class _SettingsChangeEmailWidgetState
     extends ConsumerState<SettingsChangeEmailWidget>
     with KeyboardVisibilityMixin {
-  late SettingsChangeEmailModel _model;
+  // Local state fields
+  bool errorEmailRequired = false;
+  bool errorEmailFormat = false;
+  bool emailAlreadyInUse = false;
+  bool errorPasswordRequired = false;
+  bool errorPassword = false;
+  bool passwordVisibility = false;
+
+  // Text controllers and focus nodes
+  late final TextEditingController textController1;
+  late final FocusNode textFieldFocusNode1;
+  late final TextEditingController textController2;
+  late final FocusNode textFieldFocusNode2;
+
+  // Action output results
+  dynamic isCorrect;
+  bool? isEmailRegistered;
+  dynamic result;
 
   @override
   void initState() {
     super.initState();
-    _model = SettingsChangeEmailModel();
 
-    _model.textController1 ??= TextEditingController();
-    _model.textFieldFocusNode1 ??= FocusNode();
-    _model.textFieldFocusNode1!.addListener(() => setState(() {}));
-    _model.textController2 ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
-    _model.textFieldFocusNode2!.addListener(() => setState(() {}));
+    textController1 = TextEditingController();
+    textFieldFocusNode1 = FocusNode();
+    textFieldFocusNode1.addListener(() => setState(() {}));
+    textController2 = TextEditingController();
+    textFieldFocusNode2 = FocusNode();
+    textFieldFocusNode2.addListener(() => setState(() {}));
   }
 
   @override
   void dispose() {
-    _model.dispose();
+    textFieldFocusNode1.dispose();
+    textController1.dispose();
+    textFieldFocusNode2.dispose();
+    textController2.dispose();
     super.dispose();
   }
 
@@ -105,28 +123,27 @@ class _SettingsChangeEmailWidgetState
                               Container(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.textController1,
-                                  focusNode: _model.textFieldFocusNode1,
+                                  controller: textController1,
+                                  focusNode: textFieldFocusNode1,
                                   onChanged: (_) => EasyDebounce.debounce(
-                                    '_model.textController1',
+                                    'textController1',
                                     Duration(milliseconds: 100),
                                     () => setState(() {}),
                                   ),
                                   autofocus: false,
                                   enabled: true,
                                   autofillHints: [AutofillHints.password],
-                                  obscureText: !_model.passwordVisibility,
+                                  obscureText: !passwordVisibility,
                                   decoration: appInputDecoration(
                                     'Your password',
                                     suffixIcon: InkWell(
                                       onTap: () {
-                                        setState(() =>
-                                            _model.passwordVisibility =
-                                                !_model.passwordVisibility);
+                                        setState(() => passwordVisibility =
+                                            !passwordVisibility);
                                       },
                                       focusNode: FocusNode(skipTraversal: true),
                                       child: Icon(
-                                        _model.passwordVisibility
+                                        passwordVisibility
                                             ? Icons.visibility_outlined
                                             : Icons.visibility_off_outlined,
                                         color: AppColors.textSecondary,
@@ -139,7 +156,7 @@ class _SettingsChangeEmailWidgetState
                                   enableInteractiveSelection: true,
                                 ),
                               ),
-                              if (_model.errorPasswordRequired)
+                              if (errorPasswordRequired)
                                 Padding(
                                   padding:
                                       EdgeInsets.only(left: 16.0, top: 4.0),
@@ -151,7 +168,7 @@ class _SettingsChangeEmailWidgetState
                                         .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
-                              if (_model.errorPassword)
+                              if (errorPassword)
                                 Padding(
                                   padding:
                                       EdgeInsets.only(left: 16.0, top: 4.0),
@@ -184,10 +201,10 @@ class _SettingsChangeEmailWidgetState
                               Container(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.textController2,
-                                  focusNode: _model.textFieldFocusNode2,
+                                  controller: textController2,
+                                  focusNode: textFieldFocusNode2,
                                   onChanged: (_) => EasyDebounce.debounce(
-                                    '_model.textController2',
+                                    'textController2',
                                     Duration(milliseconds: 100),
                                     () => setState(() {}),
                                   ),
@@ -202,7 +219,7 @@ class _SettingsChangeEmailWidgetState
                                   enableInteractiveSelection: true,
                                 ),
                               ),
-                              if (_model.errorEmailRequired)
+                              if (errorEmailRequired)
                                 Padding(
                                   padding:
                                       EdgeInsets.only(left: 16.0, top: 4.0),
@@ -214,7 +231,7 @@ class _SettingsChangeEmailWidgetState
                                         .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
-                              if (_model.errorEmailFormat)
+                              if (errorEmailFormat)
                                 Padding(
                                   padding:
                                       EdgeInsets.only(left: 16.0, top: 4.0),
@@ -226,7 +243,7 @@ class _SettingsChangeEmailWidgetState
                                         .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
-                              if (_model.emailAlreadyInUse)
+                              if (emailAlreadyInUse)
                                 Padding(
                                   padding:
                                       EdgeInsets.only(left: 16.0, top: 4.0),
@@ -255,78 +272,74 @@ class _SettingsChangeEmailWidgetState
                       AppGradientButton(
                         text: 'Save Changes',
                         onPressed: () async {
-                          if (_model.textController1!.text != '') {
-                            _model.errorPasswordRequired = false;
+                          if (textController1.text != '') {
+                            errorPasswordRequired = false;
                             setState(() {});
                           } else {
-                            _model.errorPasswordRequired = true;
+                            errorPasswordRequired = true;
                             setState(() {});
                             return;
                           }
 
-                          _model.isCorrect = await actions.supabaseLogin(
+                          isCorrect = await actions.supabaseLogin(
                             ref.read(currentUserEmailProvider),
-                            _model.textController1!.text,
+                            textController1.text,
                           );
-                          if (((_model.isCorrect is Map)
-                              ? _model.isCorrect['success']
+                          if (((isCorrect is Map)
+                              ? isCorrect['success']
                               : false)) {
-                            _model.errorPassword = false;
+                            errorPassword = false;
                             if (!mounted) return;
                             setState(() {});
                           } else {
-                            _model.errorPassword = true;
+                            errorPassword = true;
                             setState(() {});
                             return;
                           }
 
-                          _model.errorEmailRequired = false;
-                          _model.errorEmailFormat = false;
-                          _model.emailAlreadyInUse = false;
+                          errorEmailRequired = false;
+                          errorEmailFormat = false;
+                          emailAlreadyInUse = false;
                           setState(() {});
                           if (RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                              .hasMatch(_model.textController2!.text.trim())) {
-                            _model.errorEmailFormat = false;
+                              .hasMatch(textController2.text.trim())) {
+                            errorEmailFormat = false;
                             setState(() {});
                           } else {
-                            _model.errorEmailFormat = true;
+                            errorEmailFormat = true;
                             setState(() {});
                             return;
                           }
 
-                          _model.isEmailRegistered =
+                          isEmailRegistered =
                               await actions.checkIsEmailRegistered(
-                            _model.textController2!.text,
+                            textController2.text,
                           );
-                          if (!_model.isEmailRegistered!) {
-                            _model.emailAlreadyInUse = false;
+                          if (!isEmailRegistered!) {
+                            emailAlreadyInUse = false;
                             if (!mounted) return;
                             setState(() {});
                           } else {
-                            _model.emailAlreadyInUse = true;
+                            emailAlreadyInUse = true;
                             setState(() {});
                             return;
                           }
 
-                          _model.result =
+                          result =
                               await actions.changeUserEmailWithPasswordCheck(
                             context,
                             ref.read(currentUserEmailProvider),
-                            _model.textController2!.text,
-                            _model.textController1!.text,
+                            textController2.text,
+                            textController1.text,
                           );
-                          if ((_model.result is Map)
-                              ? _model.result['success']
-                              : false) {
+                          if ((result is Map) ? result['success'] : false) {
                             if (!mounted) return;
                             context.pop();
                           } else {
                             await actions.toastificationshow(
                               context,
                               'Error!',
-                              ((_model.result is Map)
-                                      ? _model.result['error']
-                                      : '')
+                              ((result is Map) ? result['error'] : '')
                                   .toString(),
                               'error',
                             );

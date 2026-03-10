@@ -19,8 +19,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:webviewx_plus/webviewx_plus.dart';
-import 'home_seller_profile_reviews_model.dart';
-export 'home_seller_profile_reviews_model.dart';
 
 class HomeSellerProfileReviewsWidget extends StatefulWidget {
   const HomeSellerProfileReviewsWidget({
@@ -40,7 +38,14 @@ class HomeSellerProfileReviewsWidget extends StatefulWidget {
 
 class _HomeSellerProfileReviewsWidgetState
     extends State<HomeSellerProfileReviewsWidget> {
-  late HomeSellerProfileReviewsModel _model;
+  // Local state fields
+  String? _tabState = 'As Buyer';
+
+  // Paging controllers
+  PagingController<ApiPagingParams, dynamic>? _listViewPagingController1;
+  Function(ApiPagingParams nextPageMarker)? _listViewApiCall1;
+  PagingController<ApiPagingParams, dynamic>? _listViewPagingController2;
+  Function(ApiPagingParams nextPageMarker)? _listViewApiCall2;
 
   // Mutable header data for refresh
   double? _ratingAsBuyer;
@@ -60,7 +65,6 @@ class _HomeSellerProfileReviewsWidgetState
   @override
   void initState() {
     super.initState();
-    _model = HomeSellerProfileReviewsModel();
   }
 
   Future<void> _refreshAfterReview() async {
@@ -79,16 +83,85 @@ class _HomeSellerProfileReviewsWidgetState
       }
     });
     // Refresh paging controllers
-    _model.listViewPagingController1?.refresh();
-    _model.listViewPagingController2?.refresh();
+    _listViewPagingController1?.refresh();
+    _listViewPagingController2?.refresh();
   }
 
   @override
   void dispose() {
-    _model.dispose();
-
+    _listViewPagingController1?.dispose();
+    _listViewPagingController2?.dispose();
     super.dispose();
   }
+
+  /// Paging helper methods
+  PagingController<ApiPagingParams, dynamic> _setListViewController1(
+    Function(ApiPagingParams) apiCall,
+  ) {
+    _listViewApiCall1 = apiCall;
+    if (_listViewPagingController1 != null) return _listViewPagingController1!;
+    final controller = PagingController<ApiPagingParams, dynamic>(
+      firstPageKey: ApiPagingParams(
+        nextPageNumber: 0,
+        numItems: 0,
+        lastResponse: null,
+      ),
+    );
+    controller.addPageRequestListener(_listViewGetuserreviewsPage1);
+    _listViewPagingController1 = controller;
+    return controller;
+  }
+
+  void _listViewGetuserreviewsPage1(ApiPagingParams nextPageMarker) =>
+      _listViewApiCall1!(nextPageMarker).then((listViewGetuserreviewsResponse) {
+        final pageItems =
+            (listViewGetuserreviewsResponse.jsonBody ?? []).toList() as List;
+        final newNumItems = nextPageMarker.numItems + pageItems.length;
+        _listViewPagingController1?.appendPage(
+          pageItems,
+          (pageItems.isNotEmpty)
+              ? ApiPagingParams(
+                  nextPageNumber: nextPageMarker.nextPageNumber + 1,
+                  numItems: newNumItems,
+                  lastResponse: listViewGetuserreviewsResponse,
+                )
+              : null,
+        );
+      });
+
+  PagingController<ApiPagingParams, dynamic> _setListViewController2(
+    Function(ApiPagingParams) apiCall,
+  ) {
+    _listViewApiCall2 = apiCall;
+    if (_listViewPagingController2 != null) return _listViewPagingController2!;
+    final controller = PagingController<ApiPagingParams, dynamic>(
+      firstPageKey: ApiPagingParams(
+        nextPageNumber: 0,
+        numItems: 0,
+        lastResponse: null,
+      ),
+    );
+    controller.addPageRequestListener(_listViewGetuserreviewsPage2);
+    _listViewPagingController2 = controller;
+    return controller;
+  }
+
+  void _listViewGetuserreviewsPage2(ApiPagingParams nextPageMarker) =>
+      _listViewApiCall2!(nextPageMarker).then((listViewGetuserreviewsResponse) {
+        final pageItems =
+            (listViewGetuserreviewsResponse.jsonBody ?? []).toList() as List;
+        final newNumItems = nextPageMarker.numItems + pageItems.length;
+        _listViewPagingController2?.appendPage(
+          pageItems,
+          (pageItems.isNotEmpty)
+              ? ApiPagingParams(
+                  nextPageNumber: nextPageMarker.nextPageNumber + 1,
+                  numItems: newNumItems,
+                  lastResponse: listViewGetuserreviewsResponse,
+                )
+              : null,
+        );
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -225,7 +298,7 @@ class _HomeSellerProfileReviewsWidgetState
                                           color: AppColors.statusYellow,
                                         ),
                                         direction: Axis.horizontal,
-                                        rating: _model.state == 'As Buyer'
+                                        rating: _tabState == 'As Buyer'
                                             ? _currentRatingAsBuyer
                                             : _currentRatingAsSeller,
                                         unratedColor: AppColors.neutral700,
@@ -233,7 +306,7 @@ class _HomeSellerProfileReviewsWidgetState
                                         itemSize: 18.0,
                                       ),
                                       Text(
-                                        (_model.state == 'As Buyer'
+                                        (_tabState == 'As Buyer'
                                                 ? _currentRatingAsBuyer
                                                 : _currentRatingAsSeller)
                                             .toString(),
@@ -244,7 +317,7 @@ class _HomeSellerProfileReviewsWidgetState
                                                 fontWeight: FontWeight.w500),
                                       ),
                                       Text(
-                                        '(${_model.state == 'As Buyer' ? _currentTotalReviewsAsBuyer : _currentTotalReviewsAsSeller}) reviews',
+                                        '(${_tabState == 'As Buyer' ? _currentTotalReviewsAsBuyer : _currentTotalReviewsAsSeller}) reviews',
                                         style: Theme.of(context)
                                             .textTheme
                                             .labelMedium!,
@@ -349,7 +422,7 @@ class _HomeSellerProfileReviewsWidgetState
                               Expanded(
                                 child: InkWell(
                                   onTap: () async {
-                                    _model.state = 'As Buyer';
+                                    _tabState = 'As Buyer';
                                     setState(() {});
                                   },
                                   child: Column(
@@ -361,7 +434,7 @@ class _HomeSellerProfileReviewsWidgetState
                                           'As Buyer',
                                           style: GoogleFonts.inter(
                                             fontWeight: FontWeight.normal,
-                                            color: _model.state == 'As Buyer'
+                                            color: _tabState == 'As Buyer'
                                                 ? AppColors.textPrimary
                                                 : AppColors.textSecondary,
                                             height: 2.0,
@@ -370,7 +443,7 @@ class _HomeSellerProfileReviewsWidgetState
                                       ),
                                       Opacity(
                                         opacity:
-                                            (_model.state == 'As Buyer' ? 1 : 0)
+                                            (_tabState == 'As Buyer' ? 1 : 0)
                                                 .toDouble(),
                                         child: Container(
                                           width: double.infinity,
@@ -387,7 +460,7 @@ class _HomeSellerProfileReviewsWidgetState
                               Expanded(
                                 child: InkWell(
                                   onTap: () async {
-                                    _model.state = 'As Seller';
+                                    _tabState = 'As Seller';
                                     setState(() {});
                                   },
                                   child: Column(
@@ -398,7 +471,7 @@ class _HomeSellerProfileReviewsWidgetState
                                         child: Text(
                                           'As Seller',
                                           style: GoogleFonts.inter(
-                                            color: _model.state == 'As Seller'
+                                            color: _tabState == 'As Seller'
                                                 ? AppColors.textPrimary
                                                 : AppColors.textSecondary,
                                             height: 2.0,
@@ -406,10 +479,9 @@ class _HomeSellerProfileReviewsWidgetState
                                         ),
                                       ),
                                       Opacity(
-                                        opacity: (_model.state == 'As Seller'
-                                                ? 1
-                                                : 0)
-                                            .toDouble(),
+                                        opacity:
+                                            (_tabState == 'As Seller' ? 1 : 0)
+                                                .toDouble(),
                                         child: Container(
                                           width: double.infinity,
                                           height: 2.0,
@@ -445,7 +517,7 @@ class _HomeSellerProfileReviewsWidgetState
                           ),
                           child: TextButton.icon(
                             onPressed: () async {
-                              final reviewRole = _model.state == 'As Buyer'
+                              final reviewRole = _tabState == 'As Buyer'
                                   ? 'as_buyer'
                                   : 'as_seller';
                               final result = await context.pushNamed<bool>(
@@ -483,10 +555,10 @@ class _HomeSellerProfileReviewsWidgetState
                       ),
                       Builder(
                         builder: (context) {
-                          if (_model.state == 'As Buyer') {
+                          if (_tabState == 'As Buyer') {
                             return PagedListView<ApiPagingParams,
                                 dynamic>.separated(
-                              pagingController: _model.setListViewController1(
+                              pagingController: _setListViewController1(
                                 (nextPageMarker) =>
                                     SupabaseRPCGroup.getuserreviewsCall.call(
                                   userId: widget.sellerDataType?.id,
@@ -530,7 +602,7 @@ class _HomeSellerProfileReviewsWidgetState
                           } else {
                             return PagedListView<ApiPagingParams,
                                 dynamic>.separated(
-                              pagingController: _model.setListViewController2(
+                              pagingController: _setListViewController2(
                                 (nextPageMarker) =>
                                     SupabaseRPCGroup.getuserreviewsCall.call(
                                   userId: widget.sellerDataType?.id,

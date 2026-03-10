@@ -18,8 +18,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'settings_payment_method_add_model.dart';
-export 'settings_payment_method_add_model.dart';
 
 class SettingsPaymentMethodAddWidget extends ConsumerStatefulWidget {
   const SettingsPaymentMethodAddWidget({super.key});
@@ -35,55 +33,105 @@ class SettingsPaymentMethodAddWidget extends ConsumerStatefulWidget {
 class _SettingsPaymentMethodAddWidgetState
     extends ConsumerState<SettingsPaymentMethodAddWidget>
     with TickerProviderStateMixin {
-  late SettingsPaymentMethodAddModel _model;
+  // Local state fields
+  bool setAsDefault = false;
+  String? countryDropdownValue;
+  String? stateDropdownValue;
+  dynamic result;
+
+  // Text controllers, focus nodes, and masks
+  late final TextEditingController cardNumberTextController;
+  late final FocusNode cardNumberFocusNode;
+  late final MaskTextInputFormatter cardNumberMask;
+  late final TextEditingController expireDateTextController;
+  late final FocusNode expireDateFocusNode;
+  late final MaskTextInputFormatter expireDateMask;
+  late final TextEditingController textFieldaCVCTextController;
+  late final FocusNode textFieldaCVCFocusNode;
+  late final MaskTextInputFormatter textFieldaCVCMask;
+  late final TextEditingController cardholderNameTextController;
+  late final FocusNode cardholderNameFocusNode;
+  late final TextEditingController emailAddressTextController;
+  late final FocusNode emailAddressFocusNode;
+  late final TextEditingController fullNameTextController;
+  late final FocusNode fullNameFocusNode;
+  late final TextEditingController addressLine1TextController;
+  late final FocusNode addressLine1FocusNode;
+  late final TextEditingController addressLine2TextController;
+  late final FocusNode addressLine2FocusNode;
+  late final TextEditingController stateTextController;
+  late final FocusNode stateFocusNode;
+  late final TextEditingController cityTextController;
+  late final FocusNode cityFocusNode;
+  late final TextEditingController zipCodeTextController;
+  late final FocusNode zipCodeFocusNode;
 
   @override
   void initState() {
     super.initState();
-    _model = SettingsPaymentMethodAddModel();
 
-    _model.cardNumberTextController ??= TextEditingController();
-    _model.cardNumberFocusNode ??= FocusNode();
-    _model.cardNumberFocusNode!.addListener(() => setState(() {}));
-    _model.cardNumberMask = MaskTextInputFormatter(mask: '#### #### #### ####');
-    _model.expireDateTextController ??= TextEditingController();
-    _model.expireDateFocusNode ??= FocusNode();
-    _model.expireDateFocusNode!.addListener(() => setState(() {}));
-    _model.expireDateMask = MaskTextInputFormatter(mask: '##/##');
-    _model.textFieldaCVCTextController ??= TextEditingController();
-    _model.textFieldaCVCFocusNode ??= FocusNode();
-    _model.textFieldaCVCFocusNode!.addListener(() => setState(() {}));
-    _model.textFieldaCVCMask = MaskTextInputFormatter(mask: '###');
-    _model.cardholderNameTextController ??= TextEditingController();
-    _model.cardholderNameFocusNode ??= FocusNode();
-    _model.cardholderNameFocusNode!.addListener(() => setState(() {}));
-    _model.emailAddressTextController ??= TextEditingController();
-    _model.emailAddressFocusNode ??= FocusNode();
-    _model.emailAddressFocusNode!.addListener(() => setState(() {}));
-    _model.fullNameTextController ??= TextEditingController();
-    _model.fullNameFocusNode ??= FocusNode();
-    _model.fullNameFocusNode!.addListener(() => setState(() {}));
-    _model.addressLine1TextController ??= TextEditingController();
-    _model.addressLine1FocusNode ??= FocusNode();
-    _model.addressLine1FocusNode!.addListener(() => setState(() {}));
-    _model.addressLine2TextController ??= TextEditingController();
-    _model.addressLine2FocusNode ??= FocusNode();
-    _model.addressLine2FocusNode!.addListener(() => setState(() {}));
-    _model.stateTextController ??= TextEditingController();
-    _model.stateFocusNode ??= FocusNode();
-    _model.stateFocusNode!.addListener(() => setState(() {}));
-    _model.cityTextController ??= TextEditingController();
-    _model.cityFocusNode ??= FocusNode();
-    _model.cityFocusNode!.addListener(() => setState(() {}));
-    _model.zipCodeTextController ??= TextEditingController();
-    _model.zipCodeFocusNode ??= FocusNode();
-    _model.zipCodeFocusNode!.addListener(() => setState(() {}));
+    cardNumberTextController = TextEditingController();
+    cardNumberFocusNode = FocusNode();
+    cardNumberFocusNode.addListener(() => setState(() {}));
+    cardNumberMask = MaskTextInputFormatter(mask: '#### #### #### ####');
+    expireDateTextController = TextEditingController();
+    expireDateFocusNode = FocusNode();
+    expireDateFocusNode.addListener(() => setState(() {}));
+    expireDateMask = MaskTextInputFormatter(mask: '##/##');
+    textFieldaCVCTextController = TextEditingController();
+    textFieldaCVCFocusNode = FocusNode();
+    textFieldaCVCFocusNode.addListener(() => setState(() {}));
+    textFieldaCVCMask = MaskTextInputFormatter(mask: '###');
+    cardholderNameTextController = TextEditingController();
+    cardholderNameFocusNode = FocusNode();
+    cardholderNameFocusNode.addListener(() => setState(() {}));
+    emailAddressTextController = TextEditingController();
+    emailAddressFocusNode = FocusNode();
+    emailAddressFocusNode.addListener(() => setState(() {}));
+    fullNameTextController = TextEditingController();
+    fullNameFocusNode = FocusNode();
+    fullNameFocusNode.addListener(() => setState(() {}));
+    addressLine1TextController = TextEditingController();
+    addressLine1FocusNode = FocusNode();
+    addressLine1FocusNode.addListener(() => setState(() {}));
+    addressLine2TextController = TextEditingController();
+    addressLine2FocusNode = FocusNode();
+    addressLine2FocusNode.addListener(() => setState(() {}));
+    stateTextController = TextEditingController();
+    stateFocusNode = FocusNode();
+    stateFocusNode.addListener(() => setState(() {}));
+    cityTextController = TextEditingController();
+    cityFocusNode = FocusNode();
+    cityFocusNode.addListener(() => setState(() {}));
+    zipCodeTextController = TextEditingController();
+    zipCodeFocusNode = FocusNode();
+    zipCodeFocusNode.addListener(() => setState(() {}));
   }
 
   @override
   void dispose() {
-    _model.dispose();
-
+    cardNumberFocusNode.dispose();
+    cardNumberTextController.dispose();
+    expireDateFocusNode.dispose();
+    expireDateTextController.dispose();
+    textFieldaCVCFocusNode.dispose();
+    textFieldaCVCTextController.dispose();
+    cardholderNameFocusNode.dispose();
+    cardholderNameTextController.dispose();
+    emailAddressFocusNode.dispose();
+    emailAddressTextController.dispose();
+    fullNameFocusNode.dispose();
+    fullNameTextController.dispose();
+    addressLine1FocusNode.dispose();
+    addressLine1TextController.dispose();
+    addressLine2FocusNode.dispose();
+    addressLine2TextController.dispose();
+    stateFocusNode.dispose();
+    stateTextController.dispose();
+    cityFocusNode.dispose();
+    cityTextController.dispose();
+    zipCodeFocusNode.dispose();
+    zipCodeTextController.dispose();
     super.dispose();
   }
 
@@ -162,10 +210,10 @@ class _SettingsPaymentMethodAddWidgetState
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
-                        controller: _model.cardNumberTextController,
-                        focusNode: _model.cardNumberFocusNode,
+                        controller: cardNumberTextController,
+                        focusNode: cardNumberFocusNode,
                         onChanged: (_) => EasyDebounce.debounce(
-                          '_model.cardNumberTextController',
+                          'cardNumberTextController',
                           Duration(milliseconds: 100),
                           () => setState(() {}),
                         ),
@@ -176,7 +224,7 @@ class _SettingsPaymentMethodAddWidgetState
                         style: appTextFieldStyle,
                         keyboardType: TextInputType.number,
                         cursorColor: AppColors.textPrimary,
-                        inputFormatters: [_model.cardNumberMask],
+                        inputFormatters: [cardNumberMask],
                       ),
                     ),
                   ),
@@ -193,10 +241,10 @@ class _SettingsPaymentMethodAddWidgetState
                               Container(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.expireDateTextController,
-                                  focusNode: _model.expireDateFocusNode,
+                                  controller: expireDateTextController,
+                                  focusNode: expireDateFocusNode,
                                   onChanged: (_) => EasyDebounce.debounce(
-                                    '_model.expireDateTextController',
+                                    'expireDateTextController',
                                     Duration(milliseconds: 100),
                                     () => setState(() {}),
                                   ),
@@ -206,7 +254,7 @@ class _SettingsPaymentMethodAddWidgetState
                                   style: appTextFieldStyle,
                                   keyboardType: TextInputType.number,
                                   cursorColor: AppColors.textPrimary,
-                                  inputFormatters: [_model.expireDateMask],
+                                  inputFormatters: [expireDateMask],
                                 ),
                               ),
                             ].divide(SizedBox(height: 8.0)),
@@ -221,11 +269,10 @@ class _SettingsPaymentMethodAddWidgetState
                               Container(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller:
-                                      _model.textFieldaCVCTextController,
-                                  focusNode: _model.textFieldaCVCFocusNode,
+                                  controller: textFieldaCVCTextController,
+                                  focusNode: textFieldaCVCFocusNode,
                                   onChanged: (_) => EasyDebounce.debounce(
-                                    '_model.textFieldaCVCTextController',
+                                    'textFieldaCVCTextController',
                                     Duration(milliseconds: 100),
                                     () => setState(() {}),
                                   ),
@@ -235,7 +282,7 @@ class _SettingsPaymentMethodAddWidgetState
                                   style: appTextFieldStyle,
                                   keyboardType: TextInputType.number,
                                   cursorColor: AppColors.textPrimary,
-                                  inputFormatters: [_model.textFieldaCVCMask],
+                                  inputFormatters: [textFieldaCVCMask],
                                 ),
                               ),
                             ].divide(SizedBox(height: 8.0)),
@@ -253,10 +300,10 @@ class _SettingsPaymentMethodAddWidgetState
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
-                        controller: _model.cardholderNameTextController,
-                        focusNode: _model.cardholderNameFocusNode,
+                        controller: cardholderNameTextController,
+                        focusNode: cardholderNameFocusNode,
                         onChanged: (_) => EasyDebounce.debounce(
-                          '_model.cardholderNameTextController',
+                          'cardholderNameTextController',
                           Duration(milliseconds: 100),
                           () => setState(() {}),
                         ),
@@ -290,10 +337,10 @@ class _SettingsPaymentMethodAddWidgetState
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
-                        controller: _model.emailAddressTextController,
-                        focusNode: _model.emailAddressFocusNode,
+                        controller: emailAddressTextController,
+                        focusNode: emailAddressFocusNode,
                         onChanged: (_) => EasyDebounce.debounce(
-                          '_model.emailAddressTextController',
+                          'emailAddressTextController',
                           Duration(milliseconds: 100),
                           () => setState(() {}),
                         ),
@@ -315,10 +362,10 @@ class _SettingsPaymentMethodAddWidgetState
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
-                        controller: _model.fullNameTextController,
-                        focusNode: _model.fullNameFocusNode,
+                        controller: fullNameTextController,
+                        focusNode: fullNameFocusNode,
                         onChanged: (_) => EasyDebounce.debounce(
-                          '_model.fullNameTextController',
+                          'fullNameTextController',
                           Duration(milliseconds: 100),
                           () => setState(() {}),
                         ),
@@ -340,10 +387,10 @@ class _SettingsPaymentMethodAddWidgetState
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
-                        controller: _model.addressLine1TextController,
-                        focusNode: _model.addressLine1FocusNode,
+                        controller: addressLine1TextController,
+                        focusNode: addressLine1FocusNode,
                         onChanged: (_) => EasyDebounce.debounce(
-                          '_model.addressLine1TextController',
+                          'addressLine1TextController',
                           Duration(milliseconds: 100),
                           () => setState(() {}),
                         ),
@@ -361,10 +408,10 @@ class _SettingsPaymentMethodAddWidgetState
                     child: Container(
                       width: double.infinity,
                       child: TextFormField(
-                        controller: _model.addressLine2TextController,
-                        focusNode: _model.addressLine2FocusNode,
+                        controller: addressLine2TextController,
+                        focusNode: addressLine2FocusNode,
                         onChanged: (_) => EasyDebounce.debounce(
-                          '_model.addressLine2TextController',
+                          'addressLine2TextController',
                           Duration(milliseconds: 100),
                           () => setState(() {}),
                         ),
@@ -391,10 +438,9 @@ class _SettingsPaymentMethodAddWidgetState
                                 height: 52.0,
                                 child: DropdownButtonFormField<String>(
                                   initialValue:
-                                      (_model.countryDropdownValue ?? '')
-                                              .isEmpty
+                                      (countryDropdownValue ?? '').isEmpty
                                           ? null
-                                          : _model.countryDropdownValue,
+                                          : countryDropdownValue,
                                   items: GeoData.getCountries()
                                       .map((c) => DropdownMenuItem(
                                             value: c['code'],
@@ -403,7 +449,7 @@ class _SettingsPaymentMethodAddWidgetState
                                           ))
                                       .toList(),
                                   onChanged: (val) => setState(
-                                      () => _model.countryDropdownValue = val),
+                                      () => countryDropdownValue = val),
                                   decoration: _dropdownDecoration('Country'),
                                   dropdownColor: AppColors.backgroundPrimary,
                                   icon: Icon(
@@ -426,26 +472,25 @@ class _SettingsPaymentMethodAddWidgetState
                               Text('State', style: _labelStyle()),
                               Builder(
                                 builder: (context) {
-                                  if ((_model.countryDropdownValue == 'US') ||
-                                      (_model.countryDropdownValue == 'CA')) {
+                                  if ((countryDropdownValue == 'US') ||
+                                      (countryDropdownValue == 'CA')) {
                                     return SizedBox(
                                       height: 52.0,
                                       child: DropdownButtonFormField<String>(
                                         initialValue:
-                                            (_model.stateDropdownValue ?? '')
-                                                    .isEmpty
+                                            (stateDropdownValue ?? '').isEmpty
                                                 ? null
-                                                : _model.stateDropdownValue,
+                                                : stateDropdownValue,
                                         items: GeoData.getStatesByCountry(
-                                                _model.countryDropdownValue)
+                                                countryDropdownValue)
                                             .map((name) => DropdownMenuItem(
                                                   value: name,
                                                   child: Text(name,
                                                       style: appTextFieldStyle),
                                                 ))
                                             .toList(),
-                                        onChanged: (val) => setState(() =>
-                                            _model.stateDropdownValue = val),
+                                        onChanged: (val) => setState(
+                                            () => stateDropdownValue = val),
                                         decoration:
                                             _dropdownDecoration('State'),
                                         dropdownColor:
@@ -463,10 +508,10 @@ class _SettingsPaymentMethodAddWidgetState
                                     return Container(
                                       width: double.infinity,
                                       child: TextFormField(
-                                        controller: _model.stateTextController,
-                                        focusNode: _model.stateFocusNode,
+                                        controller: stateTextController,
+                                        focusNode: stateFocusNode,
                                         onChanged: (_) => EasyDebounce.debounce(
-                                          '_model.stateTextController',
+                                          'stateTextController',
                                           Duration(milliseconds: 100),
                                           () => setState(() {}),
                                         ),
@@ -499,10 +544,10 @@ class _SettingsPaymentMethodAddWidgetState
                               Container(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.cityTextController,
-                                  focusNode: _model.cityFocusNode,
+                                  controller: cityTextController,
+                                  focusNode: cityFocusNode,
                                   onChanged: (_) => EasyDebounce.debounce(
-                                    '_model.cityTextController',
+                                    'cityTextController',
                                     Duration(milliseconds: 100),
                                     () => setState(() {}),
                                   ),
@@ -525,10 +570,10 @@ class _SettingsPaymentMethodAddWidgetState
                               Container(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.zipCodeTextController,
-                                  focusNode: _model.zipCodeFocusNode,
+                                  controller: zipCodeTextController,
+                                  focusNode: zipCodeFocusNode,
                                   onChanged: (_) => EasyDebounce.debounce(
-                                    '_model.zipCodeTextController',
+                                    'zipCodeTextController',
                                     Duration(milliseconds: 100),
                                     () => setState(() {}),
                                   ),
@@ -550,12 +595,12 @@ class _SettingsPaymentMethodAddWidgetState
                     padding: EdgeInsets.only(top: 24.0),
                     child: InkWell(
                       onTap: () async {
-                        _model.setAsDefault = !_model.setAsDefault;
+                        setAsDefault = !setAsDefault;
                         setState(() {});
                       },
                       child: Row(
                         children: [
-                          if (!_model.setAsDefault)
+                          if (!setAsDefault)
                             Container(
                               width: 22.0,
                               height: 22.0,
@@ -566,7 +611,7 @@ class _SettingsPaymentMethodAddWidgetState
                                 ),
                               ),
                             ),
-                          if (_model.setAsDefault)
+                          if (setAsDefault)
                             Container(
                               width: 22.0,
                               height: 22.0,
@@ -702,84 +747,72 @@ class _SettingsPaymentMethodAddWidgetState
                               onPressed: () async {
                                 final validationResult =
                                     FormValidators.paymentValidator(
-                                        _model.cardNumberTextController!.text,
-                                        _model.expireDateTextController!.text,
-                                        _model
-                                            .textFieldaCVCTextController!.text,
-                                        _model
-                                            .cardholderNameTextController!.text,
-                                        _model.emailAddressTextController!.text,
-                                        _model.fullNameTextController!.text,
-                                        _model.addressLine1TextController!.text,
-                                        _model.addressLine2TextController!.text,
-                                        _model.countryDropdownValue ?? '',
-                                        (_model.countryDropdownValue == 'US') ||
-                                                (_model.countryDropdownValue ==
-                                                    'CA')
-                                            ? (_model.stateDropdownValue ?? '')
-                                            : _model.stateTextController!.text,
-                                        _model.cityTextController!.text,
-                                        _model.zipCodeTextController!.text);
+                                        cardNumberTextController.text,
+                                        expireDateTextController.text,
+                                        textFieldaCVCTextController.text,
+                                        cardholderNameTextController.text,
+                                        emailAddressTextController.text,
+                                        fullNameTextController.text,
+                                        addressLine1TextController.text,
+                                        addressLine2TextController.text,
+                                        countryDropdownValue ?? '',
+                                        (countryDropdownValue == 'US') ||
+                                                (countryDropdownValue == 'CA')
+                                            ? (stateDropdownValue ?? '')
+                                            : stateTextController.text,
+                                        cityTextController.text,
+                                        zipCodeTextController.text);
                                 if (validationResult['success'] == true) {
                                   final parsedDate =
-                                      FormValidators.parseMonthYear(_model
-                                          .expireDateTextController!.text);
-                                  _model.result = await actions.addPaymentCard(
-                                    _model.cardNumberTextController!.text,
+                                      FormValidators.parseMonthYear(
+                                          expireDateTextController.text);
+                                  result = await actions.addPaymentCard(
+                                    cardNumberTextController.text,
                                     parsedDate['month'] ?? '',
                                     parsedDate['year'] ?? '',
-                                    _model.textFieldaCVCTextController!.text,
-                                    _model.cardholderNameTextController!.text,
-                                    _model.emailAddressTextController!.text,
-                                    _model.addressLine1TextController!.text,
-                                    _model.addressLine2TextController!.text,
-                                    _model.cityTextController!.text,
-                                    (_model.countryDropdownValue == 'US') ||
-                                            (_model.countryDropdownValue ==
-                                                'CA')
-                                        ? _model.stateDropdownValue
-                                        : _model.stateTextController!.text,
-                                    _model.zipCodeTextController!.text,
-                                    _model.countryDropdownValue,
-                                    _model.setAsDefault,
+                                    textFieldaCVCTextController.text,
+                                    cardholderNameTextController.text,
+                                    emailAddressTextController.text,
+                                    addressLine1TextController.text,
+                                    addressLine2TextController.text,
+                                    cityTextController.text,
+                                    (countryDropdownValue == 'US') ||
+                                            (countryDropdownValue == 'CA')
+                                        ? stateDropdownValue
+                                        : stateTextController.text,
+                                    zipCodeTextController.text,
+                                    countryDropdownValue,
+                                    setAsDefault,
                                   );
                                   final newPaymentMethod = PaymentMethod(
-                                    id: _jsonStr(
-                                        _model.result, 'payment_method_id'),
+                                    id: _jsonStr(result, 'payment_method_id'),
                                     card: PaymentCard(
-                                      brand:
-                                          _jsonStr(_model.result, 'card_brand'),
-                                      last4:
-                                          _jsonStr(_model.result, 'card_last4'),
-                                      expMonth: ((_model.result is Map)
-                                          ? _model.result['card_exp_month']
+                                      brand: _jsonStr(result, 'card_brand'),
+                                      last4: _jsonStr(result, 'card_last4'),
+                                      expMonth: ((result is Map)
+                                          ? result['card_exp_month']
                                           : null),
-                                      expYear: ((_model.result is Map)
-                                          ? _model.result['card_exp_year']
+                                      expYear: ((result is Map)
+                                          ? result['card_exp_year']
                                           : null),
                                     ),
-                                    isDefault: ((_model.result is Map)
-                                        ? _model.result['is_default']
+                                    isDefault: ((result is Map)
+                                        ? result['is_default']
                                         : null),
                                     billingDetails: BillingDetails(
-                                      name: _model.fullNameTextController!.text,
-                                      email: _model
-                                          .emailAddressTextController!.text,
-                                      addressLine1: _model
-                                          .addressLine1TextController!.text,
-                                      addressLine2: _model
-                                          .addressLine2TextController!.text,
-                                      country:
-                                          _model.countryDropdownValue ?? '',
-                                      state: (_model.countryDropdownValue ==
-                                                  'US') ||
-                                              (_model.countryDropdownValue ==
-                                                  'CA')
-                                          ? _model.stateDropdownValue ?? ''
-                                          : _model.stateTextController!.text,
-                                      city: _model.cityTextController!.text,
-                                      postalCode:
-                                          _model.zipCodeTextController!.text,
+                                      name: fullNameTextController.text,
+                                      email: emailAddressTextController.text,
+                                      addressLine1:
+                                          addressLine1TextController.text,
+                                      addressLine2:
+                                          addressLine2TextController.text,
+                                      country: countryDropdownValue ?? '',
+                                      state: (countryDropdownValue == 'US') ||
+                                              (countryDropdownValue == 'CA')
+                                          ? stateDropdownValue ?? ''
+                                          : stateTextController.text,
+                                      city: cityTextController.text,
+                                      postalCode: zipCodeTextController.text,
                                     ),
                                   );
                                   ref

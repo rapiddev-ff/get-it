@@ -10,7 +10,6 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
-import 'settings_change_password_model.dart';
 
 class SettingsChangePasswordWidget extends StatefulWidget {
   const SettingsChangePasswordWidget({super.key});
@@ -25,27 +24,48 @@ class SettingsChangePasswordWidget extends StatefulWidget {
 
 class _SettingsChangePasswordWidgetState
     extends State<SettingsChangePasswordWidget> with KeyboardVisibilityMixin {
-  late SettingsChangePasswordModel _model;
+  // Local state fields
+  bool errorConfirmPasswordRequired = false;
+  bool errorCurrentPasswordRequired = false;
+  bool errorPasswordRequired = false;
+  bool passwordVisibility1 = false;
+  bool passwordVisibility2 = false;
+  bool passwordVisibility3 = false;
+
+  // Text controllers and focus nodes
+  late final TextEditingController textController1;
+  late final FocusNode textFieldFocusNode1;
+  late final TextEditingController textController2;
+  late final FocusNode textFieldFocusNode2;
+  late final TextEditingController textController3;
+  late final FocusNode textFieldFocusNode3;
+
+  // Action output result
+  String? result;
 
   @override
   void initState() {
     super.initState();
-    _model = SettingsChangePasswordModel();
 
-    _model.textController1 ??= TextEditingController();
-    _model.textFieldFocusNode1 ??= FocusNode();
-    _model.textFieldFocusNode1!.addListener(() => setState(() {}));
-    _model.textController2 ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
-    _model.textFieldFocusNode2!.addListener(() => setState(() {}));
-    _model.textController3 ??= TextEditingController();
-    _model.textFieldFocusNode3 ??= FocusNode();
-    _model.textFieldFocusNode3!.addListener(() => setState(() {}));
+    textController1 = TextEditingController();
+    textFieldFocusNode1 = FocusNode();
+    textFieldFocusNode1.addListener(() => setState(() {}));
+    textController2 = TextEditingController();
+    textFieldFocusNode2 = FocusNode();
+    textFieldFocusNode2.addListener(() => setState(() {}));
+    textController3 = TextEditingController();
+    textFieldFocusNode3 = FocusNode();
+    textFieldFocusNode3.addListener(() => setState(() {}));
   }
 
   @override
   void dispose() {
-    _model.dispose();
+    textFieldFocusNode1.dispose();
+    textController1.dispose();
+    textFieldFocusNode2.dispose();
+    textController2.dispose();
+    textFieldFocusNode3.dispose();
+    textController3.dispose();
     super.dispose();
   }
 
@@ -101,31 +121,30 @@ class _SettingsChangePasswordWidgetState
                               Container(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.textController1,
-                                  focusNode: _model.textFieldFocusNode1,
+                                  controller: textController1,
+                                  focusNode: textFieldFocusNode1,
                                   onChanged: (_) => EasyDebounce.debounce(
-                                    '_model.textController1',
+                                    'textController1',
                                     Duration(milliseconds: 100),
                                     () => setState(() {}),
                                   ),
                                   onFieldSubmitted: (_) async {
-                                    _model.textFieldFocusNode2?.requestFocus();
+                                    textFieldFocusNode2.requestFocus();
                                   },
                                   autofocus: false,
                                   enabled: true,
                                   autofillHints: [AutofillHints.password],
-                                  obscureText: !_model.passwordVisibility1,
+                                  obscureText: !passwordVisibility1,
                                   decoration: appInputDecoration(
                                     'Enter Current Password',
                                     suffixIcon: InkWell(
                                       onTap: () {
-                                        setState(() =>
-                                            _model.passwordVisibility1 =
-                                                !_model.passwordVisibility1);
+                                        setState(() => passwordVisibility1 =
+                                            !passwordVisibility1);
                                       },
                                       focusNode: FocusNode(skipTraversal: true),
                                       child: Icon(
-                                        _model.passwordVisibility1
+                                        passwordVisibility1
                                             ? Icons.visibility_outlined
                                             : Icons.visibility_off_outlined,
                                         color: AppColors.textSecondary,
@@ -138,7 +157,7 @@ class _SettingsChangePasswordWidgetState
                                   enableInteractiveSelection: true,
                                 ),
                               ),
-                              if (_model.errorCurrentPasswordRequired)
+                              if (errorCurrentPasswordRequired)
                                 Padding(
                                   padding:
                                       EdgeInsets.only(left: 16.0, top: 4.0),
@@ -171,31 +190,30 @@ class _SettingsChangePasswordWidgetState
                               Container(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.textController2,
-                                  focusNode: _model.textFieldFocusNode2,
+                                  controller: textController2,
+                                  focusNode: textFieldFocusNode2,
                                   onChanged: (_) => EasyDebounce.debounce(
-                                    '_model.textController2',
+                                    'textController2',
                                     Duration(milliseconds: 100),
                                     () => setState(() {}),
                                   ),
                                   onFieldSubmitted: (_) async {
-                                    _model.textFieldFocusNode3?.requestFocus();
+                                    textFieldFocusNode3.requestFocus();
                                   },
                                   autofocus: false,
                                   enabled: true,
                                   autofillHints: [AutofillHints.password],
-                                  obscureText: !_model.passwordVisibility2,
+                                  obscureText: !passwordVisibility2,
                                   decoration: appInputDecoration(
                                     'Enter New Password',
                                     suffixIcon: InkWell(
                                       onTap: () {
-                                        setState(() =>
-                                            _model.passwordVisibility2 =
-                                                !_model.passwordVisibility2);
+                                        setState(() => passwordVisibility2 =
+                                            !passwordVisibility2);
                                       },
                                       focusNode: FocusNode(skipTraversal: true),
                                       child: Icon(
-                                        _model.passwordVisibility2
+                                        passwordVisibility2
                                             ? Icons.visibility_outlined
                                             : Icons.visibility_off_outlined,
                                         color: AppColors.textSecondary,
@@ -208,7 +226,7 @@ class _SettingsChangePasswordWidgetState
                                   enableInteractiveSelection: true,
                                 ),
                               ),
-                              if (_model.errorPasswordRequired)
+                              if (errorPasswordRequired)
                                 Padding(
                                   padding:
                                       EdgeInsets.only(left: 16.0, top: 4.0),
@@ -241,28 +259,27 @@ class _SettingsChangePasswordWidgetState
                               Container(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.textController3,
-                                  focusNode: _model.textFieldFocusNode3,
+                                  controller: textController3,
+                                  focusNode: textFieldFocusNode3,
                                   onChanged: (_) => EasyDebounce.debounce(
-                                    '_model.textController3',
+                                    'textController3',
                                     Duration(milliseconds: 100),
                                     () => setState(() {}),
                                   ),
                                   autofocus: false,
                                   enabled: true,
                                   autofillHints: [AutofillHints.password],
-                                  obscureText: !_model.passwordVisibility3,
+                                  obscureText: !passwordVisibility3,
                                   decoration: appInputDecoration(
                                     'Confirm New Password',
                                     suffixIcon: InkWell(
                                       onTap: () {
-                                        setState(() =>
-                                            _model.passwordVisibility3 =
-                                                !_model.passwordVisibility3);
+                                        setState(() => passwordVisibility3 =
+                                            !passwordVisibility3);
                                       },
                                       focusNode: FocusNode(skipTraversal: true),
                                       child: Icon(
-                                        _model.passwordVisibility3
+                                        passwordVisibility3
                                             ? Icons.visibility_outlined
                                             : Icons.visibility_off_outlined,
                                         color: AppColors.textSecondary,
@@ -275,7 +292,7 @@ class _SettingsChangePasswordWidgetState
                                   enableInteractiveSelection: true,
                                 ),
                               ),
-                              if (_model.errorConfirmPasswordRequired)
+                              if (errorConfirmPasswordRequired)
                                 Padding(
                                   padding:
                                       EdgeInsets.only(left: 16.0, top: 4.0),
@@ -293,8 +310,7 @@ class _SettingsChangePasswordWidgetState
                         Column(
                           children: [
                             PasswordComponentWidget(
-                              isActive:
-                                  (_model.textController2!.text.length) >= 8,
+                              isActive: (textController2.text.length) >= 8,
                               text: 'Minimum 8 characters',
                             ),
                             Padding(
@@ -302,7 +318,7 @@ class _SettingsChangePasswordWidgetState
                               child: PasswordComponentWidget(
                                 isActive: (String text) {
                                   return text.contains(RegExp(r'[A-Z]'));
-                                }(_model.textController2!.text),
+                                }(textController2.text),
                                 text: 'One uppercase letter (A-Z)',
                               ),
                             ),
@@ -311,7 +327,7 @@ class _SettingsChangePasswordWidgetState
                               child: PasswordComponentWidget(
                                 isActive: (String text) {
                                   return text.contains(RegExp(r'\d'));
-                                }(_model.textController2!.text),
+                                }(textController2.text),
                                 text: 'One number (0-9)',
                               ),
                             ),
@@ -321,16 +337,16 @@ class _SettingsChangePasswordWidgetState
                                 isActive: (String text) {
                                   return text.contains(
                                       RegExp(r'[!@#\$%^&*(),.?":{}|<>_\-]'));
-                                }(_model.textController2!.text),
+                                }(textController2.text),
                                 text: 'One special character (!@#\$%)',
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.only(top: 4.0),
                               child: PasswordComponentWidget(
-                                isActive: (_model.textController2!.text ==
-                                        _model.textController3!.text) &&
-                                    (_model.textController2!.text != ''),
+                                isActive: (textController2.text ==
+                                        textController3.text) &&
+                                    (textController2.text != ''),
                                 text: 'Passwords match',
                               ),
                             ),
@@ -350,37 +366,37 @@ class _SettingsChangePasswordWidgetState
                       AppGradientButton(
                         text: 'Change Password',
                         onPressed: () async {
-                          _model.errorConfirmPasswordRequired = false;
-                          _model.errorCurrentPasswordRequired = false;
-                          _model.errorPasswordRequired = false;
+                          errorConfirmPasswordRequired = false;
+                          errorCurrentPasswordRequired = false;
+                          errorPasswordRequired = false;
                           setState(() {});
-                          if (_model.textController1!.text != '') {
-                            _model.errorCurrentPasswordRequired = false;
+                          if (textController1.text != '') {
+                            errorCurrentPasswordRequired = false;
                           } else {
-                            _model.errorCurrentPasswordRequired = true;
+                            errorCurrentPasswordRequired = true;
                             setState(() {});
                             return;
                           }
 
-                          if (_model.textController2!.text != '') {
-                            _model.errorPasswordRequired = false;
+                          if (textController2.text != '') {
+                            errorPasswordRequired = false;
                           } else {
-                            _model.errorPasswordRequired = true;
+                            errorPasswordRequired = true;
                             setState(() {});
                             return;
                           }
 
-                          if (_model.textController3!.text != '') {
-                            _model.errorConfirmPasswordRequired = false;
+                          if (textController3.text != '') {
+                            errorConfirmPasswordRequired = false;
                           } else {
-                            _model.errorConfirmPasswordRequired = true;
+                            errorConfirmPasswordRequired = true;
                             setState(() {});
                             return;
                           }
 
                           // Client-side password strength validation
-                          final newPw = _model.textController2!.text;
-                          final confirmPw = _model.textController3!.text;
+                          final newPw = textController2.text;
+                          final confirmPw = textController3.text;
                           if (newPw.length < 8 ||
                               !newPw.contains(RegExp(r'[A-Z]')) ||
                               !newPw.contains(RegExp(r'\d')) ||
@@ -396,11 +412,11 @@ class _SettingsChangePasswordWidgetState
                             return;
                           }
 
-                          _model.result = await actions.changePassword(
-                            _model.textController1!.text,
-                            _model.textController3!.text,
+                          result = await actions.changePassword(
+                            textController1.text,
+                            textController3.text,
                           );
-                          if (_model.result == null || _model.result == '') {
+                          if (result == null || result == '') {
                             if (!mounted) return;
                             context.pop();
                             await actions.toastificationshow(
@@ -413,7 +429,7 @@ class _SettingsChangePasswordWidgetState
                             await actions.toastificationshow(
                               context,
                               'Error!',
-                              _model.result!,
+                              result!,
                               'error',
                             );
                           }
