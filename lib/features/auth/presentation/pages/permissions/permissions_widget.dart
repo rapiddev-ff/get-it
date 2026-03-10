@@ -10,6 +10,7 @@ import '/core/theme/app_colors.dart';
 import '/core/utils/keyboard_visibility_mixin.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_gradient_button.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/features/auth/presentation/pages/additional_info/additional_info_widget.dart';
 import 'permissions_model.dart';
 
@@ -44,11 +45,7 @@ class _PermissionsWidgetState extends State<PermissionsWidget>
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

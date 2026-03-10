@@ -4,6 +4,7 @@ import '/core/theme/app_colors.dart';
 import '/core/widgets/app_web_view.dart';
 import '/core/utils/instant_timer.dart';
 import '/core/router/app_router.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/features/stripe/presentation/pages/stripe_success/stripe_success_widget.dart';
 import '/features/stripe/presentation/pages/stripe_refresh/stripe_refresh_widget.dart';
 import 'package:flutter/material.dart';
@@ -82,11 +83,7 @@ class _StripeCreateChekOutWidgetState extends State<StripeCreateChekOutWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

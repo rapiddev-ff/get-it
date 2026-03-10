@@ -1,6 +1,7 @@
 import '/backend/supabase/supabase.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/home/presentation/pages/seller_dashboard/shortlist_item/shortlist_item_widget.dart';
 import '/features/home/presentation/pages/seller_dashboard/shortlist_create/home_dashoard_shortlist_create_widget.dart';
@@ -47,11 +48,7 @@ class _HomeDashoardShortlistWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         backgroundColor: AppColors.backgroundPrimary,
         appBar: PreferredSize(

@@ -15,6 +15,7 @@ import '/core/widgets/app_drop_down.dart';
 import '/core/widgets/form_field_controller.dart';
 import '/core/utils/uploaded_file.dart';
 import '/core/utils/upload_data.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/features/home/domain/models/product_details_model.dart';
 import '/features/browse/domain/models/tag_model.dart';
 import 'package:go_router/go_router.dart';
@@ -772,12 +773,8 @@ class _HomeDashoardInventoryAddWidgetState
               context: context,
               builder: (context) {
                 return WebViewAware(
-                  child: GestureDetector(
-                    onTap: () {
-                      FocusScope.of(context).unfocus();
-                      FocusManager.instance.primaryFocus?.unfocus();
-                    },
-                    child: Padding(
+                  child: DismissKeyboard(
+      child: Padding(
                       padding: MediaQuery.viewInsetsOf(context),
                       child: HomeDashoardInventoryAddCategoryWidget(
                         category: category,
@@ -812,12 +809,8 @@ class _HomeDashoardInventoryAddWidgetState
                 context: context,
                 builder: (context) {
                   return WebViewAware(
-                    child: GestureDetector(
-                      onTap: () {
-                        FocusScope.of(context).unfocus();
-                        FocusManager.instance.primaryFocus?.unfocus();
-                      },
-                      child: Padding(
+                    child: DismissKeyboard(
+      child: Padding(
                         padding: MediaQuery.viewInsetsOf(context),
                         child: HomeDashoardInventoryAddSubCategoryWidget(
                           categoryRow: category!,
@@ -948,12 +941,8 @@ class _HomeDashoardInventoryAddWidgetState
                 context: context,
                 builder: (context) {
                   return WebViewAware(
-                    child: GestureDetector(
-                      onTap: () {
-                        FocusScope.of(context).unfocus();
-                        FocusManager.instance.primaryFocus?.unfocus();
-                      },
-                      child: Padding(
+                    child: DismissKeyboard(
+      child: Padding(
                         padding: MediaQuery.viewInsetsOf(context),
                         child: HomeDashoardInventoryAddConditionWidget(
                           conditionsList: conditionsList,
@@ -1696,11 +1685,7 @@ class _HomeDashoardInventoryAddWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

@@ -12,6 +12,7 @@ import '/core/theme/app_colors.dart';
 import '/core/utils/keyboard_visibility_mixin.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_gradient_button.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/auth/presentation/pages/phone_verification_page2/phone_verification_page2_widget.dart';
 import 'phone_verification_page_model.dart';
@@ -95,11 +96,7 @@ class _PhoneVerificationPageWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

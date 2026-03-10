@@ -10,6 +10,7 @@ import '/core/utils/keyboard_visibility_mixin.dart';
 import '/core/widgets/app_text_field.dart';
 import '/core/widgets/app_gradient_button.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import 'settings_report_model.dart';
 export 'settings_report_model.dart';
 
@@ -47,11 +48,7 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget>
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

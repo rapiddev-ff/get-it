@@ -8,6 +8,7 @@ import '/backend/supabase/supabase.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/custom_code/actions/index.dart' as actions;
 
 class HomeDashoardShippingDetailedWidget extends StatefulWidget {
@@ -283,11 +284,7 @@ class _HomeDashoardShippingDetailedWidgetState
     final imageUrl = _getProductImageUrl();
     final address = _getShippingAddress();
 
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

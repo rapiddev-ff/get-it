@@ -7,6 +7,7 @@ import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';
 import '/core/utils/upload_data.dart';
 import '/core/utils/uploaded_file.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/features/messages/presentation/widgets/chat_item/chat_item_widget.dart';
 import '/features/messages/presentation/widgets/chat_more/chat_more_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
@@ -78,11 +79,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundSecondary,

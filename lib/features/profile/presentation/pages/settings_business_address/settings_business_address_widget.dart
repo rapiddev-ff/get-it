@@ -11,6 +11,7 @@ import '/core/utils/keyboard_visibility_mixin.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_text_field.dart';
 import '/core/widgets/app_gradient_button.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/features/auth/domain/models/business_address_model.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import 'settings_business_address_model.dart';
@@ -69,11 +70,7 @@ class _SettingsBusinessAddressWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

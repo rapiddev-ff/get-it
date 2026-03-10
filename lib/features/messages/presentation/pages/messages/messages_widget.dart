@@ -3,6 +3,7 @@ import '/core/constants/app_constants.dart';
 import '/features/home/presentation/widgets/empty_state/empty_state_widget.dart';
 import '/features/home/presentation/widgets/nav_bar/nav_bar_widget.dart';
 import '/core/theme/app_colors.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/features/messages/presentation/providers/messages_provider.dart';
 import '/features/messages/presentation/widgets/message_item/message_item_widget.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
@@ -56,11 +57,7 @@ class _MessagesWidgetState extends ConsumerState<MessagesWidget> {
     final conversations = ref.watch(messagesProvider).conversations;
     final isSeller = ref.watch(authProvider).isSeller;
 
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

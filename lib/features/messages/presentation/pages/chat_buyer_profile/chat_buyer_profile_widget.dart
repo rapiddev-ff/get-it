@@ -3,6 +3,7 @@ import '/features/home/domain/models/review_model.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import '/features/profile/presentation/pages/review_item/review_item_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -62,11 +63,7 @@ class _ChatBuyerProfileWidgetState
   Widget build(BuildContext context) {
     final userData = ref.watch(authProvider);
 
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

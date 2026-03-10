@@ -8,6 +8,7 @@ import '/core/theme/app_colors.dart';
 import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_gradient_button.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 
 class HomeDashoardInventoryAddTagsWidget extends StatefulWidget {
   const HomeDashoardInventoryAddTagsWidget({
@@ -99,12 +100,8 @@ class _HomeDashoardInventoryAddTagsWidgetState
         }
         List<TagsRow> homeDashoardInventoryAddTagsTagsRowList = snapshot.data!;
 
-        return GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-            FocusManager.instance.primaryFocus?.unfocus();
-          },
-          child: Scaffold(
+        return DismissKeyboard(
+      child: Scaffold(
             key: scaffoldKey,
             backgroundColor: AppColors.backgroundPrimary,
             appBar: PreferredSize(

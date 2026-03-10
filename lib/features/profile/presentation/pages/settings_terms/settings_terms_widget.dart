@@ -1,4 +1,5 @@
 import '/core/theme/app_colors.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,11 +12,7 @@ class SettingsTermsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         backgroundColor: AppColors.backgroundPrimary,
         appBar: PreferredSize(

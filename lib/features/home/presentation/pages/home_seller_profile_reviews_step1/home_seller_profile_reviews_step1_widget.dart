@@ -3,6 +3,7 @@ import '/features/home/domain/models/seller_product_model.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -79,11 +80,7 @@ class _HomeSellerProfileReviewsStep1WidgetState
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

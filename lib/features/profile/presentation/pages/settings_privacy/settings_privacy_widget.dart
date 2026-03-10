@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 import '/core/theme/app_colors.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 
 class SettingsPrivacyWidget extends StatelessWidget {
   const SettingsPrivacyWidget({super.key});
@@ -11,11 +12,7 @@ class SettingsPrivacyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         backgroundColor: AppColors.backgroundPrimary,
         appBar: PreferredSize(

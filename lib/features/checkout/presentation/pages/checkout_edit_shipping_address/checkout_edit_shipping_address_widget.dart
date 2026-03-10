@@ -11,6 +11,7 @@ import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/autocomplete_options_list.dart';
 import '/core/widgets/app_drop_down.dart';
 import '/core/widgets/form_field_controller.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -140,11 +141,7 @@ class _CheckoutEditShippingAddressWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

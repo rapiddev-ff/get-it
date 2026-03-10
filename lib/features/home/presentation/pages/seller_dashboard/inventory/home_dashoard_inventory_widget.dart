@@ -12,6 +12,7 @@ import '/core/theme/app_colors.dart';
 import '/core/utils/keyboard_visibility_mixin.dart';
 import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/features/home/presentation/pages/seller_dashboard/inventory_item/inventory_item_widget.dart';
 import '/features/home/presentation/pages/seller_dashboard/inventory_add/home_dashoard_inventory_add_widget.dart';
 import '/features/home/presentation/pages/seller_dashboard/shortlist/home_dashoard_shortlist_widget.dart';
@@ -55,11 +56,7 @@ class _HomeDashoardInventoryWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

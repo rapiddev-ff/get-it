@@ -9,6 +9,7 @@ import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_text_field.dart';
 import '/core/widgets/app_gradient_button.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/auth/domain/models/user_settings_model.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
@@ -62,11 +63,7 @@ class _SettingsShippingDefaultsWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

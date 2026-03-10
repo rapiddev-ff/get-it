@@ -13,6 +13,7 @@ import '/core/theme/app_colors.dart';
 import '/core/constants/app_constants.dart';
 import '/core/utils/value_utils.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/index.dart';
 import '/features/messages/presentation/providers/messages_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -282,11 +283,7 @@ class _HomeSellerProfileWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

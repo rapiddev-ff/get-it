@@ -5,6 +5,7 @@ import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/router/app_router.dart';
 import '/core/widgets/app_gradient_button.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/core/utils/json_utils.dart' show getJsonField;
 import '/custom_code/actions/index.dart' as actions;
 import '/core/utils/data_converters.dart' as functions;
@@ -249,11 +250,7 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

@@ -1,6 +1,7 @@
 import '/features/home/presentation/widgets/components/follower_item_widget.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/backend/supabase/supabase.dart';
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -251,11 +252,7 @@ class _SettingsMyProfileFollowersWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

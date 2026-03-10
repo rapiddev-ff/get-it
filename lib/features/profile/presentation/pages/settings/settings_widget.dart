@@ -8,6 +8,7 @@ import '/index.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/features/auth/domain/models/user_settings_model.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -70,11 +71,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
   Widget build(BuildContext context) {
     final authState = ref.watch(authProvider);
 
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,
@@ -499,12 +496,8 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                           backgroundColor: Colors.transparent,
                           context: context,
                           builder: (context) {
-                            return GestureDetector(
-                              onTap: () {
-                                FocusScope.of(context).unfocus();
-                                FocusManager.instance.primaryFocus?.unfocus();
-                              },
-                              child: Padding(
+                            return DismissKeyboard(
+      child: Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
                                 child: SettingsBusinessWidget(
                                   title: 'Business Name',
@@ -567,12 +560,8 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                           backgroundColor: Colors.transparent,
                           context: context,
                           builder: (context) {
-                            return GestureDetector(
-                              onTap: () {
-                                FocusScope.of(context).unfocus();
-                                FocusManager.instance.primaryFocus?.unfocus();
-                              },
-                              child: Padding(
+                            return DismissKeyboard(
+      child: Padding(
                                 padding: MediaQuery.viewInsetsOf(context),
                                 child: SettingsBusinessWidget(
                                   title: 'Business Email',

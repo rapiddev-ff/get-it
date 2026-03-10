@@ -2,6 +2,7 @@ import '/features/profile/presentation/pages/settings_payment_card_item/settings
 import '/features/profile/presentation/pages/settings_payment_method_add/settings_payment_method_add_widget.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -28,11 +29,7 @@ class _SettingsPaymentMethodWidgetState
   Widget build(BuildContext context) {
     final userData = ref.watch(authProvider);
 
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

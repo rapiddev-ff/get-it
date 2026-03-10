@@ -13,6 +13,7 @@ import '/core/utils/keyboard_visibility_mixin.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/app_text_field.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/auth/presentation/pages/sign_in/sign_in_widget.dart';
 import '/features/auth/presentation/widgets/password_component/password_component_widget.dart';
@@ -62,11 +63,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

@@ -15,6 +15,7 @@ import '/features/home/presentation/widgets/nav_bar/nav_bar_widget.dart';
 import '/core/router/app_router.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/browse/presentation/providers/browse_provider.dart';
@@ -86,11 +87,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
     final categoriesAsync = ref.watch(categoriesProvider);
     final categories = categoriesAsync.valueOrNull ?? [];
 
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: _scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

@@ -1,6 +1,7 @@
 import '/features/home/presentation/widgets/nav_bar/nav_bar_widget.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import 'package:flutter/material.dart';
 import 'videos_model.dart';
 export 'videos_model.dart';
@@ -34,11 +35,7 @@ class _VideosWidgetState extends State<VideosWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

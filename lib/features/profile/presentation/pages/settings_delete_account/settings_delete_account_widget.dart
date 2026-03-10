@@ -3,6 +3,7 @@ import '/features/auth/presentation/pages/sign_up/sign_up_widget.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -16,11 +17,7 @@ class SettingsDeleteAccountWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         backgroundColor: AppColors.backgroundPrimary,
         appBar: AppBar(

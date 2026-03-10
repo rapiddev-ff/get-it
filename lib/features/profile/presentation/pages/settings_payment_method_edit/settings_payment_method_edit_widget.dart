@@ -8,6 +8,7 @@ import '/core/widgets/app_gradient_button.dart';
 import '/core/utils/geo_data.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/router/app_router.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -165,11 +166,7 @@ class _SettingsPaymentMethodEditWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

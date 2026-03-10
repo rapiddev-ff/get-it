@@ -8,6 +8,7 @@ import '/core/theme/app_colors.dart';
 import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_gradient_button.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/features/home/presentation/pages/seller_dashboard/promote_step2/home_dashoard_promote_step2_widget.dart';
 
 class HomeDashoardPromoteStep1Widget extends StatefulWidget {
@@ -48,11 +49,7 @@ class _HomeDashoardPromoteStep1WidgetState
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

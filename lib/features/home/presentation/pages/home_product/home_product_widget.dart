@@ -11,6 +11,7 @@ import '/index.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/core/widgets/custom_icons.dart' show AppIcons;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
@@ -225,11 +226,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
   Widget build(BuildContext context) {
     final product = _getProduct;
 
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

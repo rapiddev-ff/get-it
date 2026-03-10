@@ -3,6 +3,7 @@ import '/features/checkout/domain/models/checkout_totals_model.dart';
 import '/features/checkout/domain/models/checkout_order_result_model.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/features/checkout/presentation/pages/checkout_edit_shipping_address/checkout_edit_shipping_address_widget.dart';
 import '/features/checkout/presentation/widgets/checkout_item/checkout_item_widget.dart';
 import '/features/profile/presentation/pages/settings_payment_method_add/settings_payment_method_add_widget.dart';
@@ -223,11 +224,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
     final user = ref.watch(authProvider);
     final selectedPayment = ref.watch(checkoutProvider);
 
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

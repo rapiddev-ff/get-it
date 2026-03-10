@@ -2,6 +2,7 @@ import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/profile/presentation/pages/settings_blocked_user_item/settings_blocked_user_item_widget.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -152,11 +153,7 @@ class _SettingsBlockListWidgetState extends State<SettingsBlockListWidget> {
 
     final blockedUsers = _filteredUsers;
 
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: AppColors.backgroundPrimary,

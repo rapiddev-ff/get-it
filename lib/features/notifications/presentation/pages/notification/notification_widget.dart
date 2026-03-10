@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '/core/theme/app_colors.dart';
+import '/core/widgets/dismiss_keyboard.dart';
 import '/features/notifications/presentation/pages/notification_settings/notification_settings_widget.dart';
 
 class NotificationWidget extends StatelessWidget {
@@ -13,11 +14,7 @@ class NotificationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+    return DismissKeyboard(
       child: Scaffold(
         backgroundColor: AppColors.backgroundPrimary,
         appBar: PreferredSize(
