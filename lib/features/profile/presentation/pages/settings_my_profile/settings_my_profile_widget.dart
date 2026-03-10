@@ -725,8 +725,7 @@ class _SettingsMyProfileWidgetState
   Widget _buildStarRow(
       dynamic json, String role, int index, String star, Color color) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(
-          0.0, index == 0 ? 12.0 : 8.0, 0.0, 0.0),
+      padding: EdgeInsets.only(top: index == 0 ? 12.0 : 8.0),
       child: Row(
         children: [
           Text(

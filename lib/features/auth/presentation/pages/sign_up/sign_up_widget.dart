@@ -101,11 +101,8 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
             children: [
               Flexible(
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(
-                    AppConstants.paddingPage,
-                    0.0,
-                    AppConstants.paddingPage,
-                    0.0,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: AppConstants.paddingPage,
                   ),
                   child: SingleChildScrollView(
                     child: Column(
@@ -127,11 +124,10 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                         ),
                         // Email section
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                            AppConstants.paddingPage,
-                            0.0,
-                            AppConstants.paddingPage,
-                            16.0,
+                          padding: EdgeInsets.only(
+                            left: AppConstants.paddingPage,
+                            right: AppConstants.paddingPage,
+                            bottom: 16.0,
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,11 +191,10 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                         ),
                         // Password section
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                            AppConstants.paddingPage,
-                            0.0,
-                            AppConstants.paddingPage,
-                            16.0,
+                          padding: EdgeInsets.only(
+                            left: AppConstants.paddingPage,
+                            right: AppConstants.paddingPage,
+                            bottom: 16.0,
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -263,11 +258,10 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                         ),
                         // Confirm Password section
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                            AppConstants.paddingPage,
-                            0.0,
-                            AppConstants.paddingPage,
-                            24.0,
+                          padding: EdgeInsets.only(
+                            left: AppConstants.paddingPage,
+                            right: AppConstants.paddingPage,
+                            bottom: 24.0,
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

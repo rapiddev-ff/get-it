@@ -81,21 +81,17 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
             children: [
               Flexible(
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(
-                      AppConstants.paddingPage,
-                      0.0,
-                      AppConstants.paddingPage,
-                      0.0),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: AppConstants.paddingPage),
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              AppConstants.paddingPage,
-                              0.0,
-                              AppConstants.paddingPage,
-                              16.0),
+                          padding: EdgeInsets.only(
+                              left: AppConstants.paddingPage,
+                              right: AppConstants.paddingPage,
+                              bottom: 16.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -159,11 +155,10 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              AppConstants.paddingPage,
-                              0.0,
-                              AppConstants.paddingPage,
-                              24.0),
+                          padding: EdgeInsets.only(
+                              left: AppConstants.paddingPage,
+                              right: AppConstants.paddingPage,
+                              bottom: 24.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

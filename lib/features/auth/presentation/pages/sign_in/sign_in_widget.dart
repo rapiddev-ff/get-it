@@ -99,11 +99,8 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
             children: [
               Expanded(
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(
-                      AppConstants.paddingPage,
-                      0.0,
-                      AppConstants.paddingPage,
-                      0.0),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: AppConstants.paddingPage),
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

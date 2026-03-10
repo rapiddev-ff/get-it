@@ -33,17 +33,9 @@ class EmptyStateWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(
-          valueOrDefault<double>(
-            sidePadding,
-            0.0,
-          ),
-          0.0,
-          valueOrDefault<double>(
-            sidePadding,
-            0.0,
-          ),
-          0.0),
+      padding: EdgeInsets.symmetric(
+        horizontal: valueOrDefault<double>(sidePadding, 0.0),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
