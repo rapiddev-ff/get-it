@@ -2,26 +2,12 @@ import '/features/home/presentation/widgets/nav_bar/nav_bar_widget.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import 'package:flutter/material.dart';
-class VideosWidget extends StatefulWidget {
+
+class VideosWidget extends StatelessWidget {
   const VideosWidget({super.key});
 
   static String routeName = 'videos';
   static String routePath = 'videos';
-
-  @override
-  State<VideosWidget> createState() => _VideosWidgetState();
-}
-
-class _VideosWidgetState extends State<VideosWidget> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

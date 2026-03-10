@@ -3,7 +3,8 @@ import '/core/theme/app_colors.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '/core/utils/list_extensions.dart';
-class PasswordComponentWidget extends StatefulWidget {
+
+class PasswordComponentWidget extends StatelessWidget {
   const PasswordComponentWidget({
     super.key,
     bool? isActive,
@@ -12,22 +13,6 @@ class PasswordComponentWidget extends StatefulWidget {
 
   final bool isActive;
   final String? text;
-
-  @override
-  State<PasswordComponentWidget> createState() =>
-      _PasswordComponentWidgetState();
-}
-
-class _PasswordComponentWidgetState extends State<PasswordComponentWidget> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +24,7 @@ class _PasswordComponentWidgetState extends State<PasswordComponentWidget> {
           decoration: BoxDecoration(),
           child: Builder(
             builder: (context) {
-              if (widget.isActive) {
+              if (isActive) {
                 return Icon(
                   Icons.check_sharp,
                   color: AppColors.statusSuccess,
@@ -68,7 +53,7 @@ class _PasswordComponentWidgetState extends State<PasswordComponentWidget> {
           duration: Duration(milliseconds: 600),
           curve: Curves.easeOut,
           child: Text(
-            widget.text ?? 'N/A',
+            text ?? 'N/A',
           ),
         ),
       ].divide(SizedBox(width: 12.0)),

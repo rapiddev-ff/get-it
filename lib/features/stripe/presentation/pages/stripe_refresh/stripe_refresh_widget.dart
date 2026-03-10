@@ -6,17 +6,12 @@ import '/features/home/presentation/pages/home_page/home_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-class StripeRefreshWidget extends StatefulWidget {
+class StripeRefreshWidget extends StatelessWidget {
   const StripeRefreshWidget({super.key});
 
   static String routeName = 'stripeRefresh';
   static String routePath = 'stripeRefresh';
 
-  @override
-  State<StripeRefreshWidget> createState() => _StripeRefreshWidgetState();
-}
-
-class _StripeRefreshWidgetState extends State<StripeRefreshWidget> {
   @override
   Widget build(BuildContext context) {
     return DismissKeyboard(

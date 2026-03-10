@@ -5,18 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-class StripeSuccessCopyWidget extends StatefulWidget {
+class StripeSuccessCopyWidget extends StatelessWidget {
   const StripeSuccessCopyWidget({super.key});
 
   static String routeName = 'stripeSuccessCopy';
   static String routePath = 'stripeSuccessCopy';
 
-  @override
-  State<StripeSuccessCopyWidget> createState() =>
-      _StripeSuccessCopyWidgetState();
-}
-
-class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
   @override
   Widget build(BuildContext context) {
     return DismissKeyboard(
