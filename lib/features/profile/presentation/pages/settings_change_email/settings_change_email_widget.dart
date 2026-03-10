@@ -1,5 +1,6 @@
-import '/features/auth/data/supabase_auth/auth_util.dart';
+import '/core/providers/current_user_provider.dart';
 import '/core/theme/app_colors.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/core/utils/keyboard_visibility_mixin.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_text_field.dart';
@@ -13,7 +14,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'settings_change_email_model.dart';
 
-class SettingsChangeEmailWidget extends StatefulWidget {
+class SettingsChangeEmailWidget extends ConsumerStatefulWidget {
   const SettingsChangeEmailWidget({
     super.key,
     required this.isOnboarding,
@@ -25,11 +26,11 @@ class SettingsChangeEmailWidget extends StatefulWidget {
   static String routePath = 'settingsChangeEmail';
 
   @override
-  State<SettingsChangeEmailWidget> createState() =>
+  ConsumerState<SettingsChangeEmailWidget> createState() =>
       _SettingsChangeEmailWidgetState();
 }
 
-class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget>
+class _SettingsChangeEmailWidgetState extends ConsumerState<SettingsChangeEmailWidget>
     with KeyboardVisibilityMixin {
   late SettingsChangeEmailModel _model;
 
@@ -248,7 +249,7 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget>
                           }
 
                           _model.isCorrect = await actions.supabaseLogin(
-                            currentUserEmail,
+                            ref.read(currentUserEmailProvider),
                             _model.textController1!.text,
                           );
                           _shouldSetState = true;
@@ -297,7 +298,7 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget>
                           _model.result =
                               await actions.changeUserEmailWithPasswordCheck(
                             context,
-                            currentUserEmail,
+                            ref.read(currentUserEmailProvider),
                             _model.textController2!.text,
                             _model.textController1!.text,
                           );

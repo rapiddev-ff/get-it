@@ -18,7 +18,6 @@ import '/core/widgets/app_text_field.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import '/custom_code/actions/index.dart' as actions;
-import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import '/features/home/presentation/pages/home_page/home_page_widget.dart';
 import 'package:uuid/uuid.dart';
@@ -113,7 +112,7 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
                 .substring(pickedFile.name.lastIndexOf('.'))
                 .toLowerCase()
             : '.jpg';
-        final filePath = '$ref.read(currentUserIdProvider)/$uuid$ext';
+        final filePath = '${ref.read(currentUserIdProvider)}/$uuid$ext';
         final mimeType = lookupMimeType(pickedFile.name) ?? 'image/jpeg';
         await supabase.storage.from('avatars').uploadBinary(
               filePath,
@@ -458,7 +457,7 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
                                 );
                                 _model.createStripeCustomer =
                                     await actions.createStripeCustomer(
-                                  currentUserEmail,
+                                  ref.read(currentUserEmailProvider),
                                   '${_model.firstnameTextController!.text} ${_model.lastnameTextController!.text}',
                                   '',
                                 );
