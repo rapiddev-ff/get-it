@@ -11,11 +11,13 @@ import '/backend/supabase/supabase.dart';
 import '/core/l10n/internationalization.dart';
 import '/core/router/app_router.dart';
 import '/core/theme/app_theme.dart';
+import '/core/utils/error_handler.dart';
 import '/core/utils/widget_extensions.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  AppErrorHandler.initialize();
   GoRouter.optionURLReflectsImperativeAPIs = true;
   usePathUrlStrategy();
 
@@ -26,7 +28,7 @@ void main() async {
 
   await SupaFlow.initialize();
 
-  runApp(ProviderScope(
+  AppErrorHandler.runGuarded(ProviderScope(
     child: MyApp(),
   ));
 }
