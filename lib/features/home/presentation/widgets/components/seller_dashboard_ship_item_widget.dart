@@ -125,9 +125,7 @@ class SellerDashboardShipItemWidget extends StatelessWidget {
                         children: [
                           TextSpan(
                             text: 'Order #${order['order_number'] ?? ''}',
-                            style: GoogleFonts.inter(
-                              fontSize: 12.0,
-                            ),
+                            style: Theme.of(context).textTheme.bodySmall!,
                           ),
                           TextSpan(
                             text: ' • ',

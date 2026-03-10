@@ -8,7 +8,6 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import '/core/providers/current_user_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 import 'settings_block_list_model.dart';
 export 'settings_block_list_model.dart';
@@ -227,12 +226,7 @@ class _SettingsBlockListWidgetState
             ),
             Text(
               'Manage who can contact and buy from you',
-              style: GoogleFonts.inter(
-                fontWeight: FontWeight.normal,
-                color: AppColors.textSecondary,
-                fontSize: 14.0,
-                height: 1.5,
-              ),
+              style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
             ),
             Padding(
               padding: EdgeInsets.only(top: 24.0),

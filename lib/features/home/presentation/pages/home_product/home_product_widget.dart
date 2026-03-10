@@ -566,10 +566,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                               padding: EdgeInsets.only(top: 4.0),
                               child: Text(
                                 product.description,
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 16.0,
-                                ),
+                                style: Theme.of(context).textTheme.bodyLarge!,
                               ),
                             ),
                           ],

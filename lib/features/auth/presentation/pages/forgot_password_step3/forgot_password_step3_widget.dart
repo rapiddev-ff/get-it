@@ -99,11 +99,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                 padding: EdgeInsets.only(bottom: 8.0),
                                 child: Text(
                                   'Password',
-                                  style: GoogleFonts.inter(
-                                    color: AppColors.textPrimary,
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.4,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
                                 ),
                               ),
                               Container(
@@ -166,11 +162,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                 padding: EdgeInsets.only(bottom: 8.0),
                                 child: Text(
                                   'Confirm Password',
-                                  style: GoogleFonts.inter(
-                                    color: AppColors.textPrimary,
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.4,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
                                 ),
                               ),
                               Container(

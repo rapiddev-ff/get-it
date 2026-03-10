@@ -4,7 +4,6 @@ import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import '/features/home/presentation/pages/home_page/home_page_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
 class StripeRefreshWidget extends StatefulWidget {
@@ -59,11 +58,7 @@ class _StripeRefreshWidgetState extends State<StripeRefreshWidget> {
                   child: Text(
                     'We\'re sorry, but we couldn\'t connect your Stripe account at this time.',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
-                      fontSize: 16.0,
-                      color: AppColors.textSecondary,
-                      height: 1.5,
-                    ),
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(height: 1.5),
                   ),
                 ),
                 AppGradientButton(

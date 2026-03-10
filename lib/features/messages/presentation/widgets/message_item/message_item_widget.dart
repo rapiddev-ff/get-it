@@ -6,7 +6,6 @@ import '/core/utils/value_utils.dart';
 import 'package:flutter/material.dart';
 import '/core/providers/current_user_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class MessageItemWidget extends ConsumerWidget {
   const MessageItemWidget({
@@ -86,9 +85,7 @@ class MessageItemWidget extends ConsumerWidget {
                           child: Center(
                             child: Text(
                               _unreadCount(ref),
-                              style: GoogleFonts.inter(
-                                fontSize: 12.0,
-                              ),
+                              style: Theme.of(context).textTheme.bodySmall!,
                             ),
                           ),
                         ),
@@ -159,11 +156,7 @@ class MessageItemWidget extends ConsumerWidget {
                           conversationDataType?.productTitle,
                           'N/A',
                         ),
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.0,
-                          height: 1.5,
-                        ),
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                       ),
                     if (valueOrDefault<String>(
                           conversationDataType?.lastMessageText,
@@ -235,9 +228,7 @@ class MessageItemWidget extends ConsumerWidget {
                           child: Center(
                             child: Text(
                               _unreadCount(ref),
-                              style: GoogleFonts.inter(
-                                fontSize: 12.0,
-                              ),
+                              style: Theme.of(context).textTheme.bodySmall!,
                             ),
                           ),
                         ),

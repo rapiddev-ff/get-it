@@ -86,12 +86,7 @@ class HomeSellerProductWidget extends StatelessWidget {
                             : null,
                         '0',
                       ),
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.0,
-                        color: AppColors.secondary,
-                        height: 1.5,
-                      ),
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(fontWeight: FontWeight.bold, color: AppColors.secondary, height: 1.5),
                     ),
                   ],
                 ),

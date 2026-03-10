@@ -233,11 +233,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                                 widget.conversation?.productTitle,
                                 'N/A ',
                               ),
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14.0,
-                                height: 1.5,
-                              ),
+                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                             ),
                             Text(
                               valueOrDefault<String>(
@@ -251,11 +247,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                             Text(
                               NumberFormat('#,##0.##', 'en_US')
                                   .format(widget.conversation!.productPrice),
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14.0,
-                                height: 1.5,
-                              ),
+                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.5),
                             ),
                           ].divide(SizedBox(height: 2.0)),
                         ),

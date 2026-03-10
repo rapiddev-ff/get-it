@@ -69,11 +69,7 @@ class _StripeSuccessWidgetState extends ConsumerState<StripeSuccessWidget> {
                   child: Text(
                     'Your Stripe account has been connected successfully. You can now start receiving payments from your sales!',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
-                      fontSize: 16.0,
-                      color: AppColors.textSecondary,
-                      height: 1.5,
-                    ),
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(height: 1.5),
                   ),
                 ),
                 AppGradientButton(

@@ -102,11 +102,7 @@ class _SettingsDeactivateAccountWidgetState
                   child: Text(
                     'If you choose to deactivate your account, you will need to reactivate your account by signing in the future. ',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 14.0,
-                      height: 1.5,
-                    ),
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
                   ),
                 ),
                 Spacer(),

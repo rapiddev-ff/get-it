@@ -91,10 +91,7 @@ class _SettingsBusinessWidgetState extends State<SettingsBusinessWidget> {
                   decoration: InputDecoration(
                     isDense: false,
                     hintText: widget.hintText,
-                    hintStyle: GoogleFonts.inter(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 16.0,
-                    ),
+                    hintStyle: Theme.of(context).textTheme.bodyLarge!,
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: AppColors.neutral700,

@@ -70,11 +70,7 @@ class SettingsDeleteAccountWidget extends StatelessWidget {
                   child: Text(
                     'If you confirm for your account to be deleted, ALL of your saved information including names, emails and app data will be deleted. This data is not recoverable.',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 14.0,
-                      height: 1.5,
-                    ),
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(height: 1.5),
                   ),
                 ),
                 Spacer(),

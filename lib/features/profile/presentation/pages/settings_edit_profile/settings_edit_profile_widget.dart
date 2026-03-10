@@ -161,12 +161,7 @@ class _SettingsEditProfileWidgetState
                     padding: EdgeInsets.only(top: 4.0, bottom: 20.0),
                     child: Text(
                       'This info is visible to other users.',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.normal,
-                        color: AppColors.textSecondary,
-                        fontSize: 14.0,
-                        height: 1.5,
-                      ),
+                      style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
                     ),
                   ),
                   Align(
@@ -399,12 +394,7 @@ class _SettingsEditProfileWidgetState
                     padding: EdgeInsets.only(top: 4.0, bottom: 20.0),
                     child: Text(
                       'For verification and security',
-                      style: GoogleFonts.inter(
-                        fontWeight: FontWeight.normal,
-                        color: AppColors.textSecondary,
-                        fontSize: 14.0,
-                        height: 1.5,
-                      ),
+                      style: Theme.of(context).textTheme.labelMedium!.copyWith(height: 1.5),
                     ),
                   ),
                   Text(

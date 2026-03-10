@@ -737,12 +737,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                 ),
                 Text(
                   'Connect Stripe to get paid and enable payouts',
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.normal,
-                    color: AppColors.textSecondary,
-                    fontSize: 16.0,
-                    height: 1.5,
-                  ),
+                  style: Theme.of(context).textTheme.labelLarge!.copyWith(height: 1.5),
                 ),
                 if (authData.stripe?.detailsSubmitted ?? false) ...[
                   Padding(
@@ -864,12 +859,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                       children: [
                         Text(
                           'Secure payments and payouts. Get It never stores your bank details.',
-                          style: GoogleFonts.inter(
-                            fontWeight: FontWeight.normal,
-                            color: AppColors.textSecondary,
-                            fontSize: 16.0,
-                            height: 1.5,
-                          ),
+                          style: Theme.of(context).textTheme.labelLarge!.copyWith(height: 1.5),
                         ),
                       ],
                     ),

@@ -1,7 +1,6 @@
 import '/backend/supabase/supabase.dart';
 import '/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '/features/home/domain/models/seller_product_model.dart';
 import 'package:shimmer/shimmer.dart';
@@ -309,7 +308,7 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 _error ?? '',
-                style: GoogleFonts.inter(fontSize: 12, color: AppColors.error),
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -336,7 +335,7 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
                   ? 'No products found for "${widget.searchText}"'
                   : 'No products found',
               style:
-                  GoogleFonts.inter(fontSize: 16, color: AppColors.textPrimary),
+                  Theme.of(context).textTheme.bodyLarge!,
               textAlign: TextAlign.center,
             ),
           ],

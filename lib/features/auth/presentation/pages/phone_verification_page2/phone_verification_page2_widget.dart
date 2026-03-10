@@ -183,10 +183,7 @@ class _PhoneVerificationPage2WidgetState
                             padding: const EdgeInsets.only(left: 16.0),
                             child: Text(
                               'Incorrect code. Try again.',
-                              style: GoogleFonts.inter(
-                                fontSize: 12.0,
-                                color: AppColors.error,
-                              ),
+                              style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                             ).animate().fade(duration: 600.ms),
                           ),
                         if (_model.errorOther)
@@ -194,10 +191,7 @@ class _PhoneVerificationPage2WidgetState
                             padding: const EdgeInsets.only(left: 16.0),
                             child: Text(
                               'Error. Try again later.',
-                              style: GoogleFonts.inter(
-                                fontSize: 12.0,
-                                color: AppColors.error,
-                              ),
+                              style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                             ).animate().fade(duration: 600.ms),
                           ),
                         if (_model.errorMaxAttemptsReached)
@@ -205,10 +199,7 @@ class _PhoneVerificationPage2WidgetState
                             padding: const EdgeInsets.only(left: 16.0),
                             child: Text(
                               'Too many attempts. Try again later.',
-                              style: GoogleFonts.inter(
-                                fontSize: 12.0,
-                                color: AppColors.error,
-                              ),
+                              style: Theme.of(context).textTheme.bodySmall!.copyWith(color: AppColors.error),
                             ).animate().fade(duration: 600.ms),
                           ),
                         if (_model.timerMilliseconds > 0)

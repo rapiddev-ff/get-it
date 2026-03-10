@@ -154,11 +154,7 @@ class _PhoneVerificationPageWidgetState
                               padding: const EdgeInsets.only(bottom: 4.0),
                               child: Text(
                                 'Phone Number',
-                                style: GoogleFonts.inter(
-                                  color: AppColors.textPrimary,
-                                  fontWeight: FontWeight.w500,
-                                  height: 1.4,
-                                ),
+                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w500, height: 1.4),
                               ),
                             ),
                             SizedBox(

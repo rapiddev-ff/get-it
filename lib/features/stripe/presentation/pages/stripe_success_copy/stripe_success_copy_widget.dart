@@ -62,11 +62,7 @@ class _StripeSuccessCopyWidgetState extends State<StripeSuccessCopyWidget> {
                   child: Text(
                     'Your payment has been processed successfully. Thank you for your purchase!',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
-                      fontSize: 16.0,
-                      color: AppColors.textSecondary,
-                      height: 1.5,
-                    ),
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(height: 1.5),
                   ),
                 ),
                 Padding(

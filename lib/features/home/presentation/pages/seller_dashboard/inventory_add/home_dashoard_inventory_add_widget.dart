@@ -322,7 +322,7 @@ class _HomeDashoardInventoryAddWidgetState
       prefix: prefix,
       hintText: hint,
       hintStyle:
-          GoogleFonts.inter(fontSize: 16.0, color: AppColors.textSecondary),
+          Theme.of(context).textTheme.labelLarge!,
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: AppColors.neutral700, width: 1.0),
         borderRadius: _borderRadius,
