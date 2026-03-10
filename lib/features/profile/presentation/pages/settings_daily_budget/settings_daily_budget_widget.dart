@@ -3,7 +3,7 @@ import '/backend/supabase/supabase.dart';
 import '/features/auth/domain/models/user_settings_model.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import '/core/theme/app_colors.dart';
-import '/core/constants/app_constants.dart';
+import '/core/widgets/app_text_field.dart';
 import '/core/utils/list_extensions.dart';
 import 'dart:async';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -159,50 +159,12 @@ class _SettingsDailyBudgetWidgetState
                             autofocus: false,
                             enabled: true,
                             obscureText: false,
-                            decoration: InputDecoration(
-                              isDense: false,
-                              hintText: 'Daily Budget',
+                            decoration: appInputDecoration('Daily Budget').copyWith(
                               prefixText: '\$ ',
                               prefixStyle: GoogleFonts.inter(
                                 fontWeight: FontWeight.normal,
                                 fontSize: 16.0,
                                 color: AppColors.textPrimary,
-                              ),
-                              hintStyle: GoogleFonts.inter(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 16.0,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: AppColors.neutral700,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(
-                                    AppConstants.radiusTextField4),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: AppColors.secondary,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(
-                                    AppConstants.radiusTextField4),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: AppColors.error,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(
-                                    AppConstants.radiusTextField4),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: AppColors.error,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(
-                                    AppConstants.radiusTextField4),
                               ),
                             ),
                             style: GoogleFonts.inter(),

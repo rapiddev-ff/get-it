@@ -13,6 +13,7 @@ import '/core/constants/app_constants.dart';
 import '/features/home/presentation/widgets/dialog/dialog_widget.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_text_field.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/auth/presentation/pages/sign_in/sign_in_widget.dart';
 import '/features/auth/presentation/widgets/password_component/password_component_widget.dart';
@@ -153,46 +154,8 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget> {
                                   autofocus: false,
                                   enabled: true,
                                   obscureText: !_model.passwordVisibility1,
-                                  decoration: InputDecoration(
-                                    isDense: false,
-                                    hintText: 'Your Password',
-                                    hintStyle: GoogleFonts.inter(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.normal,
-                                      color: AppColors.textSecondary,
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.neutral700,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.secondary,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
+                                  decoration: appInputDecoration(
+                                    'Your Password',
                                     suffixIcon: InkWell(
                                       onTap: () async {
                                         setState(() =>
@@ -209,9 +172,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget> {
                                       ),
                                     ),
                                   ),
-                                  style: GoogleFonts.inter(
-                                    color: AppColors.textPrimary,
-                                  ),
+                                  style: appTextFieldStyle,
                                   keyboardType: TextInputType.visiblePassword,
                                   cursorColor: AppColors.textPrimary,
                                   enableInteractiveSelection: true,
@@ -267,46 +228,8 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget> {
                                   autofocus: false,
                                   enabled: true,
                                   obscureText: !_model.passwordVisibility2,
-                                  decoration: InputDecoration(
-                                    isDense: false,
-                                    hintText: 'Confirm Your Password',
-                                    hintStyle: GoogleFonts.inter(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.normal,
-                                      color: AppColors.textSecondary,
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.neutral700,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.secondary,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
+                                  decoration: appInputDecoration(
+                                    'Confirm Your Password',
                                     suffixIcon: InkWell(
                                       onTap: () async {
                                         setState(() =>
@@ -323,9 +246,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget> {
                                       ),
                                     ),
                                   ),
-                                  style: GoogleFonts.inter(
-                                    color: AppColors.textPrimary,
-                                  ),
+                                  style: appTextFieldStyle,
                                   keyboardType: TextInputType.visiblePassword,
                                   cursorColor: AppColors.textPrimary,
                                   enableInteractiveSelection: true,

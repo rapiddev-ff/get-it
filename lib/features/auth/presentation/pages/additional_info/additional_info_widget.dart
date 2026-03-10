@@ -15,6 +15,7 @@ import 'package:image_picker/image_picker.dart';
 import '/backend/supabase/supabase.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
+import '/core/widgets/app_text_field.dart';
 import '/core/utils/list_extensions.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/auth/data/supabase_auth/auth_util.dart';
@@ -91,22 +92,6 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget> {
     }
     return 'valid';
   }
-
-  InputBorder _inputBorder(Color color) => OutlineInputBorder(
-        borderSide: BorderSide(color: color, width: 1.0),
-        borderRadius: BorderRadius.circular(AppConstants.radiusTextField4),
-      );
-
-  TextStyle get _bodyStyle => GoogleFonts.inter(
-        fontSize: 14.0,
-        color: AppColors.textPrimary,
-      );
-
-  TextStyle get _hintStyle => GoogleFonts.inter(
-        fontWeight: FontWeight.normal,
-        fontSize: 16.0,
-        color: AppColors.textSecondary,
-      );
 
   TextStyle get _labelStyle => GoogleFonts.inter(
         fontWeight: FontWeight.w500,
@@ -331,19 +316,8 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget> {
                               autofillHints: const [AutofillHints.name],
                               textInputAction: TextInputAction.done,
                               obscureText: false,
-                              decoration: InputDecoration(
-                                isDense: false,
-                                hintText: 'First Name',
-                                hintStyle: _hintStyle,
-                                enabledBorder:
-                                    _inputBorder(AppColors.neutral700),
-                                focusedBorder:
-                                    _inputBorder(AppColors.secondary),
-                                errorBorder: _inputBorder(AppColors.error),
-                                focusedErrorBorder:
-                                    _inputBorder(AppColors.error),
-                              ),
-                              style: _bodyStyle,
+                              decoration: appInputDecoration('First Name'),
+                              style: appTextFieldStyle,
                               cursorColor: AppColors.textPrimary,
                               enableInteractiveSelection: true,
                               validator: _model
@@ -389,19 +363,8 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget> {
                               autofillHints: const [AutofillHints.familyName],
                               textInputAction: TextInputAction.done,
                               obscureText: false,
-                              decoration: InputDecoration(
-                                isDense: false,
-                                hintText: 'Last Name',
-                                hintStyle: _hintStyle,
-                                enabledBorder:
-                                    _inputBorder(AppColors.neutral700),
-                                focusedBorder:
-                                    _inputBorder(AppColors.secondary),
-                                errorBorder: _inputBorder(AppColors.error),
-                                focusedErrorBorder:
-                                    _inputBorder(AppColors.error),
-                              ),
-                              style: _bodyStyle,
+                              decoration: appInputDecoration('Last Name'),
+                              style: appTextFieldStyle,
                               cursorColor: AppColors.textPrimary,
                               enableInteractiveSelection: true,
                               validator:
@@ -450,19 +413,8 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget> {
                               autofocus: false,
                               autofillHints: const [AutofillHints.username],
                               obscureText: false,
-                              decoration: InputDecoration(
-                                isDense: false,
-                                hintText: 'Username',
-                                hintStyle: _hintStyle,
-                                enabledBorder:
-                                    _inputBorder(AppColors.neutral700),
-                                focusedBorder:
-                                    _inputBorder(AppColors.secondary),
-                                errorBorder: _inputBorder(AppColors.error),
-                                focusedErrorBorder:
-                                    _inputBorder(AppColors.error),
-                              ),
-                              style: _bodyStyle,
+                              decoration: appInputDecoration('Username'),
+                              style: appTextFieldStyle,
                               cursorColor: AppColors.textPrimary,
                               enableInteractiveSelection: true,
                               validator:

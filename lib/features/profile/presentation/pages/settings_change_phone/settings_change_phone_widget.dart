@@ -1,7 +1,7 @@
 import '/backend/api_requests/api_calls.dart';
 import '/features/auth/presentation/pages/phone_verification_page2/phone_verification_page2_widget.dart';
 import '/core/theme/app_colors.dart';
-import '/core/constants/app_constants.dart';
+import '/core/widgets/app_text_field.dart';
 import '/core/utils/list_extensions.dart';
 import 'dart:async';
 import '/custom_code/actions/index.dart' as actions;
@@ -143,46 +143,7 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget> {
                           autofocus: false,
                           enabled: true,
                           obscureText: false,
-                          decoration: InputDecoration(
-                            isDense: false,
-                            hintText: 'Your phone number',
-                            hintStyle: GoogleFonts.inter(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 16.0,
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: AppColors.neutral700,
-                                width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.circular(
-                                  AppConstants.radiusTextField4),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: AppColors.secondary,
-                                width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.circular(
-                                  AppConstants.radiusTextField4),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: AppColors.error,
-                                width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.circular(
-                                  AppConstants.radiusTextField4),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: AppColors.error,
-                                width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.circular(
-                                  AppConstants.radiusTextField4),
-                            ),
-                          ),
+                          decoration: appInputDecoration('Your phone number'),
                           style: GoogleFonts.inter(),
                           keyboardType: TextInputType.number,
                           cursorColor: AppColors.textPrimary,

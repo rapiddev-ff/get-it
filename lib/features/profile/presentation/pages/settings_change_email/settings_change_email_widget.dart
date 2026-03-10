@@ -1,7 +1,7 @@
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/core/theme/app_colors.dart';
-import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_text_field.dart';
 import 'dart:async';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:easy_debounce/easy_debounce.dart';
@@ -150,45 +150,8 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget> {
                                   enabled: true,
                                   autofillHints: [AutofillHints.password],
                                   obscureText: !_model.passwordVisibility,
-                                  decoration: InputDecoration(
-                                    isDense: false,
-                                    hintText: 'Your password',
-                                    hintStyle: GoogleFonts.inter(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 16.0,
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.neutral700,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.secondary,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
+                                  decoration: appInputDecoration(
+                                    'Your password',
                                     suffixIcon: InkWell(
                                       onTap: () {
                                         setState(() =>
@@ -205,7 +168,7 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget> {
                                       ),
                                     ),
                                   ),
-                                  style: GoogleFonts.inter(),
+                                  style: appTextFieldStyle,
                                   cursorColor: AppColors.textPrimary,
                                   enableInteractiveSelection: true,
                                 ),
@@ -268,47 +231,8 @@ class _SettingsChangeEmailWidgetState extends State<SettingsChangeEmailWidget> {
                                   autofocus: false,
                                   enabled: true,
                                   obscureText: false,
-                                  decoration: InputDecoration(
-                                    isDense: false,
-                                    hintText: 'Your email address',
-                                    hintStyle: GoogleFonts.inter(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 16.0,
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.neutral700,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.secondary,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.error,
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
-                                    ),
-                                  ),
-                                  style: GoogleFonts.inter(),
+                                  decoration: appInputDecoration('Your email address'),
+                                  style: appTextFieldStyle,
                                   keyboardType: TextInputType.emailAddress,
                                   cursorColor: AppColors.textPrimary,
                                   enableInteractiveSelection: true,

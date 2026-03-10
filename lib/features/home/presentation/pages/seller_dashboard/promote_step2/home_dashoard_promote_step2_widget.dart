@@ -4,8 +4,8 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:go_router/go_router.dart';
 
 import '/core/theme/app_colors.dart';
-import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_text_field.dart';
 import '/features/home/presentation/pages/home_page/home_page_widget.dart';
 
 class HomeDashoardPromoteStep2Widget extends StatefulWidget {
@@ -920,60 +920,10 @@ class _HomeDashoardPromoteStep2WidgetState
                                             autofocus: false,
                                             enabled: true,
                                             obscureText: false,
-                                            decoration: InputDecoration(
-                                              isDense: false,
-                                              hintText:
-                                                  'e.g., Spider-Man, Pokemon',
-                                              hintStyle: GoogleFonts.inter(
-                                                fontSize: 16.0,
-                                                color: AppColors.textSecondary,
-                                              ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: AppColors.neutral700,
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        AppConstants
-                                                            .radiusTextField4),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: AppColors.secondary,
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        AppConstants
-                                                            .radiusTextField4),
-                                              ),
-                                              errorBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: AppColors.error,
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        AppConstants
-                                                            .radiusTextField4),
-                                              ),
-                                              focusedErrorBorder:
-                                                  OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: AppColors.error,
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        AppConstants
-                                                            .radiusTextField4),
-                                              ),
+                                            decoration: appInputDecoration(
+                                              'e.g., Spider-Man, Pokemon',
                                             ),
-                                            style: GoogleFonts.inter(
-                                              fontSize: 14.0,
-                                              color: AppColors.textPrimary,
-                                            ),
+                                            style: appTextFieldStyle,
                                             cursorColor: AppColors.textPrimary,
                                             enableInteractiveSelection: true,
                                           ),
@@ -1010,63 +960,10 @@ class _HomeDashoardPromoteStep2WidgetState
                                                   autofocus: false,
                                                   enabled: true,
                                                   obscureText: false,
-                                                  decoration: InputDecoration(
-                                                    isDense: false,
-                                                    hintText: 'MM/DD/YYYY',
-                                                    hintStyle:
-                                                        GoogleFonts.inter(
-                                                      fontSize: 16.0,
-                                                      color: AppColors
-                                                          .textSecondary,
-                                                    ),
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: AppColors
-                                                            .neutral700,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius: BorderRadius
-                                                          .circular(AppConstants
-                                                              .radiusTextField4),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            AppColors.secondary,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius: BorderRadius
-                                                          .circular(AppConstants
-                                                              .radiusTextField4),
-                                                    ),
-                                                    errorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: AppColors.error,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius: BorderRadius
-                                                          .circular(AppConstants
-                                                              .radiusTextField4),
-                                                    ),
-                                                    focusedErrorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: AppColors.error,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius: BorderRadius
-                                                          .circular(AppConstants
-                                                              .radiusTextField4),
-                                                    ),
+                                                  decoration: appInputDecoration(
+                                                    'MM/DD/YYYY',
                                                   ),
-                                                  style: GoogleFonts.inter(
-                                                    fontSize: 14.0,
-                                                    color:
-                                                        AppColors.textPrimary,
-                                                  ),
+                                                  style: appTextFieldStyle,
                                                   cursorColor:
                                                       AppColors.textPrimary,
                                                   enableInteractiveSelection:
@@ -1090,63 +987,10 @@ class _HomeDashoardPromoteStep2WidgetState
                                                   autofocus: false,
                                                   enabled: true,
                                                   obscureText: false,
-                                                  decoration: InputDecoration(
-                                                    isDense: false,
-                                                    hintText: 'MM/DD/YYYY',
-                                                    hintStyle:
-                                                        GoogleFonts.inter(
-                                                      fontSize: 16.0,
-                                                      color: AppColors
-                                                          .textSecondary,
-                                                    ),
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: AppColors
-                                                            .neutral700,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius: BorderRadius
-                                                          .circular(AppConstants
-                                                              .radiusTextField4),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            AppColors.secondary,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius: BorderRadius
-                                                          .circular(AppConstants
-                                                              .radiusTextField4),
-                                                    ),
-                                                    errorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: AppColors.error,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius: BorderRadius
-                                                          .circular(AppConstants
-                                                              .radiusTextField4),
-                                                    ),
-                                                    focusedErrorBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: AppColors.error,
-                                                        width: 1.0,
-                                                      ),
-                                                      borderRadius: BorderRadius
-                                                          .circular(AppConstants
-                                                              .radiusTextField4),
-                                                    ),
+                                                  decoration: appInputDecoration(
+                                                    'MM/DD/YYYY',
                                                   ),
-                                                  style: GoogleFonts.inter(
-                                                    fontSize: 14.0,
-                                                    color:
-                                                        AppColors.textPrimary,
-                                                  ),
+                                                  style: appTextFieldStyle,
                                                   cursorColor:
                                                       AppColors.textPrimary,
                                                   enableInteractiveSelection:

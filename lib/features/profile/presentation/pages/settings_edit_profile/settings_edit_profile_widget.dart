@@ -5,6 +5,7 @@ import '/custom_code/actions/index.dart' as actions;
 import '/core/utils/form_validators.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_text_field.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -123,37 +124,6 @@ class _SettingsEditProfileWidgetState
     );
     if (!mounted) return;
     setState(() {});
-  }
-
-  InputDecoration _fieldDecoration({
-    required String hintText,
-    double hintFontSize = 16.0,
-  }) {
-    return InputDecoration(
-      isDense: false,
-      hintText: hintText,
-      hintStyle: GoogleFonts.inter(
-        fontWeight: FontWeight.normal,
-        fontSize: hintFontSize,
-        color: AppColors.textSecondary,
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: AppColors.neutral700, width: 1.0),
-        borderRadius: BorderRadius.circular(4.0),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: AppColors.secondary, width: 1.0),
-        borderRadius: BorderRadius.circular(4.0),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: AppColors.error, width: 1.0),
-        borderRadius: BorderRadius.circular(4.0),
-      ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: AppColors.error, width: 1.0),
-        borderRadius: BorderRadius.circular(4.0),
-      ),
-    );
   }
 
   @override
@@ -337,7 +307,7 @@ class _SettingsEditProfileWidgetState
                         autofocus: false,
                         autofillHints: [AutofillHints.username],
                         obscureText: false,
-                        decoration: _fieldDecoration(hintText: 'Username'),
+                        decoration: appInputDecoration('Username'),
                         style: GoogleFonts.inter(
                           color: AppColors.textPrimary,
                         ),
@@ -448,10 +418,8 @@ class _SettingsEditProfileWidgetState
                         autofocus: false,
                         textInputAction: TextInputAction.done,
                         obscureText: false,
-                        decoration: _fieldDecoration(
-                          hintText:
-                              'Describe yourself or your collection focus',
-                          hintFontSize: 15.0,
+                        decoration: appInputDecoration(
+                          'Describe yourself or your collection focus',
                         ),
                         style: GoogleFonts.inter(
                           color: AppColors.textPrimary,
@@ -523,7 +491,7 @@ class _SettingsEditProfileWidgetState
                         autofillHints: [AutofillHints.name],
                         textInputAction: TextInputAction.done,
                         obscureText: false,
-                        decoration: _fieldDecoration(hintText: 'First Name'),
+                        decoration: appInputDecoration('First Name'),
                         style: GoogleFonts.inter(
                           color: AppColors.textPrimary,
                         ),
@@ -581,7 +549,7 @@ class _SettingsEditProfileWidgetState
                         autofillHints: [AutofillHints.familyName],
                         textInputAction: TextInputAction.done,
                         obscureText: false,
-                        decoration: _fieldDecoration(hintText: 'Last Name'),
+                        decoration: appInputDecoration('Last Name'),
                         style: GoogleFonts.inter(
                           color: AppColors.textPrimary,
                         ),

@@ -1,7 +1,7 @@
 import '/backend/supabase/supabase.dart';
-import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_text_field.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/home/presentation/pages/seller_dashboard/shortlist_add/home_dashoard_shortlist_add_widget.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -139,52 +139,6 @@ class _HomeDashoardShortlistCreateStep2WidgetState
       }
     });
   }
-
-  InputDecoration _buildInputDecoration(String hintText,
-      {double fontSize = 16.0, Widget? prefixIcon}) {
-    return InputDecoration(
-      isDense: false,
-      hintText: hintText,
-      hintStyle: GoogleFonts.inter(
-        fontSize: fontSize,
-        color: AppColors.textSecondary,
-      ),
-      prefixIcon: prefixIcon,
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: AppColors.neutral700,
-          width: 1.0,
-        ),
-        borderRadius: BorderRadius.circular(AppConstants.radiusTextField4),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: AppColors.secondary,
-          width: 1.0,
-        ),
-        borderRadius: BorderRadius.circular(AppConstants.radiusTextField4),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: AppColors.error,
-          width: 1.0,
-        ),
-        borderRadius: BorderRadius.circular(AppConstants.radiusTextField4),
-      ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: AppColors.error,
-          width: 1.0,
-        ),
-        borderRadius: BorderRadius.circular(AppConstants.radiusTextField4),
-      ),
-    );
-  }
-
-  TextStyle get _bodyStyle => GoogleFonts.inter(
-        fontSize: 14.0,
-        color: AppColors.textPrimary,
-      );
 
   Color _statusColor(String? status) {
     switch (status) {
@@ -626,11 +580,11 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                   autofocus: false,
                                   enabled: true,
                                   obscureText: false,
-                                  decoration: _buildInputDecoration('0.00').copyWith(
+                                  decoration: appInputDecoration('0.00').copyWith(
                                     prefixText: '% ',
                                     prefixStyle: GoogleFonts.inter(fontSize: 16.0, color: AppColors.textSecondary),
                                   ),
-                                  style: _bodyStyle,
+                                  style: appTextFieldStyle,
                                   keyboardType: TextInputType.number,
                                   cursorColor: AppColors.textPrimary,
                                   enableInteractiveSelection: true,
@@ -655,8 +609,8 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                 autofocus: false,
                                 enabled: true,
                                 obscureText: false,
-                                decoration: _buildInputDecoration('Notes'),
-                                style: _bodyStyle,
+                                decoration: appInputDecoration('Notes'),
+                                style: appTextFieldStyle,
                                 maxLines: null,
                                 minLines: 4,
                                 keyboardType: TextInputType.multiline,
@@ -708,16 +662,15 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                 autofocus: false,
                                 enabled: true,
                                 obscureText: false,
-                                decoration: _buildInputDecoration(
+                                decoration: appInputDecoration(
                                   'Search your shortlist',
-                                  fontSize: 15.0,
-                                  prefixIcon: Icon(
+                                  prefix: Icon(
                                     Icons.search,
                                     color: Colors.white,
                                     size: 24.0,
                                   ),
                                 ),
-                                style: _bodyStyle,
+                                style: appTextFieldStyle,
                                 cursorColor: AppColors.textPrimary,
                                 enableInteractiveSelection: true,
                               ),

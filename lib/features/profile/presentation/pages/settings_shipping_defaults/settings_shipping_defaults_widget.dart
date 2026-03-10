@@ -6,8 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import '/core/theme/app_colors.dart';
-import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_text_field.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/auth/domain/models/user_settings_model.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
@@ -161,15 +161,10 @@ class _SettingsShippingDefaultsWidgetState
                                 autofocus: false,
                                 enabled: true,
                                 obscureText: false,
-                                decoration: InputDecoration(
-                                  isDense: false,
-                                  hintText: '0.00',
-                                  hintStyle: GoogleFonts.inter(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16.0,
-                                  ),
-                                  prefixIcon: Padding(
-                                    padding: EdgeInsets.only(left: 12.0, right: 4.0),
+                                decoration: appInputDecoration(
+                                  '0.00',
+                                  prefix: Padding(
+                                    padding: EdgeInsets.only(right: 4.0),
                                     child: Text(
                                       '\$',
                                       style: GoogleFonts.inter(
@@ -178,46 +173,8 @@ class _SettingsShippingDefaultsWidgetState
                                       ),
                                     ),
                                   ),
-                                  prefixIconConstraints: BoxConstraints(
-                                    minWidth: 0,
-                                    minHeight: 0,
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.neutral700,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.secondary,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
                                 ),
-                                style: GoogleFonts.inter(
-                                  fontSize: 14.0,
-                                ),
+                                style: appTextFieldStyle,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.allow(
                                       RegExp(r'^\d*\.?\d{0,2}')),
@@ -271,15 +228,10 @@ class _SettingsShippingDefaultsWidgetState
                                 autofocus: false,
                                 enabled: true,
                                 obscureText: false,
-                                decoration: InputDecoration(
-                                  isDense: false,
-                                  hintText: '0.00',
-                                  hintStyle: GoogleFonts.inter(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16.0,
-                                  ),
-                                  prefixIcon: Padding(
-                                    padding: EdgeInsets.only(left: 12.0, right: 4.0),
+                                decoration: appInputDecoration(
+                                  '0.00',
+                                  prefix: Padding(
+                                    padding: EdgeInsets.only(right: 4.0),
                                     child: Text(
                                       '\$',
                                       style: GoogleFonts.inter(
@@ -288,46 +240,8 @@ class _SettingsShippingDefaultsWidgetState
                                       ),
                                     ),
                                   ),
-                                  prefixIconConstraints: BoxConstraints(
-                                    minWidth: 0,
-                                    minHeight: 0,
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.neutral700,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.secondary,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
                                 ),
-                                style: GoogleFonts.inter(
-                                  fontSize: 14.0,
-                                ),
+                                style: appTextFieldStyle,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.allow(
                                       RegExp(r'^\d*\.?\d{0,2}')),

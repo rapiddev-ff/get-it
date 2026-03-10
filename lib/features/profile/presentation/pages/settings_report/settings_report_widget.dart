@@ -9,7 +9,7 @@ import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/backend/supabase/database/tables/support_reports.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/core/theme/app_colors.dart';
-import '/core/constants/app_constants.dart';
+import '/core/widgets/app_text_field.dart';
 import '/core/utils/list_extensions.dart';
 import 'settings_report_model.dart';
 export 'settings_report_model.dart';
@@ -174,47 +174,8 @@ class _SettingsReportWidgetState extends State<SettingsReportWidget> {
                             enabled: true,
                             textInputAction: TextInputAction.done,
                             obscureText: false,
-                            decoration: InputDecoration(
-                              isDense: false,
-                              hintText:
-                                  'Please give us as much detail about the problem you are experiencing.',
-                              hintStyle: GoogleFonts.inter(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 15.0,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: AppColors.neutral700,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(
-                                    AppConstants.radiusTextField4),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: AppColors.secondary,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(
-                                    AppConstants.radiusTextField4),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: AppColors.error,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(
-                                    AppConstants.radiusTextField4),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: AppColors.error,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(
-                                    AppConstants.radiusTextField4),
-                              ),
-                            ),
+                            decoration: appInputDecoration(
+                                'Please give us as much detail about the problem you are experiencing.'),
                             style: GoogleFonts.inter(
                               fontSize: 14.0,
                             ),

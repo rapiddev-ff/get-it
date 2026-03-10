@@ -1,6 +1,6 @@
-import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_text_field.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/home/presentation/pages/seller_dashboard/shortlist_create_step2/home_dashoard_shortlist_create_step2_widget.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -124,50 +124,6 @@ class _HomeDashoardShortlistCreateWidgetState
     );
   }
 
-  InputDecoration _buildInputDecoration(String hintText) {
-    return InputDecoration(
-      isDense: false,
-      hintText: hintText,
-      hintStyle: GoogleFonts.inter(
-        fontSize: 16.0,
-        color: AppColors.textSecondary,
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: AppColors.neutral700,
-          width: 1.0,
-        ),
-        borderRadius: BorderRadius.circular(AppConstants.radiusTextField4),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: AppColors.secondary,
-          width: 1.0,
-        ),
-        borderRadius: BorderRadius.circular(AppConstants.radiusTextField4),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: AppColors.error,
-          width: 1.0,
-        ),
-        borderRadius: BorderRadius.circular(AppConstants.radiusTextField4),
-      ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: AppColors.error,
-          width: 1.0,
-        ),
-        borderRadius: BorderRadius.circular(AppConstants.radiusTextField4),
-      ),
-    );
-  }
-
-  TextStyle get _bodyStyle => GoogleFonts.inter(
-        fontSize: 14.0,
-        color: AppColors.textPrimary,
-      );
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -268,8 +224,8 @@ class _HomeDashoardShortlistCreateWidgetState
                           enabled: true,
                           obscureText: false,
                           decoration:
-                              _buildInputDecoration('e.g., Comic Con 2025'),
-                          style: _bodyStyle,
+                              appInputDecoration('e.g., Comic Con 2025'),
+                          style: appTextFieldStyle,
                           cursorColor: AppColors.textPrimary,
                           enableInteractiveSelection: true,
                         ),
@@ -304,8 +260,8 @@ class _HomeDashoardShortlistCreateWidgetState
                           enabled: true,
                           obscureText: false,
                           decoration:
-                              _buildInputDecoration('e.g., San Diego Comc Con'),
-                          style: _bodyStyle,
+                              appInputDecoration('e.g., San Diego Comc Con'),
+                          style: appTextFieldStyle,
                           cursorColor: AppColors.textPrimary,
                           enableInteractiveSelection: true,
                         ),
@@ -339,7 +295,7 @@ class _HomeDashoardShortlistCreateWidgetState
                                         horizontal: 12.0, vertical: 16.0),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
+                                          4.0),
                                       border: Border.all(
                                         color: AppColors.neutral700,
                                         width: 1.0,
@@ -383,7 +339,7 @@ class _HomeDashoardShortlistCreateWidgetState
                                         horizontal: 12.0, vertical: 16.0),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(
-                                          AppConstants.radiusTextField4),
+                                          4.0),
                                       border: Border.all(
                                         color: AppColors.neutral700,
                                         width: 1.0,

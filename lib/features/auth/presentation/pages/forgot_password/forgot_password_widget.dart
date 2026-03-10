@@ -11,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_text_field.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/auth/presentation/pages/forgot_password_step2/forgot_password_step2_widget.dart';
 import 'forgot_password_model.dart';
@@ -166,47 +167,8 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                                 autofocus: false,
                                 enabled: true,
                                 obscureText: false,
-                                decoration: InputDecoration(
-                                  isDense: false,
-                                  hintText: 'Your email address',
-                                  hintStyle: GoogleFonts.inter(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16.0,
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.neutral700,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.secondary,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: AppColors.error,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        AppConstants.radiusTextField4),
-                                  ),
-                                ),
-                                style: GoogleFonts.inter(),
+                                decoration: appInputDecoration('Your email address'),
+                                style: appTextFieldStyle,
                                 keyboardType: TextInputType.emailAddress,
                                 cursorColor: AppColors.textPrimary,
                                 enableInteractiveSelection: true,

@@ -4,6 +4,7 @@ import '/features/checkout/domain/models/billing_details_model.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/core/theme/app_colors.dart';
 import '/core/utils/form_validators.dart';
+import '/core/widgets/app_text_field.dart';
 import '/core/utils/geo_data.dart';
 import '/core/utils/list_extensions.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
@@ -85,40 +86,6 @@ class _SettingsPaymentMethodAddWidgetState
     _model.dispose();
 
     super.dispose();
-  }
-
-  static InputDecoration _fieldDecoration({
-    required String hintText,
-  }) {
-    return InputDecoration(
-      isDense: false,
-      hintText: hintText,
-      hintStyle: GoogleFonts.inter(
-        fontWeight: FontWeight.normal,
-        fontSize: 16.0,
-        color: AppColors.textSecondary,
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: AppColors.neutral700, width: 1.0),
-        borderRadius: BorderRadius.circular(4.0),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: AppColors.secondary, width: 1.0),
-        borderRadius: BorderRadius.circular(4.0),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: AppColors.error, width: 1.0),
-        borderRadius: BorderRadius.circular(4.0),
-      ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: AppColors.error, width: 1.0),
-        borderRadius: BorderRadius.circular(4.0),
-      ),
-    );
-  }
-
-  static TextStyle _bodyStyle() {
-    return GoogleFonts.inter(fontSize: 14.0, color: AppColors.textPrimary);
   }
 
   static TextStyle _labelStyle({double fontSize = 15.0}) {
@@ -221,10 +188,8 @@ class _SettingsPaymentMethodAddWidgetState
                         ),
                         autofocus: false,
                         obscureText: false,
-                        decoration: _fieldDecoration(
-                          hintText: 'Enter 16 digit card number',
-                        ),
-                        style: _bodyStyle(),
+                        decoration: appInputDecoration('Enter 16 digit card number'),
+                        style: appTextFieldStyle,
                         keyboardType: TextInputType.number,
                         cursorColor: AppColors.textPrimary,
                         inputFormatters: [_model.cardNumberMask],
@@ -255,9 +220,8 @@ class _SettingsPaymentMethodAddWidgetState
                                   ),
                                   autofocus: false,
                                   obscureText: false,
-                                  decoration:
-                                      _fieldDecoration(hintText: 'MM/YY'),
-                                  style: _bodyStyle(),
+                                  decoration: appInputDecoration('MM/YY'),
+                                  style: appTextFieldStyle,
                                   keyboardType: TextInputType.number,
                                   cursorColor: AppColors.textPrimary,
                                   inputFormatters: [_model.expireDateMask],
@@ -285,8 +249,8 @@ class _SettingsPaymentMethodAddWidgetState
                                   ),
                                   autofocus: false,
                                   obscureText: false,
-                                  decoration: _fieldDecoration(hintText: 'CVC'),
-                                  style: _bodyStyle(),
+                                  decoration: appInputDecoration('CVC'),
+                                  style: appTextFieldStyle,
                                   keyboardType: TextInputType.number,
                                   cursorColor: AppColors.textPrimary,
                                   inputFormatters: [_model.textFieldaCVCMask],
@@ -317,10 +281,8 @@ class _SettingsPaymentMethodAddWidgetState
                         ),
                         autofocus: false,
                         obscureText: false,
-                        decoration: _fieldDecoration(
-                          hintText: 'Full name as shown as card',
-                        ),
-                        style: _bodyStyle(),
+                        decoration: appInputDecoration('Full name as shown as card'),
+                        style: appTextFieldStyle,
                         cursorColor: AppColors.textPrimary,
                       ),
                     ),
@@ -356,10 +318,8 @@ class _SettingsPaymentMethodAddWidgetState
                         ),
                         autofocus: false,
                         obscureText: false,
-                        decoration: _fieldDecoration(
-                          hintText: 'example@example.com',
-                        ),
-                        style: _bodyStyle(),
+                        decoration: appInputDecoration('example@example.com'),
+                        style: appTextFieldStyle,
                         keyboardType: TextInputType.emailAddress,
                         cursorColor: AppColors.textPrimary,
                       ),
@@ -385,10 +345,8 @@ class _SettingsPaymentMethodAddWidgetState
                         autofocus: false,
                         autofillHints: [AutofillHints.name],
                         obscureText: false,
-                        decoration: _fieldDecoration(
-                          hintText: 'Enter full name',
-                        ),
-                        style: _bodyStyle(),
+                        decoration: appInputDecoration('Enter full name'),
+                        style: appTextFieldStyle,
                         cursorColor: AppColors.textPrimary,
                       ),
                     ),
@@ -413,10 +371,8 @@ class _SettingsPaymentMethodAddWidgetState
                         autofocus: false,
                         autofillHints: [AutofillHints.streetAddressLine1],
                         obscureText: false,
-                        decoration: _fieldDecoration(
-                          hintText: '123, Main street',
-                        ),
-                        style: _bodyStyle(),
+                        decoration: appInputDecoration('123, Main street'),
+                        style: appTextFieldStyle,
                         cursorColor: AppColors.textPrimary,
                       ),
                     ),
@@ -437,10 +393,8 @@ class _SettingsPaymentMethodAddWidgetState
                         autofocus: false,
                         autofillHints: [AutofillHints.streetAddressLine2],
                         obscureText: false,
-                        decoration: _fieldDecoration(
-                          hintText: 'Apartment, suite, etc. (optional)',
-                        ),
-                        style: _bodyStyle(),
+                        decoration: appInputDecoration('Apartment, suite, etc. (optional)'),
+                        style: appTextFieldStyle,
                         cursorColor: AppColors.textPrimary,
                       ),
                     ),
@@ -468,7 +422,7 @@ class _SettingsPaymentMethodAddWidgetState
                                       .map((c) => DropdownMenuItem(
                                             value: c['code'],
                                             child: Text(c['name']!,
-                                                style: _bodyStyle()),
+                                                style: appTextFieldStyle),
                                           ))
                                       .toList(),
                                   onChanged: (val) => setState(
@@ -480,7 +434,7 @@ class _SettingsPaymentMethodAddWidgetState
                                     color: AppColors.textSecondary,
                                     size: 24.0,
                                   ),
-                                  style: _bodyStyle(),
+                                  style: appTextFieldStyle,
                                   isExpanded: true,
                                 ),
                               ),
@@ -509,7 +463,7 @@ class _SettingsPaymentMethodAddWidgetState
                                             .map((name) => DropdownMenuItem(
                                                   value: name,
                                                   child: Text(name,
-                                                      style: _bodyStyle()),
+                                                      style: appTextFieldStyle),
                                                 ))
                                             .toList(),
                                         onChanged: (val) => setState(() =>
@@ -523,7 +477,7 @@ class _SettingsPaymentMethodAddWidgetState
                                           color: AppColors.textSecondary,
                                           size: 24.0,
                                         ),
-                                        style: _bodyStyle(),
+                                        style: appTextFieldStyle,
                                         isExpanded: true,
                                       ),
                                     );
@@ -540,10 +494,8 @@ class _SettingsPaymentMethodAddWidgetState
                                         ),
                                         autofocus: false,
                                         obscureText: false,
-                                        decoration: _fieldDecoration(
-                                          hintText: 'State',
-                                        ),
-                                        style: _bodyStyle(),
+                                        decoration: appInputDecoration('State'),
+                                        style: appTextFieldStyle,
                                         cursorColor: AppColors.textPrimary,
                                       ),
                                     );
@@ -580,9 +532,8 @@ class _SettingsPaymentMethodAddWidgetState
                                   ),
                                   autofocus: false,
                                   obscureText: false,
-                                  decoration:
-                                      _fieldDecoration(hintText: 'City'),
-                                  style: _bodyStyle(),
+                                  decoration: appInputDecoration('City'),
+                                  style: appTextFieldStyle,
                                   cursorColor: AppColors.textPrimary,
                                 ),
                               ),
@@ -607,9 +558,8 @@ class _SettingsPaymentMethodAddWidgetState
                                   ),
                                   autofocus: false,
                                   obscureText: false,
-                                  decoration:
-                                      _fieldDecoration(hintText: '10001'),
-                                  style: _bodyStyle(),
+                                  decoration: appInputDecoration('10001'),
+                                  style: appTextFieldStyle,
                                   keyboardType: TextInputType.number,
                                   cursorColor: AppColors.textPrimary,
                                 ),
