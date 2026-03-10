@@ -17,9 +17,6 @@ import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import '/features/auth/presentation/pages/permissions/permissions_widget.dart';
-import 'phone_verification_page2_model.dart';
-
-export 'phone_verification_page2_model.dart';
 
 class PhoneVerificationPage2Widget extends ConsumerStatefulWidget {
   const PhoneVerificationPage2Widget({
@@ -42,29 +39,51 @@ class PhoneVerificationPage2Widget extends ConsumerStatefulWidget {
 class _PhoneVerificationPage2WidgetState
     extends ConsumerState<PhoneVerificationPage2Widget>
     with KeyboardVisibilityMixin {
-  late PhoneVerificationPage2Model _model;
+  bool isPinSet = false;
+  bool errorCodeIncorrect = false;
+  bool errorCodeExpired = false;
+  bool errorMaxAttemptsReached = false;
+  bool errorOther = false;
+
+  late final TextEditingController pinCodeController;
+  FocusNode? pinCodeFocusNode;
+
+  final timerInitialTimeMs = 59000;
+  int timerMilliseconds = 59000;
+  String timerValue = StopWatchTimer.getDisplayTime(
+    59000,
+    hours: false,
+    milliSecond: false,
+  );
+  late final StopWatchTimer timerController;
+
+  ApiCallResponse? sendVerificationRes;
+  ApiCallResponse? verifyCodeRes;
 
   Key _shakeKey = UniqueKey();
 
   @override
   void initState() {
     super.initState();
-    _model = PhoneVerificationPage2Model();
-    _model.initState(context);
+
+    pinCodeController = TextEditingController();
+    timerController = StopWatchTimer(mode: StopWatchMode.countDown);
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.timerController.onStartTimer();
+      timerController.onStartTimer();
     });
 
-    _model.pinCodeFocusNode ??= FocusNode();
+    pinCodeFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
-    _model.dispose();
+    pinCodeFocusNode?.dispose();
+    pinCodeController.dispose();
+    timerController.dispose();
     super.dispose();
   }
 
@@ -143,7 +162,7 @@ class _PhoneVerificationPage2WidgetState
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               enableActiveFill: false,
                               autoFocus: true,
-                              focusNode: _model.pinCodeFocusNode,
+                              focusNode: pinCodeFocusNode,
                               enablePinAutofill: false,
                               errorTextSpace: 16.0,
                               showCursor: true,
@@ -163,15 +182,12 @@ class _PhoneVerificationPage2WidgetState
                                 inactiveFillColor: AppColors.surfaceLight,
                                 selectedFillColor: AppColors.surfaceLight,
                               ),
-                              controller: _model.pinCodeController,
+                              controller: pinCodeController,
                               onChanged: (_) async {
                                 setState(() {});
                               },
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
-                              validator: (value) => _model
-                                  .pinCodeControllerValidator
-                                  ?.call(context, value),
                             ).animate().shake(
                                   hz: 1,
                                   offset: const Offset(5.0, 0.0),
@@ -180,7 +196,7 @@ class _PhoneVerificationPage2WidgetState
                                 ),
                           ),
                         ),
-                        if (_model.errorCodeIncorrect)
+                        if (errorCodeIncorrect)
                           Padding(
                             padding: const EdgeInsets.only(left: 16.0),
                             child: Text(
@@ -191,7 +207,7 @@ class _PhoneVerificationPage2WidgetState
                                   .copyWith(color: AppColors.error),
                             ).animate().fade(duration: 600.ms),
                           ),
-                        if (_model.errorOther)
+                        if (errorOther)
                           Padding(
                             padding: const EdgeInsets.only(left: 16.0),
                             child: Text(
@@ -202,7 +218,7 @@ class _PhoneVerificationPage2WidgetState
                                   .copyWith(color: AppColors.error),
                             ).animate().fade(duration: 600.ms),
                           ),
-                        if (_model.errorMaxAttemptsReached)
+                        if (errorMaxAttemptsReached)
                           Padding(
                             padding: const EdgeInsets.only(left: 16.0),
                             child: Text(
@@ -213,7 +229,7 @@ class _PhoneVerificationPage2WidgetState
                                   .copyWith(color: AppColors.error),
                             ).animate().fade(duration: 600.ms),
                           ),
-                        if (_model.timerMilliseconds > 0)
+                        if (timerMilliseconds > 0)
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -228,13 +244,12 @@ class _PhoneVerificationPage2WidgetState
                                 ),
                               ),
                               StreamBuilder<int>(
-                                stream: _model.timerController.rawTime,
-                                initialData: _model.timerInitialTimeMs,
+                                stream: timerController.rawTime,
+                                initialData: timerInitialTimeMs,
                                 builder: (context, snap) {
                                   final value = snap.data ?? 0;
-                                  _model.timerMilliseconds = value;
-                                  _model.timerValue =
-                                      StopWatchTimer.getDisplayTime(
+                                  timerMilliseconds = value;
+                                  timerValue = StopWatchTimer.getDisplayTime(
                                     value,
                                     hours: false,
                                     milliSecond: false,
@@ -246,7 +261,7 @@ class _PhoneVerificationPage2WidgetState
                                     });
                                   }
                                   return Text(
-                                    _model.timerValue,
+                                    timerValue,
                                     style: GoogleFonts.inter(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 11.0,
@@ -283,36 +298,34 @@ class _PhoneVerificationPage2WidgetState
                           padding: const EdgeInsets.only(bottom: 4.0),
                           child: InkWell(
                             onTap: () async {
-                              if (_model.timerMilliseconds > 0) {
+                              if (timerMilliseconds > 0) {
                                 return;
                               }
 
-                              _model.timerController.onResetTimer();
+                              timerController.onResetTimer();
 
-                              _model.errorCodeIncorrect = false;
-                              _model.errorCodeExpired = false;
-                              _model.errorMaxAttemptsReached = false;
-                              _model.errorOther = false;
+                              errorCodeIncorrect = false;
+                              errorCodeExpired = false;
+                              errorMaxAttemptsReached = false;
+                              errorOther = false;
                               setState(() {});
                               setState(() {
-                                _model.pinCodeController?.clear();
+                                pinCodeController.clear();
                               });
-                              _model.sendVerificationRes =
+                              sendVerificationRes =
                                   await TwillioGroup.sendVerificationCall.call(
                                 to: widget.phoneNumber!
                                     .replaceAll(RegExp(r'[^\d+]'), ''),
                               );
-                              if ((_model.sendVerificationRes?.succeeded ??
-                                  true)) {
-                                _model.timerController.onStartTimer();
+                              if ((sendVerificationRes?.succeeded ?? true)) {
+                                timerController.onStartTimer();
                               } else {
-                                if ((_model.sendVerificationRes?.statusCode ??
-                                        200) ==
+                                if ((sendVerificationRes?.statusCode ?? 200) ==
                                     429) {
-                                  _model.errorMaxAttemptsReached = true;
+                                  errorMaxAttemptsReached = true;
                                   setState(() {});
                                 } else {
-                                  _model.errorOther = true;
+                                  errorOther = true;
                                   setState(() {});
                                 }
 
@@ -362,20 +375,19 @@ class _PhoneVerificationPage2WidgetState
                       ),
                       AppGradientButton(
                         text: 'Verify',
-                        enabled: (_model.pinCodeController!.text.length) == 4,
+                        enabled: (pinCodeController.text.length) == 4,
                         borderRadius: 8.0,
-                        onPressed: ((_model.pinCodeController!.text.length) !=
-                                4)
+                        onPressed: ((pinCodeController.text.length) != 4)
                             ? null
                             : () async {
-                                _model.errorCodeIncorrect = false;
-                                _model.errorCodeExpired = false;
-                                _model.errorMaxAttemptsReached = false;
-                                _model.errorOther = false;
+                                errorCodeIncorrect = false;
+                                errorCodeExpired = false;
+                                errorMaxAttemptsReached = false;
+                                errorOther = false;
                                 setState(() {});
 
                                 // Bypass code for testing
-                                if (_model.pinCodeController!.text == '0000') {
+                                if (pinCodeController.text == '0000') {
                                   final cleanPhone = widget.phoneNumber!
                                       .replaceAll(RegExp(r'[^\d+]'), '');
                                   await UserProfilesTable().update(
@@ -398,15 +410,15 @@ class _PhoneVerificationPage2WidgetState
                                   return;
                                 }
 
-                                _model.verifyCodeRes =
+                                verifyCodeRes =
                                     await TwillioGroup.verifyCodeCall.call(
                                   to: widget.phoneNumber!
                                       .replaceAll(RegExp(r'[^\d+]'), ''),
-                                  code: _model.pinCodeController!.text,
+                                  code: pinCodeController.text,
                                 );
-                                if ((_model.verifyCodeRes?.succeeded ?? true)) {
+                                if ((verifyCodeRes?.succeeded ?? true)) {
                                   if (TwillioGroup.verifyCodeCall.isValid(
-                                        (_model.verifyCodeRes?.jsonBody ?? ''),
+                                        (verifyCodeRes?.jsonBody ?? ''),
                                       ) ==
                                       true) {
                                     await Future.wait([
@@ -437,24 +449,22 @@ class _PhoneVerificationPage2WidgetState
                                       context.pop();
                                     }
                                   } else {
-                                    _model.errorCodeIncorrect = true;
+                                    errorCodeIncorrect = true;
                                     setState(() {});
                                     _triggerShake();
                                   }
                                 } else {
-                                  if ((_model.verifyCodeRes?.statusCode ??
-                                          200) ==
+                                  if ((verifyCodeRes?.statusCode ?? 200) ==
                                       404) {
-                                    _model.errorCodeExpired = true;
+                                    errorCodeExpired = true;
                                     setState(() {});
-                                  } else if ((_model
-                                              .verifyCodeRes?.statusCode ??
+                                  } else if ((verifyCodeRes?.statusCode ??
                                           200) ==
                                       429) {
-                                    _model.errorMaxAttemptsReached = true;
+                                    errorMaxAttemptsReached = true;
                                     setState(() {});
                                   } else {
-                                    _model.errorOther = true;
+                                    errorOther = true;
                                     setState(() {});
                                   }
 

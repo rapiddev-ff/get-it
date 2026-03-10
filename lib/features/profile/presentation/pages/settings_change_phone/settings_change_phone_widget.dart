@@ -13,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'settings_change_phone_model.dart';
 
 class SettingsChangePhoneWidget extends StatefulWidget {
   const SettingsChangePhoneWidget({
@@ -33,22 +32,25 @@ class SettingsChangePhoneWidget extends StatefulWidget {
 
 class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
     with KeyboardVisibilityMixin {
-  late SettingsChangePhoneModel _model;
+  late final FocusNode textFieldFocusNode;
+  late final TextEditingController textController;
+  late final MaskTextInputFormatter textFieldMask;
+  ApiCallResponse? apiResultzpe;
 
   @override
   void initState() {
     super.initState();
-    _model = SettingsChangePhoneModel();
 
-    _model.textController ??= TextEditingController();
-    _model.textFieldFocusNode ??= FocusNode();
-    _model.textFieldFocusNode!.addListener(() => setState(() {}));
-    _model.textFieldMask = MaskTextInputFormatter(mask: '+# (###) ###-##-##');
+    textController = TextEditingController();
+    textFieldFocusNode = FocusNode();
+    textFieldFocusNode.addListener(() => setState(() {}));
+    textFieldMask = MaskTextInputFormatter(mask: '+# (###) ###-##-##');
   }
 
   @override
   void dispose() {
-    _model.dispose();
+    textFieldFocusNode.dispose();
+    textController.dispose();
     super.dispose();
   }
 
@@ -99,10 +101,10 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
                       Container(
                         width: double.infinity,
                         child: TextFormField(
-                          controller: _model.textController,
-                          focusNode: _model.textFieldFocusNode,
+                          controller: textController,
+                          focusNode: textFieldFocusNode,
                           onChanged: (_) => EasyDebounce.debounce(
-                            '_model.textController',
+                            'textController',
                             Duration(milliseconds: 100),
                             () => setState(() {}),
                           ),
@@ -114,21 +116,21 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
                           keyboardType: TextInputType.number,
                           cursorColor: AppColors.textPrimary,
                           enableInteractiveSelection: true,
-                          inputFormatters: [_model.textFieldMask],
+                          inputFormatters: [textFieldMask],
                         ),
                       ),
                       if ((FormValidators.phoneValidationResult(
-                                      _model.textController!.text) !=
+                                      textController.text) !=
                                   null &&
                               FormValidators.phoneValidationResult(
-                                      _model.textController!.text) !=
+                                      textController.text) !=
                                   '') &&
-                          (_model.textController!.text != ''))
+                          (textController.text != ''))
                         Padding(
                           padding: EdgeInsets.only(top: 4.0),
                           child: Text(
                             FormValidators.phoneValidationResult(
-                                    _model.textController!.text) ??
+                                    textController.text) ??
                                 'N/A',
                             style: Theme.of(context)
                                 .textTheme
@@ -148,20 +150,20 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
                     children: [
                       AppGradientButton(
                         text: 'Send',
-                        enabled: (_model.textController!.text != '') &&
+                        enabled: (textController.text != '') &&
                             (FormValidators.phoneValidationResult(
-                                        _model.textController!.text) ==
+                                        textController.text) ==
                                     null ||
                                 FormValidators.phoneValidationResult(
-                                        _model.textController!.text) ==
+                                        textController.text) ==
                                     ''),
                         onPressed: () async {
-                          _model.apiResultzpe =
+                          apiResultzpe =
                               await SupabaseRPCGroup.checkphoneexistsCall.call(
-                            userId: _model.textController!.text,
+                            userId: textController.text,
                           );
 
-                          if (_model.apiResultzpe?.jsonBody == true) {
+                          if (apiResultzpe?.jsonBody == true) {
                             await actions.toastificationshow(
                               context,
                               'Error',
@@ -171,7 +173,7 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
                           } else {
                             await TwillioGroup.sendVerificationCall.call(
                               to: FormValidators.formatPhoneNumber(
-                                  _model.textController!.text),
+                                  textController.text),
                             );
 
                             if (!mounted) return;
@@ -182,7 +184,7 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
                               PhoneVerificationPage2Widget.routeName,
                               queryParameters: {
                                 'phoneNumber': FormValidators.formatPhoneNumber(
-                                    _model.textController!.text),
+                                    textController.text),
                                 'isOnborading': widget.isOnboarding.toString(),
                               },
                             );

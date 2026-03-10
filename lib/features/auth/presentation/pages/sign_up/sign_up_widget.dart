@@ -24,9 +24,6 @@ import '/features/auth/presentation/pages/phone_verification_page/phone_verifica
 import '/features/auth/presentation/widgets/password_component/password_component_widget.dart';
 import '/features/profile/presentation/pages/settings_privacy/settings_privacy_widget.dart';
 import '/features/profile/presentation/pages/settings_terms/settings_terms_widget.dart';
-import 'sign_up_model.dart';
-
-export 'sign_up_model.dart';
 
 class SignUpWidget extends ConsumerStatefulWidget {
   const SignUpWidget({super.key});
@@ -40,7 +37,24 @@ class SignUpWidget extends ConsumerStatefulWidget {
 
 class _SignUpWidgetState extends ConsumerState<SignUpWidget>
     with KeyboardVisibilityMixin {
-  late SignUpModel _model;
+  bool errorEmailRequired = false;
+  bool errorEmailFormat = false;
+  bool errorPasswordRequired = false;
+  bool errorConfirmPasswordRequired = false;
+  bool emailAlreadyInUse = false;
+  bool checkBoxIsActive = false;
+  bool errorPaswordsDontMatch = false;
+
+  late final FocusNode textFieldFocusNode1;
+  late final TextEditingController emailTextController;
+  late final FocusNode textFieldFocusNode2;
+  late final TextEditingController passwordTextController;
+  bool passwordVisibility1 = false;
+  late final FocusNode textFieldFocusNode3;
+  late final TextEditingController confirmPasswordTextController;
+  bool passwordVisibility2 = false;
+
+  bool? isUserExist;
 
   static bool _checkEmailFormat(String email) {
     return RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
@@ -50,23 +64,26 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
   @override
   void initState() {
     super.initState();
-    _model = SignUpModel();
-    _model.initState(context);
 
-    _model.emailTextController ??= TextEditingController();
-    _model.textFieldFocusNode1 ??= FocusNode();
-    _model.textFieldFocusNode1!.addListener(() => setState(() {}));
-    _model.passwordTextController ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
-    _model.textFieldFocusNode2!.addListener(() => setState(() {}));
-    _model.confirmPasswordTextController ??= TextEditingController();
-    _model.textFieldFocusNode3 ??= FocusNode();
-    _model.textFieldFocusNode3!.addListener(() => setState(() {}));
+    emailTextController = TextEditingController();
+    textFieldFocusNode1 = FocusNode();
+    textFieldFocusNode1.addListener(() => setState(() {}));
+    passwordTextController = TextEditingController();
+    textFieldFocusNode2 = FocusNode();
+    textFieldFocusNode2.addListener(() => setState(() {}));
+    confirmPasswordTextController = TextEditingController();
+    textFieldFocusNode3 = FocusNode();
+    textFieldFocusNode3.addListener(() => setState(() {}));
   }
 
   @override
   void dispose() {
-    _model.dispose();
+    textFieldFocusNode1.dispose();
+    emailTextController.dispose();
+    textFieldFocusNode2.dispose();
+    passwordTextController.dispose();
+    textFieldFocusNode3.dispose();
+    confirmPasswordTextController.dispose();
     super.dispose();
   }
 
@@ -150,15 +167,15 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                               SizedBox(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.emailTextController,
-                                  focusNode: _model.textFieldFocusNode1,
+                                  controller: emailTextController,
+                                  focusNode: textFieldFocusNode1,
                                   onChanged: (_) => EasyDebounce.debounce(
-                                    '_model.emailTextController',
+                                    'emailTextController',
                                     const Duration(milliseconds: 100),
                                     () => setState(() {}),
                                   ),
                                   onFieldSubmitted: (_) async {
-                                    _model.textFieldFocusNode2?.requestFocus();
+                                    textFieldFocusNode2.requestFocus();
                                   },
                                   autofocus: false,
                                   obscureText: false,
@@ -170,7 +187,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                   enableInteractiveSelection: true,
                                 ),
                               ),
-                              if (_model.errorEmailRequired)
+                              if (errorEmailRequired)
                                 Padding(
                                   padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
@@ -181,7 +198,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                         .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
-                              if (_model.errorEmailFormat)
+                              if (errorEmailFormat)
                                 Padding(
                                   padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
@@ -192,7 +209,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                         .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
-                              if (_model.emailAlreadyInUse)
+                              if (emailAlreadyInUse)
                                 Padding(
                                   padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
@@ -231,29 +248,28 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                               SizedBox(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.passwordTextController,
-                                  focusNode: _model.textFieldFocusNode2,
+                                  controller: passwordTextController,
+                                  focusNode: textFieldFocusNode2,
                                   onChanged: (_) => EasyDebounce.debounce(
-                                    '_model.passwordTextController',
+                                    'passwordTextController',
                                     const Duration(milliseconds: 100),
                                     () => setState(() {}),
                                   ),
                                   onFieldSubmitted: (_) async {
-                                    _model.textFieldFocusNode3?.requestFocus();
+                                    textFieldFocusNode3.requestFocus();
                                   },
                                   autofocus: false,
-                                  obscureText: !_model.passwordVisibility1,
+                                  obscureText: !passwordVisibility1,
                                   decoration: appInputDecoration(
                                     'Your Password',
                                     suffixIcon: InkWell(
                                       onTap: () {
-                                        setState(() =>
-                                            _model.passwordVisibility1 =
-                                                !_model.passwordVisibility1);
+                                        setState(() => passwordVisibility1 =
+                                            !passwordVisibility1);
                                       },
                                       focusNode: FocusNode(skipTraversal: true),
                                       child: Icon(
-                                        _model.passwordVisibility1
+                                        passwordVisibility1
                                             ? Icons.visibility_outlined
                                             : Icons.visibility_off_outlined,
                                         color: Colors.white,
@@ -267,7 +283,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                   enableInteractiveSelection: true,
                                 ),
                               ),
-                              if (_model.errorPasswordRequired)
+                              if (errorPasswordRequired)
                                 Padding(
                                   padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
@@ -306,27 +322,25 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                               SizedBox(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller:
-                                      _model.confirmPasswordTextController,
-                                  focusNode: _model.textFieldFocusNode3,
+                                  controller: confirmPasswordTextController,
+                                  focusNode: textFieldFocusNode3,
                                   onChanged: (_) => EasyDebounce.debounce(
-                                    '_model.confirmPasswordTextController',
+                                    'confirmPasswordTextController',
                                     const Duration(milliseconds: 100),
                                     () => setState(() {}),
                                   ),
                                   autofocus: false,
-                                  obscureText: !_model.passwordVisibility2,
+                                  obscureText: !passwordVisibility2,
                                   decoration: appInputDecoration(
                                     'Confirm Your Password',
                                     suffixIcon: InkWell(
                                       onTap: () {
-                                        setState(() =>
-                                            _model.passwordVisibility2 =
-                                                !_model.passwordVisibility2);
+                                        setState(() => passwordVisibility2 =
+                                            !passwordVisibility2);
                                       },
                                       focusNode: FocusNode(skipTraversal: true),
                                       child: Icon(
-                                        _model.passwordVisibility2
+                                        passwordVisibility2
                                             ? Icons.visibility_outlined
                                             : Icons.visibility_off_outlined,
                                         color: Colors.white,
@@ -340,7 +354,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                   enableInteractiveSelection: true,
                                 ),
                               ),
-                              if (_model.errorConfirmPasswordRequired)
+                              if (errorConfirmPasswordRequired)
                                 Padding(
                                   padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
@@ -351,7 +365,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                         .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
-                              if (_model.errorPaswordsDontMatch)
+                              if (errorPaswordsDontMatch)
                                 Padding(
                                   padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
@@ -367,17 +381,15 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                 child: Column(
                                   children: [
                                     PasswordComponentWidget(
-                                      isActive: (_model.passwordTextController
-                                                  ?.text.length ??
-                                              0) >=
+                                      isActive: (passwordTextController
+                                              .text.length) >=
                                           8,
                                       text: 'Minimum 8 characters',
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(top: 4.0),
                                       child: PasswordComponentWidget(
-                                        isActive: _model
-                                            .passwordTextController!.text
+                                        isActive: passwordTextController.text
                                             .contains(RegExp(r'[A-Z]')),
                                         text: 'One uppercase letter (A-Z)',
                                       ),
@@ -385,8 +397,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                     Padding(
                                       padding: const EdgeInsets.only(top: 4.0),
                                       child: PasswordComponentWidget(
-                                        isActive: _model
-                                            .passwordTextController!.text
+                                        isActive: passwordTextController.text
                                             .contains(RegExp(r'\d')),
                                         text: 'One number (0-9)',
                                       ),
@@ -394,8 +405,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                     Padding(
                                       padding: const EdgeInsets.only(top: 4.0),
                                       child: PasswordComponentWidget(
-                                        isActive: _model
-                                            .passwordTextController!.text
+                                        isActive: passwordTextController.text
                                             .contains(RegExp(
                                                 r'[!@#\$%^&*(),.?":{}|<>_\-]')),
                                         text: 'One special character (!@#\$%)',
@@ -404,14 +414,11 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                     Padding(
                                       padding: const EdgeInsets.only(top: 4.0),
                                       child: PasswordComponentWidget(
-                                        isActive: (_model.passwordTextController
-                                                    ?.text ==
-                                                _model
-                                                    .confirmPasswordTextController
-                                                    ?.text) &&
-                                            (_model.passwordTextController
-                                                    ?.text !=
-                                                ''),
+                                        isActive: (passwordTextController
+                                                    .text ==
+                                                confirmPasswordTextController
+                                                    .text) &&
+                                            (passwordTextController.text != ''),
                                         text: 'Passwords match',
                                       ),
                                     ),
@@ -434,11 +441,10 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                     children: [
                       Row(
                         children: [
-                          if (!_model.checkBoxIsActive)
+                          if (!checkBoxIsActive)
                             InkWell(
                               onTap: () {
-                                _model.checkBoxIsActive =
-                                    !_model.checkBoxIsActive;
+                                checkBoxIsActive = !checkBoxIsActive;
                                 setState(() {});
                               },
                               child: Container(
@@ -452,11 +458,10 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                 ),
                               ),
                             ),
-                          if (_model.checkBoxIsActive)
+                          if (checkBoxIsActive)
                             InkWell(
                               onTap: () {
-                                _model.checkBoxIsActive =
-                                    !_model.checkBoxIsActive;
+                                checkBoxIsActive = !checkBoxIsActive;
                                 setState(() {});
                               },
                               child: Container(
@@ -528,8 +533,8 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                           ),
                         ].divide(const SizedBox(width: 8.0)),
                       ),
-                      if (!_model.checkBoxIsActive &&
-                          (_model.confirmPasswordTextController!.text != ''))
+                      if (!checkBoxIsActive &&
+                          (confirmPasswordTextController.text != ''))
                         Padding(
                           padding: const EdgeInsets.only(top: 4.0),
                           child: Text(
@@ -545,93 +550,89 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                         child: AppGradientButton(
                           text: 'Create Account',
                           onPressed: () async {
-                            _model.errorEmailRequired = false;
-                            _model.errorEmailFormat = false;
-                            _model.errorPasswordRequired = false;
-                            _model.errorConfirmPasswordRequired = false;
-                            _model.emailAlreadyInUse = false;
-                            _model.errorPaswordsDontMatch = false;
+                            errorEmailRequired = false;
+                            errorEmailFormat = false;
+                            errorPasswordRequired = false;
+                            errorConfirmPasswordRequired = false;
+                            emailAlreadyInUse = false;
+                            errorPaswordsDontMatch = false;
                             setState(() {});
 
-                            if (_model.emailTextController!.text != '') {
-                              _model.errorEmailRequired = false;
+                            if (emailTextController.text != '') {
+                              errorEmailRequired = false;
                               setState(() {});
                             } else {
-                              _model.errorEmailRequired = true;
+                              errorEmailRequired = true;
                               setState(() {});
                               return;
                             }
 
-                            if (_checkEmailFormat(
-                                _model.emailTextController!.text)) {
-                              _model.errorEmailFormat = false;
+                            if (_checkEmailFormat(emailTextController.text)) {
+                              errorEmailFormat = false;
                               setState(() {});
                             } else {
-                              _model.errorEmailFormat = true;
+                              errorEmailFormat = true;
                               setState(() {});
                               return;
                             }
 
-                            _model.isUserExist =
-                                await actions.checkIsEmailRegistered(
-                              _model.emailTextController!.text,
+                            isUserExist = await actions.checkIsEmailRegistered(
+                              emailTextController.text,
                             );
-                            if (!_model.isUserExist!) {
-                              _model.emailAlreadyInUse = false;
+                            if (!isUserExist!) {
+                              emailAlreadyInUse = false;
                               if (!mounted) return;
                               setState(() {});
                             } else {
-                              _model.emailAlreadyInUse = true;
+                              emailAlreadyInUse = true;
                               setState(() {});
                               return;
                             }
 
-                            if (_model.passwordTextController!.text != '') {
-                              _model.errorPasswordRequired = false;
+                            if (passwordTextController.text != '') {
+                              errorPasswordRequired = false;
                               setState(() {});
                             } else {
-                              _model.errorPasswordRequired = true;
+                              errorPasswordRequired = true;
                               setState(() {});
                               return;
                             }
 
-                            if (_model.confirmPasswordTextController!.text !=
-                                '') {
-                              _model.errorConfirmPasswordRequired = false;
+                            if (confirmPasswordTextController.text != '') {
+                              errorConfirmPasswordRequired = false;
                               setState(() {});
                             } else {
-                              _model.errorConfirmPasswordRequired = true;
+                              errorConfirmPasswordRequired = true;
                               setState(() {});
                               return;
                             }
 
-                            if (_model.passwordTextController!.text ==
-                                _model.confirmPasswordTextController!.text) {
-                              _model.errorPaswordsDontMatch = false;
+                            if (passwordTextController.text ==
+                                confirmPasswordTextController.text) {
+                              errorPaswordsDontMatch = false;
                               setState(() {});
                             } else {
-                              _model.errorPaswordsDontMatch = true;
+                              errorPaswordsDontMatch = true;
                               setState(() {});
                               return;
                             }
 
-                            if (!((_model.passwordTextController!.text.length >=
-                                    8) &&
-                                _model.passwordTextController!.text
+                            if (!((passwordTextController.text.length >= 8) &&
+                                passwordTextController.text
                                     .contains(RegExp(r'[A-Z]')) &&
-                                _model.passwordTextController!.text
+                                passwordTextController.text
                                     .contains(RegExp(r'\d')) &&
-                                _model.passwordTextController!.text.contains(
+                                passwordTextController.text.contains(
                                     RegExp(r'[!@#\$%^&*(),.?":{}|<>_\-]')))) {
                               return;
                             }
-                            if (!_model.checkBoxIsActive) {
+                            if (!checkBoxIsActive) {
                               HapticFeedback.lightImpact();
                               return;
                             }
 
-                            if (_model.passwordTextController!.text !=
-                                _model.confirmPasswordTextController!.text) {
+                            if (passwordTextController.text !=
+                                confirmPasswordTextController.text) {
                               actions.toastificationshow(context, 'Error',
                                   'Passwords don\'t match!', 'error');
                               return;
@@ -645,15 +646,15 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                             final user =
                                 await authManager.createAccountWithEmail(
                               context,
-                              _model.emailTextController!.text,
-                              _model.passwordTextController!.text,
+                              emailTextController.text,
+                              passwordTextController.text,
                             );
                             if (user == null) {
                               return;
                             }
 
                             await UserProfilesTable().insert({
-                              'email': _model.emailTextController!.text,
+                              'email': emailTextController.text,
                               'created_at': DateTime.now().toIso8601String(),
                               'user_id': ref.read(currentUserIdProvider),
                             });

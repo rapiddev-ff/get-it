@@ -20,9 +20,6 @@ import '/custom_code/actions/index.dart' as actions;
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/auth/presentation/pages/forgot_password/forgot_password_widget.dart';
 import '/features/auth/presentation/providers/auth_settings_provider.dart';
-import 'sign_in_model.dart';
-
-export 'sign_in_model.dart';
 
 class SignInWidget extends ConsumerStatefulWidget {
   const SignInWidget({super.key});
@@ -36,7 +33,17 @@ class SignInWidget extends ConsumerStatefulWidget {
 
 class _SignInWidgetState extends ConsumerState<SignInWidget>
     with KeyboardVisibilityMixin {
-  late SignInModel _model;
+  bool errorEmailRequired = false;
+  bool errorEmailFormat = false;
+  bool errorPasswordRequired = false;
+  bool keepSignedIn = false;
+  String? errorSignIn;
+
+  late final FocusNode textFieldFocusNode1;
+  late final TextEditingController emailTextController;
+  late final FocusNode textFieldFocusNode2;
+  late final TextEditingController passwordTextController;
+  bool passwordVisibility = false;
 
   static final _emailRegExp =
       RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
@@ -44,8 +51,6 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
   @override
   void initState() {
     super.initState();
-    _model = SignInModel();
-    _model.initState(context);
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -54,18 +59,21 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
       );
     });
 
-    _model.emailTextController ??= TextEditingController();
-    _model.textFieldFocusNode1 ??= FocusNode();
+    emailTextController = TextEditingController();
+    textFieldFocusNode1 = FocusNode();
     if (!mounted) return;
-    _model.textFieldFocusNode1!.addListener(() => setState(() {}));
-    _model.passwordTextController ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
-    _model.textFieldFocusNode2!.addListener(() => setState(() {}));
+    textFieldFocusNode1.addListener(() => setState(() {}));
+    passwordTextController = TextEditingController();
+    textFieldFocusNode2 = FocusNode();
+    textFieldFocusNode2.addListener(() => setState(() {}));
   }
 
   @override
   void dispose() {
-    _model.dispose();
+    textFieldFocusNode1.dispose();
+    emailTextController.dispose();
+    textFieldFocusNode2.dispose();
+    passwordTextController.dispose();
     super.dispose();
   }
 
@@ -133,15 +141,15 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                               Container(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.emailTextController,
-                                  focusNode: _model.textFieldFocusNode1,
+                                  controller: emailTextController,
+                                  focusNode: textFieldFocusNode1,
                                   onChanged: (_) => EasyDebounce.debounce(
-                                    '_model.emailTextController',
+                                    'emailTextController',
                                     Duration(milliseconds: 100),
                                     () => setState(() {}),
                                   ),
                                   onFieldSubmitted: (_) async {
-                                    _model.textFieldFocusNode2?.requestFocus();
+                                    textFieldFocusNode2.requestFocus();
                                   },
                                   autofocus: false,
                                   enabled: true,
@@ -154,7 +162,7 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                                   enableInteractiveSelection: true,
                                 ),
                               ),
-                              if (_model.errorEmailRequired)
+                              if (errorEmailRequired)
                                 Padding(
                                   padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
@@ -165,7 +173,7 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                                         .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
-                              if (_model.errorEmailFormat)
+                              if (errorEmailFormat)
                                 Padding(
                                   padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
@@ -199,27 +207,26 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                               Container(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.passwordTextController,
-                                  focusNode: _model.textFieldFocusNode2,
+                                  controller: passwordTextController,
+                                  focusNode: textFieldFocusNode2,
                                   onChanged: (_) => EasyDebounce.debounce(
-                                    '_model.passwordTextController',
+                                    'passwordTextController',
                                     Duration(milliseconds: 100),
                                     () => setState(() {}),
                                   ),
                                   autofocus: false,
                                   enabled: true,
-                                  obscureText: !_model.passwordVisibility,
+                                  obscureText: !passwordVisibility,
                                   decoration: appInputDecoration(
                                     'Your Password',
                                     suffixIcon: InkWell(
                                       onTap: () async {
-                                        setState(() =>
-                                            _model.passwordVisibility =
-                                                !_model.passwordVisibility);
+                                        setState(() => passwordVisibility =
+                                            !passwordVisibility);
                                       },
                                       focusNode: FocusNode(skipTraversal: true),
                                       child: Icon(
-                                        _model.passwordVisibility
+                                        passwordVisibility
                                             ? Icons.visibility_outlined
                                             : Icons.visibility_off_outlined,
                                         color: Colors.white,
@@ -233,7 +240,7 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                                   enableInteractiveSelection: true,
                                 ),
                               ),
-                              if (_model.errorPasswordRequired)
+                              if (errorPasswordRequired)
                                 Padding(
                                   padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
@@ -244,12 +251,11 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                                         .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
-                              if (_model.errorSignIn != null &&
-                                  _model.errorSignIn != '')
+                              if (errorSignIn != null && errorSignIn != '')
                                 Padding(
                                   padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
-                                    _model.errorSignIn ?? 'n/A',
+                                    errorSignIn ?? 'n/A',
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodySmall!
@@ -260,11 +266,10 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                                 padding: EdgeInsets.only(top: 24.0),
                                 child: Row(
                                   children: [
-                                    if (!_model.keepSignedIn)
+                                    if (!keepSignedIn)
                                       InkWell(
                                         onTap: () async {
-                                          _model.keepSignedIn =
-                                              !_model.keepSignedIn;
+                                          keepSignedIn = !keepSignedIn;
                                           setState(() {});
                                         },
                                         child: Container(
@@ -279,11 +284,10 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                                           ),
                                         ),
                                       ),
-                                    if (_model.keepSignedIn)
+                                    if (keepSignedIn)
                                       InkWell(
                                         onTap: () async {
-                                          _model.keepSignedIn =
-                                              !_model.keepSignedIn;
+                                          keepSignedIn = !keepSignedIn;
                                           setState(() {});
                                         },
                                         child: Container(
@@ -347,33 +351,32 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                       AppGradientButton(
                         text: 'Sign In',
                         onPressed: () async {
-                          _model.errorEmailRequired = false;
-                          _model.errorEmailFormat = false;
-                          _model.errorPasswordRequired = false;
+                          errorEmailRequired = false;
+                          errorEmailFormat = false;
+                          errorPasswordRequired = false;
                           setState(() {});
-                          if (_model.emailTextController!.text != '') {
-                            _model.errorEmailRequired = false;
+                          if (emailTextController.text != '') {
+                            errorEmailRequired = false;
                             setState(() {});
                           } else {
-                            _model.errorEmailRequired = true;
+                            errorEmailRequired = true;
                             setState(() {});
                           }
 
-                          if (_emailRegExp
-                              .hasMatch(_model.emailTextController!.text)) {
-                            _model.errorEmailFormat = false;
+                          if (_emailRegExp.hasMatch(emailTextController.text)) {
+                            errorEmailFormat = false;
                             setState(() {});
                           } else {
-                            _model.errorEmailFormat = true;
+                            errorEmailFormat = true;
                             setState(() {});
                             return;
                           }
 
-                          if (_model.passwordTextController!.text != '') {
-                            _model.errorPasswordRequired = false;
+                          if (passwordTextController.text != '') {
+                            errorPasswordRequired = false;
                             setState(() {});
                           } else {
-                            _model.errorPasswordRequired = true;
+                            errorPasswordRequired = true;
                             setState(() {});
                             return;
                           }
@@ -382,13 +385,13 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
 
                           // Persist keepSignedIn preference via provider
                           await ref.read(keepSignedInProvider.notifier).set(
-                                _model.keepSignedIn,
+                                keepSignedIn,
                               );
 
                           final user = await authManager.signInWithEmail(
                             context,
-                            _model.emailTextController!.text,
-                            _model.passwordTextController!.text,
+                            emailTextController.text,
+                            passwordTextController.text,
                           );
 
                           if (!mounted) return;
@@ -401,7 +404,7 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                               },
                             );
                           } else {
-                            _model.errorSignIn =
+                            errorSignIn =
                                 'Email or password is incorrect. Please try again';
                             setState(() {});
                           }

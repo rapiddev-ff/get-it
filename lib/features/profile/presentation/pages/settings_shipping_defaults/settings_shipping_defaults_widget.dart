@@ -13,8 +13,6 @@ import '/core/widgets/dismiss_keyboard.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/auth/domain/models/user_settings_model.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
-import 'settings_shipping_defaults_model.dart';
-export 'settings_shipping_defaults_model.dart';
 
 class SettingsShippingDefaultsWidget extends ConsumerStatefulWidget {
   const SettingsShippingDefaultsWidget({super.key});
@@ -29,7 +27,11 @@ class SettingsShippingDefaultsWidget extends ConsumerStatefulWidget {
 
 class _SettingsShippingDefaultsWidgetState
     extends ConsumerState<SettingsShippingDefaultsWidget> {
-  late SettingsShippingDefaultsModel _model;
+  late final FocusNode textFieldFocusNode1;
+  late final TextEditingController textController1;
+  late final FocusNode textFieldFocusNode2;
+  late final TextEditingController textController2;
+  dynamic saveShippingSettings;
 
   static String _formatDecimal(double? value) {
     if (value == null) return '';
@@ -39,23 +41,24 @@ class _SettingsShippingDefaultsWidgetState
   @override
   void initState() {
     super.initState();
-    _model = SettingsShippingDefaultsModel();
 
     final userData = ref.read(authProvider);
-    _model.textController1 ??= TextEditingController(
+    textController1 = TextEditingController(
         text: _formatDecimal(userData.userSettings?.defaultFlatShippingRate));
-    _model.textFieldFocusNode1 ??= FocusNode();
-    _model.textFieldFocusNode1!.addListener(() => setState(() {}));
-    _model.textController2 ??= TextEditingController(
+    textFieldFocusNode1 = FocusNode();
+    textFieldFocusNode1.addListener(() => setState(() {}));
+    textController2 = TextEditingController(
         text: _formatDecimal(userData.userSettings?.defaultAdditionalItemFee));
-    _model.textFieldFocusNode2 ??= FocusNode();
-    _model.textFieldFocusNode2!.addListener(() => setState(() {}));
+    textFieldFocusNode2 = FocusNode();
+    textFieldFocusNode2.addListener(() => setState(() {}));
   }
 
   @override
   void dispose() {
-    _model.dispose();
-
+    textFieldFocusNode1.dispose();
+    textController1.dispose();
+    textFieldFocusNode2.dispose();
+    textController2.dispose();
     super.dispose();
   }
 
@@ -132,10 +135,10 @@ class _SettingsShippingDefaultsWidgetState
                             child: Container(
                               width: double.infinity,
                               child: TextFormField(
-                                controller: _model.textController1,
-                                focusNode: _model.textFieldFocusNode1,
+                                controller: textController1,
+                                focusNode: textFieldFocusNode1,
                                 onChanged: (_) => EasyDebounce.debounce(
-                                  '_model.textController1',
+                                  'textController1',
                                   Duration(milliseconds: 100),
                                   () => setState(() {}),
                                 ),
@@ -194,10 +197,10 @@ class _SettingsShippingDefaultsWidgetState
                             child: Container(
                               width: double.infinity,
                               child: TextFormField(
-                                controller: _model.textController2,
-                                focusNode: _model.textFieldFocusNode2,
+                                controller: textController2,
+                                focusNode: textFieldFocusNode2,
                                 onChanged: (_) => EasyDebounce.debounce(
-                                  '_model.textController2',
+                                  'textController2',
                                   Duration(milliseconds: 100),
                                   () => setState(() {}),
                                 ),
@@ -249,15 +252,14 @@ class _SettingsShippingDefaultsWidgetState
                             onPressed: () async {
                               await Future.wait([
                                 Future(() async {
-                                  _model.saveShippingSettings =
-                                      await actions.callRpc(
+                                  saveShippingSettings = await actions.callRpc(
                                     context,
                                     'save_seller_shipping_settings',
                                     <String, double?>{
-                                      'p_flat_rate': double.tryParse(
-                                          _model.textController1!.text),
-                                      'p_additional_item_fee': double.tryParse(
-                                          _model.textController2!.text),
+                                      'p_flat_rate':
+                                          double.tryParse(textController1.text),
+                                      'p_additional_item_fee':
+                                          double.tryParse(textController2.text),
                                     },
                                   );
                                 }),
@@ -268,14 +270,12 @@ class _SettingsShippingDefaultsWidgetState
                                                   const UserSettings())
                                               .copyWith(
                                             defaultFlatShippingRate:
-                                                double.tryParse(_model
-                                                        .textController1!
-                                                        .text) ??
+                                                double.tryParse(
+                                                        textController1.text) ??
                                                     0.0,
                                             defaultAdditionalItemFee:
-                                                double.tryParse(_model
-                                                        .textController2!
-                                                        .text) ??
+                                                double.tryParse(
+                                                        textController2.text) ??
                                                     0.0,
                                           ),
                                         ),

@@ -16,8 +16,6 @@ import '/core/widgets/dismiss_keyboard.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/auth/presentation/pages/sign_in/sign_in_widget.dart';
 import '/features/auth/presentation/widgets/password_component/password_component_widget.dart';
-import 'forgot_password_step3_model.dart';
-export 'forgot_password_step3_model.dart';
 
 class ForgotPasswordStep3Widget extends StatefulWidget {
   const ForgotPasswordStep3Widget({
@@ -37,25 +35,36 @@ class ForgotPasswordStep3Widget extends StatefulWidget {
 
 class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
     with KeyboardVisibilityMixin {
-  late ForgotPasswordStep3Model _model;
+  bool errorPasswordRequired = false;
+  bool errorConfirmPasswordRequired = false;
+  bool errorPaswordsDontMatch = false;
+
+  late final FocusNode textFieldFocusNode1;
+  late final TextEditingController textController1;
+  bool passwordVisibility1 = false;
+
+  late final FocusNode textFieldFocusNode2;
+  late final TextEditingController textController2;
+  bool passwordVisibility2 = false;
 
   @override
   void initState() {
     super.initState();
-    _model = ForgotPasswordStep3Model();
-    _model.initState(context);
 
-    _model.textController1 ??= TextEditingController();
-    _model.textFieldFocusNode1 ??= FocusNode();
-    _model.textFieldFocusNode1!.addListener(() => setState(() {}));
-    _model.textController2 ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
-    _model.textFieldFocusNode2!.addListener(() => setState(() {}));
+    textController1 = TextEditingController();
+    textFieldFocusNode1 = FocusNode();
+    textFieldFocusNode1.addListener(() => setState(() {}));
+    textController2 = TextEditingController();
+    textFieldFocusNode2 = FocusNode();
+    textFieldFocusNode2.addListener(() => setState(() {}));
   }
 
   @override
   void dispose() {
-    _model.dispose();
+    textFieldFocusNode1.dispose();
+    textController1.dispose();
+    textFieldFocusNode2.dispose();
+    textController2.dispose();
     super.dispose();
   }
 
@@ -109,27 +118,26 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                               Container(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.textController1,
-                                  focusNode: _model.textFieldFocusNode1,
+                                  controller: textController1,
+                                  focusNode: textFieldFocusNode1,
                                   onChanged: (_) => EasyDebounce.debounce(
-                                    '_model.textController1',
+                                    'textController1',
                                     Duration(milliseconds: 100),
                                     () => setState(() {}),
                                   ),
                                   autofocus: false,
                                   enabled: true,
-                                  obscureText: !_model.passwordVisibility1,
+                                  obscureText: !passwordVisibility1,
                                   decoration: appInputDecoration(
                                     'Your Password',
                                     suffixIcon: InkWell(
                                       onTap: () async {
-                                        setState(() =>
-                                            _model.passwordVisibility1 =
-                                                !_model.passwordVisibility1);
+                                        setState(() => passwordVisibility1 =
+                                            !passwordVisibility1);
                                       },
                                       focusNode: FocusNode(skipTraversal: true),
                                       child: Icon(
-                                        _model.passwordVisibility1
+                                        passwordVisibility1
                                             ? Icons.visibility_outlined
                                             : Icons.visibility_off_outlined,
                                         color: Colors.white,
@@ -143,7 +151,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                   enableInteractiveSelection: true,
                                 ),
                               ),
-                              if (_model.errorPasswordRequired)
+                              if (errorPasswordRequired)
                                 Padding(
                                   padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
@@ -180,27 +188,26 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                               Container(
                                 width: double.infinity,
                                 child: TextFormField(
-                                  controller: _model.textController2,
-                                  focusNode: _model.textFieldFocusNode2,
+                                  controller: textController2,
+                                  focusNode: textFieldFocusNode2,
                                   onChanged: (_) => EasyDebounce.debounce(
-                                    '_model.textController2',
+                                    'textController2',
                                     Duration(milliseconds: 100),
                                     () => setState(() {}),
                                   ),
                                   autofocus: false,
                                   enabled: true,
-                                  obscureText: !_model.passwordVisibility2,
+                                  obscureText: !passwordVisibility2,
                                   decoration: appInputDecoration(
                                     'Confirm Your Password',
                                     suffixIcon: InkWell(
                                       onTap: () async {
-                                        setState(() =>
-                                            _model.passwordVisibility2 =
-                                                !_model.passwordVisibility2);
+                                        setState(() => passwordVisibility2 =
+                                            !passwordVisibility2);
                                       },
                                       focusNode: FocusNode(skipTraversal: true),
                                       child: Icon(
-                                        _model.passwordVisibility2
+                                        passwordVisibility2
                                             ? Icons.visibility_outlined
                                             : Icons.visibility_off_outlined,
                                         color: Colors.white,
@@ -214,7 +221,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                   enableInteractiveSelection: true,
                                 ),
                               ),
-                              if (_model.errorConfirmPasswordRequired)
+                              if (errorConfirmPasswordRequired)
                                 Padding(
                                   padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
@@ -225,7 +232,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                         .copyWith(color: AppColors.error),
                                   ).animate().fade(duration: 600.ms),
                                 ),
-                              if (_model.errorPaswordsDontMatch)
+                              if (errorPaswordsDontMatch)
                                 Padding(
                                   padding: EdgeInsets.only(top: 4.0),
                                   child: Text(
@@ -241,9 +248,8 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                 child: Column(
                                   children: [
                                     PasswordComponentWidget(
-                                      isActive: (_model
-                                              .textController1!.text.length) >=
-                                          8,
+                                      isActive:
+                                          (textController1.text.length) >= 8,
                                       text: 'Minimum 8 characters',
                                     ),
                                     Padding(
@@ -252,7 +258,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                         isActive: (String text) {
                                           return text
                                               .contains(RegExp(r'[A-Z]'));
-                                        }(_model.textController1!.text),
+                                        }(textController1.text),
                                         text: 'One uppercase letter (A-Z)',
                                       ),
                                     ),
@@ -261,7 +267,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                       child: PasswordComponentWidget(
                                         isActive: (String text) {
                                           return text.contains(RegExp(r'\d'));
-                                        }(_model.textController1!.text),
+                                        }(textController1.text),
                                         text: 'One number (0-9)',
                                       ),
                                     ),
@@ -271,18 +277,16 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                                         isActive: (String text) {
                                           return text.contains(RegExp(
                                               r'[!@#\$%^&*(),.?":{}|<>_\-]'));
-                                        }(_model.textController1!.text),
+                                        }(textController1.text),
                                         text: 'One special character (!@#\$%)',
                                       ),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(top: 4.0),
                                       child: PasswordComponentWidget(
-                                        isActive: (_model
-                                                    .textController1!.text ==
-                                                _model.textController2!.text) &&
-                                            (_model.textController2!.text !=
-                                                ''),
+                                        isActive: (textController1.text ==
+                                                textController2.text) &&
+                                            (textController2.text != ''),
                                         text: 'Passwords match',
                                       ),
                                     ),
@@ -305,42 +309,41 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
                       AppGradientButton(
                         text: 'Reset Password',
                         onPressed: () async {
-                          _model.errorPasswordRequired = false;
-                          _model.errorConfirmPasswordRequired = false;
-                          _model.errorPaswordsDontMatch = false;
+                          errorPasswordRequired = false;
+                          errorConfirmPasswordRequired = false;
+                          errorPaswordsDontMatch = false;
                           setState(() {});
-                          if (_model.textController1!.text != '') {
-                            _model.errorPasswordRequired = false;
+                          if (textController1.text != '') {
+                            errorPasswordRequired = false;
                             setState(() {});
                           } else {
-                            _model.errorPasswordRequired = true;
+                            errorPasswordRequired = true;
                             setState(() {});
                           }
 
-                          if (_model.textController2!.text != '') {
-                            _model.errorConfirmPasswordRequired = false;
+                          if (textController2.text != '') {
+                            errorConfirmPasswordRequired = false;
                             setState(() {});
                           } else {
-                            _model.errorConfirmPasswordRequired = true;
+                            errorConfirmPasswordRequired = true;
                             setState(() {});
                             return;
                           }
 
-                          if (_model.textController1!.text ==
-                              _model.textController2!.text) {
-                            _model.errorPaswordsDontMatch = false;
+                          if (textController1.text == textController2.text) {
+                            errorPaswordsDontMatch = false;
                             setState(() {});
                           } else {
-                            _model.errorPaswordsDontMatch = true;
+                            errorPaswordsDontMatch = true;
                             setState(() {});
                             return;
                           }
 
-                          if (_model.errorPasswordRequired) return;
+                          if (errorPasswordRequired) return;
 
                           await SupabaseEdgeGroup.resetPasswordCall.call(
                             code: widget.code,
-                            newPassword: _model.textController2!.text,
+                            newPassword: textController2.text,
                           );
 
                           await actions.resetPasswordRecoveryState();
