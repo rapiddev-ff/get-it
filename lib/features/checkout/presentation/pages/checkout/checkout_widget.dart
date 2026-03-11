@@ -11,6 +11,9 @@ import '/features/profile/presentation/pages/settings_payment_method_add/setting
 import '/features/auth/presentation/providers/auth_provider.dart';
 import '/features/checkout/presentation/providers/checkout_provider.dart';
 import '/features/checkout/presentation/widgets/fast_checkout/fast_checkout_widget.dart';
+import '/features/checkout/domain/models/shipping_address_model.dart';
+import '/backend/supabase/supabase.dart';
+import '/core/providers/current_user_provider.dart';
 import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -203,6 +206,190 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
     }
   }
 
+  Future<void> _showAddressSelectionSheet() async {
+    final userId = ref.read(currentUserIdProvider);
+    final rows = await ShippingAddressesTable().queryRows(
+      queryFn: (q) => q
+          .eqOrNull('user_id', userId)
+          .isFilter('deleted_at', null)
+          .order('is_default', ascending: false)
+          .order('created_at', ascending: false),
+    );
+
+    if (!mounted) return;
+
+    final addresses = rows
+        .map((r) => ShippingAddress(
+              id: r.id,
+              fullName: r.fullName,
+              addressLine1: r.addressLine1,
+              addressLine2: r.addressLine2 ?? '',
+              city: r.city,
+              state: r.state,
+              zipCode: r.zipCode,
+              country: r.country ?? '',
+              phone: r.phone ?? '',
+              isDefault: r.isDefault ?? false,
+            ))
+        .toList();
+
+    final currentId = ref.read(authProvider).shippingAddress?.id ?? '';
+
+    await showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: AppColors.backgroundPrimary,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
+      ),
+      builder: (ctx) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  'Select Shipping Address',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(fontWeight: FontWeight.w500),
+                ),
+              ),
+              Divider(
+                  height: 1.0, thickness: 1.0, color: AppColors.surfaceDark),
+              if (addresses.isEmpty)
+                Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(
+                    'No saved addresses',
+                    style: Theme.of(context).textTheme.labelMedium!,
+                  ),
+                )
+              else
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height * 0.4),
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                    itemCount: addresses.length,
+                    separatorBuilder: (_, __) => SizedBox(height: 8.0),
+                    itemBuilder: (_, i) {
+                      final addr = addresses[i];
+                      final isSelected = addr.id == currentId;
+                      return InkWell(
+                        onTap: () {
+                          ref.read(authProvider.notifier).updateUser(
+                                (e) => e.copyWith(shippingAddress: addr),
+                              );
+                          Navigator.pop(ctx);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.backgroundSecondary,
+                            borderRadius: BorderRadius.circular(4.0),
+                            border: isSelected
+                                ? Border.all(
+                                    color: AppColors.secondary, width: 1.0)
+                                : null,
+                          ),
+                          padding: EdgeInsets.all(12.0),
+                          child: Row(
+                            children: [
+                              Icon(
+                                isSelected
+                                    ? Icons.radio_button_checked
+                                    : Icons.radio_button_off,
+                                color: isSelected
+                                    ? AppColors.secondary
+                                    : AppColors.textSecondary,
+                                size: 20.0,
+                              ),
+                              SizedBox(width: 12.0),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      addr.fullName,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(
+                                              fontWeight: FontWeight.w500),
+                                    ),
+                                    Text(
+                                      [
+                                        addr.addressLine1,
+                                        if (addr.addressLine2.isNotEmpty)
+                                          addr.addressLine2,
+                                      ].join(', '),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall!,
+                                    ),
+                                    Text(
+                                      '${addr.city}, ${addr.state}, ${addr.zipCode}',
+                                      maxLines: 1,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall!,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: InkWell(
+                  onTap: () async {
+                    Navigator.pop(ctx);
+                    await context.pushNamed(
+                        CheckoutEditShippingAddressWidget.routeName);
+                    if (mounted) await _recalculateTax();
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4.0),
+                      border: Border.all(color: AppColors.neutral700),
+                    ),
+                    padding: EdgeInsets.all(12.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.add_circle_outline,
+                            color: AppColors.textPrimary, size: 20.0),
+                        SizedBox(width: 8.0),
+                        Text(
+                          'Add New Address',
+                          style: Theme.of(context).textTheme.bodyMedium!,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    // Recalculate tax after address selection
+    if (mounted) await _recalculateTax();
+  }
+
   void _showConfirmationPopup() {
     showModalBottomSheet(
       context: context,
@@ -211,6 +398,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
       builder: (_) => FastCheckoutWidget(
         feedProduct: widget.feedProductItem,
         orderId: orderResult?.orderId,
+        orderNumber: orderResult?.orderNumber,
         subtotal: _subtotal,
         quantity: quantity,
       ),
@@ -303,12 +491,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: InkWell(
-                    onTap: () async {
-                      await context.pushNamed(
-                          CheckoutEditShippingAddressWidget.routeName);
-                      // Recalculate tax after address change
-                      await _recalculateTax();
-                    },
+                    onTap: _showAddressSelectionSheet,
                     child: Row(
                       children: [
                         Expanded(
@@ -326,7 +509,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                           size: 14.0,
                         ),
                         Text(
-                          _hasShippingAddress ? 'Edit' : 'Add Address',
+                          _hasShippingAddress ? 'Change' : 'Add Address',
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!

@@ -1,4 +1,3 @@
-import '/core/widgets/app_loading_indicator.dart';
 import 'dart:async';
 import 'dart:io';
 
@@ -235,15 +234,7 @@ class AppRoute {
                   builder: (context, _) => builder(context, ffParams),
                 )
               : builder(context, ffParams);
-          final child = appStateNotifier.loading
-              ? Center(
-                  child: SizedBox(
-                    width: 50.0,
-                    height: 50.0,
-                    child: AppLoadingIndicator(),
-                  ),
-                )
-              : page;
+          final child = page;
 
           final transitionInfo = state.transitionInfo;
           return transitionInfo.hasTransition

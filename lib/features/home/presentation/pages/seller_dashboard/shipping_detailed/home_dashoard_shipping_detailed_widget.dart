@@ -802,11 +802,8 @@ class _HomeDashoardShippingDetailedWidgetState
                                             ? SizedBox(
                                                 width: 20,
                                                 height: 20,
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  color: AppColors.textPrimary,
-                                                  strokeWidth: 2,
-                                                ),
+                                                child: AppLoadingIndicator(
+                                                    strokeWidth: 2.0),
                                               )
                                             : Text(
                                                 'Mark as Shipped',

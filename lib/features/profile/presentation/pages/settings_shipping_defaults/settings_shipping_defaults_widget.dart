@@ -92,7 +92,6 @@ class _SettingsShippingDefaultsWidgetState
                 child: Padding(
                   padding: EdgeInsets.only(left: 16.0, top: 32.0, right: 16.0),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
                         mainAxisSize: MainAxisSize.min,
@@ -242,6 +241,7 @@ class _SettingsShippingDefaultsWidgetState
                           ),
                         ],
                       ),
+                      const Spacer(),
                       Column(
                         children: [
                           AppGradientButton(

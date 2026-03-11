@@ -15,22 +15,24 @@ import '/core/utils/error_handler.dart';
 import '/core/utils/widget_extensions.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  AppErrorHandler.initialize();
-  GoRouter.optionURLReflectsImperativeAPIs = true;
-  usePathUrlStrategy();
+void main() {
+  AppErrorHandler.runGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    AppErrorHandler.initialize();
+    GoRouter.optionURLReflectsImperativeAPIs = true;
+    usePathUrlStrategy();
 
-  await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: '.env');
 
-  await actions.lockOrientation();
-  await actions.setStatusbarColor();
+    await actions.lockOrientation();
+    await actions.setStatusbarColor();
 
-  await SupaFlow.initialize();
+    await SupaFlow.initialize();
 
-  AppErrorHandler.runGuarded(ProviderScope(
-    child: MyApp(),
-  ));
+    runApp(ProviderScope(
+      child: MyApp(),
+    ));
+  });
 }
 
 class MyApp extends ConsumerStatefulWidget {
@@ -103,7 +105,7 @@ class _MyAppState extends ConsumerState<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'Get it',
+      title: 'Get It',
       localizationsDelegates: [
         AppLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,

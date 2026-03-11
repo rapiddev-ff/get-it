@@ -48,9 +48,9 @@ class AppErrorHandler {
   /// Wraps [runApp] in [runZonedGuarded] so that any Dart error escaping
   /// both Flutter framework handlers and [PlatformDispatcher.onError] is
   /// still caught and logged rather than crashing silently.
-  static void runGuarded(Widget app) {
+  static void runGuarded(void Function() body) {
     runZonedGuarded(
-      () => runApp(app),
+      body,
       (Object error, StackTrace stack) {
         // TODO(crash-reporting): forward `error` + `stack` to Sentry / Crashlytics.
         debugPrint('[AppErrorHandler] Unhandled zone error: $error');

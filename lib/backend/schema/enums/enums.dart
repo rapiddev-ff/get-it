@@ -8,7 +8,7 @@ enum ProductStatus {
 }
 
 enum OrderStatus {
-  pending,
+  sale_pending,
   paid,
   shipped,
   delivered,

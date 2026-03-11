@@ -95,6 +95,21 @@ class _QuickPurchasePopupWidgetState
         return;
       }
 
+      // Validate daily budget
+      final settings = user.userSettings;
+      final dailyBudget = settings?.dailyBudget ?? 0.0;
+      if (dailyBudget > 0) {
+        final dailyBudgetUsed = settings?.dailyBudgetUsed ?? 0.0;
+        final remaining = dailyBudget - dailyBudgetUsed;
+        if (_total > remaining) {
+          if (mounted) {
+            actions.toastificationshow(context, 'Budget Exceeded',
+                'This purchase exceeds your remaining daily budget', 'error');
+          }
+          return;
+        }
+      }
+
       // Create order
       final orderResult = await actions.createCheckoutOrder(
         widget.feedProduct.id,
@@ -178,6 +193,7 @@ class _QuickPurchasePopupWidgetState
         return _SuccessConfirmation(
           feedProduct: widget.feedProduct,
           orderId: orderResult.orderId,
+          orderNumber: orderResult.orderNumber,
           subtotal: _subtotal,
           quantity: _quantity,
         );
@@ -459,47 +475,23 @@ class _SuccessConfirmation extends ConsumerWidget {
   const _SuccessConfirmation({
     required this.feedProduct,
     required this.orderId,
+    this.orderNumber,
     required this.subtotal,
     required this.quantity,
   });
 
   final FeedProduct feedProduct;
   final String orderId;
+  final String? orderNumber;
   final double subtotal;
   final int quantity;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Delegate to FastCheckoutWidget which already handles this
-    return _FastCheckoutProxy(
-      feedProduct: feedProduct,
-      orderId: orderId,
-      subtotal: subtotal,
-      quantity: quantity,
-    );
-  }
-}
-
-// We import FastCheckoutWidget at the top level to avoid circular deps
-class _FastCheckoutProxy extends StatelessWidget {
-  const _FastCheckoutProxy({
-    required this.feedProduct,
-    required this.orderId,
-    required this.subtotal,
-    required this.quantity,
-  });
-
-  final FeedProduct feedProduct;
-  final String orderId;
-  final double subtotal;
-  final int quantity;
-
-  @override
-  Widget build(BuildContext context) {
-    // Use the existing FastCheckoutWidget for consistency
     return FastCheckoutWidget(
       feedProduct: feedProduct,
       orderId: orderId,
+      orderNumber: orderNumber,
       subtotal: subtotal,
       quantity: quantity,
     );

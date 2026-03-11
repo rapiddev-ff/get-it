@@ -695,7 +695,7 @@ class _HomeDashoardInventoryAddWidgetState
         Padding(
           padding: EdgeInsets.only(left: 16.0, top: 10.0, right: 16.0),
           child: Text(
-            'Add up to 10 photos. First photo will be the main image.',
+            'Add up to 10 photos. First photo will be the cover image.',
             style: Theme.of(context).textTheme.labelSmall!,
           ),
         ),
@@ -1210,31 +1210,27 @@ class _HomeDashoardInventoryAddWidgetState
                           enableInteractiveSelection: true,
                         ),
                       ),
-                Row(
+                Column(
                   children: [
-                    Expanded(
-                      child: _radioOption(
-                        label: 'Percentage Discount',
-                        groupValue: discount,
-                        value: 'percentage',
-                        onSelected: (val) {
-                          discount = val;
-                          setState(() {});
-                        },
-                      ),
+                    _radioOption(
+                      label: 'Percentage Discount',
+                      groupValue: discount,
+                      value: 'percentage',
+                      onSelected: (val) {
+                        discount = val;
+                        setState(() {});
+                      },
                     ),
-                    Expanded(
-                      child: _radioOption(
-                        label: 'Dollar Discount',
-                        groupValue: discount,
-                        value: 'dollar',
-                        onSelected: (val) {
-                          discount = val;
-                          setState(() {});
-                        },
-                      ),
+                    _radioOption(
+                      label: 'Dollar Discount',
+                      groupValue: discount,
+                      value: 'dollar',
+                      onSelected: (val) {
+                        discount = val;
+                        setState(() {});
+                      },
                     ),
-                  ].divide(SizedBox(width: 24.0)),
+                  ],
                 ),
               ].divide(SizedBox(height: 8.0)),
             ),

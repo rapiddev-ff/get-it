@@ -16,12 +16,14 @@ class FastCheckoutWidget extends ConsumerStatefulWidget {
     super.key,
     required this.feedProduct,
     required this.orderId,
+    this.orderNumber,
     this.subtotal,
     this.quantity = 1,
   });
 
   final FeedProduct? feedProduct;
   final String? orderId;
+  final String? orderNumber;
   final double? subtotal;
   final int quantity;
 
@@ -156,6 +158,18 @@ class _FastCheckoutWidgetState extends ConsumerState<FastCheckoutWidget> {
                             ),
                           ),
                         ),
+                        // Order number
+                        if (widget.orderNumber != null &&
+                            widget.orderNumber!.isNotEmpty)
+                          Text(
+                            'Order #${widget.orderNumber}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .copyWith(
+                                    color: AppColors.textSecondary,
+                                    height: 1.5),
+                          ),
                         // Product name
                         Text(
                           valueOrDefault<String>(

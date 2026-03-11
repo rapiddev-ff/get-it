@@ -1,7 +1,8 @@
+import '/backend/supabase/supabase.dart';
 import '/features/auth/data/supabase_auth/auth_util.dart';
+import '/features/auth/domain/models/user_settings_model.dart';
 import '/features/browse/domain/models/category_model.dart';
 import '/features/browse/domain/models/condition_model.dart';
-import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/router/app_router.dart';
 import '/core/widgets/app_gradient_button.dart';
@@ -17,7 +18,6 @@ import '/features/home/presentation/pages/home_page/home_page_widget.dart';
 import 'package:flutter/material.dart';
 import '/core/providers/current_user_provider.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -46,9 +46,53 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
   dynamic getAppInitialData;
   dynamic getPaymentMethods;
 
+  late final AnimationController _logoController;
+  late final AnimationController _itController;
+  late final AnimationController _taglineController;
+
+  late final Animation<double> _logoScale;
+  late final Animation<double> _logoFade;
+  late final Animation<double> _itFade;
+  late final Animation<Offset> _itSlide;
+  late final Animation<double> _taglineReveal;
+
   @override
   void initState() {
     super.initState();
+
+    _logoController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    );
+    _itController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+    _taglineController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    );
+
+    _logoScale = Tween<double>(begin: 2.0, end: 1.0).animate(
+      CurvedAnimation(parent: _logoController, curve: Curves.easeOutCubic),
+    );
+    _logoFade = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _logoController, curve: Curves.easeOut),
+    );
+    _itFade = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _itController, curve: Curves.easeOut),
+    );
+    _itSlide = Tween<Offset>(
+      begin: const Offset(0.3, 0.0),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(parent: _itController, curve: Curves.easeOutCubic),
+    );
+    _taglineReveal = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _taglineController, curve: Curves.easeOut),
+    );
+
+    _startLogoAnimation();
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
@@ -78,6 +122,37 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
       final userData = functions.convertUserToDataType(
           getAppInitialData!, getPaymentMethods);
       widgetRef.read(authProvider.notifier).setUser(userData);
+
+      // Reset daily budget if it hasn't been reset today
+      final settings = userData.userSettings;
+      if (settings != null &&
+          settings.swipePaymentEnabled &&
+          settings.dailyBudget > 0 &&
+          settings.dailyBudgetUsed > 0) {
+        final now = DateTime.now().toUtc();
+        final todayStart = DateTime.utc(now.year, now.month, now.day);
+        final resetAt = settings.budgetResetAt;
+        if (resetAt == null || resetAt.toUtc().isBefore(todayStart)) {
+          widgetRef.read(authProvider.notifier).updateUser(
+                (e) => e.copyWith(
+                  userSettings:
+                      (e.userSettings ?? const UserSettings()).copyWith(
+                    dailyBudgetUsed: 0.0,
+                    budgetResetAt: now,
+                  ),
+                ),
+              );
+          await UserSettingsTable().update(
+            data: {
+              'daily_budget_used': 0,
+              'budget_reset_at': now.toIso8601String(),
+            },
+            matchingRows: (rows) =>
+                rows.eqOrNull('user_id', userData.userId),
+          );
+        }
+      }
+
       await widgetRef.read(categoriesProvider.notifier).set(
             functions
                 .convertCategoriesToDataType(
@@ -245,6 +320,26 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
     });
   }
 
+  Future<void> _startLogoAnimation() async {
+    await Future.delayed(const Duration(milliseconds: 200));
+    if (!mounted) return;
+    _logoController.forward();
+    await Future.delayed(const Duration(milliseconds: 600));
+    if (!mounted) return;
+    _itController.forward();
+    await Future.delayed(const Duration(milliseconds: 400));
+    if (!mounted) return;
+    _taglineController.forward();
+  }
+
+  @override
+  void dispose() {
+    _logoController.dispose();
+    _itController.dispose();
+    _taglineController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DismissKeyboard(
@@ -253,30 +348,118 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
           child: Center(
             child: Column(
               children: [
-                Spacer(),
-                Text(
-                  AppConstants.appName,
-                  style: GoogleFonts.inter(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 48.0,
-                    letterSpacing: 0.0,
-                    height: 1.0,
-                  ),
-                ).animate().fade(duration: 600.ms),
-                Text(
-                  'Snap.Catalog. Organize',
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      fontWeight: FontWeight.normal,
-                      color: AppColors.textSecondary,
-                      letterSpacing: 0.0,
-                      fontStyle: FontStyle.italic),
-                ).animate().fade(duration: 600.ms),
-                Spacer(),
+                const Spacer(),
+                _buildLogo(),
+                const SizedBox(height: 12.0),
+                _buildTagline(),
+                const Spacer(),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildLogo() {
+    return AnimatedBuilder(
+      animation: Listenable.merge([_logoController, _itController]),
+      builder: (context, _) {
+        return FadeTransition(
+          opacity: _logoFade,
+          child: ScaleTransition(
+            scale: _logoScale,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Stack(
+                  children: [
+                    Transform.translate(
+                      offset: const Offset(3, 3),
+                      child: Text(
+                        'Get',
+                        style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 72.0,
+                          height: 1.0,
+                          color: const Color(0xFF4A2DB3),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      'Get',
+                      style: GoogleFonts.inter(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 72.0,
+                        height: 1.0,
+                        color: AppColors.brandPurple,
+                      ),
+                    ),
+                  ],
+                ),
+                SlideTransition(
+                  position: _itSlide,
+                  child: FadeTransition(
+                    opacity: _itFade,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 2.0),
+                      child: Text(
+                        'it',
+                        style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w800,
+                          fontSize: 28.0,
+                          height: 1.0,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildTagline() {
+    const words = ['Snap.', 'Catalog.', 'Organize'];
+    return AnimatedBuilder(
+      animation: _taglineController,
+      builder: (context, _) {
+        final progress = _taglineReveal.value;
+        final wordsToShow = (progress * words.length).ceil();
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: List.generate(wordsToShow, (i) {
+            final wordStart = i / words.length;
+            final wordEnd = (i + 1) / words.length;
+            final wordProgress =
+                ((progress - wordStart) / (wordEnd - wordStart)).clamp(0.0, 1.0);
+            final offsetX = (1.0 - wordProgress) * -20.0;
+            return Transform.translate(
+              offset: Offset(offsetX, 0),
+              child: Opacity(
+                opacity: wordProgress,
+                child: Padding(
+                  padding: EdgeInsets.only(left: i > 0 ? 6.0 : 0.0),
+                  child: Text(
+                    words[i],
+                    style: GoogleFonts.inter(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16.0,
+                      color: AppColors.textSecondary,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }),
+        );
+      },
     );
   }
 }

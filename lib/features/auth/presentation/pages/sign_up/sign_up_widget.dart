@@ -630,8 +630,8 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
 
                             if (passwordTextController.text !=
                                 confirmPasswordTextController.text) {
-                              actions.toastificationshow(context, 'Error',
-                                  'Passwords don\'t match!', 'error');
+                              errorPaswordsDontMatch = true;
+                              setState(() {});
                               return;
                             }
 
