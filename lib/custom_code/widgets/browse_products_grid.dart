@@ -148,12 +148,37 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
 
       final data = response as Map<String, dynamic>;
       final productsJson = data['products'] as List<dynamic>;
-      final newProducts = productsJson
+      var newProducts = productsJson
           .map((json) => BrowseProduct.fromJson(json as Map<String, dynamic>))
           .toList();
 
+      // Enrich with flash sale data from products table
+      final productIds = newProducts.map((p) => p.id).toList();
+      if (productIds.isNotEmpty) {
+        try {
+          final flashRows = await SupaFlow.client
+              .from('products')
+              .select('id, flash_sale_enabled, flash_sale_price')
+              .inFilter('id', productIds);
+          final flashMap = <String, Map<String, dynamic>>{};
+          for (final row in (flashRows as List)) {
+            flashMap[row['id'].toString()] = row;
+          }
+          for (var i = 0; i < newProducts.length; i++) {
+            final fd = flashMap[newProducts[i].id];
+            if (fd != null) {
+              newProducts[i] = newProducts[i].copyWith(
+                flashSaleEnabled: fd['flash_sale_enabled'] == true,
+                flashSalePrice:
+                    (fd['flash_sale_price'] as num?)?.toDouble(),
+              );
+            }
+          }
+        } catch (_) {}
+      }
+
       final totalCount = data['total_count'] as int;
-      final hasMore = data['has_more'] as bool;
+      final hasMore = data['has_more'] == true;
 
       if (!mounted) return;
 

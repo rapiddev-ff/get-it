@@ -17,11 +17,15 @@ class BrowseProduct with _$BrowseProduct {
     @Default('') String title,
     @Default(0.0) double price,
     @Default(0.0) double originalPrice,
+    @Default(false) bool flashSaleEnabled,
+    double? flashSalePrice,
     @Default('') String mainImageUrl,
     @Default('') String conditionName,
     @Default('') String categoryName,
     @Default(false) bool isInWishlist,
     @Default('') String sellerUsername,
+    String? discountType,
+    double? discountAmount,
     @DateTimeConverter() DateTime? createdAt,
   }) = _BrowseProduct;
 

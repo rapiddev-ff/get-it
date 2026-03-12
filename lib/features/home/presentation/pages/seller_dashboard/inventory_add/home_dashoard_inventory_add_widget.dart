@@ -121,26 +121,31 @@ class _HomeDashoardInventoryAddWidgetState
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       await Future.wait([
         Future(() async {
-          tags = (await SupaFlow.client.rpc('get_all_tags') as List? ?? [])
-              .map((e) => Tag.fromJson(Map<String, dynamic>.from(e)))
+          final tagRows = await TagsTable().queryRows(
+            queryFn: (q) => q.order('name'),
+          );
+          tags = tagRows
+              .map((e) => Tag(id: e.id, name: e.name, slug: e.slug))
               .toList();
         }),
         Future(() async {
           userShortlists = await ShortlistsTable().queryRows(
             queryFn: (q) => q
-                .eqOrNull('user_id', ref.read(currentUserIdProvider))
+                .eqOrNull('seller_id', ref.read(currentUserIdProvider))
                 .order('created_at', ascending: false),
           );
         }),
       ]);
 
       if (widget.productId != null && widget.productId != '') {
-        await Future.wait([
-          Future(() async {
-            getProduct = await actions.getProductDetails(
-                widget.productId!, ref.read(currentUserIdProvider));
-          }),
-        ]);
+        getProduct = await actions.getProductDetails(
+            widget.productId!, ref.read(currentUserIdProvider));
+        if (getProduct == null) {
+          debugPrint(
+              '[EditProduct] getProductDetails returned null for id=${widget.productId}');
+          if (mounted) setState(() {});
+          return;
+        }
         titleTextController?.text = getProduct!.title;
         priceTextController?.text = getProduct!.price.toString();
         quantityTextController?.text = getProduct!.quantity.toString();
@@ -161,25 +166,11 @@ class _HomeDashoardInventoryAddWidgetState
               getProduct!.discountAmount?.toString() ?? '';
         }
         skuPrefixTextController?.text = getProduct!.sku ?? '';
-        await Future.wait([
-          Future(() async {
-            setState(() {
-              flatShippingCostTextController?.text =
-                  getProduct!.customFlatRate.toString();
-            });
-          }),
-          Future(() async {
-            setState(() {
-              additionalItemFeeTextController?.text =
-                  getProduct!.customAdditionalItemFee.toString();
-            });
-          }),
-          Future(() async {
-            setState(() {
-              skuNumberTextController?.text = getProduct!.skuNumber ?? '';
-            });
-          }),
-        ]);
+        flatShippingCostTextController?.text =
+            getProduct!.customFlatRate.toString();
+        additionalItemFeeTextController?.text =
+            getProduct!.customAdditionalItemFee.toString();
+        skuNumberTextController?.text = getProduct!.skuNumber ?? '';
         await Future.wait([
           Future(() async {
             getCategory = await CategoriesTable().queryRows(
@@ -208,21 +199,15 @@ class _HomeDashoardInventoryAddWidgetState
           Future(() async {
             convertImages = await actions.convertUrlsToUploadedFileList(
               getProduct!.images
-                  .map((e) {
-                    final m = e.toJson();
-                    return m['imageUrl'];
-                  })
-                  .toList()
-                  .map((e) => e.toString())
-                  .toList()
+                  .map((e) => e.imageUrl)
                   .toList(),
             );
           }),
         ]);
-        uploadedImages = convertImages!.toList().cast<UploadedFile>();
+        uploadedImages = convertImages?.toList().cast<UploadedFile>() ?? [];
         category = getCategory?.firstOrNull;
         subcategory = getSubcategory?.firstOrNull;
-        conditionsList = getConditions!.toList().cast<ConditionsRow>();
+        conditionsList = getConditions?.toList().cast<ConditionsRow>() ?? [];
         choosenTags = getProduct!.tags.toList();
         discount = getProduct!.discountType ?? 'percentage';
         if (getProduct?.shortlistId != null &&
@@ -231,7 +216,7 @@ class _HomeDashoardInventoryAddWidgetState
           dropDownValue = getProduct!.shortlistId;
           dropDownValueController = FormFieldController<String>(dropDownValue);
         }
-        setState(() {});
+        if (mounted) setState(() {});
       }
     });
 
@@ -1636,6 +1621,107 @@ class _HomeDashoardInventoryAddWidgetState
   }
 
   // ---------------------------------------------------------------------------
+  // Product actions menu (edit mode only)
+  // ---------------------------------------------------------------------------
+
+  bool get _isEditing =>
+      widget.productId != null && widget.productId!.isNotEmpty;
+
+  void _showProductActionsMenu() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.backgroundSecondary,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
+      ),
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _actionMenuItem(
+              icon: Icons.check_circle_outline,
+              label: 'Mark as sold (in person)',
+              onTap: () async {
+                Navigator.pop(ctx);
+                await ProductsTable().update(
+                  data: {
+                    'status': 'sold',
+                    'quantity': 0,
+                    'updated_at': DateTime.now().toUtc().toIso8601String(),
+                  },
+                  matchingRows: (q) => q.eqOrNull('id', widget.productId),
+                );
+                if (!mounted) return;
+                actions.toastificationshow(
+                  context,
+                  'Product Sold',
+                  'Product has been marked as sold.',
+                  'success',
+                );
+                context.pop();
+              },
+            ),
+            Divider(
+              color: AppColors.textSecondary.withValues(alpha: 0.2),
+              height: 1,
+            ),
+            _actionMenuItem(
+              icon: Icons.delete_outline,
+              label: 'Remove from Inventory (Damaged)',
+              onTap: () async {
+                Navigator.pop(ctx);
+                await ProductsTable().update(
+                  data: {
+                    'status': 'removed',
+                    'quantity': 0,
+                    'updated_at': DateTime.now().toUtc().toIso8601String(),
+                  },
+                  matchingRows: (q) => q.eqOrNull('id', widget.productId),
+                );
+                if (!mounted) return;
+                actions.toastificationshow(
+                  context,
+                  'Product Removed',
+                  'Product has been removed from inventory.',
+                  'success',
+                );
+                context.pop();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _actionMenuItem({
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+        child: Row(
+          children: [
+            Icon(icon, color: AppColors.textPrimary, size: 22.0),
+            const SizedBox(width: 16.0),
+            Text(
+              label,
+              style: GoogleFonts.inter(
+                fontSize: 15.0,
+                fontWeight: FontWeight.w500,
+                color: AppColors.textPrimary,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ---------------------------------------------------------------------------
   // Build
   // ---------------------------------------------------------------------------
 
@@ -1667,15 +1753,18 @@ class _HomeDashoardInventoryAddWidgetState
                       : 'Add a Product',
                   style: Theme.of(context).textTheme.titleMedium!,
                 ),
-                IconButton(
-                  icon: Icon(
-                    Icons.more_vert,
-                    color: AppColors.info,
-                    size: 20.0,
-                  ),
-                  iconSize: 40.0,
-                  onPressed: () {},
-                ),
+                if (_isEditing)
+                  IconButton(
+                    icon: Icon(
+                      Icons.more_vert,
+                      color: AppColors.info,
+                      size: 20.0,
+                    ),
+                    iconSize: 40.0,
+                    onPressed: _showProductActionsMenu,
+                  )
+                else
+                  const SizedBox(width: 40.0),
               ],
             ),
           ),

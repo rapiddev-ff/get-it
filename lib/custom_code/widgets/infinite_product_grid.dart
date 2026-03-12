@@ -25,6 +25,8 @@ class InfiniteProductGrid extends StatefulWidget {
     this.onProductTap,
     this.itemBuilder,
     this.onTotalChanged,
+    this.onCategoriesLoaded,
+    this.emptyBuilder,
   });
 
   final double? width;
@@ -43,6 +45,9 @@ class InfiniteProductGrid extends StatefulWidget {
   final Future Function(String productId)? onProductTap;
   final Widget Function(SellerProduct? sellerProduct)? itemBuilder;
   final Future Function(int total)? onTotalChanged;
+  final void Function(List<({String id, String name})> categories)?
+      onCategoriesLoaded;
+  final Widget Function(bool hasSearchQuery)? emptyBuilder;
 
   @override
   State<InfiniteProductGrid> createState() => _InfiniteProductGridState();
@@ -120,6 +125,7 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
           : null,
       quantity: (data['quantity'] as num?)?.toInt() ?? 0,
       categoryId: data['category_id']?.toString() ?? '',
+      categoryName: data['category_name']?.toString() ?? '',
     );
   }
 
@@ -167,8 +173,18 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
         _isLoading = false;
       });
 
-      if (isFirstPage && widget.onTotalChanged != null) {
-        widget.onTotalChanged!(total);
+      if (isFirstPage) {
+        widget.onTotalChanged?.call(total);
+        if (widget.onCategoriesLoaded != null) {
+          final seen = <String>{};
+          final cats = <({String id, String name})>[];
+          for (final p in _products) {
+            if (p.categoryId.isNotEmpty && seen.add(p.categoryId)) {
+              cats.add((id: p.categoryId, name: p.categoryName));
+            }
+          }
+          widget.onCategoriesLoaded!(cats);
+        }
       }
     } catch (e) {
       setState(() {
@@ -327,6 +343,10 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
     }
 
     if (_products.isEmpty) {
+      final hasSearch = widget.searchText?.isNotEmpty == true;
+      if (widget.emptyBuilder != null) {
+        return widget.emptyBuilder!(hasSearch);
+      }
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -335,7 +355,7 @@ class _InfiniteProductGridState extends State<InfiniteProductGrid> {
                 size: 64, color: AppColors.textSecondary),
             const SizedBox(height: 16),
             Text(
-              widget.searchText?.isNotEmpty == true
+              hasSearch
                   ? 'No products found for "${widget.searchText}"'
                   : 'No products found',
               style: Theme.of(context).textTheme.bodyLarge!,

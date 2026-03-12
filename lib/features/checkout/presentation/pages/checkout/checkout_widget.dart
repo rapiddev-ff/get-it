@@ -104,12 +104,9 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
       return;
     }
 
-    final subtotal = widget.feedProductItem!.price * quantity;
-    final shipping = _shippingCost;
-
     tax = await actions.calculateOrderTax(
-      subtotal,
-      shipping,
+      _subtotal,
+      _shippingCost,
       address.addressLine1,
       address.city,
       address.state,
@@ -118,7 +115,15 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
     if (mounted) setState(() {});
   }
 
-  double get _subtotal => widget.feedProductItem!.price * quantity;
+  double get _effectivePrice {
+    final fp = widget.feedProductItem!;
+    if (fp.flashSaleEnabled && fp.flashSalePrice != null) {
+      return fp.flashSalePrice!;
+    }
+    return fp.price;
+  }
+
+  double get _subtotal => _effectivePrice * quantity;
 
   double get _shippingCost {
     if (checkoutTotals != null) return checkoutTotals!.shippingCost;
@@ -268,11 +273,8 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                   ),
                 )
               else
-                ConstrainedBox(
-                  constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height * 0.4),
+                Flexible(
                   child: ListView.separated(
-                    shrinkWrap: true,
                     padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
                     itemCount: addresses.length,
                     separatorBuilder: (_, __) => SizedBox(height: 8.0),
@@ -469,6 +471,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                 CheckoutItemWidget(
                   quantity: quantity,
                   feedProduct: widget.feedProductItem!,
+                  effectivePrice: _effectivePrice,
                   addQuantityAction: () async {
                     quantity = quantity + 1;
                     setState(() {});
@@ -962,10 +965,10 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
         ),
         Text(
           value,
-          style: Theme.of(context)
-              .textTheme
-              .bodyMedium!
-              .copyWith(fontWeight: FontWeight.w500, height: 1.5),
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeight.w500,
+                height: 1.5,
+              ),
         ),
       ].divide(SizedBox(width: 8.0)),
     );

@@ -225,6 +225,8 @@ class _HomeSellerProfileReviewsWidgetState
                               },
                               child: HomeSellerProfileMoreWidget(
                                 userId: widget.sellerDataType?.id ?? '',
+                                username: widget.sellerDataType?.username ?? '',
+                                isFollowing: widget.sellerDataType?.isFollowing ?? false,
                               ),
                             ),
                           ),

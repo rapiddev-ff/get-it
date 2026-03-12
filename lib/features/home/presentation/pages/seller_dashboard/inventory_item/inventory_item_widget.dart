@@ -27,8 +27,6 @@ class InventoryItemWidget extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(0.0),
-                  bottomRight: Radius.circular(0.0),
                   topLeft: Radius.circular(4.0),
                   topRight: Radius.circular(4.0),
                 ),
@@ -54,8 +52,6 @@ class InventoryItemWidget extends StatelessWidget {
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(4.0),
               bottomRight: Radius.circular(4.0),
-              topLeft: Radius.circular(0.0),
-              topRight: Radius.circular(0.0),
             ),
           ),
           child: Padding(
@@ -76,8 +72,7 @@ class InventoryItemWidget extends StatelessWidget {
                       .copyWith(fontWeight: FontWeight.w500, height: 1.5),
                 ),
                 Text(
-                  NumberFormat('#,##0.##', 'en_US')
-                      .format(sellerProduct!.price),
+                  '\$${NumberFormat('#,##0.##', 'en_US').format(sellerProduct!.price)}',
                   style: Theme.of(context).textTheme.titleSmall!.copyWith(
                         fontWeight: FontWeight.bold,
                         height: 1.5,
@@ -88,33 +83,13 @@ class InventoryItemWidget extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Color(0xFF22C55D),
-                          borderRadius: BorderRadius.circular(4.0),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 4.0),
-                          child: Text(
-                            valueOrDefault<String>(
-                              sellerProduct?.status,
-                              'N/A',
-                            ),
-                            style: Theme.of(context).textTheme.bodyMedium!,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 8.0, vertical: 4.0),
-                        child: Text(
-                          '${valueOrDefault<String>(
-                            sellerProduct?.viewsCount.toString(),
-                            '0',
-                          )} Views',
-                          style: Theme.of(context).textTheme.bodyMedium!,
-                        ),
+                      _StatusBadge(status: sellerProduct?.status ?? ''),
+                      Text(
+                        '${valueOrDefault<String>(
+                          sellerProduct?.viewsCount.toString(),
+                          '0',
+                        )} Views',
+                        style: Theme.of(context).textTheme.bodyMedium!,
                       ),
                     ],
                   ),
@@ -125,5 +100,65 @@ class InventoryItemWidget extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class _StatusBadge extends StatelessWidget {
+  const _StatusBadge({required this.status});
+
+  final String status;
+
+  @override
+  Widget build(BuildContext context) {
+    final normalized = status.toLowerCase();
+    final isFilled = normalized == 'active' || normalized == 'sold';
+    final label = _label(normalized);
+
+    return Container(
+      decoration: BoxDecoration(
+        color: isFilled ? _backgroundColor(normalized) : Colors.transparent,
+        borderRadius: BorderRadius.circular(4.0),
+        border: isFilled
+            ? null
+            : Border.all(color: AppColors.textSecondary, width: 1.0),
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+        child: Text(
+          label,
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                fontWeight: FontWeight.w500,
+                color: isFilled ? Colors.white : AppColors.textSecondary,
+              ),
+        ),
+      ),
+    );
+  }
+
+  String _label(String s) {
+    switch (s) {
+      case 'active':
+        return 'Active';
+      case 'sold':
+        return 'Sold';
+      case 'draft':
+        return 'Draft';
+      case 'archived':
+      case 'removed':
+        return 'Deactivated';
+      default:
+        return s.isNotEmpty ? '${s[0].toUpperCase()}${s.substring(1)}' : 'N/A';
+    }
+  }
+
+  Color _backgroundColor(String s) {
+    switch (s) {
+      case 'active':
+        return const Color(0xFF22C55D);
+      case 'sold':
+        return const Color(0xFFEF4444);
+      default:
+        return AppColors.surfaceDark;
+    }
   }
 }

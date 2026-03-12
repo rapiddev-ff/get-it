@@ -12,7 +12,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
 import 'package:toastification/toastification.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:go_router/go_router.dart';
+import 'package:page_transition/page_transition.dart';
+import '/core/router/app_router.dart';
 
 class FollowUser {
   final String userId;
@@ -551,7 +552,16 @@ class _SettingsMyProfileFollowersWidgetState
         subtitle: 'Follow sellers you like to keep up with new listings.',
         buttons: [
           _buildGradientButton('Discover Sellers', () {
-            context.goNamed('homePage');
+            context.goNamed(
+              'homePage',
+              extra: <String, dynamic>{
+                kTransitionInfoKey: TransitionInfo(
+                  hasTransition: true,
+                  transitionType: PageTransitionType.fade,
+                  duration: Duration(milliseconds: 0),
+                ),
+              },
+            );
           }),
         ],
       );

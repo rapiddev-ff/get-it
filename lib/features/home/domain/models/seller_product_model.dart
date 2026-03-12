@@ -17,14 +17,19 @@ class SellerProduct with _$SellerProduct {
     @Default('') String title,
     @Default(0.0) double price,
     @Default(0.0) double originalPrice,
+    @Default(false) bool flashSaleEnabled,
+    double? flashSalePrice,
     @Default('') String status,
     @Default(0) int viewsCount,
     @Default('') String conditionName,
     @Default('') String mainImageUrl,
     @Default(false) bool isInWishlist,
+    String? discountType,
+    double? discountAmount,
     @DateTimeConverter() DateTime? createdAt,
     @Default(0) int quantity,
     @Default('') String categoryId,
+    @Default('') String categoryName,
   }) = _SellerProduct;
 
   factory SellerProduct.fromJson(Map<String, dynamic> json) =>

@@ -1,5 +1,5 @@
-import '/core/widgets/app_loading_indicator.dart';
 import 'package:easy_debounce/easy_debounce.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
 import '/core/providers/current_user_provider.dart';
 import 'package:flutter/scheduler.dart';
@@ -23,6 +23,8 @@ import '/features/wishlist/presentation/pages/wishlist_item/wishlist_item_widget
 import '/features/wishlist/presentation/providers/wishlist_provider.dart';
 import '/features/profile/presentation/pages/settings/settings_widget.dart';
 import '/features/notifications/presentation/pages/notification/notification_widget.dart';
+import '/features/checkout/presentation/pages/checkout/checkout_widget.dart';
+import '/features/home/domain/models/feed_product_model.dart';
 import '/features/home/presentation/pages/home_product/home_product_widget.dart';
 import '/features/browse/presentation/pages/browse/browse_widget.dart';
 
@@ -78,6 +80,87 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
       }
       return true;
     }).toList();
+  }
+
+  Widget _buildShimmerGrid() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 0.68,
+          crossAxisSpacing: 24.0,
+          mainAxisSpacing: 24.0,
+        ),
+        itemCount: 6,
+        itemBuilder: (context, index) => Shimmer.fromColors(
+          baseColor: const Color(0xFF2A2A2A),
+          highlightColor: const Color(0xFF3A3A3A),
+          child: Container(
+            decoration: BoxDecoration(
+              color: AppColors.surfaceDark,
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AspectRatio(
+                  aspectRatio: 1.0,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF2A2A2A),
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(8.0),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 90.0,
+                        height: 12.0,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF2A2A2A),
+                          borderRadius: BorderRadius.circular(4.0),
+                        ),
+                      ),
+                      const SizedBox(height: 10.0),
+                      Row(
+                        children: [
+                          Container(
+                            width: 50.0,
+                            height: 12.0,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF2A2A2A),
+                              borderRadius: BorderRadius.circular(4.0),
+                            ),
+                          ),
+                          const Spacer(),
+                          Container(
+                            width: 55.0,
+                            height: 24.0,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF2A2A2A),
+                              borderRadius: BorderRadius.circular(4.0),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -138,9 +221,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
               child: Builder(
                 builder: (context) {
                   if (isLoading) {
-                    return const Center(
-                      child: AppLoadingIndicator(),
-                    );
+                    return _buildShimmerGrid();
                   }
                   if (wishlistProducts.isNotEmpty) {
                     _hadProducts = true;
@@ -424,6 +505,71 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                           await actions.toggleWishlist(
                                             ref.read(currentUserIdProvider),
                                             wishlistItem.id,
+                                          );
+                                        },
+                                        onBuyNow: () {
+                                          context.pushNamed(
+                                            CheckoutWidget.routeName,
+                                            queryParameters: {
+                                              'feedProductItem': FeedProduct(
+                                                id: wishlistItem.id,
+                                                title: wishlistItem.title,
+                                                description:
+                                                    wishlistItem.description,
+                                                price: wishlistItem.price,
+                                                originalPrice:
+                                                    wishlistItem.originalPrice,
+                                                flashSaleEnabled: wishlistItem
+                                                    .flashSaleEnabled,
+                                                flashSalePrice:
+                                                    wishlistItem.flashSalePrice,
+                                                flashSaleEndsAt:
+                                                    wishlistItem.flashSaleEndsAt,
+                                                conditionName: wishlistItem
+                                                        .conditions
+                                                        .firstOrNull
+                                                        ?.name ??
+                                                    wishlistItem.conditionName,
+                                                mainImageUrl: wishlistItem
+                                                        .images
+                                                        .firstOrNull
+                                                        ?.imageUrl ??
+                                                    wishlistItem.mainImageUrl,
+                                                sellerId:
+                                                    wishlistItem.seller?.id ??
+                                                        wishlistItem.sellerId,
+                                                sellerUsername: wishlistItem
+                                                        .seller?.username ??
+                                                    wishlistItem
+                                                        .sellerUsername,
+                                                sellerAvatarUrl: wishlistItem
+                                                        .seller?.avatarUrl ??
+                                                    wishlistItem
+                                                        .sellerAvatarUrl,
+                                                sellerRating: wishlistItem
+                                                        .seller
+                                                        ?.ratingAsSeller ??
+                                                    0.0,
+                                                sellerTotalReviews: wishlistItem
+                                                        .seller
+                                                        ?.totalReviewsAsSeller ??
+                                                    0,
+                                                isInWishlist: true,
+                                                createdAt:
+                                                    wishlistItem.createdAt,
+                                                shippingPrice:
+                                                    wishlistItem.shippingPrice,
+                                                freeShipping:
+                                                    wishlistItem.freeShipping,
+                                                useSellerShipping: wishlistItem
+                                                    .useSellerShipping,
+                                                customFlatRate: wishlistItem
+                                                    .customFlatRate,
+                                                customAdditionalItemFee:
+                                                    wishlistItem
+                                                        .customAdditionalItemFee,
+                                              ).serialize(),
+                                            },
                                           );
                                         },
                                       ),

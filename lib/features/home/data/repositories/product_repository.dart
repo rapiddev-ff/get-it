@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart' hide Category;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -73,12 +74,24 @@ class ProductRepository {
         },
       );
 
-      if (response == null || response['error'] != null) {
+      if (response == null) {
+        debugPrint('[ProductRepository] getProductDetails: response is null');
+        return null;
+      }
+      if (response is Map && response['error'] != null) {
+        debugPrint(
+            '[ProductRepository] getProductDetails error: ${response['error']}');
+        return null;
+      }
+      if (response is! Map<String, dynamic>) {
+        debugPrint(
+            '[ProductRepository] getProductDetails: unexpected response type ${response.runtimeType}: $response');
         return null;
       }
 
       return _parseProductDetails(response);
-    } catch (e) {
+    } catch (e, st) {
+      debugPrint('[ProductRepository] getProductDetails exception: $e\n$st');
       return null;
     }
   }

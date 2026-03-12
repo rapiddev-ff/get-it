@@ -17,7 +17,6 @@ import '/features/home/presentation/pages/seller_dashboard/earnings/home_dashoar
 import '/features/home/presentation/pages/seller_dashboard/shipping/home_dashoard_shipping_widget.dart';
 import '/features/home/presentation/pages/seller_dashboard/inventory/home_dashoard_inventory_widget.dart';
 import '/features/home/presentation/pages/seller_dashboard/inventory_add/home_dashoard_inventory_add_widget.dart';
-import '/features/home/presentation/pages/seller_dashboard/promote_step1/home_dashoard_promote_step1_widget.dart';
 import '/features/home/presentation/pages/seller_dashboard/shortlist/home_dashoard_shortlist_widget.dart';
 import '/core/theme/app_colors.dart';
 import '/core/constants/app_constants.dart';
@@ -299,7 +298,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
           colorSkip: AppColors.accent2,
           cardBgColor: AppColors.backgroundSecondary,
           priceTextColor: AppColors.primary,
-          emptyMessage: 'test',
+          emptyMessage: 'No Items Yet',
           products: ref.watch(feedProvider).feedProducts,
           onBuy: (product) async {
             final user = ref.read(authProvider);
@@ -565,37 +564,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                     onTap: () => context
                         .pushNamed(HomeDashoardInventoryAddWidget.routeName),
                   ),
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.backgroundSecondary,
-                        borderRadius: BorderRadius.circular(4.0),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            left: 16.0, top: 12.0, right: 16.0, bottom: 16.0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            FaIcon(
-                              FontAwesomeIcons.shopify,
-                              color: AppColors.secondary,
-                              size: 22.0,
-                            ),
-                            Text(
-                              'Shopify Sync',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(fontWeight: FontWeight.w500),
-                            ),
-                          ].divide(SizedBox(height: 8.0)),
-                        ),
-                      ),
-                    ),
-                  ),
-                ].divide(SizedBox(width: 16.0)),
+                ],
               ),
             ),
             Padding(
@@ -622,7 +591,6 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                   _buildQuickActionCard(
                     icon: FontAwesomeIcons.chartLine,
                     label: 'Analytics',
-                    height: 97.0,
                     onTap: () =>
                         context.pushNamed(HomeDashoardEarningsWidget.routeName),
                   ),
@@ -634,24 +602,16 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
               child: Row(
                 children: [
                   _buildQuickActionCard(
-                    icon: FontAwesomeIcons.bullhorn,
-                    label: 'Promote',
-                    height: 97.0,
-                    onTap: () => context
-                        .pushNamed(HomeDashoardPromoteStep1Widget.routeName),
-                  ),
-                  _buildQuickActionCard(
                     icon: FontAwesomeIcons.qrcode,
                     label: 'Shortlists',
                     subtitle: _jsonStr(getSellerDashboard, 'shortlist_count') !=
                             null
                         ? '${_jsonStr(getSellerDashboard, 'shortlist_count')} Items'
                         : null,
-                    height: 97.0,
                     onTap: () => context
                         .pushNamed(HomeDashoardShortlistWidget.routeName),
                   ),
-                ].divide(SizedBox(width: 16.0)),
+                ],
               ),
             ),
             // Items to Ship section
@@ -948,6 +908,7 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
       child: InkWell(
         onTap: onTap,
         child: Container(
+          height: 97.0,
           decoration: BoxDecoration(
             color: AppColors.backgroundSecondary,
             borderRadius: BorderRadius.circular(4.0),
@@ -983,14 +944,13 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
     required IconData icon,
     required String label,
     String? subtitle,
-    double? height,
     required VoidCallback onTap,
   }) {
     return Expanded(
       child: InkWell(
         onTap: onTap,
         child: Container(
-          height: height,
+          height: 97.0,
           decoration: BoxDecoration(
             color: AppColors.backgroundSecondary,
             borderRadius: BorderRadius.circular(4.0),

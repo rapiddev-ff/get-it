@@ -1,8 +1,8 @@
 import '/features/home/domain/models/seller_product_model.dart';
 import '/core/utils/value_utils.dart';
+import '/core/widgets/product_price_row.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
-import 'package:intl/intl.dart';
 import '/core/theme/app_colors.dart';
 
 class HomeSellerProductWidget extends StatelessWidget {
@@ -17,83 +17,50 @@ class HomeSellerProductWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4.0),
-        border: Border.all(
-          color: AppColors.surfaceDark,
-        ),
+        color: AppColors.surfaceDark,
+        borderRadius: BorderRadius.circular(8.0),
       ),
+      clipBehavior: Clip.antiAlias,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 168.5,
-            height: 128.0,
-            child: Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(0.0),
-                    bottomRight: Radius.circular(0.0),
-                    topLeft: Radius.circular(4.0),
-                    topRight: Radius.circular(4.0),
-                  ),
-                  child: Image.network(
-                    valueOrDefault<String>(
-                      productDataType?.mainImageUrl,
-                      'https://picsum.photos/seed/487/600',
-                    ),
-                    width: 168.5,
-                    height: 128.0,
-                    fit: BoxFit.cover,
-                  ),
+          Expanded(
+            child: SizedBox(
+              width: double.infinity,
+              child: CachedNetworkImage(
+                imageUrl: valueOrDefault<String>(
+                  productDataType?.mainImageUrl,
+                  'https://picsum.photos/seed/487/600',
                 ),
-              ],
+                fit: BoxFit.cover,
+                fadeInDuration: Duration(milliseconds: 100),
+                fadeOutDuration: Duration(milliseconds: 100),
+              ),
             ),
           ),
-          Expanded(
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: AppColors.surfaceDark,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(4.0),
-                  bottomRight: Radius.circular(4.0),
-                  topLeft: Radius.circular(0.0),
-                  topRight: Radius.circular(0.0),
-                ),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(12.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      valueOrDefault<String>(
-                        productDataType?.title,
-                        'N/A',
+          Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  productDataType?.title ?? '',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        fontWeight: FontWeight.w500,
                       ),
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            fontWeight: FontWeight.w500,
-                            height: 1.5,
-                          ),
-                    ),
-                    Text(
-                      valueOrDefault<String>(
-                        productDataType?.price != null
-                            ? NumberFormat('#,##0.##', 'en_US')
-                                .format(productDataType!.price)
-                            : null,
-                        '0',
-                      ),
-                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.secondary,
-                          height: 1.5),
-                    ),
-                  ],
                 ),
-              ),
+                SizedBox(height: 4.0),
+                ProductPriceRow(
+                  price: productDataType?.price ?? 0.0,
+                  originalPrice: productDataType?.originalPrice ?? 0.0,
+                  flashSaleEnabled: productDataType?.flashSaleEnabled ?? false,
+                  flashSalePrice: productDataType?.flashSalePrice,
+                  discountType: productDataType?.discountType,
+                  discountAmount: productDataType?.discountAmount,
+                ),
+              ],
             ),
           ),
         ],

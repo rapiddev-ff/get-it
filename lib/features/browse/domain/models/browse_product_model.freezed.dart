@@ -24,11 +24,15 @@ mixin _$BrowseProduct {
   String get title => throw _privateConstructorUsedError;
   double get price => throw _privateConstructorUsedError;
   double get originalPrice => throw _privateConstructorUsedError;
+  bool get flashSaleEnabled => throw _privateConstructorUsedError;
+  double? get flashSalePrice => throw _privateConstructorUsedError;
   String get mainImageUrl => throw _privateConstructorUsedError;
   String get conditionName => throw _privateConstructorUsedError;
   String get categoryName => throw _privateConstructorUsedError;
   bool get isInWishlist => throw _privateConstructorUsedError;
   String get sellerUsername => throw _privateConstructorUsedError;
+  String? get discountType => throw _privateConstructorUsedError;
+  double? get discountAmount => throw _privateConstructorUsedError;
   @DateTimeConverter()
   DateTime? get createdAt => throw _privateConstructorUsedError;
 
@@ -53,11 +57,15 @@ abstract class $BrowseProductCopyWith<$Res> {
       String title,
       double price,
       double originalPrice,
+      bool flashSaleEnabled,
+      double? flashSalePrice,
       String mainImageUrl,
       String conditionName,
       String categoryName,
       bool isInWishlist,
       String sellerUsername,
+      String? discountType,
+      double? discountAmount,
       @DateTimeConverter() DateTime? createdAt});
 }
 
@@ -80,11 +88,15 @@ class _$BrowseProductCopyWithImpl<$Res, $Val extends BrowseProduct>
     Object? title = null,
     Object? price = null,
     Object? originalPrice = null,
+    Object? flashSaleEnabled = null,
+    Object? flashSalePrice = freezed,
     Object? mainImageUrl = null,
     Object? conditionName = null,
     Object? categoryName = null,
     Object? isInWishlist = null,
     Object? sellerUsername = null,
+    Object? discountType = freezed,
+    Object? discountAmount = freezed,
     Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
@@ -104,6 +116,14 @@ class _$BrowseProductCopyWithImpl<$Res, $Val extends BrowseProduct>
           ? _value.originalPrice
           : originalPrice // ignore: cast_nullable_to_non_nullable
               as double,
+      flashSaleEnabled: null == flashSaleEnabled
+          ? _value.flashSaleEnabled
+          : flashSaleEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      flashSalePrice: freezed == flashSalePrice
+          ? _value.flashSalePrice
+          : flashSalePrice // ignore: cast_nullable_to_non_nullable
+              as double?,
       mainImageUrl: null == mainImageUrl
           ? _value.mainImageUrl
           : mainImageUrl // ignore: cast_nullable_to_non_nullable
@@ -124,6 +144,14 @@ class _$BrowseProductCopyWithImpl<$Res, $Val extends BrowseProduct>
           ? _value.sellerUsername
           : sellerUsername // ignore: cast_nullable_to_non_nullable
               as String,
+      discountType: freezed == discountType
+          ? _value.discountType
+          : discountType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      discountAmount: freezed == discountAmount
+          ? _value.discountAmount
+          : discountAmount // ignore: cast_nullable_to_non_nullable
+              as double?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -145,11 +173,15 @@ abstract class _$$BrowseProductImplCopyWith<$Res>
       String title,
       double price,
       double originalPrice,
+      bool flashSaleEnabled,
+      double? flashSalePrice,
       String mainImageUrl,
       String conditionName,
       String categoryName,
       bool isInWishlist,
       String sellerUsername,
+      String? discountType,
+      double? discountAmount,
       @DateTimeConverter() DateTime? createdAt});
 }
 
@@ -170,11 +202,15 @@ class __$$BrowseProductImplCopyWithImpl<$Res>
     Object? title = null,
     Object? price = null,
     Object? originalPrice = null,
+    Object? flashSaleEnabled = null,
+    Object? flashSalePrice = freezed,
     Object? mainImageUrl = null,
     Object? conditionName = null,
     Object? categoryName = null,
     Object? isInWishlist = null,
     Object? sellerUsername = null,
+    Object? discountType = freezed,
+    Object? discountAmount = freezed,
     Object? createdAt = freezed,
   }) {
     return _then(_$BrowseProductImpl(
@@ -194,6 +230,14 @@ class __$$BrowseProductImplCopyWithImpl<$Res>
           ? _value.originalPrice
           : originalPrice // ignore: cast_nullable_to_non_nullable
               as double,
+      flashSaleEnabled: null == flashSaleEnabled
+          ? _value.flashSaleEnabled
+          : flashSaleEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      flashSalePrice: freezed == flashSalePrice
+          ? _value.flashSalePrice
+          : flashSalePrice // ignore: cast_nullable_to_non_nullable
+              as double?,
       mainImageUrl: null == mainImageUrl
           ? _value.mainImageUrl
           : mainImageUrl // ignore: cast_nullable_to_non_nullable
@@ -214,6 +258,14 @@ class __$$BrowseProductImplCopyWithImpl<$Res>
           ? _value.sellerUsername
           : sellerUsername // ignore: cast_nullable_to_non_nullable
               as String,
+      discountType: freezed == discountType
+          ? _value.discountType
+          : discountType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      discountAmount: freezed == discountAmount
+          ? _value.discountAmount
+          : discountAmount // ignore: cast_nullable_to_non_nullable
+              as double?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -231,11 +283,15 @@ class _$BrowseProductImpl extends _BrowseProduct {
       this.title = '',
       this.price = 0.0,
       this.originalPrice = 0.0,
+      this.flashSaleEnabled = false,
+      this.flashSalePrice,
       this.mainImageUrl = '',
       this.conditionName = '',
       this.categoryName = '',
       this.isInWishlist = false,
       this.sellerUsername = '',
+      this.discountType,
+      this.discountAmount,
       @DateTimeConverter() this.createdAt})
       : super._();
 
@@ -256,6 +312,11 @@ class _$BrowseProductImpl extends _BrowseProduct {
   final double originalPrice;
   @override
   @JsonKey()
+  final bool flashSaleEnabled;
+  @override
+  final double? flashSalePrice;
+  @override
+  @JsonKey()
   final String mainImageUrl;
   @override
   @JsonKey()
@@ -270,12 +331,16 @@ class _$BrowseProductImpl extends _BrowseProduct {
   @JsonKey()
   final String sellerUsername;
   @override
+  final String? discountType;
+  @override
+  final double? discountAmount;
+  @override
   @DateTimeConverter()
   final DateTime? createdAt;
 
   @override
   String toString() {
-    return 'BrowseProduct(id: $id, title: $title, price: $price, originalPrice: $originalPrice, mainImageUrl: $mainImageUrl, conditionName: $conditionName, categoryName: $categoryName, isInWishlist: $isInWishlist, sellerUsername: $sellerUsername, createdAt: $createdAt)';
+    return 'BrowseProduct(id: $id, title: $title, price: $price, originalPrice: $originalPrice, flashSaleEnabled: $flashSaleEnabled, flashSalePrice: $flashSalePrice, mainImageUrl: $mainImageUrl, conditionName: $conditionName, categoryName: $categoryName, isInWishlist: $isInWishlist, sellerUsername: $sellerUsername, discountType: $discountType, discountAmount: $discountAmount, createdAt: $createdAt)';
   }
 
   @override
@@ -288,6 +353,10 @@ class _$BrowseProductImpl extends _BrowseProduct {
             (identical(other.price, price) || other.price == price) &&
             (identical(other.originalPrice, originalPrice) ||
                 other.originalPrice == originalPrice) &&
+            (identical(other.flashSaleEnabled, flashSaleEnabled) ||
+                other.flashSaleEnabled == flashSaleEnabled) &&
+            (identical(other.flashSalePrice, flashSalePrice) ||
+                other.flashSalePrice == flashSalePrice) &&
             (identical(other.mainImageUrl, mainImageUrl) ||
                 other.mainImageUrl == mainImageUrl) &&
             (identical(other.conditionName, conditionName) ||
@@ -298,6 +367,10 @@ class _$BrowseProductImpl extends _BrowseProduct {
                 other.isInWishlist == isInWishlist) &&
             (identical(other.sellerUsername, sellerUsername) ||
                 other.sellerUsername == sellerUsername) &&
+            (identical(other.discountType, discountType) ||
+                other.discountType == discountType) &&
+            (identical(other.discountAmount, discountAmount) ||
+                other.discountAmount == discountAmount) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt));
   }
@@ -310,11 +383,15 @@ class _$BrowseProductImpl extends _BrowseProduct {
       title,
       price,
       originalPrice,
+      flashSaleEnabled,
+      flashSalePrice,
       mainImageUrl,
       conditionName,
       categoryName,
       isInWishlist,
       sellerUsername,
+      discountType,
+      discountAmount,
       createdAt);
 
   /// Create a copy of BrowseProduct
@@ -339,11 +416,15 @@ abstract class _BrowseProduct extends BrowseProduct {
       final String title,
       final double price,
       final double originalPrice,
+      final bool flashSaleEnabled,
+      final double? flashSalePrice,
       final String mainImageUrl,
       final String conditionName,
       final String categoryName,
       final bool isInWishlist,
       final String sellerUsername,
+      final String? discountType,
+      final double? discountAmount,
       @DateTimeConverter() final DateTime? createdAt}) = _$BrowseProductImpl;
   const _BrowseProduct._() : super._();
 
@@ -359,6 +440,10 @@ abstract class _BrowseProduct extends BrowseProduct {
   @override
   double get originalPrice;
   @override
+  bool get flashSaleEnabled;
+  @override
+  double? get flashSalePrice;
+  @override
   String get mainImageUrl;
   @override
   String get conditionName;
@@ -368,6 +453,10 @@ abstract class _BrowseProduct extends BrowseProduct {
   bool get isInWishlist;
   @override
   String get sellerUsername;
+  @override
+  String? get discountType;
+  @override
+  double? get discountAmount;
   @override
   @DateTimeConverter()
   DateTime? get createdAt;

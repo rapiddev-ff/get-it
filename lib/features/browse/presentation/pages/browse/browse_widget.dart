@@ -199,24 +199,33 @@ class _BrowseWidgetState extends ConsumerState<BrowseWidget> {
                                 BrowseProductsItemWidget(
                               browseDataType: product,
                             ),
-                            emptyStateWidget: () => EmptyStateWidget(
-                              icon: const Icon(
-                                Icons.search_off,
-                                color: AppColors.neutral800,
-                                size: 140.0,
-                              ),
-                              title: 'No results for "${_textController.text}"',
-                              description:
-                                  'Try a different keyword or use fewer words.',
-                              hasButton: true,
-                              sidePadding: 0.0,
-                              buttonText: 'Clear Search',
-                              buttonAction: () async {
-                                setState(() {
-                                  _textController.clear();
-                                });
-                              },
-                            ),
+                            emptyStateWidget: () {
+                              final hasSearch =
+                                  _textController.text.trim().isNotEmpty;
+                              return EmptyStateWidget(
+                                icon: Icon(
+                                  hasSearch
+                                      ? Icons.search_off
+                                      : Icons.inventory_2_outlined,
+                                  color: AppColors.neutral800,
+                                  size: 140.0,
+                                ),
+                                title: hasSearch
+                                    ? 'No results for "${_textController.text}"'
+                                    : 'No products available',
+                                description: hasSearch
+                                    ? 'Try a different keyword or use fewer words.'
+                                    : 'Check back later for new listings.',
+                                hasButton: hasSearch,
+                                sidePadding: 0.0,
+                                buttonText: 'Clear Search',
+                                buttonAction: () async {
+                                  setState(() {
+                                    _textController.clear();
+                                  });
+                                },
+                              );
+                            },
                           ),
                         ),
                       ),

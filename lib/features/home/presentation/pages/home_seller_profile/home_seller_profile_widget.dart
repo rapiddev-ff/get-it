@@ -1,4 +1,5 @@
 import '/backend/schema/enums/enums.dart';
+import '/backend/supabase/supabase.dart';
 import '/features/home/domain/models/seller_product_model.dart';
 import '/features/home/domain/models/seller_model.dart';
 import '/features/messages/domain/models/conversation_model.dart';
@@ -29,7 +30,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:webviewx_plus/webviewx_plus.dart';
 
 class HomeSellerProfileWidget extends ConsumerStatefulWidget {
   const HomeSellerProfileWidget({
@@ -52,6 +52,10 @@ class _HomeSellerProfileWidgetState
   // Local state fields (inlined from model).
   String state = 'Products';
   String choosenFilter = 'All';
+  String? selectedCategoryId;
+  List<({String id, String name})> _categories = [];
+  int _totalProducts = 0;
+  String _searchQuery = '';
   List<SellerProduct> products = [];
   String roleState = 'As Seller';
 
@@ -90,6 +94,7 @@ class _HomeSellerProfileWidgetState
       }
       if (!mounted) return;
       setState(() {});
+      _loadSellerCategories(sellerId);
     });
 
     textController ??= TextEditingController();
@@ -114,6 +119,72 @@ class _HomeSellerProfileWidgetState
     textFieldFocusNode?.dispose();
     textController?.dispose();
     super.dispose();
+  }
+
+  Future<void> _loadSellerCategories(String sellerId) async {
+    try {
+      // Get distinct category_ids for this seller's active products
+      final rows = await SupaFlow.client
+          .from('products')
+          .select('category_id, categories!inner(id, name)')
+          .eq('seller_id', sellerId)
+          .eq('status', 'active')
+          .isFilter('deleted_at', null);
+
+      if (!mounted) return;
+
+      final seen = <String>{};
+      final cats = <({String id, String name})>[];
+      for (final row in (rows as List)) {
+        final cat = row['categories'];
+        if (cat == null) continue;
+        final id = cat['id']?.toString() ?? '';
+        final name = cat['name']?.toString() ?? '';
+        if (id.isNotEmpty && name.isNotEmpty && seen.add(id)) {
+          cats.add((id: id, name: name));
+        }
+      }
+
+      setState(() {
+        _categories = cats;
+        _totalProducts = getSellerData?.totalProducts ?? rows.length;
+      });
+    } catch (_) {
+      // Silently fail — categories are optional UI
+    }
+  }
+
+  Widget _buildCategoryChip(
+      String filterKey, String label, String? categoryId) {
+    final isSelected = selectedCategoryId == categoryId;
+    return InkWell(
+      onTap: () {
+        setState(() {
+          selectedCategoryId = categoryId;
+          choosenFilter = filterKey;
+        });
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: isSelected
+              ? LinearGradient(
+                  colors: [AppColors.brandPurple, AppColors.brandBlue],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                )
+              : null,
+          color: isSelected ? null : AppColors.backgroundSecondary,
+          borderRadius: BorderRadius.circular(100.0),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          child: Text(
+            label,
+            style: Theme.of(context).textTheme.bodyMedium!,
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buildShimmerProfile() {
@@ -329,23 +400,35 @@ class _HomeSellerProfileWidgetState
                         context: context,
                         isGlobal: false,
                         avoidOverflow: true,
-                        targetAnchor: AlignmentDirectional(-4.0, 5.5)
-                            .resolve(Directionality.of(context)),
-                        followerAnchor: Alignment.center
-                            .resolve(Directionality.of(context)),
+                        targetAnchor: Alignment.bottomRight,
+                        followerAnchor: Alignment.topRight,
                         builder: (dialogContext) {
                           return Material(
                             color: Colors.transparent,
-                            child: WebViewAware(
-                              child: GestureDetector(
-                                onTap: () {
-                                  FocusScope.of(dialogContext).unfocus();
-                                  FocusManager.instance.primaryFocus?.unfocus();
-                                },
-                                child: HomeSellerProfileMoreWidget(
-                                  userId: widget.sellerId!,
-                                ),
-                              ),
+                            child: HomeSellerProfileMoreWidget(
+                              userId: widget.sellerId!,
+                              username: getSellerData?.username ?? '',
+                              isFollowing:
+                                  getSellerData?.isFollowing ?? false,
+                              isOwnProfile:
+                                  getSellerData?.isOwnProfile ?? false,
+                              onFollowChanged: (isFollowing) {
+                                setState(() {
+                                  getSellerData =
+                                      getSellerData?.copyWith(
+                                    isFollowing: isFollowing,
+                                    followersCount:
+                                        (getSellerData?.followersCount ??
+                                                0) +
+                                            (isFollowing ? 1 : -1),
+                                  );
+                                });
+                              },
+                              onBlocked: () {
+                                if (mounted) {
+                                  context.pop();
+                                }
+                              },
                             ),
                           );
                         },
@@ -528,21 +611,16 @@ class _HomeSellerProfileWidgetState
                           ),
                         ].divide(SizedBox(width: 12.0)),
                       ),
-                      if (valueOrDefault<String>(
-                            getSellerData?.bio,
-                            'N/A',
-                          ) !=
-                          '')
+                      if (getSellerData?.bio != null &&
+                          getSellerData!.bio.isNotEmpty)
                         Padding(
                           padding: EdgeInsets.only(top: 20.0),
                           child: Text(
-                            valueOrDefault<String>(
-                              getSellerData?.bio,
-                              'N/A',
-                            ),
+                            getSellerData!.bio,
                             style: Theme.of(context).textTheme.bodyMedium!,
                           ),
                         ),
+                      if (getSellerData?.isOwnProfile != true)
                       Padding(
                         padding: EdgeInsets.only(top: 20.0),
                         child: Container(
@@ -734,7 +812,7 @@ class _HomeSellerProfileWidgetState
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 10.0),
                                       child: Text(
-                                        'Products (234)',
+                                        'Products${(getSellerData?.totalProducts ?? 0) > 0 ? ' (${getSellerData!.totalProducts})' : ''}',
                                         style: GoogleFonts.inter(
                                           fontWeight: FontWeight.normal,
                                           fontSize: 14.0,
@@ -772,7 +850,7 @@ class _HomeSellerProfileWidgetState
                                     Padding(
                                       padding: EdgeInsets.only(bottom: 10.0),
                                       child: Text(
-                                        'Short Lists (23)',
+                                        'Short Lists${(getSellerData?.totalShortlists ?? 0) > 0 ? ' (${getSellerData!.totalShortlists})' : ''}',
                                         style: GoogleFonts.inter(
                                           fontSize: 14.0,
                                           color: state == 'Short Lists'
@@ -813,8 +891,14 @@ class _HomeSellerProfileWidgetState
                                     focusNode: textFieldFocusNode,
                                     onChanged: (_) => EasyDebounce.debounce(
                                       '_textController',
-                                      Duration(milliseconds: 100),
-                                      () => setState(() {}),
+                                      Duration(milliseconds: 500),
+                                      () {
+                                        if (!mounted) return;
+                                        setState(() {
+                                          _searchQuery =
+                                              textController?.text.trim() ?? '';
+                                        });
+                                      },
                                     ),
                                     autofocus: false,
                                     obscureText: false,
@@ -870,61 +954,31 @@ class _HomeSellerProfileWidgetState
                                     enableInteractiveSelection: true,
                                   ),
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 24.0),
-                                  child: Row(
-                                    children: [
-                                      InkWell(
-                                        onTap: () async {
-                                          choosenFilter = 'All';
-                                          setState(() {});
-                                        },
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                choosenFilter == 'All'
-                                                    ? AppColors.brandPurple
-                                                    : AppColors
-                                                        .backgroundSecondary,
-                                                choosenFilter == 'All'
-                                                    ? AppColors.brandBlue
-                                                    : AppColors
-                                                        .backgroundSecondary
-                                              ],
-                                              stops: [0.0, 1.0],
-                                              begin: AlignmentDirectional(
-                                                  0.0, -1.0),
-                                              end: Alignment.bottomCenter,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(100.0),
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 16.0,
-                                                vertical: 8.0),
-                                            child: Text(
-                                              'All (24)',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!,
-                                            ),
-                                          ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: 24.0),
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                      children: [
+                                        _buildCategoryChip(
+                                          'All',
+                                          _totalProducts > 0
+                                              ? 'All ($_totalProducts)'
+                                              : 'All',
+                                          null,
                                         ),
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          child: Row(
-                                            children: <Widget>[]
-                                                .divide(SizedBox(width: 8.0)),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                        ..._categories.map((cat) =>
+                                            _buildCategoryChip(
+                                              cat.id,
+                                              cat.name,
+                                              cat.id,
+                                            )),
+                                      ].divide(SizedBox(width: 8.0)),
+                                    ),
                                   ),
+                                ),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(top: 24.0),
@@ -934,6 +988,8 @@ class _HomeSellerProfileWidgetState
                                     sellerId: widget.sellerId!,
                                     userId: ref.read(currentUserIdProvider),
                                     status: ProductStatus.active.name,
+                                    searchQuery: _searchQuery,
+                                    categoryId: selectedCategoryId,
                                     crossAxisCount: 2,
                                     childAspectRatio: 0.7,
                                     mainAxisSpacing: 16.0,

@@ -339,7 +339,8 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
           ),
           const SizedBox(height: 8),
           Text(
-            'Check back later for new items',
+            'Swipe through items from sellers you follow.\nFollow more sellers to fill your feed!',
+            textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 fontWeight: FontWeight.w400,
                 color: AppColors.textSecondary.withValues(alpha: 0.7)),

@@ -16,6 +16,8 @@ class SellerProductsGrid extends StatefulWidget {
     required this.sellerId,
     this.userId,
     this.status,
+    this.searchQuery,
+    this.categoryId,
     this.crossAxisCount = 2,
     this.childAspectRatio = 0.7,
     this.mainAxisSpacing = 12.0,
@@ -24,6 +26,7 @@ class SellerProductsGrid extends StatefulWidget {
     this.pageSize = 20,
     this.onProductTap,
     this.itemBuilder,
+    this.onCategoriesLoaded,
   });
 
   final double? width;
@@ -31,6 +34,8 @@ class SellerProductsGrid extends StatefulWidget {
   final String sellerId;
   final String? userId;
   final String? status;
+  final String? searchQuery;
+  final String? categoryId;
   final int crossAxisCount;
   final double childAspectRatio;
   final double mainAxisSpacing;
@@ -39,6 +44,8 @@ class SellerProductsGrid extends StatefulWidget {
   final int pageSize;
   final Future Function(String productId)? onProductTap;
   final Widget Function(SellerProduct? sellerProduct)? itemBuilder;
+  final void Function(List<({String id, String name})> categories, int total)?
+      onCategoriesLoaded;
 
   @override
   State<SellerProductsGrid> createState() => _SellerProductsGridState();
@@ -101,8 +108,8 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
       );
 
       final data = response as Map<String, dynamic>;
-      final productsJson = data['products'] as List<dynamic>;
-      final hasMore = data['has_more'] as bool? ?? false;
+      final productsJson = data['products'] as List<dynamic>? ?? [];
+      final hasMore = data['has_more'] == true;
       // total not currently used
       // final total = data['total'] as int? ?? 0;
 
@@ -112,16 +119,75 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
           title: json['title']?.toString() ?? '',
           price: (json['price'] as num?)?.toDouble() ?? 0.0,
           originalPrice: (json['original_price'] as num?)?.toDouble() ?? 0.0,
+          flashSaleEnabled: json['flash_sale_enabled'] == true,
+          flashSalePrice: (json['flash_sale_price'] as num?)?.toDouble(),
           status: json['status']?.toString() ?? '',
           viewsCount: (json['views_count'] as num?)?.toInt() ?? 0,
           conditionName: json['condition_name']?.toString() ?? '',
           mainImageUrl: json['main_image_url']?.toString() ?? '',
-          isInWishlist: json['is_in_wishlist'] as bool? ?? false,
+          isInWishlist: json['is_in_wishlist'] == true,
+          categoryId: json['category_id']?.toString() ?? '',
+          categoryName: json['category_name']?.toString() ?? '',
           createdAt: json['created_at'] != null
               ? DateTime.tryParse(json['created_at'].toString())
               : null,
         );
       }).toList();
+
+      // Enrich with flash sale data from products table
+      final productIds = newProducts.map((p) => p.id).toList();
+      if (productIds.isNotEmpty) {
+        try {
+          final flashRows = await SupaFlow.client
+              .from('products')
+              .select('id, flash_sale_enabled, flash_sale_price')
+              .inFilter('id', productIds);
+          final flashMap = <String, Map<String, dynamic>>{};
+          for (final row in (flashRows as List)) {
+            flashMap[row['id'].toString()] = row;
+          }
+          for (var i = 0; i < newProducts.length; i++) {
+            final fd = flashMap[newProducts[i].id];
+            if (fd != null) {
+              newProducts[i] = newProducts[i].copyWith(
+                flashSaleEnabled: fd['flash_sale_enabled'] == true,
+                flashSalePrice:
+                    (fd['flash_sale_price'] as num?)?.toDouble(),
+              );
+            }
+          }
+        } catch (_) {
+          // Non-critical — continue without flash sale data
+        }
+      }
+
+      // Extract categories on first load
+      if (_offset == 0 && widget.onCategoriesLoaded != null) {
+        final total = (data['total'] as num?)?.toInt() ?? newProducts.length;
+        final categoriesJson = data['categories'] as List<dynamic>?;
+        if (categoriesJson != null) {
+          final cats = categoriesJson
+              .map((c) => (
+                    id: c['id']?.toString() ?? '',
+                    name: c['name']?.toString() ?? '',
+                  ))
+              .where((c) => c.id.isNotEmpty && c.name.isNotEmpty)
+              .toList();
+          widget.onCategoriesLoaded!(cats, total);
+        } else {
+          // Fallback: extract from products
+          final seen = <String>{};
+          final cats = <({String id, String name})>[];
+          for (final p in newProducts) {
+            if (p.categoryId.isNotEmpty &&
+                p.categoryName.isNotEmpty &&
+                seen.add(p.categoryId)) {
+              cats.add((id: p.categoryId, name: p.categoryName));
+            }
+          }
+          widget.onCategoriesLoaded!(cats, total);
+        }
+      }
 
       setState(() {
         _products.addAll(newProducts);
@@ -242,6 +308,21 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
     );
   }
 
+  List<SellerProduct> get _filteredProducts {
+    var list = _products;
+    final search = widget.searchQuery?.toLowerCase() ?? '';
+    if (search.isNotEmpty) {
+      list = list
+          .where((p) => p.title.toLowerCase().contains(search))
+          .toList();
+    }
+    final catId = widget.categoryId;
+    if (catId != null && catId.isNotEmpty) {
+      list = list.where((p) => p.categoryId == catId).toList();
+    }
+    return list;
+  }
+
   @override
   Widget build(BuildContext context) {
     // Shimmer on initial load
@@ -281,7 +362,9 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
       );
     }
 
-    if (_products.isEmpty) {
+    final filtered = _filteredProducts;
+
+    if (filtered.isEmpty) {
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -307,9 +390,9 @@ class _SellerProductsGridState extends State<SellerProductsGrid> {
             mainAxisSpacing: widget.mainAxisSpacing,
             crossAxisSpacing: widget.crossAxisSpacing,
           ),
-          itemCount: _products.length,
+          itemCount: filtered.length,
           itemBuilder: (context, index) {
-            final product = _products[index];
+            final product = filtered[index];
 
             if (widget.itemBuilder != null) {
               return GestureDetector(

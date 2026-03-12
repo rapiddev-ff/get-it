@@ -14,12 +14,14 @@ class CheckoutItemWidget extends StatelessWidget {
     required this.quantity,
     required this.addQuantityAction,
     required this.minusQuantityAction,
+    this.effectivePrice,
   });
 
   final FeedProduct? feedProduct;
   final int? quantity;
   final Future Function()? addQuantityAction;
   final Future Function()? minusQuantityAction;
+  final double? effectivePrice;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class CheckoutItemWidget extends StatelessWidget {
                 feedProduct?.mainImageUrl,
                 'https://picsum.photos/seed/357/600',
               ),
-              width: 80.0,
+              width: 100.0,
               height: 100.0,
               fit: BoxFit.cover,
             ),
@@ -61,10 +63,13 @@ class CheckoutItemWidget extends StatelessWidget {
                             .copyWith(fontWeight: FontWeight.w500, height: 1.5),
                       ),
                     ),
-                    Icon(
-                      Icons.close_outlined,
-                      color: AppColors.brandPurpleLight,
-                      size: 24.0,
+                    GestureDetector(
+                      onTap: () => Navigator.of(context).pop(),
+                      child: Icon(
+                        Icons.close_outlined,
+                        color: AppColors.brandPurpleLight,
+                        size: 24.0,
+                      ),
                     ),
                   ].divide(SizedBox(width: 12.0)),
                 ),
@@ -120,15 +125,7 @@ class CheckoutItemWidget extends StatelessWidget {
                   child: Row(
                     children: [
                       Expanded(
-                        child: Text(
-                          NumberFormat('#,##0.##', 'en_US')
-                              .format(feedProduct!.price * (quantity!)),
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(
-                                  fontWeight: FontWeight.w500, height: 1.5),
-                        ),
+                        child: _buildPriceText(context),
                       ),
                       InkWell(
                         onTap: () async {
@@ -168,6 +165,44 @@ class CheckoutItemWidget extends StatelessWidget {
           ),
         ].divide(SizedBox(width: 12.0)),
       ),
+    );
+  }
+
+  Widget _buildPriceText(BuildContext context) {
+    final currencyFormat = NumberFormat('\$#,##0.00', 'en_US');
+    final price = effectivePrice ?? feedProduct!.price;
+    final totalPrice = price * (quantity ?? 1);
+    final hasDiscount = effectivePrice != null && effectivePrice! < feedProduct!.price;
+
+    if (!hasDiscount) {
+      return Text(
+        currencyFormat.format(totalPrice),
+        style: Theme.of(context)
+            .textTheme
+            .titleMedium!
+            .copyWith(fontWeight: FontWeight.w500, height: 1.5),
+      );
+    }
+
+    final originalTotal = feedProduct!.price * (quantity ?? 1);
+    return Row(
+      children: [
+        Text(
+          currencyFormat.format(totalPrice),
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium!
+              .copyWith(fontWeight: FontWeight.w500, height: 1.5),
+        ),
+        SizedBox(width: 6.0),
+        Text(
+          currencyFormat.format(originalTotal),
+          style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                decoration: TextDecoration.lineThrough,
+                color: AppColors.textSecondary,
+              ),
+        ),
+      ],
     );
   }
 }

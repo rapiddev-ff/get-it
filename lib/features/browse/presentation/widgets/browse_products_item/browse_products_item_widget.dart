@@ -1,10 +1,9 @@
 import '/features/browse/domain/models/browse_product_model.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/value_utils.dart';
+import '/core/widgets/product_price_row.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
-import 'package:intl/intl.dart';
 
 class BrowseProductsItemWidget extends StatelessWidget {
   const BrowseProductsItemWidget({
@@ -18,101 +17,64 @@ class BrowseProductsItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4.0),
-        border: Border.all(
-          color: AppColors.surfaceDark,
-        ),
+        color: AppColors.surfaceDark,
+        borderRadius: BorderRadius.circular(8.0),
       ),
+      clipBehavior: Clip.antiAlias,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: 168.5,
-            height: 128.0,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(4.0),
-                topRight: Radius.circular(4.0),
-              ),
+          Expanded(
+            child: SizedBox(
+              width: double.infinity,
               child: CachedNetworkImage(
-                fadeInDuration: const Duration(milliseconds: 500),
-                fadeOutDuration: const Duration(milliseconds: 500),
                 imageUrl: valueOrDefault<String>(
                   browseDataType?.mainImageUrl,
                   'https://picsum.photos/seed/487/600',
                 ),
-                width: 172.5,
-                height: 128.0,
                 fit: BoxFit.cover,
+                fadeInDuration: Duration(milliseconds: 100),
+                fadeOutDuration: Duration(milliseconds: 100),
               ),
             ),
           ),
-          Expanded(
-            child: Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                color: AppColors.surfaceDark,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(4.0),
-                  bottomRight: Radius.circular(4.0),
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      valueOrDefault<String>(
-                        browseDataType?.title,
-                        'n/a',
+          Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  browseDataType?.title ?? '',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        fontWeight: FontWeight.w500,
                       ),
-                      maxLines: 2,
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 15.0,
-                          height: 1.5),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 8.0),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '- \u2022 ${browseDataType?.categoryName}',
-                          style:
-                              Theme.of(context).textTheme.labelMedium!.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.5,
-                                  ),
-                        ),
-                        const SizedBox(height: 8.0),
-                        Text(
-                          _formatPrice(browseDataType?.price),
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.secondary,
-                                  height: 1.5),
-                        ),
-                      ],
-                    ),
-                  ],
                 ),
-              ),
+                if (browseDataType?.categoryName.isNotEmpty == true) ...[
+                  SizedBox(height: 4.0),
+                  Text(
+                    browseDataType!.categoryName,
+                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.textSecondary,
+                        ),
+                  ),
+                ],
+                SizedBox(height: 6.0),
+                ProductPriceRow(
+                  price: browseDataType?.price ?? 0.0,
+                  originalPrice: browseDataType?.originalPrice ?? 0.0,
+                  flashSaleEnabled: browseDataType?.flashSaleEnabled ?? false,
+                  flashSalePrice: browseDataType?.flashSalePrice,
+                  discountType: browseDataType?.discountType,
+                  discountAmount: browseDataType?.discountAmount,
+                ),
+              ],
             ),
           ),
         ],
       ),
     );
-  }
-
-  static String _formatPrice(double? price) {
-    if (price == null) return '0';
-    return NumberFormat('#,##0.##', 'en_US').format(price);
   }
 }
