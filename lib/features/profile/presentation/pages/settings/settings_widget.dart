@@ -32,6 +32,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingsWidget extends ConsumerStatefulWidget {
   const SettingsWidget({super.key});
@@ -951,6 +952,24 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                         ),
                       ),
                     ),
+                  ),
+                  FutureBuilder<PackageInfo>(
+                    future: PackageInfo.fromPlatform(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) return SizedBox.shrink();
+                      final info = snapshot.data!;
+                      return Padding(
+                        padding: EdgeInsets.only(top: 16.0),
+                        child: Text(
+                          'Version ${info.version} (${info.buildNumber})',
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .copyWith(color: AppColors.textSecondary),
+                        ),
+                      );
+                    },
                   ),
                 ]
                     .addToStart(SizedBox(height: 24.0))

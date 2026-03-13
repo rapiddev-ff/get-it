@@ -1,8 +1,8 @@
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import '/core/providers/current_user_provider.dart';
 import 'package:flutter/services.dart';
+import '/core/providers/current_user_provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -40,10 +40,12 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
   bool errorEmailRequired = false;
   bool errorEmailFormat = false;
   bool errorPasswordRequired = false;
+  bool errorPasswordRequirements = false;
   bool errorConfirmPasswordRequired = false;
   bool emailAlreadyInUse = false;
   bool checkBoxIsActive = false;
   bool errorPaswordsDontMatch = false;
+  bool errorTermsNotAccepted = false;
 
   late final FocusNode textFieldFocusNode1;
   late final TextEditingController emailTextController;
@@ -57,8 +59,10 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
   bool? isUserExist;
 
   static bool _checkEmailFormat(String email) {
-    return RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
-        .hasMatch(email);
+    return RegExp(
+            r'^[a-zA-Z0-9]([a-zA-Z0-9._%-]*[a-zA-Z0-9])?@[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$')
+        .hasMatch(email) &&
+        !email.contains('..');
   }
 
   @override
@@ -285,6 +289,17 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                                   padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Password is required.',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall!
+                                        .copyWith(color: AppColors.error),
+                                  ).animate().fade(duration: 600.ms),
+                                ),
+                              if (errorPasswordRequirements)
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 4.0),
+                                  child: Text(
+                                    'Password needs at least 8 characters, one uppercase letter, one number, and one special character.',
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodySmall!
@@ -530,12 +545,11 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                           ),
                         ].divide(const SizedBox(width: 8.0)),
                       ),
-                      if (!checkBoxIsActive &&
-                          (confirmPasswordTextController.text != ''))
+                      if (errorTermsNotAccepted)
                         Padding(
                           padding: const EdgeInsets.only(top: 4.0),
                           child: Text(
-                            'Terms not accepted',
+                            'Please accept the Terms & Conditions and Privacy Policy to continue.',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodySmall!
@@ -550,87 +564,72 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                             errorEmailRequired = false;
                             errorEmailFormat = false;
                             errorPasswordRequired = false;
+                            errorPasswordRequirements = false;
                             errorConfirmPasswordRequired = false;
                             emailAlreadyInUse = false;
                             errorPaswordsDontMatch = false;
-                            setState(() {});
+                            errorTermsNotAccepted = false;
 
-                            if (emailTextController.text != '') {
-                              errorEmailRequired = false;
-                              setState(() {});
-                            } else {
+                            bool hasError = false;
+
+                            // Email validation
+                            if (emailTextController.text.trim().isEmpty) {
                               errorEmailRequired = true;
-                              setState(() {});
-                              return;
-                            }
-
-                            if (_checkEmailFormat(emailTextController.text)) {
-                              errorEmailFormat = false;
-                              setState(() {});
-                            } else {
+                              hasError = true;
+                            } else if (!_checkEmailFormat(
+                                emailTextController.text.trim())) {
                               errorEmailFormat = true;
-                              setState(() {});
-                              return;
+                              hasError = true;
                             }
 
-                            isUserExist = await actions.checkIsEmailRegistered(
-                              emailTextController.text,
-                            );
-                            if (!isUserExist!) {
-                              emailAlreadyInUse = false;
-                              if (!mounted) return;
-                              setState(() {});
-                            } else {
-                              emailAlreadyInUse = true;
-                              setState(() {});
-                              return;
-                            }
-
-                            if (passwordTextController.text != '') {
-                              errorPasswordRequired = false;
-                              setState(() {});
-                            } else {
+                            // Password validation
+                            if (passwordTextController.text.isEmpty) {
                               errorPasswordRequired = true;
-                              setState(() {});
-                              return;
-                            }
-
-                            if (confirmPasswordTextController.text != '') {
-                              errorConfirmPasswordRequired = false;
-                              setState(() {});
-                            } else {
-                              errorConfirmPasswordRequired = true;
-                              setState(() {});
-                              return;
-                            }
-
-                            if (passwordTextController.text ==
-                                confirmPasswordTextController.text) {
-                              errorPaswordsDontMatch = false;
-                              setState(() {});
-                            } else {
-                              errorPaswordsDontMatch = true;
-                              setState(() {});
-                              return;
-                            }
-
-                            if (!((passwordTextController.text.length >= 8) &&
+                              hasError = true;
+                            } else if (!((passwordTextController.text.length >=
+                                    8) &&
                                 passwordTextController.text
                                     .contains(RegExp(r'[A-Z]')) &&
                                 passwordTextController.text
                                     .contains(RegExp(r'\d')) &&
-                                passwordTextController.text.contains(
-                                    RegExp(r'[!@#\$%^&*(),.?":{}|<>_\-]')))) {
-                              return;
+                                passwordTextController.text.contains(RegExp(
+                                    r'[!@#\$%^&*(),.?":{}|<>_\-]')))) {
+                              errorPasswordRequirements = true;
+                              hasError = true;
                             }
+
+                            // Confirm password validation
+                            if (confirmPasswordTextController.text.isEmpty) {
+                              errorConfirmPasswordRequired = true;
+                              hasError = true;
+                            } else if (!errorPasswordRequired &&
+                                !errorPasswordRequirements &&
+                                passwordTextController.text !=
+                                    confirmPasswordTextController.text) {
+                              errorPaswordsDontMatch = true;
+                              hasError = true;
+                            }
+
+                            // Terms validation
                             if (!checkBoxIsActive) {
+                              errorTermsNotAccepted = true;
+                              hasError = true;
+                            }
+
+                            setState(() {});
+
+                            if (hasError) {
                               HapticFeedback.lightImpact();
                               return;
                             }
 
-                            if (passwordTextController.text !=
-                                confirmPasswordTextController.text) {
-                              errorPaswordsDontMatch = true;
+                            // Check email availability (async)
+                            isUserExist = await actions.checkIsEmailRegistered(
+                              emailTextController.text.trim(),
+                            );
+                            if (!mounted) return;
+                            if (isUserExist!) {
+                              emailAlreadyInUse = true;
                               setState(() {});
                               return;
                             }
@@ -643,18 +642,25 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
                             final user =
                                 await authManager.createAccountWithEmail(
                               context,
-                              emailTextController.text,
+                              emailTextController.text.trim(),
                               passwordTextController.text,
                             );
                             if (user == null) {
+                              if (!mounted) return;
+                              emailAlreadyInUse = true;
+                              setState(() {});
                               return;
                             }
 
                             await UserProfilesTable().insert({
-                              'email': emailTextController.text,
+                              'email': emailTextController.text.trim(),
                               'created_at': DateTime.now().toIso8601String(),
-                              'user_id': ref.read(currentUserIdProvider),
+                              'user_id': user.uid,
                             });
+
+                            // Invalidate cached user provider so downstream
+                            // pages (phone verification, etc.) get the correct ID
+                            ref.invalidate(currentUserIdProvider);
 
                             if (!mounted) return;
                             context.goNamed(

@@ -673,6 +673,16 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                                           product.seller?.id ?? '',
                                           widget.productId,
                                         );
+                                        if (!mounted) return;
+                                        if (_getOrCreateConversation == null) {
+                                          await actions.toastificationshow(
+                                            context,
+                                            'Error',
+                                            'Could not start conversation. Please try again.',
+                                            'error',
+                                          );
+                                          return;
+                                        }
                                         ref
                                             .read(messagesProvider.notifier)
                                             .setCurrentConversation(

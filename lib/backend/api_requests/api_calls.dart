@@ -19,20 +19,26 @@ class SendVerificationCall {
   Future<ApiCallResponse> call({
     String? to = '',
   }) async {
-    final supabase = Supabase.instance.client;
-    final response = await supabase.functions.invoke(
-      'twilio-send-verification',
-      body: {'to': to},
-    );
+    try {
+      final supabase = Supabase.instance.client;
+      final response = await supabase.functions.invoke(
+        'twilio-send-verification',
+        body: {'to': to},
+      );
 
-    final statusCode = response.status;
-    final jsonBody = response.data;
+      final statusCode = response.status;
+      final jsonBody = response.data;
 
-    final body = jsonBody is Map
-        ? jsonBody
-        : (jsonBody is String ? jsonDecode(jsonBody) : {});
+      final body = jsonBody is Map
+          ? jsonBody
+          : (jsonBody is String ? jsonDecode(jsonBody) : {});
 
-    return ApiCallResponse(body, {}, statusCode);
+      return ApiCallResponse(body, {}, statusCode);
+    } on FunctionException catch (e) {
+      final details = e.details;
+      final body = details is Map ? details : {'error': e.reasonPhrase ?? 'Unknown error'};
+      return ApiCallResponse(body, {}, e.status);
+    }
   }
 }
 
@@ -41,19 +47,25 @@ class VerifyCodeCall {
     String? to = '',
     String? code = '',
   }) async {
-    final supabase = Supabase.instance.client;
-    final response = await supabase.functions.invoke(
-      'twilio-verify-code',
-      body: {'to': to, 'code': code},
-    );
+    try {
+      final supabase = Supabase.instance.client;
+      final response = await supabase.functions.invoke(
+        'twilio-verify-code',
+        body: {'to': to, 'code': code},
+      );
 
-    final statusCode = response.status;
-    final jsonBody = response.data;
-    final body = jsonBody is Map
-        ? jsonBody
-        : (jsonBody is String ? jsonDecode(jsonBody) : {});
+      final statusCode = response.status;
+      final jsonBody = response.data;
+      final body = jsonBody is Map
+          ? jsonBody
+          : (jsonBody is String ? jsonDecode(jsonBody) : {});
 
-    return ApiCallResponse(body, {}, statusCode);
+      return ApiCallResponse(body, {}, statusCode);
+    } on FunctionException catch (e) {
+      final details = e.details;
+      final body = details is Map ? details : {'error': e.reasonPhrase ?? 'Unknown error'};
+      return ApiCallResponse(body, {}, e.status);
+    }
   }
 
   bool? isValid(dynamic response) => castToType<bool>(getJsonField(

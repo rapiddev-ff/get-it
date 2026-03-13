@@ -1,6 +1,7 @@
 import '/features/messages/domain/models/conversation_model.dart';
 import '/backend/supabase/supabase.dart';
 
+import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<Conversation?> getOrCreateConversation(
@@ -54,6 +55,7 @@ Future<Conversation?> getOrCreateConversation(
       productPrice: (json['product_price'] as num?)?.toDouble(),
     );
   } catch (e) {
+    debugPrint('[getOrCreateConversation] Error: $e');
     return null;
   }
 }

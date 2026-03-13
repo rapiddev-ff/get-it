@@ -11,6 +11,7 @@ import '/core/utils/keyboard_visibility_mixin.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/dismiss_keyboard.dart';
+import '/custom_code/actions/index.dart' as actions;
 import '/features/auth/data/supabase_auth/auth_util.dart';
 import '/features/auth/presentation/pages/phone_verification_page2/phone_verification_page2_widget.dart';
 
@@ -35,6 +36,8 @@ class _PhoneVerificationPageWidgetState
   late final TextEditingController textController;
   late final FocusNode textFieldFocusNode;
   late final MaskTextInputFormatter textFieldMask;
+  bool _isSending = false;
+  bool _hasInteracted = false;
 
   /// Returns null if the phone number is valid, or an error string if invalid.
   static String? _phoneValidationResult(String? phoneNumber) {
@@ -71,7 +74,13 @@ class _PhoneVerificationPageWidgetState
     super.initState();
 
     textController = TextEditingController();
-    textFieldFocusNode = FocusNode();    textFieldMask = MaskTextInputFormatter(mask: '+# (###) ###-##-##');
+    textFieldFocusNode = FocusNode()
+      ..addListener(() {
+        if (!textFieldFocusNode.hasFocus && textController.text.isNotEmpty) {
+          setState(() => _hasInteracted = true);
+        }
+      });
+    textFieldMask = MaskTextInputFormatter(mask: '+# (###) ###-##-##');
   }
 
   @override
@@ -220,19 +229,17 @@ class _PhoneVerificationPageWidgetState
                                 inputFormatters: [textFieldMask],
                               ),
                             ),
-                            if (_phoneValidationResult(
-                                        textController.text) !=
-                                    null &&
+                            if (_hasInteracted &&
                                 _phoneValidationResult(
                                         textController.text) !=
-                                    '' &&
+                                    null &&
                                 textController.text != '')
                               Padding(
                                 padding: const EdgeInsets.only(top: 4.0),
                                 child: Text(
                                   _phoneValidationResult(
                                           textController.text) ??
-                                      'N/A',
+                                      '',
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodySmall!
@@ -254,25 +261,51 @@ class _PhoneVerificationPageWidgetState
                     children: [
                       AppGradientButton(
                         text: 'Send',
-                        enabled: _isPhoneValid,
+                        enabled: _isPhoneValid && !_isSending,
+                        isLoading: _isSending,
                         borderRadius: 8.0,
-                        onPressed: !_isPhoneValid
+                        onPressed: !_isPhoneValid || _isSending
                             ? null
                             : () async {
-                                await TwillioGroup.sendVerificationCall.call(
-                                  to: _formatPhoneNumber(
-                                      textController.text),
-                                );
+                                setState(() => _isSending = true);
+                                try {
+                                  final sendRes = await TwillioGroup
+                                      .sendVerificationCall
+                                      .call(
+                                    to: _formatPhoneNumber(
+                                        textController.text),
+                                  );
 
-                                if (!mounted) return;
-                                context.pushNamed(
-                                  PhoneVerificationPage2Widget.routeName,
-                                  queryParameters: {
-                                    'phoneNumber': textController.text,
-                                    'isOnborading':
-                                        widget.isOnboarding.toString(),
-                                  },
-                                );
+                                  if (!mounted) return;
+                                  if (!sendRes.succeeded) {
+                                    final msg = sendRes.jsonBody is Map
+                                        ? (sendRes.jsonBody['message'] ??
+                                            sendRes.jsonBody['error'] ??
+                                            'Failed to send verification code.')
+                                        : 'Failed to send verification code.';
+                                    await actions.toastificationshow(
+                                      context,
+                                      'Error',
+                                      msg.toString(),
+                                      'error',
+                                    );
+                                    return;
+                                  }
+
+                                  if (!mounted) return;
+                                  context.pushNamed(
+                                    PhoneVerificationPage2Widget.routeName,
+                                    queryParameters: {
+                                      'phoneNumber': textController.text,
+                                      'isOnborading':
+                                          widget.isOnboarding.toString(),
+                                    },
+                                  );
+                                } finally {
+                                  if (mounted) {
+                                    setState(() => _isSending = false);
+                                  }
+                                }
                               },
                       ),
                     ]

@@ -19,7 +19,7 @@ import '/core/utils/list_extensions.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/auth/presentation/providers/auth_provider.dart';
-import '/features/home/presentation/pages/home_page/home_page_widget.dart';
+import '/features/home/presentation/pages/check_data/check_data_widget.dart';
 import 'package:uuid/uuid.dart';
 import 'package:mime/mime.dart';
 
@@ -79,9 +79,11 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
   static String _usernameValidationResult(String text) {
     if (text.isEmpty) return 'Username is required';
     if (text.length < 3) return 'Username must be at least 3 characters';
-    if (!RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(text)) {
-      return 'Only letters, numbers, and underscores allowed';
+    if (text.length > 20) return 'Username must be 20 characters or less';
+    if (!RegExp(r'^@?[a-zA-Z0-9._]+$').hasMatch(text)) {
+      return 'Only letters, numbers, underscores, and periods allowed';
     }
+    if (text.contains('..')) return 'Username cannot contain consecutive periods';
     return 'valid';
   }
 
@@ -366,9 +368,15 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
                               style: appTextFieldStyle,
                               cursorColor: AppColors.textPrimary,
                               enableInteractiveSelection: true,
+                              maxLength: 20,
+                              buildCounter: (context,
+                                      {required currentLength,
+                                      required isFocused,
+                                      required maxLength}) =>
+                                  null,
                               inputFormatters: [
                                 FilteringTextInputFormatter.allow(
-                                    RegExp(r'^[a-zA-Z0-9_]+'))
+                                    RegExp(r'[a-zA-Z0-9_.@]'))
                               ],
                             ),
                           ),
@@ -464,7 +472,7 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
                                         ));
 
                                 if (context.mounted) {
-                                  context.goNamed(HomePageWidget.routeName);
+                                  context.goNamed(CheckDataWidget.routeName);
                                 }
                               },
                       ),

@@ -8,6 +8,7 @@ import '/core/constants/app_constants.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/dismiss_keyboard.dart';
+import '/custom_code/actions/index.dart' as actions;
 
 class ForgotPasswordStep2Widget extends StatefulWidget {
   const ForgotPasswordStep2Widget({
@@ -27,6 +28,8 @@ class ForgotPasswordStep2Widget extends StatefulWidget {
 
 class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget>
     with KeyboardVisibilityMixin {
+  bool _isResending = false;
+
   @override
   void initState() {
     super.initState();
@@ -82,7 +85,7 @@ class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget>
                   padding: EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Center(
                         child: Container(
@@ -92,18 +95,34 @@ class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget>
                             color: AppColors.backgroundSecondary,
                             shape: BoxShape.circle,
                           ),
+                          child: Icon(
+                            Icons.mail_outline_rounded,
+                            color: AppColors.primary,
+                            size: 64.0,
+                          ),
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 24.0),
                         child: Text(
-                          'Almost there! We\'ve sent a password reset link to ${widget.email}. Click the link in the email to create your new password. Don\'t see it? Check your spam folder or wait a few minutes for delivery.',
+                          'Almost there! We\'ve sent a password reset link to ${widget.email}. Click the link in the email to create your new password.',
                           textAlign: TextAlign.center,
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge!
                               .copyWith(height: 1.5),
                         ),
+                      ),
+                      Text(
+                        'Don\'t see it? Check your spam folder or wait a few minutes for delivery.',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(
+                              color: AppColors.textSecondary,
+                              height: 1.5,
+                            ),
                       ),
                     ].addToStart(SizedBox(height: 24.0)),
                   ),
@@ -124,10 +143,39 @@ class _ForgotPasswordStep2WidgetState extends State<ForgotPasswordStep2Widget>
                             .copyWith(height: 1.5),
                       ),
                       AppGradientButton(
-                        text: 'Back to Sign In',
-                        onPressed: () {
-                          context.pop();
-                        },
+                        text: 'Resend Email',
+                        isLoading: _isResending,
+                        onPressed: _isResending
+                            ? null
+                            : () async {
+                                setState(() => _isResending = true);
+                                try {
+                                  final result =
+                                      await actions.requestPasswordReset(
+                                    widget.email ?? '',
+                                  );
+                                  if (!mounted) return;
+                                  if (result['success'] == true) {
+                                    await actions.toastificationshow(
+                                      context,
+                                      'Email Sent',
+                                      'We\'ve resent the password reset link to ${widget.email}.',
+                                      'success',
+                                    );
+                                  } else {
+                                    await actions.toastificationshow(
+                                      context,
+                                      'Error',
+                                      'Could not resend email. Please try again later.',
+                                      'error',
+                                    );
+                                  }
+                                } finally {
+                                  if (mounted) {
+                                    setState(() => _isResending = false);
+                                  }
+                                }
+                              },
                       ),
                     ]
                         .divide(SizedBox(height: 24.0))

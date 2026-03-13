@@ -1,5 +1,6 @@
-import '/backend/api_requests/api_calls.dart';
+import '/backend/supabase/supabase.dart';
 import '/features/auth/presentation/pages/phone_verification_page2/phone_verification_page2_widget.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/keyboard_visibility_mixin.dart';
 import '/core/widgets/app_text_field.dart';
@@ -35,14 +36,21 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
   late final FocusNode textFieldFocusNode;
   late final TextEditingController textController;
   late final MaskTextInputFormatter textFieldMask;
-  ApiCallResponse? apiResultzpe;
+  bool _isSending = false;
+  bool _hasInteracted = false;
 
   @override
   void initState() {
     super.initState();
 
     textController = TextEditingController();
-    textFieldFocusNode = FocusNode();    textFieldMask = MaskTextInputFormatter(mask: '+# (###) ###-##-##');
+    textFieldFocusNode = FocusNode()
+      ..addListener(() {
+        if (!textFieldFocusNode.hasFocus && textController.text.isNotEmpty) {
+          setState(() => _hasInteracted = true);
+        }
+      });
+    textFieldMask = MaskTextInputFormatter(mask: '+# (###) ###-##-##');
   }
 
   @override
@@ -50,6 +58,12 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
     textFieldFocusNode.dispose();
     textController.dispose();
     super.dispose();
+  }
+
+  bool get _isPhoneValid {
+    final text = textController.text;
+    final result = FormValidators.phoneValidationResult(text);
+    return (result == null || result.isEmpty) && text.isNotEmpty;
   }
 
   @override
@@ -95,7 +109,15 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
                                   fontWeight: FontWeight.w500, height: 1.4),
                         ),
                       ),
-                      Container(
+                      Text(
+                        'We\'ll send a verification code to this number.',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .copyWith(color: AppColors.textSecondary),
+                      ),
+                      SizedBox(height: 8.0),
+                      SizedBox(
                         width: double.infinity,
                         child: TextFormField(
                           controller: textController,
@@ -116,19 +138,17 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
                           inputFormatters: [textFieldMask],
                         ),
                       ),
-                      if ((FormValidators.phoneValidationResult(
+                      if (_hasInteracted &&
+                          FormValidators.phoneValidationResult(
                                       textController.text) !=
                                   null &&
-                              FormValidators.phoneValidationResult(
-                                      textController.text) !=
-                                  '') &&
-                          (textController.text != ''))
+                          textController.text != '')
                         Padding(
                           padding: EdgeInsets.only(top: 4.0),
                           child: Text(
                             FormValidators.phoneValidationResult(
                                     textController.text) ??
-                                'N/A',
+                                '',
                             style: Theme.of(context)
                                 .textTheme
                                 .bodySmall!
@@ -147,49 +167,82 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
                     children: [
                       AppGradientButton(
                         text: 'Send',
-                        enabled: (textController.text != '') &&
-                            (FormValidators.phoneValidationResult(
-                                        textController.text) ==
-                                    null ||
-                                FormValidators.phoneValidationResult(
-                                        textController.text) ==
-                                    ''),
-                        onPressed: () async {
-                          apiResultzpe =
-                              await SupabaseRPCGroup.checkphoneexistsCall.call(
-                            userId: textController.text,
-                          );
+                        enabled: _isPhoneValid && !_isSending,
+                        isLoading: _isSending,
+                        onPressed: !_isPhoneValid || _isSending
+                            ? null
+                            : () async {
+                                setState(() => _isSending = true);
+                                try {
+                                  final formattedPhone =
+                                      FormValidators.formatPhoneNumber(
+                                          textController.text);
 
-                          if (apiResultzpe?.jsonBody == true) {
-                            await actions.toastificationshow(
-                              context,
-                              'Error',
-                              'This number already registered',
-                              'error',
-                            );
-                          } else {
-                            await TwillioGroup.sendVerificationCall.call(
-                              to: FormValidators.formatPhoneNumber(
-                                  textController.text),
-                            );
+                                  // Check if phone already registered
+                                  final exists = await SupaFlow.client
+                                      .from('user_profiles')
+                                      .select('user_id')
+                                      .eq('phone', formattedPhone)
+                                      .maybeSingle();
 
-                            if (!mounted) return;
-                            if (Navigator.of(context).canPop()) {
-                              context.pop();
-                            }
-                            context.pushNamed(
-                              PhoneVerificationPage2Widget.routeName,
-                              queryParameters: {
-                                'phoneNumber': FormValidators.formatPhoneNumber(
-                                    textController.text),
-                                'isOnborading': widget.isOnboarding.toString(),
+                                  if (!mounted) return;
+                                  if (exists != null) {
+                                    await actions.toastificationshow(
+                                      context,
+                                      'Error',
+                                      'This number is already registered.',
+                                      'error',
+                                    );
+                                    return;
+                                  }
+
+                                  final sendRes = await TwillioGroup
+                                      .sendVerificationCall
+                                      .call(to: formattedPhone);
+
+                                  if (!mounted) return;
+                                  if (!sendRes.succeeded) {
+                                    final msg = sendRes.jsonBody is Map
+                                        ? (sendRes.jsonBody['message'] ??
+                                            sendRes.jsonBody['error'] ??
+                                            'Failed to send verification code.')
+                                        : 'Failed to send verification code.';
+                                    await actions.toastificationshow(
+                                      context,
+                                      'Error',
+                                      msg.toString(),
+                                      'error',
+                                    );
+                                    return;
+                                  }
+
+                                  if (!mounted) return;
+                                  if (Navigator.of(context).canPop()) {
+                                    context.pop();
+                                  }
+                                  context.pushNamed(
+                                    PhoneVerificationPage2Widget.routeName,
+                                    queryParameters: {
+                                      'phoneNumber': formattedPhone,
+                                      'isOnborading':
+                                          widget.isOnboarding.toString(),
+                                    },
+                                  );
+                                } finally {
+                                  if (mounted) {
+                                    setState(() => _isSending = false);
+                                  }
+                                }
                               },
-                            );
-                          }
+                      ),
+                      AppOutlineButton(
+                        text: 'Cancel',
+                        onPressed: () {
+                          context.pop();
                         },
                       ),
                     ]
-                        .divide(SizedBox(height: 40.0))
+                        .divide(SizedBox(height: 16.0))
                         .addToStart(SizedBox(height: 24.0))
                         .addToEnd(SizedBox(height: 32.0)),
                   ).animate().move(

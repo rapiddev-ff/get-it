@@ -28,9 +28,18 @@ Future<Map<String, dynamic>> requestPasswordReset(String email) async {
       };
     }
   } catch (e) {
+    final errorStr = e.toString().toLowerCase();
+    if (errorStr.contains('socketexception') ||
+        errorStr.contains('timeout') ||
+        errorStr.contains('network')) {
+      return {
+        'success': false,
+        'message': 'Network error. Please check your connection.',
+      };
+    }
     return {
       'success': false,
-      'message': 'Network error. Please check your connection.',
+      'message': 'Something went wrong. Please try again later.',
     };
   }
 }

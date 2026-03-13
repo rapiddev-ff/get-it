@@ -200,7 +200,7 @@ class _PhoneVerificationPage2WidgetState
                           Padding(
                             padding: const EdgeInsets.only(left: 16.0),
                             child: Text(
-                              'Incorrect code. Try again.',
+                              'The code you entered is incorrect. Please check and try again.',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall!
@@ -211,7 +211,7 @@ class _PhoneVerificationPage2WidgetState
                           Padding(
                             padding: const EdgeInsets.only(left: 16.0),
                             child: Text(
-                              'Error. Try again later.',
+                              'Something went wrong. Please try again later.',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall!
@@ -317,10 +317,10 @@ class _PhoneVerificationPage2WidgetState
                                 to: widget.phoneNumber!
                                     .replaceAll(RegExp(r'[^\d+]'), ''),
                               );
-                              if ((sendVerificationRes?.succeeded ?? true)) {
+                              if ((sendVerificationRes?.succeeded ?? false)) {
                                 timerController.onStartTimer();
                               } else {
-                                if ((sendVerificationRes?.statusCode ?? 200) ==
+                                if ((sendVerificationRes?.statusCode ?? 0) ==
                                     429) {
                                   errorMaxAttemptsReached = true;
                                   setState(() {});
@@ -416,32 +416,32 @@ class _PhoneVerificationPage2WidgetState
                                       .replaceAll(RegExp(r'[^\d+]'), ''),
                                   code: pinCodeController.text,
                                 );
-                                if ((verifyCodeRes?.succeeded ?? true)) {
-                                  if (TwillioGroup.verifyCodeCall.isValid(
-                                        (verifyCodeRes?.jsonBody ?? ''),
-                                      ) ==
-                                      true) {
-                                    await Future.wait([
-                                      Future(() async {
-                                        await UserProfilesTable().update(
-                                          data: {
-                                            'phone': widget.phoneNumber!
-                                                .replaceAll(
-                                                    RegExp(r'[^\d+]'), ''),
-                                            'phone_verified': true,
-                                          },
-                                          matchingRows: (rows) => rows.eqOrNull(
-                                            'user_id',
-                                            ref.read(currentUserIdProvider),
-                                          ),
-                                        );
-                                      }),
-                                      Future(() async {
-                                        // TODO: migrate to Riverpod
-                                        if (!mounted) return;
-                                        setState(() {});
-                                      }),
-                                    ]);
+                                if ((verifyCodeRes?.succeeded ?? false)) {
+                                  final isValid =
+                                      TwillioGroup.verifyCodeCall.isValid(
+                                            verifyCodeRes?.jsonBody,
+                                          ) ==
+                                          true;
+                                  final status =
+                                      TwillioGroup.verifyCodeCall.status(
+                                    verifyCodeRes?.jsonBody,
+                                  );
+                                  if (isValid ||
+                                      status == 'approved') {
+                                    final cleanPhone = widget.phoneNumber!
+                                        .replaceAll(RegExp(r'[^\d+]'), '');
+                                    await UserProfilesTable().update(
+                                      data: {
+                                        'phone': cleanPhone,
+                                        'phone_verified': true,
+                                      },
+                                      matchingRows: (rows) => rows.eqOrNull(
+                                        'user_id',
+                                        ref.read(currentUserIdProvider),
+                                      ),
+                                    );
+                                    if (!mounted) return;
+                                    setState(() {});
                                     if (widget.isOnborading!) {
                                       context.pushNamed(
                                           PermissionsWidget.routeName);
@@ -454,12 +454,12 @@ class _PhoneVerificationPage2WidgetState
                                     _triggerShake();
                                   }
                                 } else {
-                                  if ((verifyCodeRes?.statusCode ?? 200) ==
+                                  if ((verifyCodeRes?.statusCode ?? 0) ==
                                       404) {
                                     errorCodeExpired = true;
                                     setState(() {});
                                   } else if ((verifyCodeRes?.statusCode ??
-                                          200) ==
+                                          0) ==
                                       429) {
                                     errorMaxAttemptsReached = true;
                                     setState(() {});

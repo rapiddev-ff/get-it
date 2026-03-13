@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import '/core/widgets/app_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import '/core/theme/app_colors.dart';
@@ -6,7 +8,10 @@ import '/core/theme/app_colors.dart';
 ///
 /// When [enabled] is false, the gradient is replaced with a flat grey.
 /// Wraps a [TextButton] inside a gradient [Container] for consistent styling.
-class AppGradientButton extends StatelessWidget {
+///
+/// Automatically prevents double-taps: if [onPressed] returns a [Future],
+/// the button is disabled and shows a loading indicator until it completes.
+class AppGradientButton extends StatefulWidget {
   const AppGradientButton({
     super.key,
     required this.text,
@@ -18,22 +23,46 @@ class AppGradientButton extends StatelessWidget {
   });
 
   final String text;
-  final VoidCallback? onPressed;
+  final FutureOr<void> Function()? onPressed;
   final bool enabled;
   final double height;
   final double borderRadius;
+  /// External loading state. The button also tracks its own internal loading
+  /// state when [onPressed] returns a Future.
   final bool isLoading;
+
+  @override
+  State<AppGradientButton> createState() => _AppGradientButtonState();
+}
+
+class _AppGradientButtonState extends State<AppGradientButton> {
+  bool _isRunning = false;
+
+  bool get _showLoading => widget.isLoading || _isRunning;
 
   static const _activeStart = AppColors.brandPurple;
   static const _activeEnd = AppColors.brandBlue;
   static const _disabledColor = AppColors.surfaceDark;
 
+  Future<void> _handlePress() async {
+    if (_isRunning) return;
+    final result = widget.onPressed!();
+    if (result is Future) {
+      setState(() => _isRunning = true);
+      try {
+        await result;
+      } finally {
+        if (mounted) setState(() => _isRunning = false);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final isActive = enabled && onPressed != null;
+    final isActive = widget.enabled && widget.onPressed != null && !_showLoading;
     return Container(
       width: double.infinity,
-      height: height,
+      height: widget.height,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -44,18 +73,18 @@ class AppGradientButton extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
-        borderRadius: BorderRadius.circular(borderRadius),
+        borderRadius: BorderRadius.circular(widget.borderRadius),
       ),
       child: TextButton(
-        onPressed: isActive ? onPressed : null,
+        onPressed: isActive ? _handlePress : null,
         style: TextButton.styleFrom(
-          minimumSize: Size(double.infinity, height),
+          minimumSize: Size(double.infinity, widget.height),
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(borderRadius),
+            borderRadius: BorderRadius.circular(widget.borderRadius),
           ),
         ),
-        child: isLoading
+        child: _showLoading
             ? const SizedBox(
                 width: 24,
                 height: 24,
@@ -63,7 +92,7 @@ class AppGradientButton extends StatelessWidget {
                     AppLoadingIndicator(strokeWidth: 2.5, color: Colors.white),
               )
             : Text(
-                text,
+                widget.text,
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.w500,

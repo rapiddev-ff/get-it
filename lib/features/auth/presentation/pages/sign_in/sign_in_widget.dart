@@ -403,7 +403,7 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                             );
                           } else {
                             errorSignIn =
-                                'Email or password is incorrect. Please try again';
+                                'Email or password is incorrect. Please try again.';
                             setState(() {});
                           }
                         },

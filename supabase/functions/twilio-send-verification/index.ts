@@ -48,11 +48,8 @@ Deno.serve(async (req) => {
       });
     }
 
-    const twilioSid = Deno.env.get("TWILLIO_SID")!;
-    const twilioAuth = Deno.env.get("TWILLIO_AUTH")!;
     const serviceSid = Deno.env.get("SERVICE_SID")!;
-
-    const credentials = btoa(`${twilioSid}:${twilioAuth}`);
+    const credentials = Deno.env.get("TWILLIO_BASE64")!;
 
     const twilioResponse = await fetch(
       `https://verify.twilio.com/v2/Services/${serviceSid}/Verifications`,

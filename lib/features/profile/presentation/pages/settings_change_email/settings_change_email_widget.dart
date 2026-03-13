@@ -331,6 +331,14 @@ class _SettingsChangeEmailWidgetState
                           );
                           if ((result is Map) ? result['success'] : false) {
                             if (!mounted) return;
+                            await actions.toastificationshow(
+                              context,
+                              'Success',
+                              result['message'] ??
+                                  'A confirmation email has been sent to your new address.',
+                              'success',
+                            );
+                            if (!mounted) return;
                             context.pop();
                           } else {
                             await actions.toastificationshow(
