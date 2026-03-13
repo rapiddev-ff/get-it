@@ -26,6 +26,7 @@ class ShortlistItemWidget extends ConsumerStatefulWidget {
     this.itemsSold,
     this.tags = const [],
     this.onChanged,
+    this.isOwner = true,
   });
 
   factory ShortlistItemWidget({
@@ -51,6 +52,7 @@ class ShortlistItemWidget extends ConsumerStatefulWidget {
   factory ShortlistItemWidget.fromSeller({
     Key? key,
     required SellerShortlist shortlist,
+    bool isOwner = false,
   }) {
     return ShortlistItemWidget._(
       key: key,
@@ -62,6 +64,7 @@ class ShortlistItemWidget extends ConsumerStatefulWidget {
       shortlistId: shortlist.id.isNotEmpty ? shortlist.id : null,
       shareCode: shortlist.shareCode.isNotEmpty ? shortlist.shareCode : null,
       tags: shortlist.tags,
+      isOwner: isOwner,
     );
   }
 
@@ -76,6 +79,7 @@ class ShortlistItemWidget extends ConsumerStatefulWidget {
   final int? itemsSold;
   final List<String> tags;
   final VoidCallback? onChanged;
+  final bool isOwner;
 
   @override
   ConsumerState<ShortlistItemWidget> createState() =>
@@ -433,8 +437,10 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
         _buildButton(label: 'View', onTap: _onView, isPrimary: true),
         SizedBox(width: 12.0),
         _buildButton(label: 'Share', onTap: _onShare),
-        SizedBox(width: 12.0),
-        _buildButton(label: 'Download', onTap: _onDownload),
+        if (widget.isOwner) ...[
+          SizedBox(width: 12.0),
+          _buildButton(label: 'Download', onTap: _onDownload),
+        ],
       ],
     );
   }

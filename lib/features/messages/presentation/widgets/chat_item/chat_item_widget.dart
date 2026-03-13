@@ -2,7 +2,6 @@ import '/features/messages/domain/models/message_model.dart';
 import '/core/constants/app_constants.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/date_utils.dart';
-import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';
 import '/core/widgets/expanded_image_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -21,284 +20,168 @@ class ChatItemWidget extends ConsumerWidget {
 
   final Message? messageDataType;
 
+  static const _defaultAvatar =
+      'https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=s0aTdmT5aU6b8ot7VKm11DeID6NctRCpB755rA1BIP0=';
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final message = messageDataType;
+    if (message == null) return const SizedBox.shrink();
+
+    final isMe = message.senderId == ref.read(currentUserIdProvider);
+    final isImage = message.messageType == 'image';
+
+    if (isMe) {
+      return _buildOwnMessage(context, message, isImage);
+    } else {
+      return _buildOtherMessage(context, message, isImage);
+    }
+  }
+
+  Widget _buildOwnMessage(BuildContext context, Message message, bool isImage) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        // Other user text message
-        if ((messageDataType?.senderId != ref.read(currentUserIdProvider)) &&
-            (messageDataType?.messageType == 'text'))
-          Row(
+        if (isImage)
+          _buildImageBubble(context, message)
+        else
+          Container(
+            width: MediaQuery.sizeOf(context).width * 0.8,
+            decoration: BoxDecoration(
+              color: AppColors.primary,
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(8.0),
+                bottomRight: Radius.circular(8.0),
+                topLeft: Radius.circular(8.0),
+              ),
+            ),
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+              child: Text(
+                message.content.isEmpty ? 'N/A' : message.content,
+                style: Theme.of(context).textTheme.bodyMedium!,
+              ),
+            ),
+          ),
+        _buildTimestamp(context, message),
+      ],
+    );
+  }
+
+  Widget _buildOtherMessage(
+      BuildContext context, Message message, bool isImage) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildAvatar(message.senderAvatar),
+        const SizedBox(width: 12.0),
+        Expanded(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 32.0,
-                height: 32.0,
-                clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                ),
-                child: Image.network(
-                  valueOrDefault<String>(
-                    messageDataType?.senderAvatar,
-                    'https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=s0aTdmT5aU6b8ot7VKm11DeID6NctRCpB755rA1BIP0=',
+              if (isImage)
+                _buildImageBubble(context, message)
+              else
+                Container(
+                  width: MediaQuery.sizeOf(context).width * 0.8,
+                  decoration: BoxDecoration(
+                    color: AppColors.backgroundSecondary,
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(8.0),
+                      bottomRight: Radius.circular(8.0),
+                      topRight: Radius.circular(8.0),
+                    ),
                   ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 12.0),
+                    child: Text(
+                      message.content.isEmpty ? 'N/A' : message.content,
+                      style: Theme.of(context).textTheme.bodyMedium!,
+                    ),
+                  ),
+                ),
+              _buildTimestamp(context, message),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAvatar(String? avatarUrl) {
+    return Container(
+      width: 32.0,
+      height: 32.0,
+      clipBehavior: Clip.antiAlias,
+      decoration: const BoxDecoration(shape: BoxShape.circle),
+      child: CachedNetworkImage(
+        imageUrl: valueOrDefault<String>(avatarUrl, _defaultAvatar),
+        fit: BoxFit.cover,
+        placeholder: (_, __) => const ColoredBox(color: AppColors.neutral800),
+        errorWidget: (_, __, ___) =>
+            const Icon(Icons.person, size: 20, color: AppColors.neutral700),
+      ),
+    );
+  }
+
+  Widget _buildTimestamp(BuildContext context, Message message) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: Text(
+        dateTimeFormat("jm", message.createdAt, locale: 'en'),
+        style: Theme.of(context).textTheme.labelSmall!,
+      ),
+    );
+  }
+
+  Widget _buildImageBubble(BuildContext context, Message message) {
+    final imageUrl = message.imageUrl ?? '';
+    return InkWell(
+      onTap: () => Navigator.push(
+        context,
+        PageTransition(
+          type: PageTransitionType.fade,
+          child: ExpandedImageView(
+            image: OctoImage(
+              placeholderBuilder: (_) => SizedBox.expand(
+                child: Image(
+                  image: BlurHashImage(AppConstants.blurHash),
                   fit: BoxFit.cover,
                 ),
               ),
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: MediaQuery.sizeOf(context).width * 0.8,
-                      decoration: BoxDecoration(
-                        color: AppColors.backgroundSecondary,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(8.0),
-                          bottomRight: Radius.circular(8.0),
-                          topLeft: Radius.circular(0.0),
-                          topRight: Radius.circular(8.0),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 16.0, vertical: 12.0),
-                        child: Text(
-                          valueOrDefault<String>(
-                            messageDataType?.content,
-                            'N/A',
-                          ),
-                          style: Theme.of(context).textTheme.bodyMedium!,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        dateTimeFormat(
-                          "jm",
-                          messageDataType!.createdAt!,
-                          locale: 'en',
-                        ),
-                        style: Theme.of(context).textTheme.labelSmall!,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ].divide(SizedBox(width: 12.0)),
+              image: CachedNetworkImageProvider(imageUrl),
+              fit: BoxFit.contain,
+            ),
+            allowRotation: false,
+            tag: imageUrl,
+            useHeroAnimation: true,
           ),
-
-        // Other user image message
-        if ((messageDataType?.senderId != ref.read(currentUserIdProvider)) &&
-            (messageDataType?.messageType == 'image'))
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: 32.0,
-                height: 32.0,
-                clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                ),
-                child: Image.network(
-                  valueOrDefault<String>(
-                    messageDataType?.senderAvatar,
-                    'https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=s0aTdmT5aU6b8ot7VKm11DeID6NctRCpB755rA1BIP0=',
-                  ),
-                  fit: BoxFit.cover,
-                ),
+        ),
+      ),
+      child: Hero(
+        tag: imageUrl,
+        transitionOnUserGestures: true,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8.0),
+          child: OctoImage(
+            placeholderBuilder: (_) => SizedBox.expand(
+              child: Image(
+                image: BlurHashImage(AppConstants.blurHash),
+                fit: BoxFit.cover,
               ),
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    InkWell(
-                      onTap: () async {
-                        await Navigator.push(
-                          context,
-                          PageTransition(
-                            type: PageTransitionType.fade,
-                            child: ExpandedImageView(
-                              image: OctoImage(
-                                placeholderBuilder: (_) => SizedBox.expand(
-                                  child: Image(
-                                    image: BlurHashImage(AppConstants.blurHash),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                image: CachedNetworkImageProvider(
-                                  messageDataType!.imageUrl ?? '',
-                                ),
-                                fit: BoxFit.contain,
-                              ),
-                              allowRotation: false,
-                              tag: messageDataType!.imageUrl ?? '',
-                              useHeroAnimation: true,
-                            ),
-                          ),
-                        );
-                      },
-                      child: Hero(
-                        tag: messageDataType!.imageUrl ?? '',
-                        transitionOnUserGestures: true,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: OctoImage(
-                            placeholderBuilder: (_) => SizedBox.expand(
-                              child: Image(
-                                image: BlurHashImage(AppConstants.blurHash),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            image: CachedNetworkImageProvider(
-                              messageDataType!.imageUrl ?? '',
-                            ),
-                            width: MediaQuery.sizeOf(context).width * 0.8,
-                            height: 200.0,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        dateTimeFormat(
-                          "jm",
-                          messageDataType!.createdAt!,
-                          locale: 'en',
-                        ),
-                        style: Theme.of(context).textTheme.labelSmall!,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ].divide(SizedBox(width: 12.0)),
+            ),
+            image: CachedNetworkImageProvider(imageUrl),
+            width: MediaQuery.sizeOf(context).width * 0.8,
+            height: 200.0,
+            fit: BoxFit.cover,
           ),
-
-        // Current user text message
-        if ((messageDataType?.senderId == ref.read(currentUserIdProvider)) &&
-            (messageDataType?.messageType == 'text'))
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Container(
-                width: MediaQuery.sizeOf(context).width * 0.8,
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(8.0),
-                    bottomRight: Radius.circular(8.0),
-                    topLeft: Radius.circular(8.0),
-                    topRight: Radius.circular(0.0),
-                  ),
-                ),
-                child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-                  child: Text(
-                    valueOrDefault<String>(
-                      messageDataType?.content,
-                      'N/A',
-                    ),
-                    style: Theme.of(context).textTheme.bodyMedium!,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 8.0),
-                child: Text(
-                  dateTimeFormat(
-                    "jm",
-                    messageDataType!.createdAt!,
-                    locale: 'en',
-                  ),
-                  style: Theme.of(context).textTheme.labelSmall!,
-                ),
-              ),
-            ],
-          ),
-
-        // Current user image message
-        if ((messageDataType?.senderId == ref.read(currentUserIdProvider)) &&
-            (messageDataType?.messageType == 'image'))
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              InkWell(
-                onTap: () async {
-                  await Navigator.push(
-                    context,
-                    PageTransition(
-                      type: PageTransitionType.fade,
-                      child: ExpandedImageView(
-                        image: OctoImage(
-                          placeholderBuilder: (_) => SizedBox.expand(
-                            child: Image(
-                              image: BlurHashImage(AppConstants.blurHash),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          image: CachedNetworkImageProvider(
-                            messageDataType!.imageUrl ?? '',
-                          ),
-                          fit: BoxFit.contain,
-                        ),
-                        allowRotation: false,
-                        tag: messageDataType!.imageUrl ?? '',
-                        useHeroAnimation: true,
-                      ),
-                    ),
-                  );
-                },
-                child: Hero(
-                  tag: messageDataType!.imageUrl ?? '',
-                  transitionOnUserGestures: true,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: OctoImage(
-                      placeholderBuilder: (_) => SizedBox.expand(
-                        child: Image(
-                          image: BlurHashImage(AppConstants.blurHash),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      image: CachedNetworkImageProvider(
-                        messageDataType!.imageUrl ?? '',
-                      ),
-                      width: MediaQuery.sizeOf(context).width * 0.8,
-                      height: 200.0,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 8.0),
-                child: Text(
-                  dateTimeFormat(
-                    "jm",
-                    messageDataType!.createdAt!,
-                    locale: 'en',
-                  ),
-                  style: Theme.of(context).textTheme.labelSmall!,
-                ),
-              ),
-            ],
-          ),
-      ].divide(SizedBox(height: 24.0)),
+        ),
+      ),
     );
   }
 }

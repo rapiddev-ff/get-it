@@ -3,9 +3,13 @@ import '/core/theme/app_colors.dart';
 import '/core/utils/date_utils.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '/core/providers/current_user_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+const _defaultAvatar =
+    'https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=s0aTdmT5aU6b8ot7VKm11DeID6NctRCpB755rA1BIP0=';
 
 class MessageItemWidget extends ConsumerWidget {
   const MessageItemWidget({
@@ -64,11 +68,13 @@ class MessageItemWidget extends ConsumerWidget {
                     Center(
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(4.0),
-                        child: Image.network(
-                          conversationDataType!.productImage ?? '',
+                        child: CachedNetworkImage(
+                          imageUrl: conversationDataType!.productImage ?? _defaultAvatar,
                           width: 56.0,
                           height: 56.0,
                           fit: BoxFit.cover,
+                          placeholder: (_, __) => const ColoredBox(color: AppColors.neutral800),
+                          errorWidget: (_, __, ___) => const ColoredBox(color: AppColors.neutral800),
                         ),
                       ),
                     ),
@@ -107,12 +113,11 @@ class MessageItemWidget extends ConsumerWidget {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                           ),
-                          child: Image.network(
-                            valueOrDefault<String>(
-                              conversationDataType?.otherUserAvatar,
-                              'https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=s0aTdmT5aU6b8ot7VKm11DeID6NctRCpB755rA1BIP0=',
-                            ),
+                          child: CachedNetworkImage(
+                            imageUrl: conversationDataType?.otherUserAvatar ?? _defaultAvatar,
                             fit: BoxFit.cover,
+                            placeholder: (_, __) => const ColoredBox(color: AppColors.neutral800),
+                            errorWidget: (_, __, ___) => const Icon(Icons.person, size: 16, color: AppColors.neutral700),
                           ),
                         ),
                         Expanded(

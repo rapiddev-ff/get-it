@@ -1,10 +1,11 @@
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/custom_code/actions/index.dart' as actions;
+import '/core/providers/current_user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ChatMoreWidget extends ConsumerStatefulWidget {
   const ChatMoreWidget({
@@ -21,32 +22,139 @@ class ChatMoreWidget extends ConsumerStatefulWidget {
 }
 
 class _ChatMoreWidgetState extends ConsumerState<ChatMoreWidget> {
+  bool _loading = false;
+  bool? _isFollowing;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkFollowStatus();
+  }
+
+  Future<void> _checkFollowStatus() async {
+    if (widget.userId == null) return;
+    try {
+      final currentUserId = ref.read(currentUserIdProvider);
+      final result = await Supabase.instance.client
+          .from('follows')
+          .select('id')
+          .eq('follower_id', currentUserId)
+          .eq('following_id', widget.userId!)
+          .maybeSingle();
+      if (!mounted) return;
+      setState(() => _isFollowing = result != null);
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _isFollowing = false);
+    }
+  }
+
+  Future<void> _toggleFollow() async {
+    if (_loading || _isFollowing == null) return;
+    setState(() => _loading = true);
+
+    try {
+      final currentUserId = ref.read(currentUserIdProvider);
+      final client = Supabase.instance.client;
+
+      if (_isFollowing!) {
+        await client
+            .from('follows')
+            .delete()
+            .eq('follower_id', currentUserId)
+            .eq('following_id', widget.userId!);
+        if (!mounted) return;
+        Navigator.of(context).pop();
+        actions.toastificationshow(
+            context, 'Unfollowed', 'You unfollowed this user', 'info');
+      } else {
+        await client.from('follows').insert({
+          'follower_id': currentUserId,
+          'following_id': widget.userId,
+        });
+        if (!mounted) return;
+        Navigator.of(context).pop();
+        actions.toastificationshow(
+            context, 'Following', 'You are now following this user', 'success');
+      }
+    } catch (_) {
+      if (!mounted) return;
+      Navigator.of(context).pop();
+      actions.toastificationshow(
+          context, 'Error', 'Something went wrong', 'error');
+    }
+  }
+
+  Future<void> _blockUser() async {
+    if (_loading) return;
+    setState(() => _loading = true);
+
+    try {
+      await actions.callRpc(
+        context,
+        'block_user',
+        <String, String>{
+          'p_blocked_id': widget.userId!,
+        },
+      );
+      if (!mounted) return;
+      Navigator.of(context).pop();
+      actions.toastificationshow(
+          context, 'Blocked', 'User has been blocked', 'success');
+      if (!mounted) return;
+      context.pop();
+    } catch (_) {
+      if (!mounted) return;
+      Navigator.of(context).pop();
+      actions.toastificationshow(
+          context, 'Error', 'Something went wrong', 'error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final textStyle = Theme.of(context).textTheme.bodyMedium!;
+
     return Container(
       width: 203.0,
       decoration: BoxDecoration(
         color: AppColors.backgroundSecondary,
-        borderRadius: BorderRadius.circular(4.0),
+        borderRadius: BorderRadius.circular(12.0),
       ),
+      clipBehavior: Clip.antiAlias,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             InkWell(
-              onTap: () async {
-                await actions.callRpc(
-                  context,
-                  'block_user',
-                  <String, String>{
-                    'p_blocked_id': widget.userId!,
-                  },
-                );
-
-                if (!mounted) return;
-                setState(() {});
-              },
+              onTap: _toggleFollow,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Icon(
+                      _isFollowing == true
+                          ? Icons.person_remove_alt_1
+                          : Icons.person_add_alt,
+                      color: AppColors.textPrimary,
+                      size: 20.0,
+                    ),
+                  ),
+                  Text(
+                    _isFollowing == true ? 'Unfollow User' : 'Follow User',
+                    style: textStyle,
+                  ),
+                ].divide(SizedBox(width: 16.0)),
+              ),
+            ),
+            Divider(
+              height: 1.0,
+              thickness: 1.0,
+              color: AppColors.neutral800,
+            ),
+            InkWell(
+              onTap: _blockUser,
               child: Row(
                 children: [
                   Padding(
@@ -57,58 +165,7 @@ class _ChatMoreWidgetState extends ConsumerState<ChatMoreWidget> {
                       size: 20.0,
                     ),
                   ),
-                  Text(
-                    'Block user',
-                    style: Theme.of(context).textTheme.bodyMedium!,
-                  ),
-                ].divide(SizedBox(width: 16.0)),
-              ),
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
-                  child: Icon(
-                    Icons.person_add_alt,
-                    color: AppColors.textPrimary,
-                    size: 20.0,
-                  ),
-                ),
-                Text(
-                  'Follow',
-                  style: Theme.of(context).textTheme.bodyMedium!,
-                ),
-              ].divide(SizedBox(width: 16.0)),
-            ),
-            InkWell(
-              onTap: () async {
-                await actions.callRpc(
-                  context,
-                  'delete_conversation',
-                  <String, String?>{
-                    'p_conversation_id': widget.conversationId,
-                  },
-                );
-                await actions.refreshConversations(ref);
-                await actions.unsubscribeFromMessages();
-                Navigator.pop(context);
-                if (!mounted) return;
-                context.pop();
-              },
-              child: Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16.0),
-                    child: FaIcon(
-                      FontAwesomeIcons.trashCan,
-                      color: AppColors.textPrimary,
-                      size: 20.0,
-                    ),
-                  ),
-                  Text(
-                    'Delete chat',
-                    style: Theme.of(context).textTheme.bodyMedium!,
-                  ),
+                  Text('Block User', style: textStyle),
                 ].divide(SizedBox(width: 16.0)),
               ),
             ),

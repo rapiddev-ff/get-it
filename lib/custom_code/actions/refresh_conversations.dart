@@ -1,5 +1,6 @@
 import '/features/messages/domain/models/conversation_model.dart';
 import '/features/messages/presentation/providers/messages_provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -83,5 +84,8 @@ Future refreshConversations(WidgetRef ref) async {
     ref
         .read(messagesProvider.notifier)
         .setTotalUnreadCount(unreadResponse as int? ?? 0);
-  } catch (_) {}
+  } catch (e, st) {
+    debugPrint('[refreshConversations] Error: $e');
+    debugPrint('[refreshConversations] Stack: $st');
+  }
 }

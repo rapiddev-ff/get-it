@@ -1,6 +1,7 @@
 import '/features/messages/domain/models/conversation_model.dart';
 import '/features/messages/presentation/providers/messages_provider.dart';
 import '/custom_code/realtime_service.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -88,7 +89,9 @@ Future subscribeToConversations(WidgetRef ref) async {
         ref
             .read(messagesProvider.notifier)
             .setTotalUnreadCount(unreadResponse as int? ?? 0);
-      } catch (_) {}
+      } catch (e) {
+        debugPrint('[subscribeToConversations] Error: $e');
+      }
     },
   );
 }

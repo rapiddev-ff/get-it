@@ -1,9 +1,7 @@
 import '/features/messages/domain/models/message_model.dart';
 import '/features/messages/domain/models/message_image_model.dart';
 import '/features/home/domain/models/counter_offer_model.dart';
-import '/backend/supabase/supabase.dart';
 import 'package:flutter/material.dart';
-
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class InfiniteMessageList extends StatefulWidget {
@@ -324,19 +322,20 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
 
   void _handleMessageUpdate(PostgresChangePayload payload) {
     final json = payload.newRecord;
-    if (json.isEmpty) return;
+    if (json.isEmpty || !mounted) return;
 
     final messageId = json['id']?.toString() ?? '';
     final isRead = json['is_read'] ?? false;
 
-    if (mounted) {
-      final index = _messages.indexWhere((m) => m.id == messageId);
-      if (index == -1) return;
-      setState(() {
-        _messages = List.from(_messages)
-          ..[index] = _messages[index].copyWith(isRead: isRead);
-      });
-    }
+    final index = _messages.indexWhere((m) => m.id == messageId);
+    if (index == -1) return;
+
+    final current = _messages[index];
+    if (current.isRead == isRead) return; // no actual change
+
+    setState(() {
+      _messages[index] = current.copyWith(isRead: isRead);
+    });
   }
 
   Future<void> _markAsRead() async {
@@ -415,23 +414,28 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
       reverse: true,
       physics: const AlwaysScrollableScrollPhysics(),
       padding: const EdgeInsets.symmetric(vertical: 8),
-      addAutomaticKeepAlives: true,
+      addAutomaticKeepAlives: false,
+      addRepaintBoundaries: true,
       itemCount: _messages.length + (_hasMore ? 1 : 0),
       separatorBuilder: (context, index) => const SizedBox(height: 24),
       itemBuilder: (context, index) {
         if (index == _messages.length) {
-          return Padding(
-              padding: const EdgeInsets.all(16),
-              child: Center(
-                  child: _isLoadingMore
-                      ? (widget.loadingIndicator?.call() ??
-                          const SizedBox(
-                              width: 24,
-                              height: 24,
-                              child: CircularProgressIndicator(strokeWidth: 2)))
-                      : const SizedBox.shrink()));
+          return _isLoadingMore
+              ? const Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Center(
+                    child: SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                  ),
+                )
+              : const SizedBox.shrink();
         }
-        return widget.itemBuilder(_messages[index]);
+        return RepaintBoundary(
+          child: widget.itemBuilder(_messages[index]),
+        );
       },
     );
   }
