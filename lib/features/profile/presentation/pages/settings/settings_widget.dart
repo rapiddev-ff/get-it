@@ -928,6 +928,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                       child: TextButton.icon(
                         onPressed: () async {
                           await authManager.signOut();
+                          ref.read(authProvider.notifier).clear();
 
                           if (!mounted) return;
                           context.goNamed(WelcomeWidget.routeName);

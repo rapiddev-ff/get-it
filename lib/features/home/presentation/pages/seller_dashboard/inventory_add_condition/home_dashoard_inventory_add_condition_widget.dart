@@ -24,8 +24,8 @@ class HomeDashoardInventoryAddConditionWidget extends StatefulWidget {
 
 class _HomeDashoardInventoryAddConditionWidgetState
     extends State<HomeDashoardInventoryAddConditionWidget> {
-  // Inlined model state
   List<ConditionsRow> conditionsList = [];
+  late final Future<List<ConditionsRow>> _conditionsFuture;
 
   void addToConditionsList(ConditionsRow item) {
     conditionsList.add(item);
@@ -43,10 +43,17 @@ class _HomeDashoardInventoryAddConditionWidgetState
   @override
   void initState() {
     super.initState();
-
-    // On component load action.
+    _conditionsFuture = ConditionsTable().queryRows(
+      queryFn: (q) {
+        if (widget.categoryId != null && widget.categoryId!.isNotEmpty) {
+          return q.eqOrNull('category_id', widget.categoryId);
+        }
+        return q;
+      },
+    );
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      conditionsList = widget.conditionsList!.toList().cast<ConditionsRow>();
+      conditionsList =
+          widget.conditionsList?.toList().cast<ConditionsRow>() ?? [];
       setState(() {});
     });
   }
@@ -55,132 +62,129 @@ class _HomeDashoardInventoryAddConditionWidgetState
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
+      height: MediaQuery.of(context).size.height * 0.6,
       decoration: BoxDecoration(
         color: AppColors.surfaceDarker,
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(0.0),
-          bottomRight: Radius.circular(0.0),
-          topLeft: Radius.circular(24.0),
-          topRight: Radius.circular(24.0),
-        ),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24.0)),
       ),
       child: Padding(
         padding:
             EdgeInsets.only(left: 16.0, top: 24.0, right: 16.0, bottom: 32.0),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Select Condition',
               style: Theme.of(context).textTheme.titleLarge!,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 24.0),
-              child: FutureBuilder<List<ConditionsRow>>(
-                future: ConditionsTable().queryRows(
-                  queryFn: (q) {
-                    if (widget.categoryId != null &&
-                        widget.categoryId!.isNotEmpty) {
-                      return q.eqOrNull('category_id', widget.categoryId);
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 24.0),
+                child: FutureBuilder<List<ConditionsRow>>(
+                  future: _conditionsFuture,
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: SizedBox(
+                          width: 50.0,
+                          height: 50.0,
+                          child: AppLoadingIndicator(),
+                        ),
+                      );
                     }
-                    return q;
-                  },
-                ),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return Center(
-                      child: SizedBox(
-                        width: 50.0,
-                        height: 50.0,
-                        child: AppLoadingIndicator(),
-                      ),
-                    );
-                  }
-                  List<ConditionsRow> listViewConditionsRowList =
-                      snapshot.data!;
+                    List<ConditionsRow> listViewConditionsRowList =
+                        snapshot.data!;
 
-                  return ListView.builder(
-                    padding: EdgeInsets.zero,
-                    primary: false,
-                    shrinkWrap: true,
-                    itemCount: listViewConditionsRowList.length,
-                    itemBuilder: (context, listViewIndex) {
-                      final listViewConditionsRow =
-                          listViewConditionsRowList[listViewIndex];
-                      return Column(
-                        children: [
-                          InkWell(
-                            onTap: () async {
-                              if (_checkConditionsContains(
-                                  conditionsList.toList(),
-                                  listViewConditionsRow)) {
-                                removeFromConditionsList(listViewConditionsRow);
+                    if (listViewConditionsRowList.isEmpty) {
+                      return Center(
+                        child: Text(
+                          'No conditions available',
+                          style: Theme.of(context).textTheme.bodyMedium!,
+                        ),
+                      );
+                    }
+
+                    return ListView.builder(
+                      padding: EdgeInsets.zero,
+                      itemCount: listViewConditionsRowList.length,
+                      itemBuilder: (context, listViewIndex) {
+                        final listViewConditionsRow =
+                            listViewConditionsRowList[listViewIndex];
+                        return Column(
+                          children: [
+                            InkWell(
+                              onTap: () async {
+                                if (_checkConditionsContains(
+                                    conditionsList.toList(),
+                                    listViewConditionsRow)) {
+                                  removeFromConditionsList(
+                                      listViewConditionsRow);
+                                } else {
+                                  addToConditionsList(listViewConditionsRow);
+                                }
                                 setState(() {});
-                              } else {
-                                addToConditionsList(listViewConditionsRow);
-                                setState(() {});
-                              }
-                            },
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 14.0),
-                                    child: Text(
-                                      listViewConditionsRow.name,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .copyWith(fontSize: 15.0),
+                              },
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 14.0),
+                                      child: Text(
+                                        listViewConditionsRow.name,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(fontSize: 15.0),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  width: 24.0,
-                                  height: 24.0,
-                                  decoration: BoxDecoration(
-                                    color: _checkConditionsContains(
-                                            conditionsList.toList(),
-                                            listViewConditionsRow)
-                                        ? AppColors.primary
-                                        : Colors.transparent,
-                                    borderRadius: BorderRadius.circular(6.0),
-                                    border: Border.all(
+                                  Container(
+                                    width: 24.0,
+                                    height: 24.0,
+                                    decoration: BoxDecoration(
                                       color: _checkConditionsContains(
                                               conditionsList.toList(),
                                               listViewConditionsRow)
                                           ? AppColors.primary
-                                          : AppColors.neutral700,
-                                      width: 1.5,
+                                          : Colors.transparent,
+                                      borderRadius:
+                                          BorderRadius.circular(6.0),
+                                      border: Border.all(
+                                        color: _checkConditionsContains(
+                                                conditionsList.toList(),
+                                                listViewConditionsRow)
+                                            ? AppColors.primary
+                                            : AppColors.neutral700,
+                                        width: 1.5,
+                                      ),
                                     ),
+                                    child: _checkConditionsContains(
+                                            conditionsList.toList(),
+                                            listViewConditionsRow)
+                                        ? Center(
+                                            child: Icon(
+                                              Icons.check_rounded,
+                                              color: Colors.white,
+                                              size: 16.0,
+                                            ),
+                                          )
+                                        : null,
                                   ),
-                                  child: _checkConditionsContains(
-                                          conditionsList.toList(),
-                                          listViewConditionsRow)
-                                      ? Center(
-                                          child: Icon(
-                                            Icons.check_rounded,
-                                            color: Colors.white,
-                                            size: 16.0,
-                                          ),
-                                        )
-                                      : null,
-                                ),
-                              ].divide(SizedBox(width: 12.0)),
+                                ].divide(SizedBox(width: 12.0)),
+                              ),
                             ),
-                          ),
-                          Divider(
-                            height: 1.0,
-                            thickness: 1.0,
-                            color: AppColors.surfaceDarkAlt,
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
+                            Divider(
+                              height: 1.0,
+                              thickness: 1.0,
+                              color: AppColors.surfaceDarkAlt,
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
             ),
             Row(
