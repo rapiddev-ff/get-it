@@ -14,9 +14,11 @@ class HomeDashoardInventoryAddTagsWidget extends StatefulWidget {
   const HomeDashoardInventoryAddTagsWidget({
     super.key,
     this.initialTags,
+    this.categoryId,
   });
 
   final List<Tag>? initialTags;
+  final String? categoryId;
 
   static String routeName = 'homeDashoardInventoryAddTags';
   static String routePath = 'homeDashoardInventoryAddTags';
@@ -76,8 +78,17 @@ class _HomeDashoardInventoryAddTagsWidgetState
     return StreamBuilder<List<TagsRow>>(
       stream: homeDashoardInventoryAddTagsSupabaseStream ??= SupaFlow.client
           .from("tags")
-          .stream(primaryKey: ['id']).map(
-              (list) => list.map((item) => TagsRow(item)).toList()),
+          .stream(primaryKey: ['id'])
+          .map((list) {
+        final rows = list.map((item) => TagsRow(item)).toList();
+        if (widget.categoryId != null && widget.categoryId!.isNotEmpty) {
+          return rows
+              .where((r) =>
+                  r.categoryId == widget.categoryId || r.categoryId == null)
+              .toList();
+        }
+        return rows;
+      }),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Scaffold(
@@ -321,28 +332,11 @@ class _HomeDashoardInventoryAddTagsWidgetState
                     child: Row(
                       children: [
                         Expanded(
-                          child: OutlinedButton(
-                            onPressed: () async {
+                          child: AppOutlineButton(
+                            text: 'Cancel',
+                            onPressed: () {
                               Navigator.pop(context, null);
                             },
-                            style: OutlinedButton.styleFrom(
-                              minimumSize: Size(double.infinity, 56.0),
-                              padding: EdgeInsets.symmetric(horizontal: 16.0),
-                              side: BorderSide(color: AppColors.neutral800),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4.0),
-                              ),
-                            ),
-                            child: Text(
-                              'Cancel',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 17.0,
-                                      color: Colors.white),
-                            ),
                           ),
                         ),
                         Expanded(

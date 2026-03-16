@@ -23,7 +23,7 @@ class HomeDashoardInventoryAddCategoryWidget extends StatefulWidget {
 class _HomeDashoardInventoryAddCategoryWidgetState
     extends State<HomeDashoardInventoryAddCategoryWidget> {
   // Inlined model state
-  CategoriesRow? choosenCategory;
+  CategoriesRow? chosenCategory;
   Stream<List<CategoriesRow>>? listViewSupabaseStream;
 
   @override
@@ -32,7 +32,7 @@ class _HomeDashoardInventoryAddCategoryWidgetState
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      choosenCategory = widget.category;
+      chosenCategory = widget.category;
       setState(() {});
     });
   }
@@ -93,7 +93,7 @@ class _HomeDashoardInventoryAddCategoryWidgetState
                         children: [
                           InkWell(
                             onTap: () async {
-                              choosenCategory = listViewCategoriesRow;
+                              chosenCategory = listViewCategoriesRow;
                               setState(() {});
                             },
                             child: Row(
@@ -112,14 +112,14 @@ class _HomeDashoardInventoryAddCategoryWidgetState
                                   ),
                                 ),
                                 if (listViewCategoriesRow.id !=
-                                    choosenCategory?.id)
+                                    chosenCategory?.id)
                                   Icon(
                                     Icons.circle_outlined,
                                     color: AppColors.textSecondary,
                                     size: 20.0,
                                   ),
                                 if (listViewCategoriesRow.id ==
-                                    choosenCategory?.id)
+                                    chosenCategory?.id)
                                   Icon(
                                     Icons.radio_button_checked_rounded,
                                     color: AppColors.primary,
@@ -143,32 +143,18 @@ class _HomeDashoardInventoryAddCategoryWidgetState
             Row(
               children: [
                 Expanded(
-                  child: OutlinedButton(
-                    onPressed: () async {
+                  child: AppOutlineButton(
+                    text: 'Cancel',
+                    onPressed: () {
                       Navigator.pop(context, widget.category);
                     },
-                    style: OutlinedButton.styleFrom(
-                      minimumSize: Size(double.infinity, 56.0),
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      side: BorderSide(color: AppColors.neutral800),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                      ),
-                    ),
-                    child: Text(
-                      'Cancel',
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 17.0,
-                          color: Colors.white),
-                    ),
                   ),
                 ),
                 Expanded(
                   child: AppGradientButton(
                     text: 'Save',
                     onPressed: () async {
-                      Navigator.pop(context, choosenCategory);
+                      Navigator.pop(context, chosenCategory);
                     },
                   ),
                 ),

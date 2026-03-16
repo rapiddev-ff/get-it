@@ -26,6 +26,9 @@ class ConditionsRow extends SupabaseDataRow {
   String? get description => getField<String>('description');
   set description(String? value) => setField<String>('description', value);
 
+  String? get categoryId => getField<String>('category_id');
+  set categoryId(String? value) => setField<String>('category_id', value);
+
   int? get sortOrder => getField<int>('sort_order');
   set sortOrder(int? value) => setField<int>('sort_order', value);
 

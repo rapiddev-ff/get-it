@@ -63,7 +63,7 @@ class _HomeDashoardInventoryAddWidgetState
   List<ConditionsRow>? getConditions;
   List<UploadedFile>? convertImages;
   bool isDataUploading_uploadDataEdit = false;
-  List<Tag> choosenTags = [];
+  List<Tag> chosenTags = [];
   List<Tag> tags = [];
   List<ShortlistsRow> userShortlists = [];
 
@@ -208,7 +208,7 @@ class _HomeDashoardInventoryAddWidgetState
         category = getCategory?.firstOrNull;
         subcategory = getSubcategory?.firstOrNull;
         conditionsList = getConditions?.toList().cast<ConditionsRow>() ?? [];
-        choosenTags = getProduct!.tags.toList();
+        chosenTags = getProduct!.tags.toList();
         discount = getProduct!.discountType ?? 'percentage';
         if (getProduct?.shortlistId != null &&
             getProduct!.shortlistId!.isNotEmpty) {
@@ -448,7 +448,7 @@ class _HomeDashoardInventoryAddWidgetState
       discount == 'percentage'
           ? percentageDiscountTextController?.text ?? ''
           : dollarDiscountTextController?.text ?? '',
-      choosenTags.map((e) => e.id).toList(),
+      chosenTags.map((e) => e.id).toList(),
       (switchConventionSettingsValue == true) ? dropDownValue : null,
       shippingCost == 'Use Seller Default Shipping Rule' ? true : false,
       flatShippingCostTextController?.text ?? '',
@@ -750,6 +750,8 @@ class _HomeDashoardInventoryAddWidgetState
               setState(() {
                 if (category?.id != value.id) {
                   subcategory = null;
+                  conditionsList = [];
+                  chosenTags = [];
                 }
                 category = value;
               });
@@ -792,7 +794,7 @@ class _HomeDashoardInventoryAddWidgetState
               await actions.toastificationshow(
                 context,
                 'Choose Category First',
-                'Category should be choosen ',
+                'Category should be chosen',
                 'warning',
               );
             }
@@ -904,6 +906,7 @@ class _HomeDashoardInventoryAddWidgetState
                         padding: MediaQuery.viewInsetsOf(context),
                         child: HomeDashoardInventoryAddConditionWidget(
                           conditionsList: conditionsList,
+                          categoryId: category?.id,
                         ),
                       ),
                     ),
@@ -1383,14 +1386,15 @@ class _HomeDashoardInventoryAddWidgetState
                 context,
                 MaterialPageRoute(
                   builder: (_) => HomeDashoardInventoryAddTagsWidget(
-                    initialTags: choosenTags,
+                    initialTags: chosenTags,
+                    categoryId: category?.id,
                   ),
                 ),
               );
               if (result != null) {
                 if (!mounted) return;
                 setState(() {
-                  choosenTags = result;
+                  chosenTags = result;
                 });
               }
             },
@@ -1422,17 +1426,17 @@ class _HomeDashoardInventoryAddWidgetState
             ),
           ),
         ),
-        if (choosenTags.isNotEmpty)
+        if (chosenTags.isNotEmpty)
           Padding(
             padding: EdgeInsets.only(top: 16.0),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                children: List.generate(choosenTags.length, (tagsIndex) {
-                  final tagsItem = choosenTags[tagsIndex];
+                children: List.generate(chosenTags.length, (tagsIndex) {
+                  final tagsItem = chosenTags[tagsIndex];
                   return InkWell(
                     onTap: () async {
-                      choosenTags.remove(tagsItem);
+                      chosenTags.remove(tagsItem);
                       setState(() {});
                     },
                     child: Container(
@@ -1599,21 +1603,14 @@ class _HomeDashoardInventoryAddWidgetState
             await _submitProduct('active');
           },
         ),
-        if ((widget.productId != null && widget.productId != '') &&
-            (getProduct?.status != 'active'))
-          Builder(
-            builder: (context) => Padding(
-              padding: EdgeInsets.only(top: 16.0),
-              child: SizedBox(
-                width: double.infinity,
-                height: 56.0,
-                child: AppOutlineButton(
-                  text: 'Save as Draft',
-                  onPressed: () async {
-                    await _submitProduct('draft');
-                  },
-                ),
-              ),
+        if (getProduct?.status != 'active')
+          Padding(
+            padding: EdgeInsets.only(top: 16.0),
+            child: AppOutlineButton(
+              text: 'Save as Draft',
+              onPressed: () async {
+                await _submitProduct('draft');
+              },
             ),
           ),
       ],

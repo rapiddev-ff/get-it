@@ -25,7 +25,7 @@ class HomeDashoardInventoryAddSubCategoryWidget extends StatefulWidget {
 class _HomeDashoardInventoryAddSubCategoryWidgetState
     extends State<HomeDashoardInventoryAddSubCategoryWidget> {
   // Inlined model state
-  SubcategoriesRow? choosenSubCategory;
+  SubcategoriesRow? chosenSubCategory;
   Stream<List<SubcategoriesRow>>? listViewSupabaseStream;
 
   @override
@@ -34,7 +34,7 @@ class _HomeDashoardInventoryAddSubCategoryWidgetState
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      choosenSubCategory = widget.subcategories;
+      chosenSubCategory = widget.subcategories;
       setState(() {});
     });
   }
@@ -100,7 +100,7 @@ class _HomeDashoardInventoryAddSubCategoryWidgetState
                         children: [
                           InkWell(
                             onTap: () async {
-                              choosenSubCategory = listViewSubcategoriesRow;
+                              chosenSubCategory = listViewSubcategoriesRow;
                               setState(() {});
                             },
                             child: Row(
@@ -119,14 +119,14 @@ class _HomeDashoardInventoryAddSubCategoryWidgetState
                                   ),
                                 ),
                                 if (listViewSubcategoriesRow.id !=
-                                    choosenSubCategory?.id)
+                                    chosenSubCategory?.id)
                                   Icon(
                                     Icons.circle_outlined,
                                     color: AppColors.textSecondary,
                                     size: 20.0,
                                   ),
                                 if (listViewSubcategoriesRow.id ==
-                                    choosenSubCategory?.id)
+                                    chosenSubCategory?.id)
                                   Icon(
                                     Icons.radio_button_checked_rounded,
                                     color: AppColors.primary,
@@ -150,32 +150,18 @@ class _HomeDashoardInventoryAddSubCategoryWidgetState
             Row(
               children: [
                 Expanded(
-                  child: OutlinedButton(
-                    onPressed: () async {
+                  child: AppOutlineButton(
+                    text: 'Cancel',
+                    onPressed: () {
                       Navigator.pop(context, widget.subcategories);
                     },
-                    style: OutlinedButton.styleFrom(
-                      minimumSize: Size(double.infinity, 56.0),
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      side: BorderSide(color: AppColors.neutral800),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                      ),
-                    ),
-                    child: Text(
-                      'Cancel',
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 17.0,
-                          color: Colors.white),
-                    ),
                   ),
                 ),
                 Expanded(
                   child: AppGradientButton(
                     text: 'Save',
                     onPressed: () async {
-                      Navigator.pop(context, choosenSubCategory);
+                      Navigator.pop(context, chosenSubCategory);
                     },
                   ),
                 ),

@@ -23,6 +23,9 @@ class TagsRow extends SupabaseDataRow {
   String get slug => getField<String>('slug')!;
   set slug(String value) => setField<String>('slug', value);
 
+  String? get categoryId => getField<String>('category_id');
+  set categoryId(String? value) => setField<String>('category_id', value);
+
   int? get usageCount => getField<int>('usage_count');
   set usageCount(int? value) => setField<int>('usage_count', value);
 

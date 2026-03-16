@@ -32,7 +32,7 @@ class _HomeDashoardInventoryWidgetState
     extends ConsumerState<HomeDashoardInventoryWidget>
     with KeyboardVisibilityMixin {
   // Inlined model state
-  ({String id, String name})? choosenCategory;
+  ({String id, String name})? chosenCategory;
   List<({String id, String name})> _categories = [];
   int? itemsCount = 0;
   int _gridKey = 0;
@@ -525,9 +525,9 @@ class _HomeDashoardInventoryWidgetState
                         children: [
                           _categoryChip(
                             label: 'All',
-                            isSelected: choosenCategory == null,
+                            isSelected: chosenCategory == null,
                             onTap: () {
-                              choosenCategory = null;
+                              chosenCategory = null;
                               setState(() {});
                             },
                           ),
@@ -535,9 +535,9 @@ class _HomeDashoardInventoryWidgetState
                             final cat = _categories[i];
                             return _categoryChip(
                               label: cat.name,
-                              isSelected: choosenCategory?.id == cat.id,
+                              isSelected: chosenCategory?.id == cat.id,
                               onTap: () {
-                                choosenCategory = cat;
+                                chosenCategory = cat;
                                 setState(() {});
                               },
                             );
@@ -582,7 +582,7 @@ class _HomeDashoardInventoryWidgetState
                         padding: 16.0,
                         pageSize: 20,
                         searchText: textController!.text,
-                        categoryId: choosenCategory?.id,
+                        categoryId: chosenCategory?.id,
                         onProductTap: (productId) async {
                           await context.pushNamed(
                             HomeDashoardInventoryAddWidget.routeName,

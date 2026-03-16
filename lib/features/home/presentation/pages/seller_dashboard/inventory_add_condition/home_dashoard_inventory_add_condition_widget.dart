@@ -11,9 +11,11 @@ class HomeDashoardInventoryAddConditionWidget extends StatefulWidget {
   const HomeDashoardInventoryAddConditionWidget({
     super.key,
     this.conditionsList,
+    this.categoryId,
   });
 
   final List<ConditionsRow>? conditionsList;
+  final String? categoryId;
 
   @override
   State<HomeDashoardInventoryAddConditionWidget> createState() =>
@@ -77,7 +79,13 @@ class _HomeDashoardInventoryAddConditionWidgetState
               padding: EdgeInsets.symmetric(vertical: 24.0),
               child: FutureBuilder<List<ConditionsRow>>(
                 future: ConditionsTable().queryRows(
-                  queryFn: (q) => q,
+                  queryFn: (q) {
+                    if (widget.categoryId != null &&
+                        widget.categoryId!.isNotEmpty) {
+                      return q.eqOrNull('category_id', widget.categoryId);
+                    }
+                    return q;
+                  },
                 ),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
@@ -178,26 +186,12 @@ class _HomeDashoardInventoryAddConditionWidgetState
             Row(
               children: [
                 Expanded(
-                  child: OutlinedButton(
-                    onPressed: () async {
+                  child: AppOutlineButton(
+                    text: 'Cancel',
+                    onPressed: () {
                       Navigator.pop(
                           context, widget.conditionsList ?? <ConditionsRow>[]);
                     },
-                    style: OutlinedButton.styleFrom(
-                      minimumSize: Size(double.infinity, 56.0),
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      side: BorderSide(color: AppColors.neutral800),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                      ),
-                    ),
-                    child: Text(
-                      'Cancel',
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 17.0,
-                          color: Colors.white),
-                    ),
                   ),
                 ),
                 Expanded(

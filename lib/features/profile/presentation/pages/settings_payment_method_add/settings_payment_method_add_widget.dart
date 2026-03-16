@@ -7,6 +7,7 @@ import '/core/utils/form_validators.dart';
 import '/core/widgets/app_text_field.dart';
 import '/core/utils/geo_data.dart';
 import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_gradient_button.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
 import '/features/checkout/presentation/providers/checkout_provider.dart';
 import '/core/router/app_router.dart';
@@ -680,160 +681,122 @@ class _SettingsPaymentMethodAddWidgetState
                     child: Row(
                       children: [
                         Expanded(
-                          child: TextButton(
-                            onPressed: () async {
+                          child: AppOutlineButton(
+                            text: 'Cancel',
+                            onPressed: () {
                               context.safePop();
                             },
-                            style: TextButton.styleFrom(
-                              minimumSize: Size(double.infinity, 56.0),
-                              padding: EdgeInsets.symmetric(horizontal: 16.0),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4.0),
-                                side: BorderSide(color: AppColors.neutral800),
-                              ),
-                            ),
-                            child: Text(
-                              'Cancel',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 17.0,
-                                      color: Colors.white),
-                            ),
                           ),
                         ),
                         Expanded(
-                          child: Container(
-                            width: double.infinity,
-                            height: 56.0,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  AppColors.brandPurple,
-                                  AppColors.brandBlue
-                                ],
-                                stops: [0.0, 1.0],
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                              ),
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
-                            child: TextButton.icon(
-                              onPressed: () async {
-                                final validationResult =
-                                    FormValidators.paymentValidator(
-                                        cardNumberTextController.text,
-                                        expireDateTextController.text,
-                                        textFieldaCVCTextController.text,
-                                        cardholderNameTextController.text,
-                                        emailAddressTextController.text,
-                                        fullNameTextController.text,
-                                        addressLine1TextController.text,
-                                        addressLine2TextController.text,
-                                        countryDropdownValue ?? '',
-                                        (countryDropdownValue == 'US') ||
-                                                (countryDropdownValue == 'CA')
-                                            ? (stateDropdownValue ?? '')
-                                            : stateTextController.text,
-                                        cityTextController.text,
-                                        zipCodeTextController.text);
-                                if (validationResult['success'] == true) {
-                                  final parsedDate =
-                                      FormValidators.parseMonthYear(
-                                          expireDateTextController.text);
-                                  result = await actions.addPaymentCard(
-                                    cardNumberTextController.text,
-                                    parsedDate['month'] ?? '',
-                                    parsedDate['year'] ?? '',
-                                    textFieldaCVCTextController.text,
-                                    cardholderNameTextController.text,
-                                    emailAddressTextController.text,
-                                    addressLine1TextController.text,
-                                    addressLine2TextController.text,
-                                    cityTextController.text,
-                                    (countryDropdownValue == 'US') ||
-                                            (countryDropdownValue == 'CA')
-                                        ? stateDropdownValue
-                                        : stateTextController.text,
-                                    zipCodeTextController.text,
-                                    countryDropdownValue,
-                                    setAsDefault,
-                                  );
-                                  final newPaymentMethod = PaymentMethod(
-                                    id: _jsonStr(result, 'payment_method_id'),
-                                    card: PaymentCard(
-                                      brand: _jsonStr(result, 'card_brand'),
-                                      last4: _jsonStr(result, 'card_last4'),
-                                      expMonth: ((result is Map)
-                                          ? result['card_exp_month']
-                                          : null),
-                                      expYear: ((result is Map)
-                                          ? result['card_exp_year']
-                                          : null),
-                                    ),
-                                    isDefault: ((result is Map)
-                                        ? result['is_default']
-                                        : null),
-                                    billingDetails: BillingDetails(
-                                      name: fullNameTextController.text,
-                                      email: emailAddressTextController.text,
-                                      addressLine1:
-                                          addressLine1TextController.text,
-                                      addressLine2:
-                                          addressLine2TextController.text,
-                                      country: countryDropdownValue ?? '',
-                                      state: (countryDropdownValue == 'US') ||
+                          child: AppGradientButton(
+                            text: 'Add Card',
+                            onPressed: () async {
+                              final validationResult =
+                                  FormValidators.paymentValidator(
+                                      cardNumberTextController.text,
+                                      expireDateTextController.text,
+                                      textFieldaCVCTextController.text,
+                                      cardholderNameTextController.text,
+                                      emailAddressTextController.text,
+                                      fullNameTextController.text,
+                                      addressLine1TextController.text,
+                                      addressLine2TextController.text,
+                                      countryDropdownValue ?? '',
+                                      (countryDropdownValue == 'US') ||
                                               (countryDropdownValue == 'CA')
-                                          ? stateDropdownValue ?? ''
+                                          ? (stateDropdownValue ?? '')
                                           : stateTextController.text,
-                                      city: cityTextController.text,
-                                      postalCode: zipCodeTextController.text,
-                                    ),
-                                  );
-                                  ref
-                                      .read(authProvider.notifier)
-                                      .updateUser((e) => e.copyWith(
-                                            paymentMethod: [
-                                              ...e.paymentMethod,
-                                              newPaymentMethod
-                                            ],
-                                          ));
-                                  ref
-                                      .read(checkoutProvider.notifier)
-                                      .setPaymentMethod(newPaymentMethod);
-                                  context.safePop();
-                                } else {
-                                  await actions.toastificationshow(
-                                    context,
-                                    'Error!',
-                                    (validationResult['message'] ?? '')
-                                        .toString(),
-                                    'error',
-                                  );
-                                }
-
-                                if (!mounted) return;
-                                setState(() {});
-                              },
-                              icon: Icon(
-                                Icons.add,
-                                size: 28.0,
-                                color: Colors.white,
-                              ),
-                              label: Text(
-                                'Add Card',
-                                style: GoogleFonts.inter(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
+                                      cityTextController.text,
+                                      zipCodeTextController.text);
+                              if (validationResult['success'] != true) {
+                                await actions.toastificationshow(
+                                  context,
+                                  'Error!',
+                                  (validationResult['message'] ?? '')
+                                      .toString(),
+                                  'error',
+                                );
+                                return;
+                              }
+                              final parsedDate =
+                                  FormValidators.parseMonthYear(
+                                      expireDateTextController.text);
+                              result = await actions.addPaymentCard(
+                                cardNumberTextController.text,
+                                parsedDate['month'] ?? '',
+                                parsedDate['year'] ?? '',
+                                textFieldaCVCTextController.text,
+                                cardholderNameTextController.text,
+                                emailAddressTextController.text,
+                                addressLine1TextController.text,
+                                addressLine2TextController.text,
+                                cityTextController.text,
+                                (countryDropdownValue == 'US') ||
+                                        (countryDropdownValue == 'CA')
+                                    ? stateDropdownValue
+                                    : stateTextController.text,
+                                zipCodeTextController.text,
+                                countryDropdownValue,
+                                setAsDefault,
+                              );
+                              if (!mounted) return;
+                              if (result is Map &&
+                                  result['success'] == false) {
+                                await actions.toastificationshow(
+                                  context,
+                                  'Error!',
+                                  (result['error'] ?? 'Failed to add card')
+                                      .toString(),
+                                  'error',
+                                );
+                                return;
+                              }
+                              final newPaymentMethod = PaymentMethod(
+                                id: _jsonStr(result, 'payment_method_id'),
+                                card: PaymentCard(
+                                  brand: _jsonStr(result, 'card_brand'),
+                                  last4: _jsonStr(result, 'card_last4'),
+                                  expMonth: ((result is Map)
+                                      ? result['card_exp_month']
+                                      : null),
+                                  expYear: ((result is Map)
+                                      ? result['card_exp_year']
+                                      : null),
                                 ),
-                              ),
-                              style: TextButton.styleFrom(
-                                minimumSize: Size(double.infinity, 56.0),
-                                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                              ),
-                            ),
+                                isDefault: ((result is Map)
+                                    ? result['is_default']
+                                    : null),
+                                billingDetails: BillingDetails(
+                                  name: fullNameTextController.text,
+                                  email: emailAddressTextController.text,
+                                  addressLine1:
+                                      addressLine1TextController.text,
+                                  addressLine2:
+                                      addressLine2TextController.text,
+                                  country: countryDropdownValue ?? '',
+                                  state: (countryDropdownValue == 'US') ||
+                                          (countryDropdownValue == 'CA')
+                                      ? stateDropdownValue ?? ''
+                                      : stateTextController.text,
+                                  city: cityTextController.text,
+                                  postalCode: zipCodeTextController.text,
+                                ),
+                              );
+                              ref
+                                  .read(authProvider.notifier)
+                                  .updateUser((e) => e.copyWith(
+                                        paymentMethod: [
+                                          ...e.paymentMethod,
+                                          newPaymentMethod
+                                        ],
+                                      ));
+                              ref
+                                  .read(checkoutProvider.notifier)
+                                  .setPaymentMethod(newPaymentMethod);
+                              if (!mounted) return;
+                              context.safePop();
+                            },
                           ),
                         ),
                       ].divide(SizedBox(width: 20.0)),
