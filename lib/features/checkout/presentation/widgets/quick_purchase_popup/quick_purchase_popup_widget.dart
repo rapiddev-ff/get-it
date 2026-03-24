@@ -45,7 +45,15 @@ class _QuickPurchasePopupWidgetState
     _calculateTax();
   }
 
-  double get _subtotal => widget.feedProduct.price * _quantity;
+  double get _effectivePrice {
+    final fp = widget.feedProduct;
+    if (fp.flashSaleEnabled && fp.flashSalePrice != null) {
+      return fp.flashSalePrice!;
+    }
+    return fp.price;
+  }
+
+  double get _subtotal => _effectivePrice * _quantity;
 
   double get _shippingCost {
     final flat = widget.feedProduct.customFlatRate ?? 0.0;
@@ -54,9 +62,7 @@ class _QuickPurchasePopupWidgetState
     return flat + additional * (_quantity - 1);
   }
 
-  double get _platformFee => _subtotal * 0.1;
-
-  double get _total => _subtotal + _shippingCost + _tax + _platformFee;
+  double get _total => _subtotal + _shippingCost + _tax;
 
   Future<void> _calculateTax() async {
     final address = ref.read(authProvider).shippingAddress;
@@ -344,8 +350,6 @@ class _QuickPurchasePopupWidgetState
                   _isLoadingTax ? '...' : _currencyFormat.format(_tax),
                 ),
                 SizedBox(height: 8.0),
-                _summaryRow(
-                    'Platform Fee', _currencyFormat.format(_platformFee)),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 8.0),
                   child: Divider(

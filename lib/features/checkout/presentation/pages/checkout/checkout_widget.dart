@@ -35,8 +35,8 @@ class CheckoutWidget extends ConsumerStatefulWidget {
   final int initialQuantity;
   final String? shortlistId;
 
-  static String routeName = 'checkout';
-  static String routePath = 'checkout';
+  static const String routeName = 'checkout';
+  static const String routePath = 'checkout';
 
   @override
   ConsumerState<CheckoutWidget> createState() => _CheckoutWidgetState();
@@ -133,9 +133,7 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
     return flat + additional * (quantity - 1);
   }
 
-  double get _platformFee => _subtotal * 0.1;
-
-  double get _total => _subtotal + _shippingCost + tax + _platformFee;
+  double get _total => _subtotal + _shippingCost + tax;
 
   bool get _hasShippingAddress {
     final addr = ref.read(authProvider).shippingAddress;
@@ -798,8 +796,6 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                               _hasShippingAddress
                                   ? _currencyFormat.format(tax)
                                   : '-'),
-                          _summaryRow('Platform Fee',
-                              _currencyFormat.format(_platformFee)),
                           Divider(
                             height: 1.0,
                             thickness: 1.0,
