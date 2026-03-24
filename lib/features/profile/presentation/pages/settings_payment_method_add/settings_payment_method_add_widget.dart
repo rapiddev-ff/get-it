@@ -2,6 +2,7 @@ import '/features/checkout/domain/models/payment_method_model.dart';
 import '/features/checkout/domain/models/payment_card_model.dart';
 import '/features/checkout/domain/models/billing_details_model.dart';
 import '/custom_code/actions/index.dart' as actions;
+import '/backend/api_requests/api_calls.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/form_validators.dart';
 import '/core/widgets/app_text_field.dart';
@@ -23,8 +24,8 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 class SettingsPaymentMethodAddWidget extends ConsumerStatefulWidget {
   const SettingsPaymentMethodAddWidget({super.key});
 
-  static String routeName = 'settingsPaymentMethodAdd';
-  static String routePath = 'settingsPaymentMethodAdd';
+  static const String routeName = 'settingsPaymentMethodAdd';
+  static const String routePath = 'settingsPaymentMethodAdd';
 
   @override
   ConsumerState<SettingsPaymentMethodAddWidget> createState() =>
@@ -39,6 +40,9 @@ class _SettingsPaymentMethodAddWidgetState
   String? countryDropdownValue;
   String? stateDropdownValue;
   dynamic result;
+  List<String> _autocompletePredictions = [];
+  List<String> _autocompletePlaceIds = [];
+  bool _showAddressSuggestions = false;
 
   // Text controllers, focus nodes, and masks
   late final TextEditingController cardNumberTextController;
@@ -81,7 +85,15 @@ class _SettingsPaymentMethodAddWidgetState
     cardholderNameFocusNode = FocusNode();    emailAddressTextController = TextEditingController();
     emailAddressFocusNode = FocusNode();    fullNameTextController = TextEditingController();
     fullNameFocusNode = FocusNode();    addressLine1TextController = TextEditingController();
-    addressLine1FocusNode = FocusNode();    addressLine2TextController = TextEditingController();
+    addressLine1FocusNode = FocusNode();
+    addressLine1FocusNode.addListener(() {
+      if (!addressLine1FocusNode.hasFocus) {
+        Future.delayed(Duration(milliseconds: 200), () {
+          if (mounted) setState(() => _showAddressSuggestions = false);
+        });
+      }
+    });
+    addressLine2TextController = TextEditingController();
     addressLine2FocusNode = FocusNode();    stateTextController = TextEditingController();
     stateFocusNode = FocusNode();    cityTextController = TextEditingController();
     cityFocusNode = FocusNode();    zipCodeTextController = TextEditingController();
@@ -89,6 +101,7 @@ class _SettingsPaymentMethodAddWidgetState
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     cardNumberFocusNode.dispose();
     cardNumberTextController.dispose();
     expireDateFocusNode.dispose();
@@ -121,6 +134,79 @@ class _SettingsPaymentMethodAddWidgetState
   String _jsonStr(dynamic json, String key) {
     if (json is Map) return (json[key] ?? '').toString();
     return '';
+  }
+
+  static Map<String, String> _parseAddressComponents(dynamic addressResponse) {
+    final components = (addressResponse is Map
+            ? addressResponse['addressComponents']
+            : null) as List? ??
+        [];
+    String streetNumber = '';
+    String route = '';
+    String city = '';
+    String county = '';
+    String state = '';
+    String zip = '';
+    String country = '';
+    for (final c in components) {
+      final types = ((c['types'] as List?)?.cast<String>()) ?? [];
+      final longText = (c['longText'] ?? '').toString();
+      final shortText = (c['shortText'] ?? '').toString();
+      if (types.contains('street_number')) streetNumber = longText;
+      if (types.contains('route')) route = longText;
+      if (types.contains('locality') ||
+          types.contains('sublocality') ||
+          types.contains('sublocality_level_1') ||
+          types.contains('postal_town')) city = longText;
+      if (types.contains('administrative_area_level_2')) county = longText;
+      if (types.contains('administrative_area_level_1')) state = longText;
+      if (types.contains('postal_code')) zip = longText;
+      if (types.contains('country')) country = shortText;
+    }
+    // Fallback: use formattedAddress first part for street if no route
+    String street = '$streetNumber $route'.trim();
+    if (street.isEmpty && addressResponse is Map) {
+      final formatted = (addressResponse['formattedAddress'] ?? '').toString();
+      if (formatted.isNotEmpty) {
+        street = formatted.split(',').first.trim();
+      }
+    }
+    // Fallback: use county for city if locality not found
+    if (city.isEmpty) city = county;
+    return {
+      'street': street,
+      'city': city,
+      'state': state,
+      'zip': zip,
+      'country': country,
+    };
+  }
+
+  Future<void> _selectPlace(int index) async {
+    final placeId = _autocompletePlaceIds[index];
+    final selectedName = _autocompletePredictions[index];
+    setState(() {
+      addressLine1TextController.text = selectedName;
+      _showAddressSuggestions = false;
+      _autocompletePredictions = [];
+      _autocompletePlaceIds = [];
+    });
+
+    final getPlace =
+        await GooglePlacesGroup.getPlaceCall.call(placeId: placeId);
+    if (!mounted) return;
+
+    if (getPlace.succeeded) {
+      final parsed = _parseAddressComponents(getPlace.jsonBody ?? {});
+      setState(() {
+        addressLine1TextController.text = parsed['street'] ?? '';
+        cityTextController.text = parsed['city'] ?? '';
+        zipCodeTextController.text = parsed['zip'] ?? '';
+        stateTextController.text = parsed['state'] ?? '';
+        stateDropdownValue = parsed['state'] ?? '';
+        countryDropdownValue = parsed['country'] ?? '';
+      });
+    }
   }
 
   static InputDecoration _dropdownDecoration(String hintText) {
@@ -362,23 +448,92 @@ class _SettingsPaymentMethodAddWidgetState
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 8.0),
-                    child: Container(
-                      width: double.infinity,
-                      child: TextFormField(
-                        controller: addressLine1TextController,
-                        focusNode: addressLine1FocusNode,
-                        onChanged: (_) => EasyDebounce.debounce(
-                          'addressLine1TextController',
-                          Duration(milliseconds: 100),
-                          () => setState(() {}),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        TextFormField(
+                          controller: addressLine1TextController,
+                          focusNode: addressLine1FocusNode,
+                          onChanged: (_) => EasyDebounce.debounce(
+                            'addressLine1TextController',
+                            Duration(milliseconds: 300),
+                            () async {
+                              final text = addressLine1TextController.text;
+                              if (text.length >= 3) {
+                                final result = await GooglePlacesGroup
+                                    .autocompleteCall
+                                    .call(searchingString: text);
+                                if (!mounted) return;
+                                if (result.succeeded) {
+                                  _autocompletePredictions = GooglePlacesGroup
+                                          .autocompleteCall
+                                          .predictionPlaceText(
+                                              result.jsonBody ?? '')
+                                          ?.toList()
+                                          .cast<String>() ??
+                                      [];
+                                  _autocompletePlaceIds = (GooglePlacesGroup
+                                              .autocompleteCall
+                                              .autocompletePredictions(
+                                                  result.jsonBody ?? '')
+                                          as List?)
+                                      ?.map<String>((e) => e.toString())
+                                      .toList() ??
+                                      [];
+                                  setState(() => _showAddressSuggestions =
+                                      _autocompletePredictions.isNotEmpty);
+                                }
+                              } else {
+                                if (mounted) {
+                                  setState(() {
+                                    _showAddressSuggestions = false;
+                                    _autocompletePredictions = [];
+                                    _autocompletePlaceIds = [];
+                                  });
+                                }
+                              }
+                            },
+                          ),
+                          autofocus: false,
+                          autofillHints: [AutofillHints.streetAddressLine1],
+                          obscureText: false,
+                          decoration: appInputDecoration('123, Main street'),
+                          style: appTextFieldStyle,
+                          cursorColor: AppColors.textPrimary,
                         ),
-                        autofocus: false,
-                        autofillHints: [AutofillHints.streetAddressLine1],
-                        obscureText: false,
-                        decoration: appInputDecoration('123, Main street'),
-                        style: appTextFieldStyle,
-                        cursorColor: AppColors.textPrimary,
-                      ),
+                        if (_showAddressSuggestions &&
+                            _autocompletePredictions.isNotEmpty)
+                          Material(
+                            elevation: 4.0,
+                            color: AppColors.backgroundPrimary,
+                            borderRadius: BorderRadius.circular(4.0),
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(maxHeight: 200.0),
+                              child: ListView.builder(
+                                padding: EdgeInsets.zero,
+                                shrinkWrap: true,
+                                itemCount: _autocompletePredictions.length,
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                    onTap: () => _selectPlace(index),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 16.0, vertical: 12.0),
+                                      child: Text(
+                                        _autocompletePredictions[index],
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                      ],
                     ),
                   ),
                   Padding(
@@ -415,6 +570,7 @@ class _SettingsPaymentMethodAddWidgetState
                               SizedBox(
                                 height: 52.0,
                                 child: DropdownButtonFormField<String>(
+                                  key: ValueKey('country_$countryDropdownValue'),
                                   initialValue:
                                       (countryDropdownValue ?? '').isEmpty
                                           ? null
@@ -455,6 +611,7 @@ class _SettingsPaymentMethodAddWidgetState
                                     return SizedBox(
                                       height: 52.0,
                                       child: DropdownButtonFormField<String>(
+                                        key: ValueKey('state_$stateDropdownValue'),
                                         initialValue:
                                             (stateDropdownValue ?? '').isEmpty
                                                 ? null
@@ -571,62 +728,61 @@ class _SettingsPaymentMethodAddWidgetState
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 24.0),
-                    child: InkWell(
-                      onTap: () async {
-                        setAsDefault = !setAsDefault;
-                        setState(() {});
-                      },
-                      child: Row(
-                        children: [
-                          if (!setAsDefault)
-                            Container(
-                              width: 22.0,
-                              height: 22.0,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4.0),
-                                border: Border.all(
-                                  color: AppColors.neutral700,
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setAsDefault = !setAsDefault;
+                            setState(() {});
+                          },
+                          child: setAsDefault
+                              ? Container(
+                                  width: 22.0,
+                                  height: 22.0,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.secondary,
+                                    borderRadius: BorderRadius.circular(4.0),
+                                    border: Border.all(
+                                      color: AppColors.neutral700,
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.check_sharp,
+                                      color: Colors.white,
+                                      size: 12.0,
+                                    ),
+                                  ),
+                                )
+                              : Container(
+                                  width: 22.0,
+                                  height: 22.0,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4.0),
+                                    border: Border.all(
+                                      color: AppColors.neutral700,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          if (setAsDefault)
-                            Container(
-                              width: 22.0,
-                              height: 22.0,
-                              decoration: BoxDecoration(
-                                color: AppColors.secondary,
-                                borderRadius: BorderRadius.circular(4.0),
-                                border: Border.all(
-                                  color: AppColors.neutral700,
-                                ),
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  Icons.check_sharp,
-                                  color: Colors.white,
-                                  size: 12.0,
-                                ),
-                              ),
-                            ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Set as default payment method',
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium!,
-                                ).animate().fade(duration: 600.ms),
-                                Text(
-                                  'This card will  be used for future purchases',
-                                  style:
-                                      Theme.of(context).textTheme.labelMedium!,
-                                ).animate().fade(duration: 600.ms),
-                              ],
-                            ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Set as default payment method',
+                                style:
+                                    Theme.of(context).textTheme.bodyMedium!,
+                              ).animate().fade(duration: 600.ms),
+                              Text(
+                                'This card will  be used for future purchases',
+                                style:
+                                    Theme.of(context).textTheme.labelMedium!,
+                              ).animate().fade(duration: 600.ms),
+                            ],
                           ),
-                        ].divide(SizedBox(width: 8.0)),
-                      ),
+                        ),
+                      ].divide(SizedBox(width: 8.0)),
                     ),
                   ),
                   Divider(
@@ -785,12 +941,20 @@ class _SettingsPaymentMethodAddWidgetState
                               );
                               ref
                                   .read(authProvider.notifier)
-                                  .updateUser((e) => e.copyWith(
-                                        paymentMethod: [
-                                          ...e.paymentMethod,
-                                          newPaymentMethod
-                                        ],
-                                      ));
+                                  .updateUser((e) {
+                                final existing = setAsDefault
+                                    ? e.paymentMethod
+                                        .map((m) =>
+                                            m.copyWith(isDefault: false))
+                                        .toList()
+                                    : [...e.paymentMethod];
+                                return e.copyWith(
+                                  paymentMethod: [
+                                    ...existing,
+                                    newPaymentMethod
+                                  ],
+                                );
+                              });
                               ref
                                   .read(checkoutProvider.notifier)
                                   .setPaymentMethod(newPaymentMethod);

@@ -14,8 +14,8 @@ import '/features/home/presentation/pages/seller_dashboard/shipping_detailed/hom
 class HomeDashoardShippingWidget extends ConsumerStatefulWidget {
   const HomeDashoardShippingWidget({super.key});
 
-  static String routeName = 'homeDashoardShipping';
-  static String routePath = 'homeDashoardShipping';
+  static const String routeName = 'homeDashoardShipping';
+  static const String routePath = 'homeDashoardShipping';
 
   @override
   ConsumerState<HomeDashoardShippingWidget> createState() =>

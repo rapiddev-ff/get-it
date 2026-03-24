@@ -20,8 +20,8 @@ class SettingsChangeEmailWidget extends ConsumerStatefulWidget {
 
   final bool? isOnboarding;
 
-  static String routeName = 'settingsChangeEmail';
-  static String routePath = 'settingsChangeEmail';
+  static const String routeName = 'settingsChangeEmail';
+  static const String routePath = 'settingsChangeEmail';
 
   @override
   ConsumerState<SettingsChangeEmailWidget> createState() =>
@@ -62,6 +62,7 @@ class _SettingsChangeEmailWidgetState
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     textFieldFocusNode1.dispose();
     textController1.dispose();
     textFieldFocusNode2.dispose();

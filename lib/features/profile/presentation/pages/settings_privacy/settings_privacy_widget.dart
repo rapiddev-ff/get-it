@@ -6,8 +6,8 @@ import '/core/widgets/dismiss_keyboard.dart';
 class SettingsPrivacyWidget extends StatelessWidget {
   const SettingsPrivacyWidget({super.key});
 
-  static String routeName = 'settingsPrivacy';
-  static String routePath = 'settingsPrivacy';
+  static const String routeName = 'settingsPrivacy';
+  static const String routePath = 'settingsPrivacy';
 
   @override
   Widget build(BuildContext context) {

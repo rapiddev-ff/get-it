@@ -12,8 +12,8 @@ import '/features/auth/presentation/providers/auth_provider.dart';
 class SettingsReferralWidget extends ConsumerStatefulWidget {
   const SettingsReferralWidget({super.key});
 
-  static String routeName = 'settingsReferral';
-  static String routePath = 'settingsReferral';
+  static const String routeName = 'settingsReferral';
+  static const String routePath = 'settingsReferral';
 
   @override
   ConsumerState<SettingsReferralWidget> createState() =>

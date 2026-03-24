@@ -20,8 +20,8 @@ class HomeDashoardShippingDetailedWidget extends StatefulWidget {
 
   final String? orderId;
 
-  static String routeName = 'homeDashoardShippingDetailed';
-  static String routePath = 'homeDashoardShippingDetailed';
+  static const String routeName = 'homeDashoardShippingDetailed';
+  static const String routePath = 'homeDashoardShippingDetailed';
 
   @override
   State<HomeDashoardShippingDetailedWidget> createState() =>
@@ -151,6 +151,7 @@ class _HomeDashoardShippingDetailedWidgetState
 
     final error = await actions.markOrderShipped(
       orderId: _orderId!,
+      sellerId: Supabase.instance.client.auth.currentUser!.id,
       trackingNumber: textController?.text,
     );
 
@@ -176,6 +177,7 @@ class _HomeDashoardShippingDetailedWidgetState
 
     final error = await actions.updateTrackingNumber(
       orderId: _orderId!,
+      sellerId: Supabase.instance.client.auth.currentUser!.id,
       trackingNumber: trackingText,
     );
 
@@ -206,6 +208,7 @@ class _HomeDashoardShippingDetailedWidgetState
 
     final error = await actions.cancelOrderSeller(
       orderId: _orderId!,
+      sellerId: Supabase.instance.client.auth.currentUser!.id,
       reason: result['reason']!,
       reasonText: result['reason_text'],
     );
@@ -252,7 +255,10 @@ class _HomeDashoardShippingDetailedWidgetState
 
     setState(() => _isSaving = true);
 
-    final error = await actions.markOrderDelivered(orderId: _orderId!);
+    final error = await actions.markOrderDelivered(
+      orderId: _orderId!,
+      sellerId: Supabase.instance.client.auth.currentUser!.id,
+    );
 
     if (!mounted) return;
     setState(() => _isSaving = false);
@@ -269,6 +275,7 @@ class _HomeDashoardShippingDetailedWidgetState
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     textController?.dispose();
     textFieldFocusNode?.dispose();
     super.dispose();

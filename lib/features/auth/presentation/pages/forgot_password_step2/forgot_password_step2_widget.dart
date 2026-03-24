@@ -18,8 +18,8 @@ class ForgotPasswordStep2Widget extends StatefulWidget {
 
   final String? email;
 
-  static String routeName = 'forgotPasswordStep2';
-  static String routePath = 'forgotPasswordStep2';
+  static const String routeName = 'forgotPasswordStep2';
+  static const String routePath = 'forgotPasswordStep2';
 
   @override
   State<ForgotPasswordStep2Widget> createState() =>

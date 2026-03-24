@@ -13,8 +13,8 @@ import '/features/home/presentation/pages/seller_dashboard/promote_step2/home_da
 class HomeDashoardPromoteStep1Widget extends StatefulWidget {
   const HomeDashoardPromoteStep1Widget({super.key});
 
-  static String routeName = 'homeDashoardPromoteStep1';
-  static String routePath = 'homeDashoardPromoteStep1';
+  static const String routeName = 'homeDashoardPromoteStep1';
+  static const String routePath = 'homeDashoardPromoteStep1';
 
   @override
   State<HomeDashoardPromoteStep1Widget> createState() =>
@@ -38,6 +38,7 @@ class _HomeDashoardPromoteStep1WidgetState
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     textController?.dispose();
     textFieldFocusNode?.dispose();
     super.dispose();

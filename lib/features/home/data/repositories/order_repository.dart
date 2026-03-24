@@ -97,6 +97,7 @@ class OrderRepository {
   /// Returns null on success, or an error message on failure.
   Future<String?> markOrderShipped({
     required String orderId,
+    required String sellerId,
     String? trackingNumber,
     String? shippingCarrier,
   }) async {
@@ -105,6 +106,7 @@ class OrderRepository {
           .from('orders')
           .select('status, total_amount')
           .eq('id', orderId)
+          .eq('seller_id', sellerId)
           .single();
 
       final status = orderData['status'] as String?;
@@ -142,7 +144,11 @@ class OrderRepository {
         updateData['shipping_carrier'] = carrier;
       }
 
-      await _client.from('orders').update(updateData).eq('id', orderId);
+      await _client
+          .from('orders')
+          .update(updateData)
+          .eq('id', orderId)
+          .eq('seller_id', sellerId);
 
       return null;
     } catch (e) {
@@ -153,6 +159,7 @@ class OrderRepository {
   /// Updates tracking number for an already-shipped order.
   Future<String?> updateTrackingNumber({
     required String orderId,
+    required String sellerId,
     required String trackingNumber,
     String? shippingCarrier,
   }) async {
@@ -161,6 +168,7 @@ class OrderRepository {
           .from('orders')
           .select('status')
           .eq('id', orderId)
+          .eq('seller_id', sellerId)
           .single();
 
       final status = orderData['status'] as String?;
@@ -180,7 +188,11 @@ class OrderRepository {
         updateData['shipping_carrier'] = carrier;
       }
 
-      await _client.from('orders').update(updateData).eq('id', orderId);
+      await _client
+          .from('orders')
+          .update(updateData)
+          .eq('id', orderId)
+          .eq('seller_id', sellerId);
 
       return null;
     } catch (e) {
@@ -189,12 +201,16 @@ class OrderRepository {
   }
 
   /// Manually marks a shipped order as delivered.
-  Future<String?> markOrderDelivered({required String orderId}) async {
+  Future<String?> markOrderDelivered({
+    required String orderId,
+    required String sellerId,
+  }) async {
     try {
       final orderData = await _client
           .from('orders')
           .select('status')
           .eq('id', orderId)
+          .eq('seller_id', sellerId)
           .single();
 
       final status = orderData['status'] as String?;
@@ -208,7 +224,7 @@ class OrderRepository {
         'status': 'delivered',
         'delivered_at': now,
         'updated_at': now,
-      }).eq('id', orderId);
+      }).eq('id', orderId).eq('seller_id', sellerId);
 
       return null;
     } catch (e) {
@@ -262,6 +278,7 @@ class OrderRepository {
   /// Seller-initiated order cancellation with reason.
   Future<String?> cancelOrderSeller({
     required String orderId,
+    required String sellerId,
     required String reason,
     String? reasonText,
   }) async {
@@ -280,6 +297,7 @@ class OrderRepository {
           .from('orders')
           .select('status, order_items(product_id)')
           .eq('id', orderId)
+          .eq('seller_id', sellerId)
           .single();
 
       final status = orderData['status'] as String?;
@@ -293,7 +311,7 @@ class OrderRepository {
         'updated_at': DateTime.now().toUtc().toIso8601String(),
         'seller_cancel_reason': reason,
         'seller_cancel_reason_text': reasonText?.trim(),
-      }).eq('id', orderId);
+      }).eq('id', orderId).eq('seller_id', sellerId);
 
       try {
         await _client.functions.invoke(
@@ -321,6 +339,90 @@ class OrderRepository {
       return null;
     } catch (e) {
       return e.toString();
+    }
+  }
+
+  /// Fetches buyer orders with seller info and product details.
+  /// [statusFilter] - 'active' (sale_pending/paid/shipped), 'delivered', 'cancelled', or null for all.
+  Future<List<Map<String, dynamic>>> getBuyerOrders({
+    required String buyerId,
+    String? statusFilter,
+    int? limit,
+  }) async {
+    var query = _client
+        .from('orders')
+        .select('''
+          *,
+          order_items(product_id, product_title, product_price, quantity, products(main_image_url)),
+          seller:users!orders_seller_id_fkey(id, username, photo_url)
+        ''')
+        .eq('buyer_id', buyerId)
+        .isFilter('deleted_at', null);
+
+    if (statusFilter == 'active') {
+      query = query.inFilter('status', ['sale_pending', 'paid', 'shipped']);
+    } else if (statusFilter == 'delivered') {
+      query = query.eq('status', 'delivered');
+    } else if (statusFilter == 'cancelled') {
+      query = query.inFilter('status', ['cancelled', 'refunded']);
+    }
+
+    final ordered = query.order('created_at', ascending: false);
+
+    List<Map<String, dynamic>> response;
+    if (limit != null) {
+      response = await ordered.limit(limit);
+    } else {
+      response = await ordered;
+    }
+
+    return List<Map<String, dynamic>>.from(response);
+  }
+
+  /// Returns buyer order counts by status group.
+  Future<Map<String, int>> getBuyerOrderCounts({
+    required String buyerId,
+  }) async {
+    final results = await _client
+        .from('orders')
+        .select('status')
+        .eq('buyer_id', buyerId)
+        .isFilter('deleted_at', null);
+
+    final list = List<Map<String, dynamic>>.from(results);
+
+    int active = 0;
+    int delivered = 0;
+    int cancelled = 0;
+
+    for (final row in list) {
+      final status = row['status'] as String?;
+      if (status == 'sale_pending' || status == 'paid' || status == 'shipped') {
+        active++;
+      } else if (status == 'delivered') {
+        delivered++;
+      } else if (status == 'cancelled' || status == 'refunded') {
+        cancelled++;
+      }
+    }
+
+    return {'active': active, 'delivered': delivered, 'cancelled': cancelled};
+  }
+
+  /// Fetches a single order with full details for buyer order detail page.
+  Future<Map<String, dynamic>?> getBuyerOrderDetail({
+    required String orderId,
+    required String buyerId,
+  }) async {
+    try {
+      final result = await _client.from('orders').select('''
+            *,
+            order_items(product_id, product_title, product_price, quantity, products(main_image_url)),
+            seller:users!orders_seller_id_fkey(id, username, photo_url)
+          ''').eq('id', orderId).eq('buyer_id', buyerId).single();
+      return result;
+    } catch (_) {
+      return null;
     }
   }
 

@@ -9,8 +9,8 @@ import 'package:page_transition/page_transition.dart';
 class StripeRefreshWidget extends StatelessWidget {
   const StripeRefreshWidget({super.key});
 
-  static String routeName = 'stripeRefresh';
-  static String routePath = 'stripeRefresh';
+  static const String routeName = 'stripeRefresh';
+  static const String routePath = 'stripeRefresh';
 
   @override
   Widget build(BuildContext context) {

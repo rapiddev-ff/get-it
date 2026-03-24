@@ -14,8 +14,8 @@ import 'package:intl/intl.dart';
 class HomeDashoardShortlistAddWidget extends ConsumerStatefulWidget {
   const HomeDashoardShortlistAddWidget({super.key});
 
-  static String routeName = 'homeDashoardShortlistAdd';
-  static String routePath = 'homeDashoardShortlistAdd';
+  static const String routeName = 'homeDashoardShortlistAdd';
+  static const String routePath = 'homeDashoardShortlistAdd';
 
   @override
   ConsumerState<HomeDashoardShortlistAddWidget> createState() =>
@@ -77,6 +77,7 @@ class _HomeDashoardShortlistAddWidgetState
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     textController?.dispose();
     textFieldFocusNode?.dispose();
     super.dispose();

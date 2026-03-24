@@ -66,3 +66,5 @@ export 'cancel_order_seller.dart' show cancelOrderSeller;
 export 'get_seller_orders.dart' show getSellerOrders, getSellerOrderCounts;
 export 'mark_order_shipped.dart' show markOrderShipped, updateTrackingNumber;
 export 'mark_order_delivered.dart' show markOrderDelivered;
+export 'get_buyer_orders.dart'
+    show getBuyerOrders, getBuyerOrderCounts, getBuyerOrderDetail;

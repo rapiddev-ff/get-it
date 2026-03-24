@@ -9,9 +9,8 @@ class CheckoutNotifier extends Notifier<PaymentMethod> {
     state = method;
   }
 
-  void updatePaymentMethod(Function(PaymentMethod) updateFn) {
-    updateFn(state);
-    state = state;
+  void updatePaymentMethod(PaymentMethod Function(PaymentMethod) updateFn) {
+    state = updateFn(state);
   }
 
   void clear() {

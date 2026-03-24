@@ -3,14 +3,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final realtimeServiceProvider = Provider<RealtimeService>((ref) {
-  final service = RealtimeService(Supabase.instance.client);
-  ref.onDispose(() => service.disposeAll());
+  // Share the singleton so actions using RealtimeService.instance
+  // and widgets using the provider operate on the same channels.
+  final service = RealtimeService.instance;
+  ref.onDispose(() async {
+    await service.disposeAll();
+    RealtimeService._instance = null;
+  });
   return service;
 });
 
 class RealtimeService {
-  /// @deprecated Use realtimeServiceProvider instead.
   static RealtimeService? _instance;
+
+  /// Prefer using [realtimeServiceProvider] with Riverpod.
+  /// This getter exists for action files that don't have a WidgetRef.
   static RealtimeService get instance =>
       _instance ??= RealtimeService(Supabase.instance.client);
 

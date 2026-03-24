@@ -69,6 +69,8 @@ import '/features/home/presentation/pages/home_seller_profile_reviews_step2/home
 import '/features/profile/presentation/pages/settings_shipping_defaults/settings_shipping_defaults_widget.dart';
 import '/features/home/presentation/pages/seller_dashboard/inventory_add_tags/home_dashoard_inventory_add_tags_widget.dart';
 import '/features/checkout/presentation/pages/checkout_edit_shipping_address/checkout_edit_shipping_address_widget.dart';
+import '/features/home/presentation/pages/buyer_dashboard/purchases/buyer_purchases_widget.dart';
+import '/features/home/presentation/pages/buyer_dashboard/order_detail/buyer_order_detail_widget.dart';
 
 /// All app route definitions, extracted from app_router.dart for readability.
 List<AppRoute> appRoutes() => [
@@ -484,5 +486,20 @@ List<AppRoute> appRoutes() => [
         name: CheckoutEditShippingAddressWidget.routeName,
         path: CheckoutEditShippingAddressWidget.routePath,
         builder: (context, params) => CheckoutEditShippingAddressWidget(),
+      ),
+      AppRoute(
+        name: BuyerPurchasesWidget.routeName,
+        path: BuyerPurchasesWidget.routePath,
+        builder: (context, params) => BuyerPurchasesWidget(),
+      ),
+      AppRoute(
+        name: BuyerOrderDetailWidget.routeName,
+        path: BuyerOrderDetailWidget.routePath,
+        builder: (context, params) {
+          final allParams = params.state.uri.queryParameters;
+          return BuyerOrderDetailWidget(
+            orderId: allParams['orderId'],
+          );
+        },
       ),
     ];

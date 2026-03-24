@@ -14,8 +14,8 @@ import 'package:go_router/go_router.dart';
 class SettingsBlockListWidget extends ConsumerStatefulWidget {
   const SettingsBlockListWidget({super.key});
 
-  static String routeName = 'settingsBlockList';
-  static String routePath = 'settingsBlockList';
+  static const String routeName = 'settingsBlockList';
+  static const String routePath = 'settingsBlockList';
 
   @override
   ConsumerState<SettingsBlockListWidget> createState() =>
@@ -43,6 +43,7 @@ class _SettingsBlockListWidgetState
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     textFieldFocusNode.dispose();
     textController.dispose();
     super.dispose();

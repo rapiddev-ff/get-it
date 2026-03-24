@@ -28,8 +28,8 @@ import '/features/profile/presentation/pages/settings_terms/settings_terms_widge
 class SignUpWidget extends ConsumerStatefulWidget {
   const SignUpWidget({super.key});
 
-  static String routeName = 'signUp';
-  static String routePath = 'signUp';
+  static const String routeName = 'signUp';
+  static const String routePath = 'signUp';
 
   @override
   ConsumerState<SignUpWidget> createState() => _SignUpWidgetState();
@@ -60,7 +60,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
 
   static bool _checkEmailFormat(String email) {
     return RegExp(
-            r'^[a-zA-Z0-9]([a-zA-Z0-9._%-]*[a-zA-Z0-9])?@[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$')
+            r'^[a-zA-Z0-9]([a-zA-Z0-9._%+-]*[a-zA-Z0-9])?@[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$')
         .hasMatch(email) &&
         !email.contains('..');
   }
@@ -79,6 +79,7 @@ class _SignUpWidgetState extends ConsumerState<SignUpWidget>
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     textFieldFocusNode1.dispose();
     emailTextController.dispose();
     textFieldFocusNode2.dispose();

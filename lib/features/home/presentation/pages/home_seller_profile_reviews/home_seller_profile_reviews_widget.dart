@@ -28,8 +28,8 @@ class HomeSellerProfileReviewsWidget extends StatefulWidget {
 
   final Seller? sellerDataType;
 
-  static String routeName = 'homeSellerProfileReviews';
-  static String routePath = 'homeSellerProfileReviews';
+  static const String routeName = 'homeSellerProfileReviews';
+  static const String routePath = 'homeSellerProfileReviews';
 
   @override
   State<HomeSellerProfileReviewsWidget> createState() =>

@@ -7,11 +7,13 @@ final _repository = OrderRepository(Supabase.instance.client);
 /// Returns null on success, or an error message string on failure.
 Future<String?> cancelOrderSeller({
   required String orderId,
+  required String sellerId,
   required String reason,
   String? reasonText,
 }) async {
   return _repository.cancelOrderSeller(
     orderId: orderId,
+    sellerId: sellerId,
     reason: reason,
     reasonText: reasonText,
   );

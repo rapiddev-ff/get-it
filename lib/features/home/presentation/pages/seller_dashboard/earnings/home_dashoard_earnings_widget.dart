@@ -14,8 +14,8 @@ import '/custom_code/actions/index.dart' as actions;
 class HomeDashoardEarningsWidget extends ConsumerStatefulWidget {
   const HomeDashoardEarningsWidget({super.key});
 
-  static String routeName = 'homeDashoardEarnings';
-  static String routePath = 'homeDashoardEarnings';
+  static const String routeName = 'homeDashoardEarnings';
+  static const String routePath = 'homeDashoardEarnings';
 
   @override
   ConsumerState<HomeDashoardEarningsWidget> createState() =>

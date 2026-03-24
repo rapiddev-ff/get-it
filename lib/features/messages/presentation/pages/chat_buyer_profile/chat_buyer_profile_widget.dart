@@ -23,8 +23,8 @@ class ChatBuyerProfileWidget extends ConsumerStatefulWidget {
 
   final String? buyerId;
 
-  static String routeName = 'chatBuyerProfile';
-  static String routePath = 'chatBuyerProfile';
+  static const String routeName = 'chatBuyerProfile';
+  static const String routePath = 'chatBuyerProfile';
 
   @override
   ConsumerState<ChatBuyerProfileWidget> createState() =>

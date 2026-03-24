@@ -28,8 +28,8 @@ class PhoneVerificationPage2Widget extends ConsumerStatefulWidget {
   final String? phoneNumber;
   final bool? isOnborading;
 
-  static String routeName = 'phoneVerificationPage2';
-  static String routePath = 'phoneVerificationPage2';
+  static const String routeName = 'phoneVerificationPage2';
+  static const String routePath = 'phoneVerificationPage2';
 
   @override
   ConsumerState<PhoneVerificationPage2Widget> createState() =>

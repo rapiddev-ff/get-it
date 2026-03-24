@@ -33,8 +33,8 @@ class HomeProductWidget extends ConsumerStatefulWidget {
 
   final String? productId;
 
-  static String routeName = 'homeProduct';
-  static String routePath = 'homeProduct';
+  static const String routeName = 'homeProduct';
+  static const String routePath = 'homeProduct';
 
   @override
   ConsumerState<HomeProductWidget> createState() => _HomeProductWidgetState();
@@ -62,6 +62,12 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
           ref.read(currentUserIdProvider),
         );
         _isInWishlist = _getProduct?.isInWishlist ?? false;
+        // Track view (fire-and-forget)
+        actions.trackProductView(
+          productId,
+          ref.read(currentUserIdProvider),
+          'product_detail',
+        );
       } catch (_) {
         // Network or API error — leave _getProduct null (shimmer stays).
       }
@@ -197,15 +203,19 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
     return Padding(
       padding: EdgeInsets.only(top: 12.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
             style: Theme.of(context).textTheme.labelLarge!,
           ),
-          Text(
-            value,
-            style: Theme.of(context).textTheme.bodyLarge!,
+          SizedBox(width: 12.0),
+          Expanded(
+            child: Text(
+              value,
+              textAlign: TextAlign.end,
+              style: Theme.of(context).textTheme.bodyLarge!,
+            ),
           ),
         ],
       ),
@@ -265,7 +275,9 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
         ),
         body: product == null
             ? _buildShimmer()
-            : SingleChildScrollView(
+            : SafeArea(
+                top: false,
+                child: SingleChildScrollView(
                 child: Column(
                   children: [
                     Container(
@@ -835,6 +847,7 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                   ],
                 ),
               ),
+            ),
       ),
     );
   }
@@ -842,9 +855,18 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
   Widget _buildPriceRow(ProductDetails product) {
     final hasFlashSale =
         product.flashSaleEnabled && product.flashSalePrice != null;
-    final hasDiscount = product.discountType != null &&
-        product.discountAmount != null &&
-        product.discountAmount! > 0;
+
+    double currentPrice = product.price;
+    double? originalPrice;
+
+    if (hasFlashSale) {
+      currentPrice = product.flashSalePrice!;
+      originalPrice = product.price;
+    } else if ((product.originalPrice ?? 0) > product.price) {
+      originalPrice = product.originalPrice;
+    }
+
+    final hasDiscount = originalPrice != null && currentPrice < originalPrice;
 
     if (!hasFlashSale && !hasDiscount) {
       return Text(
@@ -856,22 +878,17 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
       );
     }
 
-    // Determine display prices and discount text
-    double currentPrice = product.price;
-    double? originalPrice;
+    // Determine discount label
     String discountLabel = '';
-
-    if (hasFlashSale) {
-      currentPrice = product.flashSalePrice!;
-      originalPrice = product.price;
+    if (product.discountType == 'dollar') {
+      final amount =
+          product.discountAmount ?? ((originalPrice ?? currentPrice) - currentPrice);
+      discountLabel = '-\$${_formatCurrency(amount)}';
     } else if (hasDiscount) {
-      originalPrice = product.originalPrice ?? product.price;
-    }
-
-    if (product.discountType == 'percentage') {
-      discountLabel = '-${product.discountAmount!.toStringAsFixed(0)}%';
-    } else if (product.discountType == 'dollar') {
-      discountLabel = '\$${_formatCurrency(product.discountAmount!)}';
+      // 'percentage' or computed fallback
+      final pct = product.discountAmount?.round() ??
+          (((originalPrice - currentPrice) / originalPrice) * 100).round();
+      discountLabel = '-$pct%';
     }
 
     return Row(

@@ -13,8 +13,8 @@ import '/features/auth/presentation/pages/sign_up/sign_up_widget.dart';
 class WelcomeWidget extends StatefulWidget {
   const WelcomeWidget({super.key});
 
-  static String routeName = 'welcome';
-  static String routePath = 'welcome';
+  static const String routeName = 'welcome';
+  static const String routePath = 'welcome';
 
   @override
   State<WelcomeWidget> createState() => _WelcomeWidgetState();

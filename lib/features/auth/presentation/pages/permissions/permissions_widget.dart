@@ -15,8 +15,8 @@ import '/features/auth/presentation/pages/additional_info/additional_info_widget
 class PermissionsWidget extends StatefulWidget {
   const PermissionsWidget({super.key});
 
-  static String routeName = 'permissions';
-  static String routePath = 'permissions';
+  static const String routeName = 'permissions';
+  static const String routePath = 'permissions';
 
   @override
   State<PermissionsWidget> createState() => _PermissionsWidgetState();

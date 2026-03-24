@@ -1,6 +1,7 @@
 import '/features/home/domain/models/feed_product_model.dart';
 import '/core/theme/app_colors.dart';
 import '/features/auth/presentation/providers/auth_settings_provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -91,7 +92,9 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
     _swipeController = AnimationController(
       vsync: this,
       duration: _animationDuration,
-    )..addListener(_updatePositionFromAnimation);
+    )..addListener(() {
+        _offset = _swipeAnimation.value;
+      });
 
     _swipeAnimation = Tween<Offset>(
       begin: Offset.zero,
@@ -114,12 +117,6 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
     _swipeController.dispose();
     _likeController.dispose();
     super.dispose();
-  }
-
-  void _updatePositionFromAnimation() {
-    setState(() {
-      _offset = _swipeAnimation.value;
-    });
   }
 
   void _resetCard() {
@@ -276,19 +273,32 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final cardWidth = widget.width ?? constraints.maxWidth;
-        final cardHeight = widget.height ?? constraints.maxHeight;
+        final rawWidth = widget.width ?? constraints.maxWidth;
+        final rawHeight = widget.height ?? constraints.maxHeight;
+        final cardWidth = rawWidth.isFinite ? rawWidth : constraints.maxWidth.isFinite ? constraints.maxWidth : MediaQuery.of(context).size.width;
+        final cardHeight = rawHeight.isFinite ? rawHeight : constraints.maxHeight.isFinite ? constraints.maxHeight : MediaQuery.of(context).size.height;
         final screenWidth = MediaQuery.of(context).size.width;
 
         return Stack(
           alignment: Alignment.center,
           children: [
-            // Active card (front)
-            _buildActiveCard(
-              widget.products[_currentIndex],
-              cardWidth,
-              cardHeight,
-              screenWidth,
+            // Active card (front) — AnimatedBuilder ensures only the
+            // transform layer rebuilds during the fly-off animation.
+            AnimatedBuilder(
+              animation: _swipeController,
+              builder: (context, child) => Transform.translate(
+                offset: _offset,
+                child: Transform.rotate(
+                  angle: _rotation,
+                  child: child,
+                ),
+              ),
+              child: _buildActiveCard(
+                widget.products[_currentIndex],
+                cardWidth,
+                cardHeight,
+                screenWidth,
+              ),
             ),
 
             // Swipe Up Indicator (below card)
@@ -374,11 +384,7 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
 
     final bool isFlashSale = _isFlashSaleActive(product);
 
-    return Transform.translate(
-      offset: _offset,
-      child: Transform.rotate(
-        angle: _rotation,
-        child: GestureDetector(
+    return GestureDetector(
           onTap: () async {
             await widget.onTapDetails?.call(product.id, _currentIndex);
           },
@@ -416,12 +422,13 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
                       children: [
                         // Product Image
                         product.mainImageUrl.isNotEmpty
-                            ? Image.network(
-                                product.mainImageUrl,
+                            ? CachedNetworkImage(
+                                imageUrl: product.mainImageUrl,
                                 width: cardWidth,
                                 height: cardHeight * 0.62,
                                 fit: BoxFit.cover,
-                                errorBuilder: (_, __, ___) => Container(
+                                memCacheWidth: (cardWidth * 2).toInt(),
+                                errorWidget: (_, __, ___) => Container(
                                   width: cardWidth,
                                   height: cardHeight * 0.62,
                                   color: AppColors.textSecondary
@@ -717,8 +724,6 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
               ],
             ),
           ),
-        ),
-      ),
     );
   }
 

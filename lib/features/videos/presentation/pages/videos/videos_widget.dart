@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 class VideosWidget extends StatelessWidget {
   const VideosWidget({super.key});
 
-  static String routeName = 'videos';
-  static String routePath = 'videos';
+  static const String routeName = 'videos';
+  static const String routePath = 'videos';
 
   @override
   Widget build(BuildContext context) {

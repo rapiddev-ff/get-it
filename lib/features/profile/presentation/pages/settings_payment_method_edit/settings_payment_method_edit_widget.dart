@@ -28,8 +28,8 @@ class SettingsPaymentMethodEditWidget extends ConsumerStatefulWidget {
   final PaymentMethod? paymentMethod;
   final int? index;
 
-  static String routeName = 'settingsPaymentMethodEdit';
-  static String routePath = 'settingsPaymentMethodEdit';
+  static const String routeName = 'settingsPaymentMethodEdit';
+  static const String routePath = 'settingsPaymentMethodEdit';
 
   @override
   ConsumerState<SettingsPaymentMethodEditWidget> createState() =>
@@ -73,6 +73,7 @@ class _SettingsPaymentMethodEditWidgetState
   @override
   void initState() {
     super.initState();
+    setAsDefault = widget.paymentMethod?.isDefault == true;
 
     cardNumberTextController = TextEditingController(
         text: '.... .... .... ${widget.paymentMethod?.card?.last4 ?? ''}');
@@ -110,6 +111,7 @@ class _SettingsPaymentMethodEditWidgetState
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     cardNumberFocusNode.dispose();
     cardNumberTextController.dispose();
     expireDateFocusNode.dispose();
@@ -619,62 +621,61 @@ class _SettingsPaymentMethodEditWidgetState
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 24.0),
-                    child: InkWell(
-                      onTap: () async {
-                        setAsDefault = !setAsDefault;
-                        setState(() {});
-                      },
-                      child: Row(
-                        children: [
-                          if (!setAsDefault)
-                            Container(
-                              width: 22.0,
-                              height: 22.0,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4.0),
-                                border: Border.all(
-                                  color: AppColors.neutral700,
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setAsDefault = !setAsDefault;
+                            setState(() {});
+                          },
+                          child: setAsDefault
+                              ? Container(
+                                  width: 22.0,
+                                  height: 22.0,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.secondary,
+                                    borderRadius: BorderRadius.circular(4.0),
+                                    border: Border.all(
+                                      color: AppColors.neutral700,
+                                    ),
+                                  ),
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.check_sharp,
+                                      color: Colors.white,
+                                      size: 12.0,
+                                    ),
+                                  ),
+                                )
+                              : Container(
+                                  width: 22.0,
+                                  height: 22.0,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4.0),
+                                    border: Border.all(
+                                      color: AppColors.neutral700,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          if (setAsDefault)
-                            Container(
-                              width: 22.0,
-                              height: 22.0,
-                              decoration: BoxDecoration(
-                                color: AppColors.secondary,
-                                borderRadius: BorderRadius.circular(4.0),
-                                border: Border.all(
-                                  color: AppColors.neutral700,
-                                ),
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  Icons.check_sharp,
-                                  color: Colors.white,
-                                  size: 12.0,
-                                ),
-                              ),
-                            ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Set as default payment method',
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium!,
-                                ).animate().fade(duration: 600.ms),
-                                Text(
-                                  'This card will  be used for future purchases',
-                                  style:
-                                      Theme.of(context).textTheme.labelMedium!,
-                                ).animate().fade(duration: 600.ms),
-                              ],
-                            ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Set as default payment method',
+                                style:
+                                    Theme.of(context).textTheme.bodyMedium!,
+                              ).animate().fade(duration: 600.ms),
+                              Text(
+                                'This card will  be used for future purchases',
+                                style:
+                                    Theme.of(context).textTheme.labelMedium!,
+                              ).animate().fade(duration: 600.ms),
+                            ],
                           ),
-                        ].divide(SizedBox(width: 8.0)),
-                      ),
+                        ),
+                      ].divide(SizedBox(width: 8.0)),
                     ),
                   ),
                   Divider(
@@ -759,9 +760,16 @@ class _SettingsPaymentMethodEditWidgetState
                                       zipCodeTextController.text);
                               if (validationResult['success'] == true) {
                                 ref.read(authProvider.notifier).updateUser((e) {
-                                  final methods = [...e.paymentMethod];
+                                  var methods = [...e.paymentMethod];
+                                  if (setAsDefault) {
+                                    methods = methods
+                                        .map((m) =>
+                                            m.copyWith(isDefault: false))
+                                        .toList();
+                                  }
                                   final pm = methods[widget.index!];
                                   methods[widget.index!] = pm.copyWith(
+                                    isDefault: setAsDefault,
                                     billingDetails: (pm.billingDetails ??
                                             const BillingDetails())
                                         .copyWith(

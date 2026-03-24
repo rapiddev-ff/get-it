@@ -43,11 +43,11 @@
 	<true/>
 
 	<key>NSCameraUsageDescription</key>
-    <string>camera</string>
+	<string>Get It needs access to your camera to take photos of items you want to sell and to use AI Scan for automatic product cataloging.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-    <string>image library</string>
+	<string>Get It needs access to your photo library to select images of items you want to list for sale.</string>
 	<key>PermissionGroupNotification</key>
-    <string>Notifications</string>
+	<string>Get It would like to send you notifications about orders, messages, and updates on items you're watching.</string>
 
 
 

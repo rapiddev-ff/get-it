@@ -31,8 +31,8 @@ import '/features/browse/presentation/pages/browse/browse_widget.dart';
 class WishlistWidget extends ConsumerStatefulWidget {
   const WishlistWidget({super.key});
 
-  static String routeName = 'wishlist';
-  static String routePath = 'wishlist';
+  static const String routeName = 'wishlist';
+  static const String routePath = 'wishlist';
 
   @override
   ConsumerState<WishlistWidget> createState() => _WishlistWidgetState();
@@ -41,7 +41,7 @@ class WishlistWidget extends ConsumerStatefulWidget {
 class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
   final _textController = TextEditingController();
   final _textFieldFocusNode = FocusNode();
-  Category? _choosenCategory;
+  Category? _chosenCategory;
   bool _hadProducts = false;
 
   @override
@@ -49,11 +49,14 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       await actions.initWishlistStream(ref, ref.read(currentUserIdProvider));
+      if (!mounted) return;
+      setState(() {});
     });
-    if (!mounted) return;  }
+  }
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     actions.disposeWishlistStream();
     _textFieldFocusNode.dispose();
     _textController.dispose();
@@ -304,17 +307,17 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                 InkWell(
                                   onTap: () {
                                     setState(() {
-                                      _choosenCategory = null;
+                                      _chosenCategory = null;
                                     });
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         colors: [
-                                          _choosenCategory == null
+                                          _chosenCategory == null
                                               ? AppColors.brandPurple
                                               : AppColors.backgroundSecondary,
-                                          _choosenCategory == null
+                                          _chosenCategory == null
                                               ? AppColors.brandBlue
                                               : AppColors.backgroundSecondary,
                                         ],
@@ -348,17 +351,17 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                   return InkWell(
                                     onTap: () {
                                       setState(() {
-                                        _choosenCategory = categoriesItem;
+                                        _chosenCategory = categoriesItem;
                                       });
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
                                         gradient: LinearGradient(
                                           colors: [
-                                            _choosenCategory == categoriesItem
+                                            _chosenCategory == categoriesItem
                                                 ? AppColors.brandPurple
                                                 : AppColors.backgroundSecondary,
-                                            _choosenCategory == categoriesItem
+                                            _chosenCategory == categoriesItem
                                                 ? AppColors.brandBlue
                                                 : AppColors.backgroundSecondary,
                                           ],
@@ -403,12 +406,12 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                 final wishlist = _filterProducts(
                                   wishlistProducts,
                                   _textController.text,
-                                  _choosenCategory?.id,
+                                  _chosenCategory?.id,
                                 );
                                 if (wishlist.isEmpty) {
                                   final hasSearch =
                                       _textController.text.trim().isNotEmpty;
-                                  final hasCategory = _choosenCategory != null;
+                                  final hasCategory = _chosenCategory != null;
                                   final hasFilters = hasSearch || hasCategory;
 
                                   return Center(
@@ -435,7 +438,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                         description: hasSearch
                                             ? 'We couldn\'t find anything matching "${_textController.text}".'
                                             : hasCategory
-                                                ? 'No items in "${_choosenCategory?.name ?? ''}" category.'
+                                                ? 'No items in "${_chosenCategory?.name ?? ''}" category.'
                                                 : 'Tap the heart on any item to save it here for later.',
                                         hasButton: true,
                                         sidePadding: 16.0,
@@ -451,7 +454,7 @@ class _WishlistWidgetState extends ConsumerState<WishlistWidget> {
                                                 _textController.clear();
                                               }
                                               if (hasCategory) {
-                                                _choosenCategory = null;
+                                                _chosenCategory = null;
                                               }
                                             });
                                           } else {

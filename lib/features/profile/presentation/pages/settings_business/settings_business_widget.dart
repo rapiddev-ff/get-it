@@ -37,6 +37,7 @@ class _SettingsBusinessWidgetState extends State<SettingsBusinessWidget> {
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     textFieldFocusNode.dispose();
     textController.dispose();
     super.dispose();

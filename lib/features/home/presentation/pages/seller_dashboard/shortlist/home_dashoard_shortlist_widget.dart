@@ -14,8 +14,8 @@ import 'package:go_router/go_router.dart';
 class HomeDashoardShortlistWidget extends ConsumerStatefulWidget {
   const HomeDashoardShortlistWidget({super.key});
 
-  static String routeName = 'homeDashoardShortlist';
-  static String routePath = 'homeDashoardShortlist';
+  static const String routeName = 'homeDashoardShortlist';
+  static const String routePath = 'homeDashoardShortlist';
 
   @override
   ConsumerState<HomeDashoardShortlistWidget> createState() =>

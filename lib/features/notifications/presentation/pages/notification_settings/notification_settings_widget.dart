@@ -7,8 +7,8 @@ import '/core/widgets/dismiss_keyboard.dart';
 class NotificationSettingsWidget extends StatefulWidget {
   const NotificationSettingsWidget({super.key});
 
-  static String routeName = 'notificationSettings';
-  static String routePath = 'notificationSettings';
+  static const String routeName = 'notificationSettings';
+  static const String routePath = 'notificationSettings';
 
   @override
   State<NotificationSettingsWidget> createState() =>

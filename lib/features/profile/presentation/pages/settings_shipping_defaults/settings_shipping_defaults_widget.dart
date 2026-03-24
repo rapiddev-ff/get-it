@@ -17,8 +17,8 @@ import '/features/auth/presentation/providers/auth_provider.dart';
 class SettingsShippingDefaultsWidget extends ConsumerStatefulWidget {
   const SettingsShippingDefaultsWidget({super.key});
 
-  static String routeName = 'settingsShippingDefaults';
-  static String routePath = 'settingsShippingDefaults';
+  static const String routeName = 'settingsShippingDefaults';
+  static const String routePath = 'settingsShippingDefaults';
 
   @override
   ConsumerState<SettingsShippingDefaultsWidget> createState() =>
@@ -53,6 +53,7 @@ class _SettingsShippingDefaultsWidgetState
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     textFieldFocusNode1.dispose();
     textController1.dispose();
     textFieldFocusNode2.dispose();

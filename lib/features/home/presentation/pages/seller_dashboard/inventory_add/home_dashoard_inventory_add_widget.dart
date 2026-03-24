@@ -1,4 +1,6 @@
 import '/backend/supabase/supabase.dart';
+import '/features/home/domain/models/ai_scan_result_model.dart';
+import '/features/home/presentation/pages/seller_dashboard/ai_scan/ai_scan_widget.dart';
 import '/features/home/presentation/pages/seller_dashboard/dialog_product_created/dialog_product_created_widget.dart';
 import '/features/home/presentation/pages/seller_dashboard/dialog_product_draft/dialog_product_draft_widget.dart';
 import '/features/home/presentation/pages/seller_dashboard/inventory_add_category/home_dashoard_inventory_add_category_widget.dart';
@@ -34,12 +36,16 @@ class HomeDashoardInventoryAddWidget extends ConsumerStatefulWidget {
   const HomeDashoardInventoryAddWidget({
     super.key,
     this.productId,
+    this.aiScanResult,
+    this.aiScanImageBytes,
   });
 
   final String? productId;
+  final AiScanResult? aiScanResult;
+  final Uint8List? aiScanImageBytes;
 
-  static String routeName = 'homeDashoardInventoryAdd';
-  static String routePath = 'homeDashoardInventoryAdd';
+  static const String routeName = 'homeDashoardInventoryAdd';
+  static const String routePath = 'homeDashoardInventoryAdd';
 
   @override
   ConsumerState<HomeDashoardInventoryAddWidget> createState() =>
@@ -218,6 +224,17 @@ class _HomeDashoardInventoryAddWidgetState
         }
         if (mounted) setState(() {});
       }
+
+      // Pre-fill from AI Scan result (only for new products)
+      if (widget.productId == null && widget.aiScanResult != null) {
+        if (widget.aiScanImageBytes != null) {
+          uploadedImages.add(UploadedFile(
+            bytes: widget.aiScanImageBytes,
+            name: 'ai_scan_${DateTime.now().millisecondsSinceEpoch}.jpg',
+          ));
+        }
+        await _applyAiScanResult(widget.aiScanResult!);
+      }
     });
 
     titleTextController ??= TextEditingController();
@@ -252,8 +269,37 @@ class _HomeDashoardInventoryAddWidgetState
     switchConventionSettingsValue = false;
   }
 
+  Future<void> _applyAiScanResult(AiScanResult result) async {
+    titleTextController?.text = result.suggestedTitle;
+    descTextController?.text = result.suggestedDescription;
+
+    // Match category from scan result
+    if (result.categoryId != null) {
+      final catRows = await CategoriesTable().queryRows(
+        queryFn: (q) => q.eqOrNull('id', result.categoryId),
+      );
+      if (catRows.isNotEmpty) category = catRows.first;
+    }
+
+    // Match subcategory from scan result
+    if (result.subcategoryId != null) {
+      final subRows = await SubcategoriesTable().queryRows(
+        queryFn: (q) => q.eqOrNull('id', result.subcategoryId),
+      );
+      if (subRows.isNotEmpty) subcategory = subRows.first;
+    }
+
+    // Apply suggested tags
+    if (result.suggestedTags.isNotEmpty) {
+      chosenTags = result.toTags();
+    }
+
+    if (mounted) setState(() {});
+  }
+
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     titleTextController?.dispose();
     titleFocusNode?.dispose();
     skuPrefixTextController?.dispose();
@@ -1486,7 +1532,22 @@ class _HomeDashoardInventoryAddWidgetState
         borderRadius: BorderRadius.circular(4.0),
       ),
       child: TextButton(
-        onPressed: () {},
+        onPressed: () async {
+          final result = await Navigator.push<Map<String, dynamic>>(
+            context,
+            MaterialPageRoute(builder: (_) => const AiScanWidget(returnResultOnly: true)),
+          );
+          if (result != null && mounted) {
+            final scanResult = result['scanResult'] as AiScanResult;
+            final imageBytes = result['imageBytes'] as Uint8List;
+            // Add scanned image
+            uploadedImages.add(UploadedFile(
+              bytes: imageBytes,
+              name: 'ai_scan_${DateTime.now().millisecondsSinceEpoch}.jpg',
+            ));
+            await _applyAiScanResult(scanResult);
+          }
+        },
         style: TextButton.styleFrom(
           padding: EdgeInsets.symmetric(horizontal: 16.0),
           shape: RoundedRectangleBorder(

@@ -11,8 +11,8 @@ import 'package:go_router/go_router.dart';
 class SettingsDeleteAccountWidget extends StatelessWidget {
   const SettingsDeleteAccountWidget({super.key});
 
-  static String routeName = 'settingsDeleteAccount';
-  static String routePath = 'settingsDeleteAccount';
+  static const String routeName = 'settingsDeleteAccount';
+  static const String routePath = 'settingsDeleteAccount';
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart' show immutable;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '/features/home/domain/models/feed_product_model.dart';
 
+@immutable
 class FeedState {
   FeedState({
     this.feedProducts = const [],

@@ -13,8 +13,8 @@ import '/features/home/presentation/pages/home_page/home_page_widget.dart';
 class HomeDashoardPromoteStep2Widget extends StatefulWidget {
   const HomeDashoardPromoteStep2Widget({super.key});
 
-  static String routeName = 'homeDashoardPromoteStep2';
-  static String routePath = 'homeDashoardPromoteStep2';
+  static const String routeName = 'homeDashoardPromoteStep2';
+  static const String routePath = 'homeDashoardPromoteStep2';
 
   @override
   State<HomeDashoardPromoteStep2Widget> createState() =>
@@ -47,6 +47,7 @@ class _HomeDashoardPromoteStep2WidgetState
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     textController1?.dispose();
     textFieldFocusNode1?.dispose();
     textController2?.dispose();

@@ -39,8 +39,8 @@ class HomeSellerProfileWidget extends ConsumerStatefulWidget {
 
   final String? sellerId;
 
-  static String routeName = 'homeSellerProfile';
-  static String routePath = 'homeSellerProfile';
+  static const String routeName = 'homeSellerProfile';
+  static const String routePath = 'homeSellerProfile';
 
   @override
   ConsumerState<HomeSellerProfileWidget> createState() =>
@@ -51,7 +51,7 @@ class _HomeSellerProfileWidgetState
     extends ConsumerState<HomeSellerProfileWidget> {
   // Local state fields (inlined from model).
   String state = 'Products';
-  String choosenFilter = 'All';
+  String chosenFilter = 'All';
   String? selectedCategoryId;
   List<({String id, String name})> _categories = [];
   int _totalProducts = 0;
@@ -116,6 +116,7 @@ class _HomeSellerProfileWidgetState
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     textFieldFocusNode?.dispose();
     textController?.dispose();
     super.dispose();
@@ -161,7 +162,7 @@ class _HomeSellerProfileWidgetState
       onTap: () {
         setState(() {
           selectedCategoryId = categoryId;
-          choosenFilter = filterKey;
+          chosenFilter = filterKey;
         });
       },
       child: Container(

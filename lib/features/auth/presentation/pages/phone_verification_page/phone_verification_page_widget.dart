@@ -23,8 +23,8 @@ class PhoneVerificationPageWidget extends StatefulWidget {
 
   final bool? isOnboarding;
 
-  static String routeName = 'phoneVerificationPage';
-  static String routePath = 'phoneVerificationPage';
+  static const String routeName = 'phoneVerificationPage';
+  static const String routePath = 'phoneVerificationPage';
 
   @override
   State<PhoneVerificationPageWidget> createState() =>
@@ -85,6 +85,7 @@ class _PhoneVerificationPageWidgetState
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     textFieldFocusNode.dispose();
     textController.dispose();
     super.dispose();

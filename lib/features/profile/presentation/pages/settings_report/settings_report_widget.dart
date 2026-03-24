@@ -16,8 +16,8 @@ import '/core/widgets/dismiss_keyboard.dart';
 class SettingsReportWidget extends ConsumerStatefulWidget {
   const SettingsReportWidget({super.key});
 
-  static String routeName = 'settingsReport';
-  static String routePath = 'settingsReport';
+  static const String routeName = 'settingsReport';
+  static const String routePath = 'settingsReport';
 
   @override
   ConsumerState<SettingsReportWidget> createState() =>
@@ -39,6 +39,7 @@ class _SettingsReportWidgetState extends ConsumerState<SettingsReportWidget>
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     textFieldFocusNode.dispose();
     textController.dispose();
     super.dispose();

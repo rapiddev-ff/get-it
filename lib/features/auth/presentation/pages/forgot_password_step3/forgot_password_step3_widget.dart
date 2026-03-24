@@ -25,8 +25,8 @@ class ForgotPasswordStep3Widget extends StatefulWidget {
 
   final String? code;
 
-  static String routeName = 'forgotPasswordStep3';
-  static String routePath = 'forgotPasswordStep3';
+  static const String routeName = 'forgotPasswordStep3';
+  static const String routePath = 'forgotPasswordStep3';
 
   @override
   State<ForgotPasswordStep3Widget> createState() =>
@@ -59,6 +59,7 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     textFieldFocusNode1.dispose();
     textController1.dispose();
     textFieldFocusNode2.dispose();

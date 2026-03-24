@@ -21,8 +21,8 @@ import 'package:go_router/go_router.dart';
 class SettingsEditProfileWidget extends ConsumerStatefulWidget {
   const SettingsEditProfileWidget({super.key});
 
-  static String routeName = 'settingsEditProfile';
-  static String routePath = 'settingsEditProfile';
+  static const String routeName = 'settingsEditProfile';
+  static const String routePath = 'settingsEditProfile';
 
   @override
   ConsumerState<SettingsEditProfileWidget> createState() =>
@@ -84,6 +84,7 @@ class _SettingsEditProfileWidgetState
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     usernameFocusNode.dispose();
     usernameTextController.dispose();
     bioFocusNode.dispose();

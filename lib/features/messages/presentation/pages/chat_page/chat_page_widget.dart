@@ -32,8 +32,8 @@ class ChatPageWidget extends ConsumerStatefulWidget {
 
   final Conversation? conversation;
 
-  static String routeName = 'chatPage';
-  static String routePath = 'chatPage';
+  static const String routeName = 'chatPage';
+  static const String routePath = 'chatPage';
 
   @override
   ConsumerState<ChatPageWidget> createState() => _ChatPageWidgetState();

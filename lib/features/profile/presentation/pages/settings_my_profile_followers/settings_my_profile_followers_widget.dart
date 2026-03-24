@@ -49,8 +49,8 @@ class FollowUser {
 class SettingsMyProfileFollowersWidget extends ConsumerStatefulWidget {
   const SettingsMyProfileFollowersWidget({super.key});
 
-  static String routeName = 'settingsMyProfileFollowers';
-  static String routePath = 'settingsMyProfileFollowers';
+  static const String routeName = 'settingsMyProfileFollowers';
+  static const String routePath = 'settingsMyProfileFollowers';
 
   @override
   ConsumerState<SettingsMyProfileFollowersWidget> createState() =>
@@ -111,6 +111,7 @@ class _SettingsMyProfileFollowersWidgetState
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     textFieldFocusNode1.dispose();
     textController1.dispose();
     textFieldFocusNode2.dispose();

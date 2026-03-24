@@ -7,7 +7,6 @@ import '/core/utils/geo_data.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_text_field.dart';
 import '/core/widgets/app_gradient_button.dart';
-import '/core/widgets/autocomplete_options_list.dart';
 import '/core/widgets/app_drop_down.dart';
 import '/core/widgets/form_field_controller.dart';
 import '/core/widgets/dismiss_keyboard.dart';
@@ -19,8 +18,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class CheckoutEditShippingAddressWidget extends ConsumerStatefulWidget {
   const CheckoutEditShippingAddressWidget({super.key});
 
-  static String routeName = 'checkoutEditShippingAddress';
-  static String routePath = 'checkoutEditShippingAddress';
+  static const String routeName = 'checkoutEditShippingAddress';
+  static const String routePath = 'checkoutEditShippingAddress';
 
   @override
   ConsumerState<CheckoutEditShippingAddressWidget> createState() =>
@@ -29,20 +28,14 @@ class CheckoutEditShippingAddressWidget extends ConsumerStatefulWidget {
 
 class _CheckoutEditShippingAddressWidgetState
     extends ConsumerState<CheckoutEditShippingAddressWidget> {
-  bool streetaddressFocusListenerRegistered = false;
-
   // Inlined model state
   List<String> autocompletePredictionName = [];
   List<String> autocompletePredictionPlace = [];
-  String? choosenPlaceId;
+  bool _showSuggestions = false;
   FocusNode? fullNameFocusNode;
   TextEditingController? fullNameTextController;
-  final streetaddressKey = GlobalKey();
   FocusNode? streetaddressFocusNode;
   TextEditingController? streetaddressTextController;
-  String? streetaddressSelectedOption;
-  ApiCallResponse? apiResultlkc;
-  ApiCallResponse? getPlace;
   FocusNode? aptsuiteunitFocusNode;
   TextEditingController? aptsuiteunitTextController;
   FocusNode? cityFocusNode;
@@ -57,12 +50,6 @@ class _CheckoutEditShippingAddressWidgetState
   TextEditingController? zipCodeTextController;
   ShippingAddressesRow? createShippingAddress;
 
-  // Inline: getIndexByVal
-  static int? _getIndexByVal(String val, List<String> valList) {
-    final index = valList.indexOf(val);
-    return index != -1 ? index : null;
-  }
-
   // Inline: parseAddressComponents
   static Map<String, String> _parseAddressComponents(dynamic addressResponse) {
     final components = (addressResponse is Map
@@ -72,6 +59,7 @@ class _CheckoutEditShippingAddressWidgetState
     String streetNumber = '';
     String route = '';
     String city = '';
+    String county = '';
     String state = '';
     String zip = '';
     String country = '';
@@ -83,18 +71,59 @@ class _CheckoutEditShippingAddressWidgetState
       if (types.contains('route')) route = longText;
       if (types.contains('locality') ||
           types.contains('sublocality') ||
-          types.contains('sublocality_level_1')) city = longText;
+          types.contains('sublocality_level_1') ||
+          types.contains('postal_town')) city = longText;
+      if (types.contains('administrative_area_level_2')) county = longText;
       if (types.contains('administrative_area_level_1')) state = longText;
       if (types.contains('postal_code')) zip = longText;
       if (types.contains('country')) country = shortText;
     }
+    // Fallback: use formattedAddress first part for street if no route
+    String street = '$streetNumber $route'.trim();
+    if (street.isEmpty && addressResponse is Map) {
+      final formatted = (addressResponse['formattedAddress'] ?? '').toString();
+      if (formatted.isNotEmpty) {
+        street = formatted.split(',').first.trim();
+      }
+    }
+    // Fallback: use county for city if locality not found
+    if (city.isEmpty) city = county;
     return {
-      'street': '$streetNumber $route'.trim(),
+      'street': street,
       'city': city,
       'state': state,
       'zip': zip,
       'country': country,
     };
+  }
+
+  Future<void> _selectPlace(int index) async {
+    final placeId = autocompletePredictionPlace[index];
+    final selectedName = autocompletePredictionName[index];
+    setState(() {
+      streetaddressTextController?.text = selectedName;
+      _showSuggestions = false;
+      autocompletePredictionName = [];
+      autocompletePredictionPlace = [];
+    });
+
+    final getPlace =
+        await GooglePlacesGroup.getPlaceCall.call(placeId: placeId);
+    if (!mounted) return;
+
+    if (getPlace.succeeded) {
+      final parsed = _parseAddressComponents(getPlace.jsonBody ?? {});
+      setState(() {
+        streetaddressTextController?.text = parsed['street'] ?? '';
+        cityTextController?.text = parsed['city'] ?? '';
+        zipCodeTextController?.text = parsed['zip'] ?? '';
+        stateTextController?.text = parsed['state'] ?? '';
+        stateDropdownValue = parsed['state'] ?? '';
+        stateDropdownValueController?.value = parsed['state'] ?? '';
+        countryDropdownValue = parsed['country'] ?? '';
+        countryDropdownValueController?.value = parsed['country'] ?? '';
+      });
+    }
   }
 
   @override
@@ -106,6 +135,14 @@ class _CheckoutEditShippingAddressWidgetState
             '${ref.read(authProvider).firstName} ${ref.read(authProvider).lastName}');
     fullNameFocusNode ??= FocusNode();
     streetaddressTextController ??= TextEditingController();
+    streetaddressFocusNode ??= FocusNode();
+    streetaddressFocusNode!.addListener(() {
+      if (!streetaddressFocusNode!.hasFocus) {
+        Future.delayed(Duration(milliseconds: 200), () {
+          if (mounted) setState(() => _showSuggestions = false);
+        });
+      }
+    });
 
     aptsuiteunitTextController ??= TextEditingController();
     aptsuiteunitFocusNode ??= FocusNode();
@@ -119,8 +156,11 @@ class _CheckoutEditShippingAddressWidgetState
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     fullNameFocusNode?.dispose();
     fullNameTextController?.dispose();
+    streetaddressFocusNode?.dispose();
+    streetaddressTextController?.dispose();
     aptsuiteunitFocusNode?.dispose();
     aptsuiteunitTextController?.dispose();
     cityFocusNode?.dispose();
@@ -230,194 +270,104 @@ class _CheckoutEditShippingAddressWidgetState
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: 8.0),
-                            child: Container(
-                              width: double.infinity,
-                              child: Autocomplete<String>(
-                                initialValue: TextEditingValue(),
-                                optionsBuilder: (textEditingValue) {
-                                  if (textEditingValue.text == '') {
-                                    return const Iterable<String>.empty();
-                                  }
-                                  return autocompletePredictionName
-                                      .where((option) {
-                                    final lowercaseOption =
-                                        option.toLowerCase();
-                                    return lowercaseOption.contains(
-                                        textEditingValue.text.toLowerCase());
-                                  });
-                                },
-                                optionsViewBuilder:
-                                    (context, onSelected, options) {
-                                  return AutocompleteOptionsList(
-                                    textFieldKey: streetaddressKey,
-                                    textController:
-                                        streetaddressTextController!,
-                                    options: options.toList(),
-                                    onSelected: onSelected,
-                                    textStyle: TextStyle(),
-                                    textHighlightStyle: TextStyle(),
-                                    elevation: 4.0,
-                                    optionBackgroundColor:
-                                        AppColors.backgroundPrimary,
-                                    optionHighlightColor:
-                                        AppColors.backgroundSecondary,
-                                    maxHeight: 200.0,
-                                  );
-                                },
-                                onSelected: (String selection) {
-                                  setState(() =>
-                                      streetaddressSelectedOption = selection);
-                                  FocusScope.of(context).unfocus();
-                                },
-                                fieldViewBuilder: (
-                                  context,
-                                  textEditingController,
-                                  focusNode,
-                                  onEditingComplete,
-                                ) {
-                                  streetaddressFocusNode = focusNode;
-                                  if (!streetaddressFocusListenerRegistered) {
-                                    streetaddressFocusListenerRegistered = true;
-                                    streetaddressFocusNode!.addListener(
-                                      () async {
-                                        if (streetaddressSelectedOption !=
-                                                null &&
-                                            streetaddressSelectedOption != '') {
-                                          choosenPlaceId =
-                                              autocompletePredictionPlace
-                                                  .elementAtOrNull(_getIndexByVal(
-                                                      streetaddressSelectedOption!,
-                                                      autocompletePredictionName
-                                                          .toList())!);
-                                          setState(() {});
-                                          getPlace = await GooglePlacesGroup
-                                              .getPlaceCall
-                                              .call(
-                                            placeId: choosenPlaceId,
-                                          );
-
-                                          if ((getPlace?.succeeded ?? true)) {
-                                            final parsed =
-                                                _parseAddressComponents(
-                                                    getPlace?.jsonBody ?? {});
-                                            await Future.wait([
-                                              Future(() async {
-                                                setState(() {
-                                                  cityTextController?.text =
-                                                      parsed['city'] ?? '';
-                                                });
-                                              }),
-                                              Future(() async {
-                                                setState(() {
-                                                  countryDropdownValueController
-                                                          ?.value =
-                                                      parsed['country'] ?? '';
-                                                  countryDropdownValue =
-                                                      parsed['country'] ?? '';
-                                                });
-                                              }),
-                                              Future(() async {
-                                                setState(() {
-                                                  zipCodeTextController?.text =
-                                                      parsed['zip'] ?? '';
-                                                });
-                                              }),
-                                              Future(() async {
-                                                setState(() {
-                                                  stateTextController?.text =
-                                                      parsed['state'] ?? '';
-                                                });
-                                              }),
-                                              Future(() async {
-                                                setState(() {
-                                                  stateDropdownValueController
-                                                          ?.value =
-                                                      parsed['state'] ?? '';
-                                                  stateDropdownValue =
-                                                      parsed['state'] ?? '';
-                                                });
-                                              }),
-                                              Future(() async {
-                                                setState(() {
-                                                  streetaddressTextController
-                                                          ?.text =
-                                                      parsed['street'] ?? '';
-                                                });
-                                              }),
-                                            ]);
-                                          }
-                                        }
-
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                TextFormField(
+                                  controller: streetaddressTextController,
+                                  focusNode: streetaddressFocusNode,
+                                  onChanged: (_) => EasyDebounce.debounce(
+                                    'streetaddressTextController',
+                                    Duration(milliseconds: 300),
+                                    () async {
+                                      final text =
+                                          streetaddressTextController?.text ??
+                                              '';
+                                      if (text.length >= 3) {
+                                        final result = await GooglePlacesGroup
+                                            .autocompleteCall
+                                            .call(searchingString: text);
                                         if (!mounted) return;
-                                        setState(() {});
-                                      },
-                                    );
-                                  }
-                                  streetaddressTextController =
-                                      textEditingController;
-                                  return TextFormField(
-                                    key: streetaddressKey,
-                                    controller: textEditingController,
-                                    focusNode: focusNode,
-                                    onEditingComplete: onEditingComplete,
-                                    onChanged: (_) => EasyDebounce.debounce(
-                                      'streetaddressTextController',
-                                      Duration(milliseconds: 100),
-                                      () async {
-                                        if ((streetaddressTextController!
-                                                .text.length) >=
-                                            3) {
-                                          apiResultlkc = await GooglePlacesGroup
-                                              .autocompleteCall
-                                              .call(
-                                            searchingString:
-                                                streetaddressTextController!
-                                                    .text,
-                                          );
-
-                                          if ((apiResultlkc?.succeeded ??
-                                              true)) {
-                                            autocompletePredictionName =
-                                                GooglePlacesGroup
-                                                    .autocompleteCall
-                                                    .predictionPlaceText(
-                                                      (apiResultlkc?.jsonBody ??
-                                                          ''),
-                                                    )!
-                                                    .toList()
-                                                    .cast<String>();
-                                            autocompletePredictionPlace =
-                                                (GooglePlacesGroup
-                                                        .autocompleteCall
-                                                        .autocompletePredictions(
-                                              (apiResultlkc?.jsonBody ?? ''),
-                                            ) as List?)!
-                                                    .map<String>(
-                                                        (e) => e.toString())
-                                                    .toList()
-                                                    .cast<String>()
-                                                    .toList()
-                                                    .cast<String>();
-                                            setState(() {});
-                                          }
+                                        if (result.succeeded) {
+                                          autocompletePredictionName =
+                                              GooglePlacesGroup
+                                                      .autocompleteCall
+                                                      .predictionPlaceText(
+                                                        result.jsonBody ?? '',
+                                                      )
+                                                      ?.toList()
+                                                      .cast<String>() ??
+                                                  [];
+                                          autocompletePredictionPlace =
+                                              (GooglePlacesGroup
+                                                          .autocompleteCall
+                                                          .autocompletePredictions(
+                                                    result.jsonBody ?? '',
+                                                  ) as List?)
+                                                      ?.map<String>((e) =>
+                                                          e.toString())
+                                                      .toList() ??
+                                                  [];
+                                          setState(() => _showSuggestions =
+                                              autocompletePredictionName
+                                                  .isNotEmpty);
                                         }
-
-                                        setState(() {});
-                                      },
+                                      } else {
+                                        if (mounted) {
+                                          setState(() {
+                                            _showSuggestions = false;
+                                            autocompletePredictionName = [];
+                                            autocompletePredictionPlace = [];
+                                          });
+                                        }
+                                      }
+                                    },
+                                  ),
+                                  autofocus: false,
+                                  textInputAction: TextInputAction.done,
+                                  decoration: appInputDecoration(
+                                      'Enter street address'),
+                                  style: appTextFieldStyle,
+                                  cursorColor: AppColors.textPrimary,
+                                ),
+                                if (_showSuggestions &&
+                                    autocompletePredictionName.isNotEmpty)
+                                  Material(
+                                    elevation: 4.0,
+                                    color: AppColors.backgroundPrimary,
+                                    borderRadius: BorderRadius.circular(4.0),
+                                    child: ConstrainedBox(
+                                      constraints:
+                                          BoxConstraints(maxHeight: 200.0),
+                                      child: ListView.builder(
+                                        padding: EdgeInsets.zero,
+                                        shrinkWrap: true,
+                                        itemCount:
+                                            autocompletePredictionName.length,
+                                        itemBuilder: (context, index) {
+                                          return InkWell(
+                                            onTap: () => _selectPlace(index),
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 16.0,
+                                                  vertical: 12.0),
+                                              child: Text(
+                                                autocompletePredictionName[
+                                                    index],
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium,
+                                                maxLines: 2,
+                                                overflow:
+                                                    TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
                                     ),
-                                    autofocus: false,
-                                    enabled: true,
-                                    textInputAction: TextInputAction.done,
-                                    obscureText: false,
-                                    decoration: appInputDecoration(
-                                        'Enter street address'),
-                                    style: appTextFieldStyle,
-                                    cursorColor: AppColors.textPrimary,
-                                    enableInteractiveSelection: true,
-                                    validator: null,
-                                  );
-                                },
-                              ),
+                                  ),
+                              ],
                             ),
                           ),
                           Padding(

@@ -20,8 +20,8 @@ import '/features/home/presentation/pages/seller_dashboard/shortlist/home_dashoa
 class HomeDashoardInventoryWidget extends ConsumerStatefulWidget {
   const HomeDashoardInventoryWidget({super.key});
 
-  static String routeName = 'homeDashoardInventory';
-  static String routePath = 'homeDashoardInventory';
+  static const String routeName = 'homeDashoardInventory';
+  static const String routePath = 'homeDashoardInventory';
 
   @override
   ConsumerState<HomeDashoardInventoryWidget> createState() =>
@@ -73,6 +73,7 @@ class _HomeDashoardInventoryWidgetState
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     textController?.dispose();
     textFieldFocusNode?.dispose();
     super.dispose();

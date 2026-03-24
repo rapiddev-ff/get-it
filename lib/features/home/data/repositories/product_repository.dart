@@ -48,14 +48,19 @@ class ProductRepository {
   }
 
   /// Subscribes to realtime product changes and calls [onUpdate] when products change.
+  /// Debounces rapid changes to avoid excessive feed reloads.
   RealtimeChannel subscribeFeedProducts(void Function() onUpdate) {
+    Timer? debounce;
     return _client
         .channel('products_feed_channel')
         .onPostgresChanges(
           event: PostgresChangeEvent.all,
           schema: 'public',
           table: 'products',
-          callback: (_) => onUpdate(),
+          callback: (_) {
+            debounce?.cancel();
+            debounce = Timer(const Duration(milliseconds: 500), onUpdate);
+          },
         )
         .subscribe();
   }

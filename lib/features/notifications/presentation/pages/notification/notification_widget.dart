@@ -8,8 +8,8 @@ import '/features/notifications/presentation/pages/notification_settings/notific
 class NotificationWidget extends StatelessWidget {
   const NotificationWidget({super.key});
 
-  static String routeName = 'notification';
-  static String routePath = 'notification';
+  static const String routeName = 'notification';
+  static const String routePath = 'notification';
 
   @override
   Widget build(BuildContext context) {

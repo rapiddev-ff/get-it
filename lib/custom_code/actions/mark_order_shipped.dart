@@ -7,11 +7,13 @@ final _repository = OrderRepository(Supabase.instance.client);
 /// Returns null on success, or an error message string on failure.
 Future<String?> markOrderShipped({
   required String orderId,
+  required String sellerId,
   String? trackingNumber,
   String? shippingCarrier,
 }) async {
   return _repository.markOrderShipped(
     orderId: orderId,
+    sellerId: sellerId,
     trackingNumber: trackingNumber,
     shippingCarrier: shippingCarrier,
   );
@@ -20,11 +22,13 @@ Future<String?> markOrderShipped({
 /// Updates tracking number for an already-shipped order.
 Future<String?> updateTrackingNumber({
   required String orderId,
+  required String sellerId,
   required String trackingNumber,
   String? shippingCarrier,
 }) async {
   return _repository.updateTrackingNumber(
     orderId: orderId,
+    sellerId: sellerId,
     trackingNumber: trackingNumber,
     shippingCarrier: shippingCarrier,
   );

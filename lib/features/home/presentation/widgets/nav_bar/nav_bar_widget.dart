@@ -72,7 +72,7 @@ class _NavBarWidgetState extends State<NavBarWidget>
                               () {
                                 if (route == '/homePage') {
                                   return AppColors.brandPurple;
-                                } else if (route == '/homeDashoardEarnings') {
+                                } else if (route == '/homeDashoardEarnings' || route == '/buyerPurchases' || route == '/buyerOrderDetail') {
                                   return AppColors.brandPurple;
                                 } else {
                                   return Colors.transparent;
@@ -81,7 +81,7 @@ class _NavBarWidgetState extends State<NavBarWidget>
                               () {
                                 if (route == '/homePage') {
                                   return AppColors.brandBlue;
-                                } else if (route == '/homeDashoardEarnings') {
+                                } else if (route == '/homeDashoardEarnings' || route == '/buyerPurchases' || route == '/buyerOrderDetail') {
                                   return AppColors.brandBlue;
                                 } else {
                                   return Colors.transparent;
@@ -100,7 +100,7 @@ class _NavBarWidgetState extends State<NavBarWidget>
                           color: () {
                             if (route == '/homePage') {
                               return AppColors.textPrimary;
-                            } else if (route == '/homeDashoardEarnings') {
+                            } else if (route == '/homeDashoardEarnings' || route == '/buyerPurchases' || route == '/buyerOrderDetail') {
                               return AppColors.textPrimary;
                             } else {
                               return AppColors.textSecondary;

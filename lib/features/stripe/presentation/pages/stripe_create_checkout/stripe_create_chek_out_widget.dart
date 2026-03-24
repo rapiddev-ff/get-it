@@ -22,8 +22,8 @@ class StripeCreateChekOutWidget extends ConsumerStatefulWidget {
   final double? amount;
   final String? orderId;
 
-  static String routeName = 'stripeCreateChekOut';
-  static String routePath = 'stripeCreateChekOut';
+  static const String routeName = 'stripeCreateChekOut';
+  static const String routePath = 'stripeCreateChekOut';
 
   @override
   ConsumerState<StripeCreateChekOutWidget> createState() =>

@@ -26,8 +26,8 @@ import 'package:mime/mime.dart';
 class AdditionalInfoWidget extends ConsumerStatefulWidget {
   const AdditionalInfoWidget({super.key});
 
-  static String routeName = 'additionalInfo';
-  static String routePath = 'additionalInfo';
+  static const String routeName = 'additionalInfo';
+  static const String routePath = 'additionalInfo';
 
   @override
   ConsumerState<AdditionalInfoWidget> createState() =>
@@ -62,6 +62,7 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     firstnameFocusNode.dispose();
     firstnameTextController.dispose();
     lastnameFocusNode.dispose();

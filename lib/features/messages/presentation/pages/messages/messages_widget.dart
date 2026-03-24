@@ -20,8 +20,8 @@ import 'package:go_router/go_router.dart';
 class MessagesWidget extends ConsumerStatefulWidget {
   const MessagesWidget({super.key});
 
-  static String routeName = 'messages';
-  static String routePath = 'messages';
+  static const String routeName = 'messages';
+  static const String routePath = 'messages';
 
   @override
   ConsumerState<MessagesWidget> createState() => _MessagesWidgetState();

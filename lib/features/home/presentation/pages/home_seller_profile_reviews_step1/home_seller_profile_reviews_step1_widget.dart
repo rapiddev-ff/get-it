@@ -25,8 +25,8 @@ class HomeSellerProfileReviewsStep1Widget extends StatefulWidget {
   final Seller? sellerDataType;
   final String reviewRole;
 
-  static String routeName = 'homeSellerProfileReviewsStep1';
-  static String routePath = 'homeSellerProfileReviewsStep1';
+  static const String routeName = 'homeSellerProfileReviewsStep1';
+  static const String routePath = 'homeSellerProfileReviewsStep1';
 
   @override
   State<HomeSellerProfileReviewsStep1Widget> createState() =>

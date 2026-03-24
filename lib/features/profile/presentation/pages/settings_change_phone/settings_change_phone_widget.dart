@@ -23,8 +23,8 @@ class SettingsChangePhoneWidget extends StatefulWidget {
 
   final bool? isOnboarding;
 
-  static String routeName = 'settingsChangePhone';
-  static String routePath = 'settingsChangePhone';
+  static const String routeName = 'settingsChangePhone';
+  static const String routePath = 'settingsChangePhone';
 
   @override
   State<SettingsChangePhoneWidget> createState() =>
@@ -55,6 +55,7 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     textFieldFocusNode.dispose();
     textController.dispose();
     super.dispose();

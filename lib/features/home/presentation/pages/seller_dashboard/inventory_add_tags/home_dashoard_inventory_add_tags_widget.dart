@@ -20,8 +20,8 @@ class HomeDashoardInventoryAddTagsWidget extends StatefulWidget {
   final List<Tag>? initialTags;
   final String? categoryId;
 
-  static String routeName = 'homeDashoardInventoryAddTags';
-  static String routePath = 'homeDashoardInventoryAddTags';
+  static const String routeName = 'homeDashoardInventoryAddTags';
+  static const String routePath = 'homeDashoardInventoryAddTags';
 
   @override
   State<HomeDashoardInventoryAddTagsWidget> createState() =>
@@ -68,6 +68,7 @@ class _HomeDashoardInventoryAddTagsWidgetState
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     textController?.dispose();
     textFieldFocusNode?.dispose();
     super.dispose();

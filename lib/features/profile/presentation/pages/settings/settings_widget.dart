@@ -37,8 +37,8 @@ import 'package:package_info_plus/package_info_plus.dart';
 class SettingsWidget extends ConsumerStatefulWidget {
   const SettingsWidget({super.key});
 
-  static String routeName = 'settings';
-  static String routePath = 'settings';
+  static const String routeName = 'settings';
+  static const String routePath = 'settings';
 
   @override
   ConsumerState<SettingsWidget> createState() => _SettingsWidgetState();
@@ -642,11 +642,12 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 12.0, vertical: 4.0),
                                   decoration: BoxDecoration(
-                                    color: Color(int.parse(
+                                    color: Color(int.tryParse(
                                             (authState.stripe?.statusColor ??
                                                     '#9E9E9E')
                                                 .replaceFirst('#', ''),
-                                            radix: 16) |
+                                            radix: 16) ??
+                                        0x9E9E9E |
                                         0xFF000000),
                                     borderRadius: BorderRadius.circular(4.0),
                                   ),

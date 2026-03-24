@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 class SettingsTermsWidget extends StatelessWidget {
   const SettingsTermsWidget({super.key});
 
-  static String routeName = 'settingsTerms';
-  static String routePath = 'settingsTerms';
+  static const String routeName = 'settingsTerms';
+  static const String routePath = 'settingsTerms';
 
   @override
   Widget build(BuildContext context) {

@@ -8,8 +8,8 @@ import 'package:intl/intl.dart';
 class StripeSuccessCopyWidget extends StatelessWidget {
   const StripeSuccessCopyWidget({super.key});
 
-  static String routeName = 'stripeSuccessCopy';
-  static String routePath = 'stripeSuccessCopy';
+  static const String routeName = 'stripeSuccessCopy';
+  static const String routePath = 'stripeSuccessCopy';
 
   @override
   Widget build(BuildContext context) {

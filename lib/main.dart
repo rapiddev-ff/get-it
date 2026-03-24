@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
+import '/core/config/app_config.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/auth/data/supabase_auth/supabase_user_provider.dart';
 import '/features/auth/data/supabase_auth/auth_util.dart';
@@ -28,6 +32,12 @@ void main() {
     await actions.setStatusbarColor();
 
     await SupaFlow.initialize();
+
+    final stripeKey = AppConfig.stripePublishable;
+    if (stripeKey.isNotEmpty) {
+      Stripe.publishableKey = stripeKey;
+      await Stripe.instance.applySettings();
+    }
 
     runApp(ProviderScope(
       child: MyApp(),
@@ -66,6 +76,8 @@ class _MyAppState extends ConsumerState<MyApp> {
           .map((e) => getRoute(e))
           .toList();
   late Stream<BaseAuthUser> userStream;
+  StreamSubscription<BaseAuthUser>? _userSubscription;
+  StreamSubscription<String?>? _jwtSubscription;
 
   @override
   void initState() {
@@ -73,15 +85,15 @@ class _MyAppState extends ConsumerState<MyApp> {
 
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
-    userStream = getItSupabaseUserStream()
-      ..listen((user) {
-        // Clear all user-specific state on logout
-        if (!user.loggedIn) {
-          ref.read(authProvider.notifier).clear();
-        }
-        _appStateNotifier.update(user);
-      });
-    jwtTokenStream.listen((_) {});
+    userStream = getItSupabaseUserStream();
+    _userSubscription = userStream.listen((user) {
+      // Clear all user-specific state on logout
+      if (!user.loggedIn) {
+        ref.read(authProvider.notifier).clear();
+      }
+      _appStateNotifier.update(user);
+    });
+    _jwtSubscription = jwtTokenStream.listen((_) {});
 
     // Check keepSignedIn AFTER ProviderScope and user stream are set up,
     // so that signOut events are properly received by authProvider.
@@ -91,6 +103,13 @@ class _MyAppState extends ConsumerState<MyApp> {
       Duration(milliseconds: 1000),
       () => _appStateNotifier.stopShowingSplashImage(),
     );
+  }
+
+  @override
+  void dispose() {
+    _userSubscription?.cancel();
+    _jwtSubscription?.cancel();
+    super.dispose();
   }
 
   void setLocale(String language) {

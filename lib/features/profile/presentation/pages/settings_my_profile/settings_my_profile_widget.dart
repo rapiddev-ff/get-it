@@ -24,8 +24,8 @@ import 'package:percent_indicator/percent_indicator.dart';
 class SettingsMyProfileWidget extends ConsumerStatefulWidget {
   const SettingsMyProfileWidget({super.key});
 
-  static String routeName = 'settingsMyProfile';
-  static String routePath = 'settingsMyProfile';
+  static const String routeName = 'settingsMyProfile';
+  static const String routePath = 'settingsMyProfile';
 
   @override
   ConsumerState<SettingsMyProfileWidget> createState() =>

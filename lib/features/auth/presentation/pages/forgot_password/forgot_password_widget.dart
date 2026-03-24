@@ -16,8 +16,8 @@ import '/features/auth/presentation/pages/forgot_password_step2/forgot_password_
 class ForgotPasswordWidget extends StatefulWidget {
   const ForgotPasswordWidget({super.key});
 
-  static String routeName = 'forgotPassword';
-  static String routePath = 'forgotPassword';
+  static const String routeName = 'forgotPassword';
+  static const String routePath = 'forgotPassword';
 
   @override
   State<ForgotPasswordWidget> createState() => _ForgotPasswordWidgetState();
@@ -42,6 +42,7 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget>
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     textFieldFocusNode.dispose();
     textController.dispose();
     super.dispose();

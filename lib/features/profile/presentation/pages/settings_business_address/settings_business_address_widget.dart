@@ -18,8 +18,8 @@ import '/features/auth/presentation/providers/auth_provider.dart';
 class SettingsBusinessAddressWidget extends ConsumerStatefulWidget {
   const SettingsBusinessAddressWidget({super.key});
 
-  static String routeName = 'settingsBusinessAddress';
-  static String routePath = 'settingsBusinessAddress';
+  static const String routeName = 'settingsBusinessAddress';
+  static const String routePath = 'settingsBusinessAddress';
 
   @override
   ConsumerState<SettingsBusinessAddressWidget> createState() =>
@@ -65,6 +65,7 @@ class _SettingsBusinessAddressWidgetState
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     addressLine1FocusNode.dispose();
     addressLine1TextController.dispose();
     addressLine2FocusNode.dispose();

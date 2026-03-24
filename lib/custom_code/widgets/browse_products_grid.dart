@@ -17,6 +17,13 @@ class BrowseProductsGrid extends StatefulWidget {
     this.searchQuery,
     this.categoryId,
     this.subcategoryId,
+    this.categoryIds,
+    this.subcategoryIds,
+    this.conditionIds,
+    this.tagIds,
+    this.priceMin,
+    this.priceMax,
+    this.year,
     this.crossAxisCount = 2,
     this.childAspectRatio = 0.65,
     this.crossAxisSpacing = 12.0,
@@ -38,6 +45,13 @@ class BrowseProductsGrid extends StatefulWidget {
   final String? searchQuery;
   final String? categoryId;
   final String? subcategoryId;
+  final List<String>? categoryIds;
+  final List<String>? subcategoryIds;
+  final List<String>? conditionIds;
+  final List<String>? tagIds;
+  final double? priceMin;
+  final double? priceMax;
+  final int? year;
   final int crossAxisCount;
   final double childAspectRatio;
   final double crossAxisSpacing;
@@ -68,19 +82,48 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
   int _currentOffset = 0;
   Timer? _debounceTimer;
 
+  // Track previous filter values for change detection
   String? _prevSearchQuery;
   String? _prevCategoryId;
   String? _prevSubcategoryId;
   String? _prevUserId;
+  List<String>? _prevCategoryIds;
+  List<String>? _prevSubcategoryIds;
+  List<String>? _prevConditionIds;
+  List<String>? _prevTagIds;
+  double? _prevPriceMin;
+  double? _prevPriceMax;
+  int? _prevYear;
 
   @override
   void initState() {
     super.initState();
+    _syncPrev();
+    _loadProducts(reset: true);
+  }
+
+  void _syncPrev() {
     _prevSearchQuery = widget.searchQuery;
     _prevCategoryId = widget.categoryId;
     _prevSubcategoryId = widget.subcategoryId;
     _prevUserId = widget.userId;
-    _loadProducts(reset: true);
+    _prevCategoryIds = widget.categoryIds;
+    _prevSubcategoryIds = widget.subcategoryIds;
+    _prevConditionIds = widget.conditionIds;
+    _prevTagIds = widget.tagIds;
+    _prevPriceMin = widget.priceMin;
+    _prevPriceMax = widget.priceMax;
+    _prevYear = widget.year;
+  }
+
+  static bool _listEquals(List<String>? a, List<String>? b) {
+    if (a == null && b == null) return true;
+    if (a == null || b == null) return false;
+    if (a.length != b.length) return false;
+    for (var i = 0; i < a.length; i++) {
+      if (a[i] != b[i]) return false;
+    }
+    return true;
   }
 
   @override
@@ -90,13 +133,17 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
     final filtersChanged = widget.searchQuery != _prevSearchQuery ||
         widget.categoryId != _prevCategoryId ||
         widget.subcategoryId != _prevSubcategoryId ||
-        widget.userId != _prevUserId;
+        widget.userId != _prevUserId ||
+        !_listEquals(widget.categoryIds, _prevCategoryIds) ||
+        !_listEquals(widget.subcategoryIds, _prevSubcategoryIds) ||
+        !_listEquals(widget.conditionIds, _prevConditionIds) ||
+        !_listEquals(widget.tagIds, _prevTagIds) ||
+        widget.priceMin != _prevPriceMin ||
+        widget.priceMax != _prevPriceMax ||
+        widget.year != _prevYear;
 
     if (filtersChanged) {
-      _prevSearchQuery = widget.searchQuery;
-      _prevCategoryId = widget.categoryId;
-      _prevSubcategoryId = widget.subcategoryId;
-      _prevUserId = widget.userId;
+      _syncPrev();
 
       _debounceTimer?.cancel();
       _debounceTimer = Timer(
@@ -116,15 +163,12 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
 
   Future<void> _loadProducts({bool reset = false}) async {
     if (reset) {
-      final hadProducts = _products.isNotEmpty;
       setState(() {
         _error = null;
         _currentOffset = 0;
         _hasMore = true;
-        if (!hadProducts) {
-          _isLoading = true;
-          _products = [];
-        }
+        _isLoading = true;
+        _products = [];
       });
     } else {
       if (_isLoadingMore || !_hasMore) return;
@@ -132,19 +176,37 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
     }
 
     try {
+      final rpcParams = {
+        'p_user_id': widget.userId,
+        'p_search_query': widget.searchQuery?.isNotEmpty == true
+            ? widget.searchQuery
+            : null,
+        'p_category_id': widget.categoryId,
+        'p_subcategory_id': widget.subcategoryId,
+        'p_category_ids': widget.categoryIds?.isNotEmpty == true
+            ? widget.categoryIds
+            : null,
+        'p_subcategory_ids': widget.subcategoryIds?.isNotEmpty == true
+            ? widget.subcategoryIds
+            : null,
+        'p_condition_ids': widget.conditionIds?.isNotEmpty == true
+            ? widget.conditionIds
+            : null,
+        'p_tag_ids': widget.tagIds?.isNotEmpty == true
+            ? widget.tagIds
+            : null,
+        'p_price_min': widget.priceMin,
+        'p_price_max': widget.priceMax,
+        'p_year': widget.year,
+        'p_limit': widget.pageSize,
+        'p_offset': _currentOffset,
+      };
+      debugPrint('[BrowseGrid] RPC params: $rpcParams');
       final response = await SupaFlow.client.rpc(
         'get_browse_products',
-        params: {
-          'p_user_id': widget.userId,
-          'p_search_query': widget.searchQuery?.isNotEmpty == true
-              ? widget.searchQuery
-              : null,
-          'p_category_id': widget.categoryId,
-          'p_subcategory_id': widget.subcategoryId,
-          'p_limit': widget.pageSize,
-          'p_offset': _currentOffset,
-        },
+        params: rpcParams,
       );
+      debugPrint('[BrowseGrid] RPC response total_count: ${(response as Map)['total_count']}, products: ${((response)['products'] as List).length}');
 
       final data = response as Map<String, dynamic>;
       final productsJson = data['products'] as List<dynamic>;
@@ -186,7 +248,10 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
         if (reset) {
           _products = newProducts;
         } else {
-          _products = [..._products, ...newProducts];
+          // Deduplicate by product ID
+          final existingIds = _products.map((p) => p.id).toSet();
+          final uniqueNew = newProducts.where((p) => !existingIds.contains(p.id)).toList();
+          _products = [..._products, ...uniqueNew];
         }
         _hasMore = hasMore;
         _currentOffset += newProducts.length;
@@ -195,7 +260,9 @@ class _BrowseProductsGridState extends State<BrowseProductsGrid> {
       });
 
       widget.onTotalChanged?.call(totalCount);
-    } catch (e) {
+    } catch (e, st) {
+      debugPrint('[BrowseGrid] RPC ERROR: $e');
+      debugPrint('[BrowseGrid] Stack: $st');
       if (!mounted) return;
       setState(() {
         _error = e.toString();

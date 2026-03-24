@@ -7,6 +7,7 @@ final _repository = OrderRepository(Supabase.instance.client);
 /// Returns null on success, or an error message string on failure.
 Future<String?> markOrderDelivered({
   required String orderId,
+  required String sellerId,
 }) async {
-  return _repository.markOrderDelivered(orderId: orderId);
+  return _repository.markOrderDelivered(orderId: orderId, sellerId: sellerId);
 }

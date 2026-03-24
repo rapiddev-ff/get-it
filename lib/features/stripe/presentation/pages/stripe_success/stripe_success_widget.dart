@@ -13,8 +13,8 @@ import 'package:page_transition/page_transition.dart';
 class StripeSuccessWidget extends ConsumerStatefulWidget {
   const StripeSuccessWidget({super.key});
 
-  static String routeName = 'stripeSuccess';
-  static String routePath = 'stripeSuccess';
+  static const String routeName = 'stripeSuccess';
+  static const String routePath = 'stripeSuccess';
 
   @override
   ConsumerState<StripeSuccessWidget> createState() =>

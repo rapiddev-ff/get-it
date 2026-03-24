@@ -17,7 +17,6 @@ class SupaFlow {
         url: AppConfig.supabaseUrl,
         anonKey: AppConfig.supabaseAnonKey,
         debug: false,
-        authOptions:
-            FlutterAuthClientOptions(authFlowType: AuthFlowType.implicit),
+        authOptions: const FlutterAuthClientOptions(),
       );
 }

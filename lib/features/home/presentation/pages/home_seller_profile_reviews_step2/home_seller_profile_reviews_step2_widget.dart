@@ -31,8 +31,8 @@ class HomeSellerProfileReviewsStep2Widget extends StatefulWidget {
   final SellerProduct? product;
   final String reviewRole;
 
-  static String routeName = 'homeSellerProfileReviewsStep2';
-  static String routePath = 'homeSellerProfileReviewsStep2';
+  static const String routeName = 'homeSellerProfileReviewsStep2';
+  static const String routePath = 'homeSellerProfileReviewsStep2';
 
   @override
   State<HomeSellerProfileReviewsStep2Widget> createState() =>
@@ -59,6 +59,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     textFieldFocusNode?.dispose();
     textController?.dispose();
     super.dispose();

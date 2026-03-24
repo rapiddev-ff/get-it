@@ -19,8 +19,8 @@ import 'package:intl/intl.dart';
 class SettingsDailyBudgetWidget extends ConsumerStatefulWidget {
   const SettingsDailyBudgetWidget({super.key});
 
-  static String routeName = 'settingsDailyBudget';
-  static String routePath = 'settingsDailyBudget';
+  static const String routeName = 'settingsDailyBudget';
+  static const String routePath = 'settingsDailyBudget';
 
   @override
   ConsumerState<SettingsDailyBudgetWidget> createState() =>
@@ -47,6 +47,7 @@ class _SettingsDailyBudgetWidgetState
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     textFieldFocusNode.dispose();
     textController.dispose();
     super.dispose();

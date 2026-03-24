@@ -10,8 +10,8 @@ import 'package:go_router/go_router.dart';
 class SettingsDeactivateAccountWidget extends StatefulWidget {
   const SettingsDeactivateAccountWidget({super.key});
 
-  static String routeName = 'settingsDeactivateAccount';
-  static String routePath = 'settingsDeactivateAccount';
+  static const String routeName = 'settingsDeactivateAccount';
+  static const String routePath = 'settingsDeactivateAccount';
 
   @override
   State<SettingsDeactivateAccountWidget> createState() =>

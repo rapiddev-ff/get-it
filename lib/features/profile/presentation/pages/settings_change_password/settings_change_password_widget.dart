@@ -14,8 +14,8 @@ import 'package:go_router/go_router.dart';
 class SettingsChangePasswordWidget extends StatefulWidget {
   const SettingsChangePasswordWidget({super.key});
 
-  static String routeName = 'settingsChangePassword';
-  static String routePath = 'settingsChangePassword';
+  static const String routeName = 'settingsChangePassword';
+  static const String routePath = 'settingsChangePassword';
 
   @override
   State<SettingsChangePasswordWidget> createState() =>
@@ -57,6 +57,7 @@ class _SettingsChangePasswordWidgetState
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     textFieldFocusNode1.dispose();
     textController1.dispose();
     textFieldFocusNode2.dispose();

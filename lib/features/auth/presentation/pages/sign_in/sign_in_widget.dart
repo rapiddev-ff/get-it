@@ -24,8 +24,8 @@ import '/features/auth/presentation/providers/auth_settings_provider.dart';
 class SignInWidget extends ConsumerStatefulWidget {
   const SignInWidget({super.key});
 
-  static String routeName = 'signIn';
-  static String routePath = 'signIn';
+  static const String routeName = 'signIn';
+  static const String routePath = 'signIn';
 
   @override
   ConsumerState<SignInWidget> createState() => _SignInWidgetState();
@@ -68,6 +68,7 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     textFieldFocusNode1.dispose();
     emailTextController.dispose();
     textFieldFocusNode2.dispose();
@@ -403,7 +404,7 @@ class _SignInWidgetState extends ConsumerState<SignInWidget>
                             );
                           } else {
                             errorSignIn =
-                                'Email or password is incorrect. Please try again.';
+                                'The email or password you entered doesn\'t match our records. Please double-check and try again.';
                             setState(() {});
                           }
                         },

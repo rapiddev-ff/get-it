@@ -178,9 +178,9 @@ final conditionsProvider =
   ConditionsNotifier.new,
 );
 
-// --- choosenTags (in-memory only) ---
+// --- chosenTags (in-memory only) ---
 
-class ChoosenTagsNotifier extends Notifier<List<Tag>> {
+class ChosenTagsNotifier extends Notifier<List<Tag>> {
   @override
   List<Tag> build() => [];
 
@@ -218,6 +218,6 @@ class ChoosenTagsNotifier extends Notifier<List<Tag>> {
   }
 }
 
-final choosenTagsProvider = NotifierProvider<ChoosenTagsNotifier, List<Tag>>(
-  ChoosenTagsNotifier.new,
+final chosenTagsProvider = NotifierProvider<ChosenTagsNotifier, List<Tag>>(
+  ChosenTagsNotifier.new,
 );

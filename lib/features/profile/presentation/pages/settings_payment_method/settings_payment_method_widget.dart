@@ -12,8 +12,8 @@ import 'package:go_router/go_router.dart';
 class SettingsPaymentMethodWidget extends ConsumerStatefulWidget {
   const SettingsPaymentMethodWidget({super.key});
 
-  static String routeName = 'settingsPaymentMethod';
-  static String routePath = 'settingsPaymentMethod';
+  static const String routeName = 'settingsPaymentMethod';
+  static const String routePath = 'settingsPaymentMethod';
 
   @override
   ConsumerState<SettingsPaymentMethodWidget> createState() =>

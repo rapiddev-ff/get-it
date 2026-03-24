@@ -372,7 +372,7 @@ class SupabaseEdgeGroup {
     String? apikey,
   }) {
     apikey ??= AppConfig.supabaseAnonKey;
-    return 'https://xvdugwnatoqsbfssugsu.supabase.co/functions/v1';
+    return '${AppConfig.supabaseUrl}/functions/v1';
   }
 
   static Map<String, String> headers = {
@@ -551,7 +551,7 @@ class GetPlaceCall {
       headers: {
         'Content-Type': 'application/json',
         'X-Goog-Api-Key': '${google}',
-        'X-Goog-FieldMask': 'addressComponents',
+        'X-Goog-FieldMask': 'addressComponents,formattedAddress,displayName',
       },
       params: {},
       returnBody: true,
@@ -582,7 +582,7 @@ class StripeCreateCheckoutCall {
     return ApiManager.instance.makeApiCall(
       callName: 'Stripe create checkout',
       apiUrl:
-          'https://xvdugwnatoqsbfssugsu.supabase.co/functions/v1/create-checkout-session',
+          '${AppConfig.supabaseUrl}/functions/v1/create-checkout-session',
       callType: ApiCallType.POST,
       headers: {
         'Authorization': 'Bearer ${jwt}',

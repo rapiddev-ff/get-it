@@ -31,8 +31,8 @@ class HomeDashoardShortlistCreateStep2Widget extends StatefulWidget {
   final bool isPublic;
   final String? shortlistId;
 
-  static String routeName = 'homeDashoardShortlistCreateStep2';
-  static String routePath = 'homeDashoardShortlistCreateStep2';
+  static const String routeName = 'homeDashoardShortlistCreateStep2';
+  static const String routePath = 'homeDashoardShortlistCreateStep2';
 
   @override
   State<HomeDashoardShortlistCreateStep2Widget> createState() =>
@@ -106,6 +106,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     textController1?.dispose();
     textFieldFocusNode1?.dispose();
     textController2?.dispose();

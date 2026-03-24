@@ -33,8 +33,8 @@ class CheckDataWidget extends ConsumerStatefulWidget {
 
   final bool fromSignIn;
 
-  static String routeName = 'checkData';
-  static String routePath = 'checkData';
+  static const String routeName = 'checkData';
+  static const String routePath = 'checkData';
 
   @override
   ConsumerState<CheckDataWidget> createState() => _CheckDataWidgetState();
@@ -53,7 +53,6 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
   late final Animation<double> _logoScale;
   late final Animation<double> _logoFade;
   late final Animation<double> _itFade;
-  late final Animation<Offset> _itSlide;
   late final Animation<double> _taglineReveal;
 
   @override
@@ -81,12 +80,6 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
     );
     _itFade = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _itController, curve: Curves.easeOut),
-    );
-    _itSlide = Tween<Offset>(
-      begin: const Offset(0.3, 0.0),
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(parent: _itController, curve: Curves.easeOutCubic),
     );
     _taglineReveal = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _taglineController, curve: Curves.easeOut),
@@ -369,24 +362,26 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
           opacity: _logoFade,
           child: ScaleTransition(
             scale: _logoScale,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Stack(
+              clipBehavior: Clip.none,
               children: [
+                // "Get" with 3D shadow
                 Stack(
                   children: [
-                    Transform.translate(
-                      offset: const Offset(3, 3),
-                      child: Text(
-                        'Get',
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w900,
-                          fontSize: 72.0,
-                          height: 1.0,
-                          color: const Color(0xFF4A2DB3),
+                    // Filled 3D extrusion — multiple shadow layers
+                    for (int i = 7; i >= 1; i--)
+                      Transform.translate(
+                        offset: Offset(i.toDouble(), i.toDouble()),
+                        child: Text(
+                          'Get',
+                          style: GoogleFonts.inter(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 72.0,
+                            height: 1.0,
+                            color: const Color(0xFF1A0D4E),
+                          ),
                         ),
                       ),
-                    ),
                     Text(
                       'Get',
                       style: GoogleFonts.inter(
@@ -398,20 +393,19 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
                     ),
                   ],
                 ),
-                SlideTransition(
-                  position: _itSlide,
+                // "it" overlapping the top-right of "Get"
+                Positioned(
+                  right: -16,
+                  top: -4,
                   child: FadeTransition(
                     opacity: _itFade,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 2.0),
-                      child: Text(
-                        'it',
-                        style: GoogleFonts.inter(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 28.0,
-                          height: 1.0,
-                          color: Colors.white,
-                        ),
+                    child: Text(
+                      'it',
+                      style: GoogleFonts.inter(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 28.0,
+                        height: 1.0,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -430,29 +424,23 @@ class _CheckDataWidgetState extends ConsumerState<CheckDataWidget>
       animation: _taglineController,
       builder: (context, _) {
         final progress = _taglineReveal.value;
-        final wordsToShow = (progress * words.length).ceil();
         return Row(
           mainAxisSize: MainAxisSize.min,
-          children: List.generate(wordsToShow, (i) {
+          children: List.generate(words.length, (i) {
             final wordStart = i / words.length;
             final wordEnd = (i + 1) / words.length;
             final wordProgress =
                 ((progress - wordStart) / (wordEnd - wordStart)).clamp(0.0, 1.0);
-            final offsetX = (1.0 - wordProgress) * -20.0;
-            return Transform.translate(
-              offset: Offset(offsetX, 0),
-              child: Opacity(
-                opacity: wordProgress,
-                child: Padding(
-                  padding: EdgeInsets.only(left: i > 0 ? 6.0 : 0.0),
-                  child: Text(
-                    words[i],
-                    style: GoogleFonts.inter(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 16.0,
-                      color: AppColors.textSecondary,
-                      fontStyle: FontStyle.italic,
-                    ),
+            return Opacity(
+              opacity: wordProgress,
+              child: Padding(
+                padding: EdgeInsets.only(left: i > 0 ? 6.0 : 0.0),
+                child: Text(
+                  words[i],
+                  style: GoogleFonts.inter(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16.0,
+                    color: Colors.white70,
                   ),
                 ),
               ),

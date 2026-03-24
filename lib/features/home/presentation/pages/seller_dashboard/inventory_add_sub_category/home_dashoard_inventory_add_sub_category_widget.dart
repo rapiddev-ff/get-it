@@ -42,6 +42,7 @@ class _HomeDashoardInventoryAddSubCategoryWidgetState
 
   @override
   void dispose() {
+    EasyDebounce.cancelAll();
     _searchController.dispose();
     super.dispose();
   }
