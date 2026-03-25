@@ -13,10 +13,28 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class HomeDashoardShortlistCreateWidget extends StatefulWidget {
-  const HomeDashoardShortlistCreateWidget({super.key});
+  const HomeDashoardShortlistCreateWidget({
+    super.key,
+    this.shortlistId,
+    this.initialName,
+    this.initialEventName,
+    this.initialStartDate,
+    this.initialEndDate,
+    this.initialIsPublic = true,
+  });
+
+  /// If editing an existing shortlist, pass its ID.
+  final String? shortlistId;
+  final String? initialName;
+  final String? initialEventName;
+  final String? initialStartDate;
+  final String? initialEndDate;
+  final bool initialIsPublic;
 
   static const String routeName = 'homeDashoardShortlistCreate';
   static const String routePath = 'homeDashoardShortlistCreate';
+
+  bool get isEditing => shortlistId != null;
 
   @override
   State<HomeDashoardShortlistCreateWidget> createState() =>
@@ -41,10 +59,31 @@ class _HomeDashoardShortlistCreateWidgetState
   void initState() {
     super.initState();
 
-    textController1 = TextEditingController();
+    textController1 = TextEditingController(text: widget.initialName ?? '');
     textFieldFocusNode1 = FocusNode();
-    textController2 = TextEditingController();
+    textController2 = TextEditingController(text: widget.initialEventName ?? '');
     textFieldFocusNode2 = FocusNode();
+    isPublic = widget.initialIsPublic;
+
+    // Parse initial dates if provided (MM/dd/yyyy format)
+    if (widget.initialStartDate != null &&
+        widget.initialStartDate!.isNotEmpty) {
+      _startDate = _parseDateString(widget.initialStartDate!);
+    }
+    if (widget.initialEndDate != null && widget.initialEndDate!.isNotEmpty) {
+      _endDate = _parseDateString(widget.initialEndDate!);
+    }
+  }
+
+  DateTime? _parseDateString(String input) {
+    try {
+      final parts = input.split('/');
+      if (parts.length == 3) {
+        return DateTime(
+            int.parse(parts[2]), int.parse(parts[0]), int.parse(parts[1]));
+      }
+    } catch (_) {}
+    return null;
   }
 
   @override
@@ -146,7 +185,7 @@ class _HomeDashoardShortlistCreateWidgetState
                   },
                 ),
                 Text(
-                  'Create Shortlist',
+                  widget.isEditing ? 'Edit Shortlist' : 'Create Shortlist',
                   style: Theme.of(context).textTheme.titleMedium!,
                 ),
                 Opacity(
@@ -393,7 +432,7 @@ class _HomeDashoardShortlistCreateWidgetState
               Column(
                 children: [
                   AppGradientButton(
-                    text: 'Create Shortlist',
+                    text: widget.isEditing ? 'Save & Continue' : 'Create Shortlist',
                     onPressed: () {
                       if (textController1!.text.trim().isEmpty) {
                         actions.toastificationshow(
@@ -404,15 +443,19 @@ class _HomeDashoardShortlistCreateWidgetState
                         );
                         return;
                       }
+                      final params = {
+                        'name': textController1!.text,
+                        'eventName': textController2!.text,
+                        'startDate': _formatDate(_startDate),
+                        'endDate': _formatDate(_endDate),
+                        'isPublic': isPublic.toString(),
+                      };
+                      if (widget.shortlistId != null) {
+                        params['shortlistId'] = widget.shortlistId!;
+                      }
                       context.pushNamed(
                         HomeDashoardShortlistCreateStep2Widget.routeName,
-                        queryParameters: {
-                          'name': textController1!.text,
-                          'eventName': textController2!.text,
-                          'startDate': _formatDate(_startDate),
-                          'endDate': _formatDate(_endDate),
-                          'isPublic': isPublic.toString(),
-                        },
+                        queryParameters: params,
                       );
                     },
                   ),

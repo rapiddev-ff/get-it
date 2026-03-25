@@ -1,19 +1,29 @@
-import '/backend/supabase/supabase.dart';
-import '/core/theme/app_colors.dart';
-import '/core/utils/list_extensions.dart';
-import '/core/widgets/app_gradient_button.dart';
-import '/core/widgets/app_text_field.dart';
-import '/core/widgets/dismiss_keyboard.dart';
-import '/custom_code/actions/index.dart' as actions;
-import '/features/home/presentation/pages/seller_dashboard/shortlist_add/home_dashoard_shortlist_add_widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
-class HomeDashoardShortlistCreateStep2Widget extends StatefulWidget {
+import '/backend/supabase/supabase.dart';
+import '/core/providers/current_user_provider.dart';
+import '/core/theme/app_colors.dart';
+import '/core/utils/list_extensions.dart';
+import '/core/widgets/app_gradient_button.dart';
+import '/core/widgets/app_loading_indicator.dart';
+import '/core/widgets/app_text_field.dart';
+import '/core/widgets/dismiss_keyboard.dart';
+import '/core/widgets/product_price_row.dart';
+import '/custom_code/actions/index.dart' as actions;
+import '/features/browse/presentation/widgets/browse_filter/browse_filter_sheet.dart';
+import '/features/home/data/repositories/shortlist_repository.dart';
+import '/features/home/domain/models/shortlist_item_detail_model.dart';
+import '/features/home/presentation/pages/seller_dashboard/shortlist_add/home_dashoard_shortlist_add_widget.dart';
+import '/features/home/presentation/pages/seller_dashboard/shortlist_create/home_dashoard_shortlist_create_widget.dart';
+
+class HomeDashoardShortlistCreateStep2Widget extends ConsumerStatefulWidget {
   const HomeDashoardShortlistCreateStep2Widget({
     super.key,
     this.name = '',
@@ -22,6 +32,7 @@ class HomeDashoardShortlistCreateStep2Widget extends StatefulWidget {
     this.endDate = '',
     this.isPublic = true,
     this.shortlistId,
+    this.status,
   });
 
   final String name;
@@ -31,128 +42,254 @@ class HomeDashoardShortlistCreateStep2Widget extends StatefulWidget {
   final bool isPublic;
   final String? shortlistId;
 
+  /// 'draft', 'active' (published), or null (new creation).
+  final String? status;
+
   static const String routeName = 'homeDashoardShortlistCreateStep2';
   static const String routePath = 'homeDashoardShortlistCreateStep2';
 
   @override
-  State<HomeDashoardShortlistCreateStep2Widget> createState() =>
+  ConsumerState<HomeDashoardShortlistCreateStep2Widget> createState() =>
       _HomeDashoardShortlistCreateStep2WidgetState();
 }
 
 class _HomeDashoardShortlistCreateStep2WidgetState
-    extends State<HomeDashoardShortlistCreateStep2Widget> {
-  String state = 'Shop';
-  bool? switchValue;
-  List<String> selectedProductIds = [];
-  Map<String, ProductsRow> _productDetails = {};
-  Map<String, String> _productImages = {};
+    extends ConsumerState<HomeDashoardShortlistCreateStep2Widget> {
+  List<ShortlistItemDetail> _items = [];
+  bool _isLoading = true;
   bool _isSaving = false;
+  String? _shareCode;
 
-  TextEditingController? textController1;
-  FocusNode? textFieldFocusNode1;
-  late MaskTextInputFormatter textFieldMask1;
-  TextEditingController? textController2;
-  FocusNode? textFieldFocusNode2;
-  TextEditingController? textController3;
-  FocusNode? textFieldFocusNode3;
+  TextEditingController? _notesController;
+  FocusNode? _notesFocusNode;
+  TextEditingController? _searchController;
+  FocusNode? _searchFocusNode;
+
+  BrowseFilterState _filterState = const BrowseFilterState();
+
+  /// Cart items (product IDs added to cart) — only for published shortlists.
+  Set<String> _cartItems = {};
+
+  bool get _isPublished => widget.status == 'active';
+  bool get _isEditing => widget.shortlistId != null;
+  bool get _isNew => widget.shortlistId == null;
 
   @override
   void initState() {
     super.initState();
+    _notesController = TextEditingController();
+    _notesFocusNode = FocusNode();
+    _searchController = TextEditingController();
+    _searchFocusNode = FocusNode();
 
-    switchValue = false;
-    textController1 = TextEditingController();
-    textFieldFocusNode1 = FocusNode();
-    textFieldMask1 = MaskTextInputFormatter(mask: '##');
-    textController2 = TextEditingController();
-    textFieldFocusNode2 = FocusNode();
-    textController3 = TextEditingController();
-    textFieldFocusNode3 = FocusNode();
-
-    if (widget.shortlistId != null) {
-      _loadExistingItems();
+    if (_isEditing) {
+      _loadExistingData();
+    } else {
+      _isLoading = false;
     }
   }
 
-  Future<void> _loadExistingItems() async {
-    // Load shortlist details
+  @override
+  void dispose() {
+    EasyDebounce.cancelAll();
+    _notesController?.dispose();
+    _notesFocusNode?.dispose();
+    _searchController?.dispose();
+    _searchFocusNode?.dispose();
+    super.dispose();
+  }
+
+  Future<void> _loadExistingData() async {
+    // Load shortlist metadata
     final shortlists = await ShortlistsTable().queryRows(
       queryFn: (q) => q.eqOrNull('id', widget.shortlistId),
     );
     if (!mounted) return;
     if (shortlists.isNotEmpty) {
       final sl = shortlists.first;
-      final discount = sl.discountPercentage;
-      if (discount != null && discount > 0) {
-        switchValue = true;
-        textController1?.text = discount.toInt().toString();
-      }
+      _shareCode = sl.shareCode;
       if (sl.description != null && sl.description!.isNotEmpty) {
-        textController2?.text = sl.description!;
+        _notesController?.text = sl.description!;
       }
     }
 
-    // Load shortlist items
-    final items = await ShortlistItemsTable().queryRows(
-      queryFn: (q) => q.eqOrNull('shortlist_id', widget.shortlistId),
-    );
-    if (!mounted) return;
-    final ids = items.map((e) => e.productId).toList();
-    setState(() {
-      selectedProductIds = ids;
-    });
-    _loadProductDetails(ids);
+    // Load items via repository
+    await _loadItems();
   }
 
-  @override
-  void dispose() {
-    EasyDebounce.cancelAll();
-    textController1?.dispose();
-    textFieldFocusNode1?.dispose();
-    textController2?.dispose();
-    textFieldFocusNode2?.dispose();
-    textController3?.dispose();
-    textFieldFocusNode3?.dispose();
-    super.dispose();
-  }
-
-  Future<void> _loadProductDetails(List<String> ids) async {
-    if (ids.isEmpty) return;
-    final newIds = ids.where((id) => !_productDetails.containsKey(id)).toList();
-    if (newIds.isEmpty) return;
-    final rows = await ProductsTable().queryRows(
-      queryFn: (q) => q.inFilterOrNull('id', newIds),
-    );
-    final images = await ProductImagesTable().queryRows(
-      queryFn: (q) =>
-          q.inFilterOrNull('product_id', newIds).eqOrNull('is_main', true),
-    );
+  Future<void> _loadItems() async {
+    if (widget.shortlistId == null) return;
+    final repo = ref.read(shortlistRepositoryProvider);
+    final items = await repo.getShortlistItems(widget.shortlistId!);
     if (!mounted) return;
     setState(() {
-      for (final row in rows) {
-        _productDetails[row.id] = row;
-      }
-      for (final img in images) {
-        _productImages[img.productId] = img.imageUrl;
-      }
+      _items = items;
+      _isLoading = false;
     });
   }
 
-  Color _statusColor(String? status) {
+  List<ShortlistItemDetail> get _filteredItems {
+    var items = _items;
+
+    // Search filter
+    final query = _searchController?.text.trim().toLowerCase() ?? '';
+    if (query.isNotEmpty) {
+      items = items
+          .where((i) => i.title.toLowerCase().contains(query))
+          .toList();
+    }
+
+    // Category filter
+    if (_filterState.selectedCategoryIds.isNotEmpty) {
+      items = items
+          .where(
+              (i) => _filterState.selectedCategoryIds.contains(i.categoryName))
+          .toList();
+    }
+
+    return items;
+  }
+
+  Color _statusColor(String status) {
     switch (status) {
       case 'active':
         return Color(0xFF34C759);
       case 'sold':
         return AppColors.errorBright;
-      case 'draft':
+      case 'damaged':
         return AppColors.textSecondary;
       default:
         return AppColors.textSecondary;
     }
   }
 
-  void _showProductMenu(BuildContext context, ProductsRow? product, int index) {
-    if (product == null) return;
+  String _statusLabel(String status) {
+    switch (status) {
+      case 'active':
+        return 'Active';
+      case 'sold':
+        return 'Sold';
+      case 'damaged':
+        return 'Damaged';
+      default:
+        return status;
+    }
+  }
+
+  Future<void> _openFilter() async {
+    final result = await showBrowseFilterSheet(context, _filterState);
+    if (result != null) {
+      setState(() => _filterState = result);
+    }
+  }
+
+  Future<void> _addProducts() async {
+    final result = await Navigator.push<Map<String, int>>(
+      context,
+      MaterialPageRoute(
+        builder: (_) => HomeDashoardShortlistAddWidget(
+          shortlistId: widget.shortlistId,
+        ),
+      ),
+    );
+    if (result == null || result.isEmpty) return;
+
+    if (_isEditing) {
+      // Reserve immediately for existing shortlists
+      setState(() => _isSaving = true);
+      final repo = ref.read(shortlistRepositoryProvider);
+      final sellerId = ref.read(currentUserIdProvider);
+      final reserveResult = await repo.reserveItems(
+        shortlistId: widget.shortlistId!,
+        items: result,
+        sellerId: sellerId,
+      );
+      if (!mounted) return;
+
+      if (reserveResult['success'] != true) {
+        setState(() => _isSaving = false);
+        _showConflictDialog(reserveResult['conflicts']);
+        return;
+      }
+
+      // Reload items
+      await _loadItems();
+      setState(() => _isSaving = false);
+    } else {
+      // For new shortlists, just store the selection — reserve on create
+      // We can't reserve yet because shortlist doesn't exist in DB
+      // Convert to temporary ShortlistItemDetail for display
+      // This path is handled by the create flow
+      setState(() {});
+    }
+  }
+
+  void _showConflictDialog(dynamic conflicts) {
+    final conflictList = conflicts is List ? conflicts : [];
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: AppColors.backgroundSecondary,
+        title: Text('Update your quantities',
+            style: Theme.of(context).textTheme.titleMedium),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Some items don't have enough quantity available anymore. Review the updated amounts to continue.",
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            SizedBox(height: 16.0),
+            ...conflictList.map((c) => Padding(
+                  padding: EdgeInsets.only(bottom: 8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          c['title']?.toString() ?? '',
+                          style: Theme.of(context).textTheme.bodySmall,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Text(
+                        'Requested: ${c['requested']} → Available: ${c['available']}',
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelSmall!
+                            .copyWith(color: AppColors.errorBright),
+                      ),
+                    ],
+                  ),
+                )),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+              _addProducts(); // Go back to add products to review
+            },
+            child: Text('Review items',
+                style: TextStyle(color: AppColors.textPrimary)),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+              // Auto-adjust and retry would need the conflict data;
+              // for now, user goes back to review
+            },
+            child: Text('Add available quantities',
+                style: TextStyle(color: AppColors.secondary)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showItemMenu(ShortlistItemDetail item) {
+    final sellerId = ref.read(currentUserIdProvider);
     showModalBottomSheet(
       context: context,
       backgroundColor: AppColors.backgroundSecondary,
@@ -168,11 +305,13 @@ class _HomeDashoardShortlistCreateStep2WidgetState
               label: 'Mark as Sold (in person)',
               onTap: () async {
                 Navigator.pop(ctx);
-                await ProductsTable().update(
-                  data: {'status': 'sold'},
-                  matchingRows: (q) => q.eqOrNull('id', product.id),
+                final repo = ref.read(shortlistRepositoryProvider);
+                await repo.updateItemStatus(
+                  shortlistItemId: item.id,
+                  newStatus: 'sold',
+                  sellerId: sellerId,
                 );
-                _loadProductDetails(selectedProductIds);
+                _loadItems();
               },
             ),
             Divider(
@@ -183,27 +322,13 @@ class _HomeDashoardShortlistCreateStep2WidgetState
               label: 'Remove from Inventory (Damaged)',
               onTap: () async {
                 Navigator.pop(ctx);
-                await ProductsTable().update(
-                  data: {'status': 'removed'},
-                  matchingRows: (q) => q.eqOrNull('id', product.id),
+                final repo = ref.read(shortlistRepositoryProvider);
+                await repo.updateItemStatus(
+                  shortlistItemId: item.id,
+                  newStatus: 'damaged',
+                  sellerId: sellerId,
                 );
-                if (!mounted) return;
-                setState(() {
-                  selectedProductIds.remove(product.id);
-                  _productDetails.remove(product.id);
-                  _productImages.remove(product.id);
-                });
-              },
-            ),
-            Divider(
-                color: AppColors.textSecondary.withValues(alpha: 0.2),
-                height: 1),
-            _menuItem(
-              icon: Icons.campaign_outlined,
-              label: 'Promote Product',
-              onTap: () {
-                Navigator.pop(ctx);
-                context.pushNamed('homeDashoardPromoteStep1');
+                _loadItems();
               },
             ),
             Divider(
@@ -212,13 +337,15 @@ class _HomeDashoardShortlistCreateStep2WidgetState
             _menuItem(
               icon: Icons.playlist_remove,
               label: 'Remove from Shortlist',
-              onTap: () {
+              onTap: () async {
                 Navigator.pop(ctx);
-                setState(() {
-                  selectedProductIds.remove(product.id);
-                  _productDetails.remove(product.id);
-                  _productImages.remove(product.id);
-                });
+                final repo = ref.read(shortlistRepositoryProvider);
+                await repo.releaseItems(
+                  shortlistId: widget.shortlistId!,
+                  productIds: [item.productId],
+                  sellerId: sellerId,
+                );
+                _loadItems();
               },
             ),
           ],
@@ -254,140 +381,58 @@ class _HomeDashoardShortlistCreateStep2WidgetState
     );
   }
 
-  Widget _buildProductCard(ProductsRow? product, String? imageUrl, int index) {
-    final price = product != null
-        ? '\$${NumberFormat('#,##0', 'en_US').format(product.price)}'
-        : '';
-    final status = product?.status ?? '';
-    final qty = product?.quantity ?? 0;
-    final views = product?.viewsCount ?? 0;
+  Future<void> _saveShortlist({required String status}) async {
+    setState(() => _isSaving = true);
 
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.backgroundSecondary,
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Image with menu overlay
-          Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(12.0)),
-                child: AspectRatio(
-                  aspectRatio: 1.0,
-                  child: imageUrl != null
-                      ? Image.network(
-                          imageUrl,
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => Container(
-                            color: AppColors.surfaceDarkAlt,
-                            child: Icon(Icons.image,
-                                color: AppColors.textSecondary, size: 40),
-                          ),
-                        )
-                      : Container(
-                          color: AppColors.surfaceDarkAlt,
-                          child: Icon(Icons.image,
-                              color: AppColors.textSecondary, size: 40),
-                        ),
-                ),
-              ),
-              Positioned(
-                top: 8.0,
-                right: 8.0,
-                child: GestureDetector(
-                  onTap: () => _showProductMenu(context, product, index),
-                  child: Container(
-                    width: 28.0,
-                    height: 28.0,
-                    decoration: BoxDecoration(
-                      color: Colors.black54,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.more_horiz,
-                      color: Colors.white,
-                      size: 18.0,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          // Info
-          Padding(
-            padding: EdgeInsets.fromLTRB(12.0, 10.0, 12.0, 12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  product?.title ?? 'Loading...',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(fontWeight: FontWeight.w500),
-                ),
-                SizedBox(height: 6.0),
-                Row(
-                  children: [
-                    Text(
-                      price,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyLarge!
-                          .copyWith(fontWeight: FontWeight.w700),
-                    ),
-                    Spacer(),
-                    Text(
-                      'Qty: $qty',
-                      style: GoogleFonts.inter(
-                        fontSize: 13.0,
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 8.0),
-                Row(
-                  children: [
-                    if (status.isNotEmpty)
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 4.0),
-                        decoration: BoxDecoration(
-                          color: _statusColor(status),
-                          borderRadius: BorderRadius.circular(6.0),
-                        ),
-                        child: Text(
-                          status[0].toUpperCase() + status.substring(1),
-                          style: GoogleFonts.inter(
-                            fontSize: 11.0,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    Spacer(),
-                    Text(
-                      '$views Views',
-                      style: Theme.of(context).textTheme.labelSmall!,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+    if (_isNew) {
+      // Create new shortlist with reservation
+      final repo = ref.read(shortlistRepositoryProvider);
+      final result = await repo.createShortlist(
+        name: widget.name,
+        eventName: widget.eventName,
+        startDate: widget.startDate,
+        endDate: widget.endDate,
+        isPublic: widget.isPublic,
+        notes: _notesController!.text,
+        status: status,
+      );
+      if (!mounted) return;
+      setState(() => _isSaving = false);
+      actions.toastificationshow(
+        context,
+        result['title'] ?? '',
+        result['message'] ?? '',
+        result['success'] == true ? 'success' : 'error',
+      );
+      if (result['success'] == true) {
+        context.pop();
+        context.pop();
+      }
+    } else {
+      // Update existing shortlist
+      final repo = ref.read(shortlistRepositoryProvider);
+      await repo.updateShortlist(widget.shortlistId!, {
+        'description': _notesController!.text,
+        'status': status,
+      });
+      if (!mounted) return;
+      setState(() => _isSaving = false);
+      actions.toastificationshow(
+        context,
+        status == 'draft' ? 'Draft Saved' : 'Shortlist Updated',
+        status == 'draft'
+            ? 'Your shortlist has been saved as a draft.'
+            : 'Your shortlist has been updated.',
+        'success',
+      );
+      context.pop();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final filtered = _filteredItems;
+
     return DismissKeyboard(
       child: Scaffold(
         appBar: PreferredSize(
@@ -403,14 +448,9 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
-                  icon: Icon(
-                    Icons.arrow_back,
-                    color: AppColors.info,
-                    size: 24.0,
-                  ),
-                  onPressed: () {
-                    context.pop();
-                  },
+                  icon: Icon(Icons.arrow_back,
+                      color: AppColors.info, size: 24.0),
+                  onPressed: () => context.pop(),
                 ),
                 Text(
                   'Shortlist',
@@ -422,439 +462,597 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
-                  icon: Icon(
-                    Icons.more_vert,
-                    color: AppColors.info,
-                    size: 20.0,
-                  ),
+                  icon: Icon(Icons.more_vert,
+                      color: AppColors.info, size: 20.0),
                   onPressed: () {},
                 ),
               ],
             ),
           ),
         ),
-        body: Column(
-          children: [
-            Flexible(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.backgroundPrimary,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 16.0, vertical: 24.0),
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: AppColors.backgroundSecondary,
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 24.0, vertical: 20.0),
-                            child: Row(
+        body: _isLoading
+            ? Center(child: AppLoadingIndicator())
+            : Column(
+                children: [
+                  Flexible(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          // Info card
+                          _buildInfoCard(),
+                          // QR code (published only)
+                          if (_isPublished && _shareCode != null)
+                            _buildQrSection(),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Expanded(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        widget.name.isNotEmpty
-                                            ? widget.name
-                                            : 'New Shortlist',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleLarge!
-                                            .copyWith(height: 1.5),
-                                      ),
-                                      Text(
-                                        '${selectedProductIds.length} items',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelSmall!,
-                                      ),
-                                    ].divide(SizedBox(height: 4.0)),
+                                // Notes
+                                Padding(
+                                  padding: EdgeInsets.only(top: 16.0),
+                                  child: TextFormField(
+                                    controller: _notesController,
+                                    focusNode: _notesFocusNode,
+                                    decoration: appInputDecoration('Notes'),
+                                    style: appTextFieldStyle,
+                                    maxLines: null,
+                                    minLines: 3,
+                                    keyboardType: TextInputType.multiline,
+                                    cursorColor: AppColors.textPrimary,
                                   ),
                                 ),
-                                Icon(
-                                  Icons.arrow_back,
-                                  color: AppColors.textPrimary,
-                                  size: 24.0,
+                                Divider(
+                                  height: 48.0,
+                                  thickness: 1.0,
+                                  color: AppColors.surfaceDark,
                                 ),
-                              ].divide(SizedBox(width: 12.0)),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Discount',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(fontSize: 15.0, height: 1.5),
-                              ),
-                              Switch.adaptive(
-                                value: switchValue!,
-                                onChanged: (newValue) async {
-                                  setState(() => switchValue = newValue);
-                                },
-                                activeThumbColor: AppColors.primary,
-                                activeTrackColor: AppColors.primary,
-                                inactiveTrackColor: AppColors.alternate,
-                                inactiveThumbColor:
-                                    AppColors.backgroundSecondary,
-                              ),
-                            ],
-                          ),
-                          if (switchValue == true) ...[
-                            Padding(
-                              padding: EdgeInsets.only(top: 20.0),
-                              child: Text(
-                                'Discount Percentage',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(fontSize: 15.0, height: 1.5),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(top: 8.0),
-                              child: Container(
-                                width: double.infinity,
-                                child: TextFormField(
-                                  controller: textController1,
-                                  focusNode: textFieldFocusNode1,
-                                  onChanged: (_) => EasyDebounce.debounce(
-                                    '_model.textController1',
-                                    Duration(milliseconds: 100),
-                                    () => setState(() {}),
-                                  ),
-                                  autofocus: false,
-                                  enabled: true,
-                                  obscureText: false,
-                                  decoration:
-                                      appInputDecoration('0.00').copyWith(
-                                    prefixText: '% ',
-                                    prefixStyle:
-                                        Theme.of(context).textTheme.labelLarge!,
-                                  ),
-                                  style: appTextFieldStyle,
-                                  keyboardType: TextInputType.number,
-                                  cursorColor: AppColors.textPrimary,
-                                  enableInteractiveSelection: true,
-                                  inputFormatters: [textFieldMask1],
-                                ),
-                              ),
-                            ),
-                          ],
-                          Padding(
-                            padding: EdgeInsets.only(top: 24.0),
-                            child: Container(
-                              width: double.infinity,
-                              child: TextFormField(
-                                controller: textController2,
-                                focusNode: textFieldFocusNode2,
-                                onChanged: (_) => EasyDebounce.debounce(
-                                  '_model.textController2',
-                                  Duration(milliseconds: 100),
-                                  () => setState(() {}),
-                                ),
-                                autofocus: false,
-                                enabled: true,
-                                obscureText: false,
-                                decoration: appInputDecoration('Notes'),
-                                style: appTextFieldStyle,
-                                maxLines: null,
-                                minLines: 4,
-                                keyboardType: TextInputType.multiline,
-                                cursorColor: AppColors.textPrimary,
-                                enableInteractiveSelection: true,
-                              ),
-                            ),
-                          ),
-                          Divider(
-                            height: 48.0,
-                            thickness: 1.0,
-                            color: AppColors.surfaceDark,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Search Shortlist',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(fontSize: 15.0, height: 1.5),
-                              ),
-                              Text(
-                                '${selectedProductIds.length} Items',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium!
-                                    .copyWith(height: 1.5),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 16.0),
-                            child: Container(
-                              width: double.infinity,
-                              child: TextFormField(
-                                controller: textController3,
-                                focusNode: textFieldFocusNode3,
-                                onChanged: (_) => EasyDebounce.debounce(
-                                  '_model.textController3',
-                                  Duration(milliseconds: 100),
-                                  () => setState(() {}),
-                                ),
-                                autofocus: false,
-                                enabled: true,
-                                obscureText: false,
-                                decoration: appInputDecoration(
-                                  'Search your shortlist',
-                                  prefix: Icon(
-                                    Icons.search,
-                                    color: Colors.white,
-                                    size: 24.0,
-                                  ),
-                                ),
-                                style: appTextFieldStyle,
-                                cursorColor: AppColors.textPrimary,
-                                enableInteractiveSelection: true,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 16.0),
-                            child: Row(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        AppColors.secondary,
-                                        AppColors.brandBlue
-                                      ],
-                                      stops: [0.0, 1.0],
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                    ),
-                                    borderRadius: BorderRadius.circular(100.0),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 16.0, vertical: 8.0),
-                                    child: Text(
-                                      'Requested',
+                                // Search + filter row
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Search Shortlist',
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyMedium!
                                           .copyWith(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 15.0),
+                                              fontSize: 15.0, height: 1.5),
+                                    ),
+                                    Text(
+                                      '${_items.length} Items',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
+                                          .copyWith(height: 1.5),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 16.0),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: TextFormField(
+                                          controller: _searchController,
+                                          focusNode: _searchFocusNode,
+                                          onChanged: (_) =>
+                                              EasyDebounce.debounce(
+                                            'shortlistSearch',
+                                            Duration(milliseconds: 300),
+                                            () => setState(() {}),
+                                          ),
+                                          decoration: appInputDecoration(
+                                            'Search your shortlist',
+                                            prefix: Icon(Icons.search,
+                                                color: Colors.white,
+                                                size: 24.0),
+                                          ),
+                                          style: appTextFieldStyle,
+                                          cursorColor: AppColors.textPrimary,
+                                        ),
+                                      ),
+                                      SizedBox(width: 8.0),
+                                      GestureDetector(
+                                        onTap: _openFilter,
+                                        child: Container(
+                                          width: 48.0,
+                                          height: 48.0,
+                                          decoration: BoxDecoration(
+                                            color: _filterState.isEmpty
+                                                ? AppColors.backgroundSecondary
+                                                : AppColors.secondary,
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                          child: Stack(
+                                            children: [
+                                              Center(
+                                                child: Icon(Icons.tune,
+                                                    color: Colors.white,
+                                                    size: 24.0),
+                                              ),
+                                              if (!_filterState.isEmpty)
+                                                Positioned(
+                                                  top: 4.0,
+                                                  right: 4.0,
+                                                  child: Container(
+                                                    width: 18.0,
+                                                    height: 18.0,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.red,
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    child: Center(
+                                                      child: Text(
+                                                        '${_filterState.activeFilterCount}',
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 10.0,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Divider(
+                                  height: 44.0,
+                                  thickness: 1.0,
+                                  color: AppColors.surfaceDark,
+                                ),
+                                // Product grid
+                                if (filtered.isEmpty && _items.isEmpty) ...[
+                                  Text(
+                                    'Your Shortlist has no products added.',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(
+                                            fontWeight: FontWeight.normal,
+                                            height: 1.5),
+                                  ),
+                                ] else if (filtered.isEmpty) ...[
+                                  Text(
+                                    'No products match your search.',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge!,
+                                  ),
+                                ] else ...[
+                                  GridView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 12.0,
+                                      mainAxisSpacing: 12.0,
+                                      childAspectRatio: 0.55,
+                                    ),
+                                    itemCount: filtered.length,
+                                    itemBuilder: (context, index) =>
+                                        _buildProductCard(filtered[index]),
+                                  ),
+                                ],
+                                // Add Products button
+                                Padding(
+                                  padding: EdgeInsets.only(top: 8.0),
+                                  child: InkWell(
+                                    onTap: _addProducts,
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.add_circle_outline,
+                                            color: AppColors.brandPurpleLight,
+                                            size: 24.0),
+                                        Text(
+                                          'Add Products',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                  color: AppColors
+                                                      .brandPurpleLight,
+                                                  height: 1.5),
+                                        ),
+                                      ].divide(SizedBox(width: 8.0)),
                                     ),
                                   ),
                                 ),
-                              ],
+                              ].addToEnd(SizedBox(height: 24.0)),
                             ),
                           ),
-                          Divider(
-                            height: 44.0,
-                            thickness: 1.0,
-                            color: AppColors.surfaceDark,
+                        ],
+                      ),
+                    ),
+                  ),
+                  // Bottom buttons
+                  _buildBottomButtons(),
+                ].addToEnd(SizedBox(height: 32.0)),
+              ),
+      ),
+    );
+  }
+
+  Widget _buildInfoCard() {
+    final createdDate = DateFormat('MMM d, yyyy').format(DateTime.now());
+    return Container(
+      decoration: BoxDecoration(color: AppColors.backgroundPrimary),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
+        child: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: AppColors.backgroundSecondary,
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.name.isNotEmpty ? widget.name : 'New Shortlist',
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge!
+                            .copyWith(height: 1.5),
+                      ),
+                      Text(
+                        '${_items.length} items',
+                        style: Theme.of(context).textTheme.labelSmall!,
+                      ),
+                      SizedBox(height: 4.0),
+                      Text(
+                        'Created $createdDate',
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelSmall!
+                            .copyWith(color: AppColors.textSecondary),
+                      ),
+                    ].divide(SizedBox(height: 4.0)),
+                  ),
+                ),
+                // Edit icon → navigate back to Step 1 with data
+                if (_isEditing)
+                  GestureDetector(
+                    onTap: () {
+                      context.pushNamed(
+                        HomeDashoardShortlistCreateWidget.routeName,
+                        queryParameters: {
+                          'shortlistId': widget.shortlistId ?? '',
+                          'name': widget.name,
+                          'eventName': widget.eventName,
+                          'startDate': widget.startDate,
+                          'endDate': widget.endDate,
+                          'isPublic': widget.isPublic.toString(),
+                        },
+                      );
+                    },
+                    child: Icon(Icons.edit_outlined,
+                        color: AppColors.textPrimary, size: 24.0),
+                  ),
+              ].divide(SizedBox(width: 12.0)),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildQrSection() {
+    final shareUrl = 'https://getitapp.com/s/$_shareCode';
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        children: [
+          SizedBox(height: 16.0),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            padding: EdgeInsets.all(16.0),
+            child: QrImageView(
+              data: shareUrl,
+              version: QrVersions.auto,
+              size: 180.0,
+              backgroundColor: Colors.white,
+            ),
+          ),
+          SizedBox(height: 8.0),
+          Text(
+            shareUrl,
+            style: Theme.of(context)
+                .textTheme
+                .labelSmall!
+                .copyWith(color: AppColors.textSecondary),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProductCard(ShortlistItemDetail item) {
+    final isInCart = _cartItems.contains(item.productId);
+
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.backgroundSecondary,
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Image with menu overlay
+          Stack(
+            children: [
+              ClipRRect(
+                borderRadius:
+                    BorderRadius.vertical(top: Radius.circular(12.0)),
+                child: AspectRatio(
+                  aspectRatio: 1.0,
+                  child: item.mainImageUrl.isNotEmpty
+                      ? CachedNetworkImage(
+                          imageUrl: item.mainImageUrl,
+                          fit: BoxFit.cover,
+                          errorWidget: (_, __, ___) => Container(
+                            color: AppColors.surfaceDarkAlt,
+                            child: Icon(Icons.image,
+                                color: AppColors.textSecondary, size: 40),
                           ),
-                          if (selectedProductIds.isEmpty) ...[
-                            Text(
-                              'Your Shortlist has no products added.',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(
-                                      fontWeight: FontWeight.normal,
-                                      height: 1.5),
-                            ),
-                          ] else ...[
-                            GridView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 12.0,
-                                mainAxisSpacing: 12.0,
-                                childAspectRatio: 0.62,
-                              ),
-                              itemCount: selectedProductIds.length,
-                              itemBuilder: (context, index) {
-                                final productId = selectedProductIds[index];
-                                final product = _productDetails[productId];
-                                final imageUrl = _productImages[productId];
-                                return _buildProductCard(
-                                    product, imageUrl, index);
-                              },
-                            ),
-                          ],
-                          Padding(
-                            padding: EdgeInsets.only(top: 8.0),
-                            child: InkWell(
-                              onTap: () async {
-                                final result =
-                                    await Navigator.push<List<String>>(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) =>
-                                        HomeDashoardShortlistAddWidget(),
-                                  ),
-                                );
-                                if (result != null && result.isNotEmpty) {
-                                  final newIds = <String>[];
-                                  for (final id in result) {
-                                    if (!selectedProductIds.contains(id)) {
-                                      selectedProductIds.add(id);
-                                      newIds.add(id);
-                                    }
-                                  }
-                                  setState(() {});
-                                  _loadProductDetails(newIds);
-                                }
-                              },
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.add_circle_outline,
-                                    color: AppColors.brandPurpleLight,
-                                    size: 24.0,
-                                  ),
-                                  Text(
-                                    'Add Products',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .copyWith(
-                                            color: AppColors.brandPurpleLight,
-                                            height: 1.5),
-                                  ),
-                                ].divide(SizedBox(width: 8.0)),
-                              ),
+                        )
+                      : Container(
+                          color: AppColors.surfaceDarkAlt,
+                          child: Icon(Icons.image,
+                              color: AppColors.textSecondary, size: 40),
+                        ),
+                ),
+              ),
+              // Menu button
+              Positioned(
+                top: 8.0,
+                right: 8.0,
+                child: GestureDetector(
+                  onTap: () => _showItemMenu(item),
+                  child: Container(
+                    width: 28.0,
+                    height: 28.0,
+                    decoration: BoxDecoration(
+                      color: Colors.black54,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(Icons.more_horiz,
+                        color: Colors.white, size: 18.0),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          // Info
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(10.0, 8.0, 10.0, 10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall!
+                        .copyWith(fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: 4.0),
+                  // Price with flash sale
+                  ProductPriceRow(
+                    price: item.price,
+                    originalPrice: item.originalPrice,
+                    flashSaleEnabled: item.flashSaleEnabled,
+                    flashSalePrice: item.flashSalePrice,
+                    discountType: item.discountType,
+                    discountAmount: item.discountAmount,
+                  ),
+                  SizedBox(height: 4.0),
+                  // Qty + Status row
+                  Row(
+                    children: [
+                      Text(
+                        'Qty: ${item.quantity}',
+                        style: GoogleFonts.inter(
+                          fontSize: 11.0,
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                      Spacer(),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 2.0),
+                        decoration: BoxDecoration(
+                          color: _statusColor(item.itemStatus),
+                          borderRadius: BorderRadius.circular(4.0),
+                        ),
+                        child: Text(
+                          _statusLabel(item.itemStatus),
+                          style: GoogleFonts.inter(
+                            fontSize: 10.0,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // Add to cart (published only)
+                  if (_isPublished && item.itemStatus == 'active') ...[
+                    Spacer(),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 28.0,
+                      child: TextButton(
+                        onPressed: () {
+                          setState(() {
+                            if (isInCart) {
+                              _cartItems.remove(item.productId);
+                            } else {
+                              _cartItems.add(item.productId);
+                            }
+                          });
+                        },
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          backgroundColor: isInCart
+                              ? AppColors.secondary.withValues(alpha: 0.15)
+                              : Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                            side: BorderSide(
+                              color: isInCart
+                                  ? AppColors.secondary
+                                  : AppColors.neutral700,
                             ),
                           ),
-                        ].addToEnd(SizedBox(height: 24.0)),
+                        ),
+                        child: Text(
+                          isInCart ? 'Added ✓' : 'Add to cart',
+                          style: GoogleFonts.inter(
+                            fontSize: 11.0,
+                            fontWeight: FontWeight.w500,
+                            color: isInCart
+                                ? AppColors.secondary
+                                : AppColors.textPrimary,
+                          ),
+                        ),
                       ),
                     ),
                   ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                children: [
-                  AppGradientButton(
-                    text: _isSaving ? 'Creating...' : 'Create Shortlist',
-                    enabled: !_isSaving,
-                    onPressed: () async {
-                      setState(() => _isSaving = true);
-                      final discountPct =
-                          double.tryParse(textController1!.text.trim());
-                      final result = await actions.createShortlist(
-                        name: widget.name,
-                        eventName: widget.eventName,
-                        startDate: widget.startDate,
-                        endDate: widget.endDate,
-                        isPublic: widget.isPublic,
-                        discountPercentage: discountPct,
-                        notes: textController2!.text,
-                        status: 'active',
-                        productIds: selectedProductIds,
-                      );
-                      if (!mounted) return;
-                      setState(() => _isSaving = false);
-                      actions.toastificationshow(
-                        context,
-                        result['title'] ?? '',
-                        result['message'] ?? '',
-                        result['success'] == true ? 'success' : 'error',
-                      );
-                      if (result['success'] == true) {
-                        // Pop back to shortlist list (Step2 → Step1 → list)
-                        context.pop();
-                        context.pop();
-                      }
-                    },
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 16.0),
-                    child: TextButton(
-                      onPressed: _isSaving
-                          ? null
-                          : () async {
-                              setState(() => _isSaving = true);
-                              final discountPct =
-                                  double.tryParse(textController1!.text.trim());
-                              final result = await actions.createShortlist(
-                                name: widget.name,
-                                eventName: widget.eventName,
-                                startDate: widget.startDate,
-                                endDate: widget.endDate,
-                                isPublic: widget.isPublic,
-                                discountPercentage: discountPct,
-                                notes: textController2!.text,
-                                status: 'draft',
-                                productIds: selectedProductIds,
-                              );
-                              if (!mounted) return;
-                              setState(() => _isSaving = false);
-                              actions.toastificationshow(
-                                context,
-                                result['title'] ?? '',
-                                result['message'] ?? '',
-                                result['success'] == true ? 'success' : 'error',
-                              );
-                              if (result['success'] == true) {
-                                Navigator.of(context)
-                                  ..pop()
-                                  ..pop();
-                              }
-                            },
-                      style: TextButton.styleFrom(
-                        minimumSize: Size(double.infinity, 56.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          side: BorderSide(color: AppColors.neutral800),
-                        ),
-                      ),
-                      child: Text(
-                        _isSaving ? 'Saving...' : 'Save as Draft',
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 17.0,
-                            color: Colors.white),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
-          ].addToEnd(SizedBox(height: 32.0)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBottomButtons() {
+    if (_isPublished) {
+      // Published shortlist: Save / Cancel + End Shortlist
+      return Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: TextButton(
+                    onPressed: () => context.pop(),
+                    style: TextButton.styleFrom(
+                      minimumSize: Size(0, 48.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                        side: BorderSide(color: AppColors.neutral800),
+                      ),
+                    ),
+                    child: Text('Cancel',
+                        style: Theme.of(context).textTheme.bodyMedium!),
+                  ),
+                ),
+                SizedBox(width: 12.0),
+                Expanded(
+                  child: AppGradientButton(
+                    text: _isSaving ? 'Saving...' : 'Save',
+                    enabled: !_isSaving,
+                    onPressed: () => _saveShortlist(status: 'active'),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 12.0),
+            SizedBox(
+              width: double.infinity,
+              child: TextButton(
+                onPressed: () {
+                  // GT-104: End shortlist → reconciliation
+                  actions.toastificationshow(
+                    context,
+                    'Coming Soon',
+                    'Reconciliation will be available in the next update.',
+                    'info',
+                  );
+                },
+                style: TextButton.styleFrom(
+                  minimumSize: Size(double.infinity, 48.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4.0),
+                    side: BorderSide(color: AppColors.errorBright),
+                  ),
+                ),
+                child: Text(
+                  'End Shortlist',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: AppColors.errorBright),
+                ),
+              ),
+            ),
+          ],
         ),
+      );
+    }
+
+    // New / Draft shortlist: Create + Save as Draft / Move to Drafts
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        children: [
+          AppGradientButton(
+            text: _isSaving
+                ? 'Creating...'
+                : _isNew
+                    ? 'Create Shortlist'
+                    : 'Publish Shortlist',
+            enabled: !_isSaving,
+            onPressed: () => _saveShortlist(status: 'active'),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 16.0),
+            child: TextButton(
+              onPressed:
+                  _isSaving ? null : () => _saveShortlist(status: 'draft'),
+              style: TextButton.styleFrom(
+                minimumSize: Size(double.infinity, 56.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4.0),
+                  side: BorderSide(color: AppColors.neutral800),
+                ),
+              ),
+              child: Text(
+                _isSaving ? 'Saving...' : 'Move to Drafts',
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 17.0,
+                    color: Colors.white),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

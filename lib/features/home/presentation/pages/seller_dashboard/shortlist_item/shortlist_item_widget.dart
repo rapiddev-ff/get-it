@@ -137,7 +137,7 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
       queryParameters: {
         'shortlistId': widget.shortlistId!,
         'name': widget.name,
-        'viewMode': 'true',
+        'status': widget.status,
       },
     );
   }
@@ -166,6 +166,7 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
       queryParameters: {
         'shortlistId': widget.shortlistId!,
         'name': widget.name,
+        'status': widget.status,
       },
     );
   }

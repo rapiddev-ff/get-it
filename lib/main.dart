@@ -26,17 +26,32 @@ void main() {
     GoRouter.optionURLReflectsImperativeAPIs = true;
     usePathUrlStrategy();
 
-    await dotenv.load(fileName: '.env');
+    try {
+      await dotenv.load(fileName: '.env');
+    } catch (e) {
+      debugPrint('[main] dotenv.load failed: $e');
+    }
 
     await actions.lockOrientation();
     await actions.setStatusbarColor();
 
-    await SupaFlow.initialize();
+    try {
+      await SupaFlow.initialize()
+          .timeout(const Duration(seconds: 10));
+    } catch (e) {
+      debugPrint('[main] SupaFlow.initialize failed: $e');
+    }
 
-    final stripeKey = AppConfig.stripePublishable;
-    if (stripeKey.isNotEmpty) {
-      Stripe.publishableKey = stripeKey;
-      await Stripe.instance.applySettings();
+    // Stripe init is non-blocking — failures must not prevent app launch.
+    try {
+      final stripeKey = AppConfig.stripePublishable;
+      if (stripeKey.isNotEmpty) {
+        Stripe.publishableKey = stripeKey;
+        await Stripe.instance.applySettings()
+            .timeout(const Duration(seconds: 5));
+      }
+    } catch (e) {
+      debugPrint('[main] Stripe init failed: $e');
     }
 
     runApp(ProviderScope(
@@ -85,19 +100,24 @@ class _MyAppState extends ConsumerState<MyApp> {
 
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
-    userStream = getItSupabaseUserStream();
-    _userSubscription = userStream.listen((user) {
-      // Clear all user-specific state on logout
-      if (!user.loggedIn) {
-        ref.read(authProvider.notifier).clear();
-      }
-      _appStateNotifier.update(user);
-    });
-    _jwtSubscription = jwtTokenStream.listen((_) {});
 
-    // Check keepSignedIn AFTER ProviderScope and user stream are set up,
-    // so that signOut events are properly received by authProvider.
-    actions.checkReminderMeAuth();
+    try {
+      userStream = getItSupabaseUserStream();
+      _userSubscription = userStream.listen((user) {
+        // Clear all user-specific state on logout
+        if (!user.loggedIn) {
+          ref.read(authProvider.notifier).clear();
+        }
+        _appStateNotifier.update(user);
+      });
+      _jwtSubscription = jwtTokenStream.listen((_) {});
+
+      // Check keepSignedIn AFTER ProviderScope and user stream are set up,
+      // so that signOut events are properly received by authProvider.
+      actions.checkReminderMeAuth();
+    } catch (e) {
+      debugPrint('[MyApp] Failed to set up auth streams: $e');
+    }
 
     Future.delayed(
       Duration(milliseconds: 1000),

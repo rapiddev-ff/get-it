@@ -340,10 +340,29 @@ class _ForgotPasswordStep3WidgetState extends State<ForgotPasswordStep3Widget>
 
                           if (errorPasswordRequired) return;
 
-                          await SupabaseEdgeGroup.resetPasswordCall.call(
+                          final resetResult =
+                              await SupabaseEdgeGroup.resetPasswordCall.call(
                             code: widget.code,
                             newPassword: textController2.text,
                           );
+
+                          if (!mounted) return;
+
+                          if (!resetResult.succeeded) {
+                            final body = resetResult.jsonBody;
+                            final message = (body is Map
+                                    ? (body['error'] ?? body['message'])
+                                    : null)
+                                ?.toString() ??
+                                'Failed to reset password. Please try again.';
+                            await actions.toastificationshow(
+                              context,
+                              'Error',
+                              message,
+                              'error',
+                            );
+                            return;
+                          }
 
                           await actions.resetPasswordRecoveryState();
                           if (!mounted) return;

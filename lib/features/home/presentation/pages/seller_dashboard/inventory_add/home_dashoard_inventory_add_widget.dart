@@ -977,22 +977,14 @@ class _HomeDashoardInventoryAddWidgetState
                 child: Row(
                   children: [
                     Expanded(
-                      child: conditionsList.isNotEmpty
-                          ? Row(
-                              children: List.generate(conditionsList.length,
-                                  (conditionsIndex) {
-                                final conditionsItem =
-                                    conditionsList[conditionsIndex];
-                                return Text(
-                                  '${conditionsItem.name}${conditionsIndex == (conditionsList.length - 1) ? '' : ', '}',
-                                  style: Theme.of(context).textTheme.bodyLarge!,
-                                );
-                              }),
-                            )
-                          : Text(
-                              'Select condition',
-                              style: Theme.of(context).textTheme.bodyLarge!,
-                            ),
+                      child: Text(
+                        conditionsList.isNotEmpty
+                            ? conditionsList.map((e) => e.name).join(', ')
+                            : 'Select condition',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyLarge!,
+                      ),
                     ),
                     Icon(
                       Icons.keyboard_arrow_down_outlined,
@@ -1863,7 +1855,7 @@ class _HomeDashoardInventoryAddWidgetState
                 ),
               ]
                   .addToStart(SizedBox(height: 24.0))
-                  .addToEnd(SizedBox(height: 24.0)),
+                  .addToEnd(SizedBox(height: 48.0)),
             ),
           ),
         ),

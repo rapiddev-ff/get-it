@@ -27,11 +27,20 @@ class ShortlistItemsRow extends SupabaseDataRow {
   int? get customQuantity => getField<int>('custom_quantity');
   set customQuantity(int? value) => setField<int>('custom_quantity', value);
 
+  int get quantity => getField<int>('quantity') ?? 1;
+  set quantity(int value) => setField<int>('quantity', value);
+
+  String get status => getField<String>('status') ?? 'active';
+  set status(String value) => setField<String>('status', value);
+
   String? get notes => getField<String>('notes');
   set notes(String? value) => setField<String>('notes', value);
 
   int? get sortOrder => getField<int>('sort_order');
   set sortOrder(int? value) => setField<int>('sort_order', value);
+
+  DateTime? get reservedAt => getField<DateTime>('reserved_at');
+  set reservedAt(DateTime? value) => setField<DateTime>('reserved_at', value);
 
   DateTime? get createdAt => getField<DateTime>('created_at');
   set createdAt(DateTime? value) => setField<DateTime>('created_at', value);

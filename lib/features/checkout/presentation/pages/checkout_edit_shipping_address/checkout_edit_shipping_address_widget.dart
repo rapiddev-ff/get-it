@@ -16,7 +16,16 @@ import '/core/providers/current_user_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CheckoutEditShippingAddressWidget extends ConsumerStatefulWidget {
-  const CheckoutEditShippingAddressWidget({super.key});
+  const CheckoutEditShippingAddressWidget({
+    super.key,
+    this.existingAddress,
+  });
+
+  /// When non-null the page is in **edit** mode – fields are pre-populated
+  /// and Save performs an UPDATE instead of INSERT.
+  final ShippingAddress? existingAddress;
+
+  bool get isEditMode => existingAddress != null && existingAddress!.id.isNotEmpty;
 
   static const String routeName = 'checkoutEditShippingAddress';
   static const String routePath = 'checkoutEditShippingAddress';
@@ -130,11 +139,17 @@ class _CheckoutEditShippingAddressWidgetState
   void initState() {
     super.initState();
 
+    final addr = widget.existingAddress;
+    final isEdit = widget.isEditMode;
+
     fullNameTextController ??= TextEditingController(
-        text:
-            '${ref.read(authProvider).firstName} ${ref.read(authProvider).lastName}');
+        text: isEdit
+            ? addr!.fullName
+            : '${ref.read(authProvider).firstName} ${ref.read(authProvider).lastName}');
     fullNameFocusNode ??= FocusNode();
-    streetaddressTextController ??= TextEditingController();
+
+    streetaddressTextController ??=
+        TextEditingController(text: isEdit ? addr!.addressLine1 : '');
     streetaddressFocusNode ??= FocusNode();
     streetaddressFocusNode!.addListener(() {
       if (!streetaddressFocusNode!.hasFocus) {
@@ -144,14 +159,26 @@ class _CheckoutEditShippingAddressWidgetState
       }
     });
 
-    aptsuiteunitTextController ??= TextEditingController();
+    aptsuiteunitTextController ??=
+        TextEditingController(text: isEdit ? addr!.addressLine2 : '');
     aptsuiteunitFocusNode ??= FocusNode();
-    cityTextController ??= TextEditingController();
+
+    cityTextController ??=
+        TextEditingController(text: isEdit ? addr!.city : '');
     cityFocusNode ??= FocusNode();
-    stateTextController ??= TextEditingController();
+
+    stateTextController ??=
+        TextEditingController(text: isEdit ? addr!.state : '');
     stateFocusNode ??= FocusNode();
-    zipCodeTextController ??= TextEditingController();
+
+    zipCodeTextController ??=
+        TextEditingController(text: isEdit ? addr!.zipCode : '');
     zipCodeFocusNode ??= FocusNode();
+
+    if (isEdit) {
+      countryDropdownValue = addr!.country;
+      stateDropdownValue = addr.state;
+    }
   }
 
   @override
@@ -200,7 +227,9 @@ class _CheckoutEditShippingAddressWidgetState
                   },
                 ),
                 Text(
-                  'Edit Shipping Address',
+                  widget.isEditMode
+                      ? 'Edit Shipping Address'
+                      : 'Add Shipping Address',
                   style: Theme.of(context).textTheme.titleMedium!,
                 ),
                 Opacity(
@@ -603,48 +632,65 @@ class _CheckoutEditShippingAddressWidgetState
                   child: AppGradientButton(
                     text: 'Save Changes',
                     onPressed: () async {
-                      await Future.wait([
-                        Future(() async {
-                          createShippingAddress =
-                              await ShippingAddressesTable().insert({
-                            'user_id': ref.read(currentUserIdProvider),
-                            'full_name': fullNameTextController!.text,
-                            'address_line1': streetaddressTextController!.text,
-                            'address_line2': aptsuiteunitTextController!.text,
-                            'city': cityTextController!.text,
-                            'country': countryDropdownValue,
-                            'state': (countryDropdownValue == 'US') ||
-                                    (countryDropdownValue == 'CA')
-                                ? stateDropdownValue
-                                : stateTextController!.text,
-                            'zip_code': zipCodeTextController!.text,
-                            'is_default': true,
-                            'created_at': DateTime.now().toIso8601String(),
-                          });
-                        }),
-                        Future(() async {
-                          ref.read(authProvider.notifier).updateUser(
-                                (e) => e.copyWith(
-                                  shippingAddress: (e.shippingAddress ??
-                                          const ShippingAddress())
-                                      .copyWith(
-                                    fullName: fullNameTextController!.text,
-                                    addressLine1:
-                                        streetaddressTextController!.text,
-                                    addressLine2:
-                                        aptsuiteunitTextController!.text,
-                                    city: cityTextController!.text,
-                                    state: (countryDropdownValue == 'US') ||
-                                            (countryDropdownValue == 'CA')
-                                        ? stateDropdownValue ?? ''
-                                        : stateTextController!.text,
-                                    country: countryDropdownValue ?? '',
-                                    zipCode: zipCodeTextController!.text,
-                                  ),
-                                ),
-                              );
-                        }),
-                      ]);
+                      final stateValue = (countryDropdownValue == 'US') ||
+                              (countryDropdownValue == 'CA')
+                          ? stateDropdownValue ?? ''
+                          : stateTextController!.text;
+
+                      final data = {
+                        'full_name': fullNameTextController!.text,
+                        'address_line1': streetaddressTextController!.text,
+                        'address_line2': aptsuiteunitTextController!.text,
+                        'city': cityTextController!.text,
+                        'country': countryDropdownValue,
+                        'state': stateValue,
+                        'zip_code': zipCodeTextController!.text,
+                      };
+
+                      String savedId;
+
+                      if (widget.isEditMode) {
+                        // UPDATE existing address
+                        await ShippingAddressesTable().update(
+                          data: data,
+                          matchingRows: (rows) =>
+                              rows.eqOrNull('id', widget.existingAddress!.id),
+                        );
+                        savedId = widget.existingAddress!.id;
+                      } else {
+                        // INSERT new address
+                        createShippingAddress =
+                            await ShippingAddressesTable().insert({
+                          ...data,
+                          'user_id': ref.read(currentUserIdProvider),
+                          'is_default': true,
+                          'created_at': DateTime.now().toIso8601String(),
+                        });
+                        savedId = createShippingAddress?.id ?? '';
+                      }
+
+                      if (!mounted) return;
+
+                      // Update local auth state
+                      ref.read(authProvider.notifier).updateUser(
+                            (e) => e.copyWith(
+                              shippingAddress: (e.shippingAddress ??
+                                      const ShippingAddress())
+                                  .copyWith(
+                                id: savedId,
+                                fullName: fullNameTextController!.text,
+                                addressLine1:
+                                    streetaddressTextController!.text,
+                                addressLine2:
+                                    aptsuiteunitTextController!.text,
+                                city: cityTextController!.text,
+                                state: stateValue,
+                                country: countryDropdownValue ?? '',
+                                zipCode: zipCodeTextController!.text,
+                              ),
+                            ),
+                          );
+
                       Navigator.pop(context);
                     },
                   ),

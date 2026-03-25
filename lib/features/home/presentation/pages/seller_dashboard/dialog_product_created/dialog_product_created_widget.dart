@@ -81,6 +81,7 @@ class DialogProductCreatedWidget extends StatelessWidget {
                 padding: EdgeInsets.only(top: 16.0),
                 child: TextButton(
                   onPressed: () async {
+                    Navigator.pop(context);
                     if (Navigator.of(context).canPop()) {
                       context.pop();
                     }

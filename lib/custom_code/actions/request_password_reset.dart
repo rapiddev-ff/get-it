@@ -9,24 +9,36 @@ Future<Map<String, dynamic>> requestPasswordReset(String email) async {
       body: {'email': email.trim().toLowerCase()},
     );
 
-    if (response.status == 200) {
-      final data = response.data as Map<String, dynamic>;
+    final data = response.data;
+    if (response.status == 200 && data is Map<String, dynamic>) {
       return {
         'success': data['success'] ?? false,
         'message': data['message'] ?? '',
       };
-    } else if (response.status == 404) {
+    }
+    return {
+      'success': false,
+      'message': 'Something went wrong. Please try again.',
+    };
+  } on FunctionException catch (e) {
+    final details = e.details;
+    if (e.status == 404) {
+      final message = (details is Map ? details['message'] : null)?.toString()
+          ?? 'No account found with this email address.';
       return {
         'success': false,
-        'message': 'No account found with this email address.',
+        'message': message,
         'notFound': true,
       };
-    } else {
-      return {
-        'success': false,
-        'message': 'Something went wrong. Please try again.',
-      };
     }
+    final message =
+        (details is Map ? (details['error'] ?? details['message']) : null)
+            ?.toString() ??
+        'Something went wrong. Please try again.';
+    return {
+      'success': false,
+      'message': message,
+    };
   } catch (e) {
     final errorStr = e.toString().toLowerCase();
     if (errorStr.contains('socketexception') ||

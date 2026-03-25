@@ -3,6 +3,7 @@ import '/features/home/domain/models/feed_product_model.dart';
 import '/features/home/domain/models/seller_model.dart';
 import '/features/home/domain/models/seller_product_model.dart';
 import '/features/checkout/domain/models/payment_method_model.dart';
+import '/features/checkout/domain/models/shipping_address_model.dart';
 
 import '/core/router/app_router.dart';
 
@@ -311,7 +312,17 @@ List<AppRoute> appRoutes() => [
       AppRoute(
         name: HomeDashoardShortlistCreateWidget.routeName,
         path: HomeDashoardShortlistCreateWidget.routePath,
-        builder: (context, params) => HomeDashoardShortlistCreateWidget(),
+        builder: (context, params) {
+          final allParams = params.state.uri.queryParameters;
+          return HomeDashoardShortlistCreateWidget(
+            shortlistId: allParams['shortlistId'],
+            initialName: allParams['name'],
+            initialEventName: allParams['eventName'],
+            initialStartDate: allParams['startDate'],
+            initialEndDate: allParams['endDate'],
+            initialIsPublic: allParams['isPublic'] != 'false',
+          );
+        },
       ),
       AppRoute(
         name: HomeDashoardShortlistCreateStep2Widget.routeName,
@@ -325,13 +336,19 @@ List<AppRoute> appRoutes() => [
             endDate: allParams['endDate'] ?? '',
             isPublic: allParams['isPublic'] != 'false',
             shortlistId: allParams['shortlistId'],
+            status: allParams['status'],
           );
         },
       ),
       AppRoute(
         name: HomeDashoardShortlistAddWidget.routeName,
         path: HomeDashoardShortlistAddWidget.routePath,
-        builder: (context, params) => HomeDashoardShortlistAddWidget(),
+        builder: (context, params) {
+          final allParams = params.state.uri.queryParameters;
+          return HomeDashoardShortlistAddWidget(
+            shortlistId: allParams['shortlistId'],
+          );
+        },
       ),
       AppRoute(
         name: HomeDashoardShortlistWidget.routeName,
@@ -485,7 +502,14 @@ List<AppRoute> appRoutes() => [
       AppRoute(
         name: CheckoutEditShippingAddressWidget.routeName,
         path: CheckoutEditShippingAddressWidget.routePath,
-        builder: (context, params) => CheckoutEditShippingAddressWidget(),
+        builder: (context, params) => CheckoutEditShippingAddressWidget(
+          existingAddress: params.getParam(
+            'existingAddress',
+            ParamType.DataStruct,
+            isList: false,
+            structBuilder: ShippingAddress.fromSerializableMap,
+          ),
+        ),
       ),
       AppRoute(
         name: BuyerPurchasesWidget.routeName,

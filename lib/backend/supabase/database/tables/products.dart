@@ -105,6 +105,11 @@ class ProductsRow extends SupabaseDataRow {
   DateTime? get soldAt => getField<DateTime>('sold_at');
   set soldAt(DateTime? value) => setField<DateTime>('sold_at', value);
 
+  int get reservedQuantity => getField<int>('reserved_quantity') ?? 0;
+  set reservedQuantity(int value) => setField<int>('reserved_quantity', value);
+
+  int get availableQuantity => (quantity ?? 0) - reservedQuantity;
+
   DateTime? get deletedAt => getField<DateTime>('deleted_at');
   set deletedAt(DateTime? value) => setField<DateTime>('deleted_at', value);
 

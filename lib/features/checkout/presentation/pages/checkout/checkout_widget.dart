@@ -342,6 +342,23 @@ class _CheckoutWidgetState extends ConsumerState<CheckoutWidget> {
                                   ],
                                 ),
                               ),
+                              IconButton(
+                                icon: Icon(
+                                  Icons.edit_outlined,
+                                  color: AppColors.secondary,
+                                  size: 18.0,
+                                ),
+                                onPressed: () async {
+                                  Navigator.pop(ctx);
+                                  await context.pushNamed(
+                                    CheckoutEditShippingAddressWidget.routeName,
+                                    queryParameters: {
+                                      'existingAddress': addr.serialize(),
+                                    },
+                                  );
+                                  if (mounted) await _recalculateTax();
+                                },
+                              ),
                             ],
                           ),
                         ),
