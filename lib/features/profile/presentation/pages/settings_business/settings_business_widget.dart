@@ -58,7 +58,12 @@ class _SettingsBusinessWidgetState extends State<SettingsBusinessWidget> {
       ),
       child: Padding(
         padding:
-            EdgeInsets.only(left: 16.0, top: 24.0, right: 16.0, bottom: 32.0),
+            EdgeInsets.only(
+              left: 16.0,
+              top: 24.0,
+              right: 16.0,
+              bottom: 32.0 + MediaQuery.of(context).viewPadding.bottom,
+            ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -30,18 +30,21 @@ class _NavBarWidgetState extends State<NavBarWidget>
   @override
   Widget build(BuildContext context) {
     final route = _currentRoute(context);
+    final bottomInset = MediaQuery.of(context).viewPadding.bottom;
+    final bottomPadding = bottomInset > 0 ? bottomInset : 12.0;
 
     return Visibility(
       visible: !isKeyboardShowing(context),
       child: Container(
-        width: MediaQuery.sizeOf(context).width * 1.0,
-        height: 100.0,
+        width: double.infinity,
         decoration: BoxDecoration(
           color: AppColors.backgroundSecondary,
         ),
         child: Padding(
-          padding: EdgeInsets.only(bottom: 24.0),
-          child: Row(
+          padding: EdgeInsets.only(bottom: bottomPadding + 8.0),
+          child: SizedBox(
+            height: 64.0,
+            child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
@@ -322,6 +325,7 @@ class _NavBarWidgetState extends State<NavBarWidget>
                 ),
               ),
             ],
+          ),
           ),
         ),
       ),

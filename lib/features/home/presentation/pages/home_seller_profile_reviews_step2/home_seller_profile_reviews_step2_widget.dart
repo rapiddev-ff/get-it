@@ -165,6 +165,7 @@ class _HomeSellerProfileReviewsStep2WidgetState
                                   Text(
                                     widget.product!.conditionName,
                                     maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: Theme.of(context)
                                         .textTheme
                                         .labelSmall!

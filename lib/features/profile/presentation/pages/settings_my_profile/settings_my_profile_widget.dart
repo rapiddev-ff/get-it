@@ -232,6 +232,8 @@ class _SettingsMyProfileWidgetState
                                           .routeName);
                                 },
                                 child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     if (authState.isSeller)
                                       Column(
@@ -328,14 +330,14 @@ class _SettingsMyProfileWidgetState
                                               .titleSmall!,
                                         ),
                                         Text(
-                                          'Followers',
+                                          'Following',
                                           style: Theme.of(context)
                                               .textTheme
                                               .labelSmall!,
                                         ),
                                       ],
                                     ),
-                                  ].divide(SizedBox(width: 24.0)),
+                                  ],
                                 ),
                               ),
                             ),

@@ -20,29 +20,24 @@ class InventoryItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          width: 168.5,
-          height: 128.0,
-          child: Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(4.0),
-                  topRight: Radius.circular(4.0),
+        Expanded(
+          child: ClipRRect(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(4.0),
+              topRight: Radius.circular(4.0),
+            ),
+            child: SizedBox(
+              width: double.infinity,
+              child: CachedNetworkImage(
+                fadeInDuration: Duration(milliseconds: 500),
+                fadeOutDuration: Duration(milliseconds: 500),
+                imageUrl: valueOrDefault<String>(
+                  sellerProduct?.mainImageUrl,
+                  'https://picsum.photos/seed/487/600',
                 ),
-                child: CachedNetworkImage(
-                  fadeInDuration: Duration(milliseconds: 500),
-                  fadeOutDuration: Duration(milliseconds: 500),
-                  imageUrl: valueOrDefault<String>(
-                    sellerProduct?.mainImageUrl,
-                    'https://picsum.photos/seed/487/600',
-                  ),
-                  width: 168.5,
-                  height: 128.0,
-                  fit: BoxFit.cover,
-                ),
+                fit: BoxFit.cover,
               ),
-            ],
+            ),
           ),
         ),
         Container(
@@ -66,6 +61,8 @@ class InventoryItemWidget extends StatelessWidget {
                     sellerProduct?.title,
                     'N/A',
                   ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium!

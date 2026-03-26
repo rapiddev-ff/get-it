@@ -620,7 +620,11 @@ class _HomeDashoardInventoryWidgetState
                 ),
                 child: Padding(
                   padding: EdgeInsets.only(
-                      left: 16.0, top: 12.0, right: 16.0, bottom: 36.0),
+                    left: 16.0,
+                    top: 12.0,
+                    right: 16.0,
+                    bottom: 12.0 + MediaQuery.of(context).viewPadding.bottom,
+                  ),
                   child: Row(
                     children: [
                       Expanded(

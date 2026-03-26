@@ -2,7 +2,6 @@ import '/features/checkout/domain/models/payment_method_model.dart';
 import '/features/home/presentation/widgets/dialog/dialog_widget.dart';
 import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
-import '/core/utils/value_utils.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/profile/presentation/pages/settings_payment_method_edit/settings_payment_method_edit_widget.dart';
 import 'package:flutter/material.dart';
@@ -111,28 +110,34 @@ class _SettingsPaymentCardItemWidgetState
               ),
             ),
             Text(
-              valueOrDefault<String>(
-                widget.paymentMethod?.billingDetails?.name,
-                'N/A',
-              ),
+              widget.paymentMethod?.billingDetails?.name.isNotEmpty == true
+                  ? widget.paymentMethod!.billingDetails!.name
+                  : 'N/A',
               style: Theme.of(context)
                   .textTheme
                   .bodyLarge!
                   .copyWith(fontWeight: FontWeight.w500),
             ),
-            Text(
-              '${valueOrDefault<String>(
-                widget.paymentMethod?.billingDetails?.addressLine1,
-                'n/a',
-              )}, ${valueOrDefault<String>(
-                widget.paymentMethod?.billingDetails?.addressLine2,
-                'n/a',
-              )}',
-              style: GoogleFonts.inter(
-                fontWeight: FontWeight.normal,
-                fontSize: 15.0,
-                color: AppColors.textPrimary,
-              ),
+            Builder(
+              builder: (context) {
+                final bd = widget.paymentMethod?.billingDetails;
+                final parts = [
+                  bd?.addressLine1,
+                  bd?.addressLine2,
+                  bd?.city,
+                  bd?.state,
+                  bd?.postalCode,
+                  bd?.country,
+                ].where((s) => s != null && s.isNotEmpty).toList();
+                return Text(
+                  parts.isNotEmpty ? parts.join(', ') : 'N/A',
+                  style: GoogleFonts.inter(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 15.0,
+                    color: AppColors.textPrimary,
+                  ),
+                );
+              },
             ),
             Padding(
               padding: EdgeInsets.only(top: 21.0),

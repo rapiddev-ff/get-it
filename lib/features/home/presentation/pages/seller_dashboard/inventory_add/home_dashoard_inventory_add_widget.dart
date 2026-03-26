@@ -967,7 +967,7 @@ class _HomeDashoardInventoryAddWidgetState
             },
             child: Container(
               width: double.infinity,
-              height: 52.0,
+              constraints: BoxConstraints(minHeight: 52.0),
               decoration: BoxDecoration(
                 borderRadius: _borderRadius,
                 border: Border.all(color: AppColors.neutral700),
@@ -975,16 +975,36 @@ class _HomeDashoardInventoryAddWidgetState
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Expanded(
-                      child: Text(
-                        conditionsList.isNotEmpty
-                            ? conditionsList.map((e) => e.name).join(', ')
-                            : 'Select condition',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyLarge!,
-                      ),
+                      child: conditionsList.isNotEmpty
+                          ? Wrap(
+                              spacing: 6.0,
+                              runSpacing: 6.0,
+                              children: conditionsList.map((e) {
+                                return Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 8.0, vertical: 4.0),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.surfaceDark,
+                                    borderRadius: BorderRadius.circular(4.0),
+                                  ),
+                                  child: Text(
+                                    e.name,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                            color: AppColors.textPrimary),
+                                  ),
+                                );
+                              }).toList(),
+                            )
+                          : Text(
+                              'Select condition',
+                              style: Theme.of(context).textTheme.bodyLarge!,
+                            ),
                     ),
                     Icon(
                       Icons.keyboard_arrow_down_outlined,
@@ -1855,7 +1875,7 @@ class _HomeDashoardInventoryAddWidgetState
                 ),
               ]
                   .addToStart(SizedBox(height: 24.0))
-                  .addToEnd(SizedBox(height: 48.0)),
+                  .addToEnd(SizedBox(height: 80.0)),
             ),
           ),
         ),

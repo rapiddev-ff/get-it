@@ -167,7 +167,7 @@ class _SettingsChangePhoneWidgetState extends State<SettingsChangePhoneWidget>
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       AppGradientButton(
-                        text: 'Send',
+                        text: 'Save Changes',
                         enabled: _isPhoneValid && !_isSending,
                         isLoading: _isSending,
                         onPressed: !_isPhoneValid || _isSending

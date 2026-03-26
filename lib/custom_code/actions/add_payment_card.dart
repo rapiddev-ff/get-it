@@ -1,7 +1,8 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+
 import '/backend/supabase/supabase.dart';
 import '/core/config/app_config.dart';
-
-import 'package:flutter_stripe/flutter_stripe.dart';
 
 Future<Map<String, dynamic>> addPaymentCard(
   String cardNumber,
@@ -35,6 +36,7 @@ Future<Map<String, dynamic>> addPaymentCard(
       Stripe.publishableKey = stripeKey;
       await Stripe.instance.applySettings();
     } catch (e) {
+      debugPrint('[addPaymentCard] Stripe.applySettings() failed: $e');
       return {'success': false, 'error': 'Failed to initialize Stripe'};
     }
 

@@ -594,11 +594,49 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
                               style: Theme.of(context).textTheme.titleSmall!,
                             ),
                             if (product.conditions.isNotEmpty)
-                              _buildDetailRow(
-                                'Condition',
-                                product.conditions
-                                    .map((c) => c.name)
-                                    .join(', '),
+                              Padding(
+                                padding: EdgeInsets.only(top: 12.0),
+                                child: Row(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Condition',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge!,
+                                    ),
+                                    SizedBox(width: 12.0),
+                                    Expanded(
+                                      child: Wrap(
+                                        alignment: WrapAlignment.end,
+                                        spacing: 6.0,
+                                        runSpacing: 6.0,
+                                        children: product.conditions
+                                            .map((c) => Container(
+                                                  padding:
+                                                      EdgeInsets.symmetric(
+                                                          horizontal: 8.0,
+                                                          vertical: 4.0),
+                                                  decoration: BoxDecoration(
+                                                    color: AppColors
+                                                        .surfaceDark,
+                                                    borderRadius:
+                                                        BorderRadius
+                                                            .circular(4.0),
+                                                  ),
+                                                  child: Text(
+                                                    c.name,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyLarge!,
+                                                  ),
+                                                ))
+                                            .toList(),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             if (product.year != null)
                               _buildDetailRow('Year', product.year.toString()),

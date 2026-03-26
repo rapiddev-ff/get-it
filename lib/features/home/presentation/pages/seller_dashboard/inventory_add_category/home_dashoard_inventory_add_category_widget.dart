@@ -63,8 +63,12 @@ class _HomeDashoardInventoryAddCategoryWidgetState
         borderRadius: BorderRadius.vertical(top: Radius.circular(24.0)),
       ),
       child: Padding(
-        padding:
-            EdgeInsets.only(left: 16.0, top: 24.0, right: 16.0, bottom: 32.0),
+        padding: EdgeInsets.only(
+          left: 16.0,
+          top: 24.0,
+          right: 16.0,
+          bottom: 32.0 + MediaQuery.of(context).viewPadding.bottom,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
