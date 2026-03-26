@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import '/core/theme/app_colors.dart';
-import '/core/utils/list_extensions.dart';
 import '/core/widgets/app_text_field.dart';
 import '/core/widgets/app_gradient_button.dart';
 import '/core/widgets/dismiss_keyboard.dart';
@@ -86,220 +85,220 @@ class _SettingsShippingDefaultsWidgetState
           ),
         ),
         body: SafeArea(
-          child: LayoutBuilder(
-            builder: (context, constraints) => SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                child: Padding(
-                  padding: EdgeInsets.only(left: 16.0, top: 32.0, right: 16.0),
-                  child: Column(
-                    children: [
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Shipping Cost',
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 32.0),
+                        Text(
+                          'Shipping Cost',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(
+                                  fontWeight: FontWeight.w500, height: 1.5),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 8.0),
+                          child: Text(
+                            'Applies to all your items by default. Products can override this.',
                             style: Theme.of(context)
                                 .textTheme
-                                .headlineSmall!
-                                .copyWith(
-                                    fontWeight: FontWeight.w500, height: 1.5),
+                                .labelMedium!
+                                .copyWith(height: 1.5),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 8.0),
-                            child: Text(
-                              'Applies to all your items by default. Products can override this.',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .copyWith(height: 1.5),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 32.0),
+                          child: Text(
+                            'Default Flat Shipping Rate',
+                            style: GoogleFonts.inter(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 15.0,
+                              height: 1.5,
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 32.0),
-                            child: Text(
-                              'Default Flat Shipping Rate',
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 15.0,
-                                height: 1.5,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 8.0),
+                          child: Container(
+                            width: double.infinity,
+                            child: TextFormField(
+                              controller: textController1,
+                              focusNode: textFieldFocusNode1,
+                              onChanged: (_) => EasyDebounce.debounce(
+                                'textController1',
+                                Duration(milliseconds: 100),
+                                () => setState(() {}),
                               ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 8.0),
-                            child: Container(
-                              width: double.infinity,
-                              child: TextFormField(
-                                controller: textController1,
-                                focusNode: textFieldFocusNode1,
-                                onChanged: (_) => EasyDebounce.debounce(
-                                  'textController1',
-                                  Duration(milliseconds: 100),
-                                  () => setState(() {}),
-                                ),
-                                autofocus: false,
-                                enabled: true,
-                                obscureText: false,
-                                decoration: appInputDecoration(
-                                  '0.00',
-                                  prefix: Padding(
-                                    padding: EdgeInsets.only(right: 4.0),
-                                    child: Text(
-                                      '\$',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge!
-                                          .copyWith(color: Colors.white),
-                                    ),
+                              autofocus: false,
+                              enabled: true,
+                              obscureText: false,
+                              decoration: appInputDecoration(
+                                '0.00',
+                                prefix: Padding(
+                                  padding: EdgeInsets.only(right: 4.0),
+                                  child: Text(
+                                    '\$',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .copyWith(color: Colors.white),
                                   ),
                                 ),
-                                style: appTextFieldStyle,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.allow(
-                                      RegExp(r'^\d*\.?\d{0,2}')),
-                                ],
-                                keyboardType:
-                                    const TextInputType.numberWithOptions(
-                                        decimal: true),
-                                cursorColor: AppColors.textPrimary,
-                                enableInteractiveSelection: true,
                               ),
+                              style: appTextFieldStyle,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'^\d*\.?\d{0,2}')),
+                              ],
+                              keyboardType:
+                                  const TextInputType.numberWithOptions(
+                                      decimal: true),
+                              cursorColor: AppColors.textPrimary,
+                              enableInteractiveSelection: true,
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 8.0),
-                            child: Text(
-                              'Charged once per order (first item).',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .copyWith(height: 1.5),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 8.0),
+                          child: Text(
+                            'Charged once per order (first item).',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .copyWith(height: 1.5),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 32.0),
+                          child: Text(
+                            'Additional Item Fee',
+                            style: GoogleFonts.inter(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 15.0,
+                              height: 1.5,
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 32.0),
-                            child: Text(
-                              'Additional Item Fee',
-                              style: GoogleFonts.inter(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 15.0,
-                                height: 1.5,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 8.0),
+                          child: Container(
+                            width: double.infinity,
+                            child: TextFormField(
+                              controller: textController2,
+                              focusNode: textFieldFocusNode2,
+                              onChanged: (_) => EasyDebounce.debounce(
+                                'textController2',
+                                Duration(milliseconds: 100),
+                                () => setState(() {}),
                               ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 8.0),
-                            child: Container(
-                              width: double.infinity,
-                              child: TextFormField(
-                                controller: textController2,
-                                focusNode: textFieldFocusNode2,
-                                onChanged: (_) => EasyDebounce.debounce(
-                                  'textController2',
-                                  Duration(milliseconds: 100),
-                                  () => setState(() {}),
-                                ),
-                                autofocus: false,
-                                enabled: true,
-                                obscureText: false,
-                                decoration: appInputDecoration(
-                                  '0.00',
-                                  prefix: Padding(
-                                    padding: EdgeInsets.only(right: 4.0),
-                                    child: Text(
-                                      '\$',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge!
-                                          .copyWith(color: Colors.white),
-                                    ),
+                              autofocus: false,
+                              enabled: true,
+                              obscureText: false,
+                              decoration: appInputDecoration(
+                                '0.00',
+                                prefix: Padding(
+                                  padding: EdgeInsets.only(right: 4.0),
+                                  child: Text(
+                                    '\$',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .copyWith(color: Colors.white),
                                   ),
                                 ),
-                                style: appTextFieldStyle,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.allow(
-                                      RegExp(r'^\d*\.?\d{0,2}')),
-                                ],
-                                keyboardType:
-                                    const TextInputType.numberWithOptions(
-                                        decimal: true),
-                                cursorColor: AppColors.textPrimary,
-                                enableInteractiveSelection: true,
                               ),
+                              style: appTextFieldStyle,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'^\d*\.?\d{0,2}')),
+                              ],
+                              keyboardType:
+                                  const TextInputType.numberWithOptions(
+                                      decimal: true),
+                              cursorColor: AppColors.textPrimary,
+                              enableInteractiveSelection: true,
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 8.0),
-                            child: Text(
-                              'Added for each additional item.',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .copyWith(height: 1.5),
-                            ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 8.0),
+                          child: Text(
+                            'Added for each additional item.',
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .copyWith(height: 1.5),
                           ),
-                        ],
-                      ),
-                      const Spacer(),
-                      Column(
-                        children: [
-                          AppGradientButton(
-                            text: 'Save Shipping Cost',
-                            onPressed: () async {
-                              await Future.wait([
-                                Future(() async {
-                                  saveShippingSettings = await actions.callRpc(
-                                    context,
-                                    'save_seller_shipping_settings',
-                                    <String, double?>{
-                                      'p_flat_rate':
-                                          double.tryParse(textController1.text),
-                                      'p_additional_item_fee':
-                                          double.tryParse(textController2.text),
-                                    },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 16.0, bottom: 32.0),
+                  child: Column(
+                    children: [
+                      AppGradientButton(
+                        text: 'Save Shipping Cost',
+                        onPressed: () async {
+                          await Future.wait([
+                            Future(() async {
+                              saveShippingSettings = await actions.callRpc(
+                                context,
+                                'save_seller_shipping_settings',
+                                <String, double?>{
+                                  'p_flat_rate':
+                                      double.tryParse(textController1.text),
+                                  'p_additional_item_fee':
+                                      double.tryParse(textController2.text),
+                                },
+                              );
+                            }),
+                            Future(() async {
+                              ref.read(authProvider.notifier).updateUser(
+                                    (e) => e.copyWith(
+                                      userSettings: (e.userSettings ??
+                                              const UserSettings())
+                                          .copyWith(
+                                        defaultFlatShippingRate:
+                                            double.tryParse(
+                                                    textController1.text) ??
+                                                0.0,
+                                        defaultAdditionalItemFee:
+                                            double.tryParse(
+                                                    textController2.text) ??
+                                                0.0,
+                                      ),
+                                    ),
                                   );
-                                }),
-                                Future(() async {
-                                  ref.read(authProvider.notifier).updateUser(
-                                        (e) => e.copyWith(
-                                          userSettings: (e.userSettings ??
-                                                  const UserSettings())
-                                              .copyWith(
-                                            defaultFlatShippingRate:
-                                                double.tryParse(
-                                                        textController1.text) ??
-                                                    0.0,
-                                            defaultAdditionalItemFee:
-                                                double.tryParse(
-                                                        textController2.text) ??
-                                                    0.0,
-                                          ),
-                                        ),
-                                      );
-                                  if (mounted) setState(() {});
-                                }),
-                              ]);
-                              if (!mounted) return;
-                              context.pop();
-                            },
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 16.0),
-                            child: AppOutlineButton(
-                              text: 'Cancel',
-                              onPressed: () async {
-                                context.pop();
-                              },
-                            ),
-                          ),
-                        ].addToEnd(SizedBox(height: 32.0)),
+                              if (mounted) setState(() {});
+                            }),
+                          ]);
+                          if (!mounted) return;
+                          context.pop();
+                        },
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 16.0),
+                        child: AppOutlineButton(
+                          text: 'Cancel',
+                          onPressed: () async {
+                            context.pop();
+                          },
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ),
+              ],
             ),
           ),
         ),

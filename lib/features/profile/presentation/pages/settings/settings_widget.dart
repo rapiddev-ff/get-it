@@ -930,6 +930,8 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
                         onPressed: () async {
                           await authManager.signOut();
                           ref.read(authProvider.notifier).clear();
+                          ref.invalidate(currentUserIdProvider);
+                          ref.invalidate(currentUserEmailProvider);
 
                           if (!mounted) return;
                           context.goNamed(WelcomeWidget.routeName);

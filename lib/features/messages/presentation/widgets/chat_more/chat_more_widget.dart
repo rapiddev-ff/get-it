@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '/features/messages/presentation/providers/messages_provider.dart';
 
 class ChatMoreWidget extends ConsumerStatefulWidget {
   const ChatMoreWidget({
@@ -24,6 +25,7 @@ class ChatMoreWidget extends ConsumerStatefulWidget {
 class _ChatMoreWidgetState extends ConsumerState<ChatMoreWidget> {
   bool _loading = false;
   bool? _isFollowing;
+  bool _isDeleting = false;
 
   @override
   void initState() {
@@ -82,6 +84,35 @@ class _ChatMoreWidgetState extends ConsumerState<ChatMoreWidget> {
       Navigator.of(context).pop();
       actions.toastificationshow(
           context, 'Error', 'Something went wrong', 'error');
+    }
+  }
+
+  Future<void> _deleteConversation() async {
+    if (_isDeleting) return;
+    setState(() => _isDeleting = true);
+
+    try {
+      await Supabase.instance.client.rpc(
+        'delete_conversation',
+        params: {'p_conversation_id': widget.conversationId!},
+      );
+      // Remove from local state so the list updates immediately
+      final convs = ref.read(messagesProvider).conversations;
+      final updated = convs
+          .where((c) => c.id != widget.conversationId)
+          .toList();
+      ref.read(messagesProvider.notifier).setConversations(updated);
+      if (!mounted) return;
+      Navigator.of(context).pop();
+      actions.toastificationshow(
+          context, 'Deleted', 'Conversation deleted', 'success');
+      if (!mounted) return;
+      context.pop();
+    } catch (_) {
+      if (!mounted) return;
+      Navigator.of(context).pop();
+      actions.toastificationshow(
+          context, 'Error', 'Could not delete conversation', 'error');
     }
   }
 
@@ -145,6 +176,28 @@ class _ChatMoreWidgetState extends ConsumerState<ChatMoreWidget> {
                     _isFollowing == true ? 'Unfollow User' : 'Follow User',
                     style: textStyle,
                   ),
+                ].divide(SizedBox(width: 16.0)),
+              ),
+            ),
+            Divider(
+              height: 1.0,
+              thickness: 1.0,
+              color: AppColors.neutral800,
+            ),
+            InkWell(
+              onTap: _deleteConversation,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Icon(
+                      Icons.delete_outline,
+                      color: AppColors.error,
+                      size: 20.0,
+                    ),
+                  ),
+                  Text('Delete Chat',
+                      style: textStyle.copyWith(color: AppColors.error)),
                 ].divide(SizedBox(width: 16.0)),
               ),
             ),

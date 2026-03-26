@@ -18,6 +18,7 @@ import '/core/theme/app_theme.dart';
 import '/core/utils/error_handler.dart';
 import '/core/utils/widget_extensions.dart';
 import '/features/auth/presentation/providers/auth_provider.dart';
+import '/core/providers/current_user_provider.dart';
 
 void main() {
   AppErrorHandler.runGuarded(() async {
@@ -104,6 +105,9 @@ class _MyAppState extends ConsumerState<MyApp> {
     try {
       userStream = getItSupabaseUserStream();
       _userSubscription = userStream.listen((user) {
+        // Invalidate cached user ID/email so they re-read from Supabase auth
+        ref.invalidate(currentUserIdProvider);
+        ref.invalidate(currentUserEmailProvider);
         // Clear all user-specific state on logout
         if (!user.loggedIn) {
           ref.read(authProvider.notifier).clear();

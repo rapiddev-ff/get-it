@@ -10,12 +10,10 @@ import '/features/messages/presentation/widgets/chat_more/chat_more_widget.dart'
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/features/home/presentation/pages/home_seller_profile/home_seller_profile_widget.dart';
-import '/features/messages/presentation/pages/chat_buyer_profile/chat_buyer_profile_widget.dart';
 import '/features/home/presentation/pages/home_product/home_product_widget.dart';
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import '/core/providers/current_user_provider.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -23,6 +21,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '/features/messages/domain/models/conversation_model.dart';
+import '/backend/supabase/supabase.dart';
 
 class ChatPageWidget extends ConsumerStatefulWidget {
   const ChatPageWidget({
@@ -43,6 +42,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
   final _textController = TextEditingController();
   final _textFieldFocusNode = FocusNode();
   bool _isSending = false;
+  bool _messageSent = false;
 
   static const _defaultAvatar =
       'https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=s0aTdmT5aU6b8ot7VKm11DeID6NctRCpB755rA1BIP0=';
@@ -62,6 +62,14 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
 
   @override
   void dispose() {
+    // GT-115: Clean up empty conversation if user left without sending a message
+    if (!_messageSent && widget.conversation?.lastMessageText == null) {
+      final convId = widget.conversation!.id;
+      SupaFlow.client
+          .rpc('delete_conversation',
+              params: {'p_conversation_id': convId})
+          .then((_) {});
+    }
     _textFieldFocusNode.dispose();
     _textController.dispose();
     super.dispose();
@@ -73,31 +81,34 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
       child: Scaffold(
         backgroundColor: AppColors.backgroundSecondary,
         appBar: _buildAppBar(),
-        body: Column(
-          children: [
-            if (_hasProduct) _buildProductBanner(),
-            Expanded(
-              child: ColoredBox(
-                color: AppColors.backgroundPrimary,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: custom_widgets.InfiniteMessageList(
-                    width: double.infinity,
-                    height: double.infinity,
-                    conversationId: widget.conversation!.id,
-                    pageSize: 30,
-                    loadMoreThreshold: 300.0,
-                    itemBuilder: (Message message) => ChatItemWidget(
-                      messageDataType: message,
+        body: SafeArea(
+          top: false,
+          child: Column(
+            children: [
+              if (_hasProduct) _buildProductBanner(),
+              Expanded(
+                child: ColoredBox(
+                  color: AppColors.backgroundPrimary,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: custom_widgets.InfiniteMessageList(
+                      width: double.infinity,
+                      height: double.infinity,
+                      conversationId: widget.conversation!.id,
+                      pageSize: 30,
+                      loadMoreThreshold: 300.0,
+                      itemBuilder: (Message message) => ChatItemWidget(
+                        messageDataType: message,
+                      ),
+                      loadingIndicator: _buildEmptyState,
+                      emptyWidget: _buildEmptyState,
                     ),
-                    loadingIndicator: _buildEmptyState,
-                    emptyWidget: _buildEmptyState,
                   ),
                 ),
               ),
-            ),
-            _buildMessageInput(),
-          ],
+              _buildMessageInput(),
+            ],
+          ),
         ),
       ),
     );
@@ -179,17 +190,12 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
   }
 
   void _navigateToProfile() {
-    if (widget.conversation?.buyerId == ref.read(currentUserIdProvider)) {
-      context.pushNamed(
-        HomeSellerProfileWidget.routeName,
-        queryParameters: {'sellerId': widget.conversation?.sellerId ?? ''},
-      );
-    } else {
-      context.pushNamed(
-        ChatBuyerProfileWidget.routeName,
-        queryParameters: {'buyerId': widget.conversation?.buyerId ?? ''},
-      );
-    }
+    context.pushNamed(
+      HomeSellerProfileWidget.routeName,
+      queryParameters: {
+        'sellerId': widget.conversation?.otherUserId ?? '',
+      },
+    );
   }
 
   Future<void> _showMoreMenu(BuildContext context) async {
@@ -403,6 +409,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
     final text = _textController.text.trim();
     if (text.isEmpty || _isSending) return;
     _isSending = true;
+    _messageSent = true;
     _textController.clear();
     try {
       await actions.sendMessage(
@@ -437,6 +444,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
 
       if (selectedUploadedFiles.isNotEmpty &&
           (selectedUploadedFiles.first.bytes?.isNotEmpty ?? false)) {
+        _messageSent = true;
         await actions.uploadAndSendImages(
           ref,
           widget.conversation!.id,

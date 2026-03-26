@@ -53,6 +53,10 @@ Future<Conversation?> getOrCreateConversation(
           ? json['product_image']
           : null,
       productPrice: (json['product_price'] as num?)?.toDouble(),
+      productCondition: (json['product_condition'] != null &&
+              json['product_condition'].toString().isNotEmpty)
+          ? json['product_condition']
+          : null,
     );
   } catch (e) {
     debugPrint('[getOrCreateConversation] Error: $e');

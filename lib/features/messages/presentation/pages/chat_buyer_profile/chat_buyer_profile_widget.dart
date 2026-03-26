@@ -4,7 +4,6 @@ import '/core/theme/app_colors.dart';
 import '/core/utils/list_extensions.dart';
 import '/core/utils/value_utils.dart';
 import '/core/widgets/dismiss_keyboard.dart';
-import '/features/auth/presentation/providers/auth_provider.dart';
 import '/features/profile/presentation/pages/review_item/review_item_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +59,11 @@ class _ChatBuyerProfileWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final userData = ref.watch(authProvider);
+    final json = _getReviews?.jsonBody;
+    final profile = (json is Map ? json['profile'] : null) as Map?;
+    final buyerUsername = (profile?['username'] ?? '').toString();
+    final buyerAvatarUrl = (profile?['avatarUrl'] ?? '').toString();
+    final buyerIsSeller = profile?['isSeller'] == true;
 
     return DismissKeyboard(
       child: Scaffold(
@@ -115,8 +118,8 @@ class _ChatBuyerProfileWidgetState
                           fadeInDuration: Duration(milliseconds: 100),
                           fadeOutDuration: Duration(milliseconds: 100),
                           imageUrl: valueOrDefault<String>(
-                            userData.avatarUrl.isNotEmpty
-                                ? userData.avatarUrl
+                            buyerAvatarUrl.isNotEmpty
+                                ? buyerAvatarUrl
                                 : null,
                             'https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=s0aTdmT5aU6b8ot7VKm11DeID6NctRCpB755rA1BIP0=',
                           ),
@@ -130,7 +133,7 @@ class _ChatBuyerProfileWidgetState
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '@${userData.username}',
+                              '@${buyerUsername}',
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium!
@@ -148,7 +151,7 @@ class _ChatBuyerProfileWidgetState
                                     color: AppColors.statusYellow,
                                   ),
                                   direction: Axis.horizontal,
-                                  rating: userData.isSeller
+                                  rating: buyerIsSeller
                                       ? (valueOrDefault<int>(
                                           _jsonField(
                                             (_getReviews?.jsonBody ?? ''),
@@ -187,7 +190,7 @@ class _ChatBuyerProfileWidgetState
                                 ),
                                 Text(
                                   valueOrDefault<String>(
-                                    (userData.isSeller
+                                    (buyerIsSeller
                                             ? (valueOrDefault<int>(
                                                 _jsonField(
                                                   (_getReviews?.jsonBody ?? ''),
@@ -229,7 +232,7 @@ class _ChatBuyerProfileWidgetState
                                       .copyWith(fontWeight: FontWeight.w500),
                                 ),
                                 Text(
-                                  '(${userData.isSeller ? valueOrDefault<String>(
+                                  '(${buyerIsSeller ? valueOrDefault<String>(
                                       _jsonField(
                                         (_getReviews?.jsonBody ?? ''),
                                         'as_seller',
@@ -318,37 +321,6 @@ class _ChatBuyerProfileWidgetState
                                     ),
                                   ],
                                 ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(bottom: 10.0),
-                                    child: Text(
-                                      'Blocked Sellers',
-                                      style: GoogleFonts.inter(
-                                        fontSize: 14.0,
-                                        color: _state == 'As Seller'
-                                            ? AppColors.textPrimary
-                                            : AppColors.textSecondary,
-                                        height: 2.0,
-                                      ),
-                                    ),
-                                  ),
-                                  Opacity(
-                                    opacity: (_state == 'As Seller' ? 1 : 0)
-                                        .toDouble(),
-                                    child: Container(
-                                      width: double.infinity,
-                                      height: 2.0,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.secondary,
-                                      ),
-                                    ),
-                                  ),
-                                ],
                               ),
                             ),
                           ],

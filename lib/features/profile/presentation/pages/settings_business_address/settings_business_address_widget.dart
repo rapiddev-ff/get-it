@@ -1,4 +1,5 @@
 import '/backend/supabase/supabase.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/core/utils/geo_data.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,9 @@ class _SettingsBusinessAddressWidgetState
   bool setAsDefault = false;
   String? countryDropdownValue;
   String? stateDropdownValue;
+  List<String> _autocompletePredictions = [];
+  List<String> _autocompletePlaceIds = [];
+  bool _showAddressSuggestions = false;
 
   // Text controllers and focus nodes
   late final TextEditingController addressLine1TextController;
@@ -53,7 +57,15 @@ class _SettingsBusinessAddressWidgetState
     final userData = ref.read(authProvider);
     addressLine1TextController = TextEditingController(
         text: userData.businessAddress?.addressLine1 ?? '');
-    addressLine1FocusNode = FocusNode();    addressLine2TextController = TextEditingController(
+    addressLine1FocusNode = FocusNode();
+    addressLine1FocusNode.addListener(() {
+      if (!addressLine1FocusNode.hasFocus) {
+        Future.delayed(Duration(milliseconds: 200), () {
+          if (mounted) setState(() => _showAddressSuggestions = false);
+        });
+      }
+    });
+    addressLine2TextController = TextEditingController(
         text: userData.businessAddress?.addressLine2 ?? '');
     addressLine2FocusNode = FocusNode();    stateTextController =
         TextEditingController(text: userData.businessAddress?.state ?? '');
@@ -77,6 +89,77 @@ class _SettingsBusinessAddressWidgetState
     zipCodeFocusNode.dispose();
     zipCodeTextController.dispose();
     super.dispose();
+  }
+
+  static Map<String, String> _parseAddressComponents(dynamic addressResponse) {
+    final components = (addressResponse is Map
+            ? addressResponse['addressComponents']
+            : null) as List? ??
+        [];
+    String streetNumber = '';
+    String route = '';
+    String city = '';
+    String county = '';
+    String state = '';
+    String zip = '';
+    String country = '';
+    for (final c in components) {
+      final types = ((c['types'] as List?)?.cast<String>()) ?? [];
+      final longText = (c['longText'] ?? '').toString();
+      final shortText = (c['shortText'] ?? '').toString();
+      if (types.contains('street_number')) streetNumber = longText;
+      if (types.contains('route')) route = longText;
+      if (types.contains('locality') ||
+          types.contains('sublocality') ||
+          types.contains('sublocality_level_1') ||
+          types.contains('postal_town')) city = longText;
+      if (types.contains('administrative_area_level_2')) county = longText;
+      if (types.contains('administrative_area_level_1')) state = longText;
+      if (types.contains('postal_code')) zip = longText;
+      if (types.contains('country')) country = shortText;
+    }
+    String street = '$streetNumber $route'.trim();
+    if (street.isEmpty && addressResponse is Map) {
+      final formatted = (addressResponse['formattedAddress'] ?? '').toString();
+      if (formatted.isNotEmpty) {
+        street = formatted.split(',').first.trim();
+      }
+    }
+    if (city.isEmpty) city = county;
+    return {
+      'street': street,
+      'city': city,
+      'state': state,
+      'zip': zip,
+      'country': country,
+    };
+  }
+
+  Future<void> _selectPlace(int index) async {
+    final placeId = _autocompletePlaceIds[index];
+    final selectedName = _autocompletePredictions[index];
+    setState(() {
+      addressLine1TextController.text = selectedName;
+      _showAddressSuggestions = false;
+      _autocompletePredictions = [];
+      _autocompletePlaceIds = [];
+    });
+
+    final getPlace =
+        await GooglePlacesGroup.getPlaceCall.call(placeId: placeId);
+    if (!mounted) return;
+
+    if (getPlace.succeeded) {
+      final parsed = _parseAddressComponents(getPlace.jsonBody ?? {});
+      setState(() {
+        addressLine1TextController.text = parsed['street'] ?? '';
+        cityTextController.text = parsed['city'] ?? '';
+        zipCodeTextController.text = parsed['zip'] ?? '';
+        stateTextController.text = parsed['state'] ?? '';
+        stateDropdownValue = parsed['state'] ?? '';
+        countryDropdownValue = parsed['country'] ?? '';
+      });
+    }
   }
 
   @override
@@ -132,18 +215,99 @@ class _SettingsBusinessAddressWidgetState
                         ),
                         Padding(
                           padding: EdgeInsets.only(top: 8.0),
-                          child: Container(
-                            width: double.infinity,
-                            child: AppTextField(
-                              controller: addressLine1TextController,
-                              focusNode: addressLine1FocusNode,
-                              hintText: '123, Main street',
-                              onChanged: (_) => EasyDebounce.debounce(
-                                'addressLine1TextController',
-                                Duration(milliseconds: 100),
-                                () => setState(() {}),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Container(
+                                width: double.infinity,
+                                child: AppTextField(
+                                  controller: addressLine1TextController,
+                                  focusNode: addressLine1FocusNode,
+                                  hintText: '123, Main street',
+                                  onChanged: (_) => EasyDebounce.debounce(
+                                    'addressLine1TextController',
+                                    Duration(milliseconds: 300),
+                                    () async {
+                                      final text =
+                                          addressLine1TextController.text;
+                                      if (text.length >= 3) {
+                                        final result = await GooglePlacesGroup
+                                            .autocompleteCall
+                                            .call(searchingString: text);
+                                        if (!mounted) return;
+                                        if (result.succeeded) {
+                                          _autocompletePredictions =
+                                              GooglePlacesGroup.autocompleteCall
+                                                      .predictionPlaceText(
+                                                          result.jsonBody ?? '')
+                                                      ?.toList()
+                                                      .cast<String>() ??
+                                                  [];
+                                          _autocompletePlaceIds =
+                                              (GooglePlacesGroup
+                                                              .autocompleteCall
+                                                              .autocompletePredictions(
+                                                                  result.jsonBody ??
+                                                                      '')
+                                                          as List?)
+                                                      ?.map<String>(
+                                                          (e) => e.toString())
+                                                      .toList() ??
+                                                  [];
+                                          setState(() =>
+                                              _showAddressSuggestions =
+                                                  _autocompletePredictions
+                                                      .isNotEmpty);
+                                        }
+                                      } else {
+                                        if (mounted) {
+                                          setState(() {
+                                            _showAddressSuggestions = false;
+                                            _autocompletePredictions = [];
+                                            _autocompletePlaceIds = [];
+                                          });
+                                        }
+                                      }
+                                    },
+                                  ),
+                                ),
                               ),
-                            ),
+                              if (_showAddressSuggestions &&
+                                  _autocompletePredictions.isNotEmpty)
+                                Material(
+                                  elevation: 4.0,
+                                  color: AppColors.backgroundPrimary,
+                                  borderRadius: BorderRadius.circular(4.0),
+                                  child: ConstrainedBox(
+                                    constraints:
+                                        BoxConstraints(maxHeight: 200.0),
+                                    child: ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      shrinkWrap: true,
+                                      itemCount:
+                                          _autocompletePredictions.length,
+                                      itemBuilder: (context, index) {
+                                        return InkWell(
+                                          onTap: () => _selectPlace(index),
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 16.0,
+                                                vertical: 12.0),
+                                            child: Text(
+                                              _autocompletePredictions[index],
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium,
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                            ],
                           ),
                         ),
                         Padding(
