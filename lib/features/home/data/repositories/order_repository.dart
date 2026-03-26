@@ -21,8 +21,7 @@ class OrderRepository {
         .from('orders')
         .select('''
           *,
-          order_items(product_id, product_title, product_price, quantity, products(main_image_url)),
-          buyer:users!orders_buyer_id_fkey(id, username, photo_url)
+          order_items(product_id, product_title, product_price, quantity)
         ''')
         .eq('seller_id', sellerId)
         .isFilter('deleted_at', null)
@@ -61,7 +60,29 @@ class OrderRepository {
       }
     }
 
-    return List<Map<String, dynamic>>.from(response);
+    // Enrich with buyer profile data
+    final orders = List<Map<String, dynamic>>.from(response);
+    final buyerIds = orders
+        .map((o) => o['buyer_id']?.toString())
+        .where((id) => id != null && id.isNotEmpty)
+        .toSet()
+        .toList();
+    if (buyerIds.isNotEmpty) {
+      final profiles = await _client
+          .from('user_profiles')
+          .select('user_id, username, avatar_url')
+          .inFilter('user_id', buyerIds);
+      final profileMap = {
+        for (final p in profiles) p['user_id']: p,
+      };
+      for (final order in orders) {
+        order['buyer'] = profileMap[order['buyer_id']];
+      }
+    }
+
+    await _enrichOrderItemsWithImages(orders);
+
+    return orders;
   }
 
   /// Returns counts: {to_ship: int, shipped: int}
@@ -353,8 +374,7 @@ class OrderRepository {
         .from('orders')
         .select('''
           *,
-          order_items(product_id, product_title, product_price, quantity, products(main_image_url)),
-          seller:users!orders_seller_id_fkey(id, username, photo_url)
+          order_items(product_id, product_title, product_price, quantity)
         ''')
         .eq('buyer_id', buyerId)
         .isFilter('deleted_at', null);
@@ -376,7 +396,30 @@ class OrderRepository {
       response = await ordered;
     }
 
-    return List<Map<String, dynamic>>.from(response);
+    // Enrich with seller profile data and product images
+    final orders = List<Map<String, dynamic>>.from(response);
+    final sellerIds = orders
+        .map((o) => o['seller_id']?.toString())
+        .where((id) => id != null && id.isNotEmpty)
+        .toSet()
+        .toList();
+    if (sellerIds.isNotEmpty) {
+      final profiles = await _client
+          .from('user_profiles')
+          .select('user_id, username, avatar_url')
+          .inFilter('user_id', sellerIds);
+      final profileMap = {
+        for (final p in profiles) p['user_id']: p,
+      };
+      for (final order in orders) {
+        order['seller'] = profileMap[order['seller_id']];
+      }
+    }
+
+    // Enrich order_items with main product image
+    await _enrichOrderItemsWithImages(orders);
+
+    return orders;
   }
 
   /// Returns buyer order counts by status group.
@@ -417,12 +460,62 @@ class OrderRepository {
     try {
       final result = await _client.from('orders').select('''
             *,
-            order_items(product_id, product_title, product_price, quantity, products(main_image_url)),
-            seller:users!orders_seller_id_fkey(id, username, photo_url)
+            order_items(product_id, product_title, product_price, quantity)
           ''').eq('id', orderId).eq('buyer_id', buyerId).single();
+      // Enrich with seller profile
+      final sellerId = result['seller_id']?.toString();
+      if (sellerId != null && sellerId.isNotEmpty) {
+        final profile = await _client
+            .from('user_profiles')
+            .select('user_id, username, avatar_url')
+            .eq('user_id', sellerId)
+            .maybeSingle();
+        result['seller'] = profile;
+      }
+      // Enrich with product images
+      await _enrichOrderItemsWithImages([result]);
       return result;
     } catch (_) {
       return null;
+    }
+  }
+
+  /// Enriches order_items with main product image from product_images table.
+  Future<void> _enrichOrderItemsWithImages(
+      List<Map<String, dynamic>> orders) async {
+    final productIds = <String>{};
+    for (final order in orders) {
+      final items = order['order_items'];
+      if (items is List) {
+        for (final item in items) {
+          final pid = item['product_id']?.toString();
+          if (pid != null && pid.isNotEmpty) productIds.add(pid);
+        }
+      }
+    }
+    if (productIds.isEmpty) return;
+
+    final images = await _client
+        .from('product_images')
+        .select('product_id, image_url')
+        .inFilter('product_id', productIds.toList())
+        .eq('is_main', true);
+
+    final imageMap = <String, String>{};
+    for (final img in images) {
+      imageMap[img['product_id']] = img['image_url'] ?? '';
+    }
+
+    for (final order in orders) {
+      final items = order['order_items'];
+      if (items is List) {
+        for (final item in items) {
+          final pid = item['product_id']?.toString();
+          if (pid != null && imageMap.containsKey(pid)) {
+            item['products'] = {'main_image_url': imageMap[pid]};
+          }
+        }
+      }
     }
   }
 

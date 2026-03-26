@@ -57,6 +57,7 @@ class HomeSellerProductWidget extends StatelessWidget {
                   originalPrice: productDataType?.originalPrice ?? 0.0,
                   flashSaleEnabled: productDataType?.flashSaleEnabled ?? false,
                   flashSalePrice: productDataType?.flashSalePrice,
+                  flashSaleEndsAt: productDataType?.flashSaleEndsAt,
                   discountType: productDataType?.discountType,
                   discountAmount: productDataType?.discountAmount,
                 ),

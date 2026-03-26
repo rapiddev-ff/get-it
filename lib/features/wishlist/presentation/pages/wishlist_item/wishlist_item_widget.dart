@@ -100,6 +100,7 @@ class WishlistItemWidget extends StatelessWidget {
                         flashSaleEnabled:
                             productDataType?.flashSaleEnabled ?? false,
                         flashSalePrice: productDataType?.flashSalePrice,
+                        flashSaleEndsAt: productDataType?.flashSaleEndsAt,
                         discountType: productDataType?.discountType,
                         discountAmount: productDataType?.discountAmount,
                       ),

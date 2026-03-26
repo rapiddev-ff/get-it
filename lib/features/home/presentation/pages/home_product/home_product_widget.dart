@@ -891,8 +891,10 @@ class _HomeProductWidgetState extends ConsumerState<HomeProductWidget> {
   }
 
   Widget _buildPriceRow(ProductDetails product) {
-    final hasFlashSale =
-        product.flashSaleEnabled && product.flashSalePrice != null;
+    final flashSaleActive = product.flashSaleEnabled &&
+        product.flashSaleEndsAt != null &&
+        DateTime.now().isBefore(product.flashSaleEndsAt!);
+    final hasFlashSale = flashSaleActive && product.flashSalePrice != null;
 
     double currentPrice = product.price;
     double? originalPrice;

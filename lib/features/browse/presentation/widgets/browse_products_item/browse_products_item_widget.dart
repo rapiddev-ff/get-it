@@ -67,6 +67,7 @@ class BrowseProductsItemWidget extends StatelessWidget {
                   originalPrice: browseDataType?.originalPrice ?? 0.0,
                   flashSaleEnabled: browseDataType?.flashSaleEnabled ?? false,
                   flashSalePrice: browseDataType?.flashSalePrice,
+                  flashSaleEndsAt: browseDataType?.flashSaleEndsAt,
                   discountType: browseDataType?.discountType,
                   discountAmount: browseDataType?.discountAmount,
                 ),

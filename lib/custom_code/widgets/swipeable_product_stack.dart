@@ -242,7 +242,7 @@ class _SwipeableProductStackState extends ConsumerState<SwipeableProductStack>
   }
 
   String _formatPrice(FeedProduct product) {
-    if (product.flashSaleEnabled &&
+    if (_isFlashSaleActive(product) &&
         product.flashSalePrice != null &&
         product.flashSalePrice! > 0) {
       return '\$${product.flashSalePrice!.toStringAsFixed(2)}';

@@ -47,7 +47,10 @@ class _QuickPurchasePopupWidgetState
 
   double get _effectivePrice {
     final fp = widget.feedProduct;
-    if (fp.flashSaleEnabled && fp.flashSalePrice != null) {
+    final flashActive = fp.flashSaleEnabled &&
+        fp.flashSaleEndsAt != null &&
+        DateTime.now().isBefore(fp.flashSaleEndsAt!);
+    if (flashActive && fp.flashSalePrice != null) {
       return fp.flashSalePrice!;
     }
     return fp.price;

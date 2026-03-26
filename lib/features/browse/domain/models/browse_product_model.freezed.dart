@@ -26,6 +26,8 @@ mixin _$BrowseProduct {
   double get originalPrice => throw _privateConstructorUsedError;
   bool get flashSaleEnabled => throw _privateConstructorUsedError;
   double? get flashSalePrice => throw _privateConstructorUsedError;
+  @DateTimeConverter()
+  DateTime? get flashSaleEndsAt => throw _privateConstructorUsedError;
   String get mainImageUrl => throw _privateConstructorUsedError;
   String get conditionName => throw _privateConstructorUsedError;
   String get categoryName => throw _privateConstructorUsedError;
@@ -59,6 +61,7 @@ abstract class $BrowseProductCopyWith<$Res> {
       double originalPrice,
       bool flashSaleEnabled,
       double? flashSalePrice,
+      @DateTimeConverter() DateTime? flashSaleEndsAt,
       String mainImageUrl,
       String conditionName,
       String categoryName,
@@ -90,6 +93,7 @@ class _$BrowseProductCopyWithImpl<$Res, $Val extends BrowseProduct>
     Object? originalPrice = null,
     Object? flashSaleEnabled = null,
     Object? flashSalePrice = freezed,
+    Object? flashSaleEndsAt = freezed,
     Object? mainImageUrl = null,
     Object? conditionName = null,
     Object? categoryName = null,
@@ -124,6 +128,10 @@ class _$BrowseProductCopyWithImpl<$Res, $Val extends BrowseProduct>
           ? _value.flashSalePrice
           : flashSalePrice // ignore: cast_nullable_to_non_nullable
               as double?,
+      flashSaleEndsAt: freezed == flashSaleEndsAt
+          ? _value.flashSaleEndsAt
+          : flashSaleEndsAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       mainImageUrl: null == mainImageUrl
           ? _value.mainImageUrl
           : mainImageUrl // ignore: cast_nullable_to_non_nullable
@@ -175,6 +183,7 @@ abstract class _$$BrowseProductImplCopyWith<$Res>
       double originalPrice,
       bool flashSaleEnabled,
       double? flashSalePrice,
+      @DateTimeConverter() DateTime? flashSaleEndsAt,
       String mainImageUrl,
       String conditionName,
       String categoryName,
@@ -204,6 +213,7 @@ class __$$BrowseProductImplCopyWithImpl<$Res>
     Object? originalPrice = null,
     Object? flashSaleEnabled = null,
     Object? flashSalePrice = freezed,
+    Object? flashSaleEndsAt = freezed,
     Object? mainImageUrl = null,
     Object? conditionName = null,
     Object? categoryName = null,
@@ -238,6 +248,10 @@ class __$$BrowseProductImplCopyWithImpl<$Res>
           ? _value.flashSalePrice
           : flashSalePrice // ignore: cast_nullable_to_non_nullable
               as double?,
+      flashSaleEndsAt: freezed == flashSaleEndsAt
+          ? _value.flashSaleEndsAt
+          : flashSaleEndsAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       mainImageUrl: null == mainImageUrl
           ? _value.mainImageUrl
           : mainImageUrl // ignore: cast_nullable_to_non_nullable
@@ -285,6 +299,7 @@ class _$BrowseProductImpl extends _BrowseProduct {
       this.originalPrice = 0.0,
       this.flashSaleEnabled = false,
       this.flashSalePrice,
+      @DateTimeConverter() this.flashSaleEndsAt,
       this.mainImageUrl = '',
       this.conditionName = '',
       this.categoryName = '',
@@ -316,6 +331,9 @@ class _$BrowseProductImpl extends _BrowseProduct {
   @override
   final double? flashSalePrice;
   @override
+  @DateTimeConverter()
+  final DateTime? flashSaleEndsAt;
+  @override
   @JsonKey()
   final String mainImageUrl;
   @override
@@ -340,7 +358,7 @@ class _$BrowseProductImpl extends _BrowseProduct {
 
   @override
   String toString() {
-    return 'BrowseProduct(id: $id, title: $title, price: $price, originalPrice: $originalPrice, flashSaleEnabled: $flashSaleEnabled, flashSalePrice: $flashSalePrice, mainImageUrl: $mainImageUrl, conditionName: $conditionName, categoryName: $categoryName, isInWishlist: $isInWishlist, sellerUsername: $sellerUsername, discountType: $discountType, discountAmount: $discountAmount, createdAt: $createdAt)';
+    return 'BrowseProduct(id: $id, title: $title, price: $price, originalPrice: $originalPrice, flashSaleEnabled: $flashSaleEnabled, flashSalePrice: $flashSalePrice, flashSaleEndsAt: $flashSaleEndsAt, mainImageUrl: $mainImageUrl, conditionName: $conditionName, categoryName: $categoryName, isInWishlist: $isInWishlist, sellerUsername: $sellerUsername, discountType: $discountType, discountAmount: $discountAmount, createdAt: $createdAt)';
   }
 
   @override
@@ -357,6 +375,8 @@ class _$BrowseProductImpl extends _BrowseProduct {
                 other.flashSaleEnabled == flashSaleEnabled) &&
             (identical(other.flashSalePrice, flashSalePrice) ||
                 other.flashSalePrice == flashSalePrice) &&
+            (identical(other.flashSaleEndsAt, flashSaleEndsAt) ||
+                other.flashSaleEndsAt == flashSaleEndsAt) &&
             (identical(other.mainImageUrl, mainImageUrl) ||
                 other.mainImageUrl == mainImageUrl) &&
             (identical(other.conditionName, conditionName) ||
@@ -385,6 +405,7 @@ class _$BrowseProductImpl extends _BrowseProduct {
       originalPrice,
       flashSaleEnabled,
       flashSalePrice,
+      flashSaleEndsAt,
       mainImageUrl,
       conditionName,
       categoryName,
@@ -418,6 +439,7 @@ abstract class _BrowseProduct extends BrowseProduct {
       final double originalPrice,
       final bool flashSaleEnabled,
       final double? flashSalePrice,
+      @DateTimeConverter() final DateTime? flashSaleEndsAt,
       final String mainImageUrl,
       final String conditionName,
       final String categoryName,
@@ -443,6 +465,9 @@ abstract class _BrowseProduct extends BrowseProduct {
   bool get flashSaleEnabled;
   @override
   double? get flashSalePrice;
+  @override
+  @DateTimeConverter()
+  DateTime? get flashSaleEndsAt;
   @override
   String get mainImageUrl;
   @override

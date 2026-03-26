@@ -19,6 +19,7 @@ class BrowseProduct with _$BrowseProduct {
     @Default(0.0) double originalPrice,
     @Default(false) bool flashSaleEnabled,
     double? flashSalePrice,
+    @DateTimeConverter() DateTime? flashSaleEndsAt,
     @Default('') String mainImageUrl,
     @Default('') String conditionName,
     @Default('') String categoryName,

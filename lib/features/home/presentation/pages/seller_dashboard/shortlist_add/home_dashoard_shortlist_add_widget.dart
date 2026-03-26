@@ -556,6 +556,7 @@ class _HomeDashoardShortlistAddWidgetState
                     originalPrice: product.originalPrice,
                     flashSaleEnabled: product.flashSaleEnabled,
                     flashSalePrice: product.flashSalePrice,
+                    flashSaleEndsAt: product.flashSaleEndsAt,
                     discountType: product.discountType,
                     discountAmount: product.discountAmount,
                   ),

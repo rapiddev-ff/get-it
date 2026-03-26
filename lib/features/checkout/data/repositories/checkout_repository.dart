@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -95,17 +96,30 @@ class CheckoutRepository {
         params: {
           'p_product_id': productId,
           'p_quantity': quantity,
-          'p_shipping_address_id': shippingAddressId,
-          'p_payment_method_id': paymentMethodId,
-          'p_buyer_notes': buyerNotes,
-          'p_shortlist_id': shortlistId,
+          'p_shipping_address_id':
+              (shippingAddressId != null && shippingAddressId.isNotEmpty)
+                  ? shippingAddressId
+                  : null,
+          'p_payment_method_id':
+              (paymentMethodId != null && paymentMethodId.isNotEmpty)
+                  ? paymentMethodId
+                  : null,
+          'p_buyer_notes':
+              (buyerNotes != null && buyerNotes.isNotEmpty) ? buyerNotes : null,
+          'p_shortlist_id':
+              (shortlistId != null && shortlistId.isNotEmpty)
+                  ? shortlistId
+                  : null,
         },
       );
 
       if (response == null) return null;
 
       final json = response as Map<String, dynamic>;
-      if (json['success'] != true) return null;
+      if (json['success'] != true) {
+        debugPrint('[createOrder] RPC returned success=false: $json');
+        return null;
+      }
 
       return CheckoutOrderResult(
         success: true,
@@ -120,6 +134,7 @@ class CheckoutRepository {
         productTitle: json['product_title'] ?? '',
       );
     } catch (e) {
+      debugPrint('[createOrder] Error: $e');
       return null;
     }
   }

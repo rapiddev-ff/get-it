@@ -19,6 +19,7 @@ class SellerProduct with _$SellerProduct {
     @Default(0.0) double originalPrice,
     @Default(false) bool flashSaleEnabled,
     double? flashSalePrice,
+    @DateTimeConverter() DateTime? flashSaleEndsAt,
     @Default('') String status,
     @Default(0) int viewsCount,
     @Default('') String conditionName,

@@ -27,6 +27,8 @@ mixin _$SellerProduct {
   double get originalPrice => throw _privateConstructorUsedError;
   bool get flashSaleEnabled => throw _privateConstructorUsedError;
   double? get flashSalePrice => throw _privateConstructorUsedError;
+  @DateTimeConverter()
+  DateTime? get flashSaleEndsAt => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
   int get viewsCount => throw _privateConstructorUsedError;
   String get conditionName => throw _privateConstructorUsedError;
@@ -64,6 +66,7 @@ abstract class $SellerProductCopyWith<$Res> {
       double originalPrice,
       bool flashSaleEnabled,
       double? flashSalePrice,
+      @DateTimeConverter() DateTime? flashSaleEndsAt,
       String status,
       int viewsCount,
       String conditionName,
@@ -99,6 +102,7 @@ class _$SellerProductCopyWithImpl<$Res, $Val extends SellerProduct>
     Object? originalPrice = null,
     Object? flashSaleEnabled = null,
     Object? flashSalePrice = freezed,
+    Object? flashSaleEndsAt = freezed,
     Object? status = null,
     Object? viewsCount = null,
     Object? conditionName = null,
@@ -140,6 +144,10 @@ class _$SellerProductCopyWithImpl<$Res, $Val extends SellerProduct>
           ? _value.flashSalePrice
           : flashSalePrice // ignore: cast_nullable_to_non_nullable
               as double?,
+      flashSaleEndsAt: freezed == flashSaleEndsAt
+          ? _value.flashSaleEndsAt
+          : flashSaleEndsAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -204,6 +212,7 @@ abstract class _$$SellerProductImplCopyWith<$Res>
       double originalPrice,
       bool flashSaleEnabled,
       double? flashSalePrice,
+      @DateTimeConverter() DateTime? flashSaleEndsAt,
       String status,
       int viewsCount,
       String conditionName,
@@ -237,6 +246,7 @@ class __$$SellerProductImplCopyWithImpl<$Res>
     Object? originalPrice = null,
     Object? flashSaleEnabled = null,
     Object? flashSalePrice = freezed,
+    Object? flashSaleEndsAt = freezed,
     Object? status = null,
     Object? viewsCount = null,
     Object? conditionName = null,
@@ -278,6 +288,10 @@ class __$$SellerProductImplCopyWithImpl<$Res>
           ? _value.flashSalePrice
           : flashSalePrice // ignore: cast_nullable_to_non_nullable
               as double?,
+      flashSaleEndsAt: freezed == flashSaleEndsAt
+          ? _value.flashSaleEndsAt
+          : flashSaleEndsAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -337,6 +351,7 @@ class _$SellerProductImpl extends _SellerProduct {
       this.originalPrice = 0.0,
       this.flashSaleEnabled = false,
       this.flashSalePrice,
+      @DateTimeConverter() this.flashSaleEndsAt,
       this.status = '',
       this.viewsCount = 0,
       this.conditionName = '',
@@ -374,6 +389,9 @@ class _$SellerProductImpl extends _SellerProduct {
   @override
   final double? flashSalePrice;
   @override
+  @DateTimeConverter()
+  final DateTime? flashSaleEndsAt;
+  @override
   @JsonKey()
   final String status;
   @override
@@ -407,7 +425,7 @@ class _$SellerProductImpl extends _SellerProduct {
 
   @override
   String toString() {
-    return 'SellerProduct(id: $id, orderId: $orderId, title: $title, price: $price, originalPrice: $originalPrice, flashSaleEnabled: $flashSaleEnabled, flashSalePrice: $flashSalePrice, status: $status, viewsCount: $viewsCount, conditionName: $conditionName, mainImageUrl: $mainImageUrl, isInWishlist: $isInWishlist, discountType: $discountType, discountAmount: $discountAmount, createdAt: $createdAt, quantity: $quantity, categoryId: $categoryId, categoryName: $categoryName)';
+    return 'SellerProduct(id: $id, orderId: $orderId, title: $title, price: $price, originalPrice: $originalPrice, flashSaleEnabled: $flashSaleEnabled, flashSalePrice: $flashSalePrice, flashSaleEndsAt: $flashSaleEndsAt, status: $status, viewsCount: $viewsCount, conditionName: $conditionName, mainImageUrl: $mainImageUrl, isInWishlist: $isInWishlist, discountType: $discountType, discountAmount: $discountAmount, createdAt: $createdAt, quantity: $quantity, categoryId: $categoryId, categoryName: $categoryName)';
   }
 
   @override
@@ -425,6 +443,8 @@ class _$SellerProductImpl extends _SellerProduct {
                 other.flashSaleEnabled == flashSaleEnabled) &&
             (identical(other.flashSalePrice, flashSalePrice) ||
                 other.flashSalePrice == flashSalePrice) &&
+            (identical(other.flashSaleEndsAt, flashSaleEndsAt) ||
+                other.flashSaleEndsAt == flashSaleEndsAt) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.viewsCount, viewsCount) ||
                 other.viewsCount == viewsCount) &&
@@ -450,26 +470,28 @@ class _$SellerProductImpl extends _SellerProduct {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      orderId,
-      title,
-      price,
-      originalPrice,
-      flashSaleEnabled,
-      flashSalePrice,
-      status,
-      viewsCount,
-      conditionName,
-      mainImageUrl,
-      isInWishlist,
-      discountType,
-      discountAmount,
-      createdAt,
-      quantity,
-      categoryId,
-      categoryName);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        orderId,
+        title,
+        price,
+        originalPrice,
+        flashSaleEnabled,
+        flashSalePrice,
+        flashSaleEndsAt,
+        status,
+        viewsCount,
+        conditionName,
+        mainImageUrl,
+        isInWishlist,
+        discountType,
+        discountAmount,
+        createdAt,
+        quantity,
+        categoryId,
+        categoryName
+      ]);
 
   /// Create a copy of SellerProduct
   /// with the given fields replaced by the non-null parameter values.
@@ -496,6 +518,7 @@ abstract class _SellerProduct extends SellerProduct {
       final double originalPrice,
       final bool flashSaleEnabled,
       final double? flashSalePrice,
+      @DateTimeConverter() final DateTime? flashSaleEndsAt,
       final String status,
       final int viewsCount,
       final String conditionName,
@@ -526,6 +549,9 @@ abstract class _SellerProduct extends SellerProduct {
   bool get flashSaleEnabled;
   @override
   double? get flashSalePrice;
+  @override
+  @DateTimeConverter()
+  DateTime? get flashSaleEndsAt;
   @override
   String get status;
   @override

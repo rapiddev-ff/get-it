@@ -1,8 +1,8 @@
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '/backend/api_requests/api_calls.dart';
 import '/core/constants/app_constants.dart';
@@ -35,7 +35,6 @@ class _PhoneVerificationPageWidgetState
     extends State<PhoneVerificationPageWidget> with KeyboardVisibilityMixin {
   late final TextEditingController textController;
   late final FocusNode textFieldFocusNode;
-  late final MaskTextInputFormatter textFieldMask;
   bool _isSending = false;
   bool _hasInteracted = false;
 
@@ -80,7 +79,6 @@ class _PhoneVerificationPageWidgetState
           setState(() => _hasInteracted = true);
         }
       });
-    textFieldMask = MaskTextInputFormatter(mask: '+# (###) ###-##-##');
   }
 
   @override
@@ -227,7 +225,11 @@ class _PhoneVerificationPageWidgetState
                                 enableInteractiveSelection: true,
                                 validator: (value) =>
                                     _phoneValidationResult(value),
-                                inputFormatters: [textFieldMask],
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp(r'[\d+\s\-\(\)]')),
+                                  LengthLimitingTextInputFormatter(20),
+                                ],
                               ),
                             ),
                             if (_hasInteracted &&

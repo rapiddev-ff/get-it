@@ -120,8 +120,8 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                 (counts['active'] ?? 0) + (counts['delivered'] ?? 0) + (counts['cancelled'] ?? 0);
           }),
         ]);
-      } catch (_) {
-        // Network or API error — dashboard shows fallback values.
+      } catch (e) {
+        debugPrint('[HomePage] Dashboard load error: $e');
       }
       if (!mounted) return;
       setState(() {});
@@ -294,6 +294,27 @@ class _HomePageWidgetState extends ConsumerState<HomePageWidget> {
                         onTap: () async {
                           _state = 'Buy';
                           setState(() {});
+                          final uid = ref.read(currentUserIdProvider);
+                          // Load wishlist if not yet loaded
+                          if (ref.read(wishlistProvider).products.isEmpty &&
+                              ref.read(wishlistProvider).isLoading) {
+                            await actions.initWishlistStream(ref, uid);
+                          }
+                          // Refresh buyer dashboard data
+                          try {
+                            _recentPurchases = await actions.getBuyerOrders(
+                              buyerId: uid,
+                              limit: 5,
+                            );
+                            final counts =
+                                await actions.getBuyerOrderCounts(buyerId: uid);
+                            _totalPurchaseCount = (counts['active'] ?? 0) +
+                                (counts['delivered'] ?? 0) +
+                                (counts['cancelled'] ?? 0);
+                          } catch (e) {
+                            debugPrint('[BuyTab] Refresh error: $e');
+                          }
+                          if (mounted) setState(() {});
                         },
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,

@@ -15,6 +15,8 @@ _$SellerProductImpl _$$SellerProductImplFromJson(Map<String, dynamic> json) =>
       originalPrice: (json['originalPrice'] as num?)?.toDouble() ?? 0.0,
       flashSaleEnabled: json['flashSaleEnabled'] as bool? ?? false,
       flashSalePrice: (json['flashSalePrice'] as num?)?.toDouble(),
+      flashSaleEndsAt:
+          const DateTimeConverter().fromJson(json['flashSaleEndsAt']),
       status: json['status'] as String? ?? '',
       viewsCount: (json['viewsCount'] as num?)?.toInt() ?? 0,
       conditionName: json['conditionName'] as String? ?? '',
@@ -37,6 +39,8 @@ Map<String, dynamic> _$$SellerProductImplToJson(_$SellerProductImpl instance) =>
       'originalPrice': instance.originalPrice,
       'flashSaleEnabled': instance.flashSaleEnabled,
       'flashSalePrice': instance.flashSalePrice,
+      'flashSaleEndsAt':
+          const DateTimeConverter().toJson(instance.flashSaleEndsAt),
       'status': instance.status,
       'viewsCount': instance.viewsCount,
       'conditionName': instance.conditionName,

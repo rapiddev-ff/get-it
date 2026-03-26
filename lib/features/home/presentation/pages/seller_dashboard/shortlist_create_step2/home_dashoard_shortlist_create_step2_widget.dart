@@ -865,6 +865,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                     originalPrice: item.originalPrice,
                     flashSaleEnabled: item.flashSaleEnabled,
                     flashSalePrice: item.flashSalePrice,
+                    flashSaleEndsAt: item.flashSaleEndsAt,
                     discountType: item.discountType,
                     discountAmount: item.discountAmount,
                   ),

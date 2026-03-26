@@ -572,8 +572,7 @@ class _SettingsEditProfileWidgetState
                               : () async {
                                   await Future.wait([
                                     Future(() async {
-                                      await UserProfilesTable().update(
-                                        data: {
+                                      final updateData = <String, dynamic>{
                                           'first_name':
                                               firstnameTextController.text,
                                           'last_name':
@@ -581,9 +580,13 @@ class _SettingsEditProfileWidgetState
                                           'username':
                                               FormValidators.normalizeUsername(
                                                   usernameTextController.text),
-                                          'avatar_url': uploadToBucket,
                                           'bio': bioTextController.text,
-                                        },
+                                        };
+                                      if (uploadToBucket != null) {
+                                        updateData['avatar_url'] = uploadToBucket;
+                                      }
+                                      await UserProfilesTable().update(
+                                        data: updateData,
                                         matchingRows: (rows) => rows.eqOrNull(
                                           'user_id',
                                           ref.read(currentUserIdProvider),
@@ -602,7 +605,7 @@ class _SettingsEditProfileWidgetState
                                                 username:
                                                     usernameTextController.text,
                                                 bio: bioTextController.text,
-                                                avatarUrl: uploadToBucket ?? '',
+                                                avatarUrl: uploadToBucket ?? e.avatarUrl,
                                               ));
                                       setState(() {});
                                     }),

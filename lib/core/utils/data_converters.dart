@@ -236,6 +236,7 @@ UserData convertUserToDataType(
       : null;
 
   ShippingAddress shippingAddressStruct = ShippingAddress(
+    id: defaultAddress?['id']?.toString() ?? '',
     fullName: defaultAddress?['full_name'] ?? '',
     addressLine1: defaultAddress?['address_line1'] ?? '',
     addressLine2: defaultAddress?['address_line2'] ?? '',
@@ -243,6 +244,7 @@ UserData convertUserToDataType(
     state: defaultAddress?['state'] ?? '',
     zipCode: defaultAddress?['zip_code'] ?? '',
     country: defaultAddress?['country'] ?? '',
+    phone: defaultAddress?['phone'] ?? '',
   );
 
   // ── Build and return UserData ────────────────────────────────────

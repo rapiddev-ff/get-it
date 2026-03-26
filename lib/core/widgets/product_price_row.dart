@@ -14,6 +14,7 @@ class ProductPriceRow extends StatelessWidget {
     this.originalPrice = 0.0,
     this.flashSaleEnabled = false,
     this.flashSalePrice,
+    this.flashSaleEndsAt,
     this.discountType,
     this.discountAmount,
   });
@@ -22,17 +23,23 @@ class ProductPriceRow extends StatelessWidget {
   final double originalPrice;
   final bool flashSaleEnabled;
   final double? flashSalePrice;
+  final DateTime? flashSaleEndsAt;
 
   /// 'percent' or 'dollar' — from the product's discount_type DB field.
   final String? discountType;
   final double? discountAmount;
+
+  bool get _isFlashSaleActive {
+    if (!flashSaleEnabled || flashSaleEndsAt == null) return false;
+    return DateTime.now().isBefore(flashSaleEndsAt!);
+  }
 
   @override
   Widget build(BuildContext context) {
     final fmt = NumberFormat('#,##0.##', 'en_US');
 
     double effectivePrice = price;
-    if (flashSaleEnabled && flashSalePrice != null) {
+    if (_isFlashSaleActive && flashSalePrice != null) {
       effectivePrice = flashSalePrice!;
     }
 

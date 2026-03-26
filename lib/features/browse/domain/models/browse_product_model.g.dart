@@ -14,6 +14,8 @@ _$BrowseProductImpl _$$BrowseProductImplFromJson(Map<String, dynamic> json) =>
       originalPrice: (json['original_price'] as num?)?.toDouble() ?? 0.0,
       flashSaleEnabled: json['flash_sale_enabled'] as bool? ?? false,
       flashSalePrice: (json['flash_sale_price'] as num?)?.toDouble(),
+      flashSaleEndsAt:
+          const DateTimeConverter().fromJson(json['flash_sale_ends_at']),
       mainImageUrl: json['main_image_url'] as String? ?? '',
       conditionName: json['condition_name'] as String? ?? '',
       categoryName: json['category_name'] as String? ?? '',
@@ -32,6 +34,8 @@ Map<String, dynamic> _$$BrowseProductImplToJson(_$BrowseProductImpl instance) =>
       'original_price': instance.originalPrice,
       'flash_sale_enabled': instance.flashSaleEnabled,
       'flash_sale_price': instance.flashSalePrice,
+      'flash_sale_ends_at':
+          const DateTimeConverter().toJson(instance.flashSaleEndsAt),
       'main_image_url': instance.mainImageUrl,
       'condition_name': instance.conditionName,
       'category_name': instance.categoryName,
