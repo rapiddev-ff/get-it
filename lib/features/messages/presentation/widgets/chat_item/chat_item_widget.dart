@@ -16,9 +16,13 @@ class ChatItemWidget extends ConsumerWidget {
   const ChatItemWidget({
     super.key,
     required this.messageDataType,
+    this.onEdit,
+    this.onDelete,
   });
 
   final Message? messageDataType;
+  final void Function(Message message)? onEdit;
+  final void Function(Message message)? onDelete;
 
   static const _defaultAvatar =
       'https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=s0aTdmT5aU6b8ot7VKm11DeID6NctRCpB755rA1BIP0=';
@@ -39,34 +43,39 @@ class ChatItemWidget extends ConsumerWidget {
   }
 
   Widget _buildOwnMessage(BuildContext context, Message message, bool isImage) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        if (isImage)
-          _buildImageBubble(context, message)
-        else
-          Container(
-            width: MediaQuery.sizeOf(context).width * 0.8,
-            decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(8.0),
-                bottomRight: Radius.circular(8.0),
-                topLeft: Radius.circular(8.0),
+    return GestureDetector(
+      onLongPress: (onEdit != null || onDelete != null) && message.messageType == 'text'
+          ? () => _showMessageActions(context, message)
+          : null,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          if (isImage)
+            _buildImageBubble(context, message)
+          else
+            Container(
+              width: MediaQuery.sizeOf(context).width * 0.8,
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(8.0),
+                  bottomRight: Radius.circular(8.0),
+                  topLeft: Radius.circular(8.0),
+                ),
+              ),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                child: Text(
+                  message.content.isEmpty ? 'N/A' : message.content,
+                  style: Theme.of(context).textTheme.bodyMedium!,
+                ),
               ),
             ),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-              child: Text(
-                message.content.isEmpty ? 'N/A' : message.content,
-                style: Theme.of(context).textTheme.bodyMedium!,
-              ),
-            ),
-          ),
-        _buildTimestamp(context, message),
-      ],
+          _buildTimestamp(context, message),
+        ],
+      ),
     );
   }
 
@@ -130,11 +139,47 @@ class ChatItemWidget extends ConsumerWidget {
   }
 
   Widget _buildTimestamp(BuildContext context, Message message) {
+    final time = dateTimeFormat("jm", message.createdAt, locale: 'en');
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Text(
-        dateTimeFormat("jm", message.createdAt, locale: 'en'),
+        message.isEdited ? '$time · edited' : time,
         style: Theme.of(context).textTheme.labelSmall!,
+      ),
+    );
+  }
+
+  void _showMessageActions(BuildContext context, Message message) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.backgroundSecondary,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
+      ),
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (onEdit != null)
+              ListTile(
+                leading: const Icon(Icons.edit, color: AppColors.textPrimary),
+                title: Text('Edit', style: Theme.of(context).textTheme.bodyMedium),
+                onTap: () {
+                  Navigator.pop(ctx);
+                  onEdit!(message);
+                },
+              ),
+            if (onDelete != null)
+              ListTile(
+                leading: const Icon(Icons.delete_outline, color: AppColors.error),
+                title: Text('Delete', style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.error)),
+                onTap: () {
+                  Navigator.pop(ctx);
+                  onDelete!(message);
+                },
+              ),
+          ],
+        ),
       ),
     );
   }

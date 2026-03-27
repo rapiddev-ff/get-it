@@ -26,6 +26,7 @@ _$MessageImpl _$$MessageImplFromJson(Map<String, dynamic> json) =>
       senderAvatar: json['senderAvatar'] as String?,
       imageUrl: json['imageUrl'] as String?,
       isSending: json['isSending'] as bool? ?? false,
+      isEdited: json['isEdited'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) =>
@@ -43,4 +44,5 @@ Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) =>
       'senderAvatar': instance.senderAvatar,
       'imageUrl': instance.imageUrl,
       'isSending': instance.isSending,
+      'isEdited': instance.isEdited,
     };

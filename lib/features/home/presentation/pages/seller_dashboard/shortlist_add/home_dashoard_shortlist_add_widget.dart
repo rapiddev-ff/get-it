@@ -15,6 +15,12 @@ import '/features/browse/presentation/widgets/browse_filter/browse_filter_sheet.
 import '/features/home/data/repositories/shortlist_repository.dart';
 import '/features/home/domain/models/shortlist_product_model.dart';
 
+class ShortlistAddResult {
+  const ShortlistAddResult({required this.quantities, required this.products});
+  final Map<String, int> quantities;
+  final List<ShortlistProduct> products;
+}
+
 class HomeDashoardShortlistAddWidget extends ConsumerStatefulWidget {
   const HomeDashoardShortlistAddWidget({
     super.key,
@@ -437,10 +443,15 @@ class _HomeDashoardShortlistAddWidgetState
                       : 'Add Products',
                   enabled: _selectedProductCount > 0,
                   onPressed: () {
-                    // Return Map<String, int> of productId → quantity
-                    final result = Map<String, int>.from(_selectedQuantities)
+                    final quantities = Map<String, int>.from(_selectedQuantities)
                       ..removeWhere((_, qty) => qty <= 0);
-                    Navigator.pop(context, result);
+                    final selectedProducts = _products
+                        .where((p) => quantities.containsKey(p.id))
+                        .toList();
+                    Navigator.pop(context, ShortlistAddResult(
+                      quantities: quantities,
+                      products: selectedProducts,
+                    ));
                   },
                 ),
               ),

@@ -27,6 +27,7 @@ class Message with _$Message {
     String? senderAvatar,
     String? imageUrl,
     @Default(false) bool isSending,
+    @Default(false) bool isEdited,
   }) = _Message;
 
   factory Message.fromJson(Map<String, dynamic> json) =>

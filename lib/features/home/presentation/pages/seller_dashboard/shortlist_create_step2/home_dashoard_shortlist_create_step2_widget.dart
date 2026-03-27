@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,7 +18,6 @@ import '/core/widgets/app_text_field.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import '/core/widgets/product_price_row.dart';
 import '/custom_code/actions/index.dart' as actions;
-import '/features/browse/presentation/widgets/browse_filter/browse_filter_sheet.dart';
 import '/features/home/data/repositories/shortlist_repository.dart';
 import '/features/home/domain/models/shortlist_item_detail_model.dart';
 import '/features/home/presentation/pages/seller_dashboard/shortlist_add/home_dashoard_shortlist_add_widget.dart';
@@ -65,10 +65,15 @@ class _HomeDashoardShortlistCreateStep2WidgetState
   TextEditingController? _searchController;
   FocusNode? _searchFocusNode;
 
-  BrowseFilterState _filterState = const BrowseFilterState();
 
   /// Cart items (product IDs added to cart) — only for published shortlists.
   Set<String> _cartItems = {};
+
+  /// Pending items for new shortlists (not yet saved to DB).
+  Map<String, int> _pendingQuantities = {};
+  List<ShortlistItemDetail> _pendingItems = [];
+
+  bool _discountEnabled = false;
 
   bool get _isPublished => widget.status == 'active';
   bool get _isEditing => widget.shortlistId != null;
@@ -139,14 +144,6 @@ class _HomeDashoardShortlistCreateStep2WidgetState
           .toList();
     }
 
-    // Category filter
-    if (_filterState.selectedCategoryIds.isNotEmpty) {
-      items = items
-          .where(
-              (i) => _filterState.selectedCategoryIds.contains(i.categoryName))
-          .toList();
-    }
-
     return items;
   }
 
@@ -176,15 +173,8 @@ class _HomeDashoardShortlistCreateStep2WidgetState
     }
   }
 
-  Future<void> _openFilter() async {
-    final result = await showBrowseFilterSheet(context, _filterState);
-    if (result != null) {
-      setState(() => _filterState = result);
-    }
-  }
-
   Future<void> _addProducts() async {
-    final result = await Navigator.push<Map<String, int>>(
+    final result = await Navigator.push<ShortlistAddResult>(
       context,
       MaterialPageRoute(
         builder: (_) => HomeDashoardShortlistAddWidget(
@@ -192,7 +182,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
         ),
       ),
     );
-    if (result == null || result.isEmpty) return;
+    if (result == null || result.quantities.isEmpty) return;
 
     if (_isEditing) {
       // Reserve immediately for existing shortlists
@@ -201,7 +191,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
       final sellerId = ref.read(currentUserIdProvider);
       final reserveResult = await repo.reserveItems(
         shortlistId: widget.shortlistId!,
-        items: result,
+        items: result.quantities,
         sellerId: sellerId,
       );
       if (!mounted) return;
@@ -216,12 +206,217 @@ class _HomeDashoardShortlistCreateStep2WidgetState
       await _loadItems();
       setState(() => _isSaving = false);
     } else {
-      // For new shortlists, just store the selection — reserve on create
-      // We can't reserve yet because shortlist doesn't exist in DB
-      // Convert to temporary ShortlistItemDetail for display
-      // This path is handled by the create flow
-      setState(() {});
+      // For new shortlists, store selection locally — reserve after create
+      setState(() {
+        _pendingQuantities.addAll(result.quantities);
+        // Convert ShortlistProduct → ShortlistItemDetail for display
+        for (final product in result.products) {
+          final qty = result.quantities[product.id] ?? 1;
+          // Skip if already pending
+          if (_pendingItems.any((p) => p.productId == product.id)) continue;
+          _pendingItems.add(ShortlistItemDetail(
+            id: 'pending_${product.id}',
+            productId: product.id,
+            quantity: qty,
+            itemStatus: 'active',
+            title: product.title,
+            price: product.price,
+            originalPrice: product.originalPrice,
+            flashSaleEnabled: product.flashSaleEnabled,
+            flashSalePrice: product.flashSalePrice,
+            flashSaleEndsAt: product.flashSaleEndsAt,
+            discountType: product.discountType,
+            discountAmount: product.discountAmount,
+            mainImageUrl: product.mainImageUrl,
+            categoryName: product.categoryName,
+            subcategoryName: product.subcategoryName,
+          ));
+        }
+      });
     }
+  }
+
+  void _showMoreMenu() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.backgroundSecondary,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
+      ),
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _menuTile(
+              icon: Icons.archive_outlined,
+              label: 'Archive List',
+              onTap: () {
+                Navigator.pop(ctx);
+                _archiveShortlist();
+              },
+            ),
+            Divider(color: AppColors.surfaceDark, height: 1),
+            _menuTile(
+              icon: Icons.edit_outlined,
+              label: 'Edit Details',
+              onTap: () {
+                Navigator.pop(ctx);
+                _editDetails();
+              },
+            ),
+            Divider(color: AppColors.surfaceDark, height: 1),
+            _menuTile(
+              icon: Icons.qr_code,
+              label: 'QR Code',
+              onTap: () {
+                Navigator.pop(ctx);
+                _showQrCodeDialog();
+              },
+            ),
+            Divider(color: AppColors.surfaceDark, height: 1),
+            _menuTile(
+              icon: Icons.share_outlined,
+              label: 'Share List',
+              onTap: () {
+                Navigator.pop(ctx);
+                _shareList();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _menuTile({
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
+    return ListTile(
+      leading: Icon(icon, color: AppColors.textPrimary, size: 22.0),
+      title: Text(label, style: Theme.of(context).textTheme.bodyMedium!),
+      onTap: onTap,
+    );
+  }
+
+  Future<void> _archiveShortlist() async {
+    if (widget.shortlistId == null) {
+      actions.toastificationshow(
+          context, 'Info', 'Save the shortlist first before archiving.', 'info');
+      return;
+    }
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: AppColors.backgroundSecondary,
+        title: Text('Archive Shortlist',
+            style: Theme.of(context).textTheme.titleMedium),
+        content: Text(
+          'This shortlist will be archived and no longer visible. You can\'t undo this action.',
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: Text('Cancel',
+                style: TextStyle(color: AppColors.textPrimary)),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: Text('Archive',
+                style: TextStyle(color: AppColors.errorBright)),
+          ),
+        ],
+      ),
+    );
+    if (confirm != true || !mounted) return;
+
+    final repo = ref.read(shortlistRepositoryProvider);
+    await repo.updateShortlistStatus(widget.shortlistId!, 'archived');
+    if (!mounted) return;
+    actions.toastificationshow(
+        context, 'Archived', 'Shortlist has been archived.', 'success');
+    context.pop();
+  }
+
+  void _editDetails() {
+    context.pushNamed(
+      HomeDashoardShortlistCreateWidget.routeName,
+      queryParameters: {
+        'shortlistId': widget.shortlistId ?? '',
+        'name': widget.name,
+        'eventName': widget.eventName,
+        'startDate': widget.startDate,
+        'endDate': widget.endDate,
+        'isPublic': widget.isPublic.toString(),
+      },
+    );
+  }
+
+  void _showQrCodeDialog() {
+    final code = _shareCode ?? '';
+    final shareUrl = 'https://getitapp.com/s/$code';
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: AppColors.backgroundSecondary,
+        title: Text('QR Code',
+            style: Theme.of(context).textTheme.titleMedium),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              padding: EdgeInsets.all(16.0),
+              child: QrImageView(
+                data: shareUrl,
+                version: QrVersions.auto,
+                size: 200.0,
+                backgroundColor: Colors.white,
+              ),
+            ),
+            SizedBox(height: 12.0),
+            Text(
+              shareUrl,
+              textAlign: TextAlign.center,
+              style: Theme.of(context)
+                  .textTheme
+                  .labelSmall!
+                  .copyWith(color: AppColors.textSecondary),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: shareUrl));
+              Navigator.pop(ctx);
+              actions.toastificationshow(
+                  context, 'Copied', 'Link copied to clipboard.', 'success');
+            },
+            child: Text('Copy Link',
+                style: TextStyle(color: AppColors.secondary)),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text('Close',
+                style: TextStyle(color: AppColors.textPrimary)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _shareList() {
+    final code = _shareCode ?? '';
+    final shareUrl = 'https://getitapp.com/s/$code';
+    Clipboard.setData(ClipboardData(text: shareUrl));
+    actions.toastificationshow(
+        context, 'Copied', 'Shortlist link copied to clipboard.', 'success');
   }
 
   void _showConflictDialog(dynamic conflicts) {
@@ -275,10 +470,40 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                 style: TextStyle(color: AppColors.textPrimary)),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               Navigator.pop(ctx);
-              // Auto-adjust and retry would need the conflict data;
-              // for now, user goes back to review
+              // Auto-adjust quantities to available amounts and retry
+              final adjusted = <String, int>{};
+              for (final c in conflictList) {
+                final productId = c['product_id']?.toString();
+                final available = c['available'];
+                if (productId != null && available is int && available > 0) {
+                  adjusted[productId] = available;
+                }
+              }
+              if (adjusted.isEmpty) {
+                actions.toastificationshow(context, 'Info',
+                    'No items available to add.', 'info');
+                return;
+              }
+              setState(() => _isSaving = true);
+              final sellerId = ref.read(currentUserIdProvider);
+              final repo = ref.read(shortlistRepositoryProvider);
+              final retryResult = await repo.reserveItems(
+                shortlistId: widget.shortlistId!,
+                items: adjusted,
+                sellerId: sellerId,
+              );
+              if (!mounted) return;
+              if (retryResult['success'] == true) {
+                await _loadItems();
+                setState(() => _isSaving = false);
+                actions.toastificationshow(context, 'Added',
+                    'Products added with adjusted quantities.', 'success');
+              } else {
+                setState(() => _isSaving = false);
+                _showConflictDialog(retryResult['conflicts']);
+              }
             },
             child: Text('Add available quantities',
                 style: TextStyle(color: AppColors.secondary)),
@@ -289,6 +514,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
   }
 
   void _showItemMenu(ShortlistItemDetail item) {
+    final isPending = item.id.startsWith('pending_');
     final sellerId = ref.read(currentUserIdProvider);
     showModalBottomSheet(
       context: context,
@@ -300,52 +526,61 @@ class _HomeDashoardShortlistCreateStep2WidgetState
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _menuItem(
-              icon: Icons.check_circle_outline,
-              label: 'Mark as Sold (in person)',
-              onTap: () async {
-                Navigator.pop(ctx);
-                final repo = ref.read(shortlistRepositoryProvider);
-                await repo.updateItemStatus(
-                  shortlistItemId: item.id,
-                  newStatus: 'sold',
-                  sellerId: sellerId,
-                );
-                _loadItems();
-              },
-            ),
-            Divider(
-                color: AppColors.textSecondary.withValues(alpha: 0.2),
-                height: 1),
-            _menuItem(
-              icon: Icons.delete_outline,
-              label: 'Remove from Inventory (Damaged)',
-              onTap: () async {
-                Navigator.pop(ctx);
-                final repo = ref.read(shortlistRepositoryProvider);
-                await repo.updateItemStatus(
-                  shortlistItemId: item.id,
-                  newStatus: 'damaged',
-                  sellerId: sellerId,
-                );
-                _loadItems();
-              },
-            ),
-            Divider(
-                color: AppColors.textSecondary.withValues(alpha: 0.2),
-                height: 1),
+            if (!isPending) ...[
+              _menuItem(
+                icon: Icons.check_circle_outline,
+                label: 'Mark as Sold (in person)',
+                onTap: () async {
+                  Navigator.pop(ctx);
+                  final repo = ref.read(shortlistRepositoryProvider);
+                  await repo.updateItemStatus(
+                    shortlistItemId: item.id,
+                    newStatus: 'sold',
+                    sellerId: sellerId,
+                  );
+                  _loadItems();
+                },
+              ),
+              Divider(
+                  color: AppColors.textSecondary.withValues(alpha: 0.2),
+                  height: 1),
+              _menuItem(
+                icon: Icons.delete_outline,
+                label: 'Remove from Inventory (Damaged)',
+                onTap: () async {
+                  Navigator.pop(ctx);
+                  final repo = ref.read(shortlistRepositoryProvider);
+                  await repo.updateItemStatus(
+                    shortlistItemId: item.id,
+                    newStatus: 'damaged',
+                    sellerId: sellerId,
+                  );
+                  _loadItems();
+                },
+              ),
+              Divider(
+                  color: AppColors.textSecondary.withValues(alpha: 0.2),
+                  height: 1),
+            ],
             _menuItem(
               icon: Icons.playlist_remove,
               label: 'Remove from Shortlist',
               onTap: () async {
                 Navigator.pop(ctx);
-                final repo = ref.read(shortlistRepositoryProvider);
-                await repo.releaseItems(
-                  shortlistId: widget.shortlistId!,
-                  productIds: [item.productId],
-                  sellerId: sellerId,
-                );
-                _loadItems();
+                if (isPending) {
+                  setState(() {
+                    _pendingItems.removeWhere((p) => p.productId == item.productId);
+                    _pendingQuantities.remove(item.productId);
+                  });
+                } else {
+                  final repo = ref.read(shortlistRepositoryProvider);
+                  await repo.releaseItems(
+                    shortlistId: widget.shortlistId!,
+                    productIds: [item.productId],
+                    sellerId: sellerId,
+                  );
+                  _loadItems();
+                }
               },
             ),
           ],
@@ -397,6 +632,21 @@ class _HomeDashoardShortlistCreateStep2WidgetState
         status: status,
       );
       if (!mounted) return;
+
+      // Reserve pending items if shortlist was created successfully
+      if (result['success'] == true && _pendingQuantities.isNotEmpty) {
+        final shortlistId = result['shortlistId']?.toString();
+        if (shortlistId != null) {
+          final sellerId = ref.read(currentUserIdProvider);
+          await repo.reserveItems(
+            shortlistId: shortlistId,
+            items: _pendingQuantities,
+            sellerId: sellerId,
+          );
+          if (!mounted) return;
+        }
+      }
+
       setState(() => _isSaving = false);
       actions.toastificationshow(
         context,
@@ -464,17 +714,18 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                   ),
                   icon: Icon(Icons.more_vert,
                       color: AppColors.info, size: 20.0),
-                  onPressed: () {},
+                  onPressed: () => _showMoreMenu(),
                 ),
               ],
             ),
           ),
         ),
-        body: _isLoading
+        body: SafeArea(
+          child: _isLoading
             ? Center(child: AppLoadingIndicator())
             : Column(
                 children: [
-                  Flexible(
+                  Expanded(
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
@@ -497,9 +748,33 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                     decoration: appInputDecoration('Notes'),
                                     style: appTextFieldStyle,
                                     maxLines: null,
-                                    minLines: 3,
+                                    minLines: 1,
                                     keyboardType: TextInputType.multiline,
                                     cursorColor: AppColors.textPrimary,
+                                  ),
+                                ),
+                                // Discount toggle
+                                Padding(
+                                  padding: EdgeInsets.only(top: 24.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Discount',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                                fontSize: 15.0, height: 1.5),
+                                      ),
+                                      Switch.adaptive(
+                                        value: _discountEnabled,
+                                        activeTrackColor: AppColors.secondary,
+                                        onChanged: (val) =>
+                                            setState(() => _discountEnabled = val),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 Divider(
@@ -507,7 +782,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                   thickness: 1.0,
                                   color: AppColors.surfaceDark,
                                 ),
-                                // Search + filter row
+                                // Search row
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -521,7 +796,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                               fontSize: 15.0, height: 1.5),
                                     ),
                                     Text(
-                                      '${_items.length} Items',
+                                      '${_items.length + _pendingItems.length} Items',
                                       style: Theme.of(context)
                                           .textTheme
                                           .labelMedium!
@@ -531,77 +806,23 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(top: 16.0),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: TextFormField(
-                                          controller: _searchController,
-                                          focusNode: _searchFocusNode,
-                                          onChanged: (_) =>
-                                              EasyDebounce.debounce(
-                                            'shortlistSearch',
-                                            Duration(milliseconds: 300),
-                                            () => setState(() {}),
-                                          ),
-                                          decoration: appInputDecoration(
-                                            'Search your shortlist',
-                                            prefix: Icon(Icons.search,
-                                                color: Colors.white,
-                                                size: 24.0),
-                                          ),
-                                          style: appTextFieldStyle,
-                                          cursorColor: AppColors.textPrimary,
-                                        ),
-                                      ),
-                                      SizedBox(width: 8.0),
-                                      GestureDetector(
-                                        onTap: _openFilter,
-                                        child: Container(
-                                          width: 48.0,
-                                          height: 48.0,
-                                          decoration: BoxDecoration(
-                                            color: _filterState.isEmpty
-                                                ? AppColors.backgroundSecondary
-                                                : AppColors.secondary,
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          child: Stack(
-                                            children: [
-                                              Center(
-                                                child: Icon(Icons.tune,
-                                                    color: Colors.white,
-                                                    size: 24.0),
-                                              ),
-                                              if (!_filterState.isEmpty)
-                                                Positioned(
-                                                  top: 4.0,
-                                                  right: 4.0,
-                                                  child: Container(
-                                                    width: 18.0,
-                                                    height: 18.0,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.red,
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        '${_filterState.activeFilterCount}',
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 10.0,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                  child: TextFormField(
+                                    controller: _searchController,
+                                    focusNode: _searchFocusNode,
+                                    onChanged: (_) =>
+                                        EasyDebounce.debounce(
+                                      'shortlistSearch',
+                                      Duration(milliseconds: 300),
+                                      () => setState(() {}),
+                                    ),
+                                    decoration: appInputDecoration(
+                                      'Search your shortlist',
+                                      prefix: Icon(Icons.search,
+                                          color: Colors.white,
+                                          size: 24.0),
+                                    ),
+                                    style: appTextFieldStyle,
+                                    cursorColor: AppColors.textPrimary,
                                   ),
                                 ),
                                 Divider(
@@ -610,7 +831,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                   color: AppColors.surfaceDark,
                                 ),
                                 // Product grid
-                                if (filtered.isEmpty && _items.isEmpty) ...[
+                                if (filtered.isEmpty && _items.isEmpty && _pendingItems.isEmpty) ...[
                                   Text(
                                     'Your Shortlist has no products added.',
                                     style: Theme.of(context)
@@ -620,7 +841,7 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                             fontWeight: FontWeight.normal,
                                             height: 1.5),
                                   ),
-                                ] else if (filtered.isEmpty) ...[
+                                ] else if (filtered.isEmpty && _pendingItems.isEmpty) ...[
                                   Text(
                                     'No products match your search.',
                                     style: Theme.of(context)
@@ -628,20 +849,23 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                                         .labelLarge!,
                                   ),
                                 ] else ...[
-                                  GridView.builder(
-                                    shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 12.0,
-                                      mainAxisSpacing: 12.0,
-                                      childAspectRatio: 0.55,
-                                    ),
-                                    itemCount: filtered.length,
-                                    itemBuilder: (context, index) =>
-                                        _buildProductCard(filtered[index]),
-                                  ),
+                                  Builder(builder: (_) {
+                                    final allItems = [...filtered, ..._pendingItems];
+                                    return GridView.builder(
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        crossAxisSpacing: 12.0,
+                                        mainAxisSpacing: 12.0,
+                                        childAspectRatio: 0.55,
+                                      ),
+                                      itemCount: allItems.length,
+                                      itemBuilder: (context, index) =>
+                                          _buildProductCard(allItems[index]),
+                                    );
+                                  }),
                                 ],
                                 // Add Products button
                                 Padding(
@@ -674,10 +898,12 @@ class _HomeDashoardShortlistCreateStep2WidgetState
                       ),
                     ),
                   ),
-                  // Bottom buttons
-                  _buildBottomButtons(),
+                  // Bottom buttons (hidden when keyboard is open)
+                  if (MediaQuery.of(context).viewInsets.bottom == 0)
+                    _buildBottomButtons(),
                 ].addToEnd(SizedBox(height: 32.0)),
               ),
+        ),
       ),
     );
   }
@@ -988,14 +1214,16 @@ class _HomeDashoardShortlistCreateStep2WidgetState
             SizedBox(
               width: double.infinity,
               child: TextButton(
-                onPressed: () {
-                  // GT-104: End shortlist → reconciliation
-                  actions.toastificationshow(
-                    context,
-                    'Coming Soon',
-                    'Reconciliation will be available in the next update.',
-                    'info',
+                onPressed: () async {
+                  await context.pushNamed(
+                    'reconciliation',
+                    queryParameters: {
+                      'shortlistId': widget.shortlistId!,
+                      'shortlistName': widget.name,
+                    },
                   );
+                  // Refresh items after reconciliation
+                  _loadItems();
                 },
                 style: TextButton.styleFrom(
                   minimumSize: Size(double.infinity, 48.0),

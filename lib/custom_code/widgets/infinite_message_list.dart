@@ -27,10 +27,10 @@ class InfiniteMessageList extends StatefulWidget {
   final double? loadMoreThreshold;
 
   @override
-  State<InfiniteMessageList> createState() => _InfiniteMessageListState();
+  InfiniteMessageListState createState() => InfiniteMessageListState();
 }
 
-class _InfiniteMessageListState extends State<InfiniteMessageList> {
+class InfiniteMessageListState extends State<InfiniteMessageList> {
   final ScrollController _scrollController = ScrollController();
 
   List<Message> _messages = [];
@@ -325,16 +325,26 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
     if (json.isEmpty || !mounted) return;
 
     final messageId = json['id']?.toString() ?? '';
-    final isRead = json['is_read'] ?? false;
-
     final index = _messages.indexWhere((m) => m.id == messageId);
     if (index == -1) return;
 
+    // Handle soft-delete
+    if (json['deleted_at'] != null) {
+      setState(() => _messages.removeAt(index));
+      return;
+    }
+
     final current = _messages[index];
-    if (current.isRead == isRead) return; // no actual change
+    final isRead = json['is_read'] ?? current.isRead;
+    final content = json['content']?.toString() ?? current.content;
+    final isEdited = json['is_edited'] ?? current.isEdited;
 
     setState(() {
-      _messages[index] = current.copyWith(isRead: isRead);
+      _messages[index] = current.copyWith(
+        isRead: isRead,
+        content: content,
+        isEdited: isEdited,
+      );
     });
   }
 
@@ -370,6 +380,19 @@ class _InfiniteMessageListState extends State<InfiniteMessageList> {
         });
       }
     }
+  }
+
+  /// Updates a message in the list (for edit).
+  void updateMessage(String messageId, Message updated) {
+    final index = _messages.indexWhere((m) => m.id == messageId);
+    if (index != -1) {
+      setState(() => _messages[index] = updated);
+    }
+  }
+
+  /// Removes a message from the list (for delete).
+  void removeMessage(String messageId) {
+    setState(() => _messages.removeWhere((m) => m.id == messageId));
   }
 
   void addOptimisticMessage(Message message) {

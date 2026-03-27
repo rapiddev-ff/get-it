@@ -51,6 +51,8 @@ import '/features/home/presentation/pages/seller_dashboard/shortlist_create/home
 import '/features/home/presentation/pages/seller_dashboard/shortlist_create_step2/home_dashoard_shortlist_create_step2_widget.dart';
 import '/features/home/presentation/pages/seller_dashboard/shortlist_add/home_dashoard_shortlist_add_widget.dart';
 import '/features/home/presentation/pages/seller_dashboard/shortlist/home_dashoard_shortlist_widget.dart';
+import '/features/home/presentation/pages/seller_dashboard/reconciliation/reconciliation_widget.dart';
+import '/features/home/presentation/pages/seller_dashboard/reconciliation/reconciliation_summary_widget.dart';
 import '/features/checkout/presentation/pages/checkout/checkout_widget.dart';
 import '/features/profile/presentation/pages/settings_edit_profile/settings_edit_profile_widget.dart';
 import '/features/profile/presentation/pages/settings_payment_method_edit/settings_payment_method_edit_widget.dart';
@@ -354,6 +356,31 @@ List<AppRoute> appRoutes() => [
         name: HomeDashoardShortlistWidget.routeName,
         path: HomeDashoardShortlistWidget.routePath,
         builder: (context, params) => HomeDashoardShortlistWidget(),
+      ),
+      AppRoute(
+        name: ReconciliationWidget.routeName,
+        path: ReconciliationWidget.routePath,
+        builder: (context, params) {
+          final allParams = params.state.uri.queryParameters;
+          return ReconciliationWidget(
+            shortlistId: allParams['shortlistId'] ?? '',
+            shortlistName: allParams['shortlistName'] ?? '',
+          );
+        },
+      ),
+      AppRoute(
+        name: ReconciliationSummaryWidget.routeName,
+        path: ReconciliationSummaryWidget.routePath,
+        builder: (context, params) {
+          final allParams = params.state.uri.queryParameters;
+          return ReconciliationSummaryWidget(
+            shortlistName: allParams['shortlistName'] ?? '',
+            soldCount: int.tryParse(allParams['soldCount'] ?? '') ?? 0,
+            damagedCount: int.tryParse(allParams['damagedCount'] ?? '') ?? 0,
+            returnedCount:
+                int.tryParse(allParams['returnedCount'] ?? '') ?? 0,
+          );
+        },
       ),
       AppRoute(
         name: CheckoutWidget.routeName,

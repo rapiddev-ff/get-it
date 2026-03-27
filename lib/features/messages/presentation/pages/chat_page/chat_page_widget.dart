@@ -21,6 +21,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '/features/messages/domain/models/conversation_model.dart';
+import '/features/messages/data/repositories/message_repository.dart';
 import '/backend/supabase/supabase.dart';
 
 class ChatPageWidget extends ConsumerStatefulWidget {
@@ -43,6 +44,8 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
   final _textFieldFocusNode = FocusNode();
   bool _isSending = false;
   bool _messageSent = false;
+  Message? _editingMessage;
+  final _messageListKey = GlobalKey<custom_widgets.InfiniteMessageListState>();
 
   static const _defaultAvatar =
       'https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=s0aTdmT5aU6b8ot7VKm11DeID6NctRCpB755rA1BIP0=';
@@ -92,6 +95,7 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: custom_widgets.InfiniteMessageList(
+                      key: _messageListKey,
                       width: double.infinity,
                       height: double.infinity,
                       conversationId: widget.conversation!.id,
@@ -99,6 +103,8 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
                       loadMoreThreshold: 300.0,
                       itemBuilder: (Message message) => ChatItemWidget(
                         messageDataType: message,
+                        onEdit: _startEditMessage,
+                        onDelete: _deleteMessage,
                       ),
                       loadingIndicator: _buildEmptyState,
                       emptyWidget: _buildEmptyState,
@@ -319,90 +325,174 @@ class _ChatPageWidgetState extends ConsumerState<ChatPageWidget> {
       );
 
   Widget _buildMessageInput() {
-    return Container(
-      color: AppColors.backgroundSecondary,
-      padding: const EdgeInsets.all(16.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: SizedBox(
-              height: 50.0,
-              child: Stack(
-                children: [
-                  TextFormField(
-                    controller: _textController,
-                    focusNode: _textFieldFocusNode,
-                    textInputAction: TextInputAction.send,
-                    onFieldSubmitted: (_) => _sendTextMessage(),
-                    decoration: InputDecoration(
-                      isDense: false,
-                      hintText: 'Type a message...',
-                      hintStyle: Theme.of(context).textTheme.labelLarge!,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: AppColors.neutral700, width: 1.0),
-                        borderRadius: BorderRadius.circular(100.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: AppColors.secondary, width: 1.0),
-                        borderRadius: BorderRadius.circular(100.0),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(color: AppColors.error, width: 1.0),
-                        borderRadius: BorderRadius.circular(100.0),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(color: AppColors.error, width: 1.0),
-                        borderRadius: BorderRadius.circular(100.0),
-                      ),
-                    ),
-                    style: Theme.of(context).textTheme.bodyMedium!,
-                    keyboardType: TextInputType.text,
-                    cursorColor: AppColors.textPrimary,
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 16.0),
-                      child: InkWell(
-                        onTap: _pickAndSendImages,
-                        child: const FaIcon(
-                          FontAwesomeIcons.camera,
-                          color: AppColors.textPrimary,
-                          size: 24.0,
+    final isEditing = _editingMessage != null;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (isEditing)
+          Container(
+            color: AppColors.backgroundSecondary,
+            padding: const EdgeInsets.only(left: 16.0, right: 8.0, top: 8.0),
+            child: Row(
+              children: [
+                const Icon(Icons.edit, color: AppColors.secondary, size: 16.0),
+                const SizedBox(width: 8.0),
+                Expanded(
+                  child: Text(
+                    'Editing message',
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          color: AppColors.secondary,
                         ),
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.close, color: AppColors.textSecondary, size: 18.0),
+                  onPressed: _cancelEdit,
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                ),
+              ],
+            ),
+          ),
+        Container(
+          color: AppColors.backgroundSecondary,
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: SizedBox(
+                  height: 50.0,
+                  child: Stack(
+                    children: [
+                      TextFormField(
+                        controller: _textController,
+                        focusNode: _textFieldFocusNode,
+                        textInputAction: TextInputAction.send,
+                        onFieldSubmitted: (_) =>
+                            isEditing ? _submitEdit() : _sendTextMessage(),
+                        decoration: InputDecoration(
+                          isDense: false,
+                          hintText: isEditing ? 'Edit message...' : 'Type a message...',
+                          hintStyle: Theme.of(context).textTheme.labelLarge!,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: isEditing ? AppColors.secondary : AppColors.neutral700,
+                                width: 1.0),
+                            borderRadius: BorderRadius.circular(100.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: AppColors.secondary, width: 1.0),
+                            borderRadius: BorderRadius.circular(100.0),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: AppColors.error, width: 1.0),
+                            borderRadius: BorderRadius.circular(100.0),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: AppColors.error, width: 1.0),
+                            borderRadius: BorderRadius.circular(100.0),
+                          ),
+                        ),
+                        style: Theme.of(context).textTheme.bodyMedium!,
+                        keyboardType: TextInputType.text,
+                        cursorColor: AppColors.textPrimary,
                       ),
+                      if (!isEditing)
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 16.0),
+                            child: InkWell(
+                              onTap: _pickAndSendImages,
+                              child: const FaIcon(
+                                FontAwesomeIcons.camera,
+                                color: AppColors.textPrimary,
+                                size: 24.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12.0),
+              InkWell(
+                onTap: isEditing ? _submitEdit : _sendTextMessage,
+                child: Container(
+                  width: 38.0,
+                  height: 38.0,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [AppColors.brandPurple, AppColors.brandBlue],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
+                    child: Icon(
+                      isEditing ? Icons.check : Icons.send,
+                      color: AppColors.textPrimary,
+                      size: 14.0,
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(width: 12.0),
-          InkWell(
-            onTap: _sendTextMessage,
-            child: Container(
-              width: 38.0,
-              height: 38.0,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [AppColors.brandPurple, AppColors.brandBlue],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
                 ),
-                shape: BoxShape.circle,
               ),
-              child: const Center(
-                child: Icon(Icons.send, color: AppColors.textPrimary, size: 14.0),
-              ),
-            ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
+  }
+
+  void _startEditMessage(Message message) {
+    setState(() {
+      _editingMessage = message;
+      _textController.text = message.content;
+    });
+    _textFieldFocusNode.requestFocus();
+  }
+
+  void _cancelEdit() {
+    setState(() {
+      _editingMessage = null;
+      _textController.clear();
+    });
+  }
+
+  Future<void> _submitEdit() async {
+    final text = _textController.text.trim();
+    final message = _editingMessage;
+    if (text.isEmpty || message == null || _isSending) return;
+    if (text == message.content) {
+      _cancelEdit();
+      return;
+    }
+    _isSending = true;
+    final repo = ref.read(messageRepositoryProvider);
+    final success = await repo.editMessage(message.id, text);
+    if (!mounted) return;
+    _isSending = false;
+    if (success) {
+      _messageListKey.currentState?.updateMessage(
+        message.id,
+        message.copyWith(content: text, isEdited: true),
+      );
+      _cancelEdit();
+    }
+  }
+
+  Future<void> _deleteMessage(Message message) async {
+    final repo = ref.read(messageRepositoryProvider);
+    final success = await repo.deleteMessage(message.id);
+    if (!mounted) return;
+    if (success) {
+      _messageListKey.currentState?.removeMessage(message.id);
+    }
   }
 
   Future<void> _sendTextMessage() async {

@@ -170,6 +170,31 @@ class MessageRepository {
     }
   }
 
+  /// Edits a message (only by sender).
+  Future<bool> editMessage(String messageId, String content) async {
+    try {
+      await _client.rpc('edit_message', params: {
+        'p_message_id': messageId,
+        'p_content': content,
+      });
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  /// Soft-deletes a message (only by sender).
+  Future<bool> deleteMessage(String messageId) async {
+    try {
+      await _client.rpc('delete_message', params: {
+        'p_message_id': messageId,
+      });
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
   /// Deletes a conversation.
   Future<void> deleteConversation(String conversationId) async {
     await _client.rpc(

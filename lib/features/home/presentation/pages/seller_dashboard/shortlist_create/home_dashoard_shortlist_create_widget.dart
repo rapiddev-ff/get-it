@@ -5,6 +5,7 @@ import '/core/widgets/app_text_field.dart';
 import '/core/widgets/dismiss_keyboard.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/features/home/presentation/pages/seller_dashboard/shortlist_create_step2/home_dashoard_shortlist_create_step2_widget.dart';
+import '/features/home/presentation/pages/seller_dashboard/shortlist/home_dashoard_shortlist_widget.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -99,6 +100,30 @@ class _HomeDashoardShortlistCreateWidgetState
   String _formatDate(DateTime? date) {
     if (date == null) return '';
     return DateFormat('MM/dd/yyyy').format(date);
+  }
+
+  bool _validateForm() {
+    if (textController1!.text.trim().isEmpty) {
+      actions.toastificationshow(
+        context, 'Missing Name', 'Please enter a shortlist name.', 'error');
+      return false;
+    }
+    if (_startDate == null) {
+      actions.toastificationshow(
+        context, 'Missing Date', 'Please select a start date.', 'error');
+      return false;
+    }
+    if (_endDate == null) {
+      actions.toastificationshow(
+        context, 'Missing Date', 'Please select an end date.', 'error');
+      return false;
+    }
+    if (_endDate!.isBefore(_startDate!)) {
+      actions.toastificationshow(
+        context, 'Invalid Dates', 'End date must be on or after start date.', 'error');
+      return false;
+    }
+    return true;
   }
 
   void _showDatePicker({required bool isStartDate}) {
@@ -208,12 +233,14 @@ class _HomeDashoardShortlistCreateWidgetState
             ),
           ),
         ),
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            children: [
-              Flexible(
-                child: Column(
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                  child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -429,20 +456,14 @@ class _HomeDashoardShortlistCreateWidgetState
                   ],
                 ),
               ),
+              ),
+              if (MediaQuery.of(context).viewInsets.bottom == 0)
               Column(
                 children: [
                   AppGradientButton(
                     text: widget.isEditing ? 'Save & Continue' : 'Create Shortlist',
                     onPressed: () {
-                      if (textController1!.text.trim().isEmpty) {
-                        actions.toastificationshow(
-                          context,
-                          'Missing Name',
-                          'Please enter a shortlist name.',
-                          'error',
-                        );
-                        return;
-                      }
+                      if (!_validateForm()) return;
                       final params = {
                         'name': textController1!.text,
                         'eventName': textController2!.text,
@@ -465,15 +486,7 @@ class _HomeDashoardShortlistCreateWidgetState
                       onPressed: _isSaving
                           ? null
                           : () async {
-                              if (textController1!.text.trim().isEmpty) {
-                                actions.toastificationshow(
-                                  context,
-                                  'Missing Name',
-                                  'Please enter a shortlist name.',
-                                  'error',
-                                );
-                                return;
-                              }
+                              if (!_validateForm()) return;
                               setState(() => _isSaving = true);
                               final result = await actions.createShortlist(
                                 name: textController1!.text,
@@ -492,7 +505,8 @@ class _HomeDashoardShortlistCreateWidgetState
                                 result['success'] == true ? 'success' : 'error',
                               );
                               if (result['success'] == true) {
-                                context.pop();
+                                context.goNamed(
+                                    HomeDashoardShortlistWidget.routeName);
                               }
                             },
                       style: TextButton.styleFrom(
@@ -503,7 +517,7 @@ class _HomeDashoardShortlistCreateWidgetState
                         ),
                       ),
                       child: Text(
-                        _isSaving ? 'Saving...' : 'Save as Draft',
+                        _isSaving ? 'Saving...' : 'Move to Drafts',
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             fontWeight: FontWeight.w500,
                             fontSize: 17.0,
@@ -517,6 +531,7 @@ class _HomeDashoardShortlistCreateWidgetState
                 .addToStart(SizedBox(height: 24.0))
                 .addToEnd(SizedBox(height: 32.0)),
           ),
+        ),
         ),
       ),
     );

@@ -34,6 +34,7 @@ mixin _$Message {
   String? get senderAvatar => throw _privateConstructorUsedError;
   String? get imageUrl => throw _privateConstructorUsedError;
   bool get isSending => throw _privateConstructorUsedError;
+  bool get isEdited => throw _privateConstructorUsedError;
 
   /// Serializes this Message to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -62,7 +63,8 @@ abstract class $MessageCopyWith<$Res> {
       String? senderUsername,
       String? senderAvatar,
       String? imageUrl,
-      bool isSending});
+      bool isSending,
+      bool isEdited});
 
   $CounterOfferCopyWith<$Res>? get counterOffer;
 }
@@ -95,6 +97,7 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
     Object? senderAvatar = freezed,
     Object? imageUrl = freezed,
     Object? isSending = null,
+    Object? isEdited = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -149,6 +152,10 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
           ? _value.isSending
           : isSending // ignore: cast_nullable_to_non_nullable
               as bool,
+      isEdited: null == isEdited
+          ? _value.isEdited
+          : isEdited // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -187,7 +194,8 @@ abstract class _$$MessageImplCopyWith<$Res> implements $MessageCopyWith<$Res> {
       String? senderUsername,
       String? senderAvatar,
       String? imageUrl,
-      bool isSending});
+      bool isSending,
+      bool isEdited});
 
   @override
   $CounterOfferCopyWith<$Res>? get counterOffer;
@@ -219,6 +227,7 @@ class __$$MessageImplCopyWithImpl<$Res>
     Object? senderAvatar = freezed,
     Object? imageUrl = freezed,
     Object? isSending = null,
+    Object? isEdited = null,
   }) {
     return _then(_$MessageImpl(
       id: null == id
@@ -273,6 +282,10 @@ class __$$MessageImplCopyWithImpl<$Res>
           ? _value.isSending
           : isSending // ignore: cast_nullable_to_non_nullable
               as bool,
+      isEdited: null == isEdited
+          ? _value.isEdited
+          : isEdited // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -293,7 +306,8 @@ class _$MessageImpl extends _Message {
       this.senderUsername,
       this.senderAvatar,
       this.imageUrl,
-      this.isSending = false})
+      this.isSending = false,
+      this.isEdited = false})
       : _images = images,
         super._();
 
@@ -341,10 +355,13 @@ class _$MessageImpl extends _Message {
   @override
   @JsonKey()
   final bool isSending;
+  @override
+  @JsonKey()
+  final bool isEdited;
 
   @override
   String toString() {
-    return 'Message(id: $id, conversationId: $conversationId, senderId: $senderId, content: $content, messageType: $messageType, createdAt: $createdAt, isRead: $isRead, images: $images, counterOffer: $counterOffer, senderUsername: $senderUsername, senderAvatar: $senderAvatar, imageUrl: $imageUrl, isSending: $isSending)';
+    return 'Message(id: $id, conversationId: $conversationId, senderId: $senderId, content: $content, messageType: $messageType, createdAt: $createdAt, isRead: $isRead, images: $images, counterOffer: $counterOffer, senderUsername: $senderUsername, senderAvatar: $senderAvatar, imageUrl: $imageUrl, isSending: $isSending, isEdited: $isEdited)';
   }
 
   @override
@@ -373,7 +390,9 @@ class _$MessageImpl extends _Message {
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
             (identical(other.isSending, isSending) ||
-                other.isSending == isSending));
+                other.isSending == isSending) &&
+            (identical(other.isEdited, isEdited) ||
+                other.isEdited == isEdited));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -392,7 +411,8 @@ class _$MessageImpl extends _Message {
       senderUsername,
       senderAvatar,
       imageUrl,
-      isSending);
+      isSending,
+      isEdited);
 
   /// Create a copy of Message
   /// with the given fields replaced by the non-null parameter values.
@@ -424,7 +444,8 @@ abstract class _Message extends Message {
       final String? senderUsername,
       final String? senderAvatar,
       final String? imageUrl,
-      final bool isSending}) = _$MessageImpl;
+      final bool isSending,
+      final bool isEdited}) = _$MessageImpl;
   const _Message._() : super._();
 
   factory _Message.fromJson(Map<String, dynamic> json) = _$MessageImpl.fromJson;
@@ -456,6 +477,8 @@ abstract class _Message extends Message {
   String? get imageUrl;
   @override
   bool get isSending;
+  @override
+  bool get isEdited;
 
   /// Create a copy of Message
   /// with the given fields replaced by the non-null parameter values.

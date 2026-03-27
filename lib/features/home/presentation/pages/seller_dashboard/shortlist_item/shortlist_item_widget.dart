@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '/core/providers/current_user_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
@@ -118,15 +117,24 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
     });
   }
 
+  // --- Status helpers ---
+
+  bool get _isDraft => widget.status == 'draft';
+
+  bool get _isPublished =>
+      widget.status == 'active' || widget.status == 'published';
+
   bool get _isExpired {
     if (widget.status == 'expired') return true;
-    if (widget.endDate != null && widget.endDate!.isBefore(DateTime.now())) {
+    if (_isPublished &&
+        widget.endDate != null &&
+        widget.endDate!.isBefore(DateTime.now())) {
       return true;
     }
     return false;
   }
 
-  bool get _isDraft => widget.status == 'draft';
+  bool get _isClosed => widget.status == 'closed';
 
   // --- Actions ---
 
@@ -142,7 +150,7 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
     );
   }
 
-  void _onShare() {
+  void _onShareQR() {
     if (widget.shareCode == null || widget.shareCode!.isEmpty) {
       actions.toastificationshow(
           context, 'Error', 'No share code available', 'error');
@@ -152,11 +160,6 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
     Clipboard.setData(ClipboardData(text: shareUrl));
     actions.toastificationshow(
         context, 'Copied', 'Share link copied to clipboard', 'success');
-  }
-
-  void _onDownload() {
-    actions.toastificationshow(
-        context, 'Info', 'QR code download coming soon', 'info');
   }
 
   void _onEdit() {
@@ -183,55 +186,56 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
     widget.onChanged?.call();
   }
 
-  Future<void> _onDuplicate() async {
+  Future<void> _onDeleteDraft() async {
     if (widget.shortlistId == null) return;
-    // Load existing shortlist items
-    final items = await ShortlistItemsTable().queryRows(
-      queryFn: (q) => q.eqOrNull('shortlist_id', widget.shortlistId),
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: AppColors.backgroundSecondary,
+        title: Text('Delete Draft'),
+        content: Text(
+          'Are you sure you want to delete "${widget.name}"? This action cannot be undone.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => ctx.pop(false),
+            child: Text('Cancel',
+                style: TextStyle(color: AppColors.textSecondary)),
+          ),
+          TextButton(
+            onPressed: () => ctx.pop(true),
+            child:
+                Text('Delete', style: TextStyle(color: AppColors.errorBright)),
+          ),
+        ],
+      ),
     );
-    // Create new shortlist as draft copy
-    final code = List.generate(8, (_) {
-      const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-      return chars[(DateTime.now().microsecondsSinceEpoch + _) % chars.length];
-    }).join();
-
-    final result = await SupaFlow.client
-        .from('shortlists')
-        .insert({
-          'seller_id': ref.read(currentUserIdProvider),
-          'name': '${widget.name} (Copy)',
-          'status': 'draft',
-          'share_code': code,
-          'total_items': widget.totalItems,
-        })
-        .select()
-        .single();
-
-    final newId = result['id'] as String;
-    // Copy items
-    for (final item in items) {
-      await SupaFlow.client.from('shortlist_items').insert({
-        'shortlist_id': newId,
-        'product_id': item.productId,
-        'custom_quantity': item.customQuantity,
-      });
-    }
-    if (!mounted) return;
-    actions.toastificationshow(
-        context, 'Duplicated', 'Shortlist duplicated as draft', 'success');
-    widget.onChanged?.call();
-  }
-
-  Future<void> _onArchive() async {
-    if (widget.shortlistId == null) return;
+    if (confirmed != true || !mounted) return;
     await ShortlistsTable().update(
       data: {'status': 'archived'},
       matchingRows: (q) => q.eqOrNull('id', widget.shortlistId),
     );
     if (!mounted) return;
     actions.toastificationshow(
-        context, 'Archived', 'Shortlist has been archived', 'success');
+        context, 'Deleted', 'Draft has been deleted', 'success');
     widget.onChanged?.call();
+  }
+
+  Future<void> _onEndShortlist() async {
+    if (widget.shortlistId == null) return;
+    await context.pushNamed(
+      'reconciliation',
+      queryParameters: {
+        'shortlistId': widget.shortlistId!,
+        'shortlistName': widget.name,
+      },
+    );
+    // Refresh list when returning from reconciliation
+    widget.onChanged?.call();
+  }
+
+  void _onViewSummary() {
+    _onView();
   }
 
   // --- UI Builders ---
@@ -309,12 +313,34 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
 
   Widget _buildSubtitle() {
     final createdStr = widget.createdAt != null
-        ? DateFormat.MMMd().format(widget.createdAt!)
+        ? DateFormat('MMM d, yyyy').format(widget.createdAt!)
         : '';
+
+    if (_isClosed) {
+      return RichText(
+        text: TextSpan(
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(height: 1.5),
+          children: [
+            TextSpan(
+              text: '${widget.totalItems} items',
+              style: TextStyle(color: AppColors.textSecondary),
+            ),
+            TextSpan(
+              text: ' \u2022 ',
+              style: TextStyle(color: AppColors.textSecondary),
+            ),
+            TextSpan(
+              text: 'Closed',
+              style: TextStyle(color: AppColors.textSecondary),
+            ),
+          ],
+        ),
+      );
+    }
 
     if (_isExpired) {
       final expiredStr = widget.endDate != null
-          ? DateFormat('MMM yyyy').format(widget.endDate!)
+          ? DateFormat('MMM d, yyyy').format(widget.endDate!)
           : '';
       return RichText(
         text: TextSpan(
@@ -351,7 +377,7 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
               style: TextStyle(color: AppColors.textSecondary),
             ),
             TextSpan(
-              text: 'Drafts',
+              text: 'Draft',
               style: TextStyle(color: Color(0xFFFF9500)),
             ),
           ],
@@ -359,12 +385,27 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
       );
     }
 
-    // Active
-    return Text(
-      '${widget.totalItems} items${createdStr.isNotEmpty ? ' \u2022 Created $createdStr' : ''}',
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-      style: Theme.of(context).textTheme.labelSmall!.copyWith(height: 1.5),
+    // Published
+    return RichText(
+      text: TextSpan(
+        style: Theme.of(context).textTheme.bodySmall!.copyWith(height: 1.5),
+        children: [
+          TextSpan(
+            text: '${widget.totalItems} items',
+            style: TextStyle(color: AppColors.textSecondary),
+          ),
+          if (createdStr.isNotEmpty) ...[
+            TextSpan(
+              text: ' \u2022 ',
+              style: TextStyle(color: AppColors.textSecondary),
+            ),
+            TextSpan(
+              text: 'Created $createdStr',
+              style: TextStyle(color: AppColors.textSecondary),
+            ),
+          ],
+        ],
+      ),
     );
   }
 
@@ -377,7 +418,7 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
           child: Column(
             children: [
               Text(
-                '\$${NumberFormat('#,##0', 'en_US').format(sales)}',
+                '\$${NumberFormat('#,##0.00', 'en_US').format(sales)}',
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     fontWeight: FontWeight.w700, color: AppColors.secondary),
               ),
@@ -412,36 +453,63 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
   }
 
   Widget _buildButtons() {
-    if (_isExpired) {
+    // Closed: View summary
+    if (_isClosed) {
       return Row(
         children: [
-          _buildButton(label: 'Duplicate', onTap: _onDuplicate),
-          SizedBox(width: 12.0),
-          _buildButton(label: 'Archive', onTap: _onArchive, isPrimary: true),
+          _buildButton(
+              label: 'View Summary', onTap: _onViewSummary, isPrimary: true),
         ],
       );
     }
 
+    // Expired: View, End shortlist
+    if (_isExpired) {
+      return Row(
+        children: [
+          _buildButton(label: 'View', onTap: _onView),
+          SizedBox(width: 12.0),
+          _buildButton(
+              label: 'End Shortlist', onTap: _onEndShortlist, isPrimary: true),
+        ],
+      );
+    }
+
+    // Draft: Edit, Publish, Delete draft (icon)
     if (_isDraft) {
       return Row(
         children: [
           _buildButton(label: 'Edit', onTap: _onEdit),
           SizedBox(width: 12.0),
           _buildButton(label: 'Publish', onTap: _onPublish, isPrimary: true),
+          SizedBox(width: 12.0),
+          GestureDetector(
+            onTap: _onDeleteDraft,
+            child: Container(
+              padding: EdgeInsets.all(11.0),
+              decoration: BoxDecoration(
+                color: AppColors.surfaceDark,
+                borderRadius: BorderRadius.circular(4.0),
+              ),
+              child: Icon(
+                Icons.delete_outline,
+                color: AppColors.errorBright,
+                size: 22.0,
+              ),
+            ),
+          ),
         ],
       );
     }
 
-    // Active
+    // Published: View, Share QR, End shortlist
     return Row(
       children: [
         _buildButton(label: 'View', onTap: _onView, isPrimary: true),
         SizedBox(width: 12.0),
-        _buildButton(label: 'Share', onTap: _onShare),
-        if (widget.isOwner) ...[
-          SizedBox(width: 12.0),
-          _buildButton(label: 'Download', onTap: _onDownload),
-        ],
+        _buildButton(label: 'Share QR', onTap: _onShareQR),
+        SizedBox(width: 12.0),
+        _buildButton(label: 'End Shortlist', onTap: _onEndShortlist),
       ],
     );
   }
@@ -491,8 +559,8 @@ class _ShortlistItemWidgetState extends ConsumerState<ShortlistItemWidget> {
             // Tags
             SizedBox(height: 12.0),
             _buildTags(),
-            // Stats (expired only)
-            if (_isExpired) ...[
+            // Stats (all non-draft statuses)
+            if (!_isDraft) ...[
               SizedBox(height: 16.0),
               _buildStatsRow(),
             ],
